@@ -1,8 +1,11 @@
 package it.polimi.ingsw;
 
 public class TowerHall extends Hall{
-    private Color color;
+    private final Color color;
 
+    public TowerHall(Color c){
+        this.color = c;
+    }
     @Override
     public void addPiece(Piece piece) {
 
@@ -11,5 +14,9 @@ public class TowerHall extends Hall{
     @Override
     public void removePiece(Piece piece) {
 
+    }
+
+    public Color getColor(){
+        return this.color;
     }
 }

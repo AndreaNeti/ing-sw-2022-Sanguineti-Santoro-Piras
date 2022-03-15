@@ -1,8 +1,12 @@
 package it.polimi.ingsw;
 
 public class Piece {
-    private Color color;
+    private final Color color;
     private GameComponent component;
+
+    public Piece(Color color){
+        this.color = color;
+    }
 
     public Color getColor(){
         return this.color;
