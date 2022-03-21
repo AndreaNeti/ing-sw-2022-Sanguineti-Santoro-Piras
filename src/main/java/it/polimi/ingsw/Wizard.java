@@ -1,5 +1,5 @@
 package it.polimi.ingsw;
 
-public enum Mage {
+public enum Wizard {
     WOODMAGE, SANDMAGE,AIRMAGE, ELECTROMAGE
 }

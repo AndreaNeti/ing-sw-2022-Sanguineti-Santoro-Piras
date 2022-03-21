@@ -1,15 +1,5 @@
 package it.polimi.ingsw;
 
-public class EntranceHall extends Hall{
-    private List<Student> students;
+public class EntranceHall extends GameComponent{
 
-    @Override
-    public void addPiece(Piece piece) {
-
-    }
-
-    @Override
-    public void removePiece(Piece piece) {
-
-    }
 }
