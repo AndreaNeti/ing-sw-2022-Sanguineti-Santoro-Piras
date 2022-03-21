@@ -8,10 +8,7 @@ public class Island extends GameComponent{
     public Player getPlayer() {
         return player;
     }
-
-    public void merge(Island island) {
-
-    }
+    public void merge(Island island){}
 
     public byte getNumber() {
         return number;
