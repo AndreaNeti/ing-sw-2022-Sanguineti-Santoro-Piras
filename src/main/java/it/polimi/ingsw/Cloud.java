@@ -4,4 +4,8 @@ import java.util.List;
 
 public class Cloud extends GameComponent{
     private boolean frontBack;
+
+    public boolean getFrontBack() {
+        return frontBack;
+    }
 }
