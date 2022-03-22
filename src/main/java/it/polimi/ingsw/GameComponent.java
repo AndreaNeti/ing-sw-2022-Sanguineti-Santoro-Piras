@@ -1,8 +1,10 @@
 package it.polimi.ingsw;
 
+import it.polimi.ingsw.exceptions.NotEnoughStudentsException;
+
 public abstract class GameComponent {
-    private byte[] students;
-    private int idGameComponent;
+    private final byte[] students;
+    private final int idGameComponent;
 
     public GameComponent(int id) {
         this.students = new byte[]{0, 0, 0, 0, 0};
