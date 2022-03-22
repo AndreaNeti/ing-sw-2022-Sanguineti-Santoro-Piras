@@ -11,26 +11,21 @@ public abstract class GameComponent {
         this.idGameComponent = id;
     }
 
-
-    private void addStudent(byte color, byte number) {
+    public void addStudents(byte color, byte number) {
         students[color] += number;
     }
 
-    private void removeStudent(byte color, byte number) throws NotEnoughStudentsException {
+    private void removeStudents(byte color, byte number) throws NotEnoughStudentsException {
         if(students[color] > number)
             students[color] -= number;
         else
             throw new NotEnoughStudentsException();
     }
 
-    public void moveStudent(Color color, byte number, GameComponent component) {
+    public void moveStudents(Color color, byte number, GameComponent component) throws NotEnoughStudentsException{
         byte index = (byte) color.ordinal();
-        try {
-            this.removeStudent(index, number);
-            component.addStudent(index, number);
-        } catch (NotEnoughStudentsException ex) {
-            System.out.println("Not enough students of selected color in component");
-        }
+        this.removeStudents(index, number);
+        component.addStudents(index, number);
     }
 
     public int getIdGameComponent() {

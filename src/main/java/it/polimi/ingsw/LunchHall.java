@@ -1,5 +1,7 @@
 package it.polimi.ingsw;
 
+import it.polimi.ingsw.exceptions.NotEnoughStudentsException;
+
 public class LunchHall extends GameComponent{
     private final Player player;
 
@@ -9,16 +11,16 @@ public class LunchHall extends GameComponent{
     }
 
     @Override
-    public void moveStudent(Color color, byte number, GameComponent component) {
-        super.moveStudent(color, number, component);
-        //if(expertGame) {
-        // byte coins = (byte) ((number + getStudents()[0]%3) / 3);
-        // player.addCoins(coins);
+    public void addStudents(byte color, byte number) {
+        super.addStudents(color, number);
+        //if(Controller.getController().isExpert()) {
+        byte coins = (byte) ((number + getStudents()[color]%3) / 3);
+        ((ExpertPlayer)player).addCoins(coins);
         //}
     }
 
     public byte getStudentSize(Color color) {
-        return getStudents()[0];
+        return getStudents()[color.ordinal()];
     }
 
     public Player getPlayer() {
