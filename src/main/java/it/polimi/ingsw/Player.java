@@ -3,8 +3,10 @@ package it.polimi.ingsw;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
+import java.util.Objects;
 
-public class Player {
+public class Player implements Comparator<Player> {
     private final Wizard wizard;
     private byte towerLeft;
     private final String nickName;
@@ -23,8 +25,7 @@ public class Player {
 
         this.cards=new ArrayList<>(10);
         for(byte i=0; i<10; i++){
-            byte j= (byte) ( i/2 +1 ) ;
-            Card prova=new Card(i,j, this);
+            Card prova=new Card((byte) (i+1),(byte) ( i/2 +1 ), this);
             cards.add(prova);
 
         }
@@ -75,5 +76,24 @@ public class Player {
 
     public Card getPlayedCard() {
         return playedCard;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Player)) return false;
+        Player player = (Player) o;
+        return wizard == player.wizard;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(wizard);
+    }
+
+    @Override
+    public int compare(Player o1, Player o2) throws ClassCastException {
+        return Byte.compare((o1).getPlayedCard().getValue(), (o2).getPlayedCard().getValue());
+
     }
 }
