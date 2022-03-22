@@ -5,6 +5,10 @@ public class Island extends GameComponent{
     private boolean prohibition;
     private byte number;
 
+    public Island() {
+        super(0);
+    }
+
     public Player getPlayer() {
         return player;
     }
@@ -12,5 +16,9 @@ public class Island extends GameComponent{
 
     public byte getNumber() {
         return number;
+    }
+
+    public boolean isProhibition() {
+        return prohibition;
     }
 }
