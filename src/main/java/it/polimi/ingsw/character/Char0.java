@@ -1,11 +1,17 @@
 package it.polimi.ingsw.character;
 
-public class Char0 implements Character {
-    private byte prohibitionsLeft = 4;
+import it.polimi.ingsw.Bag;
+import it.polimi.ingsw.GameComponent;
+
+public class Char0 extends GameComponent implements Character{
+
+    public Char0(int id) {
+        super(id);
+        Bag.getBag().drawStudent(this, 4);
+    }
 
     @Override
     public void play() {
-        prohibitionsLeft--;
     }
 
     @Override

@@ -3,7 +3,7 @@ package it.polimi.ingsw;
 import java.util.ArrayList;
 
 public class Game {
-    private static Game game;
+    static Game game;
     private Player[] professors;
     private ArrayList<Island> islands;
     private byte motherNaturePosition;

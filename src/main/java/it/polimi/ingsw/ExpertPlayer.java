@@ -14,7 +14,7 @@ public class ExpertPlayer extends Player {
     }
 
     public void removeCoins(byte coins) throws NotEnoughCoinsException {
-        if(coins > this.coins) throw new NotEnoughCoinsException();
+        if (coins > this.coins) throw new NotEnoughCoinsException();
         this.coins -= coins;
     }
 

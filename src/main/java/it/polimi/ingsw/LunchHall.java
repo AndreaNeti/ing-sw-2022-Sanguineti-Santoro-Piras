@@ -13,10 +13,7 @@ public class LunchHall extends GameComponent{
     @Override
     public void addStudents(byte color, byte number) {
         super.addStudents(color, number);
-        //if(Controller.getController().isExpert()) {
-        byte coins = (byte) ((number + getStudents()[color]%3) / 3);
-        ((ExpertPlayer)player).addCoins(coins);
-        //}
+        //byte coins = (byte) ((number + getStudents()[color]%3) / 3
     }
 
     public byte getStudentSize(Color color) {

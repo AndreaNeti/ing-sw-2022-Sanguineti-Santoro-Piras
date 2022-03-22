@@ -1,6 +1,14 @@
 package it.polimi.ingsw.character;
 
-public class Char6 implements Character {
+import it.polimi.ingsw.Bag;
+import it.polimi.ingsw.GameComponent;
+
+public class Char6 extends GameComponent implements Character {
+    public Char6(int id) {
+        super(id);
+        Bag.getBag().drawStudent(this, 6);
+    }
+
     @Override
     public void play() {
 
