@@ -1,8 +1,9 @@
 package it.polimi.ingsw;
 
 
+import it.polimi.ingsw.exceptions.CardNotFoundException;
+
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Objects;
 
@@ -34,7 +35,7 @@ public class Player implements Comparator<Player> {
         this.lunchHall=lunchHall;
     }
 
-    public void useCard(Card card) throws  CardNotFoundException{
+    public void useCard(Card card) throws CardNotFoundException {
         if(cards.contains(card)) {
             this.playedCard = card;
             cards.remove(card);
@@ -52,10 +53,10 @@ public class Player implements Comparator<Player> {
     public void removeTowers(byte towers){
     //deve chiamare endgame
         towerLeft-=towers;
-        if(towerLeft<=0){
+        /*if(towerLeft<=0){
             towerLeft=0;
             Game.getGame().endGame(this);
-        }
+        }*/
     }
 
     public Wizard getWizard() {

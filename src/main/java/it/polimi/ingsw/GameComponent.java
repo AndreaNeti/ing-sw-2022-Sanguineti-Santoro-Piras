@@ -4,11 +4,11 @@ import it.polimi.ingsw.exceptions.NotEnoughStudentsException;
 
 public abstract class GameComponent {
     private final byte[] students;
-    private final int idGameComponent;
+
 
     public GameComponent(int id) {
         this.students = new byte[]{0, 0, 0, 0, 0};
-        this.idGameComponent = id;
+
     }
 
     public void addStudents(byte color, byte number) {
@@ -28,9 +28,6 @@ public abstract class GameComponent {
         component.addStudents(index, number);
     }
 
-    public int getIdGameComponent() {
-        return idGameComponent;
-    }
 
     public byte[] getStudents() {
         return students.clone();

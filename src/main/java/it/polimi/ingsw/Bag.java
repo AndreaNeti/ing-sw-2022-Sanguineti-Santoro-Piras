@@ -5,7 +5,7 @@ import it.polimi.ingsw.exceptions.NotEnoughStudentsException;
 import java.util.Random;
 
 public class Bag extends GameComponent{
-    private static Bag bag;
+
     private final Random rand;
 
     public Bag() {
@@ -22,9 +22,9 @@ public class Bag extends GameComponent{
                 i--;
             }
         }
-        if(getStudentSize() == 0) {
+        /*if(getStudentSize() == 0) {
             Game.getGame().endGame();
-        }
+        }*/
     }
 
     public int getStudentSize() {
@@ -35,10 +35,10 @@ public class Bag extends GameComponent{
         return sum;
     }
 
-    public static Bag getBag() {
+    /*public static Bag getBag() {
         if(bag == null){
             bag = new Bag();
         }
         return bag;
-    }
+    }*/
 }

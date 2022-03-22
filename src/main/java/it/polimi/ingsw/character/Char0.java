@@ -7,7 +7,7 @@ public class Char0 extends GameComponent implements Character{
 
     public Char0(int id) {
         super(id);
-        Bag.getBag().drawStudent(this, 4);
+        /*Bag.getBag().drawStudent(this, 4);*/
     }
 
     @Override

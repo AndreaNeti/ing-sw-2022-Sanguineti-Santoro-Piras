@@ -40,11 +40,4 @@ public class Game {
     }
 
 
-    public static Game getGame() {
-        if( game==null){
-            // TODO: add ExpertGame condition
-            game= new Game();
-        }
-        return game;
-    }
 }
