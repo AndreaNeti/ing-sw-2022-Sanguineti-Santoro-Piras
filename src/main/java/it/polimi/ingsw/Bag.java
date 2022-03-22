@@ -9,7 +9,7 @@ public class Bag extends GameComponent{
     private final Random rand;
 
     public Bag() {
-        super(0);
+        super();
         rand = new Random(System.currentTimeMillis());
     }
 

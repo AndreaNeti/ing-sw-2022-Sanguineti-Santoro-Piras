@@ -6,9 +6,8 @@ public abstract class GameComponent {
     private final byte[] students;
 
 
-    public GameComponent(int id) {
+    public GameComponent() {
         this.students = new byte[]{0, 0, 0, 0, 0};
-
     }
 
     public void addStudents(byte color, byte number) {

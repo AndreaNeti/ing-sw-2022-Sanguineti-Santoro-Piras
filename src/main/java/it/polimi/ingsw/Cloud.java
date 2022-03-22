@@ -6,7 +6,7 @@ public class Cloud extends GameComponent{
     private final boolean frontBack;
 
     public Cloud(int players) {
-        super(0);
+        super();
         frontBack = players != 3;
     }
 

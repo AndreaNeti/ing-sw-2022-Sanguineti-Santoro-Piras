@@ -4,8 +4,8 @@ import it.polimi.ingsw.Bag;
 import it.polimi.ingsw.GameComponent;
 
 public class Char10 extends GameComponent implements Character {
-    public Char10(int id) {
-        super(id);
+    public Char10() {
+        super();
         /*Bag.getBag().drawStudent(this, 4);*/
     }
 

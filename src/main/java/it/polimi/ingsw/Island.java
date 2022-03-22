@@ -6,7 +6,7 @@ public class Island extends GameComponent{
     private byte number;
 
     public Island() {
-        super(0);
+        super();
     }
 
     public Player getPlayer() {
