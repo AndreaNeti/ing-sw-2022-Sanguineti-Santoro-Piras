@@ -1,4 +1,4 @@
-package it.polimi.ingsw;
+package it.polimi.ingsw.model;
 
 import java.util.ArrayList;
 
@@ -17,7 +17,9 @@ public class Game {
 
 
     public void drawStudents(GameComponent gameComponent, byte students){}
-    public void playCard(Player player,Card card){}
+    public void playCard(Player player,Card card){
+        //function to play card
+    }
     public void moveMotherNature(int moves){}
     public void nextPlayer() {}
     public void nextActionPhase(){}

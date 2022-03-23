@@ -1,4 +1,4 @@
-package it.polimi.ingsw.character;
+package it.polimi.ingsw.model.character;
 
 public class Char1 implements Character {
     @Override

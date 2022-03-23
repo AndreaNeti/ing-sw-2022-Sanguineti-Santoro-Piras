@@ -1,6 +1,4 @@
-package it.polimi.ingsw;
-
-import java.util.List;
+package it.polimi.ingsw.model;
 
 public class Cloud extends GameComponent{
     private final boolean frontBack;

@@ -1,7 +1,6 @@
-package it.polimi.ingsw.character;
+package it.polimi.ingsw.model.character;
 
-import it.polimi.ingsw.Bag;
-import it.polimi.ingsw.GameComponent;
+import it.polimi.ingsw.model.GameComponent;
 
 public class Char6 extends GameComponent implements Character {
     public Char6() {
