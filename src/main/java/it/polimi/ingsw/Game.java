@@ -18,7 +18,10 @@ public class Game {
 
     public void drawStudents(GameComponent gameComponent, byte students){}
     public void playCard(Player player,Card card){}
-    public void moveMotherNature(int moves){}
+    public void moveMotherNature(int moves){
+        motherNaturePosition += moves;
+        motherNaturePosition %= islands.size();
+    }
     public void nextPlayer() {}
     public void nextActionPhase(){}
     public void nextPhase(){}

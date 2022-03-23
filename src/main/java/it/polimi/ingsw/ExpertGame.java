@@ -12,7 +12,7 @@ public class ExpertGame extends Game {
     private boolean extraSteps; //default false
     private Color ignoredColorInfluence;
 
-    public void addCoinsToPlayer(ExpertPlayer player, byte coins) throws NotEnoughCoinsException {
+    private void addCoinsToPlayer(ExpertPlayer player, byte coins) throws NotEnoughCoinsException {
         if (coinsLeft == 0) throw new NotEnoughCoinsException();
         else if (coinsLeft < coins) {
             player.addCoins(coinsLeft);
@@ -29,7 +29,7 @@ public class ExpertGame extends Game {
         else return (ExpertGame) game;
     }
 
-    public void addCoins(byte coins) {
+    private void addCoins(byte coins) {
         this.coinsLeft += coins;
     }
 
