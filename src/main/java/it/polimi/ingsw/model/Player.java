@@ -18,7 +18,7 @@ public class Player implements Comparator<Player> {
 
 
 
-    public Player(Wizard wizard, byte tower,String nickName, EntranceHall entranceHall, LunchHall lunchHall){
+    public Player(Wizard wizard, byte tower,String nickName){
         this.wizard=wizard;
         this.towerLeft=tower;
         this.nickName=nickName;
@@ -31,8 +31,8 @@ public class Player implements Comparator<Player> {
 
         }
 
-        this.entranceHall=entranceHall;
-        this.lunchHall=lunchHall;
+        this.entranceHall= new EntranceHall(this);
+        this.lunchHall= new LunchHall(this);
     }
 
     public void useCard(Card card) throws CardNotFoundException {

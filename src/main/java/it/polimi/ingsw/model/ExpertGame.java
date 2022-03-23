@@ -5,41 +5,44 @@ import it.polimi.ingsw.model.character.*;
 
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
 public class ExpertGame extends Game {
     private byte coinsLeft;
-    private Map<CharacterCard, Boolean> characters;
+    private CharacterCard[] characters;
+    private boolean[] playedCharacters;
     private boolean extraInfluence; //di default falso
     private boolean towerInfluence;// default true
     private boolean extraSteps; //default false
     private Color ignoredColorInfluence;
 
 
-    public ExpertGame(byte numberOfPlayer) {
-        super(numberOfPlayer);
+    public ExpertGame(byte numberOfPlayer, List<Wizard> wizards, List<String> nicknames) {
+        super(numberOfPlayer, wizards, nicknames);
         this.coinsLeft = 20;
         this.extraInfluence = false;
         this.towerInfluence = true;
         this.extraSteps = false;
         this.ignoredColorInfluence = null;
         Random rand = new Random(System.currentTimeMillis());
-        characters=new HashMap<>(3);
+        characters = new CharacterCard[3];
+        playedCharacters = new boolean[]{false, false, false};
         int characterIndex;
         byte i=0;
         boolean alreadyPresent;
         while(i<3) {
             alreadyPresent=false;
             characterIndex = rand.nextInt(12);
-            for(CharacterCard c : characters.keySet()){
+            for(CharacterCard c : characters){
                 if(c.getId()== characterIndex){
                     alreadyPresent=true;
                 }
             }
             if (!alreadyPresent) {
-                CharacterCard prova = factoryMethod(characterIndex);
-                characters.put(prova, false);
+                CharacterCard c = factoryMethod(characterIndex);
+                characters[i] = c;
                 i++;
 
             }
@@ -76,7 +79,9 @@ public class ExpertGame extends Game {
 
     }
 
-
+    public CharacterCard getCharacter(int index) {
+        return characters[index];
+    }
 
     private void addCoins(byte coins) {
         this.coinsLeft += coins;
