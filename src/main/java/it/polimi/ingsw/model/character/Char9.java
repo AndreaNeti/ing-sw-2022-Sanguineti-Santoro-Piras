@@ -1,6 +1,9 @@
 package it.polimi.ingsw.model.character;
 
 public class Char9 implements Character {
+
+    private byte nInput = 0;
+
     @Override
     public void play() {
 
@@ -9,6 +12,26 @@ public class Char9 implements Character {
     @Override
     public byte getCost() {
         return 1;
+    }
+
+    @Override
+    public void reset() {
+
+    }
+
+    @Override
+    public void setInput(int input) {
+
+    }
+
+    @Override
+    public int getId() {
+        return 9;
+    }
+
+    @Override
+    public boolean canPlay() {
+        return false;
     }
 }
 

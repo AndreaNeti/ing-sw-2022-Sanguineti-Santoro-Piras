@@ -2,7 +2,9 @@ package it.polimi.ingsw.model.character;
 
 import it.polimi.ingsw.model.GameComponent;
 
-public class Char0 extends GameComponent implements Character{
+public class Char0 extends GameComponent implements Character {
+
+    private byte nInput = 0;
 
     public Char0() {
         super();
@@ -16,5 +18,25 @@ public class Char0 extends GameComponent implements Character{
     @Override
     public byte getCost() {
         return 1;
+    }
+
+    @Override
+    public void reset() {
+
+    }
+
+    @Override
+    public void setInput(int input) {
+
+    }
+
+    @Override
+    public int getId() {
+        return 0;
+    }
+
+    @Override
+    public boolean canPlay() {
+        return false;
     }
 }

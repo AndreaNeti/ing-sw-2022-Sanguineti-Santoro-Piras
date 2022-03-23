@@ -10,4 +10,24 @@ public class Char7 implements Character {
     public byte getCost() {
         return 2;
     }
+
+    @Override
+    public void reset() {
+
+    }
+
+    @Override
+    public void setInput(int input) {
+
+    }
+
+    @Override
+    public int getId() {
+        return 7;
+    }
+
+    @Override
+    public boolean canPlay() {
+        return false;
+    }
 }
