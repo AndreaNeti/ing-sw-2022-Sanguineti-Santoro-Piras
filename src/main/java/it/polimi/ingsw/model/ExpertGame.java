@@ -23,12 +23,6 @@ public class ExpertGame extends Game {
         }
     }
 
-    public static ExpertGame getGame() {
-        if (game == null)
-            return new ExpertGame();
-        else return (ExpertGame) game;
-    }
-
     private void addCoins(byte coins) {
         this.coinsLeft += coins;
     }

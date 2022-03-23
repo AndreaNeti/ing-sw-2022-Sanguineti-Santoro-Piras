@@ -34,11 +34,4 @@ public class Bag extends GameComponent{
         }
         return sum;
     }
-
-    /*public static Bag getBag() {
-        if(bag == null){
-            bag = new Bag();
-        }
-        return bag;
-    }*/
 }

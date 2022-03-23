@@ -1,9 +1,8 @@
-package it.polimi.ingsw;
+package it.polimi.ingsw.model;
 
 import java.util.ArrayList;
 
 public class Game {
-    static Game game;
     private Player[] professors;
     private ArrayList<Island> islands;
     private byte motherNaturePosition;
@@ -17,7 +16,6 @@ public class Game {
 
 
     public void drawStudents(GameComponent gameComponent, byte students){}
-    public void playCard(Player player,Card card){}
     public void moveMotherNature(int moves){
         motherNaturePosition += moves;
         motherNaturePosition %= islands.size();
