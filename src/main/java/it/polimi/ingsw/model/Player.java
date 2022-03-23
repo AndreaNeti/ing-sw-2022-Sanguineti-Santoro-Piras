@@ -50,13 +50,10 @@ public class Player implements Comparator<Player> {
         towerLeft+=towers;
     }
 
-    public void removeTowers(byte towers){
-    //deve chiamare endgame
-        towerLeft-=towers;
-        /*if(towerLeft<=0){
-            towerLeft=0;
-            Game.getGame().endGame(this);
-        }*/
+    // removes towers and returns the number of tower left, to be read by Game
+    public byte removeTowers(byte towers){
+        towerLeft -= towers;
+        return towerLeft;
     }
 
     public Wizard getWizard() {
