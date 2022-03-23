@@ -1,8 +1,10 @@
 package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.exceptions.NotEnoughCoinsException;
+import org.w3c.dom.ls.LSOutput;
 
 import java.util.Map;
+import java.util.Random;
 
 public class ExpertGame extends Game {
     private byte coinsLeft;
@@ -11,6 +13,16 @@ public class ExpertGame extends Game {
     private boolean towerInfluence;// default true
     private boolean extraSteps; //default false
     private Color ignoredColorInfluence;
+
+    public ExpertGame() {
+        this.coinsLeft = 20;
+        this.extraInfluence = false;
+        this.towerInfluence = true;
+        this.extraSteps = false;
+        this.ignoredColorInfluence = null;
+        Random rand = new Random(System.currentTimeMillis());
+        int characterIndex = rand.nextInt(12);
+    }
 
     private void addCoinsToPlayer(ExpertPlayer player, byte coins) throws NotEnoughCoinsException {
         if (coinsLeft == 0) throw new NotEnoughCoinsException();
