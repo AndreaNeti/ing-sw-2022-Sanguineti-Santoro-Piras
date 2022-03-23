@@ -22,6 +22,9 @@ public class Game {
         motherNaturePosition += moves;
         motherNaturePosition %= islands.size();
     }
+    public void playCard(Player player,Card card){
+        //function to play card
+    }
     public void nextPlayer() {}
     public void nextActionPhase(){}
     public void nextPhase(){}

@@ -1,4 +1,4 @@
-package it.polimi.ingsw;
+package it.polimi.ingsw.model;
 
 public class EntranceHall extends GameComponent{
     private final Player player;

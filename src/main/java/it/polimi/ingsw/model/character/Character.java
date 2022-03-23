@@ -1,4 +1,4 @@
-package it.polimi.ingsw.character;
+package it.polimi.ingsw.model.character;
 
 public interface Character {
     void play();

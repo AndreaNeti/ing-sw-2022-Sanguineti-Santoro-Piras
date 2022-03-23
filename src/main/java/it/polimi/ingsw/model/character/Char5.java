@@ -1,6 +1,6 @@
-package it.polimi.ingsw.character;
+package it.polimi.ingsw.model.character;
 
-public class Char11 implements Character {
+public class Char5 implements Character {
     @Override
     public void play() {
 
@@ -11,4 +11,3 @@ public class Char11 implements Character {
         return 3;
     }
 }
-
