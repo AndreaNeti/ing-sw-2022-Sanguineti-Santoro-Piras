@@ -12,6 +12,14 @@ public class Game {
     private byte currentActionPhase;
     private byte roundIndex;
 
+
+    public Game(byte numberOfPlayers){
+        this.professors= new Player[5];
+
+
+
+
+    }
     private void checkMerge(Island island){}
 
 
