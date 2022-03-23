@@ -1,6 +1,6 @@
 package it.polimi.ingsw.model.character;
 
-public class Char7 implements Character {
+public class Char7 implements CharacterCard {
     @Override
     public void play() {
 
@@ -12,9 +12,7 @@ public class Char7 implements Character {
     }
 
     @Override
-    public void reset() {
-
-    }
+    public void reset() {}
 
     @Override
     public void setInput(int input) {
@@ -28,6 +26,6 @@ public class Char7 implements Character {
 
     @Override
     public boolean canPlay() {
-        return false;
+        return true;
     }
 }

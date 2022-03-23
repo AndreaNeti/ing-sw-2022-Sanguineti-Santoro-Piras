@@ -1,6 +1,6 @@
 package it.polimi.ingsw.model.character;
 
-public class Char4 implements Character {
+public class Char4 implements CharacterCard {
 
     private byte nInput = 0;
     private byte prohibitionsLeft = 4;
@@ -17,7 +17,7 @@ public class Char4 implements Character {
 
     @Override
     public void reset() {
-
+        nInput = 0;
     }
 
     @Override
@@ -32,6 +32,6 @@ public class Char4 implements Character {
 
     @Override
     public boolean canPlay() {
-        return false;
+        return nInput == 1;
     }
 }

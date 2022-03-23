@@ -1,6 +1,6 @@
 package it.polimi.ingsw.model.character;
 
-interface Character {
+public interface CharacterCard {
     void play();
     byte getCost();
     void reset();

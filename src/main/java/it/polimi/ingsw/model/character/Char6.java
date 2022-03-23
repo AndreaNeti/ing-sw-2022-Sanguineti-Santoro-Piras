@@ -2,7 +2,7 @@ package it.polimi.ingsw.model.character;
 
 import it.polimi.ingsw.model.GameComponent;
 
-public class Char6 extends GameComponent implements Character {
+public class Char6 extends GameComponent implements CharacterCard {
 
     private byte nInput = 0;
 
@@ -23,7 +23,7 @@ public class Char6 extends GameComponent implements Character {
 
     @Override
     public void reset() {
-
+        nInput = 0;
     }
 
     @Override
@@ -38,6 +38,6 @@ public class Char6 extends GameComponent implements Character {
 
     @Override
     public boolean canPlay() {
-        return false;
+        return (nInput >0 && nInput < 4);
     }
 }
