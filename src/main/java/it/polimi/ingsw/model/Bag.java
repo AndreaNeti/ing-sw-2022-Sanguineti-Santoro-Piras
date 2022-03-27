@@ -10,6 +10,11 @@ public class Bag extends GameComponent{
 
     public Bag() {
         super();
+
+        for (Color c:Color.values()) {
+            this.addStudents(c,(byte) 26);
+        }
+
         rand = new Random(System.currentTimeMillis());
     }
 

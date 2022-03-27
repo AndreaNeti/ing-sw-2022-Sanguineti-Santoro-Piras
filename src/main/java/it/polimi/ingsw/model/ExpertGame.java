@@ -31,6 +31,7 @@ public class ExpertGame extends Game {
         playedCharacters = new boolean[]{false, false, false};
         int characterIndex;
         byte i=0;
+        //mette tre carte diverse in characters
         boolean alreadyPresent;
         while(i<3) {
             alreadyPresent=false;
@@ -67,6 +68,7 @@ public class ExpertGame extends Game {
         }
         return null;
     }
+
     private void addCoinsToPlayer(ExpertPlayer player, byte coins) throws NotEnoughCoinsException {
         if (coinsLeft == 0) throw new NotEnoughCoinsException();
         else if (coinsLeft < coins) {
