@@ -5,8 +5,9 @@ import it.polimi.ingsw.exceptions.NotEnoughCoinsException;
 public class ExpertPlayer extends Player {
     private byte coins = 0;
 
-    public ExpertPlayer(Wizard wizard, byte tower, String nickName, EntranceHall entranceHall, LunchHall lunchHall) {
-        super(wizard, tower, nickName, entranceHall, lunchHall);
+    public ExpertPlayer(Wizard wizard, byte tower,String nickName){
+        super(wizard, tower, nickName);
+        this.coins=20;
     }
 
     public void addCoins(byte coins) {

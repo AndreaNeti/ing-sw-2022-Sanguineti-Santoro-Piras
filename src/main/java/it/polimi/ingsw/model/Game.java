@@ -6,16 +6,19 @@ public class Game {
     //professors are handled as a 5 player array: professors[i]=j means that professor i (it follows the ordinal of enum) is
     //controlled by the player j
     private Player[] professors;
-    //all players: this array is also used to represent the order of round
+    //all players
     private ArrayList<Player> players;
+    // This array is also used to represent the order of round
+    private ArrayList<Byte> playerOrder;
 
 
     private Player currentPlayer;
-    //current phase is true in the pianification phase, false during the action phase
+    //current phase is true in the planification phase, false during the action phase
     private boolean currentPhase;
     /*it's a number that goes from 1 to 3 and it represent the sub-section of the actione phase
     1-move 3 students; 2-move mother nature(calculate influence and merge); 3-drawstudent from cloud*/
     private byte currentActionPhase;
+    //it's the index of playerOrder: it goes from 0 to players.size() and when it's 3 it changes phase
     private byte roundIndex;
     private byte motherNaturePosition;
 
@@ -28,9 +31,11 @@ public class Game {
         Random rand = new Random(System.currentTimeMillis());
         this.professors = new Player[5];
 
+        this.playerOrder = new ArrayList<>(numberOfPlayers);
         this.players = new ArrayList<>(numberOfPlayers);
         for (int i = 0; i < numberOfPlayers; i++) {
             players.add(new Player(wizards.get(i), (byte) (numberOfPlayers == 3 ? 6 : 8), nicknames.get(i)));
+            playerOrder.add((byte) i);
         }
 
         this.islands = new ArrayList<>(12);
@@ -48,7 +53,7 @@ public class Game {
         this.currentPlayer = players.get(rand.nextInt(numberOfPlayers));
         this.currentPhase = false;
         this.currentActionPhase = 0;
-        this.roundIndex = 0;
+
     }
 
     private void checkMerge(Island island) {
@@ -68,34 +73,36 @@ public class Game {
     }
 
     public void nextPlayer() {
-        if (currentPhase){
-            int index=(currentPlayer.getWizard().ordinal()+1) %4;
-            for(Wizard w: Wizard.values()) {
-                if(w.ordinal() == index) {
-                    for(Player p: players ){
+        if (currentPhase) {
+
+            int index = (currentPlayer.getWizard().ordinal() + 1) % players.size();
+            for (Wizard w : Wizard.values()) {
+                if (w.ordinal() == index) {
+                    for (Player p : players) {
                         if (p.getWizard().equals(w))
-                            currentPlayer=p;
+                            currentPlayer = p;
                     }
                 }
+
             }
-        }
-        else{
-            currentPlayer= players.get(players.indexOf(currentPlayer)+1);
+        } else {
+            currentPlayer = players.get((players.indexOf(currentPlayer) + 1) % players.size());
 
         }
     }
 
     public void nextActionPhase() {
-        this.currentActionPhase=(byte) ((this.currentActionPhase+1)%3 +1);
+        this.currentActionPhase = (byte) ((this.currentActionPhase + 1) % 3 + 1);
 
     }
 
+    //sort the array if the nextPhase is the action phase, anyway set the current player to the first of the array
     public void nextPhase() {
         this.currentPhase = !currentPhase;
-        if(currentPhase){
-            players.sort(Comparator.comparingInt((Player p) -> (p).getPlayedCard().getValue()));
+        if (!currentPhase) {
+            playerOrder.sort(Comparator.comparingInt((Byte b) -> players.get(b).getPlayedCard().getValue()));
         }
-        currentPlayer=players.get(0);
+        currentPlayer = players.get(playerOrder.get(0));
     }
 
     public Player getCurrentPlayer() {
@@ -115,7 +122,7 @@ public class Game {
     }
 
     public Player calculateInfluence() {
-        return null;
+        return calculateInfluence((Island) islands.get(motherNaturePosition));
     }
 
     public void calculateProfessor(boolean characterEffect) {
