@@ -6,22 +6,25 @@ public class Game {
     //professors are handled as a 5 player array: professors[i]=j means that professor i (it follows the ordinal of enum) is
     //controlled by the player j
     private Player[] professors;
-    //all players
+    //all players: this array is also used to represent the order of round
     private ArrayList<Player> players;
 
 
     private Player currentPlayer;
+    //current phase is true in the pianification phase, false during the action phase
     private boolean currentPhase;
+    /*it's a number that goes from 1 to 3 and it represent the sub-section of the actione phase
+    1-move 3 students; 2-move mother nature(calculate influence and merge); 3-drawstudent from cloud*/
     private byte currentActionPhase;
     private byte roundIndex;
-    private ArrayList<Player> roundOrder;
     private byte motherNaturePosition;
+
     //a reference to all the pieces contained in the game
     private ArrayList<GameComponent> islands;
     private GameComponent bag;
     private ArrayList<GameComponent> clouds;
 
-    public Game(byte numberOfPlayers, List<Wizard> wizards, List<String> nicknames){
+    public Game(byte numberOfPlayers, List<Wizard> wizards, List<String> nicknames) {
         Random rand = new Random(System.currentTimeMillis());
         this.professors = new Player[5];
 
@@ -35,10 +38,10 @@ public class Game {
             islands.add(new Island());
         }
 
-        this.bag=new Bag();
+        this.bag = new Bag();
 
-        this.clouds=new ArrayList<>(numberOfPlayers);
-        for (int i=0;i<numberOfPlayers;i++)
+        this.clouds = new ArrayList<>(numberOfPlayers);
+        for (int i = 0; i < numberOfPlayers; i++)
             clouds.add(new Cloud(numberOfPlayers));
 
         this.motherNaturePosition = (byte) rand.nextInt(12);
@@ -48,36 +51,80 @@ public class Game {
         this.roundIndex = 0;
     }
 
-    private void checkMerge(Island island){}
+    private void checkMerge(Island island) {
+    }
 
 
-    public void drawStudents(GameComponent gameComponent, byte students){}
+    public void drawStudents(GameComponent gameComponent, byte students) {
+    }
 
-    public void moveMotherNature(int moves){
+    public void moveMotherNature(int moves) {
         motherNaturePosition += moves;
         motherNaturePosition %= islands.size();
     }
 
-    public void playCard(Player player,Card card){
+    public void playCard(Player player, Card card) {
         //function to play card
     }
 
-    public void nextPlayer() {}
-    public void nextActionPhase(){}
-    public void nextPhase(){}
-    public Player calculateInfluence(Island island){ return null;}
-    public Player calculateInfluence (){return null;}
-    public void calculateProfessor(boolean characterEffect){}
-    public void endGame(){}
-    public void endGame(Player player){}
+    public void nextPlayer() {
+        if (currentPhase){
+            int index=(currentPlayer.getWizard().ordinal()+1) %4;
+            for(Wizard w: Wizard.values()) {
+                if(w.ordinal() == index) {
+                    for(Player p: players ){
+                        if (p.getWizard().equals(w))
+                            currentPlayer=p;
+                    }
+                }
+            }
+        }
+        else{
+            currentPlayer= players.get(players.indexOf(currentPlayer)+1);
+
+        }
+    }
+
+    public void nextActionPhase() {
+        this.currentActionPhase=(byte) ((this.currentActionPhase+1)%3 +1);
+
+    }
+
+    public void nextPhase() {
+        this.currentPhase = !currentPhase;
+        if(currentPhase){
+            players.sort(Comparator.comparingInt((Player p) -> (p).getPlayedCard().getValue()));
+        }
+        currentPlayer=players.get(0);
+    }
 
     public Player getCurrentPlayer() {
+
         return currentPlayer;
     }
-    public boolean getPhase(){
+
+    public boolean getPhase() {
 
 
         return currentPhase;
+    }
+
+
+    public Player calculateInfluence(Island island) {
+        return null;
+    }
+
+    public Player calculateInfluence() {
+        return null;
+    }
+
+    public void calculateProfessor(boolean characterEffect) {
+    }
+
+    public void endGame() {
+    }
+
+    public void endGame(Player player) {
     }
 
 
