@@ -72,8 +72,11 @@ public class NormalGame implements Game{
     public void drawStudents(GameComponent gameComponent, byte students) {
     }
 
-    public void playCard(Player player, Card card) {
-        //function to play card
+
+
+    public void playCard(byte card) {
+        //TODO function to play card
+
     }
 
     public Player getCurrentPlayer() {
@@ -118,7 +121,7 @@ public class NormalGame implements Game{
     }
 
     public void calculateInfluence(Island island) {
-        if(island.getProhibition) {
+        if(island.getProhibition()) {
             island.setProhibition(false);
         } else {
 
