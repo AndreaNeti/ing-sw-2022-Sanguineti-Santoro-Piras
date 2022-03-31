@@ -7,17 +7,17 @@ import java.util.*;
 
 public class NormalGame implements Game{
     //a reference to all the pieces contained in the game
-    private Bag bag;
-    private ArrayList<GameComponent> islands;
-    private ArrayList<GameComponent> clouds;
+    private final Bag bag;
+    private final ArrayList<GameComponent> islands;
+    private final ArrayList<GameComponent> clouds;
     //professors are handled as a 5 player array: professors[i]=j means that professor i (it follows the ordinal of enum) is
     //controlled by the player j
-    private Player[] professors;
-    private ArrayList<Team> teams;
+    private final Player[] professors;
+    private final ArrayList<Team> teams;
     //all players
-    private ArrayList<Player> players;
+    private final ArrayList<Player> players;
     // This array is also used to represent the order of round
-    private ArrayList<Byte> playerOrder;
+    private final ArrayList<Byte> playerOrder;
     private byte motherNaturePosition;
     private Player currentPlayer;
     //current phase is true in the planification phase, false during the action phase
@@ -62,6 +62,7 @@ public class NormalGame implements Game{
     }
 
     private void checkMerge(Island island) {
+
     }
 
     public void move(Color color, int idGameComponent) {
@@ -117,14 +118,39 @@ public class NormalGame implements Game{
     }
 
     public void calculateInfluence(Island island) {
+        if(island.getProhibition) {
+            island.setProhibition(false);
+        } else {
 
+            for (Color c: Color.values()) {
+                island.getStudentSize();
+            }
+        }
     }
 
     public void calculateInfluence() {
         calculateInfluence((Island) islands.get(motherNaturePosition));
     }
 
-    public void calculateProfessor(boolean characterEffect) {
+    // compares for each color the lunchhall of each player and then puts the player with the most students
+    // in the professor array slot of the current color
+    public void calculateProfessor() {
+        byte max;
+        // player with the maximum number of students for the current color
+        Player maxP;
+        for (Color c: Color.values()) {
+            max = 0;
+            maxP = null;
+            for (Player p: players) {
+                if(p.getLunchHall().getStudentSize(c) > max) {
+                    max = p.getLunchHall().getStudentSize(c);
+                    maxP = p;
+                }
+                if(maxP != null) {
+                    professors[c.ordinal()] = maxP;
+                }
+            }
+        }
     }
 
     public void endGame() {
