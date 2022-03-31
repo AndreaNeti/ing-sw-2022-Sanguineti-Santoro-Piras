@@ -48,10 +48,10 @@ public class NormalGame implements Game{
 
         this.players = new ArrayList<>(numberOfPlayers);
         this.playerOrder = new ArrayList<>(numberOfPlayers);
-        for (int i = 0; i < numberOfPlayers; i++) {
+        /*for (int i = 0; i < numberOfPlayers; i++) {
             players.add(new Player(wizards.get(i), (byte) (numberOfPlayers == 3 ? 6 : 8), nicknames.get(i)));
             playerOrder.add((byte) i);
-        }
+        }*/
 
         this.motherNaturePosition = (byte) rand.nextInt(12);
         this.currentPlayer = players.get(rand.nextInt(numberOfPlayers));
