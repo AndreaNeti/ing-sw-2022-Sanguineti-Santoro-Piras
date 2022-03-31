@@ -1,9 +1,11 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.exceptions.NotExpertGameException;
+
 public interface Game {
     void move (Color color, int idGameComponent);
     void drawStudents(GameComponent bag, byte number);
-    boolean playCard(byte card);
+    void playCard(byte card);
     Player getCurrentPlayer();
     void moveMotherNature(int moves);
     void nextPlayer();
@@ -17,7 +19,7 @@ public interface Game {
     void nextActionPhase();
     void refillClouds();
     void setLastRound();
-    void setCharacterInput(int input);
-    void chooseCharacter(int indexCharacter);
-    void playCharacter();
+    void setCharacterInput(int input) throws NotExpertGameException;
+    void chooseCharacter(int indexCharacter) throws NotExpertGameException;
+    void playCharacter() throws NotExpertGameException;
 }

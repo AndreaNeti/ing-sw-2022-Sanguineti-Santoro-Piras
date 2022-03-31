@@ -113,13 +113,18 @@ public class ExpertGame implements Game {
     }
 
     @Override
-    public boolean playCard(byte card) {
-        return normalGame.playCard(card);
+    public void playCard(byte card) {
+        normalGame.playCard(card);
     }
 
     @Override
-    public void moveNotherNatur(int moves) {
-        normalGame.moveNotherNatur(moves);
+    public void endGame() {
+        normalGame.endGame();
+    }
+
+    @Override
+    public void endGame(Team team) {
+        normalGame.endGame(team);
     }
 
     @Override
@@ -150,6 +155,42 @@ public class ExpertGame implements Game {
     @Override
     public void calculateInfluence(Island island) {
         normalGame.calculateInfluence(island);
+    }
+
+    @Override
+    public void moveMotherNature(int moves) {
+        //TODO controllare il boolean di extra steps
+        normalGame.moveMotherNature(moves);
+    }
+
+    @Override
+    public void calculateProfessor() {
+        //TODO vedere come gestire il boolean
+        normalGame.calculateProfessor();
+    }
+
+    @Override
+    public void refillClouds() {
+        normalGame.refillClouds();
+    }
+    @Override
+    public void setLastRound() {
+        normalGame.setLastRound();
+    }
+
+    @Override
+    public void setCharacterInput(int input) {
+        //TODO implementare setCharacterInput
+    }
+
+    @Override
+    public void chooseCharacter(int indexCharacter) throws NotExpertGameException {
+        //TODO implementare chooseCharacter
+    }
+
+    @Override
+    public void playCharacter() throws NotExpertGameException {
+        //TODO implementare playCharacter
     }
 
     private void addCoinsToPlayer(ExpertPlayer player, byte coins) throws NotEnoughCoinsException {
