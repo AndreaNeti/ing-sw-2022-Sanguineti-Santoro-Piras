@@ -4,17 +4,10 @@ import it.polimi.ingsw.model.ExpertGame;
 
 public class Char4 implements CharacterCard {
 
-    private byte nInput = 0;
-    private byte prohibitionsLeft = 4;
-    private final ExpertGame game;
-
-    public Char4(ExpertGame game) {
-        this.game = game;
-    }
 
     @Override
-    public void play() {
-        prohibitionsLeft--;
+    public void play(ExpertGame game) {
+
     }
 
     @Override
@@ -23,22 +16,12 @@ public class Char4 implements CharacterCard {
     }
 
     @Override
-    public void reset() {
-        nInput = 0;
-    }
-
-    @Override
-    public void setInput(int input) {
-
-    }
-
-    @Override
     public int getId() {
         return 4;
     }
 
     @Override
-    public boolean canPlay() {
+    public boolean canPlay(int nInput) {
         return nInput == 1;
     }
 

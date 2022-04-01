@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Team {
-    private HouseColor houseColor;
+    private final HouseColor houseColor;
     private byte towersLeft;
     private final List<Player> members;
     private final byte teamSize;

@@ -4,14 +4,8 @@ import it.polimi.ingsw.model.ExpertGame;
 
 public class Char1 implements CharacterCard {
 
-    private final ExpertGame game;
-
-    public Char1(ExpertGame game) {
-        this.game = game;
-    }
-
     @Override
-    public void play() {
+    public void play(ExpertGame game) {
 
     }
 
@@ -21,20 +15,12 @@ public class Char1 implements CharacterCard {
     }
 
     @Override
-    public void reset() {}
-
-    @Override
-    public void setInput(int input) {
-
-    }
-
-    @Override
     public int getId() {
         return 1;
     }
 
     @Override
-    public boolean canPlay() {
+    public boolean canPlay(int nInput) {
         return true;
     }
 

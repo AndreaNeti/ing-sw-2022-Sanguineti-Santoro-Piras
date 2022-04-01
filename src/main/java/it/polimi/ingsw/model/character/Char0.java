@@ -5,17 +5,9 @@ import it.polimi.ingsw.model.GameComponent;
 
 public class Char0 extends GameComponent implements CharacterCard {
 
-    private byte nInput = 0;
-    private final ExpertGame game;
-
-    public Char0(ExpertGame game) {
-        super();
-        this.game = game;
-        /*Bag.getBag().drawStudent(this, 4);*/
-    }
-
     @Override
-    public void play() {
+    public void play(ExpertGame game) {
+
     }
 
     @Override
@@ -24,22 +16,12 @@ public class Char0 extends GameComponent implements CharacterCard {
     }
 
     @Override
-    public void reset() {
-        nInput = 0;
-    }
-
-    @Override
-    public void setInput(int input) {
-
-    }
-
-    @Override
     public int getId() {
         return 0;
     }
 
     @Override
-    public boolean canPlay() {
+    public boolean canPlay(int nInput) {
         return nInput == 1;
     }
 

@@ -3,14 +3,8 @@ package it.polimi.ingsw.model.character;
 import it.polimi.ingsw.model.ExpertGame;
 
 public class Char5 implements CharacterCard {
-    private final ExpertGame game;
-
-    public Char5(ExpertGame game) {
-        this.game = game;
-    }
-
     @Override
-    public void play() {
+    public void play(ExpertGame game) {
 
     }
 
@@ -20,21 +14,12 @@ public class Char5 implements CharacterCard {
     }
 
     @Override
-    public void reset() {
-    }
-
-    @Override
-    public void setInput(int input) {
-
-    }
-
-    @Override
     public int getId() {
         return 5;
     }
 
     @Override
-    public boolean canPlay() {
+    public boolean canPlay(int nInput) {
         return true;
     }
 
