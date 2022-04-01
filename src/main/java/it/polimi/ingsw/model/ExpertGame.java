@@ -1,17 +1,16 @@
 package it.polimi.ingsw.model;
 
-import it.polimi.ingsw.exceptions.*;
+import it.polimi.ingsw.exceptions.NotEnoughCoinsException;
+import it.polimi.ingsw.exceptions.NotExpertGameException;
 import it.polimi.ingsw.model.character.*;
 
-
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
 public class ExpertGame implements Game {
     private Game normalGame;
     private byte coinsLeft;
-    private CharacterCard[] characters;
+    private final CharacterCard[] characters;
     private boolean[] playedCharacters;
 
     private boolean extraInfluence; //default false
@@ -70,29 +69,35 @@ public class ExpertGame implements Game {
 
         switch (i) {
             case 0:
-                return new Char0(this);
+                Char0 c0 = new Char0();
+                normalGame.drawStudents(c0, (byte) 4);
+                return c0;
             case 1:
-                return new Char1(this);
+                return new Char1();
             case 2:
-                return new Char2(this);
+                return new Char2();
             case 3:
-                return new Char3(this);
+                return new Char3();
             case 4:
-                return new Char4(this);
+                return new Char4();
             case 5:
-                return new Char5(this);
+                return new Char5();
             case 6:
-                return new Char6(this);
+                Char6 c6 = new Char6();
+                normalGame.drawStudents(c6, (byte) 6);
+                return c6;
             case 7:
-                return new Char7(this);
+                return new Char7();
             case 8:
-                return new Char8(this);
+                return new Char8();
             case 9:
-                return new Char9(this);
+                return new Char9();
             case 10:
-                return new Char10(this);
+                Char10 c10 = new Char10();
+                normalGame.drawStudents(c10, (byte) 6);
+                return c10;
             case 11:
-                return new Char11(this);
+                return new Char11();
         }
         return null;
     }
@@ -173,6 +178,7 @@ public class ExpertGame implements Game {
     public void refillClouds() {
         normalGame.refillClouds();
     }
+
     @Override
     public void setLastRound() {
         normalGame.setLastRound();
