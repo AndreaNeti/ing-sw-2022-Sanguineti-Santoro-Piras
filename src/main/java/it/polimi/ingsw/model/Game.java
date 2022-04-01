@@ -14,7 +14,6 @@ public interface Game {
     boolean getPhase();
     void nextPhase();
     void calculateInfluence(Island island);
-    void calculateInfluence();
     void calculateProfessor();
     void endGame();
     void endGame(Team team);
@@ -27,6 +26,6 @@ public interface Game {
     void checkMerge(Island island);
     ArrayList<Player> getPlayers();
     ArrayList<Team> getTeams();
-
-     Player [] getprofessor();
+    
+     Player [] getProfessor();
 }

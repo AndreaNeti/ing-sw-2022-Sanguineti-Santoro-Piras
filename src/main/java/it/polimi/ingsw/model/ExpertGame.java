@@ -79,29 +79,35 @@ public class ExpertGame implements Game {
 
         switch (i) {
             case 0:
-                return new Char0(this);
+                Char0 c0 = new Char0();
+                normalGame.drawStudents(c0, (byte) 4);
+                return c0;
             case 1:
-                return new Char1(this);
+                return new Char1();
             case 2:
-                return new Char2(this);
+                return new Char2();
             case 3:
-                return new Char3(this);
+                return new Char3();
             case 4:
-                return new Char4(this);
+                return new Char4();
             case 5:
-                return new Char5(this);
+                return new Char5();
             case 6:
-                return new Char6(this);
+                Char6 c6 = new Char6();
+                normalGame.drawStudents(c6, (byte) 6);
+                return c6;
             case 7:
-                return new Char7(this);
+                return new Char7();
             case 8:
-                return new Char8(this);
+                return new Char8();
             case 9:
-                return new Char9(this);
+                return new Char9();
             case 10:
-                return new Char10(this);
+                Char10 c10 = new Char10();
+                normalGame.drawStudents(c10, (byte) 6);
+                return c10;
             case 11:
-                return new Char11(this);
+                return new Char11();
         }
         return null;
     }
@@ -157,10 +163,33 @@ public class ExpertGame implements Game {
     }
 
     @Override
-    public void calculateInfluence() {
-
-
+    public void setLastRound() {
+        normalGame.setLastRound();
     }
+
+    @Override
+    public void checkMerge(Island island) {
+        normalGame.checkMerge(island);
+    }
+    @Override
+    public ArrayList<Player> getPlayers() {
+        return normalGame.getPlayers();
+    }
+    @Override
+    public ArrayList<Team> getTeams() {
+        return normalGame.getTeams();
+    }
+    @Override
+    public Player[] getProfessor() {
+        return normalGame.getProfessor();
+    }
+    @Override
+    public void refillClouds() {
+        normalGame.refillClouds();
+    }
+
+
+    //calculate expertInfluence(it checks all the boolean) and then calls checkMerge
 
     @Override
     public void calculateInfluence(Island island) {
@@ -179,41 +208,47 @@ public class ExpertGame implements Game {
                 for(Color c: Color.values()){
                     if(c != ignoredColorInfluence){
                         for(Player p: t.getPlayers()){
-                            if(p.equals(normalGame.getprofessor()[c.ordinal()]))
+                            if(p.equals(normalGame.getProfessor()[c.ordinal()]))
                                 influence += island.getStudentSize(c);
                         }
                     }
                 }
                 if(island.getTeam()!=null && towerInfluence && t.equals(island.getTeam()))
-                        influence += island.getNumber();
+                    influence += island.getNumber();
                 if(extraInfluence && normalGame.getCurrentPlayer().getTeam().equals(t))
-                influence += 2;
+                    influence += 2;
                 if(influence > maxInfluence){
                     winner = t;
                     maxInfluence = influence;
                 }
             }
             Team oldTeam=island.getTeam();
-            if(!oldTeam.equals(winner))
+            if(oldTeam==null ||!oldTeam.equals(winner))
                 island.setTeam(winner);
 
 
-            //TODO aggiungere le torri al team perdente e toglierle da quello vincente
-            /*oldTeam.addTowers(island);
+
             try{
-                winner.removeTower(island.getNumber())
-            }catch(NoMoreTowers ex) {
-                endGame(Team);
-            }*/
+                oldTeam.addTowers(island.getNumber());
+            }catch (NotAllowedException ex){
+                System.err.println(ex.getErrorMessage());
+            }
+            try{
+                winner.removeTowers(island.getNumber());
+            }catch(WinnerException ex) {
+                endGame(winner);
+            }
+
+            normalGame.checkMerge(island);
 
         }
     }
+
 
     @Override
     public void moveMotherNature(int moves) {
         //TODO controllare il boolean di extra steps
         normalGame.moveMotherNature(moves);
-
     }
 
     @Override
@@ -221,51 +256,6 @@ public class ExpertGame implements Game {
         //TODO vedere come gestire il boolean
         normalGame.calculateProfessor();
     }
-
-    @Override
-    public void refillClouds() {
-        normalGame.refillClouds();
-    }
-    @Override
-    public void setLastRound() {
-        normalGame.setLastRound();
-    }
-
-    @Override
-    public void setCharacterInput(int input) {
-        //TODO implementare setCharacterInput
-    }
-
-    @Override
-    public void chooseCharacter(int indexCharacter) throws NotExpertGameException {
-        //TODO implementare chooseCharacter
-    }
-
-    @Override
-    public void playCharacter() throws NotExpertGameException {
-        //TODO implementare playCharacter
-    }
-
-    @Override
-    public void checkMerge(Island island) {
-        normalGame.checkMerge(island);
-    }
-
-    @Override
-    public ArrayList<Player> getPlayers() {
-        return normalGame.getPlayers();
-    }
-
-    @Override
-    public ArrayList<Team> getTeams() {
-        return normalGame.getTeams();
-    }
-
-    @Override
-    public Player[] getprofessor() {
-        return normalGame.getprofessor();
-    }
-
 
     private void addCoinsToPlayer(Player player, byte coins) throws NotEnoughCoinsException {
         if (coinsLeft == 0) throw new NotEnoughCoinsException();
@@ -278,50 +268,57 @@ public class ExpertGame implements Game {
         }
 
     }
+    private void addCoins(byte coins)  {
+        this.coinsLeft += coins;
+    }
+
+    @Override
+    public void playCharacter() throws NotExpertGameException {
+        //TODO implementare playCharacter
+    }
+
+    @Override
+    public void chooseCharacter(int indexCharacter) throws NotExpertGameException {
+        //TODO implementare chooseCharacter
+    }
+
+    @Override
+    public void setCharacterInput(int input) {
+        //TODO implementare setCharacterInput
+    }
 
     public CharacterCard getCharacter(int index) {
         return characters[index];
     }
 
-    private void addCoins(byte coins)  {
-        this.coinsLeft += coins;
-    }
-
-    public boolean isExtraInfluence() {
+    public boolean getExtraInfluence() {
         return extraInfluence;
     }
-
     public void setExtraInfluence(boolean extraInfluence) {
         this.extraInfluence = extraInfluence;
     }
-
     public boolean isTowerInfluence() {
         return towerInfluence;
     }
-
     public void setTowerInfluence(boolean towerInfluence) {
         this.towerInfluence = towerInfluence;
     }
-
     public boolean isExtraSteps() {
         return extraSteps;
     }
-
     public void setExtraSteps(boolean extraSteps) {
         this.extraSteps = extraSteps;
     }
-
     public Color getIgnoredColorInfluence() {
         return ignoredColorInfluence;
     }
-
     public void setIgnoredColorInfluence(Color ignoredColorInfluence) {
         this.ignoredColorInfluence = ignoredColorInfluence;
     }
-
-
-
-    public void restoreProhibition(){
+    private void restoreProhibition(){
         this.prohibitionLeft++;
+        if(this.prohibitionLeft>4){
+            this.prohibitionLeft=4;
+        }
     }
 }

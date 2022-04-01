@@ -138,9 +138,7 @@ public class NormalGame implements Game{
         }*/
     }
 
-    public void calculateInfluence() {
-        calculateInfluence((Island) islands.get(motherNaturePosition));
-    }
+
 
     // compares for each color the lunchhall of each player and then puts the player with the most students
     // in the professor array slot of the current color
@@ -206,7 +204,7 @@ public class NormalGame implements Game{
     }
 
     @Override
-    public Player[] getprofessor() {
+    public Player[] getProfessor() {
         return professors;
     }
 
