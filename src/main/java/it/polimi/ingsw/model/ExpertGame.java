@@ -1,11 +1,12 @@
 package it.polimi.ingsw.model;
 
-import it.polimi.ingsw.exceptions.*;
+import it.polimi.ingsw.exceptions.EndGameException;
+import it.polimi.ingsw.exceptions.NotAllowedException;
+import it.polimi.ingsw.exceptions.NotEnoughCoinsException;
+import it.polimi.ingsw.exceptions.NotExpertGameException;
 import it.polimi.ingsw.model.character.*;
 
-
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
 public class ExpertGame implements Game {
@@ -34,11 +35,11 @@ public class ExpertGame implements Game {
             System.err.println("Game cannot be null");
 
 
-        int numberOfPlayers=normalGame.getPlayers().size();
-        this.coinsLeft = (byte) (20-numberOfPlayers);
-        this.coinsPlayer=new byte[numberOfPlayers];
-        for(byte i=0; i<numberOfPlayers;i++)
-            coinsPlayer[i]=1;
+        int numberOfPlayers = normalGame.getPlayers().size();
+        this.coinsLeft = (byte) (20 - numberOfPlayers);
+        this.coinsPlayer = new byte[numberOfPlayers];
+        for (byte i = 0; i < numberOfPlayers; i++)
+            coinsPlayer[i] = 1;
 
         characters = new CharacterCard[3];
         Random rand = new Random(System.currentTimeMillis());
@@ -118,8 +119,8 @@ public class ExpertGame implements Game {
     }
 
     @Override
-    public void drawStudents(GameComponent bag, byte number) {
-        normalGame.drawStudents(bag, number);
+    public void drawStudents(GameComponent gameComponent, byte number) {
+        normalGame.drawStudents(gameComponent, number);
     }
 
     @Override
@@ -171,18 +172,22 @@ public class ExpertGame implements Game {
     public void checkMerge(Island island) {
         normalGame.checkMerge(island);
     }
+
     @Override
     public ArrayList<Player> getPlayers() {
         return normalGame.getPlayers();
     }
+
     @Override
     public ArrayList<Team> getTeams() {
         return normalGame.getTeams();
     }
+
     @Override
     public Player[] getProfessor() {
         return normalGame.getProfessor();
     }
+
     @Override
     public void refillClouds() {
         normalGame.refillClouds();
@@ -194,48 +199,45 @@ public class ExpertGame implements Game {
     @Override
     public void calculateInfluence(Island island) {
         //prohibition is handled by prohibitionsLeft
-        if(island.getProhibition()) {
+        if (island.getProhibition()) {
             island.setProhibition(false);
             restoreProhibition();
-        }
+        } else {
 
-        else{
-
-            int maxInfluence  = 0;
+            int maxInfluence = 0;
             Team winner = null;
             for (Team t : normalGame.getTeams()) {
                 int influence = 0;
-                for(Color c: Color.values()){
-                    if(c != ignoredColorInfluence){
-                        for(Player p: t.getPlayers()){
-                            if(p.equals(normalGame.getProfessor()[c.ordinal()]))
+                for (Color c : Color.values()) {
+                    if (c != ignoredColorInfluence) {
+                        for (Player p : t.getPlayers()) {
+                            if (p.equals(normalGame.getProfessor()[c.ordinal()]))
                                 influence += island.getStudentSize(c);
                         }
                     }
                 }
-                if(island.getTeam()!=null && towerInfluence && t.equals(island.getTeam()))
+                if (island.getTeam() != null && towerInfluence && t.equals(island.getTeam()))
                     influence += island.getNumber();
-                if(extraInfluence && normalGame.getCurrentPlayer().getTeam().equals(t))
+                if (extraInfluence && normalGame.getCurrentPlayer().getTeam().equals(t))
                     influence += 2;
-                if(influence > maxInfluence){
+                if (influence > maxInfluence) {
                     winner = t;
                     maxInfluence = influence;
                 }
             }
-            Team oldTeam=island.getTeam();
-            if(oldTeam==null ||!oldTeam.equals(winner))
+            Team oldTeam = island.getTeam();
+            if (oldTeam == null || !oldTeam.equals(winner))
                 island.setTeam(winner);
 
 
-
-            try{
+            try {
                 oldTeam.addTowers(island.getNumber());
-            }catch (NotAllowedException ex){
+            } catch (NotAllowedException ex) {
                 System.err.println(ex.getErrorMessage());
             }
-            try{
+            try {
                 winner.removeTowers(island.getNumber());
-            }catch(WinnerException ex) {
+            } catch (EndGameException ex) {
                 endGame(winner);
             }
 
@@ -260,15 +262,16 @@ public class ExpertGame implements Game {
     private void addCoinsToPlayer(Player player, byte coins) throws NotEnoughCoinsException {
         if (coinsLeft == 0) throw new NotEnoughCoinsException();
         else if (coinsLeft < coins) {
-            coinsPlayer[getPlayers().indexOf(player)] +=coinsLeft;
+            coinsPlayer[getPlayers().indexOf(player)] += coinsLeft;
             coinsLeft = 0;
         } else {
-            coinsPlayer[getPlayers().indexOf(player)] +=coins;
+            coinsPlayer[getPlayers().indexOf(player)] += coins;
             coinsLeft -= coins;
         }
 
     }
-    private void addCoins(byte coins)  {
+
+    private void addCoins(byte coins) {
         this.coinsLeft += coins;
     }
 
@@ -294,31 +297,39 @@ public class ExpertGame implements Game {
     public boolean getExtraInfluence() {
         return extraInfluence;
     }
+
     public void setExtraInfluence(boolean extraInfluence) {
         this.extraInfluence = extraInfluence;
     }
+
     public boolean isTowerInfluence() {
         return towerInfluence;
     }
+
     public void setTowerInfluence(boolean towerInfluence) {
         this.towerInfluence = towerInfluence;
     }
+
     public boolean isExtraSteps() {
         return extraSteps;
     }
+
     public void setExtraSteps(boolean extraSteps) {
         this.extraSteps = extraSteps;
     }
+
     public Color getIgnoredColorInfluence() {
         return ignoredColorInfluence;
     }
+
     public void setIgnoredColorInfluence(Color ignoredColorInfluence) {
         this.ignoredColorInfluence = ignoredColorInfluence;
     }
-    private void restoreProhibition(){
+
+    private void restoreProhibition() {
         this.prohibitionLeft++;
-        if(this.prohibitionLeft>4){
-            this.prohibitionLeft=4;
+        if (this.prohibitionLeft > 4) {
+            this.prohibitionLeft = 4;
         }
     }
 }

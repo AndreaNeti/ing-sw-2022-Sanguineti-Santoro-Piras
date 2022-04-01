@@ -1,18 +1,17 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.exceptions.EndGameException;
 import it.polimi.ingsw.exceptions.NotAllowedException;
-import it.polimi.ingsw.exceptions.WinnerException;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 public class Team {
     private final HouseColor houseColor;
-    private byte towersLeft;
     private final ArrayList<Player> members;
     private final byte teamSize;
     private final byte maxTowers;
+    private byte towersLeft;
 
     public Team(HouseColor hc, byte teamSize, byte maxTowers) {
         this.houseColor = hc;
@@ -47,7 +46,7 @@ public class Team {
 
     public void movePlayer(Player p, Team t) throws NotAllowedException {
         if (p != null && t != null) {
-            if(!this.getPlayers().contains(p)){
+            if (!this.getPlayers().contains(p)) {
                 throw new NotAllowedException("PlayerNotPresent");
             }
             t.addPlayer(p);
@@ -73,12 +72,11 @@ public class Team {
         }
     }
 
-    public void removeTowers(byte b) throws WinnerException {
+    public void removeTowers(byte b) throws EndGameException {
         if (b < 0) System.err.println("Cannot remove negative towers");
         else if (b > 0) {
             towersLeft -= b;
-
-            if (towersLeft <= 0) throw new WinnerException();
+            if (towersLeft <= 0) throw new EndGameException();
         }
     }
 

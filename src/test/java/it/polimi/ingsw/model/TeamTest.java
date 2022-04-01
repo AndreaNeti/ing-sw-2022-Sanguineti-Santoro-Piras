@@ -1,7 +1,7 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.exceptions.EndGameException;
 import it.polimi.ingsw.exceptions.NotAllowedException;
-import it.polimi.ingsw.exceptions.WinnerException;
 import org.junit.jupiter.api.Test;
 
 import java.net.Socket;
@@ -76,11 +76,11 @@ class TeamTest {
         try{
             t.removeTowers((byte) 3);
             t.addTowers((byte) 2);
-        }catch (NotAllowedException | WinnerException ex1){
+        }catch (NotAllowedException | EndGameException ex1){
             fail();
         }
         assertEquals(t.getTowersLeft(),5);
-        assertThrows(WinnerException.class,()->t.removeTowers((byte)10),
+        assertThrows(EndGameException.class,()->t.removeTowers((byte)10),
                 "tower <=0, should launch winner exception");
     }
 }
