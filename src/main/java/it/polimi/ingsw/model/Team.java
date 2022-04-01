@@ -1,15 +1,16 @@
 package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.exceptions.NotAllowedException;
-import it.polimi.ingsw.exceptions.EndGameException;
+import it.polimi.ingsw.exceptions.WinnerException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Team {
     private final HouseColor houseColor;
     private byte towersLeft;
-    private final List<Player> members;
+    private final ArrayList<Player> members;
     private final byte teamSize;
     private final byte maxTowers;
 
@@ -21,7 +22,7 @@ public class Team {
         this.towersLeft = maxTowers;
     }
 
-    public List<Player> getPlayers() {
+    public ArrayList<Player> getPlayers() {
         return this.members;
     }
 
@@ -46,6 +47,9 @@ public class Team {
 
     public void movePlayer(Player p, Team t) throws NotAllowedException {
         if (p != null && t != null) {
+            if(!this.getPlayers().contains(p)){
+                throw new NotAllowedException("PlayerNotPresent");
+            }
             t.addPlayer(p);
             removePlayer(p);
         } else
@@ -63,16 +67,31 @@ public class Team {
     public void addTowers(byte b) throws NotAllowedException {
         if (b < 0) System.err.println("Cannot add negative towers");
         else if (b > 0) {
+
             if (towersLeft + b > maxTowers) throw new NotAllowedException("Max towers exceeded");
             towersLeft += b;
         }
     }
 
-    public void removeTowers(byte b) throws EndGameException {
+    public void removeTowers(byte b) throws WinnerException {
         if (b < 0) System.err.println("Cannot remove negative towers");
         else if (b > 0) {
             towersLeft -= b;
-            if (towersLeft <= 0) throw new EndGameException();
+
+            if (towersLeft <= 0) throw new WinnerException();
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Team)) return false;
+        Team team = (Team) o;
+        return teamSize == team.teamSize && maxTowers == team.maxTowers && houseColor == team.houseColor;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(houseColor, teamSize, maxTowers);
     }
 }

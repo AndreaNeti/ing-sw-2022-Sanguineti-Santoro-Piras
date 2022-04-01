@@ -15,7 +15,7 @@ public abstract class GameComponent {
     }
 
     private void removeStudents(Color color, byte number) throws NotEnoughStudentsException {
-        if(students[color.ordinal()] > number)
+        if(students[color.ordinal()] >= number)
             students[color.ordinal()] -= number;
         else
             throw new NotEnoughStudentsException();
