@@ -61,8 +61,18 @@ public class NormalGame implements Game{
         this.lastRound = false;
     }
 
+    // checks if the islands before and after the selected island have the same team and in case merges them
     private void checkMerge(Island island) {
-
+        Island islandBefore = (Island)islands.get((islands.indexOf(island) - 1)%islands.size());
+        Island islandAfter = (Island)islands.get((islands.indexOf(island) + 1)%islands.size());
+            if(islandBefore.getTeam().equals(island.getTeam())) {
+                island.merge(islandBefore);
+                islands.remove(islandBefore);
+            }
+            if(islandAfter.getTeam().equals(island.getTeam())) {
+                island.merge(islandAfter);
+                islands.remove(islandAfter);
+            }
     }
 
     public void move(Color color, int idGameComponent) {
@@ -71,8 +81,6 @@ public class NormalGame implements Game{
 
     public void drawStudents(GameComponent gameComponent, byte students) {
     }
-
-
 
     public void playCard(byte card) {
         //TODO function to play card
@@ -115,18 +123,17 @@ public class NormalGame implements Game{
     public void nextPhase() {
         this.currentPhase = !currentPhase;
         if (!currentPhase) {
-            playerOrder.sort(Comparator.comparingInt((Byte b) -> players.get(b).getPlayedCard().getValue()));
+            playerOrder.sort(Comparator.comparingInt((Byte b) -> players.get(b).getPlayedCard()));
         }
         currentPlayer = players.get(playerOrder.get(0));
     }
 
     public void calculateInfluence(Island island) {
-        if(island.getProhibition()) {
-            island.setProhibition(false);
+        if(island.isProhibition()) {
+            island.setProhibition();
         } else {
-
             for (Color c: Color.values()) {
-                island.getStudentSize();
+                island.getStudentSize(c);
             }
         }
     }
@@ -167,7 +174,9 @@ public class NormalGame implements Game{
     }
 
     public void refillClouds() {
-
+        for (GameComponent cloud: this.clouds) {
+            bag.drawStudent(cloud, numberOfPlayers%2==0 ? 3 : 4);
+        }
     }
 
     public void setLastRound() {
