@@ -2,6 +2,8 @@ package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.exceptions.NotExpertGameException;
 
+import java.util.ArrayList;
+
 public interface Game {
     void move (Color color, int idGameComponent);
     void drawStudents(GameComponent bag, byte number);
@@ -22,4 +24,9 @@ public interface Game {
     void setCharacterInput(int input) throws NotExpertGameException;
     void chooseCharacter(int indexCharacter) throws NotExpertGameException;
     void playCharacter() throws NotExpertGameException;
+    void checkMerge(Island island);
+    ArrayList<Player> getPlayers();
+    ArrayList<Team> getTeams();
+
+     Player [] getprofessor();
 }

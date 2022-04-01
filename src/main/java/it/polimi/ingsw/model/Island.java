@@ -24,11 +24,11 @@ public class Island extends GameComponent{
         this.team = team;
     }
 
-    //merge function is used to send all its students on another island: the try catch block is due to the fact that an island knows
+    //merge function is used to send all the students from another island to this: the try catch block is due to the fact that an island knows
     //exactly how many students are present, and therefore it will never throw the exception
 
     public void merge(Island island){
-        byte[] students= getStudents();
+        byte[] students= island.getStudents();
 
         for (Color c: Color.values()) {
             try{
@@ -37,7 +37,7 @@ public class Island extends GameComponent{
                 System.out.println("qualcosa");
             }
         }
-        number += island.getNumber();
+        this.number += island.getNumber();
 
     }
     public byte getNumber() {
@@ -48,11 +48,11 @@ public class Island extends GameComponent{
         return super.getStudents()[c.ordinal()];
     }
 
-    public boolean isProhibition() {
+    public boolean getProhibition() {
         return prohibition;
     }
 
-    public void setProhibition() {
-        this.prohibition = !this.prohibition;
+    public void setProhibition(boolean value) {
+        this.prohibition = value;
     }
 }

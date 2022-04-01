@@ -10,7 +10,10 @@ import java.util.Random;
 
 public class ExpertGame implements Game {
     private Game normalGame;
+
     private byte coinsLeft;
+    private byte[] coinsPlayer;
+
     private CharacterCard[] characters;
     private boolean[] playedCharacters;
 
@@ -23,13 +26,19 @@ public class ExpertGame implements Game {
     private CharacterCard playedCharacter;
     private ArrayList<Integer> inputsCharacter;
 
+
     public ExpertGame(Game game) {
         if (game != null) {
             this.normalGame = game;
         } else
             System.err.println("Game cannot be null");
-        this.coinsLeft = 20;
 
+
+        int numberOfPlayers=normalGame.getPlayers().size();
+        this.coinsLeft = (byte) (20-numberOfPlayers);
+        this.coinsPlayer=new byte[numberOfPlayers];
+        for(byte i=0; i<numberOfPlayers;i++)
+            coinsPlayer[i]=1;
 
         characters = new CharacterCard[3];
         Random rand = new Random(System.currentTimeMillis());
@@ -149,18 +158,62 @@ public class ExpertGame implements Game {
 
     @Override
     public void calculateInfluence() {
-        normalGame.calculateInfluence();
+
+
     }
 
     @Override
     public void calculateInfluence(Island island) {
-        normalGame.calculateInfluence(island);
+        //prohibition is handled by prohibitionsLeft
+        if(island.getProhibition()) {
+            island.setProhibition(false);
+            restoreProhibition();
+        }
+
+        else{
+
+            int maxInfluence  = 0;
+            Team winner = null;
+            for (Team t : normalGame.getTeams()) {
+                int influence = 0;
+                for(Color c: Color.values()){
+                    if(c != ignoredColorInfluence){
+                        for(Player p: t.getPlayers()){
+                            if(p.equals(normalGame.getprofessor()[c.ordinal()]))
+                                influence += island.getStudentSize(c);
+                        }
+                    }
+                }
+                if(island.getTeam()!=null && towerInfluence && t.equals(island.getTeam()))
+                        influence += island.getNumber();
+                if(extraInfluence && normalGame.getCurrentPlayer().getTeam().equals(t))
+                influence += 2;
+                if(influence > maxInfluence){
+                    winner = t;
+                    maxInfluence = influence;
+                }
+            }
+            Team oldTeam=island.getTeam();
+            if(!oldTeam.equals(winner))
+                island.setTeam(winner);
+
+
+            //TODO aggiungere le torri al team perdente e toglierle da quello vincente
+            /*oldTeam.addTowers(island);
+            try{
+                winner.removeTower(island.getNumber())
+            }catch(NoMoreTowers ex) {
+                endGame(Team);
+            }*/
+
+        }
     }
 
     @Override
     public void moveMotherNature(int moves) {
         //TODO controllare il boolean di extra steps
         normalGame.moveMotherNature(moves);
+
     }
 
     @Override
@@ -193,13 +246,34 @@ public class ExpertGame implements Game {
         //TODO implementare playCharacter
     }
 
-    private void addCoinsToPlayer(ExpertPlayer player, byte coins) throws NotEnoughCoinsException {
+    @Override
+    public void checkMerge(Island island) {
+        normalGame.checkMerge(island);
+    }
+
+    @Override
+    public ArrayList<Player> getPlayers() {
+        return normalGame.getPlayers();
+    }
+
+    @Override
+    public ArrayList<Team> getTeams() {
+        return normalGame.getTeams();
+    }
+
+    @Override
+    public Player[] getprofessor() {
+        return normalGame.getprofessor();
+    }
+
+
+    private void addCoinsToPlayer(Player player, byte coins) throws NotEnoughCoinsException {
         if (coinsLeft == 0) throw new NotEnoughCoinsException();
         else if (coinsLeft < coins) {
-            player.addCoins(coinsLeft);
+            coinsPlayer[getPlayers().indexOf(player)] +=coinsLeft;
             coinsLeft = 0;
         } else {
-            player.addCoins(coins);
+            coinsPlayer[getPlayers().indexOf(player)] +=coins;
             coinsLeft -= coins;
         }
 
@@ -209,7 +283,7 @@ public class ExpertGame implements Game {
         return characters[index];
     }
 
-    private void addCoins(byte coins) {
+    private void addCoins(byte coins)  {
         this.coinsLeft += coins;
     }
 
@@ -245,4 +319,9 @@ public class ExpertGame implements Game {
         this.ignoredColorInfluence = ignoredColorInfluence;
     }
 
+
+
+    public void restoreProhibition(){
+        this.prohibitionLeft++;
+    }
 }

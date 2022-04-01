@@ -44,7 +44,7 @@ public class NormalGame implements Game{
         }
 
         this.professors = new Player[5];
-        this.teams = new ArrayList<Team>(numberOfPlayers == 3 ? 3 : 2);
+        this.teams = new ArrayList<>(numberOfPlayers == 3 ? 3 : 2);
 
         this.players = new ArrayList<>(numberOfPlayers);
         this.playerOrder = new ArrayList<>(numberOfPlayers);
@@ -62,7 +62,7 @@ public class NormalGame implements Game{
     }
 
     // checks if the islands before and after the selected island have the same team and in case merges them
-    private void checkMerge(Island island) {
+    public void checkMerge(Island island) {
         Island islandBefore = (Island)islands.get((islands.indexOf(island) - 1)%islands.size());
         Island islandAfter = (Island)islands.get((islands.indexOf(island) + 1)%islands.size());
             if(islandBefore.getTeam().equals(island.getTeam())) {
@@ -129,13 +129,13 @@ public class NormalGame implements Game{
     }
 
     public void calculateInfluence(Island island) {
-        if(island.isProhibition()) {
+        /*if(island.isProhibition()) {
             island.setProhibition();
         } else {
             for (Color c: Color.values()) {
                 island.getStudentSize(c);
             }
-        }
+        }*/
     }
 
     public void calculateInfluence() {
@@ -193,6 +193,21 @@ public class NormalGame implements Game{
 
     public void playCharacter() throws NotExpertGameException{
         throw new NotExpertGameException();
+    }
+
+    @Override
+    public ArrayList<Player> getPlayers() {
+        return players;
+    }
+
+    @Override
+    public ArrayList<Team> getTeams() {
+        return teams;
+    }
+
+    @Override
+    public Player[] getprofessor() {
+        return professors;
     }
 
 }
