@@ -1,10 +1,10 @@
 package it.polimi.ingsw.model.character;
 
+import it.polimi.ingsw.model.ExpertGame;
+
 public interface CharacterCard {
-    void play();
+    void play(ExpertGame game);
     byte getCost();
-    void reset();
-    void setInput(int input);
     int getId();
-    boolean canPlay();
+    boolean canPlay(int nInput);
 }
