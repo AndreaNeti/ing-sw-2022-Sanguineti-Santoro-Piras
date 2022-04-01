@@ -229,9 +229,9 @@ public class ExpertGame implements Game {
             if (oldTeam == null || !oldTeam.equals(winner))
                 island.setTeam(winner);
 
-
             try {
-                oldTeam.addTowers(island.getNumber());
+                if (oldTeam != null)
+                    oldTeam.addTowers(island.getNumber());
             } catch (NotAllowedException ex) {
                 System.err.println(ex.getErrorMessage());
             }
@@ -327,9 +327,8 @@ public class ExpertGame implements Game {
     }
 
     private void restoreProhibition() {
-        this.prohibitionLeft++;
-        if (this.prohibitionLeft > 4) {
-            this.prohibitionLeft = 4;
+        if (this.prohibitionLeft < 4) {
+            this.prohibitionLeft++;
         }
     }
 }

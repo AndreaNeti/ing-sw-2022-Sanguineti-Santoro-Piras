@@ -37,9 +37,10 @@ public class Bag extends GameComponent {
             } catch (NotEnoughStudentsException ex) {
                 // not extracting that color anymore
                 availableColors.remove(color);
+                // if this becomes true it means that the bag is now empty
+                if (availableColors.isEmpty()) throw new EndGameException();
             }
         }
-        if (getStudentSize() == 0) throw new EndGameException();
     }
 
     public int getStudentSize() {

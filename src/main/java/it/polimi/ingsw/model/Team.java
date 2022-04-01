@@ -33,11 +33,11 @@ public class Team {
             System.err.println("Player cannot be null");
     }
 
-    public void removePlayer(Player p) {
+    public void removePlayer(Player p) throws NotAllowedException {
         if (p != null)
-            members.remove(p);
-        else
-            System.err.println("Player cannot be null");
+            if (!members.remove(p)) throw new NotAllowedException("Player not present");
+            else
+                System.err.println("Player cannot be null");
     }
 
     public HouseColor getHouseColor() {
@@ -46,9 +46,6 @@ public class Team {
 
     public void movePlayer(Player p, Team t) throws NotAllowedException {
         if (p != null && t != null) {
-            if (!this.getPlayers().contains(p)) {
-                throw new NotAllowedException("PlayerNotPresent");
-            }
             t.addPlayer(p);
             removePlayer(p);
         } else
@@ -75,8 +72,12 @@ public class Team {
     public void removeTowers(byte b) throws EndGameException {
         if (b < 0) System.err.println("Cannot remove negative towers");
         else if (b > 0) {
-            towersLeft -= b;
-            if (towersLeft <= 0) throw new EndGameException();
+            if (towersLeft > b)
+                towersLeft -= b;
+            else {
+                towersLeft = 0;
+                throw new EndGameException();
+            }
         }
     }
 
@@ -85,11 +86,11 @@ public class Team {
         if (this == o) return true;
         if (!(o instanceof Team)) return false;
         Team team = (Team) o;
-        return teamSize == team.teamSize && maxTowers == team.maxTowers && houseColor == team.houseColor;
+        return houseColor == team.houseColor;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(houseColor, teamSize, maxTowers);
+        return Objects.hash(houseColor);
     }
 }

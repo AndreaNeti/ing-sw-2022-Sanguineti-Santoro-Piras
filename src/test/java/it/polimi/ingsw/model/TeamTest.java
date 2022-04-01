@@ -41,8 +41,15 @@ class TeamTest {
         }catch (NotAllowedException ex){
             fail();
         }
-        t.removePlayer(p);
+        try {
+            t.removePlayer(p);
+        } catch (NotAllowedException e) {
+            fail();
+        }
         assertTrue(t.getPlayers().isEmpty());
+
+        assertThrows(NotAllowedException.class,()->t.removePlayer(p),
+                "player not present");
     }
 
 
