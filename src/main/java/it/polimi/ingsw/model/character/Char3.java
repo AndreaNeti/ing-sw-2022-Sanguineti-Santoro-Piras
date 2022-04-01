@@ -6,7 +6,7 @@ public class Char3 implements CharacterCard {
 
     @Override
     public void play(ExpertGame game) {
-
+        game.setExtraSteps(true);
     }
 
     @Override

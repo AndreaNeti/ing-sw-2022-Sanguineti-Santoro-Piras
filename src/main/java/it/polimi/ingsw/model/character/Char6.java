@@ -22,7 +22,7 @@ public class Char6 extends GameComponent implements CharacterCard {
 
     @Override
     public boolean canPlay(int nInput) {
-        return (nInput > 0 && nInput < 4);
+        return (nInput == 6 || nInput == 4 || nInput == 2);
     }
 
     @Override

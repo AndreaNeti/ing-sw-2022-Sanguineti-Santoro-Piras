@@ -5,7 +5,7 @@ import it.polimi.ingsw.model.ExpertGame;
 public class Char5 implements CharacterCard {
     @Override
     public void play(ExpertGame game) {
-
+        game.setTowerInfluence(false);
     }
 
     @Override

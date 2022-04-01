@@ -1,11 +1,10 @@
 package it.polimi.ingsw.model;
 
-import it.polimi.ingsw.exceptions.*;
+import it.polimi.ingsw.exceptions.NotEnoughCoinsException;
+import it.polimi.ingsw.exceptions.NotExpertGameException;
 import it.polimi.ingsw.model.character.*;
 
-
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
 public class ExpertGame implements Game {
@@ -34,11 +33,11 @@ public class ExpertGame implements Game {
             System.err.println("Game cannot be null");
 
 
-        int numberOfPlayers=normalGame.getPlayers().size();
-        this.coinsLeft = (byte) (20-numberOfPlayers);
-        this.coinsPlayer=new byte[numberOfPlayers];
-        for(byte i=0; i<numberOfPlayers;i++)
-            coinsPlayer[i]=1;
+        int numberOfPlayers = normalGame.getPlayers().size();
+        this.coinsLeft = (byte) (20 - numberOfPlayers);
+        this.coinsPlayer = new byte[numberOfPlayers];
+        for (byte i = 0; i < numberOfPlayers; i++)
+            coinsPlayer[i] = 1;
 
         characters = new CharacterCard[3];
         Random rand = new Random(System.currentTimeMillis());
@@ -79,29 +78,35 @@ public class ExpertGame implements Game {
 
         switch (i) {
             case 0:
-                return new Char0(this);
+                Char0 c0 = new Char0();
+                normalGame.drawStudents(c0, (byte) 4);
+                return c0;
             case 1:
-                return new Char1(this);
+                return new Char1();
             case 2:
-                return new Char2(this);
+                return new Char2();
             case 3:
-                return new Char3(this);
+                return new Char3();
             case 4:
-                return new Char4(this);
+                return new Char4();
             case 5:
-                return new Char5(this);
+                return new Char5();
             case 6:
-                return new Char6(this);
+                Char6 c6 = new Char6();
+                normalGame.drawStudents(c6, (byte) 6);
+                return c6;
             case 7:
-                return new Char7(this);
+                return new Char7();
             case 8:
-                return new Char8(this);
+                return new Char8();
             case 9:
-                return new Char9(this);
+                return new Char9();
             case 10:
-                return new Char10(this);
+                Char10 c10 = new Char10();
+                normalGame.drawStudents(c10, (byte) 6);
+                return c10;
             case 11:
-                return new Char11(this);
+                return new Char11();
         }
         return null;
     }
@@ -112,8 +117,8 @@ public class ExpertGame implements Game {
     }
 
     @Override
-    public void drawStudents(GameComponent bag, byte number) {
-        normalGame.drawStudents(bag, number);
+    public void drawStudents(GameComponent gameComponent, byte number) {
+        normalGame.drawStudents(gameComponent, number);
     }
 
     @Override
@@ -165,36 +170,34 @@ public class ExpertGame implements Game {
     @Override
     public void calculateInfluence(Island island) {
         //prohibition is handled by prohibitionsLeft
-        if(island.getProhibition()) {
+        if (island.getProhibition()) {
             island.setProhibition(false);
             restoreProhibition();
-        }
+        } else {
 
-        else{
-
-            int maxInfluence  = 0;
+            int maxInfluence = 0;
             Team winner = null;
             for (Team t : normalGame.getTeams()) {
                 int influence = 0;
-                for(Color c: Color.values()){
-                    if(c != ignoredColorInfluence){
-                        for(Player p: t.getPlayers()){
-                            if(p.equals(normalGame.getprofessor()[c.ordinal()]))
+                for (Color c : Color.values()) {
+                    if (c != ignoredColorInfluence) {
+                        for (Player p : t.getPlayers()) {
+                            if (p.equals(normalGame.getprofessor()[c.ordinal()]))
                                 influence += island.getStudentSize(c);
                         }
                     }
                 }
-                if(island.getTeam()!=null && towerInfluence && t.equals(island.getTeam()))
-                        influence += island.getNumber();
-                if(extraInfluence && normalGame.getCurrentPlayer().getTeam().equals(t))
-                influence += 2;
-                if(influence > maxInfluence){
+                if (island.getTeam() != null && towerInfluence && t.equals(island.getTeam()))
+                    influence += island.getNumber();
+                if (extraInfluence && normalGame.getCurrentPlayer().getTeam().equals(t))
+                    influence += 2;
+                if (influence > maxInfluence) {
                     winner = t;
                     maxInfluence = influence;
                 }
             }
-            Team oldTeam=island.getTeam();
-            if(!oldTeam.equals(winner))
+            Team oldTeam = island.getTeam();
+            if (!oldTeam.equals(winner))
                 island.setTeam(winner);
 
 
@@ -226,6 +229,7 @@ public class ExpertGame implements Game {
     public void refillClouds() {
         normalGame.refillClouds();
     }
+
     @Override
     public void setLastRound() {
         normalGame.setLastRound();
@@ -270,10 +274,10 @@ public class ExpertGame implements Game {
     private void addCoinsToPlayer(Player player, byte coins) throws NotEnoughCoinsException {
         if (coinsLeft == 0) throw new NotEnoughCoinsException();
         else if (coinsLeft < coins) {
-            coinsPlayer[getPlayers().indexOf(player)] +=coinsLeft;
+            coinsPlayer[getPlayers().indexOf(player)] += coinsLeft;
             coinsLeft = 0;
         } else {
-            coinsPlayer[getPlayers().indexOf(player)] +=coins;
+            coinsPlayer[getPlayers().indexOf(player)] += coins;
             coinsLeft -= coins;
         }
 
@@ -283,7 +287,7 @@ public class ExpertGame implements Game {
         return characters[index];
     }
 
-    private void addCoins(byte coins)  {
+    private void addCoins(byte coins) {
         this.coinsLeft += coins;
     }
 
@@ -320,8 +324,7 @@ public class ExpertGame implements Game {
     }
 
 
-
-    public void restoreProhibition(){
+    public void restoreProhibition() {
         this.prohibitionLeft++;
     }
 }

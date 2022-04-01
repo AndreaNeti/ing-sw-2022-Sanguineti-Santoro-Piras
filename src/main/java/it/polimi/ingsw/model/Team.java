@@ -1,7 +1,7 @@
 package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.exceptions.NotAllowedException;
-import it.polimi.ingsw.exceptions.WinnerException;
+import it.polimi.ingsw.exceptions.EndGameException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -68,11 +68,11 @@ public class Team {
         }
     }
 
-    public void removeTowers(byte b) throws WinnerException {
+    public void removeTowers(byte b) throws EndGameException {
         if (b < 0) System.err.println("Cannot remove negative towers");
         else if (b > 0) {
             towersLeft -= b;
-            if (towersLeft <= 0) throw new WinnerException();
+            if (towersLeft <= 0) throw new EndGameException();
         }
     }
 }

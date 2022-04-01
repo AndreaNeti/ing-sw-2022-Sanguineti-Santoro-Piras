@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public interface Game {
     void move (Color color, int idGameComponent);
-    void drawStudents(GameComponent bag, byte number);
+    void drawStudents(GameComponent gameComponent, byte number);
     void playCard(byte card);
     Player getCurrentPlayer();
     void moveMotherNature(int moves);

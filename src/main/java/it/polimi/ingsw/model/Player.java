@@ -4,7 +4,7 @@ package it.polimi.ingsw.model;
 import it.polimi.ingsw.exceptions.NotAllowedException;
 import it.polimi.ingsw.exceptions.UnexpectedValueException;
 import it.polimi.ingsw.exceptions.UsedCardException;
-import it.polimi.ingsw.exceptions.WinnerException;
+import it.polimi.ingsw.exceptions.EndGameException;
 
 import java.net.Socket;
 import java.util.Comparator;
@@ -34,14 +34,14 @@ public class Player implements Comparator<Player> {
         this.lunchHall = new LunchHall(this);
     }
 
-    public void useCard(byte card) throws UsedCardException, UnexpectedValueException, NotAllowedException, WinnerException {
+    public void useCard(byte card) throws UsedCardException, UnexpectedValueException, NotAllowedException, EndGameException {
         if (card < 1 || card > 10) throw new UnexpectedValueException();
         if (!cardsAvailable[card]) throw new UsedCardException();
         if (cardsLeft < 1) throw new NotAllowedException("No more cards");
         playedCard = card;
         cardsLeft--;
         cardsAvailable[card] = false;
-        if (cardsLeft == 0) throw new WinnerException();
+        if (cardsLeft == 0) throw new EndGameException();
     }
 
     public byte getPlayedCardMoves() {

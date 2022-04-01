@@ -6,7 +6,7 @@ public class Char7 implements CharacterCard {
 
     @Override
     public void play(ExpertGame game) {
-
+        game.setExtraInfluence(true);
     }
 
     @Override

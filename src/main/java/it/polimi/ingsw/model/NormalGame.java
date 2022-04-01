@@ -1,11 +1,15 @@
 package it.polimi.ingsw.model;
 
-import it.polimi.ingsw.exceptions.NotEnoughStudentsException;
+import it.polimi.ingsw.exceptions.EndGameException;
 import it.polimi.ingsw.exceptions.NotExpertGameException;
+import it.polimi.ingsw.exceptions.UnexpectedValueException;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Random;
 
-public class NormalGame implements Game{
+public class NormalGame implements Game {
     //a reference to all the pieces contained in the game
     private final Bag bag;
     private final ArrayList<GameComponent> islands;
@@ -63,16 +67,16 @@ public class NormalGame implements Game{
 
     // checks if the islands before and after the selected island have the same team and in case merges them
     public void checkMerge(Island island) {
-        Island islandBefore = (Island)islands.get((islands.indexOf(island) - 1)%islands.size());
-        Island islandAfter = (Island)islands.get((islands.indexOf(island) + 1)%islands.size());
-            if(islandBefore.getTeam().equals(island.getTeam())) {
-                island.merge(islandBefore);
-                islands.remove(islandBefore);
-            }
-            if(islandAfter.getTeam().equals(island.getTeam())) {
-                island.merge(islandAfter);
-                islands.remove(islandAfter);
-            }
+        Island islandBefore = (Island) islands.get((islands.indexOf(island) - 1) % islands.size());
+        Island islandAfter = (Island) islands.get((islands.indexOf(island) + 1) % islands.size());
+        if (islandBefore.getTeam().equals(island.getTeam())) {
+            island.merge(islandBefore);
+            islands.remove(islandBefore);
+        }
+        if (islandAfter.getTeam().equals(island.getTeam())) {
+            island.merge(islandAfter);
+            islands.remove(islandAfter);
+        }
     }
 
     public void move(Color color, int idGameComponent) {
@@ -80,6 +84,13 @@ public class NormalGame implements Game{
     }
 
     public void drawStudents(GameComponent gameComponent, byte students) {
+        try {
+            bag.drawStudent(gameComponent, students);
+        } catch (EndGameException e) {
+            lastRound = true;
+        } catch (UnexpectedValueException e) {
+            System.err.println(e.getErrorMessage());
+        }
     }
 
     public void playCard(byte card) {
@@ -148,15 +159,15 @@ public class NormalGame implements Game{
         byte max;
         // player with the maximum number of students for the current color
         Player maxP;
-        for (Color c: Color.values()) {
+        for (Color c : Color.values()) {
             max = 0;
             maxP = null;
-            for (Player p: players) {
-                if(p.getLunchHall().getStudentSize(c) > max) {
+            for (Player p : players) {
+                if (p.getLunchHall().getStudentSize(c) > max) {
                     max = p.getLunchHall().getStudentSize(c);
                     maxP = p;
                 }
-                if(maxP != null) {
+                if (maxP != null) {
                     professors[c.ordinal()] = maxP;
                 }
             }
@@ -174,8 +185,8 @@ public class NormalGame implements Game{
     }
 
     public void refillClouds() {
-        for (GameComponent cloud: this.clouds) {
-            bag.drawStudent(cloud, numberOfPlayers%2==0 ? 3 : 4);
+        for (GameComponent cloud : this.clouds) {
+            drawStudents(cloud, (byte) (numberOfPlayers % 2 == 0 ? 3 : 4));
         }
     }
 
@@ -191,7 +202,7 @@ public class NormalGame implements Game{
         throw new NotExpertGameException();
     }
 
-    public void playCharacter() throws NotExpertGameException{
+    public void playCharacter() throws NotExpertGameException {
         throw new NotExpertGameException();
     }
 
