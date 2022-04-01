@@ -1,8 +1,8 @@
 package it.polimi.ingsw.exceptions;
 
-public class CardNotFoundException extends GameException {
+public class UsedCardException extends GameException {
     @Override
     public String getErrorMessage() {
-        return "Card not found";
+        return "Card already used";
     }
 }

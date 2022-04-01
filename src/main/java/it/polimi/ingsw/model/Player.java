@@ -1,7 +1,10 @@
 package it.polimi.ingsw.model;
 
 
-import it.polimi.ingsw.exceptions.CardNotFoundException;
+import it.polimi.ingsw.exceptions.NotAllowedException;
+import it.polimi.ingsw.exceptions.UnexpectedValueException;
+import it.polimi.ingsw.exceptions.UsedCardException;
+import it.polimi.ingsw.exceptions.WinnerException;
 
 import java.net.Socket;
 import java.util.Comparator;
@@ -9,6 +12,7 @@ import java.util.Objects;
 
 public class Player implements Comparator<Player> {
     private final Socket socket;
+    private final Team team;
     private final Wizard wizard;
     private final String nickName;
     private byte playedCard;
@@ -18,8 +22,9 @@ public class Player implements Comparator<Player> {
     private final LunchHall lunchHall;
 
 
-    public Player(Socket socket, Wizard wizard, String nickName) {
+    public Player(Socket socket, Team team, Wizard wizard, String nickName) {
         this.socket = socket;
+        this.team = team;
         this.wizard = wizard;
         this.nickName = nickName;
         this.cardsAvailable = new boolean[]{true, true, true, true, true, true, true, true, true, true};
@@ -29,29 +34,23 @@ public class Player implements Comparator<Player> {
         this.lunchHall = new LunchHall(this);
     }
 
-    public void useCard(Card card) throws CardNotFoundException {
-        if (cards.contains(card)) {
-            this.playedCard = card;
-            cards.remove(card);
-        } else {
-            throw new CardNotFoundException();
-        }
-
+    public void useCard(byte card) throws UsedCardException, UnexpectedValueException, NotAllowedException, WinnerException {
+        if (card < 1 || card > 10) throw new UnexpectedValueException();
+        if (!cardsAvailable[card]) throw new UsedCardException();
+        if (cardsLeft < 1) throw new NotAllowedException("No more cards");
+        playedCard = card;
+        cardsLeft--;
+        cardsAvailable[card] = false;
+        if (cardsLeft == 0) throw new WinnerException();
     }
 
-    public void addTowers(byte towers) {
-
-        towerLeft += towers;
+    public byte getPlayedCardMoves() {
+        // card max movement is 1 for card 1 and 2, 2 for card 3 and 4, ..., 5 for card 9 and 10
+        return (byte) ((playedCard + 1) / 2);
     }
 
-    // removes towers and returns the number of tower left, to be read by Game
-    public byte removeTowers(byte towers) {
-        towerLeft -= towers;
-        return towerLeft;
-    }
-
-    public Wizard getWizard() {
-        return wizard;
+    public byte getPlayedCard() {
+        return playedCard;
     }
 
     public LunchHall getLunchHall() {
@@ -59,16 +58,23 @@ public class Player implements Comparator<Player> {
     }
 
     public EntranceHall getEntranceHall() {
-
         return entranceHall;
     }
 
-    public byte getTowerLeft() {
-        return towerLeft;
+    public Wizard getWizard(){
+        return wizard;
     }
 
-    public Card getPlayedCard() {
-        return playedCard;
+    public String getNickName() {
+        return nickName;
+    }
+
+    public Socket getSocket() {
+        return socket;
+    }
+
+    public Team getTeam() {
+        return team;
     }
 
     @Override
@@ -85,8 +91,8 @@ public class Player implements Comparator<Player> {
     }
 
     @Override
-    public int compare(Player o1, Player o2) throws ClassCastException {
-        return Byte.compare((o1).getPlayedCard().getValue(), (o2).getPlayedCard().getValue());
+    public int compare(Player p1, Player p2) throws ClassCastException {
+        return Byte.compare(p1.getPlayedCard(), p2.getPlayedCard());
 
     }
 }
