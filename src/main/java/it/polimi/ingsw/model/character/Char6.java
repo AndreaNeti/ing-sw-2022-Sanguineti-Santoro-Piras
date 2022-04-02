@@ -28,7 +28,7 @@ public class Char6 extends GameComponent implements CharacterCard {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Char0)) return false;
+        if (!(o instanceof Char6)) return false;
         CharacterCard c = (CharacterCard) o;
         return getId() == c.getId();
     }

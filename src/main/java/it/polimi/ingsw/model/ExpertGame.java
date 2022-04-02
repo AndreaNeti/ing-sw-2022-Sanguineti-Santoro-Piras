@@ -4,6 +4,7 @@ import it.polimi.ingsw.exceptions.EndGameException;
 import it.polimi.ingsw.exceptions.NotAllowedException;
 import it.polimi.ingsw.exceptions.NotEnoughCoinsException;
 import it.polimi.ingsw.exceptions.NotExpertGameException;
+import it.polimi.ingsw.exceptions.GameException;
 import it.polimi.ingsw.model.character.*;
 
 import java.util.ArrayList;
@@ -129,7 +130,7 @@ public class ExpertGame implements Game {
     }
 
     @Override
-    public void playCard(byte card) {
+    public void playCard(byte card) throws GameException {
         normalGame.playCard(card);
     }
 

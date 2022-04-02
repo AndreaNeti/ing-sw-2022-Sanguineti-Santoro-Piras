@@ -26,7 +26,7 @@ public class Char5 implements CharacterCard {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Char0)) return false;
+        if (!(o instanceof Char5)) return false;
         CharacterCard c = (CharacterCard) o;
         return getId() == c.getId();
     }
