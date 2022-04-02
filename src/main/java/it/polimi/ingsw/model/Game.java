@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.exceptions.NotAllowedException;
 import it.polimi.ingsw.exceptions.NotExpertGameException;
 
 import java.util.ArrayList;
@@ -9,7 +10,7 @@ public interface Game {
     void drawStudents(GameComponent gameComponent, byte number);
     void playCard(byte card);
     Player getCurrentPlayer();
-    void moveMotherNature(int moves);
+    void moveMotherNature(int moves) throws NotAllowedException;
     void nextPlayer();
     boolean getPhase();
     void nextPhase();

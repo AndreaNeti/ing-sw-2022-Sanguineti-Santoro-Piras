@@ -1,6 +1,7 @@
 package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.exceptions.EndGameException;
+import it.polimi.ingsw.exceptions.NotAllowedException;
 import it.polimi.ingsw.exceptions.NotExpertGameException;
 import it.polimi.ingsw.exceptions.UnexpectedValueException;
 
@@ -102,9 +103,14 @@ public class NormalGame implements Game {
         return currentPlayer;
     }
 
-    public void moveMotherNature(int moves) {
-        motherNaturePosition += moves;
-        motherNaturePosition %= islands.size();
+    public void moveMotherNature(int moves) throws NotAllowedException {
+        if (moves > currentPlayer.getPlayedCardMoves())
+            throw new NotAllowedException("Moves can't be higher than the value of the card");
+        else {
+            motherNaturePosition += moves;
+            motherNaturePosition %= islands.size();
+            calculateInfluence((Island) islands.get(motherNaturePosition));
+        }
     }
 
     public void nextPlayer() {
@@ -148,7 +154,6 @@ public class NormalGame implements Game {
             }
         }*/
     }
-
 
 
     // compares for each color the lunchhall of each player and then puts the player with the most students

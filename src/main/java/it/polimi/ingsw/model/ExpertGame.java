@@ -248,8 +248,10 @@ public class ExpertGame implements Game {
 
 
     @Override
-    public void moveMotherNature(int moves) {
-        //TODO controllare il boolean di extra steps
+    public void moveMotherNature(int moves) throws NotAllowedException {
+        if(extraSteps)
+            if (moves+2 > normalGame.getCurrentPlayer().getPlayedCardMoves())
+                throw new NotAllowedException("Moves can't be higher than the value of the card");
         normalGame.moveMotherNature(moves);
     }
 
