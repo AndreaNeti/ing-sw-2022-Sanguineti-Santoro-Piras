@@ -28,7 +28,6 @@ public class NormalGame implements Game {
     private Player currentPlayer;
     //current phase is true in the planification phase, false during the action phase
     private boolean currentPhase;
-    private byte numberOfPlayers;
     /*it's a number that goes from 1 to 3 and it represent the sub-section of the actione phase
     1-move 3 students; 2-move mother nature(calculate influence and merge); 3-drawstudent from cloud*/
     private byte currentActionPhase;
@@ -265,7 +264,7 @@ public class NormalGame implements Game {
     @Override
     public void refillClouds() {
         for (GameComponent cloud : this.clouds) {
-            drawStudents(cloud, (byte) (numberOfPlayers % 2 == 0 ? 3 : 4));
+            drawStudents(cloud, (byte) (players.size() % 2 == 0 ? 3 : 4));
         }
     }
 
