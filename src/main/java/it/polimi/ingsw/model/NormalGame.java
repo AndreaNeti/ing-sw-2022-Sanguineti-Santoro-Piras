@@ -4,6 +4,7 @@ import it.polimi.ingsw.exceptions.EndGameException;
 import it.polimi.ingsw.exceptions.NotAllowedException;
 import it.polimi.ingsw.exceptions.NotExpertGameException;
 import it.polimi.ingsw.exceptions.UnexpectedValueException;
+import it.polimi.ingsw.exceptions.UsedCardException;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -84,6 +85,7 @@ public class NormalGame implements Game {
 
     }
 
+    @Override
     public void drawStudents(GameComponent gameComponent, byte students) {
         try {
             bag.drawStudent(gameComponent, students);
@@ -94,9 +96,14 @@ public class NormalGame implements Game {
         }
     }
 
-    public void playCard(byte card) {
-        //TODO function to play card
-
+    @Override
+    public void playCard(byte card) throws UnexpectedValueException, NotAllowedException, UsedCardException{
+        try {
+            currentPlayer.useCard(card);
+        }catch (EndGameException ex) {
+            lastRound = true;
+        }
+        nextPlayer();
     }
 
     public Player getCurrentPlayer() {
@@ -113,6 +120,7 @@ public class NormalGame implements Game {
         }
     }
 
+    @Override
     public void nextPlayer() {
         if (currentPhase) {
 
@@ -132,11 +140,13 @@ public class NormalGame implements Game {
         }
     }
 
+    @Override
     public boolean getPhase() {
         return currentPhase;
     }
 
     //sort the array if the nextPhase is the action phase, anyway set the current player to the first of the array
+    @Override
     public void nextPhase() {
         this.currentPhase = !currentPhase;
         if (!currentPhase) {
@@ -145,19 +155,48 @@ public class NormalGame implements Game {
         currentPlayer = players.get(playerOrder.get(0));
     }
 
+    @Override
     public void calculateInfluence(Island island) {
-        /*if(island.isProhibition()) {
-            island.setProhibition();
-        } else {
-            for (Color c: Color.values()) {
-                island.getStudentSize(c);
+        int maxInfluence = 0;
+        Team winner = null;
+        for (Team t : teams) {
+            int influence = 0;
+            for(Color c: Color.values()){
+                for(Player p: t.getPlayers()) {
+                    if (p.equals(professors[c.ordinal()]))
+                        influence += island.getStudentSize(c);
+                }
             }
-        }*/
+            if(island.getTeam()!=null && t.equals(island.getTeam()))
+                influence += island.getNumber();
+
+            if(influence > maxInfluence){
+                winner = t;
+                maxInfluence = influence;
+            }
+        }
+
+        Team oldTeam=island.getTeam();
+        if(!oldTeam.equals(winner)) {
+            island.setTeam(winner);
+            try {
+                oldTeam.addTowers(island.getNumber());
+            } catch (NotAllowedException ex) {
+                System.err.println(ex.getErrorMessage());
+            }
+            try {
+                winner.removeTowers(island.getNumber());
+            } catch (EndGameException ex) {
+                endGame(winner);
+            }
+            checkMerge(island);
+        }
     }
 
 
     // compares for each color the lunchhall of each player and then puts the player with the most students
     // in the professor array slot of the current color
+    @Override
     public void calculateProfessor() {
         byte max;
         // player with the maximum number of students for the current color
@@ -177,22 +216,60 @@ public class NormalGame implements Game {
         }
     }
 
+    // checks the team with fewer towers left and calculates its number of controlled professors.
+    // if two teams have the same number of towers left the team with more professors controlled becomes the winner
+    @Override
     public void endGame() {
+        Team winner = null;
+        byte minTowers = 0 ;
+        byte maxProfessors = 0;
+        for (Team t: teams) {
+            if(t.getTowersLeft() < minTowers) {
+                winner = t;
+                byte numberOfProfessors = 0;
+                minTowers = t.getTowersLeft();
+                for(Color c: Color.values()){
+                    for(Player p: t.getPlayers()) {
+                        if (p.equals(professors[c.ordinal()]))
+                            numberOfProfessors ++;
+                    }
+                }
+                maxProfessors = numberOfProfessors;
+            }else if(t.getTowersLeft() == minTowers) {
+                byte numberOfProfessors = 0;
+                for(Color c: Color.values()){
+                    for(Player p: t.getPlayers()) {
+                        if (p.equals(professors[c.ordinal()]))
+                            numberOfProfessors ++;
+                    }
+                }
+                if(numberOfProfessors > maxProfessors) {
+                    winner = t;
+                    maxProfessors = numberOfProfessors;
+                }
+            }
+        }
+        endGame(winner);
     }
 
-    public void endGame(Team team) {
+    @Override
+    public void endGame(Team team){
+
     }
 
+    @Override
     public void nextActionPhase() {
         this.currentActionPhase = (byte) ((this.currentActionPhase + 1) % 3 + 1);
     }
 
+    @Override
     public void refillClouds() {
         for (GameComponent cloud : this.clouds) {
             drawStudents(cloud, (byte) (numberOfPlayers % 2 == 0 ? 3 : 4));
         }
     }
 
+    @Override
     public void setLastRound() {
         this.lastRound = true;
     }
