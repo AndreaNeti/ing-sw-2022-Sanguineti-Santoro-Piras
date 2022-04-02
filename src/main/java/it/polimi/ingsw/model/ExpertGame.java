@@ -249,8 +249,8 @@ public class ExpertGame implements Game {
 
     @Override
     public void moveMotherNature(int moves) throws NotAllowedException {
-        if(extraSteps)
-            if (moves+2 > normalGame.getCurrentPlayer().getPlayedCardMoves())
+        if (extraSteps)
+            if (moves + 2 > normalGame.getCurrentPlayer().getPlayedCardMoves())
                 throw new NotAllowedException("Moves can't be higher than the value of the card");
         normalGame.moveMotherNature(moves);
     }
@@ -328,13 +328,17 @@ public class ExpertGame implements Game {
         this.ignoredColorInfluence = ignoredColorInfluence;
     }
 
+    public void setEqualProfessorCalculation(boolean equalProfessorCalculation) {
+        this.equalProfessorCalculation = equalProfessorCalculation;
+    }
+
     public ArrayList<Integer> getCharacterInputs() {
         return inputsCharacter;
     }
 
     @Override
-    public GameComponent getIsland(int i) {
-        return normalGame.getIsland(i);
+    public ArrayList<GameComponent> getIslands() {
+        return normalGame.getIslands();
     }
 
     private void restoreProhibition() {

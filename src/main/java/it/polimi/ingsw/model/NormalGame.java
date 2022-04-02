@@ -296,8 +296,8 @@ public class NormalGame implements Game {
     }
 
     @Override
-    public GameComponent getIsland(int index) {
-        return islands.get(index);
+    public ArrayList<GameComponent> getIslands() {
+        return islands;
     }
 
     @Override
