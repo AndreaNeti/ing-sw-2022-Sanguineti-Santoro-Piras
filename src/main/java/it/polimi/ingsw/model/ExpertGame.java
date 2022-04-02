@@ -326,6 +326,15 @@ public class ExpertGame implements Game {
         this.ignoredColorInfluence = ignoredColorInfluence;
     }
 
+    public ArrayList<Integer> getCharacterInputs() {
+        return inputsCharacter;
+    }
+
+    @Override
+    public GameComponent getIsland(int i) {
+        return normalGame.getIsland(i);
+    }
+
     private void restoreProhibition() {
         if (this.prohibitionLeft < 4) {
             this.prohibitionLeft++;

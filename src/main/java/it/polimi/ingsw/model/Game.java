@@ -26,6 +26,6 @@ public interface Game {
     void checkMerge(Island island);
     ArrayList<Player> getPlayers();
     ArrayList<Team> getTeams();
-    
+    GameComponent getIsland(int index);
      Player [] getProfessor();
 }

@@ -215,6 +215,11 @@ public class NormalGame implements Game {
     }
 
     @Override
+    public GameComponent getIsland(int index) {
+        return islands.get(index);
+    }
+
+    @Override
     public Player[] getProfessor() {
         return professors;
     }
