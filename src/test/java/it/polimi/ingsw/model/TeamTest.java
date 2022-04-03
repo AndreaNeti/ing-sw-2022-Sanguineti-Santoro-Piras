@@ -15,7 +15,7 @@ class TeamTest {
     void constructorAndEqualsTest() {
         Team t1 = new Team(HouseColor.GREY, (byte) 2, (byte) 6);
         assertEquals(t, t1);
-
+        assertEquals(t1.getHouseColor(),HouseColor.GREY);
     }
 
     Socket socket = new Socket();
@@ -53,6 +53,7 @@ class TeamTest {
 
         assertThrows(NotAllowedException.class, () -> t.removePlayer(p),
                 "player not present");
+
     }
 
 

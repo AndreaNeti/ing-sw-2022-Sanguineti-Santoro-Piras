@@ -33,8 +33,8 @@ public class Char9 implements CharacterCard {
             lunchHallColor = inputs.get(i);
             entranceHallColor = inputs.get(i + 1);
 
-            game.getCurrentPlayer().getLunchHall().moveStudents(Color.values()[lunchHallColor], (byte) 1, game.getCurrentPlayer().getEntranceHall());
             game.getCurrentPlayer().getEntranceHall().moveStudents(Color.values()[entranceHallColor], (byte) 1, game.getCurrentPlayer().getEntranceHall());
+            game.getCurrentPlayer().getLunchHall().moveStudents(Color.values()[lunchHallColor], (byte) 1, game.getCurrentPlayer().getEntranceHall());
         }
 
     }

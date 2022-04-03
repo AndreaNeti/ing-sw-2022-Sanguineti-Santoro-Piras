@@ -34,10 +34,11 @@ public class Team {
     }
 
     public void removePlayer(Player p) throws NotAllowedException {
-        if (p != null)
+        if (p != null) {
             if (!members.remove(p)) throw new NotAllowedException("Player not present");
-            else
-                System.err.println("Player cannot be null");
+        } else
+            System.err.println("Player cannot be null");
+
     }
 
     public HouseColor getHouseColor() {
