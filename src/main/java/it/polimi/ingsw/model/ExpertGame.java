@@ -279,12 +279,12 @@ public class ExpertGame implements Game {
     }
 
     @Override
-    public void playCharacter() throws NotExpertGameException {
+    public void playCharacter()  {
         //TODO implementare playCharacter
     }
 
     @Override
-    public void chooseCharacter(int indexCharacter) throws NotExpertGameException {
+    public void chooseCharacter(int indexCharacter)  {
         //TODO implementare chooseCharacter
     }
 
@@ -340,6 +340,11 @@ public class ExpertGame implements Game {
     @Override
     public ArrayList<GameComponent> getIslands() {
         return normalGame.getIslands();
+    }
+
+    @Override
+    public void initializeMotherNature(byte index) {
+        normalGame.initializeMotherNature(index);
     }
 
     private void restoreProhibition() {

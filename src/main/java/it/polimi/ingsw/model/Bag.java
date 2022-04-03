@@ -12,13 +12,15 @@ import java.util.Random;
 public class Bag extends GameComponent {
 
     private final Random rand;
+    private boolean refilled;
 
     public Bag() {
         super();
 
         for (Color c : Color.values()) {
-            this.addStudents(c, (byte) 26);
+            this.addStudents(c, (byte) 2);
         }
+        refilled = false;
 
         rand = new Random(System.currentTimeMillis());
     }
@@ -37,10 +39,22 @@ public class Bag extends GameComponent {
             } catch (NotEnoughStudentsException ex) {
                 // not extracting that color anymore
                 availableColors.remove(color);
-                // if this becomes true it means that the bag is now empty
-                if (availableColors.isEmpty()) throw new EndGameException();
+
+
             }
         }
+            // if this becomes true it means that the bag is now empty
+        if (this.getStudentSize() == 0) {
+            if (refilled)
+                throw new EndGameException();
+            else {
+                refilled = true;
+                for (Color c : Color.values()) {
+                    this.addStudents(c, (byte) 24);
+                }
+            }
+        }
+
     }
 
     public int getStudentSize() {

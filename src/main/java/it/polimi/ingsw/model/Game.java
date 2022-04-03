@@ -29,6 +29,6 @@ public interface Game {
     ArrayList<Player> getPlayers();
     ArrayList<Team> getTeams();
     ArrayList<GameComponent> getIslands();
-    
+    void initializeMotherNature(byte index);
      Player [] getProfessor();
 }

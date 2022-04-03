@@ -41,6 +41,8 @@ public class NormalGame implements Game {
         this.islands = new ArrayList<>(12);
         for (int i = 0; i < 12; i++) {
             islands.add(new Island());
+
+
         }
 
         this.clouds = new ArrayList<>(numberOfPlayers);
@@ -66,7 +68,18 @@ public class NormalGame implements Game {
         this.lastRound = false;
     }
 
+    @Override
+    public void initializeMotherNature(byte index) {
+        this.motherNaturePosition=index;
+        for (int i=0;i<12;i++){
+            if(!(i==index || i==(index+6)%12)){
+                drawStudents(islands.get(i),(byte)1 );
+            }
+        }
+    }
+
     // checks if the islands before and after the selected island have the same team and in case merges them
+    @Override
     public void checkMerge(Island island) {
         Island islandBefore = (Island) islands.get((islands.indexOf(island) - 1) % islands.size());
         Island islandAfter = (Island) islands.get((islands.indexOf(island) + 1) % islands.size());
@@ -80,6 +93,7 @@ public class NormalGame implements Game {
         }
     }
 
+    @Override //TODO implement move
     public void move(Color color, int idGameComponent) {
 
     }
