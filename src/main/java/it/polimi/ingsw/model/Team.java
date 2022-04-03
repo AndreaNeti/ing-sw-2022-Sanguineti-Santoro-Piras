@@ -77,7 +77,7 @@ public class Team {
                 towersLeft -= b;
             else {
                 towersLeft = 0;
-                throw new EndGameException();
+                throw new EndGameException(true);
             }
         }
     }
@@ -93,5 +93,10 @@ public class Team {
     @Override
     public int hashCode() {
         return Objects.hash(houseColor);
+    }
+
+    @Override
+    public String toString() {
+        return houseColor.name() + " team";
     }
 }

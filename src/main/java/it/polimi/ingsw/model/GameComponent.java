@@ -15,20 +15,19 @@ public abstract class GameComponent {
     }
 
     private void removeStudents(Color color, byte number) throws NotEnoughStudentsException {
-        if(students[color.ordinal()] >= number)
+        if (students[color.ordinal()] >= number)
             students[color.ordinal()] -= number;
         else
             throw new NotEnoughStudentsException();
     }
 
-    public void moveStudents(Color color, byte number, GameComponent component) throws NotEnoughStudentsException{
+    public void moveStudents(Color color, byte number, GameComponent destination) throws NotEnoughStudentsException {
         this.removeStudents(color, number);
-        component.addStudents(color, number);
+        destination.addStudents(color, number);
     }
 
 
     public byte[] getStudents() {
-
         return students.clone();
     }
 

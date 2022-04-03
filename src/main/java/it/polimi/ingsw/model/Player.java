@@ -1,10 +1,10 @@
 package it.polimi.ingsw.model;
 
 
+import it.polimi.ingsw.exceptions.EndGameException;
 import it.polimi.ingsw.exceptions.NotAllowedException;
 import it.polimi.ingsw.exceptions.UnexpectedValueException;
 import it.polimi.ingsw.exceptions.UsedCardException;
-import it.polimi.ingsw.exceptions.EndGameException;
 
 import java.net.Socket;
 import java.util.Comparator;
@@ -15,11 +15,11 @@ public class Player implements Comparator<Player> {
     private final Team team;
     private final Wizard wizard;
     private final String nickName;
-    private byte playedCard;
     private final boolean[] cardsAvailable;
-    private byte cardsLeft;
     private final EntranceHall entranceHall;
     private final LunchHall lunchHall;
+    private byte playedCard;
+    private byte cardsLeft;
 
     public Player(Socket socket, Team team, Wizard wizard, String nickName) {
         this.socket = socket;
@@ -40,7 +40,7 @@ public class Player implements Comparator<Player> {
         playedCard = card;
         cardsLeft--;
         cardsAvailable[card] = false;
-        if (cardsLeft == 0) throw new EndGameException();
+        if (cardsLeft == 0) throw new EndGameException(false);
     }
 
     public byte getPlayedCardMoves() {
@@ -60,12 +60,8 @@ public class Player implements Comparator<Player> {
         return entranceHall;
     }
 
-    public Wizard getWizard(){
+    public Wizard getWizard() {
         return wizard;
-    }
-
-    public String getNickName() {
-        return nickName;
     }
 
     public Socket getSocket() {
@@ -93,5 +89,10 @@ public class Player implements Comparator<Player> {
     public int compare(Player p1, Player p2) throws ClassCastException {
         return Byte.compare(p1.getPlayedCard(), p2.getPlayedCard());
 
+    }
+
+    @Override
+    public String toString() {
+        return nickName;
     }
 }

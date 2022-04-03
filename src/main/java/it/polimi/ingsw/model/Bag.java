@@ -29,32 +29,33 @@ public class Bag extends GameComponent {
         if (number < 0) throw new UnexpectedValueException();
         byte i = 0;
         int studentsToDraw = Math.min(number, getStudentSize());
+        if(studentsToDraw > 0) {
+            List<Color> availableColors = new ArrayList<>(Arrays.asList(Color.values()));
+            while (i < studentsToDraw) {
+                Color color = availableColors.get(rand.nextInt(availableColors.size()));
+                try {
+                    moveStudents(color, (byte) 1, gameComponent);
+                    i++;
+                } catch (NotEnoughStudentsException ex) {
+                    // not extracting that color anymore
+                    availableColors.remove(color);
 
-        List<Color> availableColors = new ArrayList<>(Arrays.asList(Color.values()));
-        while (i < studentsToDraw) {
-            Color color = availableColors.get(rand.nextInt(availableColors.size()));
-            try {
-                moveStudents(color, (byte) 1, gameComponent);
-                i++;
-            } catch (NotEnoughStudentsException ex) {
-                // not extracting that color anymore
-                availableColors.remove(color);
 
-
+                }
             }
-        }
             // if this becomes true it means that the bag is now empty
-        if (this.getStudentSize() == 0) {
-            if (refilled)
-                throw new EndGameException();
-            else {
-                refilled = true;
-                for (Color c : Color.values()) {
-                    this.addStudents(c, (byte) 24);
+            if (this.getStudentSize() == 0) {
+                if (refilled)
+                    throw new EndGameException(false);
+                else {
+                    // refill the bag after island initialization
+                    refilled = true;
+                    for (Color c : Color.values()) {
+                        this.addStudents(c, (byte) 24);
+                    }
                 }
             }
         }
-
     }
 
     public int getStudentSize() {

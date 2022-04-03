@@ -1,5 +1,7 @@
 package it.polimi.ingsw.controller;
 
+import it.polimi.ingsw.exceptions.EndGameException;
+import it.polimi.ingsw.exceptions.GameException;
 import it.polimi.ingsw.exceptions.NotAllowedException;
 import it.polimi.ingsw.model.*;
 
@@ -9,17 +11,31 @@ import java.util.*;
 public class Controller {
     private final boolean isExpertGame;
     private final int matchId;
-    private final List<Player> playersList;
+    private final ArrayList<Player> playersList;
     private final byte numberOfPlayers;
     private final Map<HouseColor, Queue<String>> messages;
-    private final List<Team> teams;
+    private final ArrayList<Team> teams;
+    // This array is also used to represent the order of round
+    private final ArrayList<Byte> playerOrder;
     private Game game;
+    private Player currentPlayer;
+    // current phase is true in the planification phase, false during the action phase
+    private boolean isPlanificationPhase;
+    /* it's a number that goes from 1 to 5, it represents the subsection of the action phase
+    1,2,3-move 1 students; 4-move mother nature(calculate influence and merge); 5-drawStudent from cloud*/
+    private byte currentActionPhase;
+    //it's the index of playerOrder: it goes from 0 to players.size() and when it's 3 it changes phase
+    private byte roundIndex;
+    private boolean lastRound;
 
     public Controller(int matchId, boolean isExpertGame, byte numberOfPlayers) {
         this.matchId = matchId;
         this.isExpertGame = isExpertGame;
         this.numberOfPlayers = numberOfPlayers;
         this.playersList = new ArrayList<>(numberOfPlayers);
+        this.playerOrder = new ArrayList<>(numberOfPlayers);
+        for (byte i = 0; i < numberOfPlayers; i++)
+            playerOrder.add(i);
         byte nTeams = (byte) ((numberOfPlayers % 2) + 2); // size is 2 or 3
         byte maxTowers = (byte) (12 - nTeams * 2); // 2 teams -> 8 towers, 3 teams -> 6 towers
         this.teams = new ArrayList<>(nTeams);
@@ -27,23 +43,57 @@ public class Controller {
             teams.add(new Team(HouseColor.values()[i], (byte) (numberOfPlayers / nTeams), maxTowers));
         }
         this.messages = new HashMap<>();
+        this.isPlanificationPhase = false;
+        this.currentActionPhase = 0;
+        this.roundIndex = 0;
+        this.lastRound = false;
     }
 
     public void move(Color color, int idGameComponent) {
-
+        if (isPlanificationPhase) {
+            HandleError(new NotAllowedException("Not in action phase"));
+            return;
+        }
+        try {
+            game.move(color, idGameComponent, currentActionPhase);
+        } catch (GameException e) {
+            HandleError(e);
+        }
+        nextActionPhase();
     }
 
     public void playCard(byte value) {
-
+        if (!isPlanificationPhase) {
+            HandleError(new NotAllowedException("Not in planification phase"));
+            return;
+        }
+        try {
+            game.playCard(value);
+        } catch (GameException e) {
+            HandleError(e);
+        } catch (EndGameException e) {
+            if (e.isEndIstantly()) endGame();
+            else lastRound = true;
+        }
+        nextPlayer();
     }
 
     public void moveMotherNature(int i) {
-
+        if (isPlanificationPhase || currentActionPhase != 4) {
+            HandleError(new NotAllowedException("Not allowed in this phase"));
+            return;
+        }
+        try {
+            game.moveMotherNature(i);
+        } catch (NotAllowedException e) {
+            HandleError(e);
+        } catch (EndGameException e) {
+            if (e.isEndIstantly()) endGame();
+            else lastRound = true;
+        }
+        nextActionPhase();
     }
 
-    public boolean isExpertGame() {
-        return isExpertGame;
-    }
 
     public int getMatchId() {
         return matchId;
@@ -77,18 +127,106 @@ public class Controller {
     }
 
     public void setCharacterInput(int input) {
-
+        if (isPlanificationPhase) {
+            HandleError(new NotAllowedException("Not in action phase"));
+            return;
+        }
+        try {
+            game.setCharacterInput(input);
+        } catch (GameException e) {
+            HandleError(e);
+        }
     }
 
     public void chooseCharacter(int character) {
-
+        if (isPlanificationPhase) {
+            HandleError(new NotAllowedException("Not in action phase"));
+            return;
+        }
+        try {
+            game.chooseCharacter(character);
+        } catch (GameException e) {
+            HandleError(e);
+        }
     }
 
     public void playCharacter() {
-
+        if (isPlanificationPhase) {
+            HandleError(new NotAllowedException("Not in action phase"));
+            return;
+        }
+        try {
+            game.playCharacter();
+        } catch (GameException e) {
+            HandleError(e);
+        } catch (EndGameException e) {
+            if (e.isEndIstantly()) endGame();
+            else lastRound = true;
+        }
     }
 
     private void startGame() {
+        game = new NormalGame(numberOfPlayers, teams, playersList);
+        if (isExpertGame)
+            game = new ExpertGame(game);
+        Random rand = new Random(System.currentTimeMillis());
+        currentPlayer = playersList.get(rand.nextInt(numberOfPlayers));
+        game.setCurrentPlayer(currentPlayer);
+    }
 
+    private void nextPlayer() {
+        int index;
+        roundIndex++;
+        if (roundIndex >= playersList.size())
+            nextPhase();
+        if (isPlanificationPhase) {
+            // is planification phase, clockwise order
+            index = (playerOrder.get(0) + roundIndex) % playersList.size();
+        } else {
+            // action phase, follow the playerOrder
+            index = playerOrder.get(roundIndex);
+            currentActionPhase = 0;
+        }
+
+        Random rand = new Random(System.currentTimeMillis());
+        currentPlayer = playersList.get(index);
+        game.setCurrentPlayer(currentPlayer);
+    }
+
+    private void nextPhase() {
+        this.isPlanificationPhase = !isPlanificationPhase;
+        //sort the array if the nextPhase is the action phase
+        if (!isPlanificationPhase) {
+            playerOrder.sort(Comparator.comparingInt((Byte b) -> playersList.get(b).getPlayedCard()));
+        } else {
+            if (lastRound) {
+                // should go in new preparation phase but is last round
+                endGame();
+            } else { // new planification phase
+                try {
+                    game.refillClouds();
+                } catch (EndGameException e) {
+                    if (e.isEndIstantly()) endGame();
+                    else lastRound = true;
+                }
+            }
+        }
+        roundIndex = 0;
+    }
+
+    private void nextActionPhase() {
+        // pass to new player
+        if (currentActionPhase >= 5) nextPlayer();
+        else currentActionPhase++;
+    }
+
+    private void endGame() {
+        Team winner = game.calculateWinner();
+        System.out.println("Game ended, winner is " + winner);
+    }
+
+    private void HandleError(GameException e) {
+        e.printStackTrace();
+        System.err.println(e.getErrorMessage());
     }
 }
