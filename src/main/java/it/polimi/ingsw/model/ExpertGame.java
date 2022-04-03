@@ -342,13 +342,19 @@ public class ExpertGame implements Game {
     }
 
     @Override
-    public ArrayList<GameComponent> getIslands() {
+    public ArrayList<Island> getIslands() {
         return normalGame.getIslands();
     }
 
     @Override
     public void initializeMotherNature(byte index) {
         normalGame.initializeMotherNature(index);
+    }
+    public void setProhibition(int idIsland) throws NotAllowedException {
+        if(this.prohibitionLeft > 0)
+            this.prohibitionLeft--;
+        else throw new NotAllowedException("No more prohibitions");
+        getIslands().get(idIsland).setProhibition(true);
     }
 
     private void restoreProhibition() {

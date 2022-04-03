@@ -14,7 +14,7 @@ import java.util.Random;
 public class NormalGame implements Game {
     //a reference to all the pieces contained in the game
     private final Bag bag;
-    private final ArrayList<GameComponent> islands;
+    private final ArrayList<Island> islands;
     private final ArrayList<GameComponent> clouds;
     //professors are handled as a 5 player array: professors[i]=j means that professor i (it follows the ordinal of enum) is
     //controlled by the player j
@@ -310,7 +310,7 @@ public class NormalGame implements Game {
     }
 
     @Override
-    public ArrayList<GameComponent> getIslands() {
+    public ArrayList<Island> getIslands() {
         return islands;
     }
 
