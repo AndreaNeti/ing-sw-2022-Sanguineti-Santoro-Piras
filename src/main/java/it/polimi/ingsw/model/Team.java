@@ -45,7 +45,7 @@ public class Team {
     }
 
     public void movePlayer(Player p, Team t) throws NotAllowedException {
-        if (p != null && t != null) {
+        if (p != null && t != null && !t.isFull()) {
             removePlayer(p);
             t.addPlayer(p);
         } else

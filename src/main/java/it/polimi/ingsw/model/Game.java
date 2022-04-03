@@ -28,7 +28,7 @@ public interface Game {
     void checkMerge(Island island);
     ArrayList<Player> getPlayers();
     ArrayList<Team> getTeams();
-    ArrayList<GameComponent> getIslands();
+    ArrayList<Island> getIslands();
     void initializeMotherNature(byte index);
     GameComponent getBag();
     Player [] getProfessor();
