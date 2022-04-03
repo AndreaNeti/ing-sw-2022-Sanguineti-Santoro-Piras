@@ -4,45 +4,28 @@ import it.polimi.ingsw.exceptions.NotEnoughStudentsException;
 import junit.framework.TestCase;
 import org.junit.Test;
 
-import java.util.Arrays;
-
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class GameComponentTest extends TestCase {
 
     GameComponent gameComponent = new Island();
     GameComponent gameComponent1 = new Cloud(3);
-
-    @Test
-    public void testGetStudents() {
-        byte[] array;
-        array = gameComponent.getStudents();
-        int i;
-        for (i = 0; i < array.length; i++)
-            assertEquals(array[i], 0);
-        assertEquals(i, 5);
-
-    }
-
-    @Test
+    
     public void testAddStudents() {
-        byte[] array;
         gameComponent.addStudents(Color.RED, (byte) 5);
         gameComponent.addStudents(Color.BLUE, (byte) 4);
         gameComponent.addStudents(Color.PINK, (byte) -3);
-        array = gameComponent.getStudents();
-        assertEquals(array[0], 5);
-        assertEquals(array[1], 4);
-        assertEquals(array[2], 0);
-        assertEquals(array[3], 0);
-        assertEquals(array[4], -3);
+        assertEquals(gameComponent.howManyStudents(Color.RED), 5);
+        assertEquals(gameComponent.howManyStudents(Color.BLUE), 4);
+        assertEquals(gameComponent.howManyStudents(Color.YELLOW), 0);
+        assertEquals(gameComponent.howManyStudents(Color.GREEN), 0);
+        assertEquals(gameComponent.howManyStudents(Color.PINK), -3);
         gameComponent.addStudents(Color.BLUE, (byte) 2);
-        array = gameComponent.getStudents();
-        assertEquals(array[0], 5);
-        assertEquals(array[1], 6);
-        assertEquals(array[2], 0);
-        assertEquals(array[3], 0);
-        assertEquals(array[4], -3);
+        assertEquals(gameComponent.howManyStudents(Color.RED), 5);
+        assertEquals(gameComponent.howManyStudents(Color.BLUE), 6);
+        assertEquals(gameComponent.howManyStudents(Color.YELLOW), 0);
+        assertEquals(gameComponent.howManyStudents(Color.GREEN), 0);
+        assertEquals(gameComponent.howManyStudents(Color.PINK), -3);
     }
 
     public void testMoveStudents() {
@@ -68,16 +51,16 @@ public class GameComponentTest extends TestCase {
         } catch (NotEnoughStudentsException ex1) {
             fail();
         }
-        assertEquals(gameComponent.getStudents()[0], 5);
-        assertEquals(gameComponent1.getStudents()[0], 0);
-        assertEquals(gameComponent.getStudents()[1], 9);
-        assertEquals(gameComponent1.getStudents()[1], 1);
-        assertEquals(gameComponent.getStudents()[2], 1);
-        assertEquals(gameComponent1.getStudents()[2], 1);
-        assertEquals(gameComponent.getStudents()[3], 3);
-        assertEquals(gameComponent1.getStudents()[3], 2);
-        assertEquals(gameComponent1.getStudents()[4], 1);
-        assertEquals(gameComponent.getStudents()[4], 5);
+        assertEquals(gameComponent.howManyStudents(Color.RED), 5);
+        assertEquals(gameComponent1.howManyStudents(Color.RED), 0);
+        assertEquals(gameComponent.howManyStudents(Color.BLUE), 9);
+        assertEquals(gameComponent1.howManyStudents(Color.BLUE), 1);
+        assertEquals(gameComponent.howManyStudents(Color.YELLOW), 1);
+        assertEquals(gameComponent1.howManyStudents(Color.YELLOW), 1);
+        assertEquals(gameComponent.howManyStudents(Color.GREEN), 3);
+        assertEquals(gameComponent1.howManyStudents(Color.GREEN), 2);
+        assertEquals(gameComponent1.howManyStudents(Color.PINK), 1);
+        assertEquals(gameComponent.howManyStudents(Color.PINK), 5);
 
 
     }

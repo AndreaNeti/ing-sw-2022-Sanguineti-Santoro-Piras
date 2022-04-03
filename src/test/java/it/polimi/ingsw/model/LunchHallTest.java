@@ -16,7 +16,7 @@ class LunchHallTest {
         LunchHall l=new LunchHall(p);
         assertEquals(p,l.getPlayer());
         l.addStudents(Color.GREEN,(byte)45);
-        assertEquals(l.getStudentSize(Color.GREEN),45);
+        assertEquals(l.howManyStudents(Color.GREEN),45);
 
     }
 

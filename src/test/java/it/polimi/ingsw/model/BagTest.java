@@ -13,7 +13,7 @@ class BagTest {
 
     @Test
     void constructorAndGetTest() {
-        assertEquals(bag.getStudentSize(), 10);
+        assertEquals(bag.howManyStudents(), 10);
     }
 
     GameComponent island = new Island();
@@ -26,11 +26,7 @@ class BagTest {
         } catch (UnexpectedValueException | EndGameException ex) {
             fail();
         }
-        int sum = 0;
-        for (byte color : island.getStudents()) {
-            sum += color;
-        }
-        assertEquals(sum,3);
+        assertEquals(island.howManyStudents(),3);
 
 
         assertThrows(UnexpectedValueException.class, ()-> bag.drawStudent(island,(byte)-4),"" +
@@ -41,12 +37,8 @@ class BagTest {
             fail();
         }
 
-        sum = 0;
-        for (byte color :island.getStudents()) {
-            sum += color;
-        }
-        assertEquals(sum,10);
-        assertEquals(bag.getStudentSize(),(byte) 24*5);
+        assertEquals(island.howManyStudents(),10);
+        assertEquals(bag.howManyStudents(),(byte) 24*5);
 
         assertThrows(EndGameException.class,()->bag.drawStudent(island,(byte) 121),"" +
                 "Not enough student in the bag should launche exception");

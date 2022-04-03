@@ -124,6 +124,7 @@ public class ExpertGame implements Game {
     @Override
     public void move(Color color, int idGameComponent, byte actionPhase) throws UnexpectedValueException, NotEnoughStudentsException {
         normalGame.move(color, idGameComponent, actionPhase);
+        // TODO add coins while moving to lunchHall, also find a way for charCards
     }
 
     @Override
@@ -195,7 +196,7 @@ public class ExpertGame implements Game {
                     if (c != ignoredColorInfluence) {
                         for (Player p : t.getPlayers()) {
                             if (p.equals(normalGame.getProfessor()[c.ordinal()]))
-                                influence += island.getStudentSize(c);
+                                influence += island.howManyStudents(c);
                         }
                     }
                 }
@@ -245,16 +246,16 @@ public class ExpertGame implements Game {
             currentOwner = getProfessor()[c.ordinal()];
 
             if (currentOwner != null)
-                max = currentOwner.getLunchHall().getStudentSize(c);
+                max = currentOwner.getLunchHall().howManyStudents(c);
             else max = 0;
             newOwner = currentOwner;
 
             for (Player p : getPlayers()) {
                 if (!p.equals(currentOwner)) {
-                    if (p.getLunchHall().getStudentSize(c) > max) {
-                        max = p.getLunchHall().getStudentSize(c);
+                    if (p.getLunchHall().howManyStudents(c) > max) {
+                        max = p.getLunchHall().howManyStudents(c);
                         newOwner = p;
-                    } else if (equalProfessorCalculation && p.equals(getCurrentPlayer()) && p.getLunchHall().getStudentSize(c) == max)
+                    } else if (equalProfessorCalculation && p.equals(getCurrentPlayer()) && p.getLunchHall().howManyStudents(c) == max)
                         newOwner = p;
                 }
             }
@@ -294,6 +295,8 @@ public class ExpertGame implements Game {
             coinsPlayer[getCurrentPlayer().getWizard().ordinal()] -= charCost;
             // add coins to game
             addCoins(charCost);
+            chosenCharacter = null;
+            inputsCharacter.clear();
         } else throw new UnexpectedValueException(); // canPlay returned false, needs a different amount of inputs
     }
 

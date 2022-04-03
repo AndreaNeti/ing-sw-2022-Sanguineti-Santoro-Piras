@@ -26,9 +26,26 @@ public abstract class GameComponent {
         destination.addStudents(color, number);
     }
 
-
-    public byte[] getStudents() {
-        return students.clone();
+    public void moveAll(GameComponent destination) {
+        for (Color c : Color.values()) {
+            try {
+                moveStudents(c, howManyStudents(c), destination);
+            } catch (NotEnoughStudentsException e) {
+                // should not call this
+                e.printStackTrace();
+            }
+        }
     }
 
+    public byte howManyStudents(Color c) {
+        return students[c.ordinal()];
+    }
+
+    public int howManyStudents() {
+        int sum = 0;
+        for (Color c : Color.values()) {
+            sum += students[c.ordinal()];
+        }
+        return sum;
+    }
 }

@@ -28,7 +28,7 @@ public class Bag extends GameComponent {
     public void drawStudent(GameComponent gameComponent, byte number) throws EndGameException, UnexpectedValueException {
         if (number < 0) throw new UnexpectedValueException();
         byte i = 0;
-        int studentsToDraw = Math.min(number, getStudentSize());
+        int studentsToDraw = Math.min(number, howManyStudents());
         if(studentsToDraw > 0) {
             List<Color> availableColors = new ArrayList<>(Arrays.asList(Color.values()));
             while (i < studentsToDraw) {
@@ -44,7 +44,7 @@ public class Bag extends GameComponent {
                 }
             }
             // if this becomes true it means that the bag is now empty
-            if (this.getStudentSize() == 0) {
+            if (howManyStudents() == 0) {
                 if (refilled)
                     throw new EndGameException(false);
                 else {
@@ -56,13 +56,5 @@ public class Bag extends GameComponent {
                 }
             }
         }
-    }
-
-    public int getStudentSize() {
-        int sum = 0;
-        for (byte color : getStudents()) {
-            sum += color;
-        }
-        return sum;
     }
 }

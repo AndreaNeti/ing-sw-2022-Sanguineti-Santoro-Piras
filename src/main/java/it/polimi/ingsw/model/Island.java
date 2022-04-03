@@ -1,7 +1,5 @@
 package it.polimi.ingsw.model;
 
-import it.polimi.ingsw.exceptions.NotEnoughStudentsException;
-
 public class Island extends GameComponent {
     private Team team;
     //prohibition is the representation of the NO Entry Tiles which  avoids the calcutaion of the influence on a island
@@ -28,25 +26,13 @@ public class Island extends GameComponent {
     //exactly how many students are present, and therefore it will never throw the exception
 
     public void merge(Island island) {
-        byte[] students = island.getStudents();
-
-        for (Color c : Color.values()) {
-            try {
-                island.moveStudents(c, students[c.ordinal()], this);
-            } catch (NotEnoughStudentsException ex) {
-                System.out.println("Error while merging islands");
-            }
-        }
+        island.moveAll(this);
         this.number += island.getNumber();
 
     }
 
     public byte getNumber() {
         return number;
-    }
-
-    public byte getStudentSize(Color c) {
-        return super.getStudents()[c.ordinal()];
     }
 
     public boolean getProhibition() {

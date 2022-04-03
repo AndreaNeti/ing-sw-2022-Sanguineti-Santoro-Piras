@@ -23,8 +23,8 @@ public class Char9 implements CharacterCard {
                 throw new UnexpectedValueException();
             }
 
-            if (game.getCurrentPlayer().getEntranceHall().getStudents()[entranceHallColor] == 0 ||
-                    game.getCurrentPlayer().getLunchHall().getStudents()[lunchHallColor] == 0) {
+            if (game.getCurrentPlayer().getEntranceHall().howManyStudents(Color.values()[entranceHallColor]) == 0 ||
+                    game.getCurrentPlayer().getLunchHall().howManyStudents(Color.values()[lunchHallColor]) == 0) {
                 throw new NotEnoughStudentsException();
             }
         }

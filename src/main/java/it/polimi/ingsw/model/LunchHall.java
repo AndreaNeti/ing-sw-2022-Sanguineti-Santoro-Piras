@@ -15,10 +15,6 @@ public class LunchHall extends GameComponent{
         super.addStudents(color, number);
          byte coins = (byte) ((number + getStudents()[color]%3) / 3
     }*/
-    //returns how many students are present in one row
-    public byte getStudentSize(Color color) {
-        return getStudents()[color.ordinal()];
-    }
 
     //returns the player associated with the board
     public Player getPlayer() {

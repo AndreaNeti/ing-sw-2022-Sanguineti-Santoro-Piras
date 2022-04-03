@@ -22,8 +22,8 @@ public class Char6 extends GameComponent implements CharacterCard {
                 throw new UnexpectedValueException();
             }
 
-            if (game.getCurrentPlayer().getEntranceHall().getStudents()[entranceHallColor] == 0 ||
-                    getStudents()[characterColor] == 0) {
+            if (game.getCurrentPlayer().getEntranceHall().howManyStudents(Color.values()[entranceHallColor]) == 0 ||
+                    howManyStudents(Color.values()[characterColor]) == 0) {
                 throw new NotEnoughStudentsException();
             }
 
@@ -32,7 +32,7 @@ public class Char6 extends GameComponent implements CharacterCard {
             characterColor = inputs.get(i);
             entranceHallColor = inputs.get(i + 1);
 
-            game.getCurrentPlayer().getEntranceHall().moveStudents(Color.values()[entranceHallColor], (byte) 1,this);
+            game.getCurrentPlayer().getEntranceHall().moveStudents(Color.values()[entranceHallColor], (byte) 1, this);
             this.moveStudents(Color.values()[characterColor], (byte) 1, game.getCurrentPlayer().getEntranceHall());
         }
     }

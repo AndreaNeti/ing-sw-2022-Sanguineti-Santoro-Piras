@@ -98,9 +98,7 @@ public class NormalGame implements Game {
             if (idGameComponent < 0 || idGameComponent >= clouds.size()) throw new UnexpectedValueException();
             //TODO check if the cloud has already been chosen and is empty
             GameComponent cloudSource = clouds.get(idGameComponent);
-            for (Color c : Color.values()) {
-                cloudSource.moveStudents(c, cloudSource.getStudents()[c.ordinal()], currentPlayer.getEntranceHall());
-            }
+            cloudSource.moveAll(currentPlayer.getEntranceHall());
         }
     }
 
@@ -145,7 +143,7 @@ public class NormalGame implements Game {
             int influence = 0;
             for (Color c : Color.values()) {
                 for (Player p : t.getPlayers()) {
-                    if (p.equals(professors[c.ordinal()])) influence += island.getStudentSize(c);
+                    if (p.equals(professors[c.ordinal()])) influence += island.howManyStudents(c);
                 }
             }
             if (island.getTeam() != null && t.equals(island.getTeam())) influence += island.getNumber();
@@ -183,13 +181,13 @@ public class NormalGame implements Game {
             currentOwner = professors[c.ordinal()];
 
             if (currentOwner != null)
-                max = currentOwner.getLunchHall().getStudentSize(c);
+                max = currentOwner.getLunchHall().howManyStudents(c);
             else max = 0;
             newOwner = currentOwner;
 
             for (Player p : players) {
-                if (!p.equals(currentOwner) && p.getLunchHall().getStudentSize(c) > max) {
-                    max = p.getLunchHall().getStudentSize(c);
+                if (!p.equals(currentOwner) && p.getLunchHall().howManyStudents(c) > max) {
+                    max = p.getLunchHall().howManyStudents(c);
                     newOwner = p;
                 }
             }
