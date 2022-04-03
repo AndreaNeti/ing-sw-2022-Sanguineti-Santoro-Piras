@@ -145,7 +145,6 @@ public class NormalGame implements Game {
                             currentPlayer = p;
                     }
                 }
-
             }
         } else {
             currentPlayer = players.get((players.indexOf(currentPlayer) + 1) % players.size());
