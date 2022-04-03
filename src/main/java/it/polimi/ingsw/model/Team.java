@@ -46,8 +46,8 @@ public class Team {
 
     public void movePlayer(Player p, Team t) throws NotAllowedException {
         if (p != null && t != null) {
-            t.addPlayer(p);
             removePlayer(p);
+            t.addPlayer(p);
         } else
             System.err.println("Player and Team cannot be null");
     }

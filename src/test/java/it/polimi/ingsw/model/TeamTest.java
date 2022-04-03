@@ -9,36 +9,39 @@ import java.net.Socket;
 import static org.junit.jupiter.api.Assertions.*;
 
 class TeamTest {
-    Team t=new Team(HouseColor.GREY,(byte)2,(byte) 6);
+    Team t = new Team(HouseColor.GREY, (byte) 2, (byte) 6);
+
     @Test
-    void constructorAndEqualsTest(){
-        Team t1=new Team(HouseColor.GREY,(byte)2,(byte) 6);
-        assertEquals(t,t1);
+    void constructorAndEqualsTest() {
+        Team t1 = new Team(HouseColor.GREY, (byte) 2, (byte) 6);
+        assertEquals(t, t1);
 
     }
-    Socket socket=new Socket();
-    Player p= new Player(socket, t,Wizard.AIRMAGE,"scemo" );
+
+    Socket socket = new Socket();
+    Player p = new Player(socket, t, Wizard.AIRMAGE, "scemo");
+
     @Test
     void addAndGetPlayerTest() {
         assertTrue(t.getPlayers().isEmpty());
-        try{
+        try {
             t.addPlayer(p);
             t.addPlayer(p);
-        }catch (NotAllowedException ex){
+        } catch (NotAllowedException ex) {
             fail();
         }
-        assertEquals(t.getPlayers().get(0),p);
+        assertEquals(t.getPlayers().get(0), p);
 
-        assertThrows(NotAllowedException.class,()->t.addPlayer(p),
+        assertThrows(NotAllowedException.class, () -> t.addPlayer(p),
                 "team is full,should launch exception");
 
     }
 
     @Test
     void removePlayer() {
-        try{
+        try {
             t.addPlayer(p);
-        }catch (NotAllowedException ex){
+        } catch (NotAllowedException ex) {
             fail();
         }
         try {
@@ -48,46 +51,45 @@ class TeamTest {
         }
         assertTrue(t.getPlayers().isEmpty());
 
-        assertThrows(NotAllowedException.class,()->t.removePlayer(p),
+        assertThrows(NotAllowedException.class, () -> t.removePlayer(p),
                 "player not present");
     }
 
 
     @Test
     void movePlayer() {
-        Team t1=new Team(HouseColor.WHITE,(byte)2,(byte) 6);
-        Player p1= new Player(socket, t,Wizard.ELECTROMAGE,"scemo1" );
+        Team t1 = new Team(HouseColor.WHITE, (byte) 2, (byte) 6);
+        Player p1 = new Player(socket, t, Wizard.ELECTROMAGE, "scemo1");
 
-        try{
+        try {
             t.addPlayer(p);
             t1.addPlayer(p1);
-        }catch (NotAllowedException ex){
+        } catch (NotAllowedException ex) {
             fail();
         }
-        assertThrows(NotAllowedException.class,()->t.movePlayer(p1,t1),
+        assertThrows(NotAllowedException.class, () -> t.movePlayer(p1, t1),
                 "player not present");
-        try{
-            t.movePlayer(p,t1);
+        try {
+            t.movePlayer(p, t1);
             assertTrue(t1.getPlayers().contains(p));
             assertTrue(t.getPlayers().isEmpty());
-        }catch (NotAllowedException ex){
+        } catch (NotAllowedException ex) {
             fail();
         }
 
     }
 
 
-
     @Test
     void removeAndAddTowersTest() {
-        try{
+        try {
             t.removeTowers((byte) 3);
             t.addTowers((byte) 2);
-        }catch (NotAllowedException | EndGameException ex1){
+        } catch (NotAllowedException | EndGameException ex1) {
             fail();
         }
-        assertEquals(t.getTowersLeft(),5);
-        assertThrows(EndGameException.class,()->t.removeTowers((byte)10),
+        assertEquals(t.getTowersLeft(), 5);
+        assertThrows(EndGameException.class, () -> t.removeTowers((byte) 10),
                 "tower <=0, should launch winner exception");
     }
 }

@@ -9,7 +9,7 @@ public class Cloud extends GameComponent{
         frontBack = (players != 3);
     }
 
-    public boolean isFrontBack() {
+    public boolean getFrontBack() {
         return frontBack;
     }
 }

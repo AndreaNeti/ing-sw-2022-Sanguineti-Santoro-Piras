@@ -9,11 +9,12 @@ public class LunchHall extends GameComponent{
         this.player = player;
     }
 
-    @Override
+    /*@Override
+    TODO Delete this add Student and implement the coins in expertGame
     public void addStudents(Color color, byte number) {
         super.addStudents(color, number);
-//      byte coins = (byte) ((number + getStudents()[color]%3) / 3
-    }
+         byte coins = (byte) ((number + getStudents()[color]%3) / 3
+    }*/
     //returns how many students are present in one row
     public byte getStudentSize(Color color) {
         return getStudents()[color.ordinal()];
