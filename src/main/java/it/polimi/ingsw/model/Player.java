@@ -21,7 +21,6 @@ public class Player implements Comparator<Player> {
     private final EntranceHall entranceHall;
     private final LunchHall lunchHall;
 
-
     public Player(Socket socket, Team team, Wizard wizard, String nickName) {
         this.socket = socket;
         this.team = team;

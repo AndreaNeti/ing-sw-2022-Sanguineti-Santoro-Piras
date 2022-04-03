@@ -35,14 +35,12 @@ public class NormalGame implements Game {
     private byte roundIndex;
     private boolean lastRound;
 
-    public NormalGame(byte numberOfPlayers, List<Wizard> wizards, List<String> nicknames) {
+    public NormalGame(byte numberOfPlayers, ArrayList<Team> teamList, ArrayList<Player> playerList) {
         Random rand = new Random(System.currentTimeMillis());
         this.bag = new Bag();
         this.islands = new ArrayList<>(12);
         for (int i = 0; i < 12; i++) {
             islands.add(new Island());
-
-
         }
 
         this.clouds = new ArrayList<>(numberOfPlayers);
@@ -52,14 +50,14 @@ public class NormalGame implements Game {
 
         this.professors = new Player[5];
         this.teams = new ArrayList<>(numberOfPlayers == 3 ? 3 : 2);
-
         this.players = new ArrayList<>(numberOfPlayers);
+        for(int i = 0; i < numberOfPlayers; i++) {
+            players.add(playerList.get(i));
+        }
+        for(int i = 0; i < (numberOfPlayers == 3 ? 3 : 2); i++) {
+            teams.add(teamList.get(i));
+        }
         this.playerOrder = new ArrayList<>(numberOfPlayers);
-        /*for (int i = 0; i < numberOfPlayers; i++) {
-            players.add(new Player(wizards.get(i), (byte) (numberOfPlayers == 3 ? 6 : 8), nicknames.get(i)));
-            playerOrder.add((byte) i);
-        }*/
-
         this.motherNaturePosition = (byte) rand.nextInt(12);
         this.currentPlayer = players.get(rand.nextInt(numberOfPlayers));
         this.currentPhase = false;
@@ -81,8 +79,8 @@ public class NormalGame implements Game {
     // checks if the islands before and after the selected island have the same team and in case merges them
     @Override
     public void checkMerge(Island island) {
-        Island islandBefore = (Island) islands.get((islands.indexOf(island) - 1) % islands.size());
-        Island islandAfter = (Island) islands.get((islands.indexOf(island) + 1) % islands.size());
+        Island islandBefore = islands.get((islands.indexOf(island) - 1) % islands.size());
+        Island islandAfter = islands.get((islands.indexOf(island) + 1) % islands.size());
         if (islandBefore.getTeam().equals(island.getTeam())) {
             island.merge(islandBefore);
             islands.remove(islandBefore);

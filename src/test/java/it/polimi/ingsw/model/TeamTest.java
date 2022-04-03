@@ -53,7 +53,6 @@ class TeamTest {
 
         assertThrows(NotAllowedException.class, () -> t.removePlayer(p),
                 "player not present");
-
     }
 
 
