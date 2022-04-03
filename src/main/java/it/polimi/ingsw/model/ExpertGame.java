@@ -274,6 +274,10 @@ public class ExpertGame implements Game {
 
     }
 
+    public GameComponent getBag() {
+        return normalGame.getBag();
+    }
+
     private void addCoins(byte coins) {
         this.coinsLeft += coins;
     }

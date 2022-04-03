@@ -234,7 +234,7 @@ public class NormalGame implements Game {
     @Override
     public void endGame() {
         Team winner = null;
-        byte minTowers = 0 ;
+        byte minTowers = 8;
         byte maxProfessors = 0;
         for (Team t: teams) {
             if(t.getTowersLeft() < minTowers) {
@@ -312,6 +312,11 @@ public class NormalGame implements Game {
     @Override
     public ArrayList<GameComponent> getIslands() {
         return islands;
+    }
+
+    @Override
+    public GameComponent getBag() {
+        return this.bag;
     }
 
     @Override

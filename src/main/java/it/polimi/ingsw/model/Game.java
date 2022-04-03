@@ -30,5 +30,6 @@ public interface Game {
     ArrayList<Team> getTeams();
     ArrayList<GameComponent> getIslands();
     void initializeMotherNature(byte index);
-     Player [] getProfessor();
+    GameComponent getBag();
+    Player [] getProfessor();
 }
