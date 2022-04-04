@@ -66,16 +66,25 @@ public class NormalGame implements Game {
     // checks if the islands before and after the selected island have the same team and in case merges them
     @Override
     public void checkMerge(Island island) throws EndGameException {
-        Island islandBefore = islands.get((islands.indexOf(island) - 1) % islands.size());
-        Island islandAfter = islands.get((islands.indexOf(island) + 1) % islands.size());
+        int islandBeforeIndx = (islands.indexOf(island) - 1) % islands.size();
+        int islandAfterIndx = (islands.indexOf(island) + 1) % islands.size();
+
+        Island islandBefore = islands.get(islandBeforeIndx);
+        Island islandAfter = islands.get(islandAfterIndx);
+
         if (islandBefore.getTeam().equals(island.getTeam())) {
             island.merge(islandBefore);
             islands.remove(islandBefore);
+            if (islandBeforeIndx < motherNaturePosition)
+                motherNaturePosition--;
         }
         if (islandAfter.getTeam().equals(island.getTeam())) {
             island.merge(islandAfter);
             islands.remove(islandAfter);
+            if (islandAfterIndx <= motherNaturePosition)
+                motherNaturePosition--;
         }
+        if (motherNaturePosition < 0) motherNaturePosition = 0;
         if (islands.size() <= 3)
             throw new EndGameException(true);
     }

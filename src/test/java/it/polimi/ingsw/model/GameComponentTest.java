@@ -10,7 +10,7 @@ public class GameComponentTest extends TestCase {
 
     GameComponent gameComponent = new Island();
     GameComponent gameComponent1 = new Cloud(3);
-    
+
     public void testAddStudents() {
         gameComponent.addStudents(Color.RED, (byte) 5);
         gameComponent.addStudents(Color.BLUE, (byte) 4);

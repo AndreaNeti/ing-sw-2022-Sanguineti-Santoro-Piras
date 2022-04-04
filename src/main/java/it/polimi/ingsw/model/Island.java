@@ -26,9 +26,10 @@ public class Island extends GameComponent {
     //exactly how many students are present, and therefore it will never throw the exception
 
     public void merge(Island island) {
-        island.moveAll(this);
-        this.number += island.getNumber();
-
+        if (island != null) {
+            island.moveAll(this);
+            this.number += island.getNumber();
+        } else System.err.println("Cannot merge to null island");
     }
 
     public byte getNumber() {
