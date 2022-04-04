@@ -166,9 +166,10 @@ public class Controller {
     }
 
     private void startGame() {
-        game = new NormalGame(numberOfPlayers, teams, playersList);
         if (isExpertGame)
-            game = new ExpertGame(game);
+            game = new ExpertGame(new NormalGame(numberOfPlayers, teams, playersList));
+        else
+            game = new NormalGame(numberOfPlayers, teams, playersList);
         Random rand = new Random(System.currentTimeMillis());
         currentPlayer = playersList.get(rand.nextInt(numberOfPlayers));
         game.setCurrentPlayer(currentPlayer);

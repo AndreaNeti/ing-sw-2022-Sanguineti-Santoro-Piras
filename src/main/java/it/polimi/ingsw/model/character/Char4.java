@@ -3,7 +3,6 @@ package it.polimi.ingsw.model.character;
 import it.polimi.ingsw.exceptions.NotAllowedException;
 import it.polimi.ingsw.exceptions.UnexpectedValueException;
 import it.polimi.ingsw.model.ExpertGame;
-import it.polimi.ingsw.model.Island;
 
 public class Char4 implements CharacterCard {
 
