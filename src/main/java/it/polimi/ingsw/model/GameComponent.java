@@ -1,5 +1,7 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.exceptions.GameException;
+import it.polimi.ingsw.exceptions.NotAllowedException;
 import it.polimi.ingsw.exceptions.NotEnoughStudentsException;
 
 public abstract class GameComponent {
@@ -13,7 +15,7 @@ public abstract class GameComponent {
         }
     }
 
-    public void addStudents(Color color, byte number) {
+    public void addStudents(Color color, byte number) throws NotAllowedException {
         students[color.ordinal()] += number;
     }
 
@@ -24,7 +26,7 @@ public abstract class GameComponent {
             throw new NotEnoughStudentsException();
     }
 
-    public void moveStudents(Color color, byte number, GameComponent destination) throws NotEnoughStudentsException {
+    public void moveStudents(Color color, byte number, GameComponent destination) throws NotEnoughStudentsException, NotAllowedException {
         this.removeStudents(color, number);
         destination.addStudents(color, number);
     }
@@ -33,7 +35,7 @@ public abstract class GameComponent {
         for (Color c : Color.values()) {
             try {
                 moveStudents(c, howManyStudents(c), destination);
-            } catch (NotEnoughStudentsException e) {
+            } catch (GameException e) {
                 // should not call this
                 e.printStackTrace();
             }

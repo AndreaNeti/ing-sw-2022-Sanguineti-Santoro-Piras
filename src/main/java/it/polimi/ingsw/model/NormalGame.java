@@ -125,8 +125,8 @@ public class NormalGame implements Game {
         } else if (actionPhase == 5) { // move students from cloud, destination is player entrance hall
             if (idGameComponent >= 0 || getComponentById(idGameComponent).howManyStudents() == 0)
                 throw new NotAllowedException("Can't move from the selected GameComponent");
-
-
+//            if (getCurrentPlayer().getEntranceHall().howManyStudents() >= 8)
+//                throw new NotAllowedException("Cannot add all students to entrance hall");
             GameComponent cloudSource = getComponentById(idGameComponent);
             cloudSource.moveAll(currentPlayer.getEntranceHall());
         } else {

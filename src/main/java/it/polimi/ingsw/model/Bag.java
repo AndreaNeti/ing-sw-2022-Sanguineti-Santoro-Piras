@@ -1,8 +1,6 @@
 package it.polimi.ingsw.model;
 
-import it.polimi.ingsw.exceptions.EndGameException;
-import it.polimi.ingsw.exceptions.NotEnoughStudentsException;
-import it.polimi.ingsw.exceptions.UnexpectedValueException;
+import it.polimi.ingsw.exceptions.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -18,7 +16,12 @@ public class Bag extends GameComponent {
         super();
 
         for (Color c : Color.values()) {
-            this.addStudents(c, (byte) 2);
+            try {
+                this.addStudents(c, (byte) 2);
+            } catch (NotAllowedException ex) {
+                ex.printStackTrace();
+                // should not call this
+            }
         }
         refilled = false;
 
@@ -29,7 +32,7 @@ public class Bag extends GameComponent {
         if (number < 0) throw new UnexpectedValueException();
         byte i = 0;
         int studentsToDraw = Math.min(number, howManyStudents());
-        if(studentsToDraw > 0) {
+        if (studentsToDraw > 0) {
             List<Color> availableColors = new ArrayList<>(Arrays.asList(Color.values()));
             while (i < studentsToDraw) {
                 Color color = availableColors.get(rand.nextInt(availableColors.size()));
@@ -39,22 +42,30 @@ public class Bag extends GameComponent {
                 } catch (NotEnoughStudentsException ex) {
                     // not extracting that color anymore
                     availableColors.remove(color);
-
-
+                } catch (NotAllowedException ex) {
+                    ex.printStackTrace();
+                    // should not call this
                 }
+
             }
-            // if this becomes true it means that the bag is now empty
-            if (howManyStudents() == 0) {
-                if (refilled)
-                    throw new EndGameException(false);
-                else {
-                    // refill the bag after island initialization
-                    refilled = true;
-                    for (Color c : Color.values()) {
+        }
+        // if this becomes true it means that the bag is now empty
+        if (howManyStudents() == 0) {
+            if (refilled)
+                throw new EndGameException(false);
+            else {
+                // refill the bag after island initialization
+                refilled = true;
+                for (Color c : Color.values()) {
+                    try {
                         this.addStudents(c, (byte) 24);
+                    } catch (NotAllowedException ex) {
+                        ex.printStackTrace();
+                        // should not call this
                     }
                 }
             }
         }
     }
 }
+
