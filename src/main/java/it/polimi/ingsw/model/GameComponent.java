@@ -7,7 +7,10 @@ public abstract class GameComponent {
 
 
     public GameComponent() {
-        this.students = new byte[]{0, 0, 0, 0, 0};
+        this.students = new byte[Color.values().length];
+        for (byte s : students) {
+            s = 0;
+        }
     }
 
     public void addStudents(Color color, byte number) {

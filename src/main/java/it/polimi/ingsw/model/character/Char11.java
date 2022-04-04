@@ -9,11 +9,17 @@ import it.polimi.ingsw.model.Player;
 public class Char11 implements CharacterCard {
 
     @Override
-    public void play(ExpertGame game) throws UnexpectedValueException, NotEnoughStudentsException {
+    public void play(ExpertGame game) throws UnexpectedValueException {
         int color = game.getCharacterInputs().get(0);
         if (color < 0 || color >= Color.values().length) throw new UnexpectedValueException();
         for (Player p : game.getPlayers()) {
-            p.getLunchHall().moveStudents(Color.values()[color], (byte) 3, game.getBag());
+            byte s = (byte) Math.min(3, p.getLunchHall().howManyStudents(Color.values()[color]));
+            try {
+                p.getLunchHall().moveStudents(Color.values()[color], s, game.getBag());
+            } catch (NotEnoughStudentsException e) {
+                e.printStackTrace();
+                //it shouldn't happen because we calculate the minimum value of the students of that color
+            }
         }
     }
 

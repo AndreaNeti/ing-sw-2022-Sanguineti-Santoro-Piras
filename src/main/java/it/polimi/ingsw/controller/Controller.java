@@ -186,7 +186,7 @@ public class Controller {
         } else {
             // action phase, follow the playerOrder
             index = playerOrder.get(roundIndex);
-            currentActionPhase = 0;
+            currentActionPhase = 1;
         }
 
         Random rand = new Random(System.currentTimeMillis());

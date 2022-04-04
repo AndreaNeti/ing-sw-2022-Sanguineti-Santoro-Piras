@@ -88,10 +88,6 @@ class PlayerTest {
     }
 
     @Test
-    void getNickName() {
-    }
-
-    @Test
     void getSocket() {
     }
 

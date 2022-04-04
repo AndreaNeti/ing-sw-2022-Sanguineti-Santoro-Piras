@@ -27,7 +27,7 @@ public class NormalGame implements Game {
         for (int i = 0; i < 12; i++) {
             islands.add(new Island());
         }
-
+        //TODO mettere gli studenti nelle entrance e inizializzare robe
         this.clouds = new ArrayList<>(numberOfPlayers);
         for (int i = 0; i < numberOfPlayers; i++) {
             clouds.add(new Cloud(numberOfPlayers));
@@ -64,8 +64,8 @@ public class NormalGame implements Game {
     }
 
     // checks if the islands before and after the selected island have the same team and in case merges them
-    @Override
-    public void checkMerge(Island island) throws EndGameException {
+
+    protected void checkMerge(Island island) throws EndGameException {
         int islandBeforeIndx = (islands.indexOf(island) - 1) % islands.size();
         int islandAfterIndx = (islands.indexOf(island) + 1) % islands.size();
 
@@ -87,28 +87,52 @@ public class NormalGame implements Game {
         if (motherNaturePosition < 0) motherNaturePosition = 0;
         if (islands.size() <= 3)
             throw new EndGameException(true);
+
+    }
+
+    private GameComponent getComponentById(int idGameComponent) throws NotAllowedException {
+        //0 is for the entranceHall, 1 is for the LunchHall, negative numbers are for clouds, and from 2 is islands.
+        if (idGameComponent < (-clouds.size()) || idGameComponent >= (islands.size() + 2)) {
+            throw new NotAllowedException("idGameComponent not valid");
+        }
+        if (idGameComponent < 0)
+            return clouds.get(-idGameComponent - 1);
+        if (idGameComponent == 0)
+            return currentPlayer.getEntranceHall();
+        if (idGameComponent == 1)
+            return currentPlayer.getLunchHall();
+        return islands.get(idGameComponent - 2);
+    }
+
+
+    protected void moveById(Color color, int idSource, int idDestination) throws NotAllowedException, NotEnoughStudentsException {
+        getComponentById(idSource).moveStudents(color, (byte) 1, getComponentById(idDestination));
     }
 
     @Override
-    public void move(Color color, int idGameComponent, byte actionPhase) throws UnexpectedValueException, NotEnoughStudentsException {
+
+    public void move(Color color, int idGameComponent, byte actionPhase) throws NotEnoughStudentsException, NotAllowedException {
         // moving students from player entrance hall
+
         if (actionPhase >= 1 && actionPhase <= 3) {
-            // idGameComponent: -1 -> lunchHall, 0 - 11 -> idIsland
-            if (idGameComponent < -1 || idGameComponent >= islands.size()) throw new UnexpectedValueException();
 
-            GameComponent destination;
-            if (idGameComponent == -1)
-                destination = currentPlayer.getLunchHall();
-            else destination = islands.get(idGameComponent);
+            if (idGameComponent <= 0)
+                throw new NotAllowedException("Can't move to the selected GameComponent");
 
-            currentPlayer.getEntranceHall().moveStudents(color, (byte) 1, destination);
-
+            moveById(color, 0, idGameComponent);
+            if (idGameComponent == 1)
+                calculateProfessor();
         } else if (actionPhase == 5) { // move students from cloud, destination is player entrance hall
-            if (idGameComponent < 0 || idGameComponent >= clouds.size()) throw new UnexpectedValueException();
-            //TODO check if the cloud has already been chosen and is empty
-            GameComponent cloudSource = clouds.get(idGameComponent);
+            if (idGameComponent >= 0 || getComponentById(idGameComponent).howManyStudents() == 0)
+                throw new NotAllowedException("Can't move from the selected GameComponent");
+
+
+            GameComponent cloudSource = getComponentById(idGameComponent);
             cloudSource.moveAll(currentPlayer.getEntranceHall());
+        } else {
+            throw new NotAllowedException("Wrong Phase");
         }
+
     }
 
     @Override
@@ -144,8 +168,8 @@ public class NormalGame implements Game {
         }
     }
 
-    @Override
-    public void calculateInfluence(Island island) throws EndGameException {
+
+    private void calculateInfluence(Island island) throws EndGameException {
         int maxInfluence = 0;
         Team winner = null;
         for (Team t : teams) {
@@ -179,8 +203,7 @@ public class NormalGame implements Game {
 
     // compares for each color the lunchHall of each player and then puts the player with the most students
     // in the professor array slot of the current color
-    @Override
-    public void calculateProfessor() {
+    protected void calculateProfessor() {
         byte max;
         Player currentOwner;
         // player with the maximum number of students for the current color
@@ -258,28 +281,24 @@ public class NormalGame implements Game {
         throw new NotExpertGameException();
     }
 
-    @Override
-    public ArrayList<Player> getPlayers() {
+
+    protected ArrayList<Player> getPlayers() {
         return players;
     }
 
-    @Override
-    public ArrayList<Team> getTeams() {
+    protected ArrayList<Team> getTeams() {
         return teams;
     }
 
-    @Override
-    public ArrayList<Island> getIslands() {
+    protected ArrayList<Island> getIslands() {
         return islands;
     }
 
-    @Override
-    public GameComponent getBag() {
+    protected GameComponent getBag() {
         return this.bag;
     }
 
-    @Override
-    public Player[] getProfessor() {
+    protected Player[] getProfessor() {
         return professors;
     }
 

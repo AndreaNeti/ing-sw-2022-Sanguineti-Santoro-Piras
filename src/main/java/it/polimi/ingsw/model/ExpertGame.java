@@ -10,7 +10,7 @@ public class ExpertGame implements Game {
     private final byte[] coinsPlayer;
     private final ArrayList<CharacterCard> characters;
     private final ArrayList<Integer> inputsCharacter;
-    private final Game normalGame;
+    private final NormalGame normalGame;
     private byte coinsLeft;
     private boolean[] playedCharacters;
     private boolean extraInfluence; //default false
@@ -22,7 +22,7 @@ public class ExpertGame implements Game {
     private CharacterCard chosenCharacter;
 
 
-    public ExpertGame(Game game) {
+    public ExpertGame(NormalGame game) {
         if (game != null) {
             this.normalGame = game;
         } else {
@@ -121,10 +121,18 @@ public class ExpertGame implements Game {
         return null;
     }
 
+    protected void moveById(Color color, int idSource, int idDestination) throws NotAllowedException, NotEnoughStudentsException {
+        //TODO add coins logic
+        if (idDestination == 1) {
+
+        }
+        normalGame.moveById(color, idSource, idDestination);
+    }
+
     @Override
-    public void move(Color color, int idGameComponent, byte actionPhase) throws UnexpectedValueException, NotEnoughStudentsException {
+    public void move(Color color, int idGameComponent, byte actionPhase) throws GameException {
         normalGame.move(color, idGameComponent, actionPhase);
-        // TODO add coins while moving to lunchHall, also find a way for charCards
+
     }
 
     @Override
@@ -152,22 +160,11 @@ public class ExpertGame implements Game {
         return normalGame.calculateWinner();
     }
 
-    @Override
-    public void checkMerge(Island island) throws EndGameException {
-        normalGame.checkMerge(island);
-    }
 
-    @Override
     public ArrayList<Player> getPlayers() {
         return normalGame.getPlayers();
     }
 
-    @Override
-    public ArrayList<Team> getTeams() {
-        return normalGame.getTeams();
-    }
-
-    @Override
     public Player[] getProfessor() {
         return normalGame.getProfessor();
     }
@@ -180,7 +177,6 @@ public class ExpertGame implements Game {
 
     //calculate expertInfluence(it checks all the boolean) and then calls checkMerge
 
-    @Override
     public void calculateInfluence(Island island) throws EndGameException {
         //prohibition is handled by prohibitionsLeft
         if (island.getProhibition()) {
@@ -235,7 +231,7 @@ public class ExpertGame implements Game {
         normalGame.moveMotherNature(moves);
     }
 
-    @Override
+    //TODO da agiiungere nella moveExpert
     public void calculateProfessor() {
         byte max;
         Player currentOwner;
@@ -324,32 +320,16 @@ public class ExpertGame implements Game {
         return characters.get(index);
     }
 
-    public boolean getExtraInfluence() {
-        return extraInfluence;
-    }
-
     public void setExtraInfluence(boolean extraInfluence) {
         this.extraInfluence = extraInfluence;
-    }
-
-    public boolean isTowerInfluence() {
-        return towerInfluence;
     }
 
     public void setTowerInfluence(boolean towerInfluence) {
         this.towerInfluence = towerInfluence;
     }
 
-    public boolean isExtraSteps() {
-        return extraSteps;
-    }
-
     public void setExtraSteps(boolean extraSteps) {
         this.extraSteps = extraSteps;
-    }
-
-    public Color getIgnoredColorInfluence() {
-        return ignoredColorInfluence;
     }
 
     public void setIgnoredColorInfluence(Color ignoredColorInfluence) {
@@ -364,7 +344,6 @@ public class ExpertGame implements Game {
         return inputsCharacter;
     }
 
-    @Override
     public ArrayList<Island> getIslands() {
         return normalGame.getIslands();
     }
