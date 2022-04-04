@@ -110,7 +110,7 @@ public class ExpertGame implements Game {
             case 10:
                 Char10 c10 = new Char10();
                 try {
-                    normalGame.drawStudents(c10, (byte) 6);
+                    drawStudents(c10, (byte) 6);
                 } catch (EndGameException e) {
                     e.printStackTrace();
                 }
@@ -121,17 +121,21 @@ public class ExpertGame implements Game {
         return null;
     }
 
-    protected void moveById(Color color, int idSource, int idDestination) throws NotAllowedException, NotEnoughStudentsException {
+    protected void moveById(Color color, int idSource, int idDestination) throws NotAllowedException, NotEnoughStudentsException, NotEnoughCoinsException {
         //TODO add coins logic
-        if (idDestination == 1) {
-
-        }
         normalGame.moveById(color, idSource, idDestination);
+        if (idDestination == 1 && getCurrentPlayer().getLunchHall().howManyStudents(color) % 3 == 0) {
+            addCoinsToPlayer(getCurrentPlayer(), (byte) 1);
+        }
     }
 
     @Override
     public void move(Color color, int idGameComponent, byte actionPhase) throws GameException {
         normalGame.move(color, idGameComponent, actionPhase);
+        if (actionPhase >= 1 && actionPhase <= 3 && idGameComponent == 1) {
+            if (getCurrentPlayer().getLunchHall().howManyStudents(color) % 3 == 0)
+                addCoinsToPlayer(getCurrentPlayer(), (byte) 1);
+        }
 
     }
 
