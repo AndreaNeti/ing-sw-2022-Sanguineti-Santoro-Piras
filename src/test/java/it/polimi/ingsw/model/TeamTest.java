@@ -10,16 +10,15 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class TeamTest {
     Team t = new Team(HouseColor.GREY, (byte) 2, (byte) 6);
+    Socket socket = new Socket();
+    Player p = new Player(socket, t, Wizard.AIRMAGE, "scemo", 7);
 
     @Test
     void constructorAndEqualsTest() {
         Team t1 = new Team(HouseColor.GREY, (byte) 2, (byte) 6);
         assertEquals(t, t1);
-        assertEquals(t1.getHouseColor(),HouseColor.GREY);
+        assertEquals(t1.getHouseColor(), HouseColor.GREY);
     }
-
-    Socket socket = new Socket();
-    Player p = new Player(socket, t, Wizard.AIRMAGE, "scemo");
 
     @Test
     void addAndGetPlayerTest() {
@@ -59,7 +58,7 @@ class TeamTest {
     @Test
     void movePlayer() {
         Team t1 = new Team(HouseColor.WHITE, (byte) 2, (byte) 6);
-        Player p1 = new Player(socket, t, Wizard.ELECTROMAGE, "scemo1");
+        Player p1 = new Player(socket, t, Wizard.ELECTROMAGE, "scemo1", 7);
 
         try {
             t.addPlayer(p);

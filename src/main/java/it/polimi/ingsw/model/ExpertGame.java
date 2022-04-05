@@ -122,7 +122,7 @@ public class ExpertGame implements Game {
     }
 
     protected void moveById(Color color, int idSource, int idDestination) throws GameException {
-        //TODO use this functino
+        //TODO use this functin
         normalGame.moveById(color, idSource, idDestination);
         if (idDestination == 1 && getCurrentPlayer().getLunchHall().howManyStudents(color) % 3 == 0) {
             addCoinsToPlayer(getCurrentPlayer(), (byte) 1);
@@ -183,8 +183,8 @@ public class ExpertGame implements Game {
 
     public void calculateInfluence(Island island) throws EndGameException {
         //prohibition is handled by prohibitionsLeft
-        if (island.getProhibition()) {
-            island.setProhibition(false);
+        if (island.getProhibitions() > 0) {
+            island.removeProhibition();
             restoreProhibition();
         } else {
 
@@ -235,7 +235,7 @@ public class ExpertGame implements Game {
         normalGame.moveMotherNature(moves);
     }
 
-    //TODO da agiiungere nella moveExpert
+    //TODO da agiungere nella moveExpert
     public void calculateProfessor() {
         byte max;
         Player currentOwner;
@@ -356,7 +356,7 @@ public class ExpertGame implements Game {
         if (this.prohibitionLeft > 0)
             this.prohibitionLeft--;
         else throw new NotAllowedException("No more prohibitions");
-        getIslands().get(idIsland).setProhibition(true);
+        getIslands().get(idIsland).addProhibitions((byte) 1);
     }
 
     private void restoreProhibition() {

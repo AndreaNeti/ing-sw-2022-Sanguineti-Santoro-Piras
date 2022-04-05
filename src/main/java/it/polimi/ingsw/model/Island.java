@@ -3,14 +3,14 @@ package it.polimi.ingsw.model;
 public class Island extends GameComponent {
     private Team team;
     //prohibition is the representation of the NO Entry Tiles which  avoids the calcutaion of the influence on a island
-    private boolean prohibition;
+    private byte prohibition;
     //it's the number of the island merged in this island
     private byte number;
 
     public Island() {
         super();
         team = null;
-        prohibition = false;
+        prohibition = 0;
         number = 1;
     }
 
@@ -29,6 +29,7 @@ public class Island extends GameComponent {
         if (island != null) {
             island.moveAll(this);
             this.number += island.getNumber();
+            addProhibitions(island.getProhibitions());
         } else System.err.println("Cannot merge to null island");
     }
 
@@ -36,11 +37,16 @@ public class Island extends GameComponent {
         return number;
     }
 
-    public boolean getProhibition() {
+    public byte getProhibitions() {
         return prohibition;
     }
 
-    public void setProhibition(boolean value) {
-        this.prohibition = value;
+    public void addProhibitions(byte value) {
+        prohibition += value;
+    }
+
+    public void removeProhibition() {
+        if (prohibition > 0)
+            prohibition--;
     }
 }

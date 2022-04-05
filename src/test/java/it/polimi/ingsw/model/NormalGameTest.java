@@ -2,20 +2,21 @@ package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.exceptions.NotAllowedException;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
 
 import java.net.Socket;
 import java.util.ArrayList;
 
-public class NormalGameTest{
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+public class NormalGameTest {
     NormalGame game;
     ArrayList<Team> teamList = new ArrayList<>(2);
     Team t1 = new Team(HouseColor.WHITE, (byte) 1, (byte) 8);
     Team t2 = new Team(HouseColor.BLACK, (byte) 1, (byte) 8);
     ArrayList<Player> players = new ArrayList<>(2);
     Socket socket1 = new Socket(), socket2 = new Socket();
-    Player p1 = new Player(socket1, t1, Wizard.AIRMAGE, "Franco");
-    Player p2 = new Player(socket2, t2, Wizard.ELECTROMAGE, "Gigi");
+    Player p1 = new Player(socket1, t1, Wizard.AIRMAGE, "Franco", 7);
+    Player p2 = new Player(socket2, t2, Wizard.ELECTROMAGE, "Gigi", 7);
 
 
     @Test

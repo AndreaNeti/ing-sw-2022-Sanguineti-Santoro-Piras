@@ -31,7 +31,7 @@ public class NormalGame implements Game {
         for (int i = 0; i < numberOfPlayers; i++) {
             clouds.add(new Cloud(numberOfPlayers));
         }
-        this.professors = new Player[5];
+        this.professors = new Player[Color.values().length];
         this.teams = new ArrayList<>(numberOfPlayers == 3 ? 3 : 2);
         this.players = new ArrayList<>(numberOfPlayers);
         for (int i = 0; i < numberOfPlayers; i++) {
