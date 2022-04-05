@@ -9,6 +9,9 @@ import it.polimi.ingsw.model.GameComponent;
 
 public class Char10 extends GameComponent implements CharacterCard {
 
+    public Char10(){
+        super(4);
+    }
     @Override
     public void play(ExpertGame game) throws GameException, EndGameException {
         moveStudents(Color.values()[game.getCharacterInputs().get(0)], (byte) 1, game.getCurrentPlayer().getLunchHall());

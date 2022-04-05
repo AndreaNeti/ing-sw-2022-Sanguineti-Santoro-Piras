@@ -7,6 +7,10 @@ import it.polimi.ingsw.exceptions.NotAllowedException;
 //It extends GameComponent which is the superclass of all the components that contains students.
 public class LunchHall extends GameComponent {
 
+    public LunchHall(int lunchHallSize) {
+        super(lunchHallSize);
+    }
+
     @Override
     public void moveStudents(Color color, byte number, GameComponent destination) throws GameException {
         boolean check = true;

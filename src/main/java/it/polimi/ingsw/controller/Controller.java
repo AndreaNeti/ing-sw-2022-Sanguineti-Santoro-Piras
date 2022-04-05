@@ -101,7 +101,8 @@ public class Controller {
 
     public void addPlayer(Socket s, String nickName) {
         int teamIndex = playersList.size() % teams.size(); // circular team selection
-        Player newPlayer = new Player(s, teams.get(teamIndex), Wizard.values()[playersList.size()], nickName);
+        int entranceHallSize = (teams.size() % 2 == 0) ? 7 : 9;
+        Player newPlayer = new Player(s, teams.get(teamIndex), Wizard.values()[playersList.size()], nickName, entranceHallSize);
         try {
             teams.get(teamIndex).addPlayer(newPlayer);
         } catch (NotAllowedException e) {

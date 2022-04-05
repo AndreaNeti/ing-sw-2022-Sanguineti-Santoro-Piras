@@ -1,6 +1,8 @@
 package it.polimi.ingsw.model;
 
 
-public class EntranceHall extends GameComponent{
-    //TODO remove class?
+public class EntranceHall extends GameComponent {
+    public EntranceHall(int entranceHallSize) {
+        super(entranceHallSize);
+    }
 }

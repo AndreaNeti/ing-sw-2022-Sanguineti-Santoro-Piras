@@ -10,6 +10,9 @@ import it.polimi.ingsw.model.GameComponent;
 import java.util.List;
 
 public class Char6 extends GameComponent implements CharacterCard {
+    public Char6() {
+        super(6);
+    }
 
     @Override
     public void play(ExpertGame game) throws GameException {

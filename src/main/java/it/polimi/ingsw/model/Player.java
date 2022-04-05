@@ -21,7 +21,7 @@ public class Player implements Comparator<Player> {
     private byte playedCard;
     private byte cardsLeft;
 
-    public Player(Socket socket, Team team, Wizard wizard, String nickName) {
+    public Player(Socket socket, Team team, Wizard wizard, String nickName, int entranceHallSize) {
         this.socket = socket;
         this.team = team;
         this.wizard = wizard;
@@ -29,8 +29,8 @@ public class Player implements Comparator<Player> {
         this.cardsAvailable = new boolean[]{true, true, true, true, true, true, true, true, true, true};
         this.cardsLeft = 10;
         this.playedCard = 0; // 0 = no card, else 1 to 10
-        this.entranceHall = new EntranceHall();
-        this.lunchHall = new LunchHall();
+        this.entranceHall = new EntranceHall(entranceHallSize);
+        this.lunchHall = new LunchHall(Color.values().length * 10);
     }
 
     public void useCard(byte card) throws UsedCardException, UnexpectedValueException, NotAllowedException, EndGameException {

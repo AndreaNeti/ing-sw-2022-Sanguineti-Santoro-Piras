@@ -12,6 +12,9 @@ import java.util.List;
 
 public class Char0 extends GameComponent implements CharacterCard {
 
+    public Char0(){
+        super(4);
+    }
     @Override
     public void play(ExpertGame game) throws GameException, EndGameException {
         List<Integer> inputs = game.getCharacterInputs();
