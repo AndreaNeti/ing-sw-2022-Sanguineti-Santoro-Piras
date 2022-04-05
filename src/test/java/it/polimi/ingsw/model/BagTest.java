@@ -9,7 +9,7 @@ import java.util.Arrays;
 import static org.junit.jupiter.api.Assertions.*;
 
 class BagTest {
-    Bag bag = new Bag();
+    Bag bag = new Bag((byte) 26);
 
     @Test
     void constructorAndGetTest() {

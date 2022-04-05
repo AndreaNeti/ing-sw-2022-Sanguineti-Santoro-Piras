@@ -1,6 +1,7 @@
 package it.polimi.ingsw.model.character;
 
 import it.polimi.ingsw.exceptions.EndGameException;
+import it.polimi.ingsw.exceptions.GameException;
 import it.polimi.ingsw.exceptions.NotEnoughStudentsException;
 import it.polimi.ingsw.model.Color;
 import it.polimi.ingsw.model.ExpertGame;
@@ -9,7 +10,7 @@ import it.polimi.ingsw.model.GameComponent;
 public class Char10 extends GameComponent implements CharacterCard {
 
     @Override
-    public void play(ExpertGame game) throws NotEnoughStudentsException, EndGameException {
+    public void play(ExpertGame game) throws GameException, EndGameException {
         moveStudents(Color.values()[game.getCharacterInputs().get(0)], (byte) 1, game.getCurrentPlayer().getLunchHall());
         game.drawStudents(this, (byte) 1);
     }

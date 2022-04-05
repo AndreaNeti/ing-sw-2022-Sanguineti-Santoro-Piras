@@ -6,16 +6,29 @@ import it.polimi.ingsw.exceptions.NotEnoughStudentsException;
 
 public abstract class GameComponent {
     private final byte[] students;
+    private int maxStudents;
 
-
-    public GameComponent() {
+    private GameComponent(int maxStudents, byte studentsPerColor) {
         this.students = new byte[Color.values().length];
         for (byte s : students) {
-            s = 0;
+            s = studentsPerColor;
         }
+        this.maxStudents = maxStudents;
     }
 
-    public void addStudents(Color color, byte number) throws NotAllowedException {
+    public GameComponent(int maxStudents) {
+        this(maxStudents, (byte) 0);
+    }
+
+    public GameComponent(byte studentsPerColor) {
+        this(Color.values().length * studentsPerColor, studentsPerColor);
+    }
+
+    public GameComponent() {
+        this(Integer.MAX_VALUE, (byte) 0);
+    }
+
+    private void addStudents(Color color, byte number) {
         students[color.ordinal()] += number;
     }
 
@@ -26,8 +39,9 @@ public abstract class GameComponent {
             throw new NotEnoughStudentsException();
     }
 
-    public void moveStudents(Color color, byte number, GameComponent destination) throws NotEnoughStudentsException, NotAllowedException {
-        this.removeStudents(color, number);
+    public void moveStudents(Color color, byte number, GameComponent destination) throws GameException {
+        if (canAddStudents()) this.removeStudents(color, number);
+        else throw new NotAllowedException("Can't add more students to this component");
         destination.addStudents(color, number);
     }
 
@@ -40,6 +54,10 @@ public abstract class GameComponent {
                 e.printStackTrace();
             }
         }
+    }
+
+    private boolean canAddStudents() {
+        return howManyStudents() < maxStudents;
     }
 
     public byte howManyStudents(Color c) {

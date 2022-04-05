@@ -29,8 +29,8 @@ public class Player implements Comparator<Player> {
         this.cardsAvailable = new boolean[]{true, true, true, true, true, true, true, true, true, true};
         this.cardsLeft = 10;
         this.playedCard = 0; // 0 = no card, else 1 to 10
-        this.entranceHall = new EntranceHall(this);
-        this.lunchHall = new LunchHall(this);
+        this.entranceHall = new EntranceHall();
+        this.lunchHall = new LunchHall();
     }
 
     public void useCard(byte card) throws UsedCardException, UnexpectedValueException, NotAllowedException, EndGameException {

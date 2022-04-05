@@ -121,8 +121,8 @@ public class ExpertGame implements Game {
         return null;
     }
 
-    protected void moveById(Color color, int idSource, int idDestination) throws NotAllowedException, NotEnoughStudentsException, NotEnoughCoinsException {
-        //TODO add coins logic
+    protected void moveById(Color color, int idSource, int idDestination) throws GameException {
+        //TODO use this functino
         normalGame.moveById(color, idSource, idDestination);
         if (idDestination == 1 && getCurrentPlayer().getLunchHall().howManyStudents(color) % 3 == 0) {
             addCoinsToPlayer(getCurrentPlayer(), (byte) 1);
@@ -350,11 +350,6 @@ public class ExpertGame implements Game {
 
     public ArrayList<Island> getIslands() {
         return normalGame.getIslands();
-    }
-
-    @Override
-    public void initializeMotherNature(byte index) {
-        normalGame.initializeMotherNature(index);
     }
 
     public void setProhibition(int idIsland) throws NotAllowedException {

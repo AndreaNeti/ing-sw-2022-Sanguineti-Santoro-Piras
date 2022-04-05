@@ -6,8 +6,6 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class NormalGame implements Game {
-    //a reference to all the pieces contained in the game
-    private final Bag bag;
     private final ArrayList<Island> islands;
     private final ArrayList<Cloud> clouds;
     //professors are handled as a 5 player array: professors[i]=j means that professor i (it follows the ordinal of enum) is
@@ -16,13 +14,14 @@ public class NormalGame implements Game {
     private final ArrayList<Team> teams;
     //all players
     private final ArrayList<Player> players;
+    //a reference to all the pieces contained in the game
+    private Bag bag;
     private byte motherNaturePosition;
     private Player currentPlayer;
 
 
     public NormalGame(byte numberOfPlayers, ArrayList<Team> teamList, ArrayList<Player> playerList) {
         Random rand = new Random(System.currentTimeMillis());
-        this.bag = new Bag();
         this.islands = new ArrayList<>(12);
         for (int i = 0; i < 12; i++) {
             islands.add(new Island());
@@ -41,7 +40,9 @@ public class NormalGame implements Game {
         for (int i = 0; i < (numberOfPlayers == 3 ? 3 : 2); i++) {
             teams.add(teamList.get(i));
         }
-        initializeMotherNature((byte) rand.nextInt(12));
+        this.bag = new Bag((byte) 2);
+        initializeMotherNature((byte) rand.nextInt(islands.size()));
+
         try {
             refillClouds();
         } catch (EndGameException e) {
@@ -49,8 +50,7 @@ public class NormalGame implements Game {
         }
     }
 
-    @Override
-    public void initializeMotherNature(byte index) {
+    private void initializeMotherNature(byte index) {
         this.motherNaturePosition = index;
         for (int i = 0; i < islands.size(); i++) {
             if (!(i == index || i == (index + 6) % 12)) {
@@ -61,6 +61,7 @@ public class NormalGame implements Game {
                 }
             }
         }
+        this.bag = new Bag((byte) 24);
     }
 
     // checks if the islands before and after the selected island have the same team and in case merges them
@@ -105,13 +106,13 @@ public class NormalGame implements Game {
     }
 
 
-    protected void moveById(Color color, int idSource, int idDestination) throws NotAllowedException, NotEnoughStudentsException {
+    protected void moveById(Color color, int idSource, int idDestination) throws GameException {
         getComponentById(idSource).moveStudents(color, (byte) 1, getComponentById(idDestination));
     }
 
     @Override
 
-    public void move(Color color, int idGameComponent, byte actionPhase) throws NotEnoughStudentsException, NotAllowedException {
+    public void move(Color color, int idGameComponent, byte actionPhase) throws GameException {
         // moving students from player entrance hall
 
         if (actionPhase >= 1 && actionPhase <= 3) {

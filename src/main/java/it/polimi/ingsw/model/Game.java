@@ -2,8 +2,6 @@ package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.exceptions.*;
 
-import java.util.ArrayList;
-
 public interface Game {
     void move(Color color, int idGameComponent, byte actionPhase) throws GameException;
 
@@ -11,9 +9,9 @@ public interface Game {
 
     void playCard(byte card) throws GameException, EndGameException;
 
-    void setCurrentPlayer(Player p);
-
     Player getCurrentPlayer();
+
+    void setCurrentPlayer(Player p);
 
     void moveMotherNature(int moves) throws NotAllowedException, EndGameException;
 
@@ -26,7 +24,4 @@ public interface Game {
     void chooseCharacter(int indexCharacter) throws NotExpertGameException, UnexpectedValueException, NotAllowedException;
 
     void playCharacter() throws GameException, EndGameException;
-
-    void initializeMotherNature(byte index);
-
 }

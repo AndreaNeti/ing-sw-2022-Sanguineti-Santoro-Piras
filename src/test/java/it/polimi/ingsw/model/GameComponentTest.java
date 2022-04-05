@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.exceptions.GameException;
 import it.polimi.ingsw.exceptions.NotEnoughStudentsException;
 import junit.framework.TestCase;
 import org.junit.Test;
@@ -48,7 +49,7 @@ public class GameComponentTest extends TestCase {
             gameComponent1.moveStudents(Color.YELLOW, (byte) 1, gameComponent);
             gameComponent1.moveStudents(Color.GREEN, (byte) 3, gameComponent);
             gameComponent1.moveStudents(Color.PINK, (byte) 2, gameComponent);
-        } catch (NotEnoughStudentsException ex1) {
+        } catch (GameException ex1) {
             fail();
         }
         assertEquals(gameComponent.howManyStudents(Color.RED), 5);

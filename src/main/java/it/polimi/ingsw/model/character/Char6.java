@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model.character;
 
+import it.polimi.ingsw.exceptions.GameException;
 import it.polimi.ingsw.exceptions.NotEnoughStudentsException;
 import it.polimi.ingsw.exceptions.UnexpectedValueException;
 import it.polimi.ingsw.model.Color;
@@ -11,7 +12,7 @@ import java.util.List;
 public class Char6 extends GameComponent implements CharacterCard {
 
     @Override
-    public void play(ExpertGame game) throws UnexpectedValueException, NotEnoughStudentsException {
+    public void play(ExpertGame game) throws GameException {
         List<Integer> inputs = game.getCharacterInputs();
         // input 0 and 2 and 4 are the colors of this character, input 1 and 3 and 5 are the colors of entrance hall students
         int characterColor, entranceHallColor;

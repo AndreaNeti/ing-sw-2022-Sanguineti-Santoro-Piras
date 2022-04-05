@@ -1,6 +1,9 @@
 package it.polimi.ingsw.model;
 
-import it.polimi.ingsw.exceptions.*;
+import it.polimi.ingsw.exceptions.EndGameException;
+import it.polimi.ingsw.exceptions.GameException;
+import it.polimi.ingsw.exceptions.NotEnoughStudentsException;
+import it.polimi.ingsw.exceptions.UnexpectedValueException;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -10,21 +13,9 @@ import java.util.Random;
 public class Bag extends GameComponent {
 
     private final Random rand;
-    private boolean refilled;
 
-    public Bag() {
-        super();
-
-        for (Color c : Color.values()) {
-            try {
-                this.addStudents(c, (byte) 2);
-            } catch (NotAllowedException ex) {
-                ex.printStackTrace();
-                // should not call this
-            }
-        }
-        refilled = false;
-
+    public Bag(byte studentsPerColor) {
+        super(studentsPerColor);
         rand = new Random(System.currentTimeMillis());
     }
 
@@ -42,29 +33,14 @@ public class Bag extends GameComponent {
                 } catch (NotEnoughStudentsException ex) {
                     // not extracting that color anymore
                     availableColors.remove(color);
-                } catch (NotAllowedException ex) {
-                    ex.printStackTrace();
-                    // should not call this
+                } catch (GameException e) {
+                    e.printStackTrace();
                 }
 
             }
-        }
-        // if this becomes true it means that the bag is now empty
-        if (howManyStudents() == 0) {
-            if (refilled)
+            // if this becomes true it means that the bag is now empty
+            if (howManyStudents() == 0)
                 throw new EndGameException(false);
-            else {
-                // refill the bag after island initialization
-                refilled = true;
-                for (Color c : Color.values()) {
-                    try {
-                        this.addStudents(c, (byte) 24);
-                    } catch (NotAllowedException ex) {
-                        ex.printStackTrace();
-                        // should not call this
-                    }
-                }
-            }
         }
     }
 }
