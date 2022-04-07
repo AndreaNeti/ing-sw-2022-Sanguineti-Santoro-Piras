@@ -122,7 +122,7 @@ public class ExpertGame extends NormalGame {
             island.removeProhibition();
             restoreProhibition();
         } else {
-
+            Team oldController = island.getTeam();
             int maxInfluence = 0;
             Team winner = null;
             for (Team t : getTeams()) {
@@ -145,6 +145,8 @@ public class ExpertGame extends NormalGame {
                 if (influence > maxInfluence) {
                     winner = t;
                     maxInfluence = influence;
+                } else if (influence == maxInfluence) {
+                    winner = oldController;
                 }
             }
             Team oldTeam = island.getTeam();
@@ -161,6 +163,17 @@ public class ExpertGame extends NormalGame {
         }
     }
 
+    @Override
+    public void setCurrentPlayer(Player p) {
+        this.extraInfluence = false;
+        this.towerInfluence = true;
+        this.extraSteps = false;
+        this.equalProfessorCalculation = false;
+        this.ignoredColorInfluence = null;
+        this.chosenCharacter = null;
+        this.inputsCharacter.clear();
+        super.setCurrentPlayer(p);
+    }
 
     @Override
     public void moveMotherNature(int moves) throws NotAllowedException, EndGameException {

@@ -3,6 +3,7 @@ package it.polimi.ingsw.model;
 import it.polimi.ingsw.exceptions.*;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class NormalGame implements Game {
@@ -143,6 +144,7 @@ public class NormalGame implements Game {
     }
 
     private void calculateInfluence(Island island) throws EndGameException {
+        Team oldController = island.getTeam();
         int maxInfluence = 0;
         Team winner = null;
         for (Team t : teams) {
@@ -157,7 +159,10 @@ public class NormalGame implements Game {
             if (influence > maxInfluence) {
                 winner = t;
                 maxInfluence = influence;
+            } else if (influence == maxInfluence) {
+                winner = oldController;
             }
+
         }
 
         Team oldTeam = island.getTeam();
@@ -203,13 +208,14 @@ public class NormalGame implements Game {
     // checks the team with fewer towers left and calculates its number of controlled professors.
     // if two teams have the same number of towers left the team with more professors controlled becomes the winner
     @Override
-    public Team calculateWinner() {
-        Team winner = null;
+    public ArrayList<Team> calculateWinner() {
+        ArrayList<Team> winners = new ArrayList<>();
         byte minTowers = 8;
         byte maxProfessors = 0;
         for (Team t : teams) {
             if (t.getTowersLeft() < minTowers) {
-                winner = t;
+                winners.clear();
+                winners.add(t);
                 byte numberOfProfessors = 0;
                 minTowers = t.getTowersLeft();
                 for (Color c : Color.values()) {
@@ -226,12 +232,15 @@ public class NormalGame implements Game {
                     }
                 }
                 if (numberOfProfessors > maxProfessors) {
-                    winner = t;
+                    winners.clear();
+                    winners.add(t);
                     maxProfessors = numberOfProfessors;
+                } else if (numberOfProfessors == maxProfessors) {
+                    winners.add(t);
                 }
             }
         }
-        return winner;
+        return winners;
     }
 
     @Override
@@ -262,15 +271,15 @@ public class NormalGame implements Game {
         cloudSource.moveAll(currentPlayer.getEntranceHall());
     }
 
-    protected Player getCurrentPlayer() {return this.currentPlayer;}
+    // TODO: pass by copy player, team etc..
+
+    protected Player getCurrentPlayer() { return this.currentPlayer; }
 
     protected ArrayList<Player> getPlayers() {
         return players;
     }
 
-    protected ArrayList<Team> getTeams() {
-        return teams;
-    }
+    protected ArrayList<Team> getTeams() { return teams; }
 
     protected ArrayList<Island> getIslands() {
         return islands;

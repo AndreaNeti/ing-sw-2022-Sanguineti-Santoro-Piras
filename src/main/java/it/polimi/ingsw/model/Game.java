@@ -2,6 +2,8 @@ package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.exceptions.*;
 
+import java.util.ArrayList;
+
 public interface Game {
     void move(Color color, int gameComponentSource, int gameComponentDestination) throws GameException;
 
@@ -11,7 +13,7 @@ public interface Game {
 
     void moveMotherNature(int moves) throws NotAllowedException, EndGameException;
 
-    Team calculateWinner();
+    ArrayList<Team> calculateWinner();
 
     void refillClouds() throws EndGameException;
 

@@ -87,7 +87,7 @@ public class Controller {
     }
 
     public void moveMotherNature(int i) {
-        if (isPlanificationPhase || actionPhase != 4) {
+        if (isPlanificationPhase || actionPhase != 2) {
             HandleError(new NotAllowedException("Not allowed in this phase"));
             return;
         }
@@ -231,8 +231,16 @@ public class Controller {
     }
 
     private void endGame() {
-        Team winner = game.calculateWinner();
-        System.out.println("Game ended, winner is " + winner);
+        ArrayList<Team> winners = game.calculateWinner();
+        StringBuilder message = new StringBuilder("Game ended: ");
+        byte i;
+        for (i = 0; i < winners.size() - 1; i++) {
+            message.append(winners.get(i).toString()).append(", ");
+        }
+        message.append(winners.get(i).toString()).append(" won the game!!!");
+        System.out.println(message);
+        if(winners.size() == 3)
+            System.out.println("Paolino tvb <3");
     }
 
     private void HandleError(GameException e) {

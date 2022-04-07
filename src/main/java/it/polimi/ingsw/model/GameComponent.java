@@ -40,19 +40,25 @@ public abstract class GameComponent {
     }
 
     public void moveStudents(Color color, byte number, GameComponent destination) throws GameException {
-        if (canAddStudents()) this.removeStudents(color, number);
-        else throw new NotAllowedException("Can't add more students to this component");
-        destination.addStudents(color, number);
+        if (number != 0) {
+            if (canAddStudents()) this.removeStudents(color, number);
+            else throw new NotAllowedException("Can't add more students to this component");
+            destination.addStudents(color, number);
+        }
     }
 
     public void moveAll(GameComponent destination) {
-        for (Color c : Color.values()) {
-            try {
-                moveStudents(c, howManyStudents(c), destination);
-            } catch (GameException e) {
-                // should not call this
-                e.printStackTrace();
+        if(destination.howManyStudents() != 0 ) {
+            for (Color c : Color.values()) {
+                try {
+                    moveStudents(c, howManyStudents(c), destination);
+                } catch (GameException e) {
+                    // should not call this
+                    e.printStackTrace();
+                }
             }
+        } else {
+            System.out.println("Bravo, ti sei impegnato per fare questa cacatoa. Trovati qualcos'altro da fare");
         }
     }
 

@@ -97,6 +97,6 @@ public class Team {
 
     @Override
     public String toString() {
-        return houseColor.name() + " team";
+        return houseColor.name().toLowerCase() + " team";
     }
 }
