@@ -1,11 +1,8 @@
-package it.polimi.ingsw.model.character;
+package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.exceptions.GameException;
 import it.polimi.ingsw.exceptions.NotEnoughStudentsException;
 import it.polimi.ingsw.exceptions.UnexpectedValueException;
-import it.polimi.ingsw.model.Color;
-import it.polimi.ingsw.model.ExpertGame;
-import it.polimi.ingsw.model.Player;
 
 public class Char11 implements CharacterCard {
 

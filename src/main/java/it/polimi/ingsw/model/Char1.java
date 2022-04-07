@@ -1,22 +1,20 @@
-package it.polimi.ingsw.model.character;
+package it.polimi.ingsw.model;
 
-import it.polimi.ingsw.model.ExpertGame;
-
-public class Char3 implements CharacterCard {
+public class Char1 implements CharacterCard {
 
     @Override
     public void play(ExpertGame game) {
-        game.setExtraSteps(true);
+        game.setEqualProfessorCalculation(true);
     }
 
     @Override
     public byte getCost() {
-        return 1;
+        return 2;
     }
 
     @Override
     public int getId() {
-        return 3;
+        return 1;
     }
 
     @Override
@@ -27,7 +25,7 @@ public class Char3 implements CharacterCard {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Char3)) return false;
+        if (!(o instanceof Char1)) return false;
         CharacterCard c = (CharacterCard) o;
         return getId() == c.getId();
     }

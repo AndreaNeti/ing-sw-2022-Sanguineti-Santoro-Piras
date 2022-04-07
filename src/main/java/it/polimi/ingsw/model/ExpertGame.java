@@ -1,18 +1,16 @@
 package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.exceptions.*;
-import it.polimi.ingsw.model.character.*;
 
 import java.util.ArrayList;
 import java.util.Random;
 
-public class ExpertGame implements Game {
+public class ExpertGame extends NormalGame {
     private final byte[] coinsPlayer;
     private final ArrayList<CharacterCard> characters;
     private final ArrayList<Integer> inputsCharacter;
-    private final NormalGame normalGame;
+    private final boolean[] playedCharacters;
     private byte coinsLeft;
-    private boolean[] playedCharacters;
     private boolean extraInfluence; //default false
     private boolean towerInfluence;// default true
     private boolean extraSteps; //default false
@@ -22,15 +20,8 @@ public class ExpertGame implements Game {
     private CharacterCard chosenCharacter;
 
 
-    public ExpertGame(NormalGame game) {
-        if (game != null) {
-            this.normalGame = game;
-        } else {
-            System.err.println("Game cannot be null");
-            throw new NullPointerException();
-        }
-
-        int numberOfPlayers = normalGame.getPlayers().size();
+    public ExpertGame(byte numberOfPlayers, ArrayList<Team> teamList, ArrayList<Player> playerList) {
+        super(numberOfPlayers, teamList, playerList);
         this.coinsLeft = (byte) (20 - numberOfPlayers);
         this.coinsPlayer = new byte[numberOfPlayers];
         for (byte i = 0; i < numberOfPlayers; i++)
@@ -38,30 +29,25 @@ public class ExpertGame implements Game {
 
         characters = new ArrayList<>(3);
         Random rand = new Random(System.currentTimeMillis());
-        playedCharacters = new boolean[]{false, false, false};
-        int characterIndex;
+        int characterIndex = rand.nextInt(12);
         byte i = 0;
-        //mette tre carte diverse in characters
-        boolean alreadyPresent;
+        ArrayList<Integer> selectedCharacters = new ArrayList<>(3);
+        CharacterCard c;
         while (i < 3) {
-            alreadyPresent = false;
-            characterIndex = rand.nextInt(12);
-            for (CharacterCard c : characters) {
-                if (c.getId() == characterIndex) {
-                    alreadyPresent = true;
-                    break; // :D
-                }
+            while (selectedCharacters.contains(characterIndex)) {
+                characterIndex = rand.nextInt(12);
             }
-            if (!alreadyPresent) {
-                CharacterCard c = factoryMethod(characterIndex);
+            try {
+                c = factoryMethod(characterIndex);
                 characters.add(c);
+                selectedCharacters.add(c.getId());
                 i++;
-
+            } catch (UnexpectedValueException e) {
+                e.printStackTrace();
             }
         }
 
         playedCharacters = new boolean[]{false, false, false};
-
         this.extraInfluence = false;
         this.towerInfluence = true;
         this.extraSteps = false;
@@ -72,13 +58,12 @@ public class ExpertGame implements Game {
         this.inputsCharacter = null;
     }
 
-    private CharacterCard factoryMethod(int i) {
-
+    private CharacterCard factoryMethod(int i) throws UnexpectedValueException {
         switch (i) {
             case 0:
                 Char0 c0 = new Char0();
                 try {
-                    normalGame.drawStudents(c0, (byte) 4);
+                    drawStudents(c0, (byte) 4);
                 } catch (EndGameException e) {
                     e.printStackTrace();
                 }
@@ -96,7 +81,7 @@ public class ExpertGame implements Game {
             case 6:
                 Char6 c6 = new Char6();
                 try {
-                    normalGame.drawStudents(c6, (byte) 6);
+                    drawStudents(c6, (byte) 6);
                 } catch (EndGameException e) {
                     e.printStackTrace();
                 }
@@ -118,66 +103,16 @@ public class ExpertGame implements Game {
             case 11:
                 return new Char11();
         }
-        return null;
+        throw new UnexpectedValueException();
     }
 
-    protected void moveById(Color color, int idSource, int idDestination) throws GameException {
-        //TODO use this functin
-        normalGame.moveById(color, idSource, idDestination);
-        if (idDestination == 1 && getCurrentPlayer().getLunchHall().howManyStudents(color) % 3 == 0) {
-            addCoinsToPlayer(getCurrentPlayer(), (byte) 1);
+    @Override
+    public void move(Color color, int gameComponentSource, int gameComponentDestination) throws GameException {
+        super.move(color, gameComponentSource, gameComponentDestination);
+        if (gameComponentDestination == 1 && getCurrentPlayer().getLunchHall().howManyStudents(color) % 3 == 0) {
+            addCoinToPlayer(getCurrentPlayer());
         }
     }
-
-    @Override
-    public void move(Color color, int idGameComponent, byte actionPhase) throws GameException {
-        normalGame.move(color, idGameComponent, actionPhase);
-        if (actionPhase >= 1 && actionPhase <= 3 && idGameComponent == 1) {
-            if (getCurrentPlayer().getLunchHall().howManyStudents(color) % 3 == 0)
-                addCoinsToPlayer(getCurrentPlayer(), (byte) 1);
-        }
-
-    }
-
-    @Override
-    public void drawStudents(GameComponent gameComponent, byte number) throws EndGameException {
-        normalGame.drawStudents(gameComponent, number);
-    }
-
-    @Override
-    public Player getCurrentPlayer() {
-        return normalGame.getCurrentPlayer();
-    }
-
-    @Override
-    public void setCurrentPlayer(Player p) {
-        normalGame.setCurrentPlayer(p);
-    }
-
-    @Override
-    public void playCard(byte card) throws GameException, EndGameException {
-        normalGame.playCard(card);
-    }
-
-    @Override
-    public Team calculateWinner() {
-        return normalGame.calculateWinner();
-    }
-
-
-    public ArrayList<Player> getPlayers() {
-        return normalGame.getPlayers();
-    }
-
-    public Player[] getProfessor() {
-        return normalGame.getProfessor();
-    }
-
-    @Override
-    public void refillClouds() throws EndGameException {
-        normalGame.refillClouds();
-    }
-
 
     //calculate expertInfluence(it checks all the boolean) and then calls checkMerge
 
@@ -190,12 +125,12 @@ public class ExpertGame implements Game {
 
             int maxInfluence = 0;
             Team winner = null;
-            for (Team t : normalGame.getTeams()) {
+            for (Team t : getTeams()) {
                 int influence = 0;
                 for (Color c : Color.values()) {
                     if (c != ignoredColorInfluence) {
                         for (Player p : t.getPlayers()) {
-                            if (p.equals(normalGame.getProfessor()[c.ordinal()]))
+                            if (p.equals(getProfessor()[c.ordinal()]))
                                 influence += island.howManyStudents(c);
                         }
                     }
@@ -203,7 +138,7 @@ public class ExpertGame implements Game {
                 if (island.getTeam() != null && towerInfluence && t.equals(island.getTeam()))
                     influence += island.getNumber();
 
-                if (extraInfluence && normalGame.getCurrentPlayer().getTeam().equals(t)) {
+                if (extraInfluence && getCurrentPlayer().getTeam().equals(t)) {
                     influence += 2;
                 }
 
@@ -221,7 +156,7 @@ public class ExpertGame implements Game {
                     System.err.println(ex.getErrorMessage());
                 }
                 winner.removeTowers(island.getNumber());
-                normalGame.checkMerge(island);
+                checkMerge(island);
             }
         }
     }
@@ -230,12 +165,10 @@ public class ExpertGame implements Game {
     @Override
     public void moveMotherNature(int moves) throws NotAllowedException, EndGameException {
         if (extraSteps)
-            if (moves + 2 > normalGame.getCurrentPlayer().getPlayedCardMoves())
-                throw new NotAllowedException("Moves can't be higher than the value of the card");
-        normalGame.moveMotherNature(moves);
+            moves += 2;
+        super.moveMotherNature(moves);
     }
 
-    //TODO da agiungere nella moveExpert
     public void calculateProfessor() {
         byte max;
         Player currentOwner;
@@ -263,20 +196,13 @@ public class ExpertGame implements Game {
         }
     }
 
-    private void addCoinsToPlayer(Player player, byte coins) throws NotEnoughCoinsException {
+    private void addCoinToPlayer(Player player) throws NotEnoughCoinsException {
         if (coinsLeft == 0) throw new NotEnoughCoinsException();
-        else if (coinsLeft < coins) {
-            coinsPlayer[getPlayers().indexOf(player)] += coinsLeft;
-            coinsLeft = 0;
-        } else {
-            coinsPlayer[getPlayers().indexOf(player)] += coins;
-            coinsLeft -= coins;
+        else {
+            coinsPlayer[getPlayers().indexOf(player)]++;
+            coinsLeft--;
         }
 
-    }
-
-    public GameComponent getBag() {
-        return normalGame.getBag();
     }
 
     private void addCoins(byte coins) {
@@ -301,7 +227,7 @@ public class ExpertGame implements Game {
     }
 
     @Override
-    public void chooseCharacter(int indexCharacter) throws UnexpectedValueException, NotAllowedException {
+    public void chooseCharacter(int indexCharacter) throws GameException {
         if (indexCharacter < 0 || indexCharacter >= characters.size()) throw new UnexpectedValueException();
         CharacterCard characterToPlay = characters.get(indexCharacter);
         byte charCost = characterToPlay.getCost();
@@ -314,7 +240,7 @@ public class ExpertGame implements Game {
     }
 
     @Override
-    public void setCharacterInput(int input) throws NotAllowedException {
+    public void setCharacterInput(int input) throws GameException {
         if (chosenCharacter != null)
             inputsCharacter.add(input);
         else throw new NotAllowedException("There is no played character card");
@@ -346,10 +272,6 @@ public class ExpertGame implements Game {
 
     public ArrayList<Integer> getCharacterInputs() {
         return inputsCharacter;
-    }
-
-    public ArrayList<Island> getIslands() {
-        return normalGame.getIslands();
     }
 
     public void setProhibition(int idIsland) throws NotAllowedException {

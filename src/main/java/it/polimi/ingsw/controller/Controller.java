@@ -21,9 +21,9 @@ public class Controller {
     private Player currentPlayer;
     // current phase is true in the planification phase, false during the action phase
     private boolean isPlanificationPhase;
-    /* it's a number that goes from 1 to 5, it represents the subsection of the action phase
-    1,2,3-move 1 students; 4-move mother nature(calculate influence and merge); 5-drawStudent from cloud*/
-    private byte currentActionPhase;
+    /* it's a number that goes from 1 to 3, it represents the subsection of the action phase
+    1-move 3-4 students; 2-move mother nature(calculate influence and merge); 3-drawStudent from cloud*/
+    private byte actionPhase;
     //it's the index of playerOrder: it goes from 0 to players.size() and when it's 3 it changes phase
     private byte roundIndex;
     private boolean lastRound;
@@ -44,7 +44,7 @@ public class Controller {
         }
         this.messages = new HashMap<>();
         this.isPlanificationPhase = false;
-        this.currentActionPhase = 0;
+        this.actionPhase = 0;
         this.roundIndex = 0;
         this.lastRound = false;
     }
@@ -55,7 +55,15 @@ public class Controller {
             return;
         }
         try {
-            game.move(color, idGameComponent, currentActionPhase);
+            if (actionPhase == 1) {
+                if (idGameComponent <= 0)
+                    throw new NotAllowedException("Can't move to the selected GameComponent");
+                game.move(color, 0, idGameComponent);
+            } else if (actionPhase == 3) { // move students from cloud, destination is player entrance hall
+                game.moveFromCloud(idGameComponent);
+            } else {
+                throw new NotAllowedException("Wrong Phase");
+            }
         } catch (GameException e) {
             HandleError(e);
         }
@@ -72,14 +80,14 @@ public class Controller {
         } catch (GameException e) {
             HandleError(e);
         } catch (EndGameException e) {
-            if (e.isEndIstantly()) endGame();
+            if (e.isEndInstantly()) endGame();
             else lastRound = true;
         }
         nextPlayer();
     }
 
     public void moveMotherNature(int i) {
-        if (isPlanificationPhase || currentActionPhase != 4) {
+        if (isPlanificationPhase || actionPhase != 4) {
             HandleError(new NotAllowedException("Not allowed in this phase"));
             return;
         }
@@ -88,7 +96,7 @@ public class Controller {
         } catch (NotAllowedException e) {
             HandleError(e);
         } catch (EndGameException e) {
-            if (e.isEndIstantly()) endGame();
+            if (e.isEndInstantly()) endGame();
             else lastRound = true;
         }
         nextActionPhase();
@@ -161,14 +169,14 @@ public class Controller {
         } catch (GameException e) {
             HandleError(e);
         } catch (EndGameException e) {
-            if (e.isEndIstantly()) endGame();
+            if (e.isEndInstantly()) endGame();
             else lastRound = true;
         }
     }
 
     private void startGame() {
         if (isExpertGame)
-            game = new ExpertGame(new NormalGame(numberOfPlayers, teams, playersList));
+            game = new ExpertGame(numberOfPlayers, teams, playersList);
         else
             game = new NormalGame(numberOfPlayers, teams, playersList);
         Random rand = new Random(System.currentTimeMillis());
@@ -187,7 +195,7 @@ public class Controller {
         } else {
             // action phase, follow the playerOrder
             index = playerOrder.get(roundIndex);
-            currentActionPhase = 1;
+            actionPhase = 1;
         }
 
         Random rand = new Random(System.currentTimeMillis());
@@ -208,7 +216,7 @@ public class Controller {
                 try {
                     game.refillClouds();
                 } catch (EndGameException e) {
-                    if (e.isEndIstantly()) endGame();
+                    if (e.isEndInstantly()) endGame();
                     else lastRound = true;
                 }
             }
@@ -218,8 +226,8 @@ public class Controller {
 
     private void nextActionPhase() {
         // pass to new player
-        if (currentActionPhase >= 5) nextPlayer();
-        else currentActionPhase++;
+        if (actionPhase >= 3) nextPlayer();
+        else actionPhase++;
     }
 
     private void endGame() {

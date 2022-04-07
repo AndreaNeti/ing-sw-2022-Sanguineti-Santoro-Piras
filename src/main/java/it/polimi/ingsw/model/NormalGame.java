@@ -26,7 +26,6 @@ public class NormalGame implements Game {
         for (int i = 0; i < 12; i++) {
             islands.add(new Island());
         }
-        //TODO mettere gli studenti nelle entrance e inizializzare robe
         this.clouds = new ArrayList<>(numberOfPlayers);
         for (int i = 0; i < numberOfPlayers; i++) {
             clouds.add(new Cloud(numberOfPlayers));
@@ -45,10 +44,14 @@ public class NormalGame implements Game {
 
         try {
             refillClouds();
+            for (Player p : playerList)
+                drawStudents(p.getEntranceHall(), (byte) p.getEntranceHall().getMaxStudents());
         } catch (EndGameException e) {
             e.printStackTrace();
         }
     }
+
+    // checks if the islands before and after the selected island have the same team and in case merges them
 
     private void initializeMotherNature(byte index) {
         this.motherNaturePosition = index;
@@ -57,32 +60,30 @@ public class NormalGame implements Game {
                 try {
                     drawStudents(islands.get(i), (byte) 1);
                 } catch (EndGameException e) {
-                    e.printStackTrace();
+                    System.out.println("Initialized islands");
                 }
             }
         }
         this.bag = new Bag((byte) 24);
     }
 
-    // checks if the islands before and after the selected island have the same team and in case merges them
-
     protected void checkMerge(Island island) throws EndGameException {
-        int islandBeforeIndx = (islands.indexOf(island) - 1) % islands.size();
-        int islandAfterIndx = (islands.indexOf(island) + 1) % islands.size();
+        int islandBeforeIndex = (islands.indexOf(island) - 1) % islands.size();
+        int islandAfterIndex = (islands.indexOf(island) + 1) % islands.size();
 
-        Island islandBefore = islands.get(islandBeforeIndx);
-        Island islandAfter = islands.get(islandAfterIndx);
+        Island islandBefore = islands.get(islandBeforeIndex);
+        Island islandAfter = islands.get(islandAfterIndex);
 
         if (islandBefore.getTeam().equals(island.getTeam())) {
             island.merge(islandBefore);
             islands.remove(islandBefore);
-            if (islandBeforeIndx < motherNaturePosition)
+            if (islandBeforeIndex < motherNaturePosition)
                 motherNaturePosition--;
         }
         if (islandAfter.getTeam().equals(island.getTeam())) {
             island.merge(islandAfter);
             islands.remove(islandAfter);
-            if (islandAfterIndx <= motherNaturePosition)
+            if (islandAfterIndex <= motherNaturePosition)
                 motherNaturePosition--;
         }
         if (motherNaturePosition < 0) motherNaturePosition = 0;
@@ -105,39 +106,14 @@ public class NormalGame implements Game {
         return islands.get(idGameComponent - 2);
     }
 
-
-    protected void moveById(Color color, int idSource, int idDestination) throws GameException {
-        getComponentById(idSource).moveStudents(color, (byte) 1, getComponentById(idDestination));
+    @Override
+    public void move(Color color, int gameComponentSource, int gameComponentDestination) throws GameException {
+        getComponentById(gameComponentSource).moveStudents(color, (byte) 1, getComponentById(gameComponentDestination));
+        if (gameComponentDestination == 1)
+            calculateProfessor();
     }
 
-    @Override
-
-    public void move(Color color, int idGameComponent, byte actionPhase) throws GameException {
-        // moving students from player entrance hall
-
-        if (actionPhase >= 1 && actionPhase <= 3) {
-
-            if (idGameComponent <= 0)
-                throw new NotAllowedException("Can't move to the selected GameComponent");
-
-            moveById(color, 0, idGameComponent);
-            if (idGameComponent == 1)
-                calculateProfessor();
-        } else if (actionPhase == 5) { // move students from cloud, destination is player entrance hall
-            if (idGameComponent >= 0 || getComponentById(idGameComponent).howManyStudents() == 0)
-                throw new NotAllowedException("Can't move from the selected GameComponent");
-//            if (getCurrentPlayer().getEntranceHall().howManyStudents() >= 8)
-//                throw new NotAllowedException("Cannot add all students to entrance hall");
-            GameComponent cloudSource = getComponentById(idGameComponent);
-            cloudSource.moveAll(currentPlayer.getEntranceHall());
-        } else {
-            throw new NotAllowedException("Wrong Phase");
-        }
-
-    }
-
-    @Override
-    public void drawStudents(GameComponent gameComponent, byte students) throws EndGameException {
+    protected void drawStudents(GameComponent gameComponent, byte students) throws EndGameException {
         try {
             bag.drawStudent(gameComponent, students);
         } catch (UnexpectedValueException e) {
@@ -146,12 +122,8 @@ public class NormalGame implements Game {
     }
 
     @Override
-    public void playCard(byte card) throws UnexpectedValueException, NotAllowedException, UsedCardException, EndGameException {
+    public void playCard(byte card) throws GameException, EndGameException {
         currentPlayer.useCard(card);
-    }
-
-    public Player getCurrentPlayer() {
-        return currentPlayer;
     }
 
     @Override
@@ -159,6 +131,7 @@ public class NormalGame implements Game {
         this.currentPlayer = p;
     }
 
+    @Override
     public void moveMotherNature(int moves) throws NotAllowedException, EndGameException {
         if (moves > currentPlayer.getPlayedCardMoves())
             throw new NotAllowedException("Moves can't be higher than the value of the card");
@@ -168,7 +141,6 @@ public class NormalGame implements Game {
             calculateInfluence(islands.get(motherNaturePosition));
         }
     }
-
 
     private void calculateInfluence(Island island) throws EndGameException {
         int maxInfluence = 0;
@@ -270,18 +242,27 @@ public class NormalGame implements Game {
         }
     }
 
-    public void setCharacterInput(int input) throws NotExpertGameException {
+    public void setCharacterInput(int input) throws GameException {
         throw new NotExpertGameException();
     }
 
-    public void chooseCharacter(int index) throws NotExpertGameException {
+    public void chooseCharacter(int index) throws GameException {
         throw new NotExpertGameException();
     }
 
-    public void playCharacter() throws NotExpertGameException {
+    public void playCharacter() throws GameException, EndGameException {
         throw new NotExpertGameException();
     }
 
+    @Override
+    public void moveFromCloud(int cloudId) throws NotAllowedException {
+        if (cloudId >= 0 || getComponentById(cloudId).howManyStudents() == 0)
+            throw new NotAllowedException("Can't move from the selected cloud");
+        GameComponent cloudSource = getComponentById(cloudId);
+        cloudSource.moveAll(currentPlayer.getEntranceHall());
+    }
+
+    protected Player getCurrentPlayer() {return this.currentPlayer;}
 
     protected ArrayList<Player> getPlayers() {
         return players;

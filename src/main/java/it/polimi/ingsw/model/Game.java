@@ -3,13 +3,9 @@ package it.polimi.ingsw.model;
 import it.polimi.ingsw.exceptions.*;
 
 public interface Game {
-    void move(Color color, int idGameComponent, byte actionPhase) throws GameException;
-
-    void drawStudents(GameComponent gameComponent, byte number) throws EndGameException;
+    void move(Color color, int gameComponentSource, int gameComponentDestination) throws GameException;
 
     void playCard(byte card) throws GameException, EndGameException;
-
-    Player getCurrentPlayer();
 
     void setCurrentPlayer(Player p);
 
@@ -21,7 +17,9 @@ public interface Game {
 
     void setCharacterInput(int input) throws GameException;
 
-    void chooseCharacter(int indexCharacter) throws NotExpertGameException, UnexpectedValueException, NotAllowedException;
+    void chooseCharacter(int indexCharacter) throws GameException;
 
     void playCharacter() throws GameException, EndGameException;
+
+    void moveFromCloud(int cloudId) throws NotAllowedException;
 }

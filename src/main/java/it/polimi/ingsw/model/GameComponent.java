@@ -6,12 +6,12 @@ import it.polimi.ingsw.exceptions.NotEnoughStudentsException;
 
 public abstract class GameComponent {
     private final byte[] students;
-    private int maxStudents;
+    private final int maxStudents;
 
     private GameComponent(int maxStudents, byte studentsPerColor) {
         this.students = new byte[Color.values().length];
-        for (byte s : students) {
-            s = studentsPerColor;
+        for (byte i = 0; i < students.length; i++) {
+            students[i] = studentsPerColor;
         }
         this.maxStudents = maxStudents;
     }
@@ -70,5 +70,9 @@ public abstract class GameComponent {
             sum += students[c.ordinal()];
         }
         return sum;
+    }
+
+    public int getMaxStudents() {
+        return maxStudents;
     }
 }

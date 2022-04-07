@@ -1,6 +1,4 @@
-package it.polimi.ingsw.model.character;
-
-import it.polimi.ingsw.model.ExpertGame;
+package it.polimi.ingsw.model;
 
 public class Char7 implements CharacterCard {
 

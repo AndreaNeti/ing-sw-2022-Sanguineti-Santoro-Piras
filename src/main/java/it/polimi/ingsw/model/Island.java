@@ -2,7 +2,7 @@ package it.polimi.ingsw.model;
 
 public class Island extends GameComponent {
     private Team team;
-    //prohibition is the representation of the NO Entry Tiles which  avoids the calcutaion of the influence on a island
+    //prohibition is the representation of the NO Entry Tiles which avoids the calculation of the influence on an island
     private byte prohibition;
     //it's the number of the island merged in this island
     private byte number;
