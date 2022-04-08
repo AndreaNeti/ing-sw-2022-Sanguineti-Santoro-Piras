@@ -1,6 +1,8 @@
 package it.polimi.ingsw.model;
 
-import it.polimi.ingsw.exceptions.*;
+import it.polimi.ingsw.exceptions.EndGameException;
+import it.polimi.ingsw.exceptions.GameException;
+import it.polimi.ingsw.exceptions.NotAllowedException;
 
 import java.util.ArrayList;
 
