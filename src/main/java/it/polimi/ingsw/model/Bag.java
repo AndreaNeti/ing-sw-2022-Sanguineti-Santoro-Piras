@@ -19,7 +19,7 @@ public class Bag extends GameComponent {
         rand = new Random(System.currentTimeMillis());
     }
 
-    public void drawStudent(GameComponent gameComponent, byte number) throws EndGameException, UnexpectedValueException {
+    public void drawStudent(GameComponent gameComponent, byte number) throws EndGameException, GameException {
         if (number < 0) throw new UnexpectedValueException();
         byte i = 0;
         int studentsToDraw = Math.min(number, howManyStudents());
@@ -33,8 +33,6 @@ public class Bag extends GameComponent {
                 } catch (NotEnoughStudentsException ex) {
                     // not extracting that color anymore
                     availableColors.remove(color);
-                } catch (GameException e) {
-                    e.printStackTrace();
                 }
 
             }

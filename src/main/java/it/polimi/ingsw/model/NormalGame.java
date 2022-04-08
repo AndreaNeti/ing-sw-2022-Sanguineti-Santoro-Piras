@@ -116,7 +116,7 @@ public class NormalGame implements Game {
     protected void drawStudents(GameComponent gameComponent, byte students) throws EndGameException {
         try {
             bag.drawStudent(gameComponent, students);
-        } catch (UnexpectedValueException e) {
+        } catch (GameException e) {
             System.err.println(e.getErrorMessage());
         }
     }

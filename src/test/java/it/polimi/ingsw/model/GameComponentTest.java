@@ -1,65 +1,40 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.exceptions.EndGameException;
+import it.polimi.ingsw.exceptions.GameException;
+import it.polimi.ingsw.exceptions.NotAllowedException;
 import junit.framework.TestCase;
 
-public class GameComponentTest extends TestCase {
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
-    GameComponent gameComponent = new Island();
-    GameComponent gameComponent1 = new Cloud(3);
-/*
-    public void testAddStudents() {
-        gameComponent.addStudents(Color.RED, (byte) 5);
-        gameComponent.addStudents(Color.BLUE, (byte) 4);
-        gameComponent.addStudents(Color.PINK, (byte) -3);
-        assertEquals(gameComponent.howManyStudents(Color.RED), 5);
-        assertEquals(gameComponent.howManyStudents(Color.BLUE), 4);
-        assertEquals(gameComponent.howManyStudents(Color.YELLOW), 0);
-        assertEquals(gameComponent.howManyStudents(Color.GREEN), 0);
-        assertEquals(gameComponent.howManyStudents(Color.PINK), -3);
-        gameComponent.addStudents(Color.BLUE, (byte) 2);
-        assertEquals(gameComponent.howManyStudents(Color.RED), 5);
-        assertEquals(gameComponent.howManyStudents(Color.BLUE), 6);
-        assertEquals(gameComponent.howManyStudents(Color.YELLOW), 0);
-        assertEquals(gameComponent.howManyStudents(Color.GREEN), 0);
-        assertEquals(gameComponent.howManyStudents(Color.PINK), -3);
-    }
+public class GameComponentTest extends TestCase {
+    Bag bag = new Bag((byte) 2);
+    GameComponent island = new Island();
+    GameComponent cloud = new Cloud(3);
 
     public void testMoveStudents() {
-        gameComponent.addStudents(Color.RED, (byte) 5);
-        gameComponent.addStudents(Color.BLUE, (byte) 4);
-        gameComponent.addStudents(Color.PINK, (byte) 3);
-
-        gameComponent1.addStudents(Color.BLUE, (byte) 6);
-        gameComponent1.addStudents(Color.YELLOW, (byte) 2);
-        gameComponent1.addStudents(Color.GREEN, (byte) 5);
-        gameComponent1.addStudents(Color.PINK, (byte) 3);
-
-        NotEnoughStudentsException ex = assertThrows(NotEnoughStudentsException.class, () ->
-                        gameComponent.moveStudents(Color.BLUE, (byte) 10, gameComponent1),
-                "Should throw exception but it didn't");
-
         try {
-            gameComponent1.moveStudents(Color.RED, (byte) 0, gameComponent);
-            gameComponent1.moveStudents(Color.BLUE, (byte) 5, gameComponent);
-            gameComponent1.moveStudents(Color.YELLOW, (byte) 1, gameComponent);
-            gameComponent1.moveStudents(Color.GREEN, (byte) 3, gameComponent);
-            gameComponent1.moveStudents(Color.PINK, (byte) 2, gameComponent);
-        } catch (GameException ex1) {
+            bag.drawStudent(island, (byte) 9);
+        } catch (EndGameException | GameException e) {
             fail();
         }
-        assertEquals(gameComponent.howManyStudents(Color.RED), 5);
-        assertEquals(gameComponent1.howManyStudents(Color.RED), 0);
-        assertEquals(gameComponent.howManyStudents(Color.BLUE), 9);
-        assertEquals(gameComponent1.howManyStudents(Color.BLUE), 1);
-        assertEquals(gameComponent.howManyStudents(Color.YELLOW), 1);
-        assertEquals(gameComponent1.howManyStudents(Color.YELLOW), 1);
-        assertEquals(gameComponent.howManyStudents(Color.GREEN), 3);
-        assertEquals(gameComponent1.howManyStudents(Color.GREEN), 2);
-        assertEquals(gameComponent1.howManyStudents(Color.PINK), 1);
-        assertEquals(gameComponent.howManyStudents(Color.PINK), 5);
+        assertEquals(island.howManyStudents(), 9);
+        for (Color c : Color.values())
+            assertTrue(island.howManyStudents(c) > 0);
+        try {
+            island.moveStudents(Color.RED, (byte) 1, cloud);
+            island.moveStudents(Color.BLUE, (byte) 1, cloud);
+            island.moveStudents(Color.PINK, (byte) 1, cloud);
+            island.moveStudents(Color.GREEN, (byte) 1, cloud);
+            assertEquals(cloud.howManyStudents(), 4);
+            assertEquals(island.howManyStudents(), 5);
+        } catch (GameException e) {
+            fail();
+        }
+        assertThrows(GameException.class, () -> island.moveStudents(Color.YELLOW, (byte) 1, cloud), "Cloud can't have more than 4 students");
+        island.moveAll(bag);
 
-
+        assertEquals(island.howManyStudents(), 0);
+        assertEquals(bag.howManyStudents(), 2 * Color.values().length);
     }
-
-*/
 }

@@ -4,6 +4,9 @@ import it.polimi.ingsw.exceptions.GameException;
 import it.polimi.ingsw.exceptions.NotAllowedException;
 import it.polimi.ingsw.exceptions.NotEnoughStudentsException;
 
+import java.util.Arrays;
+import java.util.Objects;
+
 public abstract class GameComponent {
     private final byte[] students;
     private final int maxStudents;
@@ -48,7 +51,7 @@ public abstract class GameComponent {
     }
 
     public void moveAll(GameComponent destination) {
-        if (destination.howManyStudents() != 0) {
+        if (howManyStudents() != 0) {
             for (Color c : Color.values()) {
                 try {
                     moveStudents(c, howManyStudents(c), destination);
@@ -58,7 +61,7 @@ public abstract class GameComponent {
                 }
             }
         } else {
-            System.out.println("Bravo, ti sei impegnato per fare questa cacatoa. Trovati qualcos'altro da fare");
+            System.out.println("Bravo, ti sei impegnato per fare questa cacata. Trovati qualcos'altro da fare");
         }
     }
 
@@ -82,5 +85,13 @@ public abstract class GameComponent {
 
     public int getMaxStudents() {
         return maxStudents;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        GameComponent that = (GameComponent) o;
+        return maxStudents == that.maxStudents && Arrays.equals(students, that.students);
     }
 }
