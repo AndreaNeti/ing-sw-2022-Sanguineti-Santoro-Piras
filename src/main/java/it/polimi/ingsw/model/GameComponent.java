@@ -66,12 +66,14 @@ public abstract class GameComponent {
         return howManyStudents() < maxStudents;
     }
 
+    // returns the number of students with color c
     public byte howManyStudents(Color c) {
         return students[c.ordinal()];
     }
 
-    public int howManyStudents() {
-        int sum = 0;
+    // returns the global number of students
+    public byte howManyStudents() {
+        byte sum = 0;
         for (Color c : Color.values()) {
             sum += students[c.ordinal()];
         }

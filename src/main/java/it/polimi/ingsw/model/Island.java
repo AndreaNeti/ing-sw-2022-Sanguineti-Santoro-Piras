@@ -13,7 +13,7 @@ public class Island extends GameComponent {
         prohibition = 0;
         number = 1;
     }
-
+    // TODO by copy?
     public Team getTeam() {
         return team;
     }

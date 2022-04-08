@@ -13,14 +13,7 @@ public class LunchHall extends GameComponent {
 
     @Override
     public void moveStudents(Color color, byte number, GameComponent destination) throws GameException {
-        boolean check = true;
-        for (Color c : Color.values()) {
-            if (howManyStudents(c) >= 10) {
-                check = false;
-                break; // :D
-            }
-        }
-        if (check) super.moveStudents(color, number, destination);
+        if (howManyStudents(color) < 10 - number) super.moveStudents(color, number, destination);
         else
             throw new NotAllowedException("Lunch hall can't have more than 10 " + color.name().toLowerCase() + " students");
     }

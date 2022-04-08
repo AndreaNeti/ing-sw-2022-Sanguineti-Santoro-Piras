@@ -21,6 +21,7 @@ public class Team {
         this.towersLeft = maxTowers;
     }
 
+    // TODO by value?
     public ArrayList<Player> getPlayers() {
         return this.members;
     }
@@ -64,7 +65,6 @@ public class Team {
     public void addTowers(byte b) throws NotAllowedException {
         if (b < 0) System.err.println("Cannot add negative towers");
         else if (b > 0) {
-
             if (towersLeft + b > maxTowers) throw new NotAllowedException("Max towers exceeded");
             towersLeft += b;
         }

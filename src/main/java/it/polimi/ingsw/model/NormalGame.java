@@ -3,7 +3,6 @@ package it.polimi.ingsw.model;
 import it.polimi.ingsw.exceptions.*;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
 public class NormalGame implements Game {
@@ -111,7 +110,7 @@ public class NormalGame implements Game {
     public void move(Color color, int gameComponentSource, int gameComponentDestination) throws GameException {
         getComponentById(gameComponentSource).moveStudents(color, (byte) 1, getComponentById(gameComponentDestination));
         if (gameComponentDestination == 1)
-            calculateProfessor();
+            calculateProfessor(); //TODO check if calls the expertgame one from super.move() in expertgame
     }
 
     protected void drawStudents(GameComponent gameComponent, byte students) throws EndGameException {
@@ -125,11 +124,6 @@ public class NormalGame implements Game {
     @Override
     public void playCard(byte card) throws GameException, EndGameException {
         currentPlayer.useCard(card);
-    }
-
-    @Override
-    public void setCurrentPlayer(Player p) {
-        this.currentPlayer = p;
     }
 
     @Override
@@ -177,7 +171,6 @@ public class NormalGame implements Game {
             checkMerge(island);
         }
     }
-
 
     // compares for each color the lunchHall of each player and then puts the player with the most students
     // in the professor array slot of the current color
@@ -251,14 +244,17 @@ public class NormalGame implements Game {
         }
     }
 
+    @Override
     public void setCharacterInput(int input) throws GameException {
         throw new NotExpertGameException();
     }
 
+    @Override
     public void chooseCharacter(int index) throws GameException {
         throw new NotExpertGameException();
     }
 
+    @Override
     public void playCharacter() throws GameException, EndGameException {
         throw new NotExpertGameException();
     }
@@ -271,15 +267,24 @@ public class NormalGame implements Game {
         cloudSource.moveAll(currentPlayer.getEntranceHall());
     }
 
+    protected Player getCurrentPlayer() {
+        return this.currentPlayer;
+    }
+
     // TODO: pass by copy player, team etc..
 
-    protected Player getCurrentPlayer() { return this.currentPlayer; }
+    @Override
+    public void setCurrentPlayer(Player p) {
+        this.currentPlayer = p;
+    }
 
     protected ArrayList<Player> getPlayers() {
         return players;
     }
 
-    protected ArrayList<Team> getTeams() { return teams; }
+    protected ArrayList<Team> getTeams() {
+        return teams;
+    }
 
     protected ArrayList<Island> getIslands() {
         return islands;

@@ -51,7 +51,7 @@ public class Controller {
 
     public void move(Color color, int idGameComponent) {
         if (isPlanificationPhase) {
-            HandleError(new NotAllowedException("Not in action phase"));
+            handleError(new NotAllowedException("Not in action phase"));
             return;
         }
         try {
@@ -65,20 +65,20 @@ public class Controller {
                 throw new NotAllowedException("Wrong Phase");
             }
         } catch (GameException e) {
-            HandleError(e);
+            handleError(e);
         }
         nextActionPhase();
     }
 
     public void playCard(byte value) {
         if (!isPlanificationPhase) {
-            HandleError(new NotAllowedException("Not in planification phase"));
+            handleError(new NotAllowedException("Not in planification phase"));
             return;
         }
         try {
             game.playCard(value);
         } catch (GameException e) {
-            HandleError(e);
+            handleError(e);
         } catch (EndGameException e) {
             if (e.isEndInstantly()) endGame();
             else lastRound = true;
@@ -88,13 +88,13 @@ public class Controller {
 
     public void moveMotherNature(int i) {
         if (isPlanificationPhase || actionPhase != 2) {
-            HandleError(new NotAllowedException("Not allowed in this phase"));
+            handleError(new NotAllowedException("Not allowed in this phase"));
             return;
         }
         try {
             game.moveMotherNature(i);
         } catch (NotAllowedException e) {
-            HandleError(e);
+            handleError(e);
         } catch (EndGameException e) {
             if (e.isEndInstantly()) endGame();
             else lastRound = true;
@@ -137,37 +137,37 @@ public class Controller {
 
     public void setCharacterInput(int input) {
         if (isPlanificationPhase) {
-            HandleError(new NotAllowedException("Not in action phase"));
+            handleError(new NotAllowedException("Not in action phase"));
             return;
         }
         try {
             game.setCharacterInput(input);
         } catch (GameException e) {
-            HandleError(e);
+            handleError(e);
         }
     }
 
     public void chooseCharacter(int character) {
         if (isPlanificationPhase) {
-            HandleError(new NotAllowedException("Not in action phase"));
+            handleError(new NotAllowedException("Not in action phase"));
             return;
         }
         try {
             game.chooseCharacter(character);
         } catch (GameException e) {
-            HandleError(e);
+            handleError(e);
         }
     }
 
     public void playCharacter() {
         if (isPlanificationPhase) {
-            HandleError(new NotAllowedException("Not in action phase"));
+            handleError(new NotAllowedException("Not in action phase"));
             return;
         }
         try {
             game.playCharacter();
         } catch (GameException e) {
-            HandleError(e);
+            handleError(e);
         } catch (EndGameException e) {
             if (e.isEndInstantly()) endGame();
             else lastRound = true;
@@ -243,7 +243,7 @@ public class Controller {
             System.out.println("Paolino tvb <3");
     }
 
-    private void HandleError(GameException e) {
+    private void handleError(GameException e) {
         e.printStackTrace();
         System.err.println(e.getErrorMessage());
     }

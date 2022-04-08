@@ -38,7 +38,7 @@ public class ExpertGame extends NormalGame {
                 characterIndex = rand.nextInt(12);
             }
             try {
-                c = factoryMethod(characterIndex);
+                c = factoryCharacter(characterIndex);
                 characters.add(c);
                 selectedCharacters.add(c.getId());
                 i++;
@@ -58,7 +58,7 @@ public class ExpertGame extends NormalGame {
         this.inputsCharacter = null;
     }
 
-    private CharacterCard factoryMethod(int i) throws UnexpectedValueException {
+    private CharacterCard factoryCharacter(int i) throws UnexpectedValueException {
         switch (i) {
             case 0:
                 Char0 c0 = new Char0();
@@ -116,7 +116,7 @@ public class ExpertGame extends NormalGame {
 
     //calculate expertInfluence(it checks all the boolean) and then calls checkMerge
 
-    public void calculateInfluence(Island island) throws EndGameException {
+    protected void calculateInfluence(Island island) throws EndGameException {
         //prohibition is handled by prohibitionsLeft
         if (island.getProhibitions() > 0) {
             island.removeProhibition();
@@ -182,7 +182,7 @@ public class ExpertGame extends NormalGame {
         super.moveMotherNature(moves);
     }
 
-    public void calculateProfessor() {
+    protected void calculateProfessor() {
         byte max;
         Player currentOwner;
         // player with the maximum number of students for the current color
@@ -211,15 +211,24 @@ public class ExpertGame extends NormalGame {
 
     private void addCoinToPlayer(Player player) throws NotEnoughCoinsException {
         if (coinsLeft == 0) throw new NotEnoughCoinsException();
-        else {
+        else if (player != null) {
             coinsPlayer[getPlayers().indexOf(player)]++;
             coinsLeft--;
-        }
+        } else System.err.println("Can't add coin to null player");
 
     }
 
-    private void addCoins(byte coins) {
-        this.coinsLeft += coins;
+    private void removeCoinsToPlayer(Player player, byte coins) throws GameException {
+        if (coins <= 0) throw new UnexpectedValueException();
+        if (player != null) {
+            // player's wizard is its index inside the list
+            int playerIndex = getCurrentPlayer().getWizard().ordinal();
+            if (coinsPlayer[playerIndex] >= coins) {
+                coinsPlayer[playerIndex] -= coins;
+                // add coins to player
+                coinsLeft += coins;
+            } else throw new NotEnoughCoinsException();
+        } else System.err.println("Can't remove coins to null player");
     }
 
     @Override
@@ -230,10 +239,14 @@ public class ExpertGame extends NormalGame {
             byte charCost = chosenCharacter.getCost();
             // this character card has already been used, increase its cost
             if (playedCharacters[characters.indexOf(chosenCharacter)]) charCost++;
+            else {
+                playedCharacters[characters.indexOf(chosenCharacter)] = true;
+                // a coin is left on the character card to remember it has been used
+                coinsLeft--;
+            }
             // remove coins to player
-            coinsPlayer[getCurrentPlayer().getWizard().ordinal()] -= charCost;
-            // add coins to game
-            addCoins(charCost);
+            removeCoinsToPlayer(getCurrentPlayer(), charCost);
+
             chosenCharacter = null;
             inputsCharacter.clear();
         } else throw new UnexpectedValueException(); // canPlay returned false, needs a different amount of inputs
@@ -282,7 +295,7 @@ public class ExpertGame extends NormalGame {
     public void setEqualProfessorCalculation(boolean equalProfessorCalculation) {
         this.equalProfessorCalculation = equalProfessorCalculation;
     }
-
+    // TODO by copy?
     public ArrayList<Integer> getCharacterInputs() {
         return inputsCharacter;
     }

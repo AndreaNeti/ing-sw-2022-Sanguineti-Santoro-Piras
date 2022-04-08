@@ -52,10 +52,11 @@ public class Player implements Comparator<Player> {
         return playedCard;
     }
 
+    // TODO by value?
     public LunchHall getLunchHall() {
         return lunchHall;
     }
-
+    // TODO by value?
     public EntranceHall getEntranceHall() {
         return entranceHall;
     }
@@ -67,7 +68,7 @@ public class Player implements Comparator<Player> {
     public Socket getSocket() {
         return socket;
     }
-
+    // TODO by value?
     public Team getTeam() {
         return team;
     }
