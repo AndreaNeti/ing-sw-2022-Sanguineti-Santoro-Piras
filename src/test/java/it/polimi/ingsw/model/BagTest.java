@@ -9,11 +9,12 @@ import java.util.Arrays;
 import static org.junit.jupiter.api.Assertions.*;
 
 class BagTest {
-    Bag bag = new Bag((byte) 26);
+    byte nStudentPerColor = 24;
+    Bag bag = new Bag(nStudentPerColor);
 
     @Test
     void constructorAndGetTest() {
-        assertEquals(bag.howManyStudents(), 10);
+        assertEquals(bag.howManyStudents(), nStudentPerColor * Color.values().length);
     }
 
     GameComponent island = new Island();
@@ -26,22 +27,20 @@ class BagTest {
         } catch (UnexpectedValueException | EndGameException ex) {
             fail();
         }
-        assertEquals(island.howManyStudents(),3);
+        assertEquals(island.howManyStudents(), 3);
 
 
-        assertThrows(UnexpectedValueException.class, ()-> bag.drawStudent(island,(byte)-4),"" +
-                "it's negative value, should launch exception");
-        try{
-            bag.drawStudent(island,(byte) 7);
-        }catch (UnexpectedValueException| EndGameException ex){
+        assertThrows(UnexpectedValueException.class, () -> bag.drawStudent(island, (byte) -4), "it's negative value, should launch exception");
+        try {
+            bag.drawStudent(island, (byte) 7);
+        } catch (UnexpectedValueException | EndGameException ex) {
             fail();
         }
 
-        assertEquals(island.howManyStudents(),10);
-        assertEquals(bag.howManyStudents(),(byte) 24*5);
+        assertEquals(island.howManyStudents(), 10);
+        assertEquals(bag.howManyStudents(), nStudentPerColor * Color.values().length - island.howManyStudents());
 
-        assertThrows(EndGameException.class,()->bag.drawStudent(island,(byte) 121),"" +
-                "Not enough student in the bag should launche exception");
+        assertThrows(EndGameException.class, () -> bag.drawStudent(island, (byte) (bag.howManyStudents() + 1)), "" + "Not enough student in the bag should launche exception");
 
     }
 }

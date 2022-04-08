@@ -41,14 +41,14 @@ public abstract class GameComponent {
 
     public void moveStudents(Color color, byte number, GameComponent destination) throws GameException {
         if (number != 0) {
-            if (canAddStudents()) this.removeStudents(color, number);
+            if (destination.canAddStudents()) this.removeStudents(color, number);
             else throw new NotAllowedException("Can't add more students to this component");
             destination.addStudents(color, number);
         }
     }
 
     public void moveAll(GameComponent destination) {
-        if(destination.howManyStudents() != 0 ) {
+        if (destination.howManyStudents() != 0) {
             for (Color c : Color.values()) {
                 try {
                     moveStudents(c, howManyStudents(c), destination);

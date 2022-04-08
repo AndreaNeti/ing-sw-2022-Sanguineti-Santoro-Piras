@@ -40,27 +40,28 @@ class PlayerTest {
         assertThrows(UsedCardException.class, () -> p.useCard((byte) 4), "negative value");
         try {
             p.useCard((byte) 1);
-            assertEquals(p.getPlayedCard(), 1);
+            assertEquals(p.getPlayedCardMoves(), 1);
             p.useCard((byte) 2);
-            assertEquals(p.getPlayedCard(), 1);
+            assertEquals(p.getPlayedCardMoves(), 1);
             p.useCard((byte) 3);
-            assertEquals(p.getPlayedCard(), 2);
+            assertEquals(p.getPlayedCardMoves(), 2);
             p.useCard((byte) 5);
-            assertEquals(p.getPlayedCard(), 3);
+            assertEquals(p.getPlayedCardMoves(), 3);
             p.useCard((byte) 6);
-            assertEquals(p.getPlayedCard(), 3);
+            assertEquals(p.getPlayedCardMoves(), 3);
             p.useCard((byte) 7);
-            assertEquals(p.getPlayedCard(), 4);
+            assertEquals(p.getPlayedCardMoves(), 4);
             p.useCard((byte) 8);
-            assertEquals(p.getPlayedCard(), 4);
+            assertEquals(p.getPlayedCardMoves(), 4);
             p.useCard((byte) 9);
-            assertEquals(p.getPlayedCard(), 5);
+            assertEquals(p.getPlayedCardMoves(), 5);
         } catch (UsedCardException | UnexpectedValueException | NotAllowedException | EndGameException ex) {
             fail();
         }
         assertThrows(UsedCardException.class, () -> p.useCard((byte) 4), "negative value");
-        assertThrows(EndGameException.class, () -> p.useCard((byte) 9), "no more card");
-        assertThrows(NotAllowedException.class, () -> p.useCard((byte) 3), "can't call this");
+        assertThrows(EndGameException.class, () -> p.useCard((byte) 10), "used last card");
+        assertThrows(NotAllowedException.class, () -> p.useCard((byte) 3), "no cards to use");
+        assertThrows(UnexpectedValueException.class, () -> p.useCard((byte) -1), "not a valid input");
     }
 
     @Test

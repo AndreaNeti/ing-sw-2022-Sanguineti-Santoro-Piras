@@ -35,11 +35,11 @@ public class Player implements Comparator<Player> {
 
     public void useCard(byte card) throws UsedCardException, UnexpectedValueException, NotAllowedException, EndGameException {
         if (card < 1 || card > 10) throw new UnexpectedValueException();
-        if (!cardsAvailable[card]) throw new UsedCardException();
         if (cardsLeft < 1) throw new NotAllowedException("No more cards");
+        if (!cardsAvailable[card - 1]) throw new UsedCardException();
         playedCard = card;
         cardsLeft--;
-        cardsAvailable[card] = false;
+        cardsAvailable[card - 1] = false;
         if (cardsLeft == 0) throw new EndGameException(false);
     }
 
@@ -56,6 +56,7 @@ public class Player implements Comparator<Player> {
     public LunchHall getLunchHall() {
         return lunchHall;
     }
+
     // TODO by value?
     public EntranceHall getEntranceHall() {
         return entranceHall;
@@ -68,6 +69,7 @@ public class Player implements Comparator<Player> {
     public Socket getSocket() {
         return socket;
     }
+
     // TODO by value?
     public Team getTeam() {
         return team;
