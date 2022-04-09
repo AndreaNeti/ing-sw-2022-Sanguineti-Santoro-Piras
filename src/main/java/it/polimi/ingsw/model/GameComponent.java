@@ -5,7 +5,6 @@ import it.polimi.ingsw.exceptions.NotAllowedException;
 import it.polimi.ingsw.exceptions.NotEnoughStudentsException;
 
 import java.util.Arrays;
-import java.util.Objects;
 
 public abstract class GameComponent {
     private final byte[] students;
@@ -44,7 +43,7 @@ public abstract class GameComponent {
 
     public void moveStudents(Color color, byte number, GameComponent destination) throws GameException {
         if (number != 0) {
-            if (destination.canAddStudents(number)) this.removeStudents(color, number);
+            if (destination.canAddStudents(color, number)) this.removeStudents(color, number);
             else throw new NotAllowedException("Can't add more students to this component");
             destination.addStudents(color, number);
         }
@@ -65,7 +64,7 @@ public abstract class GameComponent {
         }
     }
 
-    private boolean canAddStudents(byte number) {
+    public boolean canAddStudents(Color c, byte number) {
         return howManyStudents() + number <= maxStudents;
     }
 

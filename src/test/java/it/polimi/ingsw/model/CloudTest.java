@@ -14,6 +14,6 @@ class CloudTest {
         Cloud cloud1=new Cloud(3);
         assertFalse(cloud1.getFrontBack());
         Cloud cloud2=new Cloud(2);
-        assertTrue(cloud.getFrontBack());
+        assertTrue(cloud2.getFrontBack());
     }
 }

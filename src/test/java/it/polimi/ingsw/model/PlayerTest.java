@@ -24,6 +24,7 @@ class PlayerTest {
 
     @Test
     void constructorAndEqualsTest() {
+        assertThrows(UnexpectedValueException.class, () -> new Player(null, null, null, null, 5));
         Player p2 = null;
         try {
             p2 = new Player(socket, t, Wizard.AIRMAGE, "prova", 7);

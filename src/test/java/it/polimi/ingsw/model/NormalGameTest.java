@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.exceptions.EndGameException;
 import it.polimi.ingsw.exceptions.GameException;
 import it.polimi.ingsw.exceptions.NotAllowedException;
 import it.polimi.ingsw.exceptions.NotExpertGameException;
@@ -34,15 +35,16 @@ public class NormalGameTest {
         add(t2);
     }};
 
-    NormalGame game = new NormalGame((byte) 2, teamList, players);
+    NormalGame game = new NormalGame((byte) 2, teamList, players) {{
+        setCurrentPlayer(p1);
+    }};
 
     @Test
-    void constructorAndGetTest() {
+    void getTest() {
         assertEquals(game.getTeams(), teamList);
         assertEquals(game.getPlayers(), players);
         assertEquals(game.getIslands().size(), 12);
         assertEquals(game.getBag().getClass(), Bag.class);
-        game.setCurrentPlayer(p1);
         assertEquals(game.getCurrentPlayer(), p1);
         for (Player p : game.getProfessor())
             assertNull(p);
@@ -51,11 +53,26 @@ public class NormalGameTest {
 
     @Test
     void move() {
-
     }
 
     @Test
     void playCard() {
+        try {
+            game.playCard((byte) 5);
+        } catch (GameException | EndGameException e) {
+            fail();
+        }
+        assertEquals(5, p1.getPlayedCard());
+        assertEquals(3, p1.getPlayedCardMoves());
+        game.setCurrentPlayer(p2);
+        try {
+            game.playCard((byte) 6);
+        } catch (GameException | EndGameException e) {
+            fail();
+        }
+        assertEquals(6, p2.getPlayedCard());
+        assertEquals(3, p2.getPlayedCardMoves());
+        assertTrue(p1.compare(p2, p1) > 0);
     }
 
     @Test
@@ -87,5 +104,6 @@ public class NormalGameTest {
 
     @Test
     void moveFromCloud() {
+
     }
 }
