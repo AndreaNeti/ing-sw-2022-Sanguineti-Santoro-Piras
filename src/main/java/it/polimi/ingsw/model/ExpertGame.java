@@ -55,7 +55,7 @@ public class ExpertGame extends NormalGame {
         this.ignoredColorInfluence = null;
         this.prohibitionLeft = 4;
         this.chosenCharacter = null;
-        this.inputsCharacter = null;
+        this.inputsCharacter = new ArrayList<>();
     }
 
     private CharacterCard factoryCharacter(int i) throws UnexpectedValueException {
@@ -276,35 +276,40 @@ public class ExpertGame extends NormalGame {
         return characters.get(index);
     }
 
-    public void setExtraInfluence(boolean extraInfluence) {
+    protected void setExtraInfluence(boolean extraInfluence) {
         this.extraInfluence = extraInfluence;
     }
 
-    public void setTowerInfluence(boolean towerInfluence) {
+    protected void setTowerInfluence(boolean towerInfluence) {
         this.towerInfluence = towerInfluence;
     }
 
-    public void setExtraSteps(boolean extraSteps) {
+    protected void setExtraSteps(boolean extraSteps) {
         this.extraSteps = extraSteps;
     }
 
-    public void setIgnoredColorInfluence(Color ignoredColorInfluence) {
+    protected void setIgnoredColorInfluence(Color ignoredColorInfluence) {
         this.ignoredColorInfluence = ignoredColorInfluence;
     }
 
-    public void setEqualProfessorCalculation(boolean equalProfessorCalculation) {
+    protected void setEqualProfessorCalculation(boolean equalProfessorCalculation) {
         this.equalProfessorCalculation = equalProfessorCalculation;
     }
     // TODO by copy?
-    public ArrayList<Integer> getCharacterInputs() {
+    protected ArrayList<Integer> getCharacterInputs() {
         return inputsCharacter;
     }
 
-    public void setProhibition(int idIsland) throws NotAllowedException {
+    protected void setProhibition(int idIsland) throws NotAllowedException {
         if (this.prohibitionLeft > 0)
             this.prohibitionLeft--;
         else throw new NotAllowedException("No more prohibitions");
-        getIslands().get(idIsland).addProhibitions((byte) 1);
+        try {
+            getIslands().get(idIsland).addProhibitions((byte) 1);
+        } catch (UnexpectedValueException e) {
+            // Passing 1 as argument, 1 > 0 -> no exceptions
+            e.printStackTrace();
+        }
     }
 
     private void restoreProhibition() {

@@ -1,10 +1,7 @@
 package it.polimi.ingsw.model;
 
 
-import it.polimi.ingsw.exceptions.EndGameException;
-import it.polimi.ingsw.exceptions.NotAllowedException;
-import it.polimi.ingsw.exceptions.UnexpectedValueException;
-import it.polimi.ingsw.exceptions.UsedCardException;
+import it.polimi.ingsw.exceptions.*;
 
 import java.net.Socket;
 import java.util.Comparator;
@@ -21,9 +18,12 @@ public class Player implements Comparator<Player> {
     private byte playedCard;
     private byte cardsLeft;
 
-    public Player(Socket socket, Team team, Wizard wizard, String nickName, int entranceHallSize) {
+    public Player(Socket socket, Team team, Wizard wizard, String nickName, int entranceHallSize) throws GameException {
+        if (socket == null || team == null || nickName == null || entranceHallSize < 1)
+            throw new UnexpectedValueException();
         this.socket = socket;
         this.team = team;
+        team.addPlayer(this);
         this.wizard = wizard;
         this.nickName = nickName;
         this.cardsAvailable = new boolean[]{true, true, true, true, true, true, true, true, true, true};
@@ -78,8 +78,7 @@ public class Player implements Comparator<Player> {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Player)) return false;
-        Player player = (Player) o;
+        if (!(o instanceof Player player)) return false;
         return wizard == player.wizard;
     }
 

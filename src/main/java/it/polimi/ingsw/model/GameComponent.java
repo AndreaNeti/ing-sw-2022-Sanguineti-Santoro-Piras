@@ -44,7 +44,7 @@ public abstract class GameComponent {
 
     public void moveStudents(Color color, byte number, GameComponent destination) throws GameException {
         if (number != 0) {
-            if (destination.canAddStudents()) this.removeStudents(color, number);
+            if (destination.canAddStudents(number)) this.removeStudents(color, number);
             else throw new NotAllowedException("Can't add more students to this component");
             destination.addStudents(color, number);
         }
@@ -65,8 +65,8 @@ public abstract class GameComponent {
         }
     }
 
-    private boolean canAddStudents() {
-        return howManyStudents() < maxStudents;
+    private boolean canAddStudents(byte number) {
+        return howManyStudents() + number <= maxStudents;
     }
 
     // returns the number of students with color c

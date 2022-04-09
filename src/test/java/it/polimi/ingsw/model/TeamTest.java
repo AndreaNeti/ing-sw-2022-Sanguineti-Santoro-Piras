@@ -1,6 +1,7 @@
 package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.exceptions.EndGameException;
+import it.polimi.ingsw.exceptions.GameException;
 import it.polimi.ingsw.exceptions.NotAllowedException;
 import org.junit.jupiter.api.Test;
 
@@ -12,7 +13,15 @@ import static org.junit.jupiter.api.Assertions.*;
 class TeamTest {
     Team t = new Team(HouseColor.GREY, (byte) 2, (byte) 6);
     Socket socket = new Socket();
-    Player p = new Player(socket, t, Wizard.AIRMAGE, "player", 7);
+    Player p;
+
+    {
+        try {
+            p = new Player(socket, t, Wizard.AIRMAGE, "player", 7);
+        } catch (GameException e) {
+            fail();
+        }
+    }
 
     @Test
     void constructorAndEqualsTest() {
@@ -23,12 +32,13 @@ class TeamTest {
 
     @Test
     void addAndGetPlayerTest() {
-        assertTrue(t.getPlayers().isEmpty());
+        assertEquals(1, t.getPlayers().size());
+        assertThrows(NotAllowedException.class, () -> t.addPlayer(p), "player already present in team");
         try {
-            t.addPlayer(p);
             t.addPlayer(null);
-            t.addPlayer(p);
-        } catch (NotAllowedException ex) {
+            Player p1 = new Player(socket, new Team(HouseColor.BLACK, (byte) 2, (byte) 6), Wizard.WOODMAGE, "player1", 7);
+            t.addPlayer(p1);
+        } catch (GameException ex) {
             fail();
         }
         assertEquals(t.getPlayers().get(0), p);
@@ -41,11 +51,6 @@ class TeamTest {
 
     @Test
     void removePlayer() {
-        try {
-            t.addPlayer(p);
-        } catch (NotAllowedException ex) {
-            fail();
-        }
         try {
             t.removePlayer(null);
             t.removePlayer(p);
@@ -62,15 +67,15 @@ class TeamTest {
     @Test
     void movePlayer() {
         Team t1 = new Team(HouseColor.WHITE, (byte) 2, (byte) 6);
-        Player p1 = new Player(socket, t, Wizard.ELECTROMAGE, "player1", 7);
-
+        Player p1 = null;
         try {
-            t.addPlayer(p);
-            t1.addPlayer(p1);
-        } catch (NotAllowedException ex) {
+            p1 = new Player(socket, t1, Wizard.ELECTROMAGE, "player1", 7);
+        } catch (GameException e) {
             fail();
         }
-        assertThrows(NotAllowedException.class, () -> t.movePlayer(p1, t1),
+
+        Player finalP = p1;
+        assertThrows(NotAllowedException.class, () -> t.movePlayer(finalP, t1),
                 "player not present");
         try {
             t.movePlayer(null, null);

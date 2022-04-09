@@ -33,7 +33,6 @@ public class GameComponentTest extends TestCase {
         }
         assertThrows(GameException.class, () -> island.moveStudents(Color.YELLOW, (byte) 1, cloud), "Cloud can't have more than 4 students");
         island.moveAll(bag);
-
         assertEquals(island.howManyStudents(), 0);
         assertEquals(bag.howManyStudents(), 2 * Color.values().length);
     }

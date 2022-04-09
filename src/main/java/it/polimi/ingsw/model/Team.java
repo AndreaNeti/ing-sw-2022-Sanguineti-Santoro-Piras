@@ -26,8 +26,9 @@ public class Team {
         return this.members;
     }
 
-    public void addPlayer(Player p) throws NotAllowedException {
+    protected void addPlayer(Player p) throws NotAllowedException {
         if (isFull()) throw new NotAllowedException("Team is already full");
+        if (members.contains(p)) throw new NotAllowedException("Player already present");
         if (p != null) {
             members.add(p);
         } else
@@ -85,8 +86,7 @@ public class Team {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Team)) return false;
-        Team team = (Team) o;
+        if (!(o instanceof Team team)) return false;
         return houseColor == team.houseColor;
     }
 

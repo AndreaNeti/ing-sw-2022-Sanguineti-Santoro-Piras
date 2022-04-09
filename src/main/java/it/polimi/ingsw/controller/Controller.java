@@ -43,7 +43,7 @@ public class Controller {
             teams.add(new Team(HouseColor.values()[i], (byte) (numberOfPlayers / nTeams), maxTowers));
         }
         this.messages = new HashMap<>();
-        this.isPlanificationPhase = false;
+        this.isPlanificationPhase = true;
         this.actionPhase = 0;
         this.roundIndex = 0;
         this.lastRound = false;
@@ -108,14 +108,14 @@ public class Controller {
     }
 
     public void addPlayer(Socket s, String nickName) {
+        if (playersList.size() == numberOfPlayers) handleError(new NotAllowedException("Match is full"));
         int teamIndex = playersList.size() % teams.size(); // circular team selection
         int entranceHallSize = (teams.size() % 2 == 0) ? 7 : 9;
-        Player newPlayer = new Player(s, teams.get(teamIndex), Wizard.values()[playersList.size()], nickName, entranceHallSize);
+        Player newPlayer = null;
         try {
-            teams.get(teamIndex).addPlayer(newPlayer);
-        } catch (NotAllowedException e) {
-            e.printStackTrace();
-            System.err.println(e.getErrorMessage());
+            newPlayer = new Player(s, teams.get(teamIndex), Wizard.values()[playersList.size()], nickName, entranceHallSize);
+        } catch (GameException e) {
+            handleError(e);
         }
         playersList.add(newPlayer);
         if (playersList.size() == numberOfPlayers) {
@@ -239,7 +239,7 @@ public class Controller {
         }
         message.append(winners.get(i).toString()).append(" won the game!!!");
         System.out.println(message);
-        if(winners.size() == 3)
+        if (winners.size() == 3)
             System.out.println("Paolino tvb <3");
     }
 

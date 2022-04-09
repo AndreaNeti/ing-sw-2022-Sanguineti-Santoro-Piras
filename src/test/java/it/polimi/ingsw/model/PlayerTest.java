@@ -1,9 +1,6 @@
 package it.polimi.ingsw.model;
 
-import it.polimi.ingsw.exceptions.EndGameException;
-import it.polimi.ingsw.exceptions.NotAllowedException;
-import it.polimi.ingsw.exceptions.UnexpectedValueException;
-import it.polimi.ingsw.exceptions.UsedCardException;
+import it.polimi.ingsw.exceptions.*;
 import org.junit.jupiter.api.Test;
 
 import java.net.Socket;
@@ -12,14 +9,27 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class PlayerTest {
     Socket socket = new Socket();
-    Team t = new Team(HouseColor.WHITE, (byte) 1, (byte) 2);
+    Team t = new Team(HouseColor.WHITE, (byte) 2, (byte) 2);
     Team t1 = new Team(HouseColor.BLACK, (byte) 1, (byte) 2);
-    Player p = new Player(socket, t, Wizard.AIRMAGE, "prova", 7);
-    Player p1 = new Player(socket, t1, Wizard.WOODMAGE, "prova", 7);
+    Player p, p1;
+
+    {
+        try {
+            p = new Player(socket, t, Wizard.AIRMAGE, "prova", 7);
+            p1 = new Player(socket, t1, Wizard.WOODMAGE, "prova", 7);
+        } catch (GameException e) {
+            fail();
+        }
+    }
 
     @Test
     void constructorAndEqualsTest() {
-        Player p2 = new Player(socket, t, Wizard.AIRMAGE, "prova", 7);
+        Player p2 = null;
+        try {
+            p2 = new Player(socket, t, Wizard.AIRMAGE, "prova", 7);
+        } catch (GameException e) {
+            fail();
+        }
         assertEquals(p, p2);
         assertEquals(p.getPlayedCard(), 0);
         assertEquals(p.getWizard(), Wizard.AIRMAGE);
