@@ -4,6 +4,7 @@ public class Char1 implements CharacterCard {
 
     @Override
     public void play(ExpertGame game) {
+        game.calculateProfessor();
         game.setEqualProfessorCalculation(true);
     }
 
