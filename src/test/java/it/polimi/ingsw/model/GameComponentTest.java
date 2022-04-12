@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class GameComponentTest  {
+public class GameComponentTest {
     Bag bag = new Bag((byte) 2);
     GameComponent island = new Island();
     GameComponent cloud = new Cloud(3);
@@ -48,8 +48,9 @@ public class GameComponentTest  {
 
     @Test
     public void moveAllTest() {
+
         try {
-            bag.drawStudent(island, (byte) 5);
+            bag.drawStudent(island, (byte)3 );
             bag.drawStudent(island1, (byte) 1);
         } catch (GameException | EndGameException ex) {
             fail();
@@ -60,7 +61,7 @@ public class GameComponentTest  {
             fail();
         }
         assertEquals(island.howManyStudents(), 0);
-        assertEquals(island1.howManyStudents(), 6);
+        assertEquals(island1.howManyStudents(), 4);
 
         //I need to see if the other island has 0 students it
         //prints an out line
@@ -68,7 +69,20 @@ public class GameComponentTest  {
             island.moveAll(island2);
         } catch (NotAllowedException ex) {
             fail();
-
         }
+        try {
+            bag.drawStudent(island, (byte) 5);
+        } catch (EndGameException | GameException ex) {
+            fail();
+        }
+        try {
+            island.moveAll(cloud);
+        } catch (GameException ex) {
+            fail();
+        }
+        /*TODO THIS IS NOT ALWAYS TRUE BECAUSE THE MOVE STUDENTS MAY LAUNCH THE EXCEPTION
+        *  BEFORE IT ACTUALLY MOVES ALL 4 STUDENTS (2 OR PLUS STUDENTS OF THE SAME COLOR)*/
+        //assertEquals(cloud.howManyStudents(),4);
+
     }
 }

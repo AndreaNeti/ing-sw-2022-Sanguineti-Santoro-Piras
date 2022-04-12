@@ -48,15 +48,16 @@ public abstract class GameComponent {
             destination.addStudents(color, number);
         }
     }
-
+    //the exception is for the subclasses like bag,entranceHall and lunchHall that can't use this function
     public void moveAll(GameComponent destination) throws NotAllowedException {
         if (howManyStudents() != 0) {
             for (Color c : Color.values()) {
                 try {
                     moveStudents(c, howManyStudents(c), destination);
-                } catch (GameException e) {
-                    // should not call this
-                    e.printStackTrace();
+                } catch (GameException ignored) {
+                    //TODO technically we could for example move all students from
+                    //a cloud to an island which is an error
+                    //TODO FIX THIS BUG PLS
                 }
             }
         } else {

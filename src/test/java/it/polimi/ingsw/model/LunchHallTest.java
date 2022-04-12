@@ -11,23 +11,25 @@ class LunchHallTest {
     Bag bag = new Bag((byte) 20);
 
     @Test
-    void constructorAndGetTest() {
-        LunchHall l = new LunchHall(10 * Color.values().length);
+    void lunchHallTest() {
+        LunchHall lunchHall = new LunchHall(10 * Color.values().length);
         GameComponent gc = new Island();
         try {
             bag.drawStudent(gc, (byte) (20 * Color.values().length - 1));
         } catch (EndGameException | GameException e) {
             fail();
         }
-        assertEquals(0, l.howManyStudents());
-        assertThrows(NotAllowedException.class, () -> gc.moveStudents(Color.BLUE, (byte) 11, l), "Cannot exceed 10 students per color");
-        assertEquals(0, l.howManyStudents());
+        assertEquals(0, lunchHall.howManyStudents());
+        assertThrows(NotAllowedException.class, () -> gc.moveStudents(Color.BLUE, (byte) 11, lunchHall), "Cannot exceed 10 students per color");
+        assertEquals(0, lunchHall.howManyStudents());
         try {
-            gc.moveStudents(Color.BLUE, (byte) 10, l);
+            gc.moveStudents(Color.BLUE, (byte) 10, lunchHall);
         } catch (GameException e) {
             fail();
         }
-        assertEquals(10, l.howManyStudents());
-        assertEquals(10, l.howManyStudents(Color.BLUE));
+        assertEquals(10, lunchHall.howManyStudents());
+        assertEquals(10, lunchHall.howManyStudents(Color.BLUE));
+        assertThrows(NotAllowedException.class,()->lunchHall.moveAll(bag),"Should launch cause you can't use this method");
+
     }
 }

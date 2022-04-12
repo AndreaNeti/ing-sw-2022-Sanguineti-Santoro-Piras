@@ -3,8 +3,6 @@ package it.polimi.ingsw.model;
 import it.polimi.ingsw.exceptions.NotAllowedException;
 import it.polimi.ingsw.exceptions.UnexpectedValueException;
 
-import it.polimi.ingsw.exceptions.GameException;
-
 public class Island extends GameComponent {
     private Team team;
     //prohibition is the representation of the NO Entry Tiles which avoids the calculation of the influence on an island
@@ -33,19 +31,17 @@ public class Island extends GameComponent {
 
     public void merge(Island island) {
         if (island != null) {
-            try{
+            try {
                 island.moveAll(this);
-            }catch (NotAllowedException ignored){
+            } catch (NotAllowedException ignored) {
 
             }
-
-
             this.number += island.getNumber();
             try {
                 addProhibitions(island.getProhibitions());
-            } catch (UnexpectedValueException e) {
+            } catch (UnexpectedValueException ignored) {
                 // getProhibition should never return negative values
-                e.printStackTrace();
+
             }
         } else System.err.println("Cannot merge to null island");
     }
@@ -60,7 +56,7 @@ public class Island extends GameComponent {
 
     public void addProhibitions(byte value) throws UnexpectedValueException {
         if (value < 0) throw new UnexpectedValueException();
-        else if (value > 0) prohibition += value;
+        else prohibition += value;
     }
 
     public void removeProhibition() {
