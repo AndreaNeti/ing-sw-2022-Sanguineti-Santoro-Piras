@@ -2,6 +2,8 @@ package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.exceptions.UnexpectedValueException;
 
+import it.polimi.ingsw.exceptions.GameException;
+
 public class Island extends GameComponent {
     private Team team;
     //prohibition is the representation of the NO Entry Tiles which avoids the calculation of the influence on an island
@@ -31,6 +33,8 @@ public class Island extends GameComponent {
     public void merge(Island island) {
         if (island != null) {
             island.moveAll(this);
+
+
             this.number += island.getNumber();
             try {
                 addProhibitions(island.getProhibitions());

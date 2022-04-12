@@ -23,7 +23,7 @@ class PlayerTest {
     }
 
     @Test
-    void constructorAndEqualsTest() {
+    void constructorAndEqualsAndCompareTest() {
         assertThrows(UnexpectedValueException.class, () -> new Player(null, null, null, null, 5));
         Player p2 = null;
         try {
@@ -40,6 +40,7 @@ class PlayerTest {
         assertEquals(p.getSocket(), p2.getSocket());
         assertNotEquals(p2, p1);
         assertNotEquals(p2.getTeam(), p1.getTeam());
+
     }
 
     @Test
@@ -51,6 +52,8 @@ class PlayerTest {
             fail();
         }
         assertTrue(p.compare(p, p1) > 0);
+        assertTrue(p.compare(p1,p)<0);
+        assertEquals(p.compare(p,p), 0);
         assertEquals(p.getPlayedCard(), 4);
         assertEquals(p.getPlayedCardMoves(), 2);
 

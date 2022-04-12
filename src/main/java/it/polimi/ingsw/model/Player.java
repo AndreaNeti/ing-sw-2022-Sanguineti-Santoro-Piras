@@ -82,10 +82,7 @@ public class Player implements Comparator<Player> {
         return wizard == player.wizard;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(wizard);
-    }
+
 
     @Override
     public int compare(Player p1, Player p2) throws ClassCastException {
