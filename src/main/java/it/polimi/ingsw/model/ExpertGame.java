@@ -177,9 +177,11 @@ public class ExpertGame extends NormalGame {
 
     @Override
     public void moveMotherNature(int moves) throws NotAllowedException, EndGameException {
-        if (extraSteps)
-            moves += 2;
-        super.moveMotherNature(moves);
+        if (moves+2 > super.getCurrentPlayer().getPlayedCardMoves())
+            throw new NotAllowedException("Moves can't be higher than the value of the card");
+        try{
+            super.moveMotherNature(moves);
+        }catch (NotAllowedException ignored){}
     }
 
     protected void calculateProfessor() {

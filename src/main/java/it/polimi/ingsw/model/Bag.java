@@ -1,9 +1,6 @@
 package it.polimi.ingsw.model;
 
-import it.polimi.ingsw.exceptions.EndGameException;
-import it.polimi.ingsw.exceptions.GameException;
-import it.polimi.ingsw.exceptions.NotEnoughStudentsException;
-import it.polimi.ingsw.exceptions.UnexpectedValueException;
+import it.polimi.ingsw.exceptions.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -40,6 +37,11 @@ public class Bag extends GameComponent {
             if (howManyStudents() == 0)
                 throw new EndGameException(false);
         }
+
+    }
+    @Override
+    public void moveAll(GameComponent destination) throws NotAllowedException {
+        throw new NotAllowedException("It's a bag i can't moveMyStudents");
     }
 }
 

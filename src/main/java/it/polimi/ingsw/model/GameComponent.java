@@ -49,7 +49,7 @@ public abstract class GameComponent {
         }
     }
 
-    public void moveAll(GameComponent destination) {
+    public void moveAll(GameComponent destination) throws NotAllowedException {
         if (howManyStudents() != 0) {
             for (Color c : Color.values()) {
                 try {

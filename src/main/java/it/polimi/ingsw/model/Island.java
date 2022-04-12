@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.exceptions.NotAllowedException;
 import it.polimi.ingsw.exceptions.UnexpectedValueException;
 
 import it.polimi.ingsw.exceptions.GameException;
@@ -32,7 +33,11 @@ public class Island extends GameComponent {
 
     public void merge(Island island) {
         if (island != null) {
-            island.moveAll(this);
+            try{
+                island.moveAll(this);
+            }catch (NotAllowedException ignored){
+
+            }
 
 
             this.number += island.getNumber();
