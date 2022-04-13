@@ -130,7 +130,7 @@ public class ExpertGame extends NormalGame {
                 for (Color c : Color.values()) {
                     if (c != ignoredColorInfluence) {
                         for (Player p : t.getPlayers()) {
-                            if (p.equals(getProfessor()[c.ordinal()]))
+                            if (p.getWizard() == getProfessor()[c.ordinal()])
                                 influence += island.howManyStudents(c);
                         }
                     }
@@ -190,7 +190,7 @@ public class ExpertGame extends NormalGame {
         Player newOwner;
         for (Color c : Color.values()) {
             // player actually controlling that professor
-            currentOwner = getProfessor()[c.ordinal()];
+            currentOwner = getPlayers().get(getProfessor()[c.ordinal()].ordinal());
 
             if (currentOwner != null)
                 max = currentOwner.getLunchHall().howManyStudents(c);
@@ -206,7 +206,7 @@ public class ExpertGame extends NormalGame {
                         newOwner = p;
                 }
             }
-            getProfessor()[c.ordinal()] = newOwner;
+            getProfessor()[c.ordinal()] = newOwner.getWizard();
         }
     }
 
