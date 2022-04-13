@@ -75,14 +75,8 @@ public class GameComponentTest {
         } catch (EndGameException | GameException ex) {
             fail();
         }
-        try {
-            island.moveAll(cloud);
-        } catch (GameException ex) {
-            fail();
-        }
-        /*TODO THIS IS NOT ALWAYS TRUE BECAUSE THE MOVE STUDENTS MAY LAUNCH THE EXCEPTION
-        *  BEFORE IT ACTUALLY MOVES ALL 4 STUDENTS (2 OR PLUS STUDENTS OF THE SAME COLOR)*/
-        //assertEquals(cloud.howManyStudents(),4);
+
+        assertThrows(NotAllowedException.class,()->island.moveAll(cloud),"Cloud is full should call exception");
 
     }
 }

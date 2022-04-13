@@ -34,14 +34,11 @@ public class NormalGame implements Game {
             clouds.add(new Cloud(numberOfPlayers));
         }
         this.professors = new Player[Color.values().length];
-        this.teams = new ArrayList<>(numberOfPlayers == 3 ? 3 : 2);
-        this.players = new ArrayList<>(numberOfPlayers);
-        for (int i = 0; i < numberOfPlayers; i++) {
-            players.add(playerList.get(i));
-        }
-        for (int i = 0; i < (numberOfPlayers == 3 ? 3 : 2); i++) {
-            teams.add(teamList.get(i));
-        }
+
+        this.teams = new ArrayList<>(teamList);
+
+        this.players = new ArrayList<>(playerList);
+
         this.bag = new Bag((byte) 2);
         initializeMotherNature((byte) rand.nextInt(islands.size()));
 
