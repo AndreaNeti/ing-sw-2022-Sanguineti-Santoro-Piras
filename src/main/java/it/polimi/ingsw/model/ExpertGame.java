@@ -320,4 +320,8 @@ public class ExpertGame extends NormalGame {
         }
     }
 
+    public byte getCoinsPlayer(Player p) {
+        return coinsPlayer[getPlayers().indexOf(p)];
+        // return coinsPlayer[p.getWizard().ordinal()]
+    }
 }

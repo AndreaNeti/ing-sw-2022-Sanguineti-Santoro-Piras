@@ -183,7 +183,12 @@ public class NormalGame implements Game {
         Player newOwner;
         for (Color c : Color.values()) {
             // player actually controlling that professor
+
             currentOwner = players.get(professors[c.ordinal()].ordinal());
+//            for(Player p: players){
+//                if (p.getWizard()==professors[c.ordinal()])
+//                    currentOwner=p;
+//            }
 
             if (currentOwner != null)
                 max = currentOwner.getLunchHall().howManyStudents(c);
