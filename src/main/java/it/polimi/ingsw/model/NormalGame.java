@@ -129,15 +129,17 @@ public class NormalGame implements Game {
         currentPlayer.useCard(card);
     }
 
-    @Override
-    public void moveMotherNature(int moves) throws NotAllowedException, EndGameException {
+    protected void checkMoveMotherNature(int moves) throws NotAllowedException {
         if (moves > currentPlayer.getPlayedCardMoves())
             throw new NotAllowedException("Moves can't be higher than the value of the card");
-        else {
-            motherNaturePosition += moves;
-            motherNaturePosition %= islands.size();
-            calculateInfluence(islands.get(motherNaturePosition));
-        }
+    }
+
+    @Override
+    public void moveMotherNature(int moves) throws NotAllowedException, EndGameException {
+        checkMoveMotherNature(moves);
+        motherNaturePosition += moves;
+        motherNaturePosition %= islands.size();
+        calculateInfluence(islands.get(motherNaturePosition));
     }
 
     private void calculateInfluence(Island island) throws EndGameException {

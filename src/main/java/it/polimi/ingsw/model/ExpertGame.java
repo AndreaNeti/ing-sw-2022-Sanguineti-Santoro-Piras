@@ -176,12 +176,11 @@ public class ExpertGame extends NormalGame {
     }
 
     @Override
-    public void moveMotherNature(int moves) throws NotAllowedException, EndGameException {
-        if (moves+2 > super.getCurrentPlayer().getPlayedCardMoves())
+    protected void checkMoveMotherNature(int moves) throws NotAllowedException {
+        if (!extraSteps)
+            super.checkMoveMotherNature(moves);
+        else if (moves > super.getCurrentPlayer().getPlayedCardMoves() + 2)
             throw new NotAllowedException("Moves can't be higher than the value of the card");
-        try{
-            super.moveMotherNature(moves);
-        }catch (NotAllowedException ignored){}
     }
 
     protected void calculateProfessor() {
@@ -278,25 +277,26 @@ public class ExpertGame extends NormalGame {
         return characters.get(index);
     }
 
-    protected void setExtraInfluence(boolean extraInfluence) {
-        this.extraInfluence = extraInfluence;
+    protected void setExtraInfluence() {
+        this.extraInfluence = true;
     }
 
-    protected void setTowerInfluence(boolean towerInfluence) {
-        this.towerInfluence = towerInfluence;
+    protected void removeTowerInfluence() {
+        this.towerInfluence = false;
     }
 
-    protected void setExtraSteps(boolean extraSteps) {
-        this.extraSteps = extraSteps;
+    protected void setExtraSteps() {
+        this.extraSteps = true;
     }
 
     protected void setIgnoredColorInfluence(Color ignoredColorInfluence) {
         this.ignoredColorInfluence = ignoredColorInfluence;
     }
 
-    protected void setEqualProfessorCalculation(boolean equalProfessorCalculation) {
-        this.equalProfessorCalculation = equalProfessorCalculation;
+    protected void setEqualProfessorCalculation() {
+        this.equalProfessorCalculation = true;
     }
+
     // TODO by copy?
     protected ArrayList<Integer> getCharacterInputs() {
         return inputsCharacter;

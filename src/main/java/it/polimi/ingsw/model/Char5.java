@@ -3,7 +3,7 @@ package it.polimi.ingsw.model;
 public class Char5 implements CharacterCard {
     @Override
     public void play(ExpertGame game) {
-        game.setTowerInfluence(false);
+        game.removeTowerInfluence();
     }
 
     @Override
