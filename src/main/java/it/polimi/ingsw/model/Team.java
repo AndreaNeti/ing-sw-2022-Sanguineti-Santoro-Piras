@@ -99,4 +99,5 @@ public class Team {
     public String toString() {
         return houseColor.name().toLowerCase() + " team";
     }
+
 }

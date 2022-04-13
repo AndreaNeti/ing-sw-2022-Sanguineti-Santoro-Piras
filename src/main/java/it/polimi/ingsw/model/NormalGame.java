@@ -269,6 +269,11 @@ public class NormalGame implements Game {
         cloudSource.moveAll(currentPlayer.getEntranceHall());
     }
 
+    public ArrayList<Cloud> getClouds() {
+        //TODO do the clone
+        return clouds;
+    }
+
     protected Player getCurrentPlayer() {
         return this.currentPlayer;
     }
@@ -291,7 +296,6 @@ public class NormalGame implements Game {
     protected ArrayList<Island> getIslands() {
         return islands;
     }
-
     protected GameComponent getBag() {
         return this.bag;
     }
@@ -300,4 +304,7 @@ public class NormalGame implements Game {
         return professors;
     }
 
+    public byte getMotherNaturePosition() {
+        return motherNaturePosition;
+    }
 }
