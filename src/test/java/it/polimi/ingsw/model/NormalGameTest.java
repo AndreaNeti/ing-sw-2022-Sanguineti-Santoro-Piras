@@ -151,7 +151,7 @@ public class NormalGameTest {
 
         assertEquals(gameWith2.getBag().getClass(), Bag.class);
         assertEquals(gameWith2.getCurrentPlayer(), p1);
-        for (Player p : gameWith2.getProfessor())
+        for (Wizard p : gameWith2.getProfessor())
             assertNull(p);
     }
 

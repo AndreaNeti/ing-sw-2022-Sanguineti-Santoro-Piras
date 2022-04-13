@@ -22,9 +22,7 @@ public class Team {
     }
 
     // TODO by value?
-    public ArrayList<Player> getPlayers() {
-        return this.members;
-    }
+    public ArrayList<Player> getPlayers() { return this.members; }
 
     protected void addPlayer(Player p) throws NotAllowedException {
         if (isFull()) throw new NotAllowedException("Team is already full");

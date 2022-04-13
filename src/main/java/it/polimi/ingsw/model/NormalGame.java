@@ -13,7 +13,7 @@ public class NormalGame implements Game {
     private final ArrayList<Cloud> clouds;
     //professors are handled as a 5 player array: professors[i]=j means that professor i (it follows the ordinal of enum) is
     //controlled by the player j
-    private final Player[] professors;
+    private final Wizard[] professors;
     private final ArrayList<Team> teams;
     //all players
     private final ArrayList<Player> players;
@@ -33,7 +33,7 @@ public class NormalGame implements Game {
         for (int i = 0; i < numberOfPlayers; i++) {
             clouds.add(new Cloud(numberOfPlayers));
         }
-        this.professors = new Player[Color.values().length];
+        this.professors = new Wizard[Color.values().length];
 
         this.teams = new ArrayList<>(teamList);
 
@@ -147,7 +147,7 @@ public class NormalGame implements Game {
             int influence = 0;
             for (Color c : Color.values()) {
                 for (Player p : t.getPlayers()) {
-                    if (p.equals(professors[c.ordinal()])) influence += island.howManyStudents(c);
+                    if (p.getWizard().equals(professors[c.ordinal()])) influence += island.howManyStudents(c);
                 }
             }
             if (island.getTeam() != null && t.equals(island.getTeam())) influence += island.getNumber();
@@ -183,7 +183,7 @@ public class NormalGame implements Game {
         Player newOwner;
         for (Color c : Color.values()) {
             // player actually controlling that professor
-            currentOwner = professors[c.ordinal()];
+            currentOwner = players.get(professors[c.ordinal()].ordinal());
 
             if (currentOwner != null)
                 max = currentOwner.getLunchHall().howManyStudents(c);
@@ -196,7 +196,7 @@ public class NormalGame implements Game {
                     newOwner = p;
                 }
             }
-            professors[c.ordinal()] = newOwner;
+            professors[c.ordinal()] = newOwner.getWizard();
         }
     }
 
@@ -215,7 +215,7 @@ public class NormalGame implements Game {
                 minTowers = t.getTowersLeft();
                 for (Color c : Color.values()) {
                     for (Player p : t.getPlayers()) {
-                        if (p.equals(professors[c.ordinal()])) numberOfProfessors++;
+                        if (p.getWizard() == professors[c.ordinal()]) numberOfProfessors++;
                     }
                 }
                 maxProfessors = numberOfProfessors;
@@ -223,7 +223,7 @@ public class NormalGame implements Game {
                 byte numberOfProfessors = 0;
                 for (Color c : Color.values()) {
                     for (Player p : t.getPlayers()) {
-                        if (p.equals(professors[c.ordinal()])) numberOfProfessors++;
+                        if (p.getWizard() == professors[c.ordinal()]) numberOfProfessors++;
                     }
                 }
                 if (numberOfProfessors > maxProfessors) {
@@ -300,7 +300,7 @@ public class NormalGame implements Game {
         return this.bag;
     }
 
-    protected Player[] getProfessor() {
+    protected Wizard[] getProfessor() {
         return professors;
     }
 
