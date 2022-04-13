@@ -6,6 +6,7 @@ import it.polimi.ingsw.exceptions.NotAllowedException;
 import it.polimi.ingsw.exceptions.NotExpertGameException;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
 
 public class NormalGame implements Game {
@@ -34,7 +35,6 @@ public class NormalGame implements Game {
             clouds.add(new Cloud(numberOfPlayers));
         }
         this.professors = new Wizard[Color.values().length];
-
         this.teams = new ArrayList<>(teamList);
 
         this.players = new ArrayList<>(playerList);
@@ -106,13 +106,6 @@ public class NormalGame implements Game {
         return islands.get(idGameComponent - 2);
     }
 
-    @Override
-    public void move(Color color, int gameComponentSource, int gameComponentDestination) throws GameException {
-        getComponentById(gameComponentSource).moveStudents(color, (byte) 1, getComponentById(gameComponentDestination));
-        if (gameComponentDestination == 1)
-            calculateProfessor(); //TODO check if calls the expertgame one from super.move() in expertgame
-    }
-
     protected void drawStudents(GameComponent gameComponent, byte students) throws EndGameException {
         try {
             bag.drawStudent(gameComponent, students);
@@ -122,8 +115,56 @@ public class NormalGame implements Game {
     }
 
     @Override
+    public void refillClouds() throws EndGameException {
+        for (GameComponent cloud : this.clouds) {
+            // draw 3 if 2 teams, draws 4 if 3 teams
+            drawStudents(cloud, (byte) (teams.size() % 2 + 3));
+        }
+    }
+
+    @Override
     public void playCard(byte card) throws GameException, EndGameException {
         currentPlayer.useCard(card);
+    }
+
+
+    @Override
+    public void move(Color color, int gameComponentSource, int gameComponentDestination) throws GameException {
+        getComponentById(gameComponentSource).moveStudents(color, (byte) 1, getComponentById(gameComponentDestination));
+        if (gameComponentDestination == 1)
+            calculateProfessor();
+    }
+
+    // compares for each color the lunchHall of each player and then puts the player with the most students
+    // in the professor array slot of the current color
+    protected void calculateProfessor() {
+        byte max;
+        Player currentOwner=null;
+        // player with the maximum number of students for the current color
+        Player newOwner;
+        for (Color c : Color.values()) {
+            // player actually controlling that professor
+
+            //currentOwner = players.get(professors[c.ordinal()].ordinal());
+            for (Player p : players) {
+                if (p.getWizard() == professors[c.ordinal()])
+                    currentOwner = p;
+            }
+
+            if (currentOwner != null)
+                max = currentOwner.getLunchHall().howManyStudents(c);
+            else max = 0;
+            newOwner = currentOwner;
+
+            for (Player p : players) {
+                if (!p.equals(currentOwner) && p.getLunchHall().howManyStudents(c) > max) {
+                    max = p.getLunchHall().howManyStudents(c);
+                    newOwner = p;
+                }
+            }
+            if(newOwner!=null)
+                professors[c.ordinal()] = newOwner.getWizard();
+        }
     }
 
     protected void checkMoveMotherNature(int moves) throws NotAllowedException {
@@ -174,39 +215,10 @@ public class NormalGame implements Game {
         }
     }
 
-    // compares for each color the lunchHall of each player and then puts the player with the most students
-    // in the professor array slot of the current color
-    protected void calculateProfessor() {
-        byte max;
-        Player currentOwner;
-        // player with the maximum number of students for the current color
-        Player newOwner;
-        for (Color c : Color.values()) {
-            // player actually controlling that professor
-
-            currentOwner = players.get(professors[c.ordinal()].ordinal());
-//            for(Player p: players){
-//                if (p.getWizard()==professors[c.ordinal()])
-//                    currentOwner=p;
-//            }
-
-            if (currentOwner != null)
-                max = currentOwner.getLunchHall().howManyStudents(c);
-            else max = 0;
-            newOwner = currentOwner;
-
-            for (Player p : players) {
-                if (!p.equals(currentOwner) && p.getLunchHall().howManyStudents(c) > max) {
-                    max = p.getLunchHall().howManyStudents(c);
-                    newOwner = p;
-                }
-            }
-            professors[c.ordinal()] = newOwner.getWizard();
-        }
-    }
 
     // checks the team with fewer towers left and calculates its number of controlled professors.
     // if two teams have the same number of towers left the team with more professors controlled becomes the winner
+
     @Override
     public ArrayList<Team> calculateWinner() {
         ArrayList<Team> winners = new ArrayList<>();
@@ -241,14 +253,6 @@ public class NormalGame implements Game {
             }
         }
         return winners;
-    }
-
-    @Override
-    public void refillClouds() throws EndGameException {
-        for (GameComponent cloud : this.clouds) {
-            // draw 3 if 2 teams, draws 4 if 3 teams
-            drawStudents(cloud, (byte) (teams.size() % 2 + 3));
-        }
     }
 
     @Override
@@ -301,7 +305,8 @@ public class NormalGame implements Game {
     protected ArrayList<Island> getIslands() {
         return islands;
     }
-    protected GameComponent getBag() {
+
+    protected Bag getBag() {
         return this.bag;
     }
 

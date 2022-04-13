@@ -63,19 +63,28 @@ class PlayerTest {
         try {
             p.useCard((byte) 1);
             assertEquals(p.getPlayedCardMoves(), 1);
+            assertEquals(p.getPlayedCard(),1);
             p.useCard((byte) 2);
+            assertEquals(p.getPlayedCard(),2);
             assertEquals(p.getPlayedCardMoves(), 1);
             p.useCard((byte) 3);
+            assertEquals(p.getPlayedCard(),3);
             assertEquals(p.getPlayedCardMoves(), 2);
+
             p.useCard((byte) 5);
+            assertEquals(p.getPlayedCard(),5);
             assertEquals(p.getPlayedCardMoves(), 3);
             p.useCard((byte) 6);
             assertEquals(p.getPlayedCardMoves(), 3);
+            assertEquals(p.getPlayedCard(),6);
             p.useCard((byte) 7);
+            assertEquals(p.getPlayedCard(),7);
             assertEquals(p.getPlayedCardMoves(), 4);
             p.useCard((byte) 8);
+            assertEquals(p.getPlayedCard(),8);
             assertEquals(p.getPlayedCardMoves(), 4);
             p.useCard((byte) 9);
+            assertEquals(p.getPlayedCard(),9);
             assertEquals(p.getPlayedCardMoves(), 5);
         } catch (UsedCardException | UnexpectedValueException | NotAllowedException | EndGameException ex) {
             fail();

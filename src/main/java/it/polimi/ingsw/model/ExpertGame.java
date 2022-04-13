@@ -109,6 +109,7 @@ public class ExpertGame extends NormalGame {
     @Override
     public void move(Color color, int gameComponentSource, int gameComponentDestination) throws GameException {
         super.move(color, gameComponentSource, gameComponentDestination);
+        //TODO check if the super.move calls the expert calculateProfessor
         if (gameComponentDestination == 1 && getCurrentPlayer().getLunchHall().howManyStudents(color) % 3 == 0) {
             addCoinToPlayer(getCurrentPlayer());
         }

@@ -10,6 +10,7 @@ import java.net.Socket;
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assumptions.*;
 
 public class NormalGameTest {
     Socket socket1 = new Socket(), socket2 = new Socket();
@@ -19,7 +20,7 @@ public class NormalGameTest {
     ArrayList<Team> teamList2;
     ArrayList<Team> teamList3;
     ArrayList<Team> teamList4;
-    Player p1, p2, p3, p4;
+    Player p1_2, p2_2,p1_3,p2_3,p3_3,p1_4,p2_4,p3_4, p4_4;
     ArrayList<Player> players2;
     ArrayList<Player> players3;
     ArrayList<Player> players4;
@@ -27,7 +28,7 @@ public class NormalGameTest {
     NormalGame gameWith4;
     NormalGame gameWith3;
 
-    //create a game with2Players
+    //constructor of game
     public NormalGameTest() {
         t1 = new Team(HouseColor.WHITE, (byte) 1, (byte) 8);
         t2 = new Team(HouseColor.BLACK, (byte) 1, (byte) 8);
@@ -36,16 +37,16 @@ public class NormalGameTest {
         teamList2.add(t1);
         teamList2.add(t2);
         try {
-            p1 = new Player(socket1, t1, Wizard.AIRMAGE, "Franco", 7);
-            p2 = new Player(socket2, t2, Wizard.ELECTROMAGE, "Gigi", 7);
+            p1_2 = new Player(socket1, t1, Wizard.AIRMAGE, "Franco", 7);
+            p2_2 = new Player(socket2, t2, Wizard.ELECTROMAGE, "Gigi", 7);
         } catch (GameException e) {
             fail();
         }
         players2 = new ArrayList<>(2);
-        players2.add(p1);
-        players2.add(p2);
+        players2.add(p1_2);
+        players2.add(p2_2);
         gameWith2 = new NormalGame((byte) 2, teamList2, players2);
-        gameWith2.setCurrentPlayer(p1);
+        gameWith2.setCurrentPlayer(p1_2);
 
 
         teamList4 = new ArrayList<>(2);
@@ -55,20 +56,20 @@ public class NormalGameTest {
 
         teamList4.add(t2);
         try {
-            p1 = new Player(socket1, t1, Wizard.AIRMAGE, "Franco", 7);
-            p2 = new Player(socket2, t2, Wizard.ELECTROMAGE, "Gigi", 7);
-            p3 = new Player(socket1, t1, Wizard.SANDMAGE, "Luigi", 7);
-            p4 = new Player(socket1, t2, Wizard.WOODMAGE, "Filomena", 7);
+            p1_4 = new Player(socket1, t1, Wizard.AIRMAGE, "Franco", 7);
+            p2_4 = new Player(socket2, t2, Wizard.ELECTROMAGE, "Gigi", 7);
+            p3_4 = new Player(socket1, t1, Wizard.SANDMAGE, "Luigi", 7);
+            p4_4 = new Player(socket1, t2, Wizard.WOODMAGE, "Filomena", 7);
 
         } catch (GameException e) {
             fail();
         }
         players4 = new ArrayList<>(4);
-        players4.add(p1);
-        players4.add(p2);
+        players4.add(p1_4);
+        players4.add(p2_4);
 
         gameWith4 = new NormalGame((byte) 4, teamList4, players4);
-        gameWith4.setCurrentPlayer(p1);
+        gameWith4.setCurrentPlayer(p1_4);
 
         //create a game with 3 people
         t1 = new Team(HouseColor.WHITE, (byte) 2, (byte) 6);
@@ -79,26 +80,27 @@ public class NormalGameTest {
         teamList3.add(t2);
         teamList3.add(t3);
         try {
-            p1 = new Player(socket1, t1, Wizard.AIRMAGE, "Franco", 9);
-            p2 = new Player(socket2, t2, Wizard.ELECTROMAGE, "Gigi", 9);
-            p3 = new Player(socket1, t1, Wizard.SANDMAGE, "Luigi", 9);
+            p1_3 = new Player(socket1, t1, Wizard.AIRMAGE, "Franco", 9);
+            p2_3 = new Player(socket2, t2, Wizard.ELECTROMAGE, "Gigi", 9);
+            p3_3 = new Player(socket1, t1, Wizard.SANDMAGE, "Luigi", 9);
 
 
         } catch (GameException e) {
             fail();
         }
         players3 = new ArrayList<>(3);
-        players3.add(p1);
-        players3.add(p2);
-        players3.add(p3);
+        players3.add(p1_3);
+        players3.add(p2_3);
+        players3.add(p3_3);
 
         gameWith3 = new NormalGame((byte) 3, teamList3, players3);
-        gameWith3.setCurrentPlayer(p1);
+        gameWith3.setCurrentPlayer(p1_3);
+
     }
 
 
     @Test
-    void getTest() {
+    void constructorTest() {
         assertEquals(gameWith2.getTeams(), teamList2);
         assertEquals(gameWith2.getPlayers(), players2);
         assertEquals(gameWith3.getTeams(), teamList3);
@@ -148,41 +150,111 @@ public class NormalGameTest {
 
         }
 
-
         assertEquals(gameWith2.getBag().getClass(), Bag.class);
-        assertEquals(gameWith2.getCurrentPlayer(), p1);
+        assertEquals(gameWith2.getCurrentPlayer(), p1_2);
         for (Wizard p : gameWith2.getProfessor())
             assertNull(p);
     }
 
 
     @Test
-    void move() {
+    void refillCloudTest(){
+        GameComponent islandTest=new Island();
+        for (Cloud cloud: gameWith2.getClouds()) {
+            try{
+                cloud.moveAll(islandTest);
+            }catch (GameException ignored){
+                fail();
+            }
+        }
+        try{
+            gameWith2.refillClouds();
+        }catch (EndGameException ex){
+            fail();
+        }
+
+        for (Cloud cloud: gameWith2.getClouds()) {
+
+            assertEquals(cloud.howManyStudents(),3);
+        }
     }
 
     @Test
-    void playCard() {
-        gameWith2.setCurrentPlayer(p1);
+    void playCardTest() {
+        assertEquals(gameWith2.getCurrentPlayer(),p1_2);
         try {
             gameWith2.playCard((byte) 5);
         } catch (GameException | EndGameException e) {
             fail();
         }
-        assertEquals(5, p1.getPlayedCard());
-        assertEquals(3, p1.getPlayedCardMoves());
-        gameWith2.setCurrentPlayer(p2);
+        assertEquals(5, p1_2.getPlayedCard());
+        assertEquals(3, p1_2.getPlayedCardMoves());
+        gameWith2.setCurrentPlayer(p2_2);
         try {
             gameWith2.playCard((byte) 6);
         } catch (GameException | EndGameException e) {
             fail();
         }
-        assertEquals(6, p2.getPlayedCard());
-        assertEquals(3, p2.getPlayedCardMoves());
-        assertTrue(p1.compare(p2, p1) > 0);
+        assertEquals(6, p2_2.getPlayedCard());
+        assertEquals(3, p2_2.getPlayedCardMoves());
+        assertTrue(p1_2.compare(p2_2, p1_2) > 0);
     }
 
     @Test
-    void moveMotherNature() {
+    void calculateProfessorTest(){
+        //at the beginning after the calculation no one should have professor
+        gameWith2.calculateProfessor();
+        for (Wizard w: gameWith2.getProfessor()) {
+            assertNull(w);
+        }
+        gameWith3.calculateProfessor();
+        for (Wizard w: gameWith3.getProfessor()) {
+            assertNull(w);
+        }
+        gameWith4.calculateProfessor();
+        for (Wizard w: gameWith3.getProfessor()) {
+            assertNull(w);
+        }
+        try {
+            gameWith4.getBag().moveStudents(Color.BLUE, (byte) 5, gameWith4.getCurrentPlayer().getLunchHall());
+        }catch(GameException ex){
+            fail();
+        }
+        gameWith4.calculateProfessor();
+        assertEquals(gameWith4.getProfessor()[1],gameWith4.getCurrentPlayer().getWizard());
+
+        try {
+            gameWith3.getBag().moveStudents(Color.BLUE, (byte) 5, p3_3.getLunchHall());
+        }catch(GameException ex){
+            fail();
+        }
+        gameWith3.calculateProfessor();
+        assertEquals(p3_3.getWizard(),gameWith3.getProfessor()[1]);
+        try {
+            gameWith3.getBag().moveStudents(Color.RED, (byte) 5, p1_3.getLunchHall());
+            gameWith3.getBag().moveStudents(Color.RED, (byte) 5, p2_3.getLunchHall());
+        }catch(GameException ex){
+            fail();
+        }
+        gameWith3.calculateProfessor();
+        assertEquals(gameWith3.getProfessor()[0],p1_3.getWizard());
+
+        try {
+            gameWith3.getBag().moveStudents(Color.BLUE, (byte) 6, p2_3.getLunchHall());
+        }catch(GameException ex){
+            fail();
+        }
+        gameWith3.calculateProfessor();
+        assertEquals(p2_3.getWizard(),gameWith3.getProfessor()[1]);
+    }
+    @Test
+    void moveTest(){
+
+    }
+    @Test
+
+    void moveMotherNatureTest(){
+        //now it's the beginning of a game
 
     }
 
