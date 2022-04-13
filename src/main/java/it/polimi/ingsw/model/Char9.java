@@ -53,12 +53,12 @@ public class Char9 implements CharacterCard {
         return (nInput == 2 || nInput == 4);
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Char9)) return false;
-        CharacterCard c = (CharacterCard) o;
-        return getId() == c.getId();
-    }
+//    @Override
+//    public boolean equals(Object o) {
+//        if (this == o) return true;
+//        if (!(o instanceof Char9)) return false;
+//        CharacterCard c = (CharacterCard) o;
+//        return getId() == c.getId();
+//    }
 }
 

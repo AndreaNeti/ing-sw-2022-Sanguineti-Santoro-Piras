@@ -22,11 +22,11 @@ public class Char7 implements CharacterCard {
         return true;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Char7)) return false;
-        CharacterCard c = (CharacterCard) o;
-        return getId() == c.getId();
-    }
+//    @Override
+//    public boolean equals(Object o) {
+//        if (this == o) return true;
+//        if (!(o instanceof Char7)) return false;
+//        CharacterCard c = (CharacterCard) o;
+//        return getId() == c.getId();
+//    }
 }

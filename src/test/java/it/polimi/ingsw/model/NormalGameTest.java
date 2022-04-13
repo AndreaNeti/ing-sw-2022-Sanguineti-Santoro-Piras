@@ -26,8 +26,7 @@ public class NormalGameTest {
     NormalGame gameWith3;
 
     //create a game with2Players
-    @Before
-    public void NormalGameTest() {
+    public NormalGameTest() {
         t1 = new Team(HouseColor.WHITE, (byte) 1, (byte) 8);
         t2 = new Team(HouseColor.BLACK, (byte) 1, (byte) 8);
 
@@ -99,7 +98,6 @@ public class NormalGameTest {
 
     @Test
     void getTest() {
-        NormalGameTest();
         assertEquals(gameWith2.getTeams(), teamList2);
         //assertEquals(gameWith2.getPlayers(), players);
         assertEquals(gameWith2.getIslands().size(), 12);
@@ -116,6 +114,7 @@ public class NormalGameTest {
 
     @Test
     void playCard() {
+        gameWith2.setCurrentPlayer(p1);
         try {
             gameWith2.playCard((byte) 5);
         } catch (GameException | EndGameException e) {
@@ -136,6 +135,7 @@ public class NormalGameTest {
 
     @Test
     void moveMotherNature() {
+
     }
 
     @Test

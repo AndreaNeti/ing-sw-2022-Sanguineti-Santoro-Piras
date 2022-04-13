@@ -53,11 +53,11 @@ public class Char6 extends GameComponent implements CharacterCard {
         return (nInput == 6 || nInput == 4 || nInput == 2);
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Char6)) return false;
-        CharacterCard c = (CharacterCard) o;
-        return getId() == c.getId();
-    }
+//    @Override
+//    public boolean equals(Object o) {
+//        if (this == o) return true;
+//        if (!(o instanceof Char6)) return false;
+//        CharacterCard c = (CharacterCard) o;
+//        return getId() == c.getId();
+//    }
 }

@@ -30,6 +30,5 @@ class LunchHallTest {
         assertEquals(10, lunchHall.howManyStudents());
         assertEquals(10, lunchHall.howManyStudents(Color.BLUE));
         assertThrows(NotAllowedException.class,()->lunchHall.moveAll(bag),"Should launch cause you can't use this method");
-
     }
 }
