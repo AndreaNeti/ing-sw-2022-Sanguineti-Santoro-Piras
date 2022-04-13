@@ -4,10 +4,9 @@ public class Char1 implements CharacterCard {
 
     @Override
     public void play(ExpertGame game) {
-        //should set the boolean to true before the calculation and then put it false(?)
+        //should set the boolean to true before the calculation
         game.setEqualProfessorCalculation(true);
         game.calculateProfessor();
-        game.setEqualProfessorCalculation(false);
     }
 
     @Override

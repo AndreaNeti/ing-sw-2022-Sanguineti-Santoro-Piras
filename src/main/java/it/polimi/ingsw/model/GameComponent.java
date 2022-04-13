@@ -48,16 +48,16 @@ public abstract class GameComponent {
             destination.addStudents(color, number);
         }
     }
+
     //the exception is for the subclasses like bag,entranceHall and lunchHall that can't use this function
     public void moveAll(GameComponent destination) throws NotAllowedException {
+        if (howManyStudents() > destination.getMaxStudents() - destination.howManyStudents())
+            throw new NotAllowedException("Exceeded destination max student limit");
         if (howManyStudents() != 0) {
             for (Color c : Color.values()) {
                 try {
                     moveStudents(c, howManyStudents(c), destination);
                 } catch (GameException ignored) {
-                    //TODO technically we could for example move all students from
-                    //a cloud to an island which is an error
-                    //TODO FIX THIS BUG PLS
                 }
             }
         } else {
