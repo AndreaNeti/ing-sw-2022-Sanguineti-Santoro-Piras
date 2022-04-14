@@ -49,6 +49,27 @@ public abstract class GameComponent {
         }
     }
 
+    public void swapStudents(Color toGive, Color toGet, GameComponent other) throws GameException {
+        // swapping between same gameComponent
+        if (this == other) return;
+        removeStudents(toGive, (byte) 1);
+        try {
+            other.moveStudents(toGet, (byte) 1, this);
+        } catch (GameException e) {
+            // can't do move, revert removeStudents
+            addStudents(toGive, (byte) 1);
+            throw e;
+        }
+        // have to check after the move
+        if (other.canAddStudents(toGive, (byte) 1))
+            other.addStudents(toGive, (byte) 1);
+        else {
+            // re-add the removed student, cannot swap
+            addStudents(toGive, (byte) 1);
+            throw new NotAllowedException("Cannot swap these students");
+        }
+    }
+
     //the exception is for the subclasses like bag,entranceHall and lunchHall that can't use this function
     public void moveAll(GameComponent destination) throws NotAllowedException {
         if (howManyStudents() > destination.getMaxStudents() - destination.howManyStudents())

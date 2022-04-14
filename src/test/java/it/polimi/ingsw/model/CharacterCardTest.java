@@ -2,6 +2,7 @@ package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.exceptions.EndGameException;
 import it.polimi.ingsw.exceptions.GameException;
+import it.polimi.ingsw.exceptions.NotEnoughStudentsException;
 import it.polimi.ingsw.exceptions.UnexpectedValueException;
 import org.junit.jupiter.api.Test;
 
@@ -82,15 +83,15 @@ class CharacterCardTest {
         int islandId = 0;
         try {
             game.chooseCharacter(0);
-            // use first available color on the card to test (it's chosen randomly)
-            while (((GameComponent) c0).howManyStudents(Color.values()[color]) == 0 && color < Color.values().length) {
-                color++;
-            }
             game.setCharacterInput(-5);
             game.setCharacterInput(-1);
             assertThrows(UnexpectedValueException.class, () -> c0.play(game), "not valid inputs");
             // also resets character inputs
             game.setCurrentPlayer(p1);
+            // use first available color on the card to test (it's chosen randomly)
+            while (((GameComponent) c0).howManyStudents(Color.values()[color]) == 0 && color < Color.values().length) {
+                color++;
+            }
             game.chooseCharacter(0);
             game.setCharacterInput(color);
             game.setCharacterInput(0);
@@ -105,6 +106,66 @@ class CharacterCardTest {
         }
         assertEquals(game.getIslands().get(islandId).howManyStudents(Color.values()[color]), old + 1);
         assertEquals(((GameComponent) c0).howManyStudents(), ((GameComponent) c0).getMaxStudents());
+    }
+
+    @Test
+    void playChar6() {
+        int color1 = 0, color2 = Color.values().length - 1;
+        try {
+            game.chooseCharacter(0);
+            game.setCharacterInput(-5);
+            game.setCharacterInput(-1);
+            assertThrows(UnexpectedValueException.class, () -> c6.play(game), "not valid inputs");
+            // also resets character inputs
+            game.setCurrentPlayer(p1);
+            // use first available color on the card to test (it's chosen randomly)
+            while (((GameComponent) c6).howManyStudents(Color.values()[color1]) == 0 && color1 < Color.values().length) {
+                game.setCurrentPlayer(p1);
+                game.chooseCharacter(0);
+                game.setCharacterInput(color1);
+                game.setCharacterInput(color2);
+                assertThrows(NotEnoughStudentsException.class, () -> c6.play(game), "not enough students");
+                color1++;
+            }
+            try {
+                game.drawStudents(game.getCurrentPlayer().getEntranceHall(), (byte) game.getCurrentPlayer().getEntranceHall().getMaxStudents());
+            } catch (EndGameException e) {
+                fail();
+            }
+            // use last available color on the card to test (it's chosen randomly), more likely to be different from color1
+            while (game.getCurrentPlayer().getEntranceHall().howManyStudents(Color.values()[color2]) == 0 && color2 > 0) {
+                game.setCurrentPlayer(p1);
+                game.chooseCharacter(0);
+                game.setCharacterInput(color1);
+                game.setCharacterInput(color2);
+                assertThrows(NotEnoughStudentsException.class, () -> c6.play(game), "not enough students");
+                color2--;
+            }
+            game.setCurrentPlayer(p1);
+            game.chooseCharacter(0);
+            game.setCharacterInput(color1);
+            game.setCharacterInput(color2);
+        } catch (GameException e) {
+            fail();
+        }
+        byte oldC6Color1 = ((GameComponent) c6).howManyStudents(Color.values()[color1]);
+        byte oldC6Color2 = ((GameComponent) c6).howManyStudents(Color.values()[color2]);
+        byte oldEntranceColor1 = game.getCurrentPlayer().getEntranceHall().howManyStudents(Color.values()[color1]);
+        byte oldEntranceColor2 = game.getCurrentPlayer().getEntranceHall().howManyStudents(Color.values()[color2]);
+        try {
+            c6.play(game);
+        } catch (GameException | EndGameException e) {
+            fail();
+        }
+        if (color1 != color2) {
+            assertEquals(((GameComponent) c6).howManyStudents(Color.values()[color1]), oldC6Color1 - 1);
+            assertEquals(((GameComponent) c6).howManyStudents(Color.values()[color2]), oldC6Color2 + 1);
+            assertEquals(game.getCurrentPlayer().getEntranceHall().howManyStudents(Color.values()[color1]), oldEntranceColor1 + 1);
+            assertEquals(game.getCurrentPlayer().getEntranceHall().howManyStudents(Color.values()[color2]), oldEntranceColor2 - 1);
+        } else {
+            assertEquals(((GameComponent) c6).howManyStudents(Color.values()[color1]), oldC6Color1);
+            assertEquals(game.getCurrentPlayer().getEntranceHall().howManyStudents(Color.values()[color1]), oldEntranceColor1);
+        }
     }
 
     @Test

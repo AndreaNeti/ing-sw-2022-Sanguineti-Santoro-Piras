@@ -3,14 +3,12 @@ package it.polimi.ingsw.model;
 import it.polimi.ingsw.exceptions.EndGameException;
 import it.polimi.ingsw.exceptions.GameException;
 import it.polimi.ingsw.exceptions.NotExpertGameException;
-import org.junit.Before;
 import org.junit.jupiter.api.Test;
 
 import java.net.Socket;
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.jupiter.api.Assumptions.*;
 
 public class NormalGameTest {
     Socket socket1 = new Socket(), socket2 = new Socket();
@@ -20,7 +18,7 @@ public class NormalGameTest {
     ArrayList<Team> teamList2;
     ArrayList<Team> teamList3;
     ArrayList<Team> teamList4;
-    Player p1_2, p2_2,p1_3,p2_3,p3_3,p1_4,p2_4,p3_4, p4_4;
+    Player p1_2, p2_2, p1_3, p2_3, p3_3, p1_4, p2_4, p3_4, p4_4;
     ArrayList<Player> players2;
     ArrayList<Player> players3;
     ArrayList<Player> players4;
@@ -37,8 +35,8 @@ public class NormalGameTest {
         teamList2.add(t1);
         teamList2.add(t2);
         try {
-            p1_2 = new Player(socket1, t1, Wizard.AIRMAGE, "Franco", 7);
-            p2_2 = new Player(socket2, t2, Wizard.ELECTROMAGE, "Gigi", 7);
+            p1_2 = new Player(socket1, t1, Wizard.WOODMAGE, "Franco", 7);
+            p2_2 = new Player(socket2, t2, Wizard.SANDMAGE, "Gigi", 7);
         } catch (GameException e) {
             fail();
         }
@@ -56,10 +54,10 @@ public class NormalGameTest {
 
         teamList4.add(t2);
         try {
-            p1_4 = new Player(socket1, t1, Wizard.AIRMAGE, "Franco", 7);
-            p2_4 = new Player(socket2, t2, Wizard.ELECTROMAGE, "Gigi", 7);
-            p3_4 = new Player(socket1, t1, Wizard.SANDMAGE, "Luigi", 7);
-            p4_4 = new Player(socket1, t2, Wizard.WOODMAGE, "Filomena", 7);
+            p1_4 = new Player(socket1, t1, Wizard.WOODMAGE, "Franco", 7);
+            p2_4 = new Player(socket2, t2, Wizard.SANDMAGE, "Gigi", 7);
+            p3_4 = new Player(socket1, t1, Wizard.AIRMAGE, "Luigi", 7);
+            p4_4 = new Player(socket1, t2, Wizard.ELECTROMAGE, "Filomena", 7);
 
         } catch (GameException e) {
             fail();
@@ -80,9 +78,9 @@ public class NormalGameTest {
         teamList3.add(t2);
         teamList3.add(t3);
         try {
-            p1_3 = new Player(socket1, t1, Wizard.AIRMAGE, "Franco", 9);
-            p2_3 = new Player(socket2, t2, Wizard.ELECTROMAGE, "Gigi", 9);
-            p3_3 = new Player(socket1, t1, Wizard.SANDMAGE, "Luigi", 9);
+            p1_3 = new Player(socket1, t1, Wizard.WOODMAGE, "Franco", 9);
+            p2_3 = new Player(socket2, t2, Wizard.SANDMAGE, "Gigi", 9);
+            p3_3 = new Player(socket1, t1, Wizard.AIRMAGE, "Luigi", 9);
 
 
         } catch (GameException e) {
@@ -127,26 +125,26 @@ public class NormalGameTest {
                 }
             }
         }
-        for(Cloud cloud:gameWith3.getClouds()){
-            assertEquals(cloud.howManyStudents(),4);
+        for (Cloud cloud : gameWith3.getClouds()) {
+            assertEquals(cloud.howManyStudents(), 4);
         }
-        for(Cloud cloud:gameWith4.getClouds()){
-            assertEquals(cloud.howManyStudents(),3);
+        for (Cloud cloud : gameWith4.getClouds()) {
+            assertEquals(cloud.howManyStudents(), 3);
         }
-        for(Cloud cloud:gameWith2.getClouds()){
-            assertEquals(cloud.howManyStudents(),3);
+        for (Cloud cloud : gameWith2.getClouds()) {
+            assertEquals(cloud.howManyStudents(), 3);
         }
 
-        for(Player p:gameWith2.getPlayers()){
-            assertEquals(p.getEntranceHall().howManyStudents(),7);
+        for (Player p : gameWith2.getPlayers()) {
+            assertEquals(p.getEntranceHall().howManyStudents(), 7);
 
         }
-        for(Player p:gameWith3.getPlayers()){
-            assertEquals(p.getEntranceHall().howManyStudents(),9);
+        for (Player p : gameWith3.getPlayers()) {
+            assertEquals(p.getEntranceHall().howManyStudents(), 9);
 
         }
-        for(Player p:gameWith4.getPlayers()){
-            assertEquals(p.getEntranceHall().howManyStudents(),7);
+        for (Player p : gameWith4.getPlayers()) {
+            assertEquals(p.getEntranceHall().howManyStudents(), 7);
 
         }
 
@@ -158,30 +156,30 @@ public class NormalGameTest {
 
 
     @Test
-    void refillCloudTest(){
-        GameComponent islandTest=new Island();
-        for (Cloud cloud: gameWith2.getClouds()) {
-            try{
+    void refillCloudTest() {
+        GameComponent islandTest = new Island();
+        for (Cloud cloud : gameWith2.getClouds()) {
+            try {
                 cloud.moveAll(islandTest);
-            }catch (GameException ignored){
+            } catch (GameException ignored) {
                 fail();
             }
         }
-        try{
+        try {
             gameWith2.refillClouds();
-        }catch (EndGameException ex){
+        } catch (EndGameException ex) {
             fail();
         }
 
-        for (Cloud cloud: gameWith2.getClouds()) {
+        for (Cloud cloud : gameWith2.getClouds()) {
 
-            assertEquals(cloud.howManyStudents(),3);
+            assertEquals(cloud.howManyStudents(), 3);
         }
     }
 
     @Test
     void playCardTest() {
-        assertEquals(gameWith2.getCurrentPlayer(),p1_2);
+        assertEquals(gameWith2.getCurrentPlayer(), p1_2);
         try {
             gameWith2.playCard((byte) 5);
         } catch (GameException | EndGameException e) {
@@ -201,59 +199,60 @@ public class NormalGameTest {
     }
 
     @Test
-    void calculateProfessorTest(){
+    void calculateProfessorTest() {
         //at the beginning after the calculation no one should have professor
         gameWith2.calculateProfessor();
-        for (Wizard w: gameWith2.getProfessor()) {
+        for (Wizard w : gameWith2.getProfessor()) {
             assertNull(w);
         }
         gameWith3.calculateProfessor();
-        for (Wizard w: gameWith3.getProfessor()) {
+        for (Wizard w : gameWith3.getProfessor()) {
             assertNull(w);
         }
         gameWith4.calculateProfessor();
-        for (Wizard w: gameWith3.getProfessor()) {
+        for (Wizard w : gameWith3.getProfessor()) {
             assertNull(w);
         }
         try {
             gameWith4.getBag().moveStudents(Color.BLUE, (byte) 5, gameWith4.getCurrentPlayer().getLunchHall());
-        }catch(GameException ex){
+        } catch (GameException ex) {
             fail();
         }
         gameWith4.calculateProfessor();
-        assertEquals(gameWith4.getProfessor()[1],gameWith4.getCurrentPlayer().getWizard());
+        assertEquals(gameWith4.getProfessor()[1], gameWith4.getCurrentPlayer().getWizard());
 
         try {
             gameWith3.getBag().moveStudents(Color.BLUE, (byte) 5, p3_3.getLunchHall());
-        }catch(GameException ex){
+        } catch (GameException ex) {
             fail();
         }
         gameWith3.calculateProfessor();
-        assertEquals(p3_3.getWizard(),gameWith3.getProfessor()[1]);
+        assertEquals(p3_3.getWizard(), gameWith3.getProfessor()[1]);
         try {
             gameWith3.getBag().moveStudents(Color.RED, (byte) 5, p1_3.getLunchHall());
             gameWith3.getBag().moveStudents(Color.RED, (byte) 5, p2_3.getLunchHall());
-        }catch(GameException ex){
+        } catch (GameException ex) {
             fail();
         }
         gameWith3.calculateProfessor();
-        assertEquals(gameWith3.getProfessor()[0],p1_3.getWizard());
+        assertEquals(gameWith3.getProfessor()[0], p1_3.getWizard());
 
         try {
             gameWith3.getBag().moveStudents(Color.BLUE, (byte) 6, p2_3.getLunchHall());
-        }catch(GameException ex){
+        } catch (GameException ex) {
             fail();
         }
         gameWith3.calculateProfessor();
-        assertEquals(p2_3.getWizard(),gameWith3.getProfessor()[1]);
+        assertEquals(p2_3.getWizard(), gameWith3.getProfessor()[1]);
     }
+
     @Test
-    void moveTest(){
+    void moveTest() {
 
     }
-    @Test
 
-    void moveMotherNatureTest(){
+    @Test
+    void moveMotherNatureTest() {
         //now it's the beginning of a game
 
     }

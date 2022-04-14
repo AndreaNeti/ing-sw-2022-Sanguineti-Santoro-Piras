@@ -32,9 +32,7 @@ public class Char6 extends GameComponent implements CharacterCard {
         for (int i = 0; i < inputs.size(); i += 2) {
             characterColor = inputs.get(i);
             entranceHallColor = inputs.get(i + 1);
-
-            game.getCurrentPlayer().getEntranceHall().moveStudents(Color.values()[entranceHallColor], (byte) 1, this);
-            this.moveStudents(Color.values()[characterColor], (byte) 1, game.getCurrentPlayer().getEntranceHall());
+            swapStudents(Color.values()[characterColor], Color.values()[entranceHallColor], game.getCurrentPlayer().getEntranceHall());
         }
     }
 

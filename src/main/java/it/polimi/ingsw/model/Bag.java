@@ -1,6 +1,9 @@
 package it.polimi.ingsw.model;
 
-import it.polimi.ingsw.exceptions.*;
+import it.polimi.ingsw.exceptions.EndGameException;
+import it.polimi.ingsw.exceptions.GameException;
+import it.polimi.ingsw.exceptions.NotAllowedException;
+import it.polimi.ingsw.exceptions.UnexpectedValueException;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -18,6 +21,8 @@ public class Bag extends GameComponent {
 
     public void drawStudent(GameComponent gameComponent, byte number) throws EndGameException, GameException {
         if (number < 0) throw new UnexpectedValueException();
+        else if (number > gameComponent.getMaxStudents() - gameComponent.howManyStudents())
+            throw new NotAllowedException("Can't draw " + number + " students to this gameComponent");
         byte i = 0;
         int studentsToDraw = Math.min(number, howManyStudents());
         if (studentsToDraw > 0) {
@@ -27,8 +32,8 @@ public class Bag extends GameComponent {
                 try {
                     moveStudents(color, (byte) 1, gameComponent);
                     i++;
-                } catch (NotEnoughStudentsException ex) {
-                    // not extracting that color anymore
+                } catch (GameException ex) {
+                    // for some reason can't more students of this color but for sure there is other free space, not extracting that color anymore
                     availableColors.remove(color);
                 }
 
@@ -39,6 +44,7 @@ public class Bag extends GameComponent {
         }
 
     }
+
     @Override
     public void moveAll(GameComponent destination) throws NotAllowedException {
         throw new NotAllowedException("It's a bag i can't moveMyStudents");

@@ -3,6 +3,7 @@ package it.polimi.ingsw.model;
 import it.polimi.ingsw.exceptions.EndGameException;
 import it.polimi.ingsw.exceptions.GameException;
 import it.polimi.ingsw.exceptions.NotAllowedException;
+import it.polimi.ingsw.exceptions.NotEnoughStudentsException;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -45,12 +46,66 @@ public class GameComponentTest {
         assertEquals(bag.howManyStudents(), 2 * Color.values().length);
     }
 
+    @Test
+    public void swapTest() {
+        try {
+            bag = new Bag((byte) 2);
+            // at least one per color
+            bag.drawStudent(island1, (byte) (bag.howManyStudents() - 1));
+            bag = new Bag((byte) 2);
+            bag.drawStudent(island2, (byte) (bag.howManyStudents() - 1));
+        } catch (EndGameException | GameException e) {
+            fail();
+        }
+        byte oldBlue1 = island1.howManyStudents(Color.BLUE);
+        byte oldBlue2 = island2.howManyStudents(Color.BLUE);
+        byte oldRed1 = island1.howManyStudents(Color.RED);
+        byte oldRed2 = island2.howManyStudents(Color.RED);
+        try {
+            island1.swapStudents(Color.BLUE, Color.RED, island2);
+        } catch (GameException e) {
+            fail();
+        }
+        assertEquals(island1.howManyStudents(Color.BLUE), oldBlue1 - 1);
+        assertEquals(island1.howManyStudents(Color.RED), oldRed1 + 1);
+        assertEquals(island2.howManyStudents(Color.BLUE), oldBlue2 + 1);
+        assertEquals(island2.howManyStudents(Color.RED), oldRed2 - 1);
+
+        // swap same student color
+        oldBlue1 = island1.howManyStudents(Color.BLUE);
+        oldBlue2 = island2.howManyStudents(Color.BLUE);
+        try {
+            island1.swapStudents(Color.PINK, Color.PINK, island2);
+        } catch (GameException e) {
+            fail();
+        }
+        assertEquals(island1.howManyStudents(Color.BLUE), oldBlue1);
+        assertEquals(island2.howManyStudents(Color.BLUE), oldBlue2);
+
+        // island is empty, can't swap
+        assertThrows(NotEnoughStudentsException.class, () -> island.swapStudents(Color.PINK, Color.PINK, island1));
+        assertThrows(NotEnoughStudentsException.class, () -> island1.swapStudents(Color.PINK, Color.PINK, island));
+        bag = new Bag((byte) 11);
+        LunchHall lh = new LunchHall(50);
+        try {
+            bag.drawStudent(lh, (byte) 50);
+        } catch (EndGameException | GameException e) {
+            fail();
+        }
+        assertThrows(NotAllowedException.class, () -> island1.swapStudents(Color.GREEN, Color.PINK, lh));
+        try {
+            // should launch exception, but it's the same gameComponent -> doesn't do anything
+            island.swapStudents(Color.BLUE, Color.BLUE, island);
+        } catch (GameException e) {
+            fail();
+        }
+    }
 
     @Test
     public void moveAllTest() {
 
         try {
-            bag.drawStudent(island, (byte)3 );
+            bag.drawStudent(island, (byte) 3);
             bag.drawStudent(island1, (byte) 1);
         } catch (GameException | EndGameException ex) {
             fail();
@@ -64,7 +119,7 @@ public class GameComponentTest {
         assertEquals(island1.howManyStudents(), 4);
 
         //I need to see if the other island has 0 students it
-        //prints an out line
+        // prints an out line
         try {
             island.moveAll(island2);
         } catch (NotAllowedException ex) {
@@ -76,7 +131,7 @@ public class GameComponentTest {
             fail();
         }
 
-        assertThrows(NotAllowedException.class,()->island.moveAll(cloud),"Cloud is full should call exception");
+        assertThrows(NotAllowedException.class, () -> island.moveAll(cloud), "Cloud is full should call exception");
 
     }
 }
