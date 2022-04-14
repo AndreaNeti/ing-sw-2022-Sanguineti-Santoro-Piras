@@ -63,7 +63,7 @@ public class ExpertGame extends NormalGame {
             case 0:
                 Char0 c0 = new Char0();
                 try {
-                    drawStudents(c0, (byte) 4);
+                    drawStudents(c0, (byte) c0.getMaxStudents());
                 } catch (EndGameException e) {
                     e.printStackTrace();
                 }
@@ -81,7 +81,7 @@ public class ExpertGame extends NormalGame {
             case 6:
                 Char6 c6 = new Char6();
                 try {
-                    drawStudents(c6, (byte) 6);
+                    drawStudents(c6, (byte) c6.getMaxStudents());
                 } catch (EndGameException e) {
                     e.printStackTrace();
                 }
@@ -95,7 +95,7 @@ public class ExpertGame extends NormalGame {
             case 10:
                 Char10 c10 = new Char10();
                 try {
-                    drawStudents(c10, (byte) 6);
+                    drawStudents(c10, (byte) c10.getMaxStudents());
                 } catch (EndGameException e) {
                     e.printStackTrace();
                 }
@@ -186,12 +186,13 @@ public class ExpertGame extends NormalGame {
 
     protected void calculateProfessor() {
         byte max;
-        Player currentOwner;
+        Player currentOwner = null;
         // player with the maximum number of students for the current color
         Player newOwner;
         for (Color c : Color.values()) {
             // player actually controlling that professor
-            currentOwner = getPlayers().get(getProfessor()[c.ordinal()].ordinal());
+            if (getProfessor()[c.ordinal()] != null)
+                currentOwner = getPlayers().get(getProfessor()[c.ordinal()].ordinal());
 
             if (currentOwner != null)
                 max = currentOwner.getLunchHall().howManyStudents(c);
@@ -207,7 +208,8 @@ public class ExpertGame extends NormalGame {
                         newOwner = p;
                 }
             }
-            getProfessor()[c.ordinal()] = newOwner.getWizard();
+            if (newOwner != null)
+                getProfessor()[c.ordinal()] = newOwner.getWizard();
         }
     }
 
@@ -298,9 +300,8 @@ public class ExpertGame extends NormalGame {
         this.equalProfessorCalculation = true;
     }
 
-    // TODO by copy?
     protected ArrayList<Integer> getCharacterInputs() {
-        return inputsCharacter;
+        return new ArrayList<>(inputsCharacter);
     }
 
     protected void setProhibition(int idIsland) throws NotAllowedException {

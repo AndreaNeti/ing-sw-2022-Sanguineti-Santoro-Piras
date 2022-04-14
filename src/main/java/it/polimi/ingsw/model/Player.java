@@ -5,7 +5,6 @@ import it.polimi.ingsw.exceptions.*;
 
 import java.net.Socket;
 import java.util.Comparator;
-import java.util.Objects;
 
 public class Player implements Comparator<Player> {
     private final Socket socket;
@@ -52,12 +51,10 @@ public class Player implements Comparator<Player> {
         return playedCard;
     }
 
-    // TODO by value?
     public LunchHall getLunchHall() {
         return lunchHall;
     }
 
-    // TODO by value?
     public EntranceHall getEntranceHall() {
         return entranceHall;
     }

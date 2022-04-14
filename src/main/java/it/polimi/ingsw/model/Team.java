@@ -21,8 +21,9 @@ public class Team {
         this.towersLeft = maxTowers;
     }
 
-    // TODO by value?
-    public ArrayList<Player> getPlayers() { return this.members; }
+    public ArrayList<Player> getPlayers() {
+        return new ArrayList<>(members);
+    }
 
     protected void addPlayer(Player p) throws NotAllowedException {
         if (isFull()) throw new NotAllowedException("Team is already full");
@@ -97,5 +98,4 @@ public class Team {
     public String toString() {
         return houseColor.name().toLowerCase() + " team";
     }
-
 }

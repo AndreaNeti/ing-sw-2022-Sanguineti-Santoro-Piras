@@ -6,7 +6,6 @@ import it.polimi.ingsw.exceptions.NotAllowedException;
 import it.polimi.ingsw.exceptions.NotExpertGameException;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Random;
 
 public class NormalGame implements Game {
@@ -139,17 +138,13 @@ public class NormalGame implements Game {
     // in the professor array slot of the current color
     protected void calculateProfessor() {
         byte max;
-        Player currentOwner=null;
+        Player currentOwner = null;
         // player with the maximum number of students for the current color
         Player newOwner;
         for (Color c : Color.values()) {
             // player actually controlling that professor
-
-            //currentOwner = players.get(professors[c.ordinal()].ordinal());
-            for (Player p : players) {
-                if (p.getWizard() == professors[c.ordinal()])
-                    currentOwner = p;
-            }
+            if (getProfessor()[c.ordinal()] != null)
+                currentOwner = getPlayers().get(getProfessor()[c.ordinal()].ordinal());
 
             if (currentOwner != null)
                 max = currentOwner.getLunchHall().howManyStudents(c);
@@ -162,7 +157,7 @@ public class NormalGame implements Game {
                     newOwner = p;
                 }
             }
-            if(newOwner!=null)
+            if (newOwner != null)
                 professors[c.ordinal()] = newOwner.getWizard();
         }
     }
