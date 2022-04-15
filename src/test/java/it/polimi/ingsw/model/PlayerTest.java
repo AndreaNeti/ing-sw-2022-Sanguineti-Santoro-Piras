@@ -4,6 +4,7 @@ import it.polimi.ingsw.exceptions.*;
 import org.junit.jupiter.api.Test;
 
 import java.net.Socket;
+import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -100,4 +101,34 @@ class PlayerTest {
     void testToString() {
         assertEquals(p.toString(), "prova");
     }
+    @Test
+    void canPlayCardTest(){
+        ArrayList<Byte> playedCards=new ArrayList<>();
+        assertTrue(p.canPlayCard(playedCards,(byte) 5));
+
+
+        playedCards.add((byte)5);
+        assertFalse(p.canPlayCard(playedCards,(byte) 5));
+
+
+        try {
+            p.useCard((byte)1);
+            p.useCard((byte)2);
+            p.useCard((byte)6);
+            p.useCard((byte)7);
+            p.useCard((byte) 8);
+            p.useCard((byte) 9);
+            p.useCard((byte)10 );
+        } catch (UsedCardException | UnexpectedValueException | NotAllowedException | EndGameException e) {
+            fail();
+        }
+
+        playedCards.add((byte) 3);
+        playedCards.add((byte) 4);
+        playedCards.add((byte)5);
+        assertTrue(p.canPlayCard(playedCards,(byte)5));
+
+
+    }
+
 }

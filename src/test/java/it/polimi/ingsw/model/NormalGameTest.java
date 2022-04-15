@@ -2,6 +2,7 @@ package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.exceptions.EndGameException;
 import it.polimi.ingsw.exceptions.GameException;
+import it.polimi.ingsw.exceptions.NotAllowedException;
 import it.polimi.ingsw.exceptions.NotExpertGameException;
 import org.junit.jupiter.api.Test;
 
@@ -248,13 +249,66 @@ public class NormalGameTest {
 
     @Test
     void moveTest() {
+        assertThrows(NotAllowedException.class, () -> gameWith2.move(Color.RED, -5, -6), "" +
+                "Wrong Index should catch an error");
+        //move from entrance to island with index 2
+        for (Color c : Color.values()) {
+            if (gameWith2.getCurrentPlayer().getEntranceHall().howManyStudents(c) > 0) {
+                byte studentsBefore = gameWith2.getIslands().get(2).howManyStudents(c);
+                try {
+                    gameWith2.move(c, 0, 4);
+                } catch (GameException e) {
+                    fail();
+                }
+                assertEquals(studentsBefore + 1, gameWith2.getIslands().get(2).howManyStudents(c));
+            }
+        }
+    }
+
+    @Test
+    void checkMoveMotherNatureTest() {
+        gameWith3.setCurrentPlayer(p1_3);
+        try {
+            gameWith3.playCard((byte) 5);
+        } catch (GameException | EndGameException e) {
+            fail();
+        }
+        assertThrows(NotAllowedException.class, () -> gameWith3.checkMoveMotherNature(p1_3.getPlayedCardMoves() + 1));
+        try {
+            gameWith3.checkMoveMotherNature(p1_3.getPlayedCardMoves());
+        } catch (GameException ex) {
+            fail();
+        }
 
     }
 
     @Test
     void moveMotherNatureTest() {
         //now it's the beginning of a game
-
+        //TODO also need to test the calculateInfluence
+        try {
+            gameWith4.playCard((byte) 3);
+        } catch (GameException | EndGameException e) {
+            fail();
+        }
+        gameWith4.setCurrentPlayer(p2_4);
+        try {
+            gameWith4.playCard((byte) 5);
+        } catch (GameException | EndGameException e) {
+            fail();
+        }
+        gameWith4.setCurrentPlayer(p3_4);
+        try {
+            gameWith4.playCard((byte) 6);
+        } catch (GameException | EndGameException e) {
+            fail();
+        }
+        gameWith4.setCurrentPlayer(p4_4);
+        try {
+            gameWith4.playCard((byte) 8);
+        } catch (GameException | EndGameException e) {
+            fail();
+        }
     }
 
     @Test

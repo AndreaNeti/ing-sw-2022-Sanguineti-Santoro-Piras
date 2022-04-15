@@ -69,21 +69,39 @@ public class Controller {
         }
         nextActionPhase();
     }
-
+    //the value here need to go from 1 to 10
     public void playCard(byte value) {
         if (!isPlanificationPhase) {
             handleError(new NotAllowedException("Not in planification phase"));
             return;
         }
-        try {
-            game.playCard(value);
-        } catch (GameException e) {
-            handleError(e);
-        } catch (EndGameException e) {
-            if (e.isEndInstantly()) endGame();
-            else lastRound = true;
+        ArrayList<Byte> playedCards=new ArrayList<>();
+        //loop where I put in playedCard the previous card played by other Player.If it's current Player
+        //it breaks the loop 'cause there aren't other previous player
+        for (int i = 0; i < playersList.size(); i++) {
+            Player player = playersList.get((playerOrder.get(0) + roundIndex + i) % playersList.size());
+            if (currentPlayer.equals(player)){
+                break;
+            }
+            else {
+                playedCards.add(player.getPlayedCard());
+            }
         }
-        nextPlayer();
+
+        if(currentPlayer.canPlayCard(playedCards,value)){
+            try {
+                game.playCard(value);
+            } catch (GameException e) {
+                handleError(e);
+            } catch (EndGameException e) {
+                if (e.isEndInstantly()) endGame();
+                else lastRound = true;
+            }
+                nextPlayer();
+        }
+        else {
+            handleError(new NotAllowedException("Cannot play this card"));
+        }
     }
 
     public void moveMotherNature(int i) {

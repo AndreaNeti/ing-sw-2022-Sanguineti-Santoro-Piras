@@ -4,6 +4,7 @@ package it.polimi.ingsw.model;
 import it.polimi.ingsw.exceptions.*;
 
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.Comparator;
 
 public class Player implements Comparator<Player> {
@@ -51,6 +52,23 @@ public class Player implements Comparator<Player> {
         return playedCard;
     }
 
+    public boolean canPlayCard(ArrayList<Byte> playedCards,byte value){
+        //the value goes from 1 to 10
+        if(playedCards.size()==0)
+            return true;
+        boolean oneDifferentCard=false;
+        if(playedCards.contains(value)) {
+            for (int i = 0; i < cardsAvailable.length && !oneDifferentCard; i++) {
+                if (cardsAvailable[i] && !playedCards.contains((byte) (i+1))) {
+                    oneDifferentCard = true;
+                }
+            }
+            return !oneDifferentCard;
+        }
+        else {
+            return true;
+        }
+    }
     public LunchHall getLunchHall() {
         return lunchHall;
     }

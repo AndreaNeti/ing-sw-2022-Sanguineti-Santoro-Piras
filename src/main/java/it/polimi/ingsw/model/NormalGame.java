@@ -91,20 +91,6 @@ public class NormalGame implements Game {
 
     }
 
-    private GameComponent getComponentById(int idGameComponent) throws NotAllowedException {
-        //0 is for the entranceHall, 1 is for the LunchHall, negative numbers are for clouds, and from 2 is islands.
-        if (idGameComponent < (-clouds.size()) || idGameComponent >= (islands.size() + 2)) {
-            throw new NotAllowedException("idGameComponent not valid");
-        }
-        if (idGameComponent < 0)
-            return clouds.get(-idGameComponent - 1);
-        if (idGameComponent == 0)
-            return currentPlayer.getEntranceHall();
-        if (idGameComponent == 1)
-            return currentPlayer.getLunchHall();
-        return islands.get(idGameComponent - 2);
-    }
-
     protected void drawStudents(GameComponent gameComponent, byte students) throws EndGameException {
         try {
             bag.drawStudent(gameComponent, students);
@@ -123,7 +109,23 @@ public class NormalGame implements Game {
 
     @Override
     public void playCard(byte card) throws GameException, EndGameException {
-        currentPlayer.useCard(card);
+
+            currentPlayer.useCard(card);
+
+    }
+
+    private GameComponent getComponentById(int idGameComponent) throws NotAllowedException {
+        //0 is for the entranceHall, 1 is for the LunchHall, negative numbers are for clouds, and from 2 is islands.
+        if (idGameComponent < (-clouds.size()) || idGameComponent >= (islands.size() + 2)) {
+            throw new NotAllowedException("idGameComponent not valid");
+        }
+        if (idGameComponent < 0)
+            return clouds.get(-idGameComponent - 1);
+        if (idGameComponent == 0)
+            return currentPlayer.getEntranceHall();
+        if (idGameComponent == 1)
+            return currentPlayer.getLunchHall();
+        return islands.get(idGameComponent - 2);
     }
 
 
