@@ -1,9 +1,8 @@
 package it.polimi.ingsw.exceptions;
 
-public class NotEnoughStudentsException extends GameException{
-
+public class NotEnoughStudentsException extends GameException {
     @Override
-    public String getErrorMessage() {
+    public String getMessage() {
         return "Not enough students";
     }
 }

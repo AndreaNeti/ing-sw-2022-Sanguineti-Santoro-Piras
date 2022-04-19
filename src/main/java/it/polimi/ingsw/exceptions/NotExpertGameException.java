@@ -1,9 +1,8 @@
 package it.polimi.ingsw.exceptions;
 
-public class NotExpertGameException extends GameException{
-
+public class NotExpertGameException extends GameException {
     @Override
-    public String getErrorMessage() {
+    public String getMessage() {
         return "Not expert game";
     }
 }

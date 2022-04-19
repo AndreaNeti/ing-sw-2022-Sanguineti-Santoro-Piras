@@ -66,40 +66,40 @@ public class Controller {
             }
         } catch (GameException e) {
             handleError(e);
+            return;
         }
         nextActionPhase();
     }
+
     //the value here need to go from 1 to 10
     public void playCard(byte value) {
         if (!isPlanificationPhase) {
             handleError(new NotAllowedException("Not in planification phase"));
             return;
         }
-        ArrayList<Byte> playedCards=new ArrayList<>();
+        ArrayList<Byte> playedCards = new ArrayList<>();
         //loop where I put in playedCard the previous card played by other Player.If it's current Player
         //it breaks the loop 'cause there aren't other previous player
         for (int i = 0; i < playersList.size(); i++) {
             Player player = playersList.get((playerOrder.get(0) + roundIndex + i) % playersList.size());
-            if (currentPlayer.equals(player)){
+            if (currentPlayer.equals(player)) {
                 break;
-            }
-            else {
+            } else {
                 playedCards.add(player.getPlayedCard());
             }
         }
 
-        if(currentPlayer.canPlayCard(playedCards,value)){
+        if (currentPlayer.canPlayCard(playedCards, value)) {
             try {
                 game.playCard(value);
             } catch (GameException e) {
                 handleError(e);
+                return;
             } catch (EndGameException e) {
-                if (e.isEndInstantly()) endGame();
-                else lastRound = true;
+                handleError(e);
             }
-                nextPlayer();
-        }
-        else {
+            nextPlayer();
+        } else {
             handleError(new NotAllowedException("Cannot play this card"));
         }
     }
@@ -113,9 +113,9 @@ public class Controller {
             game.moveMotherNature(i);
         } catch (NotAllowedException e) {
             handleError(e);
+            return;
         } catch (EndGameException e) {
-            if (e.isEndInstantly()) endGame();
-            else lastRound = true;
+            handleError(e);
         }
         nextActionPhase();
     }
@@ -126,14 +126,18 @@ public class Controller {
     }
 
     public void addPlayer(Socket s, String nickName) {
-        if (playersList.size() == numberOfPlayers) handleError(new NotAllowedException("Match is full"));
+        if (playersList.size() == numberOfPlayers) {
+            handleError(new NotAllowedException("Match is full"));
+            return;
+        }
         int teamIndex = playersList.size() % teams.size(); // circular team selection
         int entranceHallSize = (teams.size() % 2 == 0) ? 7 : 9;
-        Player newPlayer = null;
+        Player newPlayer;
         try {
             newPlayer = new Player(s, teams.get(teamIndex), Wizard.values()[playersList.size()], nickName, entranceHallSize);
         } catch (GameException e) {
             handleError(e);
+            return;
         }
         playersList.add(newPlayer);
         if (playersList.size() == numberOfPlayers) {
@@ -187,8 +191,7 @@ public class Controller {
         } catch (GameException e) {
             handleError(e);
         } catch (EndGameException e) {
-            if (e.isEndInstantly()) endGame();
-            else lastRound = true;
+            handleError(e);
         }
     }
 
@@ -216,7 +219,6 @@ public class Controller {
             actionPhase = 1;
         }
 
-        Random rand = new Random(System.currentTimeMillis());
         currentPlayer = playersList.get(index);
         game.setCurrentPlayer(currentPlayer);
     }
@@ -234,8 +236,7 @@ public class Controller {
                 try {
                     game.refillClouds();
                 } catch (EndGameException e) {
-                    if (e.isEndInstantly()) endGame();
-                    else lastRound = true;
+                    handleError(e);
                 }
             }
         }
@@ -263,6 +264,10 @@ public class Controller {
 
     private void handleError(GameException e) {
         e.printStackTrace();
-        System.err.println(e.getErrorMessage());
+    }
+
+    private void handleError(EndGameException e) {
+        if (e.isEndInstantly()) endGame();
+        else lastRound = true;
     }
 }

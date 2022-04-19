@@ -1,8 +1,8 @@
 package it.polimi.ingsw.exceptions;
 
-public class UnexpectedValueException extends GameException{
+public class UnexpectedValueException extends GameException {
     @Override
-    public String getErrorMessage() {
+    public String getMessage() {
         return "Unexpected value exception";
     }
 }

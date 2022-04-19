@@ -1,8 +1,8 @@
 package it.polimi.ingsw.exceptions;
 
-public class NotEnoughCoinsException extends GameException{
+public class NotEnoughCoinsException extends GameException {
     @Override
-    public String getErrorMessage() {
+    public String getMessage() {
         return "Not Enough Coins";
     }
 }

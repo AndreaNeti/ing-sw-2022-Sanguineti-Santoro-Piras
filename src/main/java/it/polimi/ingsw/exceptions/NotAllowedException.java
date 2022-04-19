@@ -8,7 +8,8 @@ public class NotAllowedException extends GameException {
     }
 
     @Override
-    public String getErrorMessage() {
+    public String getMessage() {
         return message;
     }
+
 }
