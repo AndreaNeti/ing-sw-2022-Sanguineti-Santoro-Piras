@@ -95,7 +95,7 @@ public class NormalGame implements Game {
         try {
             bag.drawStudent(gameComponent, students);
         } catch (GameException e) {
-            System.err.println(e.getErrorMessage());
+            System.err.println(e.getMessage());
         }
     }
 
@@ -205,7 +205,7 @@ public class NormalGame implements Game {
             try {
                 oldTeam.addTowers(island.getNumber());
             } catch (NotAllowedException ex) {
-                System.err.println(ex.getErrorMessage());
+                System.err.println(ex.getMessage());
             }
             winner.removeTowers(island.getNumber());
             checkMerge(island);

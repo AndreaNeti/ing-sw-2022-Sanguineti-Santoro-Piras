@@ -1,5 +1,6 @@
 package it.polimi.ingsw.controller;
 
+import it.polimi.ingsw.exceptions.NotAllowedException;
 import org.junit.jupiter.api.Test;
 
 import java.net.Socket;

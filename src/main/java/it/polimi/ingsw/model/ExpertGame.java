@@ -156,7 +156,7 @@ public class ExpertGame extends NormalGame {
                 try {
                     oldTeam.addTowers(island.getNumber());
                 } catch (NotAllowedException ex) {
-                    System.err.println(ex.getErrorMessage());
+                    System.err.println(ex.getMessage());
                 }
                 winner.removeTowers(island.getNumber());
                 checkMerge(island);
