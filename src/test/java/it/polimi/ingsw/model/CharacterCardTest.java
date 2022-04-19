@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -165,6 +166,44 @@ class CharacterCardTest {
         } else {
             assertEquals(((GameComponent) c6).howManyStudents(Color.values()[color1]), oldC6Color1);
             assertEquals(game.getCurrentPlayer().getEntranceHall().howManyStudents(Color.values()[color1]), oldEntranceColor1);
+        }
+    }
+
+    @Test
+    void playChar11() {
+        Random rand = new Random();
+        int color = rand.nextInt(Color.values().length);
+        try {
+            game.chooseCharacter(0);
+            game.setCharacterInput(-5);
+            assertThrows(UnexpectedValueException.class, () -> c11.play(game), "not valid inputs");
+
+            for (Player p : game.getPlayers()) {
+                try {
+                    game.drawStudents(p.getLunchHall(), (byte) 20);
+                } catch (EndGameException e) {
+                    fail();
+                }
+            }
+            // also resets character inputs
+            game.setCurrentPlayer(p1);
+            game.chooseCharacter(0);
+            game.setCharacterInput(color);
+        } catch (GameException e) {
+            fail();
+        }
+        ArrayList<Player> players = game.getPlayers();
+        byte[] oldValues = new byte[players.size()];
+        for (byte i = 0; i < players.size(); i++)
+            oldValues[i] = players.get(i).getLunchHall().howManyStudents(Color.values()[color]);
+        try {
+            c11.play(game);
+        } catch (GameException | EndGameException e) {
+            fail();
+        }
+        for (byte i = 0; i < players.size(); i++) {
+            if (oldValues[i] < 3) assertEquals(0, players.get(i).getLunchHall().howManyStudents(Color.values()[color]));
+            else assertEquals(oldValues[i] - 3, players.get(i).getLunchHall().howManyStudents(Color.values()[color]));
         }
     }
 
