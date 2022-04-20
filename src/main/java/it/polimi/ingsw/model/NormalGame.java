@@ -116,6 +116,7 @@ public class NormalGame implements Game {
 
     private GameComponent getComponentById(int idGameComponent) throws NotAllowedException {
         //0 is for the entranceHall, 1 is for the LunchHall, negative numbers are for clouds, and from 2 is islands.
+        //for island 2->0; 3->1;4->2 .....
         if (idGameComponent < (-clouds.size()) || idGameComponent >= (islands.size() + 2)) {
             throw new NotAllowedException("idGameComponent not valid");
         }
@@ -269,7 +270,7 @@ public class NormalGame implements Game {
 
     @Override
     public void moveFromCloud(int cloudId) throws NotAllowedException {
-        if (cloudId >= 0 || getComponentById(cloudId).howManyStudents() == 0)
+        if (cloudId >= 0 || cloudId<-getClouds().size() || getComponentById(cloudId).howManyStudents() == 0)
             throw new NotAllowedException("Can't move from the selected cloud");
         GameComponent cloudSource = getComponentById(cloudId);
         cloudSource.moveAll(currentPlayer.getEntranceHall());
