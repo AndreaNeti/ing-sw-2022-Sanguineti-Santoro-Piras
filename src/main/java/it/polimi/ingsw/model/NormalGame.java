@@ -67,19 +67,19 @@ public class NormalGame implements Game {
     }
 
     protected void checkMerge(Island island) throws EndGameException {
-        int islandBeforeIndex = (islands.indexOf(island) - 1) % islands.size();
+        int islandBeforeIndex = Math.floorMod(islands.indexOf(island) - 1, islands.size());
         int islandAfterIndex = (islands.indexOf(island) + 1) % islands.size();
 
         Island islandBefore = islands.get(islandBeforeIndex);
         Island islandAfter = islands.get(islandAfterIndex);
 
-        if (islandBefore.getTeam().equals(island.getTeam())) {
+        if (islandBefore.getTeam() != null && islandBefore.getTeam().equals(island.getTeam())) {
             island.merge(islandBefore);
             islands.remove(islandBefore);
             if (islandBeforeIndex < motherNaturePosition)
                 motherNaturePosition--;
         }
-        if (islandAfter.getTeam().equals(island.getTeam())) {
+        if (islandAfter.getTeam() != null && islandAfter.getTeam().equals(island.getTeam())) {
             island.merge(islandAfter);
             islands.remove(islandAfter);
             if (islandAfterIndex <= motherNaturePosition)
@@ -110,7 +110,7 @@ public class NormalGame implements Game {
     @Override
     public void playCard(byte card) throws GameException, EndGameException {
 
-            currentPlayer.useCard(card);
+        currentPlayer.useCard(card);
 
     }
 

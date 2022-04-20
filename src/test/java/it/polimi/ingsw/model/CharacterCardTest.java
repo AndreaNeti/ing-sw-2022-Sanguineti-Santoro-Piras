@@ -38,7 +38,7 @@ class CharacterCardTest {
         for (Color c : Color.values()) {
             for (Player p : playerList) {
                 game.setCurrentPlayer(p);
-                byte nStudents = p.getEntranceHall().howManyStudents(c);
+                byte nStudents = (byte) Math.min(10, p.getEntranceHall().howManyStudents(c));
                 for (byte i = 0; i < nStudents; i++) {
                     try {
                         game.move(c, 0, 1);
@@ -107,6 +107,70 @@ class CharacterCardTest {
         }
         assertEquals(game.getIslands().get(islandId).howManyStudents(Color.values()[color]), old + 1);
         assertEquals(((GameComponent) c0).howManyStudents(), ((GameComponent) c0).getMaxStudents());
+    }
+
+    @Test
+    void playChar1() {
+        int color = -1;
+        for (int i = 0; i < 5; i++) {
+            if (game.getProfessor()[i] != null && p1.getWizard() == game.getProfessor()[i]) {
+                color = i;
+                break;
+            }
+        }
+        game.setCurrentPlayer(p2);
+
+        while (p2.getLunchHall().howManyStudents(Color.values()[color]) < p1.getLunchHall().howManyStudents(Color.values()[color])) {
+            try {
+                game.getBag().moveStudents(Color.values()[color], (byte) 1, p2.getLunchHall());
+            } catch (GameException e) {
+                fail();
+            }
+        }
+
+        try {
+            c1.play(game);
+        } catch (GameException | EndGameException e) {
+            fail();
+        }
+
+        assertEquals(game.getProfessor()[color], p2.getWizard());
+    }
+
+    @Test
+    void playChar2() {
+        try {
+            game.chooseCharacter(0);
+            game.setCharacterInput(-1);
+            assertThrows(UnexpectedValueException.class, () -> c2.play(game), "not valid inputs");
+        } catch (GameException e) {
+            fail();
+        }
+        int color = -1;
+        Team winnerTeam = null;
+        for (int i = 0; i < 5 && color < 0; i++) {
+            Wizard profController = game.getProfessor()[i];
+            if (profController != null) {
+                color = i;
+                winnerTeam = game.getPlayers().get(profController.ordinal()).getTeam();
+            }
+        }
+        game.setCurrentPlayer(p1);
+        try {
+            game.chooseCharacter(0);
+            game.getBag().moveStudents(Color.values()[color], (byte) 5, game.getIslands().get(0));
+            game.setCharacterInput(0);
+        } catch (GameException e) {
+            fail();
+        }
+
+        try {
+            c2.play(game);
+        } catch (GameException | EndGameException e) {
+            fail();
+        }
+
+        assertEquals(game.getIslands().get(0).getTeam(), winnerTeam);
     }
 
     @Test

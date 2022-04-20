@@ -151,12 +151,14 @@ public class ExpertGame extends NormalGame {
                 }
             }
             Team oldTeam = island.getTeam();
-            if (oldTeam != null && winner != null && !oldTeam.equals(winner)) {
+            if (winner != null && !winner.equals(oldTeam)) {
                 island.setTeam(winner);
-                try {
-                    oldTeam.addTowers(island.getNumber());
-                } catch (NotAllowedException ex) {
-                    System.err.println(ex.getMessage());
+                if (oldTeam != null) {
+                    try {
+                        oldTeam.addTowers(island.getNumber());
+                    } catch (NotAllowedException ex) {
+                        System.err.println(ex.getMessage());
+                    }
                 }
                 winner.removeTowers(island.getNumber());
                 checkMerge(island);
@@ -253,7 +255,10 @@ public class ExpertGame extends NormalGame {
 
             chosenCharacter = null;
             inputsCharacter.clear();
-        } else throw new UnexpectedValueException(); // canPlay returned false, needs a different amount of inputs
+        } else {
+            inputsCharacter.clear();
+            throw new UnexpectedValueException(); // canPlay returned false, needs a different amount of inputs
+        }
     }
 
     @Override
