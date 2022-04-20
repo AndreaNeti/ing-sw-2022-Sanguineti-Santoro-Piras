@@ -285,7 +285,16 @@ public class NormalGameTest {
     @Test
     void moveMotherNatureTest() {
         //now it's the beginning of a game
-        //TODO also need to test the calculateInfluence
+        Integer islandEmpty1 = null;
+        Integer islandEmpty2 = null;
+        for (Island island : gameWith4.getIslands()) {
+            if (island.howManyStudents() == 0) {
+                if (islandEmpty1 == null)
+                    islandEmpty1 = gameWith4.getIslands().indexOf(island);
+                else
+                    islandEmpty2 = gameWith4.getIslands().indexOf(island);
+            }
+        }
         try {
             gameWith4.playCard((byte) 3);
         } catch (GameException | EndGameException e) {
@@ -309,6 +318,25 @@ public class NormalGameTest {
         } catch (GameException | EndGameException e) {
             fail();
         }
+        //Hp: nobody moves any student so nobody has a professor yet
+        try {
+            gameWith4.moveMotherNature(3);
+        } catch (NotAllowedException | EndGameException e) {
+            fail();
+        }
+        assertEquals(gameWith4.getIslands().size(), 12);
+
+        //return to player 1 which now move students on 3 island (Played cards remain the same)
+        gameWith4.setCurrentPlayer(p1_4);
+        //it will move first all the red one then all the blue and so on until it moves three students
+        for (int i = 0; i < 3; i++) {
+            for (Color c : Color.values()) {
+                try {
+                    gameWith4.move(c, 0, 5);
+                } catch (GameException ignored) {
+                }
+            }
+        }
     }
 
     @Test
@@ -316,8 +344,30 @@ public class NormalGameTest {
     }
 
     @Test
-    void refillClouds() {
+    void moveFromCloudsTest() {
+        assertThrows(NotAllowedException.class, () -> gameWith4.moveFromCloud(-5));
+        assertEquals(gameWith4.getCurrentPlayer().getEntranceHall().howManyStudents(), 7);
+
+        for (int i = 0; i < 3; i++) {
+            for (Color c : Color.values())
+                try {
+
+                    gameWith4.move(c, 0, 3);
+                    break;
+                } catch (GameException ignored) {
+                }
+        }
+
+        try {
+            gameWith4.moveFromCloud(-4);
+        } catch (NotAllowedException e) {
+            fail();
+        }
+        assertEquals(gameWith4.getClouds().get(3).howManyStudents(), 0);
+        assertEquals(gameWith4.getCurrentPlayer().getEntranceHall().howManyStudents(), 7);
+
     }
+
 
     @Test
     void setCharacterInput() {
