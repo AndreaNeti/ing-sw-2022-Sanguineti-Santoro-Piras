@@ -24,6 +24,7 @@ class CharacterCardTest {
         t1 = new Team(HouseColor.WHITE, (byte) 1, (byte) 8);
         t2 = new Team(HouseColor.BLACK, (byte) 1, (byte) 8);
         try {
+            // 14 students are the minimum to get 3 coins after moving them all to the lunch all in the worst case
             p1 = new Player(new Socket(), t1, Wizard.WOODMAGE, "Franco", 14);
             p2 = new Player(new Socket(), t2, Wizard.SANDMAGE, "Carola", 14);
         } catch (GameException e) {
@@ -41,6 +42,7 @@ class CharacterCardTest {
                 byte nStudents = (byte) Math.min(10, p.getEntranceHall().howManyStudents(c));
                 for (byte i = 0; i < nStudents; i++) {
                     try {
+                        // move from entrance to lunch hall
                         game.move(c, 0, 1);
                     } catch (GameException e) {
                         fail();
@@ -230,6 +232,77 @@ class CharacterCardTest {
         } else {
             assertEquals(((GameComponent) c6).howManyStudents(Color.values()[color1]), oldC6Color1);
             assertEquals(game.getCurrentPlayer().getEntranceHall().howManyStudents(Color.values()[color1]), oldEntranceColor1);
+        }
+    }
+
+    @Test
+    void playChar9() {
+        try {
+            game.chooseCharacter(0);
+            game.setCharacterInput(-1);
+            game.setCharacterInput(-1);
+            assertThrows(UnexpectedValueException.class, () -> c9.play(game), "not valid inputs");
+            game.setCurrentPlayer(p1);
+        } catch (GameException e) {
+            fail();
+        }
+        // remove all red students from p1 lunch hall and tests exception
+        try {
+            p1.getLunchHall().moveStudents(Color.RED, p1.getLunchHall().howManyStudents(Color.RED), game.getBag());
+            game.chooseCharacter(0);
+            // first input is lunch hall color
+            game.setCharacterInput(Color.RED.ordinal());
+            game.setCharacterInput(1);
+            assertThrows(NotEnoughStudentsException.class, () -> c9.play(game), "can't swap this, no red students");
+            game.setCurrentPlayer(p1);
+        } catch (GameException e) {
+            fail();
+        }
+        try {
+            // entranceHall has no students, should launch exception
+            game.chooseCharacter(0);
+            game.setCharacterInput(1);
+            game.setCharacterInput(3);
+            assertThrows(NotEnoughStudentsException.class, () -> c9.play(game), "can't swap this, no red students");
+            game.setCurrentPlayer(p1);
+        } catch (GameException e) {
+            fail();
+        }
+        // get two colors that can swap
+        int colorLunch = -1;
+        for (byte i = 0; i < Color.values().length && colorLunch < 0; i++)
+            if (game.getCurrentPlayer().getLunchHall().howManyStudents(Color.values()[i]) > 0) colorLunch = i;
+        // entranceHall has a red student
+        try {
+            game.getBag().moveStudents(Color.RED, (byte) 1, game.getCurrentPlayer().getEntranceHall());
+        } catch (GameException e) {
+            fail();
+        }
+        try {
+            game.chooseCharacter(0);
+            game.setCharacterInput(colorLunch);
+            game.setCharacterInput(Color.RED.ordinal());
+        } catch (GameException e) {
+            fail();
+        }
+        byte redStudentsLunch = game.getCurrentPlayer().getLunchHall().howManyStudents(Color.RED);
+        byte oldValue = game.getCurrentPlayer().getLunchHall().howManyStudents(Color.values()[colorLunch]);
+        try {
+            c9.play(game);
+        } catch (GameException | EndGameException e) {
+            fail();
+        }
+        if (colorLunch != Color.RED.ordinal()) {
+            assertEquals(0, game.getCurrentPlayer().getEntranceHall().howManyStudents(Color.RED));
+            assertEquals(1, game.getCurrentPlayer().getEntranceHall().howManyStudents(Color.values()[colorLunch]));
+            assertEquals(game.getCurrentPlayer().getLunchHall().howManyStudents(Color.RED), redStudentsLunch + 1);
+            assertEquals(game.getCurrentPlayer().getLunchHall().howManyStudents(Color.values()[colorLunch]), oldValue - 1);
+        } else {
+            // swapped same color
+            assertEquals(0, game.getCurrentPlayer().getEntranceHall().howManyStudents(Color.RED));
+            assertEquals(0, game.getCurrentPlayer().getEntranceHall().howManyStudents(Color.values()[colorLunch]));
+            assertEquals(game.getCurrentPlayer().getLunchHall().howManyStudents(Color.RED), redStudentsLunch);
+            assertEquals(game.getCurrentPlayer().getLunchHall().howManyStudents(Color.values()[colorLunch]), oldValue);
         }
     }
 

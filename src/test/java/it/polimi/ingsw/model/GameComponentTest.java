@@ -83,8 +83,8 @@ public class GameComponentTest {
         assertEquals(island2.howManyStudents(Color.BLUE), oldBlue2);
 
         // island is empty, can't swap
-        assertThrows(NotEnoughStudentsException.class, () -> island.swapStudents(Color.PINK, Color.PINK, island1));
-        assertThrows(NotEnoughStudentsException.class, () -> island1.swapStudents(Color.PINK, Color.PINK, island));
+        assertThrows(NotEnoughStudentsException.class, () -> island.swapStudents(Color.PINK, Color.BLUE, island1));
+        assertThrows(NotEnoughStudentsException.class, () -> island1.swapStudents(Color.BLUE, Color.PINK, island));
         bag = new Bag((byte) 11);
         LunchHall lh = new LunchHall(50);
         try {

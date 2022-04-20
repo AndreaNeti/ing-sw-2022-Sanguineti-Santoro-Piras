@@ -241,7 +241,13 @@ public class ExpertGame extends NormalGame {
     public void playCharacter() throws GameException, EndGameException {
         if (chosenCharacter == null) throw new NotAllowedException("Cannot play character card");
         if (chosenCharacter.canPlay(inputsCharacter.size())) {
-            chosenCharacter.play(this);
+            try {
+                chosenCharacter.play(this);
+            } catch (GameException e) {
+                // something gone wrong while playing the card, reset inputs
+                inputsCharacter.clear();
+                throw e;
+            }
             byte charCost = chosenCharacter.getCost();
             // this character card has already been used, increase its cost
             if (playedCharacters[characters.indexOf(chosenCharacter)]) charCost++;

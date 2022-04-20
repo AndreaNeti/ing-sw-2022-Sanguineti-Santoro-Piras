@@ -50,8 +50,8 @@ public abstract class GameComponent {
     }
 
     public void swapStudents(Color toGive, Color toGet, GameComponent other) throws GameException {
-        // swapping between same gameComponent
-        if (this == other) return;
+        // swapping between same gameComponent or same color
+        if (this == other || toGive == toGet) return;
         removeStudents(toGive, (byte) 1);
         try {
             other.moveStudents(toGet, (byte) 1, this);
