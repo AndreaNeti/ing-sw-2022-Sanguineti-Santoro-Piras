@@ -109,9 +109,7 @@ public class NormalGame implements Game {
 
     @Override
     public void playCard(byte card) throws GameException, EndGameException {
-
         currentPlayer.useCard(card);
-
     }
 
     private GameComponent getComponentById(int idGameComponent) throws NotAllowedException {
@@ -165,14 +163,14 @@ public class NormalGame implements Game {
         }
     }
 
-    protected void checkMoveMotherNature(int moves) throws NotAllowedException {
-        if (moves > currentPlayer.getPlayedCardMoves())
-            throw new NotAllowedException("Moves can't be higher than the value of the card");
+    protected boolean checkMoveMotherNature(int moves) {
+        return moves <= currentPlayer.getPlayedCardMoves();
     }
 
     @Override
     public void moveMotherNature(int moves) throws NotAllowedException, EndGameException {
-        checkMoveMotherNature(moves);
+        if (!checkMoveMotherNature(moves))
+            throw new NotAllowedException("Moves can't be higher than the value of the card");
         motherNaturePosition += moves;
         motherNaturePosition %= islands.size();
         calculateInfluence(islands.get(motherNaturePosition));
@@ -270,7 +268,7 @@ public class NormalGame implements Game {
 
     @Override
     public void moveFromCloud(int cloudId) throws NotAllowedException {
-        if (cloudId >= 0 || cloudId<-getClouds().size() || getComponentById(cloudId).howManyStudents() == 0)
+        if (cloudId >= 0 || cloudId < -getClouds().size() || getComponentById(cloudId).howManyStudents() == 0)
             throw new NotAllowedException("Can't move from the selected cloud");
         GameComponent cloudSource = getComponentById(cloudId);
         cloudSource.moveAll(currentPlayer.getEntranceHall());

@@ -118,10 +118,8 @@ public class NormalGameTest {
                 assertEquals(i.howManyStudents(), 1);
                 for (Color c : Color.values()) {
                     if (i.howManyStudents(c) == 1) {
-                        if (color[c.ordinal()] == 2)
-                            fail();
-                        else
-                            color[c.ordinal()]++;
+                        if (color[c.ordinal()] == 2) fail();
+                        else color[c.ordinal()]++;
                     }
                 }
             }
@@ -249,8 +247,7 @@ public class NormalGameTest {
 
     @Test
     void moveTest() {
-        assertThrows(NotAllowedException.class, () -> gameWith2.move(Color.RED, -5, -6), "" +
-                "Wrong Index should catch an error");
+        assertThrows(NotAllowedException.class, () -> gameWith2.move(Color.RED, -5, -6), "" + "Wrong Index should catch an error");
         //move from entrance to island with index 2
         for (Color c : Color.values()) {
             if (gameWith2.getCurrentPlayer().getEntranceHall().howManyStudents(c) > 0) {
@@ -273,12 +270,8 @@ public class NormalGameTest {
         } catch (GameException | EndGameException e) {
             fail();
         }
-        assertThrows(NotAllowedException.class, () -> gameWith3.checkMoveMotherNature(p1_3.getPlayedCardMoves() + 1));
-        try {
-            gameWith3.checkMoveMotherNature(p1_3.getPlayedCardMoves());
-        } catch (GameException ex) {
-            fail();
-        }
+        assertFalse(gameWith3.checkMoveMotherNature(p1_3.getPlayedCardMoves() + 1));
+        assertTrue(gameWith3.checkMoveMotherNature(p1_3.getPlayedCardMoves()));
 
     }
 
@@ -289,10 +282,8 @@ public class NormalGameTest {
         Integer islandEmpty2 = null;
         for (Island island : gameWith4.getIslands()) {
             if (island.howManyStudents() == 0) {
-                if (islandEmpty1 == null)
-                    islandEmpty1 = gameWith4.getIslands().indexOf(island);
-                else
-                    islandEmpty2 = gameWith4.getIslands().indexOf(island);
+                if (islandEmpty1 == null) islandEmpty1 = gameWith4.getIslands().indexOf(island);
+                else islandEmpty2 = gameWith4.getIslands().indexOf(island);
             }
         }
         try {

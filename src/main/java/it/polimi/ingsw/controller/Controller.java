@@ -9,9 +9,8 @@ import java.net.Socket;
 import java.util.*;
 
 public class Controller {
-    private final boolean isExpertGame;
+    private final MatchType matchType;
     private final ArrayList<Player> playersList;
-    private final byte numberOfPlayers;
     private final Map<HouseColor, Queue<String>> messages;
     private final ArrayList<Team> teams;
     // This array is also used to represent the order of round
@@ -27,18 +26,17 @@ public class Controller {
     private byte roundIndex;
     private boolean lastRound;
 
-    public Controller(boolean isExpertGame, byte numberOfPlayers) {
-        this.isExpertGame = isExpertGame;
-        this.numberOfPlayers = numberOfPlayers;
-        this.playersList = new ArrayList<>(numberOfPlayers);
-        this.playerOrder = new ArrayList<>(numberOfPlayers);
-        for (byte i = 0; i < numberOfPlayers; i++)
+    public Controller(MatchType matchType) {
+        this.matchType = matchType;
+        this.playersList = new ArrayList<>(matchType.nPlayers());
+        this.playerOrder = new ArrayList<>(matchType.nPlayers());
+        for (byte i = 0; i < matchType.nPlayers(); i++)
             playerOrder.add(i);
-        byte nTeams = (byte) ((numberOfPlayers % 2) + 2); // size is 2 or 3
+        byte nTeams = (byte) ((matchType.nPlayers() % 2) + 2); // size is 2 or 3
         byte maxTowers = (byte) (12 - nTeams * 2); // 2 teams -> 8 towers, 3 teams -> 6 towers
         this.teams = new ArrayList<>(nTeams);
         for (byte i = 0; i < nTeams; i++) {
-            teams.add(new Team(HouseColor.values()[i], (byte) (numberOfPlayers / nTeams), maxTowers));
+            teams.add(new Team(HouseColor.values()[i], (byte) (matchType.nPlayers() / nTeams), maxTowers));
         }
         this.messages = new HashMap<>();
         this.isPlanificationPhase = true;
@@ -119,7 +117,7 @@ public class Controller {
     }
 
     public void addPlayer(Socket s, String nickName) {
-        if (playersList.size() == numberOfPlayers) {
+        if (playersList.size() == matchType.nPlayers()) {
             handleError(new NotAllowedException("Match is full"));
             return;
         }
@@ -133,7 +131,7 @@ public class Controller {
             return;
         }
         playersList.add(newPlayer);
-        if (playersList.size() == numberOfPlayers) {
+        if (playersList.size() == matchType.nPlayers()) {
             startGame();
         }
     }
@@ -189,12 +187,12 @@ public class Controller {
     }
 
     private void startGame() {
-        if (isExpertGame)
-            game = new ExpertGame(numberOfPlayers, teams, playersList);
+        if (matchType.isExpert())
+            game = new ExpertGame(matchType.nPlayers(), teams, playersList);
         else
-            game = new NormalGame(numberOfPlayers, teams, playersList);
+            game = new NormalGame(matchType.nPlayers(), teams, playersList);
         Random rand = new Random(System.currentTimeMillis());
-        currentPlayer = playersList.get(rand.nextInt(numberOfPlayers));
+        currentPlayer = playersList.get(rand.nextInt(matchType.nPlayers()));
         game.setCurrentPlayer(currentPlayer);
     }
 
