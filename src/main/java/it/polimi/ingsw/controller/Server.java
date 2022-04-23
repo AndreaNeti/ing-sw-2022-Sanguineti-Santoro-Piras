@@ -10,7 +10,7 @@ public class Server {
 
     public static void main(String[] args) {
         matches = new HashMap<>();
-        ServerSocket server = null;
+        ServerSocket server;
         try {
             server = new ServerSocket(42069);
         } catch (IOException e) {

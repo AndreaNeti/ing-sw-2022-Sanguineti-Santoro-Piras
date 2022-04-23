@@ -12,7 +12,7 @@ class ControllerTest {
 
     @Test
     void controllerTest() {
-        controllerExpert = new Controller(true, (byte) 4);
+        controllerExpert = new Controller(new MatchType((byte) 4, true));
         controllerExpert.addPlayer(new Socket(), "Franco");
         controllerExpert.addPlayer(new Socket(), "Paolo");
         controllerExpert.addPlayer(new Socket(), "Giulia");
