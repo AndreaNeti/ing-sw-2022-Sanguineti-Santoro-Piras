@@ -45,33 +45,32 @@ public class Controller {
         this.lastRound = false;
     }
 
-    public void move(Color color, int idGameComponent) {
+    public void move(String colorString, String idGameComponentString) throws GameException {
+        Color color = Color.valueOf(colorString);
+        int idGameComponent = Integer.parseInt(idGameComponentString);
         if (isPlanificationPhase) {
-            handleError(new NotAllowedException("Not in action phase"));
-            return;
+            throw new NotAllowedException("Not in action phase");
+
         }
-        try {
-            if (actionPhase == 1) {
-                if (idGameComponent <= 0)
-                    throw new NotAllowedException("Can't move to the selected GameComponent");
-                game.move(color, 0, idGameComponent);
-            } else if (actionPhase == 3) { // move students from cloud, destination is player entrance hall
-                game.moveFromCloud(idGameComponent);
-            } else {
-                throw new NotAllowedException("Wrong Phase");
-            }
-        } catch (GameException e) {
-            handleError(e);
-            return;
+
+        if (actionPhase == 1) {
+            if (idGameComponent <= 0) throw new NotAllowedException("Can't move to the selected GameComponent");
+            game.move(color, 0, idGameComponent);
+        } else if (actionPhase == 3) { // move students from cloud, destination is player entrance hall
+            game.moveFromCloud(idGameComponent);
+        } else {
+            throw new NotAllowedException("Wrong Phase");
         }
+
         nextActionPhase();
     }
 
     //the value here need to go from 1 to 10
-    public void playCard(byte value) {
+    public void playCard(String valueString) throws GameException {
+        byte value = Byte.parseByte(valueString);
         if (!isPlanificationPhase) {
-            handleError(new NotAllowedException("Not in planification phase"));
-            return;
+            throw new NotAllowedException("Not in planification phase");
+
         }
         ArrayList<Byte> playedCards = new ArrayList<>();
         //loop where I put in playedCard the previous card played by other Player.If it's current Player
@@ -88,52 +87,45 @@ public class Controller {
         if (currentPlayer.canPlayCard(playedCards, value)) {
             try {
                 game.playCard(value);
-            } catch (GameException e) {
-                handleError(e);
-                return;
             } catch (EndGameException e) {
                 handleError(e);
             }
             nextPlayer();
         } else {
-            handleError(new NotAllowedException("Cannot play this card"));
+            throw new NotAllowedException("Cannot play this card");
         }
     }
 
-    public void moveMotherNature(int i) {
+    public void moveMotherNature(String moves) throws GameException {
+        int i = Integer.parseInt(moves);
         if (isPlanificationPhase || actionPhase != 2) {
-            handleError(new NotAllowedException("Not allowed in this phase"));
-            return;
+            throw new NotAllowedException("Not allowed in this phase");
+
         }
         try {
             game.moveMotherNature(i);
-        } catch (NotAllowedException e) {
-            handleError(e);
-            return;
         } catch (EndGameException e) {
             handleError(e);
         }
         nextActionPhase();
     }
 
-    public void addPlayer(Socket s, String nickName) {
+    public boolean addPlayer(Socket s, String nickName) throws GameException {
         if (playersList.size() == matchType.nPlayers()) {
-            handleError(new NotAllowedException("Match is full"));
-            return;
+            throw new NotAllowedException("Match is full");
+
         }
         int teamIndex = playersList.size() % teams.size(); // circular team selection
         int entranceHallSize = (teams.size() % 2 == 0) ? 7 : 9;
         Player newPlayer;
-        try {
-            newPlayer = new Player(s, teams.get(teamIndex), Wizard.values()[playersList.size()], nickName, entranceHallSize);
-        } catch (GameException e) {
-            handleError(e);
-            return;
-        }
+        newPlayer = new Player(s, teams.get(teamIndex), Wizard.values()[playersList.size()], nickName, entranceHallSize);
+
         playersList.add(newPlayer);
         if (playersList.size() == matchType.nPlayers()) {
             startGame();
+            return true;
         }
+        return false;
     }
 
     public void changeTeam() {
@@ -148,39 +140,32 @@ public class Controller {
 
     }
 
-    public void setCharacterInput(int input) {
+    public void setCharacterInput(String inputString) throws GameException {
+        int input = Integer.parseInt(inputString);
         if (isPlanificationPhase) {
-            handleError(new NotAllowedException("Not in action phase"));
-            return;
+            throw new NotAllowedException("Not in action phase");
+
         }
-        try {
-            game.setCharacterInput(input);
-        } catch (GameException e) {
-            handleError(e);
-        }
+        game.setCharacterInput(input);
+
     }
 
-    public void chooseCharacter(int character) {
+    public void chooseCharacter(String characterString) throws GameException {
+        int character = Integer.parseInt(characterString);
         if (isPlanificationPhase) {
-            handleError(new NotAllowedException("Not in action phase"));
-            return;
+            throw new NotAllowedException("Not in action phase");
+
         }
-        try {
-            game.chooseCharacter(character);
-        } catch (GameException e) {
-            handleError(e);
-        }
+        game.chooseCharacter(character);
+
     }
 
-    public void playCharacter() {
+    public void playCharacter() throws GameException {
         if (isPlanificationPhase) {
-            handleError(new NotAllowedException("Not in action phase"));
-            return;
+            throw new NotAllowedException("not in planification phase");
         }
         try {
             game.playCharacter();
-        } catch (GameException e) {
-            handleError(e);
         } catch (EndGameException e) {
             handleError(e);
         }
@@ -191,6 +176,8 @@ public class Controller {
             game = new ExpertGame(matchType.nPlayers(), teams, playersList);
         else
             game = new NormalGame(matchType.nPlayers(), teams, playersList);
+        if (matchType.isExpert()) game = new ExpertGame(matchType.nPlayers(),  teams, playersList);
+        else game = new NormalGame(matchType.nPlayers(), teams, playersList);
         Random rand = new Random(System.currentTimeMillis());
         currentPlayer = playersList.get(rand.nextInt(matchType.nPlayers()));
         game.setCurrentPlayer(currentPlayer);
@@ -199,8 +186,7 @@ public class Controller {
     private void nextPlayer() {
         int index;
         roundIndex++;
-        if (roundIndex >= playersList.size())
-            nextPhase();
+        if (roundIndex >= playersList.size()) nextPhase();
         if (isPlanificationPhase) {
             // is planification phase, clockwise order
             index = (playerOrder.get(0) + roundIndex) % playersList.size();
@@ -249,13 +235,9 @@ public class Controller {
         }
         message.append(winners.get(i).toString()).append(" won the game!!!");
         System.out.println(message);
-        if (winners.size() == 3)
-            System.out.println("Paolino tvb <3");
+        if (winners.size() == 3) System.out.println("Paolino tvb <3");
     }
 
-    private void handleError(GameException e) {
-        e.printStackTrace();
-    }
 
     private void handleError(EndGameException e) {
         if (e.isEndInstantly()) endGame();

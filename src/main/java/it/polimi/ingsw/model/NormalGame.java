@@ -74,6 +74,7 @@ public class NormalGame implements Game {
         Island islandAfter = islands.get(islandAfterIndex);
 
         if (islandBefore.getTeam() != null && islandBefore.getTeam().equals(island.getTeam())) {
+
             island.merge(islandBefore);
             islands.remove(islandBefore);
             if (islandBeforeIndex < motherNaturePosition)
@@ -199,12 +200,14 @@ public class NormalGame implements Game {
         }
 
         Team oldTeam = island.getTeam();
-        if (oldTeam != null && winner != null && !oldTeam.equals(winner)) {
+        if (winner != null && !winner.equals(oldTeam)) {
             island.setTeam(winner);
-            try {
-                oldTeam.addTowers(island.getNumber());
-            } catch (NotAllowedException ex) {
-                System.err.println(ex.getMessage());
+            if (oldTeam != null) {
+                try {
+                    oldTeam.addTowers(island.getNumber());
+                } catch (NotAllowedException ex) {
+                    System.err.println(ex.getMessage());
+                }
             }
             winner.removeTowers(island.getNumber());
             checkMerge(island);

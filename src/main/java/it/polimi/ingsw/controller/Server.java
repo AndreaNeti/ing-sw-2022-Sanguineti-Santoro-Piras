@@ -2,15 +2,21 @@ package it.polimi.ingsw.controller;
 
 import it.polimi.ingsw.exceptions.NotAllowedException;
 
+import it.polimi.ingsw.exceptions.UnexpectedValueException;
+
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Set;
 
 public class Server {
-    public static HashMap<MatchType, LinkedHashMap<Long, Controller>> matches;
+
     public static Long matchId = 0L;
 
+    public static HashMap<MatchType, LinkedHashMap<Long, Controller>> matches;
+    private static Set<String> nickname;
     public static void main(String[] args) {
         matches = new HashMap<>();
         ServerSocket server;
@@ -27,6 +33,14 @@ public class Server {
             }
         }
     }
+    public static boolean setNickname(String nicknameToAdd) throws UnexpectedValueException{
+        if (!nickname.add(nicknameToAdd))
+            throw new UnexpectedValueException();
+        return true;
+    }
+
+
+
 
     public static Controller createMatch(MatchType matchType) {
         LinkedHashMap<Long, Controller> filteredMatches = matches.computeIfAbsent(matchType, k -> new LinkedHashMap<>());
