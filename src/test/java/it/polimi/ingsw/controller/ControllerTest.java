@@ -12,8 +12,7 @@ class ControllerTest {
 
     @Test
     void controllerTest() {
-        controllerExpert = new Controller(4, true, (byte) 4);
-        assertEquals(4, controllerExpert.getMatchId());
+        controllerExpert = new Controller(true, (byte) 4);
         controllerExpert.addPlayer(new Socket(), "Franco");
         controllerExpert.addPlayer(new Socket(), "Paolo");
         controllerExpert.addPlayer(new Socket(), "Giulia");

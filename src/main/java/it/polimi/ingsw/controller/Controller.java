@@ -10,7 +10,6 @@ import java.util.*;
 
 public class Controller {
     private final boolean isExpertGame;
-    private final int matchId;
     private final ArrayList<Player> playersList;
     private final byte numberOfPlayers;
     private final Map<HouseColor, Queue<String>> messages;
@@ -28,8 +27,7 @@ public class Controller {
     private byte roundIndex;
     private boolean lastRound;
 
-    public Controller(int matchId, boolean isExpertGame, byte numberOfPlayers) {
-        this.matchId = matchId;
+    public Controller(boolean isExpertGame, byte numberOfPlayers) {
         this.isExpertGame = isExpertGame;
         this.numberOfPlayers = numberOfPlayers;
         this.playersList = new ArrayList<>(numberOfPlayers);
@@ -118,11 +116,6 @@ public class Controller {
             handleError(e);
         }
         nextActionPhase();
-    }
-
-
-    public int getMatchId() {
-        return matchId;
     }
 
     public void addPlayer(Socket s, String nickName) {
