@@ -176,6 +176,56 @@ class CharacterCardTest {
     }
 
     @Test
+    void playChar3() {
+        game.setCurrentPlayer(p1);
+        try {
+            game.playCard((byte) 3);
+            game.chooseCharacter(0);
+        } catch (GameException | EndGameException e) {
+            fail();
+        }
+
+        try {
+            c3.play(game);
+        } catch (GameException | EndGameException e) {
+            fail();
+        }
+        try {
+            game.moveMotherNature(4);
+        } catch (GameException | EndGameException e) {
+            fail();
+        }
+    }
+
+    @Test
+    void playChar4() {
+        try {
+            game.chooseCharacter(0);
+            game.setCharacterInput(-1);
+        } catch (GameException e) {
+            fail();
+        }
+        assertThrows(UnexpectedValueException.class, () -> c4.play(game), "not valid inputs");
+        game.setCurrentPlayer(p1);
+
+        try {
+            game.chooseCharacter(0);
+            game.setCharacterInput(2);
+        } catch (GameException e) {
+            fail();
+        }
+
+        try {
+            c4.play(game);
+        } catch (GameException | EndGameException e) {
+            fail();
+        }
+
+        assertEquals(game.getIslands().get(2).getProhibitions(), 1);
+    }
+
+
+    @Test
     void playChar6() {
         int color1 = 0, color2 = Color.values().length - 1;
         try {
@@ -183,6 +233,8 @@ class CharacterCardTest {
             game.setCharacterInput(-5);
             game.setCharacterInput(-1);
             assertThrows(UnexpectedValueException.class, () -> c6.play(game), "not valid inputs");
+            // also resets character inputs
+            game.setCurrentPlayer(p1);
             // use first available color on the card to test (it's chosen randomly)
             while (((GameComponent) c6).howManyStudents(Color.values()[color1]) == 0 && color1 < Color.values().length) {
                 game.setCurrentPlayer(p1);
@@ -235,6 +287,14 @@ class CharacterCardTest {
 
     @Test
     void playChar8() {
+        try{
+            game.chooseCharacter(0);
+            game.setCharacterInput(-1);
+            assertThrows(UnexpectedValueException.class, () -> c8.play(game), "not valid inputs");
+        } catch (GameException e) {
+            fail();
+        }
+        game.setCurrentPlayer(p1);
         try {
             game.getIslands().get(4).moveAll(game.getIslands().get(1));
             Color color;
@@ -347,6 +407,46 @@ class CharacterCardTest {
             assertEquals(game.getCurrentPlayer().getLunchHall().howManyStudents(Color.RED), redStudentsLunch);
             assertEquals(game.getCurrentPlayer().getLunchHall().howManyStudents(Color.values()[colorLunch]), oldValue);
         }
+    }
+
+    @Test
+    void playChar10() {
+        game.setCurrentPlayer(p1);
+        int color = -1;
+        int wrongColor = -1;
+        for (int i = 0; i < 5 && color == -1; i++) {
+            if (((GameComponent) c10).howManyStudents(Color.values()[i]) != 0) {
+                color = i;
+            }
+        }
+
+        for (int i = 0; i < 5 && wrongColor == -1; i++) {
+            if (((GameComponent) c10).howManyStudents(Color.values()[i]) == 0) {
+                wrongColor = i;
+            }
+        }
+
+        try {
+            game.chooseCharacter(0);
+            game.setCharacterInput(wrongColor);
+
+            assertThrows(NotEnoughStudentsException.class, () -> c10.play(game), "Not enough students");
+
+            game.setCurrentPlayer(p1);
+            game.chooseCharacter(0);
+            game.setCharacterInput(color);
+        } catch (GameException e) {
+            fail();
+        }
+
+        int oldSize = game.getCurrentPlayer().getLunchHall().howManyStudents(Color.values()[color]);
+        try {
+            c10.play(game);
+        } catch (GameException | EndGameException e) {
+            fail();
+        }
+        assertEquals(game.getCurrentPlayer().getLunchHall().howManyStudents(Color.values()[color]), oldSize + 1);
+        assertEquals(((GameComponent) c10).howManyStudents(), ((GameComponent) c10).getMaxStudents());
     }
 
     @Test
