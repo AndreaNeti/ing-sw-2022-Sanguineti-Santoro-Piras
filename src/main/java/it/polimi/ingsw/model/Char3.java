@@ -19,7 +19,7 @@ public class Char3 implements CharacterCard {
 
     @Override
     public boolean canPlay(int nInput) {
-        return true;
+        return nInput == 0;
     }
 
 //    @Override

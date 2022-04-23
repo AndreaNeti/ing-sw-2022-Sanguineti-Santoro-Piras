@@ -236,6 +236,51 @@ class CharacterCardTest {
     }
 
     @Test
+    void playChar8() {
+        try {
+            game.getIslands().get(4).moveAll(game.getIslands().get(1));
+            Color color;
+            for (int i = 0; i < 3; i++) {
+                color = Color.values()[i];
+                if (p1.getLunchHall().howManyStudents(color) <= p2.getLunchHall().howManyStudents(color)) {
+                    int sum = p2.getLunchHall().howManyStudents(color) - p1.getLunchHall().howManyStudents(color) + 1;
+                    game.getBag().moveStudents(color, (byte) sum, p1.getLunchHall());
+                }
+            }
+            for (int i = 3; i < 5; i++) {
+                color = Color.values()[i];
+                if (p2.getLunchHall().howManyStudents(color) <= p1.getLunchHall().howManyStudents(color)) {
+                    int sum = p1.getLunchHall().howManyStudents(color) - p2.getLunchHall().howManyStudents(color) + 1;
+                    game.getBag().moveStudents(color, (byte) sum, p2.getLunchHall());
+                }
+            }
+            game.calculateProfessor();
+            for (int i = 0; i < 5; i++) {
+                color = Color.values()[i];
+                game.getBag().moveStudents(color, (byte) (i + 1), game.getIslands().get(4));
+            }
+        } catch (GameException e) {
+            fail();
+        }
+        Team old = null;
+        try {
+            game.chooseCharacter(0);
+            game.setCharacterInput(4);
+            c2.play(game);
+            old = game.getIslands().get(4).getTeam();
+            game.setCurrentPlayer(p1);
+            game.chooseCharacter(0);
+            game.setCharacterInput(4);
+            c8.play(game);
+            game.chooseCharacter(0);
+            c2.play(game);
+        } catch (GameException | EndGameException e) {
+            fail();
+        }
+        assertNotEquals(game.getIslands().get(4).getTeam(), old);
+    }
+
+    @Test
     void playChar9() {
         try {
             game.chooseCharacter(0);
