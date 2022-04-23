@@ -183,8 +183,6 @@ class CharacterCardTest {
             game.setCharacterInput(-5);
             game.setCharacterInput(-1);
             assertThrows(UnexpectedValueException.class, () -> c6.play(game), "not valid inputs");
-            // also resets character inputs
-            game.setCurrentPlayer(p1);
             // use first available color on the card to test (it's chosen randomly)
             while (((GameComponent) c6).howManyStudents(Color.values()[color1]) == 0 && color1 < Color.values().length) {
                 game.setCurrentPlayer(p1);
