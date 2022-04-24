@@ -20,7 +20,7 @@ public class NormalGame implements Game {
     //a reference to all the pieces contained in the game
     private transient Bag bag;
     private byte motherNaturePosition;
-    private Player currentPlayer;
+    private byte currentPlayer;
 
 
     public NormalGame(byte numberOfPlayers, ArrayList<Team> teamList, ArrayList<Player> playerList) {
@@ -55,7 +55,7 @@ public class NormalGame implements Game {
     private void initializeMotherNature() {
         this.motherNaturePosition = 0;
         for (int i = 0; i < islands.size(); i++) {
-            if (!(i == 0|| i == (6) % 12)) {
+            if (!(i == 0 || i == (6) % 12)) {
                 try {
                     drawStudents(islands.get(i), (byte) 1);
                 } catch (EndGameException e) {
@@ -110,7 +110,7 @@ public class NormalGame implements Game {
 
     @Override
     public void playCard(byte card) throws GameException, EndGameException {
-        currentPlayer.useCard(card);
+        getCurrentPlayer().useCard(card);
     }
 
     private GameComponent getComponentById(int idGameComponent) throws NotAllowedException {
@@ -122,9 +122,9 @@ public class NormalGame implements Game {
         if (idGameComponent < 0)
             return clouds.get(-idGameComponent - 1);
         if (idGameComponent == 0)
-            return currentPlayer.getEntranceHall();
+            return getCurrentPlayer().getEntranceHall();
         if (idGameComponent == 1)
-            return currentPlayer.getLunchHall();
+            return getCurrentPlayer().getLunchHall();
         return islands.get(idGameComponent - 2);
     }
 
@@ -140,11 +140,11 @@ public class NormalGame implements Game {
     // in the professor array slot of the current color
     protected void calculateProfessor() {
         byte max;
-        Player currentOwner ;
+        Player currentOwner;
         // player with the maximum number of students for the current color
         Player newOwner;
         for (Color c : Color.values()) {
-            currentOwner=null;
+            currentOwner = null;
             // player actually controlling that professor
             if (getProfessor()[c.ordinal()] != null)
                 currentOwner = getPlayers().get(getProfessor()[c.ordinal()].ordinal());
@@ -167,7 +167,7 @@ public class NormalGame implements Game {
     }
 
     protected boolean checkMoveMotherNature(int moves) {
-        return moves <= currentPlayer.getPlayedCardMoves();
+        return moves <= getCurrentPlayer().getPlayedCardMoves();
     }
 
     @Override
@@ -277,7 +277,7 @@ public class NormalGame implements Game {
         if (cloudId >= 0 || cloudId < -getClouds().size() || getComponentById(cloudId).howManyStudents() == 0)
             throw new NotAllowedException("Can't move from the selected cloud");
         GameComponent cloudSource = getComponentById(cloudId);
-        cloudSource.moveAll(currentPlayer.getEntranceHall());
+        cloudSource.moveAll(getCurrentPlayer().getEntranceHall());
     }
 
     public ArrayList<Cloud> getClouds() {
@@ -286,14 +286,14 @@ public class NormalGame implements Game {
     }
 
     protected Player getCurrentPlayer() {
-        return this.currentPlayer;
+        return players.get(currentPlayer);
     }
 
     // TODO: pass by copy player, team etc..
 
     @Override
     public void setCurrentPlayer(Player p) {
-        this.currentPlayer = p;
+        this.currentPlayer = (byte) players.indexOf(p);
     }
 
     protected ArrayList<Player> getPlayers() {

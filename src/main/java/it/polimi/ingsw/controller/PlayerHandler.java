@@ -32,12 +32,12 @@ public class PlayerHandler implements Runnable {
         BufferedReader in = null;
         try {
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-
+            // what the server receives from the player
             String command;
             do {
                 command = in.readLine();
-
-            } while (command != null && !command.equals("quit"));
+                callMethod(command);
+            } while (!command.equals("quit"));
 
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -116,12 +116,12 @@ public class PlayerHandler implements Runnable {
         } catch (GameException ex) {
             handleError(ex);
         } catch (NullPointerException ex) {
-            this.sendString("Must join a match before");
+            this.sendString("error/Must join a match before");
         }
     }
 
     private void handleError(GameException e) {
-        this.sendString(e.getMessage());
+        this.sendString("error/" + e.getMessage());
     }
 
     private void nickName(String nickName) {

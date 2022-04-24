@@ -5,7 +5,10 @@ import it.polimi.ingsw.exceptions.GameException;
 import it.polimi.ingsw.exceptions.NotAllowedException;
 import it.polimi.ingsw.model.*;
 
-import java.util.*;
+import java.io.ByteArrayOutputStream;
+import java.io.ObjectOutputStream;
+import java.util.ArrayList;
+import java.util.Comparator;
 
 public class Controller {
     private final MatchType matchType;
@@ -171,9 +174,19 @@ public class Controller {
             handleError(e);
         }
     }
-    private void sendGameState(){
 
+    private void sendGameState() {
+        try {
+            ByteArrayOutputStream bo = new ByteArrayOutputStream();
+            ObjectOutputStream so = new ObjectOutputStream(bo);
+            so.writeObject(game);
+            so.flush();
+            notifyClients(bo.toString());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
+
     private void notifyClients(String message) {
         for (PlayerHandler h : playerHandlers) {
             h.sendString(message);
@@ -189,6 +202,7 @@ public class Controller {
         else game = new NormalGame(matchType.nPlayers(), teams, playersList);
         currentPlayer = playersList.get(0);
         game.setCurrentPlayer(currentPlayer);
+        sendGameState();
     }
 
     private void nextPlayer() {
@@ -244,13 +258,10 @@ public class Controller {
 
     private void endGame() {
         ArrayList<Team> winners = game.calculateWinner();
-        StringBuilder message = new StringBuilder("Game ended: ");
-        byte i;
-        for (i = 0; i < winners.size() - 1; i++) {
-            message.append(winners.get(i).toString()).append(", ");
-        }
-        message.append(winners.get(i).toString()).append(" won the game!!!");
-        System.out.println(message);
+        StringBuilder message = new StringBuilder("end");
+        for (Team t : winners)
+            message.append("/").append(t.toString());
+        notifyClients(String.valueOf(message));
         if (winners.size() == 3) System.out.println("Paolino tvb <3");
     }
 
