@@ -114,7 +114,6 @@ public class ExpertGame extends NormalGame {
     @Override
     public void move(Color color, int gameComponentSource, int gameComponentDestination) throws GameException {
         super.move(color, gameComponentSource, gameComponentDestination);
-        //TODO check if the super.move calls the expert calculateProfessor
         if (gameComponentDestination == 1 && getCurrentPlayer().getLunchHall().howManyStudents(color) % 3 == 0) {
             addCoinToPlayer(getCurrentPlayer());
         }
@@ -244,19 +243,19 @@ public class ExpertGame extends NormalGame {
     @Override
     public void playCharacter() throws GameException, EndGameException {
         if (chosenCharacter == -1) throw new NotAllowedException("Cannot play character card");
-        if (getChoosenCharacter().canPlay(inputsCharacter.size())) {
+        if (getChosenCharacter().canPlay(inputsCharacter.size())) {
             try {
-                getChoosenCharacter().play(this);
+                getChosenCharacter().play(this);
             } catch (GameException e) {
                 // something gone wrong while playing the card, reset inputs
                 inputsCharacter.clear();
                 throw e;
             }
-            byte charCost = getChoosenCharacter().getCost();
+            byte charCost = getChosenCharacter().getCost();
             // this character card has already been used, increase its cost
-            if (playedCharacters[characters.indexOf(getChoosenCharacter())]) charCost++;
+            if (playedCharacters[characters.indexOf(getChosenCharacter())]) charCost++;
             else {
-                playedCharacters[characters.indexOf(getChoosenCharacter())] = true;
+                playedCharacters[characters.indexOf(getChosenCharacter())] = true;
                 // a coin is left on the character card to remember it has been used
                 coinsLeft--;
             }
@@ -291,7 +290,7 @@ public class ExpertGame extends NormalGame {
         else throw new NotAllowedException("There is no played character card");
     }
 
-    public CharacterCard getChoosenCharacter() {
+    private CharacterCard getChosenCharacter() {
         return characters.get(chosenCharacter);
     }
 
