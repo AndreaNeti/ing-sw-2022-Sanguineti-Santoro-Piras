@@ -114,7 +114,6 @@ public class ExpertGame extends NormalGame {
     @Override
     public void move(Color color, int gameComponentSource, int gameComponentDestination) throws GameException {
         super.move(color, gameComponentSource, gameComponentDestination);
-        //TODO check if the super.move calls the expert calculateProfessor
         if (gameComponentDestination == 1 && getCurrentPlayer().getLunchHall().howManyStudents(color) % 3 == 0) {
             addCoinToPlayer(getCurrentPlayer());
         }
@@ -128,9 +127,9 @@ public class ExpertGame extends NormalGame {
             island.removeProhibition();
             restoreProhibition();
         } else {
-            Team oldController = island.getTeam();
+            HouseColor oldController = island.getTeamColor();
             int maxInfluence = 0;
-            Team winner = null;
+            HouseColor winnerColor = null;
             for (Team t : getTeams()) {
                 int influence = 0;
                 for (Color c : Color.values()) {
@@ -141,7 +140,7 @@ public class ExpertGame extends NormalGame {
                         }
                     }
                 }
-                if (island.getTeam() != null && towerInfluence && t.equals(island.getTeam()))
+                if (island.getTeamColor() != null && towerInfluence && t.getHouseColor() == island.getTeamColor())
                     influence += island.getNumber();
 
                 if (extraInfluence && getCurrentPlayer().getTeam().equals(t)) {
@@ -149,23 +148,23 @@ public class ExpertGame extends NormalGame {
                 }
 
                 if (influence > maxInfluence) {
-                    winner = t;
+                    winnerColor = t.getHouseColor();
                     maxInfluence = influence;
                 } else if (influence == maxInfluence) {
-                    winner = oldController;
+                    winnerColor = oldController;
                 }
             }
-            Team oldTeam = island.getTeam();
-            if (winner != null && !winner.equals(oldTeam)) {
-                island.setTeam(winner);
-                if (oldTeam != null) {
+            HouseColor oldTeamColor = island.getTeamColor();
+            if (winnerColor != null && !winnerColor.equals(oldTeamColor)) {
+                island.setTeamColor(winnerColor);
+                if (oldTeamColor != null) {
                     try {
-                        oldTeam.addTowers(island.getNumber());
+                        getTeams().get(oldTeamColor.ordinal()).addTowers(island.getNumber());
                     } catch (NotAllowedException ex) {
                         System.err.println(ex.getMessage());
                     }
                 }
-                winner.removeTowers(island.getNumber());
+                getTeams().get(winnerColor.ordinal()).removeTowers(island.getNumber());
                 checkMerge(island);
             }
         }
@@ -244,19 +243,19 @@ public class ExpertGame extends NormalGame {
     @Override
     public void playCharacter() throws GameException, EndGameException {
         if (chosenCharacter == -1) throw new NotAllowedException("Cannot play character card");
-        if (getChoosenCharacter().canPlay(inputsCharacter.size())) {
+        if (getChosenCharacter().canPlay(inputsCharacter.size())) {
             try {
-                getChoosenCharacter().play(this);
+                getChosenCharacter().play(this);
             } catch (GameException e) {
                 // something gone wrong while playing the card, reset inputs
                 inputsCharacter.clear();
                 throw e;
             }
-            byte charCost = getChoosenCharacter().getCost();
+            byte charCost = getChosenCharacter().getCost();
             // this character card has already been used, increase its cost
-            if (playedCharacters[characters.indexOf(getChoosenCharacter())]) charCost++;
+            if (playedCharacters[characters.indexOf(getChosenCharacter())]) charCost++;
             else {
-                playedCharacters[characters.indexOf(getChoosenCharacter())] = true;
+                playedCharacters[characters.indexOf(getChosenCharacter())] = true;
                 // a coin is left on the character card to remember it has been used
                 coinsLeft--;
             }
@@ -291,7 +290,7 @@ public class ExpertGame extends NormalGame {
         else throw new NotAllowedException("There is no played character card");
     }
 
-    public CharacterCard getChoosenCharacter() {
+    private CharacterCard getChosenCharacter() {
         return characters.get(chosenCharacter);
     }
 

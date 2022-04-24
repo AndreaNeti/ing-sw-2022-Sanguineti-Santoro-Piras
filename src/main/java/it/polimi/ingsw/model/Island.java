@@ -4,7 +4,7 @@ import it.polimi.ingsw.exceptions.NotAllowedException;
 import it.polimi.ingsw.exceptions.UnexpectedValueException;
 
 public class Island extends GameComponent {
-    private Team team;
+    private HouseColor team;
     //prohibition is the representation of the NO Entry Tiles which avoids the calculation of the influence on an island
     private byte prohibition;
     //it's the number of the island merged in this island
@@ -17,12 +17,11 @@ public class Island extends GameComponent {
         number = 1;
     }
 
-    // TODO by copy?
-    public Team getTeam() {
+    public HouseColor getTeamColor() {
         return team;
     }
 
-    public void setTeam(Team team) {
+    public void setTeamColor(HouseColor team) {
         this.team = team;
     }
 

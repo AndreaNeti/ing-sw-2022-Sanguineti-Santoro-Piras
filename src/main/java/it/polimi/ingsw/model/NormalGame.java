@@ -73,14 +73,14 @@ public class NormalGame implements Game {
         Island islandBefore = islands.get(islandBeforeIndex);
         Island islandAfter = islands.get(islandAfterIndex);
 
-        if (islandBefore.getTeam() != null && islandBefore.getTeam().equals(island.getTeam())) {
+        if (islandBefore.getTeamColor() != null && islandBefore.getTeamColor().equals(island.getTeamColor())) {
 
             island.merge(islandBefore);
             islands.remove(islandBefore);
             if (islandBeforeIndex < motherNaturePosition)
                 motherNaturePosition--;
         }
-        if (islandAfter.getTeam() != null && islandAfter.getTeam().equals(island.getTeam())) {
+        if (islandAfter.getTeamColor() != null && islandAfter.getTeamColor().equals(island.getTeamColor())) {
             island.merge(islandAfter);
             islands.remove(islandAfter);
             if (islandAfterIndex <= motherNaturePosition)
@@ -180,9 +180,9 @@ public class NormalGame implements Game {
     }
 
     private void calculateInfluence(Island island) throws EndGameException {
-        Team oldController = island.getTeam();
+        HouseColor oldController = island.getTeamColor();
         int maxInfluence = 0;
-        Team winner = null;
+        HouseColor winnerColor = null;
         for (Team t : teams) {
             int influence = 0;
             for (Color c : Color.values()) {
@@ -190,28 +190,29 @@ public class NormalGame implements Game {
                     if (p.getWizard().equals(professors[c.ordinal()])) influence += island.howManyStudents(c);
                 }
             }
-            if (island.getTeam() != null && t.equals(island.getTeam())) influence += island.getNumber();
+            if (island.getTeamColor() != null && t.getHouseColor() == island.getTeamColor())
+                influence += island.getNumber();
 
             if (influence > maxInfluence) {
-                winner = t;
+                winnerColor = t.getHouseColor();
                 maxInfluence = influence;
             } else if (influence == maxInfluence) {
-                winner = oldController;
+                winnerColor = oldController;
             }
 
         }
 
-        Team oldTeam = island.getTeam();
-        if (winner != null && !winner.equals(oldTeam)) {
-            island.setTeam(winner);
-            if (oldTeam != null) {
+        HouseColor oldTeamColor = island.getTeamColor();
+        if (winnerColor != null && !winnerColor.equals(oldTeamColor)) {
+            island.setTeamColor(winnerColor);
+            if (oldTeamColor != null) {
                 try {
-                    oldTeam.addTowers(island.getNumber());
+                    getTeams().get(oldTeamColor.ordinal()).addTowers(island.getNumber());
                 } catch (NotAllowedException ex) {
                     System.err.println(ex.getMessage());
                 }
             }
-            winner.removeTowers(island.getNumber());
+            getTeams().get(winnerColor.ordinal()).removeTowers(island.getNumber());
             checkMerge(island);
         }
     }

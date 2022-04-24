@@ -172,7 +172,7 @@ class CharacterCardTest {
             fail();
         }
 
-        assertEquals(game.getIslands().get(0).getTeam(), winnerTeam);
+        assertEquals(game.getIslands().get(0).getTeamColor(), winnerTeam.getHouseColor());
     }
 
     @Test
@@ -251,23 +251,19 @@ class CharacterCardTest {
         } catch (GameException e) {
             fail();
         }
-        Team old = null;
+        HouseColor old = null;
         try {
-            game.chooseCharacter((byte) 0);
-            game.setCharacterInput(4);
-            c2.play(game);
-            old = game.getIslands().get(4).getTeam();
+            game.calculateInfluence(game.getIslands().get(4));
+            old = game.getIslands().get(4).getTeamColor();
             game.setCurrentPlayer(p1);
             game.chooseCharacter((byte) 0);
             game.getBag().moveStudents(Color.values()[4], (byte) (2), game.getIslands().get(4));
             c5.play(game);
-            game.chooseCharacter((byte) 0);
-            game.setCharacterInput(4);
-            c2.play(game);
+            game.calculateInfluence(game.getIslands().get(4));
         } catch (GameException | EndGameException e) {
             fail();
         }
-        assertNotEquals(game.getIslands().get(4).getTeam(), old);
+        assertNotEquals(game.getIslands().get(4).getTeamColor(), old);
     }
 
     @Test
@@ -361,13 +357,11 @@ class CharacterCardTest {
             game.setCurrentPlayer(p2);
             game.chooseCharacter((byte) 0);
             c7.play(game);
-            game.chooseCharacter((byte) 0);
-            game.setCharacterInput(4);
-            c2.play(game);
+            game.calculateInfluence(game.getIslands().get(4));
         } catch (GameException | EndGameException e) {
             fail();
         }
-        assertEquals(game.getIslands().get(4).getTeam(), p2.getTeam());
+        assertEquals(game.getIslands().get(4).getTeamColor(), p2.getTeam().getHouseColor());
     }
 
     @Test
@@ -409,12 +403,11 @@ class CharacterCardTest {
             game.chooseCharacter((byte) 0);
             game.setCharacterInput(4);
             c8.play(game);
-            game.chooseCharacter((byte) 0);
-            c2.play(game);
+            game.calculateInfluence(game.getIslands().get(4));
         } catch (GameException | EndGameException e) {
             fail();
         }
-        assertEquals(game.getIslands().get(4).getTeam(), p1.getTeam());
+        assertEquals(game.getIslands().get(4).getTeamColor(), p1.getTeam().getHouseColor());
     }
 
     @Test
