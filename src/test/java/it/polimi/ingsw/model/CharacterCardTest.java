@@ -25,8 +25,8 @@ class CharacterCardTest {
         t2 = new Team(HouseColor.BLACK, (byte) 1, (byte) 8);
         try {
             // 14 students are the minimum to get 3 coins after moving them all to the lunch all in the worst case
-            p1 = new Player("Franco", t1, Wizard.WOODMAGE, 14);
-            p2 = new Player("Gigi", t2, Wizard.SANDMAGE, 14);
+            p1 = new Player("Franco", t1, Wizard.WOODMAGE, 9);
+            p2 = new Player("Gigi", t2, Wizard.SANDMAGE, 9);
         } catch (GameException e) {
             fail();
         }
@@ -35,22 +35,34 @@ class CharacterCardTest {
         playerList.add(p1);
         playerList.add(p2);
         game = new ExpertGame((byte) 2, teamList, playerList);
-        // fill lunch halls, players will gain enough coins to test char.play methods
-        for (Color c : Color.values()) {
-            for (Player p : playerList) {
-                game.setCurrentPlayer(p);
-                byte nStudents = (byte) Math.min(10, p.getEntranceHall().howManyStudents(c));
-                for (byte i = 0; i < nStudents; i++) {
-                    try {
-                        // move from entrance to lunch hall
-                        game.move(c, 0, 1);
-                    } catch (GameException e) {
-                        fail();
-                    }
+        // fill lunch halls, p1 will gain enough coins to test char.play methods
+        game.setCurrentPlayer(p1);
+        try {
+            for (Color c : Color.values()) {
+                p1.getEntranceHall().moveStudents(c, p1.getEntranceHall().howManyStudents(c), game.getBag());
+            }
+            for (Color c : Color.values()) {
+                game.getBag().moveStudents(c, (byte) 3, p1.getEntranceHall());
+                for (int i = 0; i < 3; i++) {
+                    game.move(c, 0, 1);
                 }
             }
+        } catch (GameException e) {
+            fail();
         }
-        game.setCurrentPlayer(p1);
+//            for (Player p : playerList) {
+//                game.setCurrentPlayer(p);
+//                byte nStudents = (byte) Math.min(10, p.getEntranceHall().howManyStudents(c));
+//                for (byte i = 0; i < nStudents; i++) {
+//                    try {
+//                        // move from entrance to lunch hall
+//                        game.move(c, 0, 1);
+//                    } catch (GameException e) {
+//                        fail();
+//                    }
+//                }
+//            }
+
         c0 = new Char0();
         try {
             game.drawStudents((GameComponent) c0, (byte) ((GameComponent) c0).getMaxStudents());
@@ -113,21 +125,19 @@ class CharacterCardTest {
 
     @Test
     void playChar1() {
-        int color = -1;
-        for (int i = 0; i < 5; i++) {
-            if (game.getProfessor()[i] != null && p1.getWizard() == game.getProfessor()[i]) {
-                color = i;
-                break;
-            }
-        }
-        game.setCurrentPlayer(p2);
-
-        while (p2.getLunchHall().howManyStudents(Color.values()[color]) < p1.getLunchHall().howManyStudents(Color.values()[color])) {
-            try {
-                game.getBag().moveStudents(Color.values()[color], (byte) 1, p2.getLunchHall());
-            } catch (GameException e) {
-                fail();
-            }
+//        int color = -1;
+//        for (int i = 0; i < 5; i++) {
+//            if (game.getProfessor()[i] != null && p1.getWizard() == game.getProfessor()[i]) {
+//                color = i;
+//                break;
+//            }
+//        }
+        game.setCurrentPlayer(p1);
+        try {
+            game.getBag().moveStudents(Color.RED, (byte) 6, p2.getLunchHall());
+            game.getBag().moveStudents(Color.RED, (byte) 3, p1.getLunchHall());
+        } catch (GameException e) {
+            fail();
         }
 
         try {
@@ -136,7 +146,7 @@ class CharacterCardTest {
             fail();
         }
 
-        assertEquals(game.getProfessor()[color], p2.getWizard());
+        assertEquals(game.getProfessor()[0], p1.getWizard());
     }
 
     @Test
@@ -331,19 +341,20 @@ class CharacterCardTest {
         try {
             game.getIslands().get(4).moveAll(game.getIslands().get(1));
             Color color;
-            for (int i = 0; i < 3; i++) {
+//            for (int i = 0; i < 3; i++) {
+//                color = Color.values()[i];
+//                if (p1.getLunchHall().howManyStudents(color) <= p2.getLunchHall().howManyStudents(color)) {
+//                    int sum = p2.getLunchHall().howManyStudents(color) - p1.getLunchHall().howManyStudents(color) + 1;
+//                    game.getBag().moveStudents(color, (byte) sum, p1.getLunchHall());
+//                }
+//            }
+            for (int i = 2; i < 5; i++) {
                 color = Color.values()[i];
-                if (p1.getLunchHall().howManyStudents(color) <= p2.getLunchHall().howManyStudents(color)) {
-                    int sum = p2.getLunchHall().howManyStudents(color) - p1.getLunchHall().howManyStudents(color) + 1;
-                    game.getBag().moveStudents(color, (byte) sum, p1.getLunchHall());
-                }
-            }
-            for (int i = 3; i < 5; i++) {
-                color = Color.values()[i];
-                if (p2.getLunchHall().howManyStudents(color) <= p1.getLunchHall().howManyStudents(color)) {
-                    int sum = p1.getLunchHall().howManyStudents(color) - p2.getLunchHall().howManyStudents(color) + 1;
-                    game.getBag().moveStudents(color, (byte) sum, p2.getLunchHall());
-                }
+//                if (p2.getLunchHall().howManyStudents(color) <= p1.getLunchHall().howManyStudents(color)) {
+//                    int sum = p1.getLunchHall().howManyStudents(color) - p2.getLunchHall().howManyStudents(color) + 1;
+//                    game.getBag().moveStudents(color, (byte) sum, p2.getLunchHall());
+//                }
+                game.getBag().moveStudents(color, (byte) 5, p2.getLunchHall());
             }
             game.calculateProfessor();
             for (int i = 0; i < 5; i++) {
@@ -354,14 +365,14 @@ class CharacterCardTest {
             fail();
         }
         try {
-            game.setCurrentPlayer(p2);
+            game.setCurrentPlayer(p1);
             game.chooseCharacter((byte) 0);
             c7.play(game);
             game.calculateInfluence(game.getIslands().get(4));
         } catch (GameException | EndGameException e) {
             fail();
         }
-        assertEquals(game.getIslands().get(4).getTeamColor(), p2.getTeam().getHouseColor());
+        assertEquals(game.getIslands().get(4).getTeamColor(), p1.getTeam().getHouseColor());
     }
 
     @Test
@@ -377,19 +388,20 @@ class CharacterCardTest {
         try {
             game.getIslands().get(4).moveAll(game.getIslands().get(1));
             Color color;
-            for (int i = 0; i < 3; i++) {
-                color = Color.values()[i];
-                if (p1.getLunchHall().howManyStudents(color) <= p2.getLunchHall().howManyStudents(color)) {
-                    int sum = p2.getLunchHall().howManyStudents(color) - p1.getLunchHall().howManyStudents(color) + 1;
-                    game.getBag().moveStudents(color, (byte) sum, p1.getLunchHall());
-                }
-            }
+//            for (int i = 0; i < 3; i++) {
+//                color = Color.values()[i];
+//                if (p1.getLunchHall().howManyStudents(color) <= p2.getLunchHall().howManyStudents(color)) {
+//                    int sum = p2.getLunchHall().howManyStudents(color) - p1.getLunchHall().howManyStudents(color) + 1;
+//                    game.getBag().moveStudents(color, (byte) sum, p1.getLunchHall());
+//                }
+//            }
             for (int i = 3; i < 5; i++) {
                 color = Color.values()[i];
-                if (p2.getLunchHall().howManyStudents(color) <= p1.getLunchHall().howManyStudents(color)) {
-                    int sum = p1.getLunchHall().howManyStudents(color) - p2.getLunchHall().howManyStudents(color) + 1;
-                    game.getBag().moveStudents(color, (byte) sum, p2.getLunchHall());
-                }
+//                if (p2.getLunchHall().howManyStudents(color) <= p1.getLunchHall().howManyStudents(color)) {
+//                    int sum = p1.getLunchHall().howManyStudents(color) - p2.getLunchHall().howManyStudents(color) + 1;
+//                    game.getBag().moveStudents(color, (byte) sum, p2.getLunchHall());
+//                }
+                game.getBag().moveStudents(color, (byte) 5, p2.getLunchHall());
             }
             game.calculateProfessor();
             for (int i = 0; i < 5; i++) {

@@ -242,7 +242,7 @@ public class ExpertGame extends NormalGame {
 
     @Override
     public void playCharacter() throws GameException, EndGameException {
-        if (chosenCharacter == -1) throw new NotAllowedException("Cannot play character card");
+        if (chosenCharacter == -1) throw new NotAllowedException("No character card selected");
         if (getChosenCharacter().canPlay(inputsCharacter.size())) {
             try {
                 getChosenCharacter().play(this);
