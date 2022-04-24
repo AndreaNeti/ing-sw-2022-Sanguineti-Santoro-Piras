@@ -112,22 +112,27 @@ public class PlayerHandler implements Runnable {
                 }
                 //Player methods
                 case "nickName": {
+                    Server.setNickname(tokens.get(0));
                     this.nickName(tokens.get(0));
                 }
                 //Server methods
-                case "getMatch": {
+                case "getOldestMatchId": {
                     Long controllerId;
-                    controllerId=Server.getMatch(new MatchType(Byte.parseByte(tokens.get(0)),Boolean.parseBoolean(tokens.get(1))));
-                    controller=Server.getControllerById(controllerId);
-                    if(controller.addPlayer(this.socket,nickName)){
+                    controllerId=Server.getOldestMatchId(new MatchType(Byte.parseByte(tokens.get(0)),Boolean.parseBoolean(tokens.get(1))));
+                    controller=Server.getMatchById(controllerId);
+                    if(controller.addPlayer(this)){
                         Server.removeMatch(controllerId);
                     }
                 }
                 case "getMatchById":{
                     controller=Server.getMatchById(Long.parseLong(tokens.get(0)));
-                    if(controller.addPlayer(this.socket,nickName)){
+                    if(controller.addPlayer(this)){
                         Server.removeMatch(Long.parseLong(tokens.get(0)));
                     }
+                }
+                case "createMatch":{
+                    controller=Server.createMatch(new MatchType(Byte.parseByte(tokens.get(0)),Boolean.parseBoolean(tokens.get(1))));
+                    controller.addPlayer(this);
                 }
                 default:{
                     throw new UnexpectedValueException();
@@ -154,6 +159,10 @@ public class PlayerHandler implements Runnable {
         if (!this.nickNameAlreadySet)
             this.nickName = nickName;
         this.nickNameAlreadySet = true;
+    }
+
+    public String getNickName() {
+        return nickName;
     }
 }
 

@@ -95,7 +95,7 @@ public class ExpertGameTest {
         gameWith3 = new ExpertGame((byte) 3, teamList3, players3);
         gameWith3.setCurrentPlayer(p1);
     }
-
+    
     // constructor test
     @Test
     void contructorTest() {

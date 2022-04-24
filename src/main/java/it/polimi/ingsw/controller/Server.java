@@ -50,7 +50,7 @@ public class Server {
         }
     }
 
-    public static Long getMatch(MatchType matchType) throws NotAllowedException {
+    public static Long getOldestMatchId(MatchType matchType) throws NotAllowedException {
         synchronized (matches) {
             LinkedHashMap<Long, Controller> filteredMatches = matches.get(matchType);
             if (filteredMatches == null) throw new NotAllowedException("No matches found :(");
@@ -76,18 +76,6 @@ public class Server {
             for (LinkedHashMap<Long, Controller> matches : matches.values())
                 if (matches.remove(id) != null) break;
         }
-    }
-
-    public static Controller getControllerById(Long idController) throws NotAllowedException {
-        Controller c = null;
-        for (LinkedHashMap<Long, Controller> matches : matches.values()) {
-            if (matches.containsKey(idController)) {
-                c = matches.get(idController);
-            }
-        }
-        if (c == null) throw new NotAllowedException("Error in retrieving the id");
-
-        return c;
     }
 
 

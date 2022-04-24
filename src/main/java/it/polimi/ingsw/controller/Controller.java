@@ -110,7 +110,7 @@ public class Controller {
         nextActionPhase();
     }
 
-    public synchronized boolean addPlayer(Socket s, String nickName) throws GameException {
+    public synchronized boolean addPlayer(PlayerHandler p) throws GameException {
         if (playersList.size() == matchType.nPlayers()) {
             throw new NotAllowedException("Match is full");
 
@@ -118,7 +118,7 @@ public class Controller {
         int teamIndex = playersList.size() % teams.size(); // circular team selection
         int entranceHallSize = (teams.size() % 2 == 0) ? 7 : 9;
         Player newPlayer;
-        newPlayer = new Player(s, teams.get(teamIndex), Wizard.values()[playersList.size()], nickName, entranceHallSize);
+        newPlayer = new Player(p.getSocket(), teams.get(teamIndex), Wizard.values()[playersList.size()], p.getNickName(), entranceHallSize);
 
         playersList.add(newPlayer);
         if (playersList.size() == matchType.nPlayers()) {
