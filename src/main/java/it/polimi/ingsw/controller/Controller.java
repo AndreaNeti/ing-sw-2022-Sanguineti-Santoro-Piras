@@ -205,6 +205,8 @@ public class Controller {
         if (!isPlanificationPhase) {
             playerOrder.sort((b1, b2) -> {
                 int ret = playersList.get(b1).getPlayedCard() - playersList.get(b2).getPlayedCard();
+                // players have used the same card, compare in function of who played first
+                // [3,1,2,4] : player 3 is the first playing in planification phase then clockwise order (3,4,1,2), doing bx -= 3 (mod 4) obtains -> [0,2,3,1] and that's the planification phase order from 0 to 3
                 if (ret == 0)
                     ret = Math.floorMod(b1 - playerOrder.get(0), matchType.nPlayers()) - Math.floorMod(b2 - playerOrder.get(0), matchType.nPlayers());
                 return ret;
