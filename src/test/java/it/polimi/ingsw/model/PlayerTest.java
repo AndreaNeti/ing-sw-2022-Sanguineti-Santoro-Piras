@@ -1,6 +1,5 @@
 package it.polimi.ingsw.model;
 
-import it.polimi.ingsw.controller.PlayerHandler;
 import it.polimi.ingsw.exceptions.*;
 import org.junit.jupiter.api.Test;
 
@@ -15,8 +14,8 @@ class PlayerTest {
 
     {
         try {
-            p = new Player(new PlayerHandler("Franco"), t, Wizard.AIRMAGE, 7);
-            p1 = new Player(new PlayerHandler("Gigi"), t1, Wizard.WOODMAGE, 7);
+            p = new Player("Franco", t, Wizard.AIRMAGE, 7);
+            p1 = new Player("Gigi", t1, Wizard.WOODMAGE, 7);
         } catch (GameException e) {
             fail();
         }
@@ -27,7 +26,7 @@ class PlayerTest {
         assertThrows(UnexpectedValueException.class, () -> new Player(null, null, null, 5));
         Player p2 = null;
         try {
-            p2 = new Player(new PlayerHandler("Filippo"), t, Wizard.AIRMAGE, 7);
+            p2 = new Player("Filippo", t, Wizard.AIRMAGE, 7);
         } catch (GameException e) {
             fail();
         }

@@ -1,6 +1,5 @@
 package it.polimi.ingsw.model;
 
-import it.polimi.ingsw.controller.PlayerHandler;
 import it.polimi.ingsw.exceptions.GameException;
 import it.polimi.ingsw.exceptions.NotAllowedException;
 import it.polimi.ingsw.exceptions.UnexpectedValueException;
@@ -26,8 +25,8 @@ public class ExpertGameTest {
         teamList2.add(t1);
         teamList2.add(t2);
         try {
-            p1 = new Player(new PlayerHandler("Franco"), t1, Wizard.WOODMAGE, 7);
-            p2 = new Player(new PlayerHandler("Gigi"), t2, Wizard.SANDMAGE, 7);
+            p1 = new Player("Franco", t1, Wizard.WOODMAGE, 7);
+            p2 = new Player("Gigi", t2, Wizard.SANDMAGE, 7);
         } catch (GameException e) {
             fail();
         }
@@ -45,10 +44,10 @@ public class ExpertGameTest {
 
         teamList4.add(t2);
         try {
-            p1 = new Player(new PlayerHandler("Franco"), t1, Wizard.WOODMAGE, 7);
-            p2 = new Player(new PlayerHandler("Gigi"), t2, Wizard.SANDMAGE, 7);
-            p3 = new Player(new PlayerHandler("Carola"), t1, Wizard.AIRMAGE, 7);
-            p4 = new Player(new PlayerHandler("Filomena"), t2, Wizard.ELECTROMAGE, 7);
+            p1 = new Player("Franco", t1, Wizard.WOODMAGE, 7);
+            p2 = new Player("Gigi", t2, Wizard.SANDMAGE, 7);
+            p3 = new Player("Carola", t1, Wizard.AIRMAGE, 7);
+            p4 = new Player("Filomena", t2, Wizard.ELECTROMAGE, 7);
 
         } catch (GameException e) {
             fail();
@@ -69,9 +68,9 @@ public class ExpertGameTest {
         teamList3.add(t2);
         teamList3.add(t3);
         try {
-            p1 = new Player(new PlayerHandler("Franco"), t1, Wizard.WOODMAGE, 9);
-            p2 = new Player(new PlayerHandler("Gigi"), t2, Wizard.SANDMAGE, 9);
-            p3 = new Player(new PlayerHandler("Carola"), t1, Wizard.AIRMAGE, 9);
+            p1 = new Player("Franco", t1, Wizard.WOODMAGE, 9);
+            p2 = new Player("Gigi", t2, Wizard.SANDMAGE, 9);
+            p3 = new Player("Carola", t1, Wizard.AIRMAGE, 9);
 
 
         } catch (GameException e) {

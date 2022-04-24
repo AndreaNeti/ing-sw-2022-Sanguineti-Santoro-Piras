@@ -25,8 +25,8 @@ class CharacterCardTest {
         t2 = new Team(HouseColor.BLACK, (byte) 1, (byte) 8);
         try {
             // 14 students are the minimum to get 3 coins after moving them all to the lunch all in the worst case
-            p1 = new Player(new PlayerHandler("Franco"), t1, Wizard.WOODMAGE, 14);
-            p2 = new Player(new PlayerHandler("Gigi"), t2, Wizard.SANDMAGE, 14);
+            p1 = new Player("Franco", t1, Wizard.WOODMAGE, 14);
+            p2 = new Player("Gigi", t2, Wizard.SANDMAGE, 14);
         } catch (GameException e) {
             fail();
         }

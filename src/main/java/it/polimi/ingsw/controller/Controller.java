@@ -10,6 +10,7 @@ import java.util.*;
 public class Controller {
     private final MatchType matchType;
     private final ArrayList<Player> playersList;
+    private final ArrayList<PlayerHandler> playerHandlers;
     private final ArrayList<Team> teams;
     // This array is also used to represent the order of round
     private final ArrayList<Byte> playerOrder;
@@ -27,6 +28,7 @@ public class Controller {
     public Controller(MatchType matchType) {
         this.matchType = matchType;
         this.playersList = new ArrayList<>(matchType.nPlayers());
+        this.playerHandlers = new ArrayList<>(matchType.nPlayers());
         this.playerOrder = new ArrayList<>(matchType.nPlayers());
         for (byte i = 0; i < matchType.nPlayers(); i++)
             playerOrder.add(i);
@@ -115,9 +117,10 @@ public class Controller {
         int teamIndex = playersList.size() % teams.size(); // circular team selection
         int entranceHallSize = (teams.size() % 2 == 0) ? 7 : 9;
         Player newPlayer;
-        newPlayer = new Player(handler, teams.get(teamIndex), Wizard.values()[playersList.size()], entranceHallSize);
+        newPlayer = new Player(handler.getNickName(), teams.get(teamIndex), Wizard.values()[playersList.size()], entranceHallSize);
 
         playersList.add(newPlayer);
+        playerHandlers.add(handler);
         if (playersList.size() == matchType.nPlayers()) {
             startGame();
             return true;
@@ -133,10 +136,9 @@ public class Controller {
 
     }
 
-    public void sendMessage(String message,String nickName) {
-        for(Player p: playersList){
-            p.getPlayerHandler().sendString(nickName+": "+ message);
-        }
+    public void sendMessage(String me, String message) {
+        for (PlayerHandler h : playerHandlers)
+            if (!h.getNickName().equals(me)) h.sendString("message/" + me + ": " + message);
     }
 
     public synchronized void setCharacterInput(String inputString) throws GameException {
@@ -169,6 +171,14 @@ public class Controller {
             handleError(e);
         }
     }
+    private void sendGameState(){
+
+    }
+    private void notifyClients(String message) {
+        for (PlayerHandler h : playerHandlers) {
+            h.sendString(message);
+        }
+    }
 
     private void startGame() {
         if (matchType.isExpert())
@@ -177,8 +187,7 @@ public class Controller {
             game = new NormalGame(matchType.nPlayers(), teams, playersList);
         if (matchType.isExpert()) game = new ExpertGame(matchType.nPlayers(), teams, playersList);
         else game = new NormalGame(matchType.nPlayers(), teams, playersList);
-        Random rand = new Random(System.currentTimeMillis());
-        currentPlayer = playersList.get(rand.nextInt(matchType.nPlayers()));
+        currentPlayer = playersList.get(0);
         game.setCurrentPlayer(currentPlayer);
     }
 

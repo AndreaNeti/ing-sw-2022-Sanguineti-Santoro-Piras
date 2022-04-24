@@ -1,14 +1,13 @@
 package it.polimi.ingsw.model;
 
 
-import it.polimi.ingsw.controller.PlayerHandler;
 import it.polimi.ingsw.exceptions.*;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 
 public class Player implements Serializable {
-    private final PlayerHandler handler;
+    private final String nickName;
     private transient final Team team;
     private final Wizard wizard;
     private final boolean[] cardsAvailable;
@@ -17,10 +16,10 @@ public class Player implements Serializable {
     private byte playedCard;
     private byte cardsLeft;
 
-    public Player(PlayerHandler handler, Team team, Wizard wizard, int entranceHallSize) throws GameException {
-        if (handler == null || team == null || entranceHallSize < 1)
+    public Player(String nickName, Team team, Wizard wizard, int entranceHallSize) throws GameException {
+        if (nickName == null || team == null || entranceHallSize < 1)
             throw new UnexpectedValueException();
-        this.handler = handler;
+        this.nickName = nickName;
         this.team = team;
         team.addPlayer(this);
         this.wizard = wizard;
@@ -77,8 +76,8 @@ public class Player implements Serializable {
         return wizard;
     }
 
-    public PlayerHandler getPlayerHandler() {
-        return handler;
+    public String getNickName() {
+        return nickName;
     }
 
     // TODO by value?
@@ -90,11 +89,11 @@ public class Player implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Player player)) return false;
-        return handler.getNickName().equals(player.getPlayerHandler().getNickName());
+        return nickName.equals(player.getNickName());
     }
 
     @Override
     public String toString() {
-        return handler.getNickName();
+        return nickName;
     }
 }

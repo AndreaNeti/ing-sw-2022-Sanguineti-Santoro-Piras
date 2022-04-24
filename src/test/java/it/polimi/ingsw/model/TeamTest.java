@@ -1,6 +1,5 @@
 package it.polimi.ingsw.model;
 
-import it.polimi.ingsw.controller.PlayerHandler;
 import it.polimi.ingsw.exceptions.EndGameException;
 import it.polimi.ingsw.exceptions.GameException;
 import it.polimi.ingsw.exceptions.NotAllowedException;
@@ -16,7 +15,7 @@ class TeamTest {
 
     {
         try {
-            p = new Player(new PlayerHandler("Franco"), t, Wizard.AIRMAGE, 7);
+            p = new Player("Franco", t, Wizard.AIRMAGE, 7);
         } catch (GameException e) {
             fail();
         }
@@ -35,7 +34,7 @@ class TeamTest {
         assertThrows(NotAllowedException.class, () -> t.addPlayer(p), "player already present in team");
         try {
             t.addPlayer(null);
-            Player p1 = new Player(new PlayerHandler("Gigi"), new Team(HouseColor.BLACK, (byte) 2, (byte) 6), Wizard.WOODMAGE, 7);
+            Player p1 = new Player("Gigi", new Team(HouseColor.BLACK, (byte) 2, (byte) 6), Wizard.WOODMAGE, 7);
             t.addPlayer(p1);
         } catch (GameException ex) {
             fail();
@@ -68,7 +67,7 @@ class TeamTest {
         Team t1 = new Team(HouseColor.WHITE, (byte) 2, (byte) 6);
         Player p1 = null;
         try {
-            p1 = new Player(new PlayerHandler("Gigi"), t1, Wizard.ELECTROMAGE, 7);
+            p1 = new Player("Gigi", t1, Wizard.ELECTROMAGE, 7);
         } catch (GameException e) {
             fail();
         }

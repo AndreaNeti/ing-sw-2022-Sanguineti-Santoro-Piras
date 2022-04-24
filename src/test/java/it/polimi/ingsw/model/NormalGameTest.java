@@ -1,6 +1,5 @@
 package it.polimi.ingsw.model;
 
-import it.polimi.ingsw.controller.PlayerHandler;
 import it.polimi.ingsw.exceptions.EndGameException;
 import it.polimi.ingsw.exceptions.GameException;
 import it.polimi.ingsw.exceptions.NotAllowedException;
@@ -27,8 +26,8 @@ public class NormalGameTest {
         teamList2.add(t1);
         teamList2.add(t2);
         try {
-            p1_2 = new Player(new PlayerHandler("Franco"), t1, Wizard.WOODMAGE, 7);
-            p2_2 = new Player(new PlayerHandler("Gigi"), t2, Wizard.SANDMAGE, 7);
+            p1_2 = new Player("Franco", t1, Wizard.WOODMAGE, 7);
+            p2_2 = new Player("Gigi", t2, Wizard.SANDMAGE, 7);
         } catch (GameException e) {
             fail();
         }
@@ -46,10 +45,10 @@ public class NormalGameTest {
 
         teamList4.add(t2);
         try {
-            p1_4 = new Player(new PlayerHandler("Franco"), t1, Wizard.WOODMAGE, 7);
-            p2_4 = new Player(new PlayerHandler("Gigi"), t2, Wizard.SANDMAGE, 7);
-            p3_4 = new Player(new PlayerHandler("Carola"), t1, Wizard.AIRMAGE, 7);
-            p4_4 = new Player(new PlayerHandler("Filomena"), t2, Wizard.ELECTROMAGE, 7);
+            p1_4 = new Player("Franco", t1, Wizard.WOODMAGE, 7);
+            p2_4 = new Player("Gigi", t2, Wizard.SANDMAGE, 7);
+            p3_4 = new Player("Carola", t1, Wizard.AIRMAGE, 7);
+            p4_4 = new Player("Filomena", t2, Wizard.ELECTROMAGE, 7);
 
         } catch (GameException e) {
             fail();
@@ -71,9 +70,9 @@ public class NormalGameTest {
         teamList3.add(t2);
         teamList3.add(t3);
         try {
-            p1_3 = new Player(new PlayerHandler("Franco"), t1, Wizard.WOODMAGE, 9);
-            p2_3 = new Player(new PlayerHandler("Gigi"), t2, Wizard.SANDMAGE, 9);
-            p3_3 = new Player(new PlayerHandler("Carola"), t1, Wizard.AIRMAGE, 9);
+            p1_3 = new Player("Franco", t1, Wizard.WOODMAGE, 9);
+            p2_3 = new Player("Gigi", t2, Wizard.SANDMAGE, 9);
+            p3_3 = new Player("Carola", t1, Wizard.AIRMAGE, 9);
 
 
         } catch (GameException e) {
@@ -337,7 +336,7 @@ public class NormalGameTest {
         } catch (GameException | EndGameException e) {
             fail();
         }
-        assertEquals(gameWith4.getIslands().get(1).getTeam(),p1_4.getTeam());
+        assertEquals(gameWith4.getIslands().get(1).getTeamColor(),p1_4.getTeam().getHouseColor());
         //let's try to merge island 2 and 1 by putting blue student on island 2
         //and the other player of the team has professor
         try {
@@ -351,7 +350,7 @@ public class NormalGameTest {
             fail();
         }
         assertEquals(gameWith4.getIslands().size(),11);
-        assertEquals(gameWith4.getIslands().get(1).getTeam(), p3_4.getTeam());
+        assertEquals(gameWith4.getIslands().get(1).getTeamColor(), p3_4.getTeam().getHouseColor());
 
     }
 
