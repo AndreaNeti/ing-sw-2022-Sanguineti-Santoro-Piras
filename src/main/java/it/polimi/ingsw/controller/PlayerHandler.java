@@ -88,34 +88,22 @@ public class PlayerHandler implements Runnable {
                 throw new NotAllowedException("Must set a nickName first");
             switch (methodString) {
                 //Controller methods
-                case "playCard": {
-                    controller.playCard(tokens.get(0));
-                }
-                case "chooseCharacter": {
-                    controller.chooseCharacter(tokens.get(0));
-                }
-                case "setCharacterInput": {
-                    controller.setCharacterInput(tokens.get(0));
-                }
-                case "sendMessage": {
-                    controller.sendMessage(tokens.get(0));
-                }
-                case "moveMotherNature": {
-                    controller.moveMotherNature(tokens.get(0));
-                }
-                case "move": {
-                    controller.move(tokens.get(0), tokens.get(1));
-                }
-                case "playCharacter": {
-                    controller.playCharacter();
-                }
+                case "playCard" -> controller.playCard(tokens.get(0));
+                case "chooseCharacter" -> controller.chooseCharacter(tokens.get(0));
+                case "setCharacterInput" -> controller.setCharacterInput(tokens.get(0));
+                case "sendMessage" -> controller.sendMessage(tokens.get(0), nickName);
+                case "moveMotherNature" -> controller.moveMotherNature(tokens.get(0));
+                case "move" -> controller.move(tokens.get(0), tokens.get(1));
+                case "playCharacter" -> controller.playCharacter();
+
                 //Player methods
-                case "nickName": {
+                case "nickName" -> {
                     Server.setNickname(tokens.get(0));
                     this.nickName(tokens.get(0));
                 }
+
                 //Server methods
-                case "getOldestMatchId": {
+                case "getOldestMatchId" -> {
                     Long controllerId;
                     controllerId = Server.getOldestMatchId(new MatchType(Byte.parseByte(tokens.get(0)), Boolean.parseBoolean(tokens.get(1))));
                     controller = Server.getMatchById(controllerId);
@@ -123,26 +111,24 @@ public class PlayerHandler implements Runnable {
                         Server.removeMatch(controllerId);
                     }
                 }
-                case "getMatchById": {
+                case "getMatchById" -> {
                     controller = Server.getMatchById(Long.parseLong(tokens.get(0)));
                     if (controller.addPlayer(this)) {
                         Server.removeMatch(Long.parseLong(tokens.get(0)));
                     }
                 }
-                case "createMatch": {
+                case "createMatch" -> {
                     controller = Server.createMatch(new MatchType(Byte.parseByte(tokens.get(0)), Boolean.parseBoolean(tokens.get(1))));
                     controller.addPlayer(this);
                 }
-                default: {
-                    throw new UnexpectedValueException();
-                }
+                default -> throw new UnexpectedValueException();
             }
+            this.sendString("ok");
+
         } catch (GameException ex) {
             handleError(ex);
         } catch (NullPointerException ex) {
             this.sendString("Must join a match before");
-        } finally {
-            this.sendString("ok");
         }
     }
 

@@ -39,7 +39,7 @@ public class NormalGame implements Game {
         this.players = new ArrayList<>(playerList);
 
         this.bag = new Bag((byte) 2);
-        initializeMotherNature((byte) rand.nextInt(islands.size()));
+        initializeMotherNature();
 
         try {
             refillClouds();
@@ -52,10 +52,10 @@ public class NormalGame implements Game {
 
     // checks if the islands before and after the selected island have the same team and in case merges them
 
-    private void initializeMotherNature(byte index) {
-        this.motherNaturePosition = index;
+    private void initializeMotherNature() {
+        this.motherNaturePosition = 0;
         for (int i = 0; i < islands.size(); i++) {
-            if (!(i == index || i == (index + 6) % 12)) {
+            if (!(i == 0|| i == (6) % 12)) {
                 try {
                     drawStudents(islands.get(i), (byte) 1);
                 } catch (EndGameException e) {
@@ -140,10 +140,11 @@ public class NormalGame implements Game {
     // in the professor array slot of the current color
     protected void calculateProfessor() {
         byte max;
-        Player currentOwner = null;
+        Player currentOwner ;
         // player with the maximum number of students for the current color
         Player newOwner;
         for (Color c : Color.values()) {
+            currentOwner=null;
             // player actually controlling that professor
             if (getProfessor()[c.ordinal()] != null)
                 currentOwner = getPlayers().get(getProfessor()[c.ordinal()].ordinal());
@@ -161,6 +162,7 @@ public class NormalGame implements Game {
             }
             if (newOwner != null)
                 professors[c.ordinal()] = newOwner.getWizard();
+
         }
     }
 

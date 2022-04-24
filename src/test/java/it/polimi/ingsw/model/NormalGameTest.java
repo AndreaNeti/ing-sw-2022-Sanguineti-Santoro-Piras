@@ -57,7 +57,8 @@ public class NormalGameTest {
         players4 = new ArrayList<>(4);
         players4.add(p1_4);
         players4.add(p2_4);
-
+        players4.add(p3_4);
+        players4.add(p4_4);
         gameWith4 = new NormalGame((byte) 4, teamList4, players4);
         gameWith4.setCurrentPlayer(p1_4);
 
@@ -254,37 +255,42 @@ public class NormalGameTest {
 
     @Test
     void checkMoveMotherNatureTest() {
-        gameWith3.setCurrentPlayer(p1_3);
-        try {
-            gameWith3.playCard((byte) 5);
-        } catch (GameException | EndGameException e) {
-            fail();
-        }
-        assertFalse(gameWith3.checkMoveMotherNature(p1_3.getPlayedCardMoves() + 1));
-        assertTrue(gameWith3.checkMoveMotherNature(p1_3.getPlayedCardMoves()));
+
 
     }
 
     @Test
     void moveMotherNatureTest() {
-        //now it's the beginning of a game
-        Integer islandEmpty1 = null;
-        Integer islandEmpty2 = null;
-        for (Island island : gameWith4.getIslands()) {
-            if (island.howManyStudents() == 0) {
-                if (islandEmpty1 == null) islandEmpty1 = gameWith4.getIslands().indexOf(island);
-                else islandEmpty2 = gameWith4.getIslands().indexOf(island);
-            }
+        Bag bagTest=new Bag((byte)20);
+        //svuoto l'isola 0,1,2 così posso metterci gli studenti che voglio
+        try {
+            gameWith4.getIslands().get(0).moveAll(gameWith3.getIslands().get(3));
+            gameWith4.getIslands().get(1).moveAll(gameWith3.getIslands().get(3));
+            gameWith4.getIslands().get(2).moveAll(gameWith3.getIslands().get(3));
+        } catch (NotAllowedException e) {
+            fail();
+        }
+        gameWith4.setCurrentPlayer(p1_3);
+        try {
+            gameWith4.playCard((byte) 8);
+            assertThrows(NotAllowedException.class, ()->gameWith4.moveMotherNature((byte)10),"");
+        } catch (GameException | EndGameException e) {
+            fail();
         }
         try {
-            gameWith4.playCard((byte) 3);
-        } catch (GameException | EndGameException e) {
+            gameWith4.moveMotherNature(4);
+        } catch (NotAllowedException | EndGameException e) {
             fail();
         }
         gameWith4.setCurrentPlayer(p2_4);
         try {
-            gameWith4.playCard((byte) 5);
+            gameWith4.playCard((byte) 8);
         } catch (GameException | EndGameException e) {
+            fail();
+        }
+        try {
+            gameWith4.moveMotherNature(1);
+        } catch (NotAllowedException | EndGameException e) {
             fail();
         }
         gameWith4.setCurrentPlayer(p3_4);
@@ -293,15 +299,19 @@ public class NormalGameTest {
         } catch (GameException | EndGameException e) {
             fail();
         }
+        try {
+            gameWith4.moveMotherNature(3);
+        } catch (NotAllowedException | EndGameException e) {
+            fail();
+        }
         gameWith4.setCurrentPlayer(p4_4);
         try {
             gameWith4.playCard((byte) 8);
         } catch (GameException | EndGameException e) {
             fail();
         }
-        //Hp: nobody moves any student so nobody has a professor yet
         try {
-            gameWith4.moveMotherNature(3);
+            gameWith4.moveMotherNature(4);
         } catch (NotAllowedException | EndGameException e) {
             fail();
         }
@@ -309,15 +319,40 @@ public class NormalGameTest {
 
         //return to player 1 which now move students on 3 island (Played cards remain the same)
         gameWith4.setCurrentPlayer(p1_4);
-        //it will move first all the red one then all the blue and so on until it moves three students
-        for (int i = 0; i < 3; i++) {
-            for (Color c : Color.values()) {
-                try {
-                    gameWith4.move(c, 0, 5);
-                } catch (GameException ignored) {
-                }
-            }
+        //assign to p1_4 professor red
+        try {
+            bagTest.moveStudents(Color.RED, (byte) (10-p1_4.getLunchHall().howManyStudents(Color.RED)), p1_4.getLunchHall());
+            gameWith4.calculateProfessor();
+        //put on the island 1 some red students so the first player win
+            bagTest.moveStudents(Color.RED, (byte) (2), gameWith4.getIslands().get(1));
+        } catch (GameException e) {
+            fail();
         }
+        int movesToReach1=Math.floorMod(1-(gameWith4.getMotherNaturePosition()),gameWith4.getIslands().size());
+        assertEquals(gameWith4.getMotherNaturePosition(),0);
+
+        try {
+            gameWith4.playCard((byte)7);
+            gameWith4.moveMotherNature(1);
+        } catch (GameException | EndGameException e) {
+            fail();
+        }
+        assertEquals(gameWith4.getIslands().get(1).getTeam(),p1_4.getTeam());
+        //let's try to merge island 2 and 1 by putting blue student on island 2
+        //and the other player of the team has professor
+        try {
+            gameWith4.setCurrentPlayer(p3_4);
+            bagTest.moveStudents(Color.BLUE, (byte) (10-p3_4.getLunchHall().howManyStudents(Color.RED)), p3_4.getLunchHall());
+            gameWith4.calculateProfessor();
+            bagTest.moveStudents(Color.BLUE, (byte) (2), gameWith4.getIslands().get(2));
+            gameWith4.playCard((byte) 1);
+            gameWith4.moveMotherNature(1);
+        } catch (GameException |EndGameException e) {
+            fail();
+        }
+        assertEquals(gameWith4.getIslands().size(),11);
+        assertEquals(gameWith4.getIslands().get(1).getTeam(), p3_4.getTeam());
+
     }
 
     @Test

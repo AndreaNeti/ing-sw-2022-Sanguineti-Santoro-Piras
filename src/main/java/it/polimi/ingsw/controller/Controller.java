@@ -133,8 +133,10 @@ public class Controller {
 
     }
 
-    public void sendMessage(String message) {
-        //TODO synchronized on message
+    public void sendMessage(String message,String nickName) {
+        for(Player p: playersList){
+            p.getPlayerHandler().sendString(nickName+": "+ message);
+        }
     }
 
     public synchronized void setCharacterInput(String inputString) throws GameException {
