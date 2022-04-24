@@ -12,11 +12,10 @@ public class Server {
 
     public static Long matchId = 0L;
 
-    public static HashMap<MatchType, LinkedHashMap<Long, Controller>> matches;
-    private static Set<String> nickname;
+    public static final HashMap<MatchType, LinkedHashMap<Long, Controller>> matches = new HashMap<>();
+    private static final Set<String> nickname = new HashSet<>();
 
     public static void main(String[] args) {
-        matches = new HashMap<>();
         ServerSocket server;
         try {
             server = new ServerSocket(42069);
@@ -33,50 +32,60 @@ public class Server {
     }
 
     public static boolean setNickname(String nicknameToAdd) throws UnexpectedValueException {
-        if (!nickname.add(nicknameToAdd))
-            throw new UnexpectedValueException();
-        return true;
+        synchronized (nickname) {
+            if (!nickname.add(nicknameToAdd))
+                throw new UnexpectedValueException();
+            return true;
+        }
     }
 
 
     public static Controller createMatch(MatchType matchType) {
-        LinkedHashMap<Long, Controller> filteredMatches = matches.computeIfAbsent(matchType, k -> new LinkedHashMap<>());
-        Controller c = new Controller(matchType);
-        filteredMatches.put(matchId, c);
-        matchId++;
-        return c;
+        synchronized (matches) {
+            LinkedHashMap<Long, Controller> filteredMatches = matches.computeIfAbsent(matchType, k -> new LinkedHashMap<>());
+            Controller c = new Controller(matchType);
+            filteredMatches.put(matchId, c);
+            matchId++;
+            return c;
+        }
     }
 
     public static Long getMatch(MatchType matchType) throws NotAllowedException {
-        LinkedHashMap<Long, Controller> filteredMatches = matches.get(matchType);
-        if (filteredMatches == null) throw new NotAllowedException("No matches found :(");
-        // get oldest
-        Long c = filteredMatches.entrySet().iterator().next().getKey();
-        if (c == null) throw new NotAllowedException("No matches found :(");
-        return c;
+        synchronized (matches) {
+            LinkedHashMap<Long, Controller> filteredMatches = matches.get(matchType);
+            if (filteredMatches == null) throw new NotAllowedException("No matches found :(");
+            // get oldest
+            Long c = filteredMatches.entrySet().iterator().next().getKey();
+            if (c == null) throw new NotAllowedException("No matches found :(");
+            return c;
+        }
     }
 
     public static Controller getMatchById(Long id) throws NotAllowedException {
-        Controller c = null;
-        for (LinkedHashMap<Long, Controller> matches : matches.values())
-            if ((c = matches.get(id)) != null) break;
-        if (c == null) throw new NotAllowedException("No matches found :(");
-        return c;
+        synchronized (matches) {
+            Controller c = null;
+            for (LinkedHashMap<Long, Controller> matches : matches.values())
+                if ((c = matches.get(id)) != null) break;
+            if (c == null) throw new NotAllowedException("No matches found :(");
+            return c;
+        }
     }
 
     public static void removeMatch(Long id) {
-        for (LinkedHashMap<Long, Controller> matches : matches.values())
-            if (matches.remove(id) != null) break;
+        synchronized (matches) {
+            for (LinkedHashMap<Long, Controller> matches : matches.values())
+                if (matches.remove(id) != null) break;
+        }
     }
 
     public static Controller getControllerById(Long idController) throws NotAllowedException {
         Controller c = null;
         for (LinkedHashMap<Long, Controller> matches : matches.values()) {
             if (matches.containsKey(idController)) {
-                c=matches.get(idController);
+                c = matches.get(idController);
             }
         }
-        if(c==null ) throw new NotAllowedException("Error in retrieving the id");
+        if (c == null) throw new NotAllowedException("Error in retrieving the id");
 
         return c;
     }
