@@ -175,7 +175,7 @@ public class Controller {
             game = new ExpertGame(matchType.nPlayers(), teams, playersList);
         else
             game = new NormalGame(matchType.nPlayers(), teams, playersList);
-        if (matchType.isExpert()) game = new ExpertGame(matchType.nPlayers(),  teams, playersList);
+        if (matchType.isExpert()) game = new ExpertGame(matchType.nPlayers(), teams, playersList);
         else game = new NormalGame(matchType.nPlayers(), teams, playersList);
         Random rand = new Random(System.currentTimeMillis());
         currentPlayer = playersList.get(rand.nextInt(matchType.nPlayers()));
@@ -203,6 +203,12 @@ public class Controller {
         this.isPlanificationPhase = !isPlanificationPhase;
         //sort the array if the nextPhase is the action phase
         if (!isPlanificationPhase) {
+            playerOrder.sort((b1, b2) -> {
+                int ret = playersList.get(b1).getPlayedCard() - playersList.get(b2).getPlayedCard();
+                if (ret == 0)
+                    ret = Math.floorMod(b1 - playerOrder.get(0), matchType.nPlayers()) - Math.floorMod(b2 - playerOrder.get(0), matchType.nPlayers());
+                return ret;
+            });
             playerOrder.sort(Comparator.comparingInt((Byte b) -> playersList.get(b).getPlayedCard()));
         } else {
             if (lastRound) {
