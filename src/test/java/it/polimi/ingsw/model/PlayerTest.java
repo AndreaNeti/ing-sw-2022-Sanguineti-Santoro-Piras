@@ -50,8 +50,6 @@ class PlayerTest {
         } catch (UsedCardException | UnexpectedValueException | NotAllowedException | EndGameException ex) {
             fail();
         }
-        assertTrue(p.compare(p, p1) > 0);
-        assertTrue(p.compare(p1, p) < 0);
         assertEquals(p.getPlayedCard(), 4);
         assertEquals(p.getPlayedCardMoves(), 2);
 

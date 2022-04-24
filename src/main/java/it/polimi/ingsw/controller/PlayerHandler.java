@@ -13,11 +13,11 @@ import java.util.Arrays;
 import java.util.List;
 
 public class PlayerHandler implements Runnable {
-    private final Socket socket;
-    private final PrintWriter out;
+    private transient final Socket socket;
+    private transient final PrintWriter out;
     private String nickName;
-    private boolean nickNameAlreadySet;
-    private Controller controller;
+    private transient boolean nickNameAlreadySet;
+    private transient Controller controller;
 
     /**
      * Use this constructor only for tests

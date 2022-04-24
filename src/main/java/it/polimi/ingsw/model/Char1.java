@@ -15,7 +15,7 @@ public class Char1 implements CharacterCard {
     }
 
     @Override
-    public int getId() {
+    public byte getId() {
         return 1;
     }
 

@@ -10,7 +10,6 @@ import java.util.*;
 public class Controller {
     private final MatchType matchType;
     private final ArrayList<Player> playersList;
-    private final Map<HouseColor, Queue<String>> messages;
     private final ArrayList<Team> teams;
     // This array is also used to represent the order of round
     private final ArrayList<Byte> playerOrder;
@@ -37,7 +36,6 @@ public class Controller {
         for (byte i = 0; i < nTeams; i++) {
             teams.add(new Team(HouseColor.values()[i], (byte) (matchType.nPlayers() / nTeams), maxTowers));
         }
-        this.messages = new HashMap<>();
         this.isPlanificationPhase = true;
         this.actionPhase = 0;
         this.roundIndex = 0;
@@ -150,7 +148,7 @@ public class Controller {
     }
 
     public synchronized void chooseCharacter(String characterString) throws GameException {
-        int character = Integer.parseInt(characterString);
+        byte character = Byte.parseByte(characterString);
         if (isPlanificationPhase) {
             throw new NotAllowedException("Not in action phase");
 

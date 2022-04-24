@@ -20,7 +20,7 @@ public class Char4 implements CharacterCard {
     }
 
     @Override
-    public int getId() {
+    public byte getId() {
         return 4;
     }
 

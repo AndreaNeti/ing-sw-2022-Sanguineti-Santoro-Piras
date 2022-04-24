@@ -4,11 +4,12 @@ import it.polimi.ingsw.exceptions.GameException;
 import it.polimi.ingsw.exceptions.NotAllowedException;
 import it.polimi.ingsw.exceptions.NotEnoughStudentsException;
 
+import java.io.Serializable;
 import java.util.Arrays;
 
-public abstract class GameComponent {
+public abstract class GameComponent implements Serializable {
     private final byte[] students;
-    private final int maxStudents;
+    private transient final int maxStudents;
 
     private GameComponent(int maxStudents, byte studentsPerColor) {
         this.students = new byte[Color.values().length];

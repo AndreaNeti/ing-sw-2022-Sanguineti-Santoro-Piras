@@ -28,7 +28,7 @@ public class Char0 extends GameComponent implements CharacterCard {
     }
 
     @Override
-    public int getId() {
+    public byte getId() {
         return 0;
     }
 

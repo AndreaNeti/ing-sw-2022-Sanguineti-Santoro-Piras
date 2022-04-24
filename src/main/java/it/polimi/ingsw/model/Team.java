@@ -3,14 +3,15 @@ package it.polimi.ingsw.model;
 import it.polimi.ingsw.exceptions.EndGameException;
 import it.polimi.ingsw.exceptions.NotAllowedException;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class Team {
+public class Team implements Serializable {
     private final HouseColor houseColor;
     private final ArrayList<Player> members;
-    private final byte teamSize;
-    private final byte maxTowers;
+    private transient final byte teamSize;
+    private transient final byte maxTowers;
     private byte towersLeft;
 
     public Team(HouseColor hc, byte teamSize, byte maxTowers) {

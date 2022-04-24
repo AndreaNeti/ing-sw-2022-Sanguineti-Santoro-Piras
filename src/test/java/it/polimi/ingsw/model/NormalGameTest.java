@@ -185,7 +185,6 @@ public class NormalGameTest {
         }
         assertEquals(6, p2_2.getPlayedCard());
         assertEquals(3, p2_2.getPlayedCardMoves());
-        assertTrue(p1_2.compare(p2_2, p1_2) > 0);
     }
 
     @Test
@@ -358,7 +357,7 @@ public class NormalGameTest {
 
     @Test
     void chooseCharacter() {
-        assertThrows(NotExpertGameException.class, () -> gameWith2.chooseCharacter(0));
+        assertThrows(NotExpertGameException.class, () -> gameWith2.chooseCharacter((byte) 0));
     }
 
     @Test

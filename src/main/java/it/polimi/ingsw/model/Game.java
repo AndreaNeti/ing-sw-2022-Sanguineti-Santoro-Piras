@@ -4,9 +4,10 @@ import it.polimi.ingsw.exceptions.EndGameException;
 import it.polimi.ingsw.exceptions.GameException;
 import it.polimi.ingsw.exceptions.NotAllowedException;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public interface Game {
+public interface Game extends Serializable {
     void move(Color color, int gameComponentSource, int gameComponentDestination) throws GameException;
 
     void playCard(byte card) throws GameException, EndGameException;
@@ -21,7 +22,7 @@ public interface Game {
 
     void setCharacterInput(int input) throws GameException;
 
-    void chooseCharacter(int indexCharacter) throws GameException;
+    void chooseCharacter(byte indexCharacter) throws GameException;
 
     void playCharacter() throws GameException, EndGameException;
 

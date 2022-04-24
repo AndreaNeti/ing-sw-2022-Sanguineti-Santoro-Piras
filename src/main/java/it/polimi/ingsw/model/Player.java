@@ -4,12 +4,12 @@ package it.polimi.ingsw.model;
 import it.polimi.ingsw.controller.PlayerHandler;
 import it.polimi.ingsw.exceptions.*;
 
+import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Comparator;
 
-public class Player implements Comparator<Player> {
+public class Player implements Serializable {
     private final PlayerHandler handler;
-    private final Team team;
+    private transient final Team team;
     private final Wizard wizard;
     private final boolean[] cardsAvailable;
     private final EntranceHall entranceHall;
@@ -91,12 +91,6 @@ public class Player implements Comparator<Player> {
         if (this == o) return true;
         if (!(o instanceof Player player)) return false;
         return handler.getNickName().equals(player.getPlayerHandler().getNickName());
-    }
-
-    @Override
-    public int compare(Player p1, Player p2) throws ClassCastException {
-        return Byte.compare(p1.getPlayedCard(), p2.getPlayedCard());
-
     }
 
     @Override

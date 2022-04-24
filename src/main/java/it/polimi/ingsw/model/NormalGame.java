@@ -16,9 +16,9 @@ public class NormalGame implements Game {
     private final Wizard[] professors;
     private final ArrayList<Team> teams;
     //all players
-    private final ArrayList<Player> players;
+    private transient final ArrayList<Player> players;
     //a reference to all the pieces contained in the game
-    private Bag bag;
+    private transient Bag bag;
     private byte motherNaturePosition;
     private Player currentPlayer;
 
@@ -260,7 +260,7 @@ public class NormalGame implements Game {
     }
 
     @Override
-    public void chooseCharacter(int index) throws GameException {
+    public void chooseCharacter(byte index) throws GameException {
         throw new NotExpertGameException();
     }
 

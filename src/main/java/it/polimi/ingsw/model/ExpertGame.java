@@ -3,21 +3,24 @@ package it.polimi.ingsw.model;
 import it.polimi.ingsw.exceptions.*;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Random;
+import java.util.Set;
 
 public class ExpertGame extends NormalGame {
     private final byte[] coinsPlayer;
-    private final ArrayList<CharacterCard> characters;
-    private final ArrayList<Integer> inputsCharacter;
+    private transient final ArrayList<CharacterCard> characters;
+    private final Set<Byte> charactersId;
+    private transient final ArrayList<Integer> inputsCharacter;
     private final boolean[] playedCharacters;
     private byte coinsLeft;
-    private boolean extraInfluence; //default false
-    private boolean towerInfluence;// default true
-    private boolean extraSteps; //default false
-    private boolean equalProfessorCalculation; //default false
+    private transient boolean extraInfluence; //default false
+    private transient boolean towerInfluence;// default true
+    private transient boolean extraSteps; //default false
+    private transient boolean equalProfessorCalculation; //default false
     private Color ignoredColorInfluence;
     private byte prohibitionLeft;
-    private CharacterCard chosenCharacter;
+    private byte chosenCharacter;
 
 
     public ExpertGame(byte numberOfPlayers, ArrayList<Team> teamList, ArrayList<Player> playerList) {
@@ -28,14 +31,15 @@ public class ExpertGame extends NormalGame {
             coinsPlayer[i] = 1;
 
         characters = new ArrayList<>(3);
+        charactersId = new HashSet<>(3);
         Random rand = new Random(System.currentTimeMillis());
-        int characterIndex = rand.nextInt(12);
+        byte characterIndex = (byte) rand.nextInt(12);
         byte i = 0;
-        ArrayList<Integer> selectedCharacters = new ArrayList<>(3);
+        ArrayList<Byte> selectedCharacters = new ArrayList<>(3);
         CharacterCard c;
         while (i < 3) {
             while (selectedCharacters.contains(characterIndex)) {
-                characterIndex = rand.nextInt(12);
+                characterIndex = (byte) rand.nextInt(12);
             }
             try {
                 c = factoryCharacter(characterIndex);
@@ -54,11 +58,12 @@ public class ExpertGame extends NormalGame {
         this.equalProfessorCalculation = false;
         this.ignoredColorInfluence = null;
         this.prohibitionLeft = 4;
-        this.chosenCharacter = null;
+        this.chosenCharacter = -1;
         this.inputsCharacter = new ArrayList<>();
     }
 
-    private CharacterCard factoryCharacter(int i) throws UnexpectedValueException {
+    private CharacterCard factoryCharacter(byte i) throws UnexpectedValueException {
+        charactersId.add(i);
         switch (i) {
             case 0:
                 Char0 c0 = new Char0();
@@ -173,7 +178,7 @@ public class ExpertGame extends NormalGame {
         this.extraSteps = false;
         this.equalProfessorCalculation = false;
         this.ignoredColorInfluence = null;
-        this.chosenCharacter = null;
+        this.chosenCharacter = -1;
         this.inputsCharacter.clear();
         super.setCurrentPlayer(p);
     }
@@ -238,27 +243,27 @@ public class ExpertGame extends NormalGame {
 
     @Override
     public void playCharacter() throws GameException, EndGameException {
-        if (chosenCharacter == null) throw new NotAllowedException("Cannot play character card");
-        if (chosenCharacter.canPlay(inputsCharacter.size())) {
+        if (chosenCharacter == -1) throw new NotAllowedException("Cannot play character card");
+        if (getChoosenCharacter().canPlay(inputsCharacter.size())) {
             try {
-                chosenCharacter.play(this);
+                getChoosenCharacter().play(this);
             } catch (GameException e) {
                 // something gone wrong while playing the card, reset inputs
                 inputsCharacter.clear();
                 throw e;
             }
-            byte charCost = chosenCharacter.getCost();
+            byte charCost = getChoosenCharacter().getCost();
             // this character card has already been used, increase its cost
-            if (playedCharacters[characters.indexOf(chosenCharacter)]) charCost++;
+            if (playedCharacters[characters.indexOf(getChoosenCharacter())]) charCost++;
             else {
-                playedCharacters[characters.indexOf(chosenCharacter)] = true;
+                playedCharacters[characters.indexOf(getChoosenCharacter())] = true;
                 // a coin is left on the character card to remember it has been used
                 coinsLeft--;
             }
             // remove coins to player
             removeCoinsToPlayer(getCurrentPlayer(), charCost);
 
-            chosenCharacter = null;
+            chosenCharacter = -1;
             inputsCharacter.clear();
         } else {
             inputsCharacter.clear();
@@ -267,7 +272,7 @@ public class ExpertGame extends NormalGame {
     }
 
     @Override
-    public void chooseCharacter(int indexCharacter) throws GameException {
+    public void chooseCharacter(byte indexCharacter) throws GameException {
         if (indexCharacter < 0 || indexCharacter >= characters.size()) throw new UnexpectedValueException();
         CharacterCard characterToPlay = characters.get(indexCharacter);
         byte charCost = characterToPlay.getCost();
@@ -276,18 +281,18 @@ public class ExpertGame extends NormalGame {
         if (charCost > coinsPlayer[getCurrentPlayer().getWizard().ordinal()])
             throw new NotAllowedException("You have not enough coins to play this card");
 
-        chosenCharacter = characterToPlay;
+        chosenCharacter = indexCharacter;
     }
 
     @Override
     public void setCharacterInput(int input) throws GameException {
-        if (chosenCharacter != null)
+        if (chosenCharacter != -1)
             inputsCharacter.add(input);
         else throw new NotAllowedException("There is no played character card");
     }
 
-    public CharacterCard getCharacter(int index) {
-        return characters.get(index);
+    public CharacterCard getChoosenCharacter() {
+        return characters.get(chosenCharacter);
     }
 
     protected void setExtraInfluence() {

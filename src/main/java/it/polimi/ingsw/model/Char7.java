@@ -13,7 +13,7 @@ public class Char7 implements CharacterCard {
     }
 
     @Override
-    public int getId() {
+    public byte getId() {
         return 7;
     }
 
