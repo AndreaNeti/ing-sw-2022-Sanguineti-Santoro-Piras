@@ -128,9 +128,9 @@ public class ExpertGame extends NormalGame {
             island.removeProhibition();
             restoreProhibition();
         } else {
-            Team oldController = island.getTeam();
+            HouseColor oldController = island.getTeamColor();
             int maxInfluence = 0;
-            Team winner = null;
+            HouseColor winnerColor = null;
             for (Team t : getTeams()) {
                 int influence = 0;
                 for (Color c : Color.values()) {
@@ -141,7 +141,7 @@ public class ExpertGame extends NormalGame {
                         }
                     }
                 }
-                if (island.getTeam() != null && towerInfluence && t.equals(island.getTeam()))
+                if (island.getTeamColor() != null && towerInfluence && t.getHouseColor() == island.getTeamColor())
                     influence += island.getNumber();
 
                 if (extraInfluence && getCurrentPlayer().getTeam().equals(t)) {
@@ -149,23 +149,23 @@ public class ExpertGame extends NormalGame {
                 }
 
                 if (influence > maxInfluence) {
-                    winner = t;
+                    winnerColor = t.getHouseColor();
                     maxInfluence = influence;
                 } else if (influence == maxInfluence) {
-                    winner = oldController;
+                    winnerColor = oldController;
                 }
             }
-            Team oldTeam = island.getTeam();
-            if (winner != null && !winner.equals(oldTeam)) {
-                island.setTeam(winner);
-                if (oldTeam != null) {
+            HouseColor oldTeamColor = island.getTeamColor();
+            if (winnerColor != null && !winnerColor.equals(oldTeamColor)) {
+                island.setTeamColor(winnerColor);
+                if (oldTeamColor != null) {
                     try {
-                        oldTeam.addTowers(island.getNumber());
+                        getTeams().get(oldTeamColor.ordinal()).addTowers(island.getNumber());
                     } catch (NotAllowedException ex) {
                         System.err.println(ex.getMessage());
                     }
                 }
-                winner.removeTowers(island.getNumber());
+                getTeams().get(winnerColor.ordinal()).removeTowers(island.getNumber());
                 checkMerge(island);
             }
         }

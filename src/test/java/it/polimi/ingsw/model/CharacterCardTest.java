@@ -172,7 +172,7 @@ class CharacterCardTest {
             fail();
         }
 
-        assertEquals(game.getIslands().get(0).getTeam(), winnerTeam);
+        assertEquals(game.getIslands().get(0).getTeamColor(), winnerTeam.getHouseColor());
     }
 
     @Test
@@ -251,12 +251,12 @@ class CharacterCardTest {
         } catch (GameException e) {
             fail();
         }
-        Team old = null;
+        HouseColor old = null;
         try {
             game.chooseCharacter((byte) 0);
             game.setCharacterInput(4);
             c2.play(game);
-            old = game.getIslands().get(4).getTeam();
+            old = game.getIslands().get(4).getTeamColor();
             game.setCurrentPlayer(p1);
             game.chooseCharacter((byte) 0);
             game.getBag().moveStudents(Color.values()[4], (byte) (2), game.getIslands().get(4));
@@ -267,7 +267,7 @@ class CharacterCardTest {
         } catch (GameException | EndGameException e) {
             fail();
         }
-        assertNotEquals(game.getIslands().get(4).getTeam(), old);
+        assertNotEquals(game.getIslands().get(4).getTeamColor(), old);
     }
 
     @Test
@@ -367,7 +367,7 @@ class CharacterCardTest {
         } catch (GameException | EndGameException e) {
             fail();
         }
-        assertEquals(game.getIslands().get(4).getTeam(), p2.getTeam());
+        assertEquals(game.getIslands().get(4).getTeamColor(), p2.getTeam().getHouseColor());
     }
 
     @Test
@@ -414,7 +414,7 @@ class CharacterCardTest {
         } catch (GameException | EndGameException e) {
             fail();
         }
-        assertEquals(game.getIslands().get(4).getTeam(), p1.getTeam());
+        assertEquals(game.getIslands().get(4).getTeamColor(), p1.getTeam().getHouseColor());
     }
 
     @Test
