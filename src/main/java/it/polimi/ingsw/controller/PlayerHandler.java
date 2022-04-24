@@ -2,6 +2,7 @@ package it.polimi.ingsw.controller;
 
 import it.polimi.ingsw.exceptions.EndGameException;
 import it.polimi.ingsw.exceptions.GameException;
+import it.polimi.ingsw.exceptions.NotAllowedException;
 import it.polimi.ingsw.exceptions.UnexpectedValueException;
 
 import java.io.BufferedReader;
@@ -78,13 +79,16 @@ public class PlayerHandler implements Runnable {
         }
     }
 
-    private void callMethod(String comand) throws UnexpectedValueException {
+    private void callMethod(String comand) {
         List<String> tokens = Arrays.asList(comand.split("/"));
 
 
         String methodString = tokens.remove(0);
         try {
+            if (!nickNameAlreadySet && !methodString.equals("nickName"))
+                throw new NotAllowedException("Must set a nickName first");
             switch (methodString) {
+                //Controller methods
                 case "playCard": {
                     controller.playCard(tokens.get(0));
                 }
@@ -103,12 +107,37 @@ public class PlayerHandler implements Runnable {
                 case "move": {
                     controller.move(tokens.get(0), tokens.get(1));
                 }
-                case "playCharacter":{
+                case "playCharacter": {
                     controller.playCharacter();
+                }
+                //Player methods
+                case "nickName": {
+                    this.nickName(tokens.get(0));
+                }
+                //Server methods
+                case "getMatch": {
+                    Long controllerId;
+                    controllerId=Server.getMatch(new MatchType(Byte.parseByte(tokens.get(0)),Boolean.parseBoolean(tokens.get(1))));
+                    controller=Server.getControllerById(controllerId);
+                    if(controller.addPlayer(this.socket,nickName)){
+                        Server.removeMatch(controllerId);
+                    }
+                }
+                case "getMatchById":{
+                    controller=Server.getMatchById(Long.parseLong(tokens.get(0)));
+                    if(controller.addPlayer(this.socket,nickName)){
+                        Server.removeMatch(Long.parseLong(tokens.get(0)));
+                    }
+                }
+                default:{
+                    throw new UnexpectedValueException();
+
                 }
             }
         } catch (GameException ex) {
             handleError(ex);
+        }catch (NullPointerException ex){
+            this.sendString("Must join a match before");
         }
         finally {
             this.sendString("ok");

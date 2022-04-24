@@ -6,10 +6,7 @@ import it.polimi.ingsw.exceptions.UnexpectedValueException;
 
 import java.io.IOException;
 import java.net.ServerSocket;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class Server {
 
@@ -17,6 +14,7 @@ public class Server {
 
     public static HashMap<MatchType, LinkedHashMap<Long, Controller>> matches;
     private static Set<String> nickname;
+
     public static void main(String[] args) {
         matches = new HashMap<>();
         ServerSocket server;
@@ -33,13 +31,12 @@ public class Server {
             }
         }
     }
-    public static boolean setNickname(String nicknameToAdd) throws UnexpectedValueException{
+
+    public static boolean setNickname(String nicknameToAdd) throws UnexpectedValueException {
         if (!nickname.add(nicknameToAdd))
             throw new UnexpectedValueException();
         return true;
     }
-
-
 
 
     public static Controller createMatch(MatchType matchType) {
@@ -50,16 +47,16 @@ public class Server {
         return c;
     }
 
-    public static Controller joinMatch(MatchType matchType) throws NotAllowedException {
+    public static Long getMatch(MatchType matchType) throws NotAllowedException {
         LinkedHashMap<Long, Controller> filteredMatches = matches.get(matchType);
         if (filteredMatches == null) throw new NotAllowedException("No matches found :(");
         // get oldest
-        Controller c = (Controller) filteredMatches.entrySet().iterator().next();
+        Long c = filteredMatches.entrySet().iterator().next().getKey();
         if (c == null) throw new NotAllowedException("No matches found :(");
         return c;
     }
 
-    public static Controller joinMatchById(Long id) throws NotAllowedException {
+    public static Controller getMatchById(Long id) throws NotAllowedException {
         Controller c = null;
         for (LinkedHashMap<Long, Controller> matches : matches.values())
             if ((c = matches.get(id)) != null) break;
@@ -71,4 +68,18 @@ public class Server {
         for (LinkedHashMap<Long, Controller> matches : matches.values())
             if (matches.remove(id) != null) break;
     }
+
+    public static Controller getControllerById(Long idController) throws NotAllowedException {
+        Controller c = null;
+        for (LinkedHashMap<Long, Controller> matches : matches.values()) {
+            if (matches.containsKey(idController)) {
+                c=matches.get(idController);
+            }
+        }
+        if(c==null ) throw new NotAllowedException("Error in retrieving the id");
+
+        return c;
+    }
+
+
 }

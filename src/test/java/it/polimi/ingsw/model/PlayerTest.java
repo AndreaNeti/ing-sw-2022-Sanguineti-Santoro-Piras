@@ -105,7 +105,9 @@ class PlayerTest {
     void canPlayCardTest(){
         ArrayList<Byte> playedCards=new ArrayList<>();
         assertTrue(p.canPlayCard(playedCards,(byte) 5));
-
+        playedCards.add((byte) 4);
+        assertTrue(p.canPlayCard(playedCards, (byte) 5));
+        playedCards.remove(0);
 
         playedCards.add((byte)5);
         assertFalse(p.canPlayCard(playedCards,(byte) 5));
