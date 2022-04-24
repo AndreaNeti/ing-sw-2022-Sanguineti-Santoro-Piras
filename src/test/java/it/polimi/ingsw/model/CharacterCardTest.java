@@ -1,12 +1,12 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.controller.PlayerHandler;
 import it.polimi.ingsw.exceptions.EndGameException;
 import it.polimi.ingsw.exceptions.GameException;
 import it.polimi.ingsw.exceptions.NotEnoughStudentsException;
 import it.polimi.ingsw.exceptions.UnexpectedValueException;
 import org.junit.jupiter.api.Test;
 
-import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -25,8 +25,8 @@ class CharacterCardTest {
         t2 = new Team(HouseColor.BLACK, (byte) 1, (byte) 8);
         try {
             // 14 students are the minimum to get 3 coins after moving them all to the lunch all in the worst case
-            p1 = new Player(new Socket(), t1, Wizard.WOODMAGE, "Franco", 14);
-            p2 = new Player(new Socket(), t2, Wizard.SANDMAGE, "Carola", 14);
+            p1 = new Player(new PlayerHandler("Franco"), t1, Wizard.WOODMAGE, 14);
+            p2 = new Player(new PlayerHandler("Gigi"), t2, Wizard.SANDMAGE, 14);
         } catch (GameException e) {
             fail();
         }
@@ -372,7 +372,7 @@ class CharacterCardTest {
 
     @Test
     void playChar8() {
-        try{
+        try {
             game.chooseCharacter(0);
             game.setCharacterInput(-1);
             assertThrows(UnexpectedValueException.class, () -> c8.play(game), "not valid inputs");

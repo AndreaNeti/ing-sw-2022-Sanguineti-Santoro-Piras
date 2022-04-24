@@ -1,31 +1,29 @@
 package it.polimi.ingsw.model;
 
 
+import it.polimi.ingsw.controller.PlayerHandler;
 import it.polimi.ingsw.exceptions.*;
 
-import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Comparator;
 
 public class Player implements Comparator<Player> {
-    private final Socket socket;
+    private final PlayerHandler handler;
     private final Team team;
     private final Wizard wizard;
-    private final String nickName;
     private final boolean[] cardsAvailable;
     private final EntranceHall entranceHall;
     private final LunchHall lunchHall;
     private byte playedCard;
     private byte cardsLeft;
 
-    public Player(Socket socket, Team team, Wizard wizard, String nickName, int entranceHallSize) throws GameException {
-        if (socket == null || team == null || nickName == null || entranceHallSize < 1)
+    public Player(PlayerHandler handler, Team team, Wizard wizard, int entranceHallSize) throws GameException {
+        if (handler == null || team == null || entranceHallSize < 1)
             throw new UnexpectedValueException();
-        this.socket = socket;
+        this.handler = handler;
         this.team = team;
         team.addPlayer(this);
         this.wizard = wizard;
-        this.nickName = nickName;
         this.cardsAvailable = new boolean[]{true, true, true, true, true, true, true, true, true, true};
         this.cardsLeft = 10;
         this.playedCard = 0; // 0 = no card, else 1 to 10
@@ -52,23 +50,21 @@ public class Player implements Comparator<Player> {
         return playedCard;
     }
 
-    public boolean canPlayCard(ArrayList<Byte> playedCards,byte value){
+    public boolean canPlayCard(ArrayList<Byte> playedCards, byte value) {
         //the value goes from 1 to 10
-        if(playedCards.size()==0)
+        if (playedCards.size() == 0)
             return true;
-        boolean oneDifferentCard=false;
-        if(playedCards.contains(value)) {
-            for (int i = 0; i < cardsAvailable.length && !oneDifferentCard; i++) {
-                if (cardsAvailable[i] && !playedCards.contains((byte) (i+1))) {
-                    oneDifferentCard = true;
+        if (playedCards.contains(value)) {
+            for (int i = 0; i < cardsAvailable.length; i++) {
+                if (cardsAvailable[i] && !playedCards.contains((byte) (i + 1))) {
+                    // there is a different card -> you should have played that one
+                    return false;
                 }
             }
-            return !oneDifferentCard;
         }
-        else {
-            return true;
-        }
+        return true;
     }
+
     public LunchHall getLunchHall() {
         return lunchHall;
     }
@@ -81,8 +77,8 @@ public class Player implements Comparator<Player> {
         return wizard;
     }
 
-    public Socket getSocket() {
-        return socket;
+    public PlayerHandler getPlayerHandler() {
+        return handler;
     }
 
     // TODO by value?
@@ -94,10 +90,8 @@ public class Player implements Comparator<Player> {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Player player)) return false;
-        return wizard == player.wizard;
+        return handler.getNickName().equals(player.getPlayerHandler().getNickName());
     }
-
-
 
     @Override
     public int compare(Player p1, Player p2) throws ClassCastException {
@@ -107,6 +101,6 @@ public class Player implements Comparator<Player> {
 
     @Override
     public String toString() {
-        return nickName;
+        return handler.getNickName();
     }
 }

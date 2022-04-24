@@ -1,31 +1,22 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.controller.PlayerHandler;
 import it.polimi.ingsw.exceptions.EndGameException;
 import it.polimi.ingsw.exceptions.GameException;
 import it.polimi.ingsw.exceptions.NotAllowedException;
 import it.polimi.ingsw.exceptions.NotExpertGameException;
 import org.junit.jupiter.api.Test;
 
-import java.net.Socket;
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class NormalGameTest {
-    Socket socket1 = new Socket(), socket2 = new Socket();
-    Team t1;
-    Team t2;
-    Team t3;
-    ArrayList<Team> teamList2;
-    ArrayList<Team> teamList3;
-    ArrayList<Team> teamList4;
+    Team t1, t2, t3;
+    ArrayList<Team> teamList2, teamList3, teamList4;
     Player p1_2, p2_2, p1_3, p2_3, p3_3, p1_4, p2_4, p3_4, p4_4;
-    ArrayList<Player> players2;
-    ArrayList<Player> players3;
-    ArrayList<Player> players4;
-    NormalGame gameWith2;
-    NormalGame gameWith4;
-    NormalGame gameWith3;
+    ArrayList<Player> players2, players3, players4;
+    NormalGame gameWith2, gameWith3, gameWith4;
 
     //constructor of game
     public NormalGameTest() {
@@ -36,8 +27,8 @@ public class NormalGameTest {
         teamList2.add(t1);
         teamList2.add(t2);
         try {
-            p1_2 = new Player(socket1, t1, Wizard.WOODMAGE, "Franco", 7);
-            p2_2 = new Player(socket2, t2, Wizard.SANDMAGE, "Gigi", 7);
+            p1_2 = new Player(new PlayerHandler("Franco"), t1, Wizard.WOODMAGE, 7);
+            p2_2 = new Player(new PlayerHandler("Gigi"), t2, Wizard.SANDMAGE, 7);
         } catch (GameException e) {
             fail();
         }
@@ -55,10 +46,10 @@ public class NormalGameTest {
 
         teamList4.add(t2);
         try {
-            p1_4 = new Player(socket1, t1, Wizard.WOODMAGE, "Franco", 7);
-            p2_4 = new Player(socket2, t2, Wizard.SANDMAGE, "Gigi", 7);
-            p3_4 = new Player(socket1, t1, Wizard.AIRMAGE, "Luigi", 7);
-            p4_4 = new Player(socket1, t2, Wizard.ELECTROMAGE, "Filomena", 7);
+            p1_4 = new Player(new PlayerHandler("Franco"), t1, Wizard.WOODMAGE, 7);
+            p2_4 = new Player(new PlayerHandler("Gigi"), t2, Wizard.SANDMAGE, 7);
+            p3_4 = new Player(new PlayerHandler("Carola"), t1, Wizard.AIRMAGE, 7);
+            p4_4 = new Player(new PlayerHandler("Filomena"), t2, Wizard.ELECTROMAGE, 7);
 
         } catch (GameException e) {
             fail();
@@ -79,9 +70,9 @@ public class NormalGameTest {
         teamList3.add(t2);
         teamList3.add(t3);
         try {
-            p1_3 = new Player(socket1, t1, Wizard.WOODMAGE, "Franco", 9);
-            p2_3 = new Player(socket2, t2, Wizard.SANDMAGE, "Gigi", 9);
-            p3_3 = new Player(socket1, t1, Wizard.AIRMAGE, "Luigi", 9);
+            p1_3 = new Player(new PlayerHandler("Franco"), t1, Wizard.WOODMAGE, 9);
+            p2_3 = new Player(new PlayerHandler("Gigi"), t2, Wizard.SANDMAGE, 9);
+            p3_3 = new Player(new PlayerHandler("Carola"), t1, Wizard.AIRMAGE, 9);
 
 
         } catch (GameException e) {

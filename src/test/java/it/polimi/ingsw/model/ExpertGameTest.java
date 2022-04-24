@@ -1,31 +1,20 @@
 package it.polimi.ingsw.model;
 
-import it.polimi.ingsw.exceptions.EndGameException;
+import it.polimi.ingsw.controller.PlayerHandler;
 import it.polimi.ingsw.exceptions.GameException;
-import it.polimi.ingsw.exceptions.NotExpertGameException;
-import org.junit.Before;
 import org.junit.jupiter.api.Test;
 
-import java.net.Socket;
 import java.util.ArrayList;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 
 public class ExpertGameTest {
-    Socket socket1 = new Socket(), socket2 = new Socket();
-    Team t1;
-    Team t2;
-    Team t3;
-    ArrayList<Team> teamList2;
-    ArrayList<Team> teamList3;
-    ArrayList<Team> teamList4;
+    Team t1, t2, t3;
+    ArrayList<Team> teamList2, teamList3, teamList4;
     Player p1, p2, p3, p4;
-    ArrayList<Player> players2;
-    ArrayList<Player> players3;
-    ArrayList<Player> players4;
-    ExpertGame gameWith2;
-    ExpertGame gameWith4;
-    ExpertGame gameWith3;
+    ArrayList<Player> players2, players3, players4;
+    ExpertGame gameWith2, gameWith3, gameWith4;
 
     //constructor of expert game
     public ExpertGameTest() {
@@ -36,8 +25,8 @@ public class ExpertGameTest {
         teamList2.add(t1);
         teamList2.add(t2);
         try {
-            p1 = new Player(socket1, t1, Wizard.AIRMAGE, "Franco", 7);
-            p2 = new Player(socket2, t2, Wizard.ELECTROMAGE, "Gigi", 7);
+            p1 = new Player(new PlayerHandler("Franco"), t1, Wizard.AIRMAGE, 7);
+            p2 = new Player(new PlayerHandler("Gigi"), t2, Wizard.ELECTROMAGE, 7);
         } catch (GameException e) {
             fail();
         }
@@ -55,10 +44,10 @@ public class ExpertGameTest {
 
         teamList4.add(t2);
         try {
-            p1 = new Player(socket1, t1, Wizard.AIRMAGE, "Franco", 7);
-            p2 = new Player(socket2, t2, Wizard.ELECTROMAGE, "Gigi", 7);
-            p3 = new Player(socket1, t1, Wizard.SANDMAGE, "Luigi", 7);
-            p4 = new Player(socket1, t2, Wizard.WOODMAGE, "Filomena", 7);
+            p1 = new Player(new PlayerHandler("Fracno"), t1, Wizard.AIRMAGE, 7);
+            p2 = new Player(new PlayerHandler("Gigi"), t2, Wizard.ELECTROMAGE, 7);
+            p3 = new Player(new PlayerHandler("Carola"), t1, Wizard.SANDMAGE, 7);
+            p4 = new Player(new PlayerHandler("Filomena"), t2, Wizard.WOODMAGE, 7);
 
         } catch (GameException e) {
             fail();
@@ -79,9 +68,9 @@ public class ExpertGameTest {
         teamList3.add(t2);
         teamList3.add(t3);
         try {
-            p1 = new Player(socket1, t1, Wizard.AIRMAGE, "Franco", 9);
-            p2 = new Player(socket2, t2, Wizard.ELECTROMAGE, "Gigi", 9);
-            p3 = new Player(socket1, t1, Wizard.SANDMAGE, "Luigi", 9);
+            p1 = new Player(new PlayerHandler("Franco"), t1, Wizard.AIRMAGE, 9);
+            p2 = new Player(new PlayerHandler("Gigi"), t2, Wizard.ELECTROMAGE, 9);
+            p3 = new Player(new PlayerHandler("Carola"), t1, Wizard.SANDMAGE, 9);
 
 
         } catch (GameException e) {
@@ -95,7 +84,7 @@ public class ExpertGameTest {
         gameWith3 = new ExpertGame((byte) 3, teamList3, players3);
         gameWith3.setCurrentPlayer(p1);
     }
-    
+
     // constructor test
     @Test
     void contructorTest() {
@@ -105,7 +94,5 @@ public class ExpertGameTest {
         assertEquals(gameWith3.getPlayers(), players3);
         assertEquals(gameWith4.getTeams(), teamList4);
         assertEquals(gameWith4.getPlayers(), players4);
-
-
     }
 }

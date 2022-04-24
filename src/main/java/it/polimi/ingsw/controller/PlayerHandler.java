@@ -1,6 +1,5 @@
 package it.polimi.ingsw.controller;
 
-import it.polimi.ingsw.exceptions.EndGameException;
 import it.polimi.ingsw.exceptions.GameException;
 import it.polimi.ingsw.exceptions.NotAllowedException;
 import it.polimi.ingsw.exceptions.UnexpectedValueException;
@@ -9,9 +8,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
-import java.lang.reflect.Array;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.net.Socket;
 import java.util.Arrays;
 import java.util.List;
@@ -22,6 +18,15 @@ public class PlayerHandler implements Runnable {
     private String nickName;
     private boolean nickNameAlreadySet;
     private Controller controller;
+
+    /**
+     * Use this constructor only for tests
+     */
+    public PlayerHandler(String nickName) {
+        socket = null;
+        out = null;
+        this.nickName = nickName;
+    }
 
     public PlayerHandler(Socket socket) {
         if (socket == null) throw new NullPointerException();
@@ -66,12 +71,6 @@ public class PlayerHandler implements Runnable {
         }
     }
 
-    protected Socket getSocket() {
-        synchronized (socket) {
-            return socket;
-        }
-    }
-
     protected void sendString(String s) {
         synchronized (out) {
             out.println(s);
@@ -79,8 +78,8 @@ public class PlayerHandler implements Runnable {
         }
     }
 
-    private void callMethod(String comand) {
-        List<String> tokens = Arrays.asList(comand.split("/"));
+    private void callMethod(String command) {
+        List<String> tokens = Arrays.asList(command.split("/"));
 
 
         String methodString = tokens.remove(0);
@@ -118,37 +117,33 @@ public class PlayerHandler implements Runnable {
                 //Server methods
                 case "getOldestMatchId": {
                     Long controllerId;
-                    controllerId=Server.getOldestMatchId(new MatchType(Byte.parseByte(tokens.get(0)),Boolean.parseBoolean(tokens.get(1))));
-                    controller=Server.getMatchById(controllerId);
-                    if(controller.addPlayer(this)){
+                    controllerId = Server.getOldestMatchId(new MatchType(Byte.parseByte(tokens.get(0)), Boolean.parseBoolean(tokens.get(1))));
+                    controller = Server.getMatchById(controllerId);
+                    if (controller.addPlayer(this)) {
                         Server.removeMatch(controllerId);
                     }
                 }
-                case "getMatchById":{
-                    controller=Server.getMatchById(Long.parseLong(tokens.get(0)));
-                    if(controller.addPlayer(this)){
+                case "getMatchById": {
+                    controller = Server.getMatchById(Long.parseLong(tokens.get(0)));
+                    if (controller.addPlayer(this)) {
                         Server.removeMatch(Long.parseLong(tokens.get(0)));
                     }
                 }
-                case "createMatch":{
-                    controller=Server.createMatch(new MatchType(Byte.parseByte(tokens.get(0)),Boolean.parseBoolean(tokens.get(1))));
+                case "createMatch": {
+                    controller = Server.createMatch(new MatchType(Byte.parseByte(tokens.get(0)), Boolean.parseBoolean(tokens.get(1))));
                     controller.addPlayer(this);
                 }
-                default:{
+                default: {
                     throw new UnexpectedValueException();
-
                 }
             }
         } catch (GameException ex) {
             handleError(ex);
-        }catch (NullPointerException ex){
+        } catch (NullPointerException ex) {
             this.sendString("Must join a match before");
-        }
-        finally {
+        } finally {
             this.sendString("ok");
         }
-
-
     }
 
     private void handleError(GameException e) {

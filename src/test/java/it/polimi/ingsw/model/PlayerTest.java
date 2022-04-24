@@ -1,23 +1,22 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.controller.PlayerHandler;
 import it.polimi.ingsw.exceptions.*;
 import org.junit.jupiter.api.Test;
 
-import java.net.Socket;
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class PlayerTest {
-    Socket socket = new Socket();
     Team t = new Team(HouseColor.WHITE, (byte) 2, (byte) 2);
     Team t1 = new Team(HouseColor.BLACK, (byte) 1, (byte) 2);
     Player p, p1;
 
     {
         try {
-            p = new Player(socket, t, Wizard.AIRMAGE, "prova", 7);
-            p1 = new Player(socket, t1, Wizard.WOODMAGE, "prova", 7);
+            p = new Player(new PlayerHandler("Franco"), t, Wizard.AIRMAGE, 7);
+            p1 = new Player(new PlayerHandler("Gigi"), t1, Wizard.WOODMAGE, 7);
         } catch (GameException e) {
             fail();
         }
@@ -25,20 +24,19 @@ class PlayerTest {
 
     @Test
     void constructorAndEqualsAndCompareTest() {
-        assertThrows(UnexpectedValueException.class, () -> new Player(null, null, null, null, 5));
+        assertThrows(UnexpectedValueException.class, () -> new Player(null, null, null, 5));
         Player p2 = null;
         try {
-            p2 = new Player(socket, t, Wizard.AIRMAGE, "prova", 7);
+            p2 = new Player(new PlayerHandler("Filippo"), t, Wizard.AIRMAGE, 7);
         } catch (GameException e) {
             fail();
         }
-        assertEquals(p, p2);
+        assertNotEquals(p, p2);
         assertEquals(p.getPlayedCard(), 0);
         assertEquals(p.getWizard(), Wizard.AIRMAGE);
         assertEquals(p.getPlayedCardMoves(), 0);
         assertEquals(p.getLunchHall(), p2.getLunchHall());
         assertEquals(p.getEntranceHall(), p2.getEntranceHall());
-        assertEquals(p.getSocket(), p2.getSocket());
         assertNotEquals(p2, p1);
         assertNotEquals(p2.getTeam(), p1.getTeam());
 
@@ -53,8 +51,7 @@ class PlayerTest {
             fail();
         }
         assertTrue(p.compare(p, p1) > 0);
-        assertTrue(p.compare(p1,p)<0);
-        assertEquals(p.compare(p,p), 0);
+        assertTrue(p.compare(p1, p) < 0);
         assertEquals(p.getPlayedCard(), 4);
         assertEquals(p.getPlayedCardMoves(), 2);
 
@@ -64,28 +61,28 @@ class PlayerTest {
         try {
             p.useCard((byte) 1);
             assertEquals(p.getPlayedCardMoves(), 1);
-            assertEquals(p.getPlayedCard(),1);
+            assertEquals(p.getPlayedCard(), 1);
             p.useCard((byte) 2);
-            assertEquals(p.getPlayedCard(),2);
+            assertEquals(p.getPlayedCard(), 2);
             assertEquals(p.getPlayedCardMoves(), 1);
             p.useCard((byte) 3);
-            assertEquals(p.getPlayedCard(),3);
+            assertEquals(p.getPlayedCard(), 3);
             assertEquals(p.getPlayedCardMoves(), 2);
 
             p.useCard((byte) 5);
-            assertEquals(p.getPlayedCard(),5);
+            assertEquals(p.getPlayedCard(), 5);
             assertEquals(p.getPlayedCardMoves(), 3);
             p.useCard((byte) 6);
             assertEquals(p.getPlayedCardMoves(), 3);
-            assertEquals(p.getPlayedCard(),6);
+            assertEquals(p.getPlayedCard(), 6);
             p.useCard((byte) 7);
-            assertEquals(p.getPlayedCard(),7);
+            assertEquals(p.getPlayedCard(), 7);
             assertEquals(p.getPlayedCardMoves(), 4);
             p.useCard((byte) 8);
-            assertEquals(p.getPlayedCard(),8);
+            assertEquals(p.getPlayedCard(), 8);
             assertEquals(p.getPlayedCardMoves(), 4);
             p.useCard((byte) 9);
-            assertEquals(p.getPlayedCard(),9);
+            assertEquals(p.getPlayedCard(), 9);
             assertEquals(p.getPlayedCardMoves(), 5);
         } catch (UsedCardException | UnexpectedValueException | NotAllowedException | EndGameException ex) {
             fail();
@@ -99,36 +96,37 @@ class PlayerTest {
 
     @Test
     void testToString() {
-        assertEquals(p.toString(), "prova");
+        assertEquals(p.toString(), "Franco");
     }
+
     @Test
-    void canPlayCardTest(){
-        ArrayList<Byte> playedCards=new ArrayList<>();
-        assertTrue(p.canPlayCard(playedCards,(byte) 5));
+    void canPlayCardTest() {
+        ArrayList<Byte> playedCards = new ArrayList<>();
+        assertTrue(p.canPlayCard(playedCards, (byte) 5));
         playedCards.add((byte) 4);
         assertTrue(p.canPlayCard(playedCards, (byte) 5));
         playedCards.remove(0);
 
-        playedCards.add((byte)5);
-        assertFalse(p.canPlayCard(playedCards,(byte) 5));
+        playedCards.add((byte) 5);
+        assertFalse(p.canPlayCard(playedCards, (byte) 5));
 
 
         try {
-            p.useCard((byte)1);
-            p.useCard((byte)2);
-            p.useCard((byte)6);
-            p.useCard((byte)7);
+            p.useCard((byte) 1);
+            p.useCard((byte) 2);
+            p.useCard((byte) 6);
+            p.useCard((byte) 7);
             p.useCard((byte) 8);
             p.useCard((byte) 9);
-            p.useCard((byte)10 );
+            p.useCard((byte) 10);
         } catch (UsedCardException | UnexpectedValueException | NotAllowedException | EndGameException e) {
             fail();
         }
 
         playedCards.add((byte) 3);
         playedCards.add((byte) 4);
-        playedCards.add((byte)5);
-        assertTrue(p.canPlayCard(playedCards,(byte)5));
+        playedCards.add((byte) 5);
+        assertTrue(p.canPlayCard(playedCards, (byte) 5));
 
 
     }

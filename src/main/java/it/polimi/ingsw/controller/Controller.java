@@ -5,7 +5,6 @@ import it.polimi.ingsw.exceptions.GameException;
 import it.polimi.ingsw.exceptions.NotAllowedException;
 import it.polimi.ingsw.model.*;
 
-import java.net.Socket;
 import java.util.*;
 
 public class Controller {
@@ -110,7 +109,7 @@ public class Controller {
         nextActionPhase();
     }
 
-    public synchronized boolean addPlayer(PlayerHandler p) throws GameException {
+    public synchronized boolean addPlayer(PlayerHandler handler) throws GameException {
         if (playersList.size() == matchType.nPlayers()) {
             throw new NotAllowedException("Match is full");
 
@@ -118,7 +117,7 @@ public class Controller {
         int teamIndex = playersList.size() % teams.size(); // circular team selection
         int entranceHallSize = (teams.size() % 2 == 0) ? 7 : 9;
         Player newPlayer;
-        newPlayer = new Player(p.getSocket(), teams.get(teamIndex), Wizard.values()[playersList.size()], p.getNickName(), entranceHallSize);
+        newPlayer = new Player(handler, teams.get(teamIndex), Wizard.values()[playersList.size()], entranceHallSize);
 
         playersList.add(newPlayer);
         if (playersList.size() == matchType.nPlayers()) {

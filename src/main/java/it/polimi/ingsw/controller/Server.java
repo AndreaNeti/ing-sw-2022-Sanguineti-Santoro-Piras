@@ -1,12 +1,14 @@
 package it.polimi.ingsw.controller;
 
 import it.polimi.ingsw.exceptions.NotAllowedException;
-
 import it.polimi.ingsw.exceptions.UnexpectedValueException;
 
 import java.io.IOException;
 import java.net.ServerSocket;
-import java.util.*;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.Set;
 
 public class Server {
 
@@ -16,26 +18,23 @@ public class Server {
     private static final Set<String> nickname = new HashSet<>();
 
     public static void main(String[] args) {
-        ServerSocket server;
-        try {
-            server = new ServerSocket(42069);
+        try (ServerSocket server = new ServerSocket(42069)) {
+            while (true) {
+                try {
+                    new Thread(new PlayerHandler(server.accept())).start();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        while (true) {
-            try {
-                new Thread(new PlayerHandler(server.accept())).start();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }
     }
 
-    public static boolean setNickname(String nicknameToAdd) throws UnexpectedValueException {
+    public static void setNickname(String nicknameToAdd) throws UnexpectedValueException {
         synchronized (nickname) {
             if (!nickname.add(nicknameToAdd))
                 throw new UnexpectedValueException();
-            return true;
         }
     }
 
