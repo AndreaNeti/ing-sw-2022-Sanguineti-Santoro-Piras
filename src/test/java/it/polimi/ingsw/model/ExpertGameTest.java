@@ -60,6 +60,7 @@ public class ExpertGameTest {
         players4.add(p3_4);
         players4.add(p4_4);
 
+
         gameWith4 = new ExpertGame((byte) 4, teamList4, players4);
         gameWith4.setCurrentPlayer(p1_4);
 
@@ -74,7 +75,7 @@ public class ExpertGameTest {
         try {
             p1_3 = new Player("Franco", t1, Wizard.WOODMAGE, 9);
             p2_3 = new Player("Gigi", t2, Wizard.SANDMAGE, 9);
-            p3_3 = new Player("Carola", t1, Wizard.AIRMAGE, 9);
+            p3_3 = new Player("Carola", t3, Wizard.AIRMAGE, 9);
 
 
         } catch (GameException e) {
@@ -326,7 +327,7 @@ public class ExpertGameTest {
         gameWith3.setCurrentPlayer(p1_3);
 
         try {
-            gameWith3.getBag().moveStudents(Color.RED, (byte) 1, gameWith3.getIslands().get(0));
+            gameWith3.getBag().moveStudents(Color.RED, (byte) 3, gameWith3.getIslands().get(0));
             gameWith3.calculateInfluence(gameWith3.getIslands().get(0));
         } catch (GameException | EndGameException e) {
             fail();
