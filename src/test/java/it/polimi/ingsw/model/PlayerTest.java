@@ -37,8 +37,6 @@ class PlayerTest {
         assertEquals(p.getLunchHall(), p2.getLunchHall());
         assertEquals(p.getEntranceHall(), p2.getEntranceHall());
         assertNotEquals(p2, p1);
-        assertNotEquals(p2.getTeam(), p1.getTeam());
-
     }
 
     @Test

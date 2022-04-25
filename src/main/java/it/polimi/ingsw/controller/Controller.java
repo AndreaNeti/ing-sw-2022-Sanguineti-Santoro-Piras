@@ -131,10 +131,6 @@ public class Controller {
         return false;
     }
 
-    public void changeTeam() {
-
-    }
-
     public void leaveLobby() {
 
     }
@@ -195,11 +191,9 @@ public class Controller {
 
     private void startGame() {
         if (matchType.isExpert())
-            game = new ExpertGame(matchType.nPlayers(), teams, playersList);
+            game = new ExpertGame(matchType.nPlayers(), teams);
         else
-            game = new NormalGame(matchType.nPlayers(), teams, playersList);
-        if (matchType.isExpert()) game = new ExpertGame(matchType.nPlayers(), teams, playersList);
-        else game = new NormalGame(matchType.nPlayers(), teams, playersList);
+            game = new NormalGame(matchType.nPlayers(), teams);
         currentPlayer = playersList.get(0);
         game.setCurrentPlayer(currentPlayer);
         sendGameState();

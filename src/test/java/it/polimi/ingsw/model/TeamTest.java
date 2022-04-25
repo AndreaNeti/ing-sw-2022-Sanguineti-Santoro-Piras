@@ -47,21 +47,20 @@ class TeamTest {
 
     }
 
-    @Test
-    void removePlayer() {
-        try {
-            t.removePlayer(null);
-            t.removePlayer(p);
-        } catch (NotAllowedException e) {
-            fail();
+    /*
+        @Test
+        void removePlayer() {
+            try {
+                t.removePlayer(null);
+                t.removePlayer(p);
+            } catch (NotAllowedException e) {
+                fail();
+            }
+            assertTrue(t.getPlayers().isEmpty());
+
+            assertThrows(NotAllowedException.class, () -> t.removePlayer(p),
+                    "player not present");
         }
-        assertTrue(t.getPlayers().isEmpty());
-
-        assertThrows(NotAllowedException.class, () -> t.removePlayer(p),
-                "player not present");
-    }
-
-
     @Test
     void movePlayer() {
         Team t1 = new Team(HouseColor.WHITE, (byte) 2, (byte) 6);
@@ -86,7 +85,7 @@ class TeamTest {
 
     }
 
-
+*/
     @Test
     void removeAndAddTowersTest() {
         try {

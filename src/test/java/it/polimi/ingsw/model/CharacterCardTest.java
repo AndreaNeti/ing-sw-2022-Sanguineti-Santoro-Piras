@@ -1,6 +1,5 @@
 package it.polimi.ingsw.model;
 
-import it.polimi.ingsw.controller.PlayerHandler;
 import it.polimi.ingsw.exceptions.EndGameException;
 import it.polimi.ingsw.exceptions.GameException;
 import it.polimi.ingsw.exceptions.NotEnoughStudentsException;
@@ -34,7 +33,7 @@ class CharacterCardTest {
         teamList.add(t2);
         playerList.add(p1);
         playerList.add(p2);
-        game = new ExpertGame((byte) 2, teamList, playerList);
+        game = new ExpertGame((byte) 2, teamList);
         // fill lunch halls, p1 will gain enough coins to test char.play methods
         game.setCurrentPlayer(p1);
         try {
@@ -176,7 +175,8 @@ class CharacterCardTest {
             Wizard profController = game.getProfessor()[i];
             if (profController != null) {
                 color = i;
-                winnerTeam = game.getPlayers().get(profController.ordinal()).getTeam();
+                // team index is player index % team size
+                winnerTeam = game.getTeams().get(profController.ordinal() % game.getTeams().size());
             }
         }
         game.setCurrentPlayer(p1);
@@ -393,7 +393,8 @@ class CharacterCardTest {
         } catch (GameException | EndGameException e) {
             fail();
         }
-        assertEquals(game.getIslands().get(4).getTeamColor(), p1.getTeam().getHouseColor());
+        // p1 team is t1
+        assertEquals(game.getIslands().get(4).getTeamColor(), t1.getHouseColor());
     }
 
     @Test
@@ -440,7 +441,8 @@ class CharacterCardTest {
         } catch (GameException | EndGameException e) {
             fail();
         }
-        assertEquals(game.getIslands().get(4).getTeamColor(), p1.getTeam().getHouseColor());
+        // p1 team is t1
+        assertEquals(game.getIslands().get(4).getTeamColor(), t1.getHouseColor());
     }
 
     @Test

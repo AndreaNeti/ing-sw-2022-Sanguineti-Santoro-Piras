@@ -6,7 +6,6 @@ import it.polimi.ingsw.exceptions.NotAllowedException;
 import it.polimi.ingsw.exceptions.NotExpertGameException;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 public class NormalGame implements Game {
     private final ArrayList<Island> islands;
@@ -15,16 +14,14 @@ public class NormalGame implements Game {
     //controlled by the player j
     private final Wizard[] professors;
     private final ArrayList<Team> teams;
-    //all players
-    private transient final ArrayList<Player> players;
+
     //a reference to all the pieces contained in the game
     private transient Bag bag;
     private byte motherNaturePosition;
     private byte currentPlayer;
 
 
-    public NormalGame(byte numberOfPlayers, ArrayList<Team> teamList, ArrayList<Player> playerList) {
-        Random rand = new Random(System.currentTimeMillis());
+    public NormalGame(byte numberOfPlayers, ArrayList<Team> teamList) {
         this.islands = new ArrayList<>(12);
         for (int i = 0; i < 12; i++) {
             islands.add(new Island());
@@ -36,15 +33,14 @@ public class NormalGame implements Game {
         this.professors = new Wizard[Color.values().length];
         this.teams = new ArrayList<>(teamList);
 
-        this.players = new ArrayList<>(playerList);
-
         this.bag = new Bag((byte) 2);
         initializeMotherNature();
 
         try {
             refillClouds();
-            for (Player p : playerList)
-                drawStudents(p.getEntranceHall(), (byte) p.getEntranceHall().getMaxStudents());
+            for (Team t : teams)
+                for (Player p : t.getPlayers())
+                    drawStudents(p.getEntranceHall(), (byte) p.getEntranceHall().getMaxStudents());
         } catch (EndGameException e) {
             e.printStackTrace();
         }
@@ -154,7 +150,7 @@ public class NormalGame implements Game {
             else max = 0;
             newOwner = currentOwner;
 
-            for (Player p : players) {
+            for (Player p : getPlayers()) {
                 if (!p.equals(currentOwner) && p.getLunchHall().howManyStudents(c) > max) {
                     max = p.getLunchHall().howManyStudents(c);
                     newOwner = p;
@@ -285,18 +281,32 @@ public class NormalGame implements Game {
     }
 
     protected Player getCurrentPlayer() {
-        return players.get(currentPlayer);
+        return getPlayer(currentPlayer);
     }
 
     // TODO: pass by copy player, team etc..
 
     @Override
     public void setCurrentPlayer(Player p) {
-        this.currentPlayer = (byte) players.indexOf(p);
+        this.currentPlayer = (byte) getPlayers().indexOf(p);
+    }
+
+    protected Player getPlayer(byte b) {
+        // teams index = b % team size (in 4 players game, players are inserted in team 0, indexOf1, 0, 1)
+        // player index (in team members) = b / team size (2 or 3 players -> = 0 (team contains only 1 member), 4 players -> first 2 = 0, last 2 = 1 (3rd player is in team 0 and is member[1]))
+        return teams.get(b % teams.size()).getPlayers().get(b / teams.size());
     }
 
     protected ArrayList<Player> getPlayers() {
-        return players;
+        ArrayList<Player> ret = new ArrayList<>(getPlayerSize());
+        for (byte i = 0; i < getPlayerSize() / teams.size(); i++)
+            for (Team t : teams)
+                ret.add(t.getPlayers().get(i));
+        return ret;
+    }
+
+    protected int getPlayerSize() {
+        return teams.size() * teams.get(0).getPlayers().size();
     }
 
     protected ArrayList<Team> getTeams() {

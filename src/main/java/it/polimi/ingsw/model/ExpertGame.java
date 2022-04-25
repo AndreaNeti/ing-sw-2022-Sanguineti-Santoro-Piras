@@ -23,8 +23,8 @@ public class ExpertGame extends NormalGame {
     private byte chosenCharacter;
 
 
-    public ExpertGame(byte numberOfPlayers, ArrayList<Team> teamList, ArrayList<Player> playerList) {
-        super(numberOfPlayers, teamList, playerList);
+    public ExpertGame(byte numberOfPlayers, ArrayList<Team> teamList) {
+        super(numberOfPlayers, teamList);
         this.coinsLeft = (byte) (20 - numberOfPlayers);
         this.coinsPlayer = new byte[numberOfPlayers];
         for (byte i = 0; i < numberOfPlayers; i++)
@@ -143,7 +143,7 @@ public class ExpertGame extends NormalGame {
                 if (island.getTeamColor() != null && towerInfluence && t.getHouseColor() == island.getTeamColor())
                     influence += island.getNumber();
 
-                if (extraInfluence && getCurrentPlayer().getTeam().equals(t)) {
+                if (extraInfluence && t.getPlayers().contains(getCurrentPlayer())) {
                     influence += 2;
                 }
 

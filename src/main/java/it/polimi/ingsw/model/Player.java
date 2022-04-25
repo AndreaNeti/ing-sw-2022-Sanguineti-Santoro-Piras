@@ -8,7 +8,6 @@ import java.util.ArrayList;
 
 public class Player implements Serializable {
     private final String nickName;
-    private transient final Team team;
     private final Wizard wizard;
     private final boolean[] cardsAvailable;
     private final EntranceHall entranceHall;
@@ -20,7 +19,6 @@ public class Player implements Serializable {
         if (nickName == null || team == null || entranceHallSize < 1)
             throw new UnexpectedValueException();
         this.nickName = nickName;
-        this.team = team;
         team.addPlayer(this);
         this.wizard = wizard;
         this.cardsAvailable = new boolean[]{true, true, true, true, true, true, true, true, true, true};
@@ -78,11 +76,6 @@ public class Player implements Serializable {
 
     public String getNickName() {
         return nickName;
-    }
-
-    // TODO by value?
-    public Team getTeam() {
-        return team;
     }
 
     @Override

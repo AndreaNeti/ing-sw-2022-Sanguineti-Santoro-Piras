@@ -1,6 +1,5 @@
 package it.polimi.ingsw.model;
 
-import it.polimi.ingsw.controller.PlayerHandler;
 import it.polimi.ingsw.exceptions.EndGameException;
 import it.polimi.ingsw.exceptions.GameException;
 import it.polimi.ingsw.exceptions.NotAllowedException;
@@ -35,7 +34,7 @@ public class ExpertGameTest {
         players2 = new ArrayList<>(2);
         players2.add(p1_2);
         players2.add(p2_2);
-        gameWith2 = new ExpertGame((byte) 2, teamList2, players2);
+        gameWith2 = new ExpertGame((byte) 2, teamList2);
         gameWith2.setCurrentPlayer(p1_2);
 
 
@@ -61,7 +60,7 @@ public class ExpertGameTest {
         players4.add(p4_4);
 
 
-        gameWith4 = new ExpertGame((byte) 4, teamList4, players4);
+        gameWith4 = new ExpertGame((byte) 4, teamList4);
         gameWith4.setCurrentPlayer(p1_4);
 
         //create a game with 3 people
@@ -86,7 +85,7 @@ public class ExpertGameTest {
         players3.add(p2_3);
         players3.add(p3_3);
 
-        gameWith3 = new ExpertGame((byte) 3, teamList3, players3);
+        gameWith3 = new ExpertGame((byte) 3, teamList3);
         gameWith3.setCurrentPlayer(p1_3);
 
     }
@@ -322,8 +321,8 @@ public class ExpertGameTest {
         } catch (GameException | EndGameException e) {
             fail();
         }
-
-        assertEquals(gameWith3.getIslands().get(0).getTeamColor(), p3_3.getTeam().getHouseColor());
+        // p3_3 team is t3
+        assertEquals(gameWith3.getIslands().get(0).getTeamColor(), t3.getHouseColor());
         gameWith3.setCurrentPlayer(p1_3);
 
         try {
@@ -332,21 +331,24 @@ public class ExpertGameTest {
         } catch (GameException | EndGameException e) {
             fail();
         }
-        assertEquals(gameWith3.getIslands().get(0).getTeamColor(), p3_3.getTeam().getHouseColor());
+        // p3_3 team is t3
+        assertEquals(gameWith3.getIslands().get(0).getTeamColor(), t3.getHouseColor());
         try {
             gameWith3.getBag().moveStudents(Color.RED, (byte) 1, gameWith3.getIslands().get(0));
             gameWith3.calculateInfluence(gameWith3.getIslands().get(0));
         } catch (GameException | EndGameException e) {
             fail();
         }
-        assertEquals(gameWith3.getIslands().get(0).getTeamColor(), p1_3.getTeam().getHouseColor());
+        // p1_3 team is t1
+        assertEquals(gameWith3.getIslands().get(0).getTeamColor(), t1.getHouseColor());
         try {
             gameWith3.getBag().moveStudents(Color.BLUE, (byte) 10, gameWith3.getIslands().get(0));
             gameWith3.calculateInfluence(gameWith3.getIslands().get(0));
         } catch (GameException | EndGameException e) {
             fail();
         }
-        assertEquals(gameWith3.getIslands().get(0).getTeamColor(), p2_3.getTeam().getHouseColor());
+        // p2_3 team is t3
+        assertEquals(gameWith3.getIslands().get(0).getTeamColor(), t2.getHouseColor());
 
     }
 
