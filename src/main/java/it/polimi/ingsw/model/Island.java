@@ -62,4 +62,6 @@ public class Island extends GameComponent {
         if (prohibition > 0)
             prohibition--;
     }
+
+
 }

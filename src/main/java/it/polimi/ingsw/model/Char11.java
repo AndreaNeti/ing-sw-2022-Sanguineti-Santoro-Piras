@@ -14,8 +14,8 @@ public class Char11 implements CharacterCard {
             byte s = (byte) Math.min(3, p.getLunchHall().howManyStudents(Color.values()[color]));
             try {
                 p.getLunchHall().moveStudents(Color.values()[color], s, game.getBag());
-            } catch (NotEnoughStudentsException e) {
-                e.printStackTrace();
+            } catch (NotEnoughStudentsException ignored) {
+
                 //it shouldn't happen because we calculate the minimum value of the students of that color
             }
         }

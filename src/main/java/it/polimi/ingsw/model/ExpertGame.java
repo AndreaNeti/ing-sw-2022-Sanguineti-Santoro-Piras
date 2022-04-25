@@ -191,10 +191,11 @@ public class ExpertGame extends NormalGame {
 
     protected void calculateProfessor() {
         byte max;
-        Player currentOwner = null;
+        Player currentOwner;
         // player with the maximum number of students for the current color
         Player newOwner;
         for (Color c : Color.values()) {
+            currentOwner=null;
             // player actually controlling that professor
             if (getProfessor()[c.ordinal()] != null)
                 currentOwner = getPlayers().get(getProfessor()[c.ordinal()].ordinal());

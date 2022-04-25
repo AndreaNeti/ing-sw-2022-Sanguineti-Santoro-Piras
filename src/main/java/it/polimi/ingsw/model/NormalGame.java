@@ -76,13 +76,14 @@ public class NormalGame implements Game {
         if (islandBefore.getTeamColor() != null && islandBefore.getTeamColor().equals(island.getTeamColor())) {
 
             island.merge(islandBefore);
-            islands.remove(islandBefore);
+            islands.remove(islandBeforeIndex);
             if (islandBeforeIndex < motherNaturePosition)
                 motherNaturePosition--;
+            islandAfterIndex--;
         }
         if (islandAfter.getTeamColor() != null && islandAfter.getTeamColor().equals(island.getTeamColor())) {
             island.merge(islandAfter);
-            islands.remove(islandAfter);
+            islands.remove(islandAfterIndex);
             if (islandAfterIndex <= motherNaturePosition)
                 motherNaturePosition--;
         }
@@ -95,8 +96,7 @@ public class NormalGame implements Game {
     protected void drawStudents(GameComponent gameComponent, byte students) throws EndGameException {
         try {
             bag.drawStudent(gameComponent, students);
-        } catch (GameException e) {
-            System.err.println(e.getMessage());
+        } catch (GameException ignored) {
         }
     }
 
@@ -208,8 +208,7 @@ public class NormalGame implements Game {
             if (oldTeamColor != null) {
                 try {
                     getTeams().get(oldTeamColor.ordinal()).addTowers(island.getNumber());
-                } catch (NotAllowedException ex) {
-                    System.err.println(ex.getMessage());
+                } catch (NotAllowedException ignored) {
                 }
             }
             getTeams().get(winnerColor.ordinal()).removeTowers(island.getNumber());
