@@ -57,6 +57,8 @@ public class ExpertGameTest {
         players4 = new ArrayList<>(4);
         players4.add(p1_4);
         players4.add(p2_4);
+        players4.add(p3_4);
+        players4.add(p4_4);
 
         gameWith4 = new ExpertGame((byte) 4, teamList4, players4);
         gameWith4.setCurrentPlayer(p1_4);
