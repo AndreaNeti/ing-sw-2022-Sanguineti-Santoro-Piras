@@ -132,10 +132,22 @@ class CharacterCardTest {
 //                break;
 //            }
 //        }
+        try {
+            game.setCurrentPlayer(p2);
+            for (Color c : Color.values()) {
+                p2.getEntranceHall().moveStudents(c, p2.getEntranceHall().howManyStudents(c), game.getBag());
+            }
+            game.getBag().moveStudents(Color.RED, (byte) 4, p2.getEntranceHall());
+            for (int i = 0; i < 4; i++) {
+                game.move(Color.RED, 0, 1);
+            }
+        } catch (GameException e) {
+            fail();
+        }
+        assertEquals(game.getProfessor()[0], p2.getWizard());
         game.setCurrentPlayer(p1);
         try {
-            game.getBag().moveStudents(Color.RED, (byte) 6, p2.getLunchHall());
-            game.getBag().moveStudents(Color.RED, (byte) 3, p1.getLunchHall());
+            game.getBag().moveStudents(Color.RED, (byte) 1, p1.getLunchHall());
         } catch (GameException e) {
             fail();
         }
@@ -219,6 +231,8 @@ class CharacterCardTest {
         game.setCurrentPlayer(p1);
 
         try {
+            game.getIslands().get(2).moveAll(game.getBag());
+            game.getBag().moveStudents(Color.RED, (byte) 2, game.getIslands().get(2));
             game.chooseCharacter((byte) 0);
             game.setCharacterInput(2);
         } catch (GameException e) {
@@ -230,8 +244,15 @@ class CharacterCardTest {
         } catch (GameException | EndGameException e) {
             fail();
         }
-
         assertEquals(game.getIslands().get(2).getProhibitions(), 1);
+
+        try {
+            game.calculateInfluence(game.getIslands().get(2));
+        } catch (EndGameException e) {
+            fail();
+        }
+
+        assertNull(game.getIslands().get(2).getTeamColor());
     }
 
     @Test

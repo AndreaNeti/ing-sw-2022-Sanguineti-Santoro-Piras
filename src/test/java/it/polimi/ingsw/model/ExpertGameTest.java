@@ -109,8 +109,6 @@ public class ExpertGameTest {
         } catch (GameException e) {
             fail();
         }
-        System.out.println(p1_2.getEntranceHall().howManyStudents());
-        System.out.println(gameWith2.getCurrentPlayer().getEntranceHall().howManyStudents());
         try {
             gameWith2.getBag().moveStudents(Color.RED, (byte) 9, p1_2.getEntranceHall());
         } catch (GameException e) {
@@ -274,5 +272,79 @@ public class ExpertGameTest {
         }
     }
 
+    @Test
+    void checkMotherNatureTest() {
+        gameWith2.setCurrentPlayer(p1_2);
+        try {
+            gameWith2.playCard((byte) 1);
+        } catch (GameException | EndGameException e) {
+            fail();
+        }
+        assertThrows(NotAllowedException.class, () -> gameWith2.moveMotherNature(2));
+        byte old = gameWith2.getMotherNaturePosition();
+        try {
+            gameWith2.moveMotherNature(1);
+        } catch (GameException | EndGameException e) {
+            fail();
+        }
+        assertEquals(gameWith2.getMotherNaturePosition(), old + 1);
+    }
+
+    @Test
+    void calculateInfluenceTest() {
+        try {
+            for (Color color : Color.values()) {
+                p1_3.getEntranceHall().moveStudents(color, p1_3.getEntranceHall().howManyStudents(color), gameWith3.getBag());
+                p2_3.getEntranceHall().moveStudents(color, p2_3.getEntranceHall().howManyStudents(color), gameWith3.getBag());
+                p3_3.getEntranceHall().moveStudents(color, p3_3.getEntranceHall().howManyStudents(color), gameWith3.getBag());
+            }
+            gameWith3.getBag().moveStudents(Color.RED, (byte) 6, p1_3.getEntranceHall());
+            gameWith3.getBag().moveStudents(Color.BLUE, (byte) 6, p2_3.getEntranceHall());
+            gameWith3.getBag().moveStudents(Color.YELLOW, (byte) 6, p3_3.getEntranceHall());
+
+            for (Player p : players3) {
+                gameWith3.setCurrentPlayer(p);
+                gameWith3.move(Color.values()[players3.indexOf(p)], 0, 1);
+            }
+        } catch (GameException e) {
+            fail();
+        }
+
+        try {
+            gameWith3.getIslands().get(0).moveAll(gameWith3.getBag());
+            for (int i = 0; i < 3; i++) {
+                gameWith3.getBag().moveStudents(Color.values()[i], (byte) i, gameWith3.getIslands().get(0));
+            }
+            gameWith3.calculateInfluence(gameWith3.getIslands().get(0));
+        } catch (GameException | EndGameException e) {
+            fail();
+        }
+
+        assertEquals(gameWith3.getIslands().get(0).getTeamColor(), p3_3.getTeam().getHouseColor());
+        gameWith3.setCurrentPlayer(p1_3);
+
+        try {
+            gameWith3.getBag().moveStudents(Color.RED, (byte) 1, gameWith3.getIslands().get(0));
+            gameWith3.calculateInfluence(gameWith3.getIslands().get(0));
+        } catch (GameException | EndGameException e) {
+            fail();
+        }
+        assertEquals(gameWith3.getIslands().get(0).getTeamColor(), p3_3.getTeam().getHouseColor());
+        try {
+            gameWith3.getBag().moveStudents(Color.RED, (byte) 1, gameWith3.getIslands().get(0));
+            gameWith3.calculateInfluence(gameWith3.getIslands().get(0));
+        } catch (GameException | EndGameException e) {
+            fail();
+        }
+        assertEquals(gameWith3.getIslands().get(0).getTeamColor(), p1_3.getTeam().getHouseColor());
+        try {
+            gameWith3.getBag().moveStudents(Color.BLUE, (byte) 10, gameWith3.getIslands().get(0));
+            gameWith3.calculateInfluence(gameWith3.getIslands().get(0));
+        } catch (GameException | EndGameException e) {
+            fail();
+        }
+        assertEquals(gameWith3.getIslands().get(0).getTeamColor(), p2_3.getTeam().getHouseColor());
+
+    }
 
 }
