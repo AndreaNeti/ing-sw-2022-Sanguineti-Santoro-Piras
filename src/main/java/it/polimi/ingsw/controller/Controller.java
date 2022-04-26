@@ -27,6 +27,10 @@ public class Controller {
     private byte roundIndex, currentPlayerIndex;
     private boolean lastRound;
 
+    private byte movesCounter;
+
+    private boolean cardPlayed;
+
     public Controller(MatchType matchType) {
         this.matchType = matchType;
         this.playersList = new ArrayList<>(matchType.nPlayers());
@@ -45,9 +49,11 @@ public class Controller {
         this.roundIndex = 0;
         this.currentPlayerIndex = 0;
         this.lastRound = false;
+        this.movesCounter = 0;
+        this.cardPlayed = false;
     }
     //TODO Check a player can move only three/four students for turn
-    public synchronized void move(Color color, int idGameComponent) throws GameException {
+    public synchronized void move(Color color, int idGameComponent) throws GameException, NullPointerException {
         if (isPlanificationPhase) {
             throw new NotAllowedException("Not in action phase");
         }
@@ -55,13 +61,17 @@ public class Controller {
         if (actionPhase == 1) {
             if (idGameComponent <= 0) throw new NotAllowedException("Can't move to the selected GameComponent");
             game.move(color, 0, idGameComponent);
+            movesCounter++;
+            if (movesCounter == (matchType.nPlayers()%2 == 0 ? 3 : 4)) {
+                movesCounter = 0;
+                nextActionPhase();
+            }
         } else {
             throw new NotAllowedException("Wrong Phase");
         }
 
-        nextActionPhase();
     }
-    public synchronized void moveFromCloud( int idGameComponent) throws NotAllowedException{
+    public synchronized void moveFromCloud(int idGameComponent) throws NotAllowedException, NullPointerException{
 
         if (actionPhase == 3) { // move students from cloud, destination is player entrance hall
             game.moveFromCloud(idGameComponent);}
@@ -70,11 +80,10 @@ public class Controller {
     }
 
     //the value here need to go from 1 to 10
-    public synchronized void playCard(byte value) throws GameException {
+    public synchronized void playCard(byte value) throws GameException, NullPointerException {
 
         if (!isPlanificationPhase) {
             throw new NotAllowedException("Not in planification phase");
-
         }
         ArrayList<Byte> playedCards = new ArrayList<>();
         //loop where I put in playedCard the previous card played by other Player.If it's current Player
@@ -95,7 +104,7 @@ public class Controller {
         }
     }
 
-    public synchronized void moveMotherNature(int i) throws GameException {
+    public synchronized void moveMotherNature(int i) throws GameException, NullPointerException {
         if (isPlanificationPhase || actionPhase != 2) {
             throw new NotAllowedException("Not allowed in this phase");
         }
@@ -126,23 +135,19 @@ public class Controller {
         return false;
     }
 
-    public void leaveLobby() {
-
-    }
-
     public void sendMessage(String me, String message) {
         for (PlayerHandler h : playerHandlers)
             if (!h.getNickName().equals(me)) h.sendString("message/" + me + ": " + message);
     }
 
-    public synchronized void setCharacterInput(int input) throws GameException {
+    public synchronized void setCharacterInput(int input) throws GameException, NullPointerException {
         if (isPlanificationPhase) {
             throw new NotAllowedException("Not in action phase");
         }
         game.setCharacterInput(input);
     }
 
-    public synchronized void chooseCharacter(byte character) throws GameException {
+    public synchronized void chooseCharacter(byte character) throws GameException, NullPointerException {
         if (isPlanificationPhase) {
             throw new NotAllowedException("Not in action phase");
         }
@@ -150,12 +155,16 @@ public class Controller {
 
     }
 
-    public synchronized void playCharacter() throws GameException {
+    public synchronized void playCharacter() throws GameException, NullPointerException {
         if (isPlanificationPhase) {
-            throw new NotAllowedException("not in planification phase");
+            throw new NotAllowedException("Not in planification phase");
+        }
+        if (cardPlayed) {
+            throw new NotAllowedException("A card has already been played this turn");
         }
         try {
             game.playCharacter();
+            cardPlayed = true;
         } catch (EndGameException e) {
             handleError(e);
         }
@@ -189,6 +198,7 @@ public class Controller {
     }
 
     private void nextPlayer() {
+        cardPlayed = false;
         roundIndex++;
         if (roundIndex >= playersList.size()) nextPhase();
         if (!isPlanificationPhase)
