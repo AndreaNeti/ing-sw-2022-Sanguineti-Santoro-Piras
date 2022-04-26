@@ -24,16 +24,16 @@ public class NormalGame implements Game {
     public NormalGame(byte numberOfPlayers, ArrayList<Team> teamList) {
         this.islands = new ArrayList<>(12);
         for (int i = 0; i < 12; i++) {
-            islands.add(new Island());
+            islands.add(new Island((byte) (i +2)));
         }
         this.clouds = new ArrayList<>(numberOfPlayers);
         for (int i = 0; i < numberOfPlayers; i++) {
-            clouds.add(new Cloud(numberOfPlayers));
+            clouds.add(new Cloud(numberOfPlayers,(byte) (-(i+1))));
         }
         this.professors = new Wizard[Color.values().length];
         this.teams = new ArrayList<>(teamList);
 
-        this.bag = new Bag((byte) 2);
+        this.bag = new Bag((byte) 2, (byte) 69);
         initializeMotherNature();
 
         try {
@@ -59,7 +59,7 @@ public class NormalGame implements Game {
                 }
             }
         }
-        this.bag = new Bag((byte) 24);
+        this.bag = new Bag((byte) 24, (byte) 69);
     }
 
     protected void checkMerge(Island island) throws EndGameException {

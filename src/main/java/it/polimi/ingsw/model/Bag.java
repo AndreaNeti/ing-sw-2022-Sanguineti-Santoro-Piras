@@ -14,8 +14,8 @@ public class Bag extends GameComponent {
 
     private final Random rand;
 
-    public Bag(byte studentsPerColor) {
-        super(studentsPerColor);
+    public Bag(byte studentsPerColor, byte idGameComponet) {
+        super(studentsPerColor,(byte) 69);
         rand = new Random(System.currentTimeMillis());
     }
 

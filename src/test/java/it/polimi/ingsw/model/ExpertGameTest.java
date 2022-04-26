@@ -99,6 +99,7 @@ public class ExpertGameTest {
         assertEquals(gameWith3.getPlayers(), players3);
         assertEquals(gameWith4.getTeams(), teamList4);
         assertEquals(gameWith4.getPlayers(), players4);
+
     }
 
     @Test

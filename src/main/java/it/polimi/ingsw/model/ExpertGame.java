@@ -12,6 +12,7 @@ public class ExpertGame extends NormalGame {
     private transient final ArrayList<CharacterCard> characters;
     private final Set<Byte> charactersId;
     private transient final ArrayList<Integer> inputsCharacter;
+    //TODO put the control that i c3an only use one character card for turn
     private final boolean[] playedCharacters;
     private byte coinsLeft;
     private transient boolean extraInfluence; //default false
@@ -44,7 +45,7 @@ public class ExpertGame extends NormalGame {
             try {
                 c = factoryCharacter(characterIndex);
                 characters.add(c);
-                selectedCharacters.add(c.getId());
+                selectedCharacters.add(c.getCharId());
                 i++;
             } catch (UnexpectedValueException e) {
                 e.printStackTrace();

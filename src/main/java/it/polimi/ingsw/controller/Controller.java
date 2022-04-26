@@ -46,7 +46,7 @@ public class Controller {
         this.currentPlayerIndex = 0;
         this.lastRound = false;
     }
-
+    //TODO Check a player can move only three/four students for turn
     public synchronized void move(Color color, int idGameComponent) throws GameException {
         if (isPlanificationPhase) {
             throw new NotAllowedException("Not in action phase");

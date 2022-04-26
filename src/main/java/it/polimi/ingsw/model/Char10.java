@@ -6,7 +6,7 @@ import it.polimi.ingsw.exceptions.GameException;
 public class Char10 extends GameComponent implements CharacterCard {
 
     public Char10(){
-        super(4);
+        super(4, (byte) -12);
     }
     @Override
     public void play(ExpertGame game) throws GameException, EndGameException {
@@ -21,7 +21,7 @@ public class Char10 extends GameComponent implements CharacterCard {
 
 
     @Override
-    public byte getId() {
+    public byte getCharId() {
         return 10;
     }
 
@@ -35,7 +35,7 @@ public class Char10 extends GameComponent implements CharacterCard {
 //        if (this == o) return true;
 //        if (!(o instanceof Char10)) return false;
 //        CharacterCard c = (CharacterCard) o;
-//        return getId() == c.getId();
+//        return getCharId() == c.getCharId();
 //    }
 }
 

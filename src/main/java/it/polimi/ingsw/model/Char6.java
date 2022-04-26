@@ -8,7 +8,7 @@ import java.util.List;
 
 public class Char6 extends GameComponent implements CharacterCard {
     public Char6() {
-        super(6);
+        super(6, (byte) -11);
     }
 
     @Override
@@ -42,7 +42,7 @@ public class Char6 extends GameComponent implements CharacterCard {
     }
 
     @Override
-    public byte getId() {
+    public byte getCharId() {
         return 6;
     }
 
@@ -56,6 +56,6 @@ public class Char6 extends GameComponent implements CharacterCard {
 //        if (this == o) return true;
 //        if (!(o instanceof Char6)) return false;
 //        CharacterCard c = (CharacterCard) o;
-//        return getId() == c.getId();
+//        return getCharId() == c.getCharId();
 //    }
 }

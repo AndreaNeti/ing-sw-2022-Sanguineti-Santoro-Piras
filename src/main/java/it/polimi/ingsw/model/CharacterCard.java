@@ -6,6 +6,6 @@ import it.polimi.ingsw.exceptions.GameException;
 public interface CharacterCard {
     void play(ExpertGame game) throws GameException, EndGameException;
     byte getCost();
-    byte getId();
+    byte getCharId();
     boolean canPlay(int nInput);
 }

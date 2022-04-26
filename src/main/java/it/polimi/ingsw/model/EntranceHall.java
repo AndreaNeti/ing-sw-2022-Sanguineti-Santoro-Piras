@@ -4,8 +4,8 @@ package it.polimi.ingsw.model;
 import it.polimi.ingsw.exceptions.NotAllowedException;
 
 public class EntranceHall extends GameComponent {
-    public EntranceHall(int entranceHallSize) {
-        super(entranceHallSize);
+    public EntranceHall(int entranceHallSize, byte idGameComponent) {
+        super(entranceHallSize,idGameComponent);
     }
 
     @Override

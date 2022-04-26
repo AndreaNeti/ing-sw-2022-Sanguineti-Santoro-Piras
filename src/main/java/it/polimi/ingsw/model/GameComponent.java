@@ -10,25 +10,27 @@ import java.util.Arrays;
 public abstract class GameComponent implements Serializable {
     private final byte[] students;
     private transient final int maxStudents;
-
-    private GameComponent(int maxStudents, byte studentsPerColor) {
+    private final byte idGameComponent;
+    private GameComponent(int maxStudents, byte studentsPerColor, byte idGameComponent) {
         this.students = new byte[Color.values().length];
         for (byte i = 0; i < students.length; i++) {
             students[i] = studentsPerColor;
         }
         this.maxStudents = maxStudents;
+        this.idGameComponent=idGameComponent;
     }
 
-    public GameComponent(int maxStudents) {
-        this(maxStudents, (byte) 0);
+    public GameComponent(int maxStudents,byte idGameComponent) {
+        this(maxStudents, (byte) 0,idGameComponent);
     }
 
-    public GameComponent(byte studentsPerColor) {
-        this(Color.values().length * studentsPerColor, studentsPerColor);
+    public GameComponent(byte studentsPerColor,byte idGameComponent) {
+
+        this(Color.values().length * studentsPerColor, studentsPerColor, idGameComponent);
     }
 
-    public GameComponent() {
-        this(Integer.MAX_VALUE, (byte) 0);
+    public GameComponent(byte idGameComponent) {
+        this(Integer.MAX_VALUE, (byte) 0,idGameComponent);
     }
 
     private void addStudents(Color color, byte number) {
@@ -115,5 +117,9 @@ public abstract class GameComponent implements Serializable {
         if (o == null || getClass() != o.getClass()) return false;
         GameComponent that = (GameComponent) o;
         return maxStudents == that.maxStudents && Arrays.equals(students, that.students);
+    }
+
+    public byte getId() {
+        return idGameComponent;
     }
 }

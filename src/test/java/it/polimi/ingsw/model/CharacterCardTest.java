@@ -301,6 +301,7 @@ class CharacterCardTest {
     void playChar6() {
         int color1 = 0, color2 = Color.values().length - 1;
         try {
+
             game.chooseCharacter((byte) 0);
             game.setCharacterInput(-5);
             game.setCharacterInput(-1);
@@ -612,18 +613,25 @@ class CharacterCardTest {
 
     @Test
     void getId() {
-        assertEquals(c0.getId(), 0);
-        assertEquals(c1.getId(), 1);
-        assertEquals(c2.getId(), 2);
-        assertEquals(c3.getId(), 3);
-        assertEquals(c4.getId(), 4);
-        assertEquals(c5.getId(), 5);
-        assertEquals(c6.getId(), 6);
-        assertEquals(c7.getId(), 7);
-        assertEquals(c8.getId(), 8);
-        assertEquals(c9.getId(), 9);
-        assertEquals(c10.getId(), 10);
-        assertEquals(c11.getId(), 11);
+        assertEquals(c0.getCharId(), 0);
+        assertEquals(c1.getCharId(), 1);
+        assertEquals(c2.getCharId(), 2);
+        assertEquals(c3.getCharId(), 3);
+        assertEquals(c4.getCharId(), 4);
+        assertEquals(c5.getCharId(), 5);
+        assertEquals(c6.getCharId(), 6);
+        assertEquals(c7.getCharId(), 7);
+        assertEquals(c8.getCharId(), 8);
+        assertEquals(c9.getCharId(), 9);
+        assertEquals(c10.getCharId(), 10);
+        assertEquals(c11.getCharId(), 11);
+        GameComponent test =(GameComponent) c0;
+        assertEquals(test.getId() ,-10);
+        test =(GameComponent) c6;
+        assertEquals(test.getId() ,-11);
+        test =(GameComponent) c10;
+        assertEquals(test.getId(),-12);
+
     }
 
     @Test

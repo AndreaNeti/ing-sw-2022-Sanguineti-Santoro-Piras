@@ -10,8 +10,8 @@ public class Island extends GameComponent {
     //it's the number of the island merged in this island
     private byte number;
 
-    public Island() {
-        super();
+    public Island(byte idGameComponent) {
+        super(idGameComponent);
         team = null;
         prohibition = 0;
         number = 1;

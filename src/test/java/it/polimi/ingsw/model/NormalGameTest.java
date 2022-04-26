@@ -99,7 +99,9 @@ public class NormalGameTest {
 
         assertEquals(gameWith2.getIslands().size(), 12);
         int[] color = {0, 0, 0, 0, 0};
+        int j=0;
         for (Island i : gameWith2.getIslands()) {
+            assertEquals(i.getId(),j+2);
             int index = gameWith2.getIslands().indexOf(i);
             if (index == gameWith2.getMotherNaturePosition() || index == (gameWith2.getMotherNaturePosition() + 6) % 12) {
                 assertEquals(i.howManyStudents(), 0);
@@ -112,31 +114,49 @@ public class NormalGameTest {
                     }
                 }
             }
+            j++;
         }
+        j=0;
         for (Cloud cloud : gameWith3.getClouds()) {
             assertEquals(cloud.howManyStudents(), 4);
+            assertEquals(cloud.getId(),j-1);
+            j--;
         }
+        j=0;
         for (Cloud cloud : gameWith4.getClouds()) {
             assertEquals(cloud.howManyStudents(), 3);
+            assertEquals(cloud.getId(),j-1);
+            j--;
         }
+        j=0;
         for (Cloud cloud : gameWith2.getClouds()) {
             assertEquals(cloud.howManyStudents(), 3);
+            assertEquals(cloud.getId(),j-1);
+            j--;
         }
 
         for (Player p : gameWith2.getPlayers()) {
             assertEquals(p.getEntranceHall().howManyStudents(), 7);
+            assertEquals(p.getEntranceHall().getId(), 0);
+            assertEquals(p.getLunchHall().getId(), 1);
+
 
         }
         for (Player p : gameWith3.getPlayers()) {
             assertEquals(p.getEntranceHall().howManyStudents(), 9);
+            assertEquals(p.getEntranceHall().getId(), 0);
+            assertEquals(p.getLunchHall().getId(), 1);
 
         }
         for (Player p : gameWith4.getPlayers()) {
             assertEquals(p.getEntranceHall().howManyStudents(), 7);
+            assertEquals(p.getEntranceHall().getId(), 0);
+            assertEquals(p.getLunchHall().getId(), 1);
 
         }
 
         assertEquals(gameWith2.getBag().getClass(), Bag.class);
+        assertEquals(gameWith2.getBag().getId(), 69);
         assertEquals(gameWith2.getCurrentPlayer(), p1_2);
         for (Wizard p : gameWith2.getProfessor())
             assertNull(p);
@@ -145,7 +165,7 @@ public class NormalGameTest {
 
     @Test
     void refillCloudTest() {
-        GameComponent islandTest = new Island();
+        GameComponent islandTest = new Island( (byte) 4);
         for (Cloud cloud : gameWith2.getClouds()) {
             try {
                 cloud.moveAll(islandTest);
@@ -251,7 +271,7 @@ public class NormalGameTest {
 
     @Test
     void moveMotherNatureTest() {
-        Bag bagTest = new Bag((byte) 20);
+        Bag bagTest = new Bag((byte) 20, (byte) 69);
         //svuoto l'isola 0,1,2,3 così posso metterci gli studenti che voglio
         try {
             gameWith4.getIslands().get(0).moveAll(gameWith3.getIslands().get(4));

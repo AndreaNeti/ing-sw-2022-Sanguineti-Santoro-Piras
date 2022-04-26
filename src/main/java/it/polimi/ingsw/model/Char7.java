@@ -13,7 +13,7 @@ public class Char7 implements CharacterCard {
     }
 
     @Override
-    public byte getId() {
+    public byte getCharId() {
         return 7;
     }
 
@@ -27,6 +27,6 @@ public class Char7 implements CharacterCard {
 //        if (this == o) return true;
 //        if (!(o instanceof Char7)) return false;
 //        CharacterCard c = (CharacterCard) o;
-//        return getId() == c.getId();
+//        return getCharId() == c.getCharId();
 //    }
 }

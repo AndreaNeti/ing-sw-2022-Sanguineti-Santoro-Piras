@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class BagTest {
     byte nStudentPerColor = 24;
-    Bag bag = new Bag(nStudentPerColor);
+    Bag bag = new Bag(nStudentPerColor,(byte) 69);
 
     @Test
     void constructorTest() {
@@ -22,12 +22,12 @@ class BagTest {
             assertEquals(bag.howManyStudents(c),nStudentPerColor);
         }
         assertEquals(bag.getMaxStudents(),nStudentPerColor * Color.values().length);
-
+        assertEquals(bag.getId(),69);
 
     }
 
-    GameComponent island = new Island();
-    GameComponent cloud = new Cloud(2);
+    GameComponent island = new Island((byte) 2);
+    GameComponent cloud = new Cloud(2, (byte) -1);
     @Test
     void drawStudentAndRefilledTest() {
         try {

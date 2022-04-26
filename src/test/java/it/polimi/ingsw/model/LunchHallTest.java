@@ -8,12 +8,12 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class LunchHallTest {
-    Bag bag = new Bag((byte) 20);
+    Bag bag = new Bag((byte) 20,(byte) 69);
 
     @Test
     void lunchHallTest() {
-        LunchHall lunchHall = new LunchHall(10 * Color.values().length);
-        GameComponent gc = new Island();
+        LunchHall lunchHall = new LunchHall(10 * Color.values().length, (byte) 1);
+        GameComponent gc = new Island((byte) 4);
         try {
             bag.drawStudent(gc, (byte) (20 * Color.values().length - 1));
         } catch (EndGameException | GameException e) {
