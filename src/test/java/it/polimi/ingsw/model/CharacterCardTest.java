@@ -1,5 +1,7 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.controller.Controller;
+import it.polimi.ingsw.controller.MatchType;
 import it.polimi.ingsw.exceptions.EndGameException;
 import it.polimi.ingsw.exceptions.GameException;
 import it.polimi.ingsw.exceptions.NotEnoughStudentsException;
@@ -33,7 +35,7 @@ class CharacterCardTest {
         teamList.add(t2);
         playerList.add(p1);
         playerList.add(p2);
-        game = new ExpertGame( teamList);
+        game = new ExpertGame(teamList, new Controller(new MatchType((byte) 2, true)));
         // fill lunch halls, p1 will gain enough coins to test char.play methods
         game.setCurrentPlayer(p1);
         try {
@@ -626,12 +628,12 @@ class CharacterCardTest {
         assertEquals(c9.getCharId(), 9);
         assertEquals(c10.getCharId(), 10);
         assertEquals(c11.getCharId(), 11);
-        GameComponent test =(GameComponent) c0;
-        assertEquals(test.getId() ,-10);
-        test =(GameComponent) c6;
-        assertEquals(test.getId() ,-11);
-        test =(GameComponent) c10;
-        assertEquals(test.getId(),-12);
+        GameComponent test = (GameComponent) c0;
+        assertEquals(test.getId(), -10);
+        test = (GameComponent) c6;
+        assertEquals(test.getId(), -11);
+        test = (GameComponent) c10;
+        assertEquals(test.getId(), -12);
 
     }
 

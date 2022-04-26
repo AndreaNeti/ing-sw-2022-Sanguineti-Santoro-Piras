@@ -1,6 +1,7 @@
 package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.controller.GameDelta;
+import it.polimi.ingsw.controller.GameListener;
 import it.polimi.ingsw.exceptions.EndGameException;
 import it.polimi.ingsw.exceptions.GameException;
 import it.polimi.ingsw.exceptions.NotAllowedException;
@@ -23,8 +24,8 @@ public class NormalGame implements Game {
     private byte currentPlayer;
 
 
-    public NormalGame(ArrayList<Team> teamList) {
-        gameDelta = getNewGameDelta();
+    public NormalGame(ArrayList<Team> teamList, GameListener listener) {
+        gameDelta = getNewGameDelta(listener);
         this.teams = new ArrayList<>(teamList);
         byte numberOfPlayers = this.getPlayerSize();
 
@@ -53,8 +54,8 @@ public class NormalGame implements Game {
         }
     }
 
-    protected GameDelta getNewGameDelta() {
-        return new GameDelta();
+    protected GameDelta getNewGameDelta(GameListener listener) {
+        return new GameDelta(listener);
     }
     // checks if the islands before and after the selected island have the same team and in case merges them
 
@@ -84,10 +85,13 @@ public class NormalGame implements Game {
             island.merge(islandBefore);
             islands.remove(islandBeforeIndex);
 
+            if (islandBeforeIndex < motherNaturePosition) motherNaturePosition--;
+
             // add to game delta
+            gameDelta.setNewMotherNaturePosition(motherNaturePosition);
+            gameDelta.addUpdatedGC(island);
             gameDelta.addDeletedIslands(islandBefore);
 
-            if (islandBeforeIndex < motherNaturePosition) motherNaturePosition--;
             islandAfterIndex--;
         }
         if (islandAfter.getTeamColor() != null && islandAfter.getTeamColor().equals(island.getTeamColor())) {
@@ -95,15 +99,13 @@ public class NormalGame implements Game {
             islands.remove(islandAfterIndex);
 
             // add to game delta
+            gameDelta.setNewMotherNaturePosition(motherNaturePosition);
+            gameDelta.addUpdatedGC(island);
             gameDelta.addDeletedIslands(islandAfter);
 
             if (islandAfterIndex <= motherNaturePosition) motherNaturePosition--;
         }
         if (motherNaturePosition < 0) motherNaturePosition = 0;
-
-        // add to game delta
-        gameDelta.setNewMotherNaturePosition(motherNaturePosition);
-        gameDelta.addUpdatedGC(island);
 
         if (islands.size() <= 3) throw new EndGameException(true);
 
@@ -376,6 +378,7 @@ public class NormalGame implements Game {
         return ret;
     }
 
+    @Override
     public GameDelta getAndClearGameDelta() {
         GameDelta copy = getGameDelta();
         gameDelta.clear();

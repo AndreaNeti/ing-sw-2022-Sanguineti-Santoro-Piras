@@ -10,7 +10,7 @@ import java.net.Socket;
 import java.util.Arrays;
 import java.util.List;
 
-public class PlayerHandler implements Runnable {
+public class PlayerHandler implements Runnable, GameListener {
     private final Socket socket;
     private final PrintWriter out;
     private String nickName;
@@ -61,13 +61,6 @@ public class PlayerHandler implements Runnable {
         }
     }
 
-    protected void sendString(String s) {
-        synchronized (out) {
-            out.println(s);
-            out.flush();
-        }
-    }
-
     private void callMethod(String command) {
         List<String> tokens = Arrays.asList(command.split("/"));
 
@@ -96,34 +89,30 @@ public class PlayerHandler implements Runnable {
                     Long controllerId;
                     controllerId = Server.getOldestMatchId(new MatchType(Byte.parseByte(tokens.get(0)), Boolean.parseBoolean(tokens.get(1))));
                     controller = Server.getMatchById(controllerId);
-                    if (controller.addPlayer(this)) {
+                    if (controller.addPlayer(this, nickName)) {
                         Server.removeMatch(controllerId);
                     }
                 }
                 case "getMatchById" -> {
                     controller = Server.getMatchById(Long.parseLong(tokens.get(0)));
-                    if (controller.addPlayer(this)) {
+                    if (controller.addPlayer(this, nickName)) {
                         Server.removeMatch(Long.parseLong(tokens.get(0)));
                     }
                 }
                 case "createMatch" -> {
                     controller = Server.createMatch(new MatchType(Byte.parseByte(tokens.get(0)), Boolean.parseBoolean(tokens.get(1))));
-                    controller.addPlayer(this);
+                    controller.addPlayer(this, nickName);
                 }
                 //TODO ignore notExpertGameException
                 default -> throw new UnexpectedValueException();
             }
-            this.sendString("ok");
+            update(new OK());
 
         } catch (GameException | IllegalArgumentException ex) {
-            handleError(ex);
+            update(new Error(ex.getMessage()));
         } catch (NullPointerException ex) {
-            this.sendString("error/Match is not yet started");
+            update(new Error("Must join a match before"));
         }
-    }
-
-    private void handleError(Exception e) {
-        this.sendString("error/" + e.getMessage());
     }
 
     private void nickName(String nickName) {
@@ -140,6 +129,19 @@ public class PlayerHandler implements Runnable {
         return nickName;
     }
 
+    @Override
+    public void update(Message m) {
+        synchronized (out) {
+            try {
+                ByteArrayOutputStream bo = new ByteArrayOutputStream();
+                ObjectOutputStream so = new ObjectOutputStream(bo);
+                so.writeObject(m);
+                so.flush();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
     private class Quit implements Message {
         public Quit() {
@@ -198,7 +200,7 @@ public class PlayerHandler implements Runnable {
         }
 
         @Override
-        public void execute()  {
+        public void execute() {
             controller.sendMessage(nickName, message);
         }
     }
@@ -220,9 +222,9 @@ public class PlayerHandler implements Runnable {
         Color color;
         int idGameComponent;
 
-        public Move(Color color,int idGameComponent) {
+        public Move(Color color, int idGameComponent) {
             this.color = color;
-            this.idGameComponent=idGameComponent;
+            this.idGameComponent = idGameComponent;
         }
 
         @Override
@@ -245,9 +247,6 @@ public class PlayerHandler implements Runnable {
     }
 
     private class PlayCharacter implements Message {
-        public PlayCharacter() {
-        }
-
         @Override
         public void execute() throws GameException {
             controller.playCharacter();
@@ -262,7 +261,7 @@ public class PlayerHandler implements Runnable {
         }
 
         @Override
-        public void execute()  {
+        public void execute() {
             nickName(nickName);
         }
     }
@@ -280,7 +279,7 @@ public class PlayerHandler implements Runnable {
             controllerId = Server.getOldestMatchId(matchType);
             controller = Server.getMatchById(controllerId);
             //TODO see if this this works
-            if (controller.addPlayer(PlayerHandler.this)) {
+            if (controller.addPlayer(PlayerHandler.this, nickName)) {
                 Server.removeMatch(controllerId);
             }
         }
@@ -289,6 +288,7 @@ public class PlayerHandler implements Runnable {
     private class GetMatchById implements Message {
         Long matchId;
 
+
         public GetMatchById(Long matchId) {
             this.matchId = matchId;
         }
@@ -296,12 +296,13 @@ public class PlayerHandler implements Runnable {
         @Override
         public void execute() throws GameException {
             controller = Server.getMatchById(matchId);
-            if (controller.addPlayer(PlayerHandler.this)) {
+            if (controller.addPlayer(PlayerHandler.this, nickName)) {
                 Server.removeMatch(matchId);
             }
         }
     }
-    private class CreateMatch implements Message{
+
+    private class CreateMatch implements Message {
         MatchType matchType;
 
         public CreateMatch(MatchType matchType) {
@@ -311,21 +312,24 @@ public class PlayerHandler implements Runnable {
         @Override
         public void execute() throws GameException {
             controller = Server.createMatch(matchType);
-            controller.addPlayer(PlayerHandler.this);
+            controller.addPlayer(PlayerHandler.this, nickName);
         }
     }
-    private class OK implements Message{
+
+    private class OK implements Message {
         String ok;
+
         public OK() {
-            ok="Paolinok";
+            ok = "Paolinok";
         }
 
         @Override
-        public void execute() throws GameException {
+        public void execute() {
 
         }
     }
-    private class Error implements Message{
+
+    private class Error implements Message {
         String error;
 
         public Error(String error) {
@@ -333,7 +337,7 @@ public class PlayerHandler implements Runnable {
         }
 
         @Override
-        public void execute() throws GameException {
+        public void execute() {
 
         }
     }

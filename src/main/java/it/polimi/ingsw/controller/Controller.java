@@ -5,15 +5,13 @@ import it.polimi.ingsw.exceptions.GameException;
 import it.polimi.ingsw.exceptions.NotAllowedException;
 import it.polimi.ingsw.model.*;
 
-import java.io.ByteArrayOutputStream;
-import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Comparator;
 
-public class Controller {
+public class Controller implements GameListener {
     private final MatchType matchType;
     private final ArrayList<Player> playersList;
-    private final ArrayList<PlayerHandler> playerHandlers;
+    private final ArrayList<GameListener> playerHandlers;
     private final ArrayList<Team> teams;
     // This array is also used to represent the order of round
     private final ArrayList<Byte> playerOrder;
@@ -52,6 +50,7 @@ public class Controller {
         this.movesCounter = 0;
         this.cardPlayed = false;
     }
+
     //TODO Check a player can move only three/four students for turn
     public synchronized void move(Color color, int idGameComponent) throws GameException, NullPointerException {
         if (isPlanificationPhase) {
@@ -62,7 +61,7 @@ public class Controller {
             if (idGameComponent <= 0) throw new NotAllowedException("Can't move to the selected GameComponent");
             game.move(color, 0, idGameComponent);
             movesCounter++;
-            if (movesCounter == (matchType.nPlayers()%2 == 0 ? 3 : 4)) {
+            if (movesCounter == (matchType.nPlayers() % 2 == 0 ? 3 : 4)) {
                 movesCounter = 0;
                 nextActionPhase();
             }
@@ -71,11 +70,13 @@ public class Controller {
         }
 
     }
-    public synchronized void moveFromCloud(int idGameComponent) throws NotAllowedException, NullPointerException{
+
+    public synchronized void moveFromCloud(int idGameComponent) throws NotAllowedException, NullPointerException {
 
         if (actionPhase == 3) { // move students from cloud, destination is player entrance hall
-            game.moveFromCloud(idGameComponent);}
-        else
+            game.moveFromCloud(idGameComponent);
+            nextActionPhase();
+        } else
             throw new NotAllowedException("Wrong Phase");
     }
 
@@ -116,7 +117,7 @@ public class Controller {
         nextActionPhase();
     }
 
-    public synchronized boolean addPlayer(PlayerHandler handler) throws GameException {
+    public synchronized boolean addPlayer(GameListener handler, String nickName) throws GameException {
         if (playersList.size() == matchType.nPlayers()) {
             throw new NotAllowedException("Match is full");
 
@@ -124,7 +125,7 @@ public class Controller {
         int teamIndex = playersList.size() % teams.size(); // circular team selection
         int entranceHallSize = (teams.size() % 2 == 0) ? 7 : 9;
         Player newPlayer;
-        newPlayer = new Player(handler.getNickName(), teams.get(teamIndex), Wizard.values()[playersList.size()], entranceHallSize);
+        newPlayer = new Player(nickName, teams.get(teamIndex), Wizard.values()[playersList.size()], entranceHallSize);
 
         playersList.add(newPlayer);
         playerHandlers.add(handler);
@@ -136,8 +137,7 @@ public class Controller {
     }
 
     public void sendMessage(String me, String message) {
-        for (PlayerHandler h : playerHandlers)
-            if (!h.getNickName().equals(me)) h.sendString("message/" + me + ": " + message);
+        notifyClients(new TextMessageSC("[" + me + "]: " + message));
     }
 
     public synchronized void setCharacterInput(int input) throws GameException, NullPointerException {
@@ -171,28 +171,20 @@ public class Controller {
     }
 
     private void sendGameState() {
-        try {
-            ByteArrayOutputStream bo = new ByteArrayOutputStream();
-            ObjectOutputStream so = new ObjectOutputStream(bo);
-            so.writeObject(game);
-            so.flush();
-            notifyClients(bo.toString());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        notifyClients(new GameState(game));
     }
 
-    private void notifyClients(String message) {
-        for (PlayerHandler h : playerHandlers) {
-            h.sendString(message);
+    private void notifyClients(Message m) {
+        for (GameListener gl : playerHandlers) {
+            gl.update(m);
         }
     }
 
     private void startGame() {
         if (matchType.isExpert())
-            game = new ExpertGame( teams);
+            game = new ExpertGame(teams, this);
         else
-            game = new NormalGame( teams);
+            game = new NormalGame(teams, this);
         game.setCurrentPlayer(currentPlayerIndex);
         sendGameState();
     }
@@ -253,10 +245,7 @@ public class Controller {
 
     private void endGame() {
         ArrayList<Team> winners = game.calculateWinner();
-        StringBuilder message = new StringBuilder("end");
-        for (Team t : winners)
-            message.append("/").append(t.toString());
-        notifyClients(String.valueOf(message));
+        notifyClients(new EndGame(winners));
         if (winners.size() == 3) System.out.println("Paolino tvb <3");
     }
 
@@ -264,5 +253,59 @@ public class Controller {
     private void handleError(EndGameException e) {
         if (e.isEndInstantly()) endGame();
         else lastRound = true;
+    }
+
+    @Override
+    public void update(Message m) {
+        notifyClients(m);
+    }
+
+    private class DeltaUpdate implements Message {
+        GameDelta gameDelta;
+
+        public DeltaUpdate(GameDelta gameDelta) {
+            this.gameDelta = gameDelta;
+        }
+
+        @Override
+        public void execute() {
+        }
+    }
+
+    private class GameState implements Message {
+        Game game;
+
+        public GameState(Game game) {
+            this.game = game;
+        }
+
+        @Override
+        public void execute() {
+        }
+    }
+
+    private class EndGame implements Message {
+        ArrayList<Team> winners;
+
+        public EndGame(ArrayList<Team> winners) {
+            this.winners = winners;
+        }
+
+        @Override
+        public void execute() {
+        }
+    }
+
+    // message from server to clients
+    private class TextMessageSC implements Message {
+        String message;
+
+        public TextMessageSC(String message) {
+            this.message = message;
+        }
+
+        @Override
+        public void execute() {
+        }
     }
 }

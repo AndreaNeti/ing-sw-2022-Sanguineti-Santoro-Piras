@@ -8,6 +8,10 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class GameDelta implements Serializable {
+
+    // TODO add update() everywhere
+    private final GameListener listener;
+
     // GC index, students array
     private HashMap<Byte, byte[]> updatedGC;
     private HashMap<Byte, IslandData> updatedIslandData;
@@ -20,6 +24,9 @@ public class GameDelta implements Serializable {
 
     private Byte newCurrentPlayer, newMotherNaturePosition, playedCard;
 
+    public GameDelta(GameListener listener){
+        this.listener = listener;
+    }
     public void clear() {
         updatedGC = null;
         updatedIslandData = null;

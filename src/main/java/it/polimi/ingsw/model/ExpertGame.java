@@ -2,6 +2,7 @@ package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.controller.ExpertGameDelta;
 import it.polimi.ingsw.controller.GameDelta;
+import it.polimi.ingsw.controller.GameListener;
 import it.polimi.ingsw.exceptions.*;
 
 import java.util.ArrayList;
@@ -26,8 +27,8 @@ public class ExpertGame extends NormalGame {
     private transient byte chosenCharacter;
 
 
-    public ExpertGame( ArrayList<Team> teamList) {
-        super(teamList);
+    public ExpertGame(ArrayList<Team> teamList, GameListener listener) {
+        super(teamList, listener);
         byte numberOfPlayers=super.getPlayerSize();
         this.coinsLeft = (byte) (20 - numberOfPlayers);
         this.coinsPlayer = new byte[numberOfPlayers];
@@ -67,8 +68,8 @@ public class ExpertGame extends NormalGame {
     }
 
     @Override
-    protected GameDelta getNewGameDelta() {
-        return new ExpertGameDelta();
+    protected GameDelta getNewGameDelta(GameListener listener) {
+        return new ExpertGameDelta(listener);
     }
 
 
@@ -182,14 +183,7 @@ public class ExpertGame extends NormalGame {
 
     @Override
     public void setCurrentPlayer(Player p) {
-        this.extraInfluence = false;
-        this.towerInfluence = true;
-        this.extraSteps = false;
-        this.equalProfessorCalculation = false;
-        this.ignoredColorInfluence = null;
-        this.chosenCharacter = -1;
-        this.inputsCharacter.clear();
-        super.setCurrentPlayer(p);
+        setCurrentPlayer((byte) p.getWizard().ordinal());
     }
 
     @Override

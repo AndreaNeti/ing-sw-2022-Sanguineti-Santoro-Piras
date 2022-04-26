@@ -1,5 +1,7 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.controller.Controller;
+import it.polimi.ingsw.controller.MatchType;
 import it.polimi.ingsw.exceptions.EndGameException;
 import it.polimi.ingsw.exceptions.GameException;
 import it.polimi.ingsw.exceptions.NotAllowedException;
@@ -34,7 +36,7 @@ public class NormalGameTest {
         players2 = new ArrayList<>(2);
         players2.add(p1_2);
         players2.add(p2_2);
-        gameWith2 = new NormalGame( teamList2);
+        gameWith2 = new NormalGame(teamList2, new Controller(new MatchType((byte) 2, false)));
         gameWith2.setCurrentPlayer(p1_2);
 
 
@@ -58,7 +60,7 @@ public class NormalGameTest {
         players4.add(p2_4);
         players4.add(p3_4);
         players4.add(p4_4);
-        gameWith4 = new NormalGame( teamList4);
+        gameWith4 = new NormalGame(teamList4, new Controller(new MatchType((byte) 4, false)));
         gameWith4.setCurrentPlayer(p1_4);
 
         //create a game with 3 people
@@ -83,7 +85,7 @@ public class NormalGameTest {
         players3.add(p2_3);
         players3.add(p3_3);
 
-        gameWith3 = new NormalGame(teamList3);
+        gameWith3 = new NormalGame(teamList3, new Controller(new MatchType((byte) 3, false)));
         gameWith3.setCurrentPlayer(p1_3);
     }
 
@@ -99,9 +101,9 @@ public class NormalGameTest {
 
         assertEquals(gameWith2.getIslands().size(), 12);
         int[] color = {0, 0, 0, 0, 0};
-        int j=0;
+        int j = 0;
         for (Island i : gameWith2.getIslands()) {
-            assertEquals(i.getId(),j+2);
+            assertEquals(i.getId(), j + 2);
             int index = gameWith2.getIslands().indexOf(i);
             if (index == gameWith2.getMotherNaturePosition() || index == (gameWith2.getMotherNaturePosition() + 6) % 12) {
                 assertEquals(i.howManyStudents(), 0);
@@ -116,22 +118,22 @@ public class NormalGameTest {
             }
             j++;
         }
-        j=0;
+        j = 0;
         for (Cloud cloud : gameWith3.getClouds()) {
             assertEquals(cloud.howManyStudents(), 4);
-            assertEquals(cloud.getId(),j-1);
+            assertEquals(cloud.getId(), j - 1);
             j--;
         }
-        j=0;
+        j = 0;
         for (Cloud cloud : gameWith4.getClouds()) {
             assertEquals(cloud.howManyStudents(), 3);
-            assertEquals(cloud.getId(),j-1);
+            assertEquals(cloud.getId(), j - 1);
             j--;
         }
-        j=0;
+        j = 0;
         for (Cloud cloud : gameWith2.getClouds()) {
             assertEquals(cloud.howManyStudents(), 3);
-            assertEquals(cloud.getId(),j-1);
+            assertEquals(cloud.getId(), j - 1);
             j--;
         }
 
@@ -165,7 +167,7 @@ public class NormalGameTest {
 
     @Test
     void refillCloudTest() {
-        GameComponent islandTest = new Island( (byte) 4);
+        GameComponent islandTest = new Island((byte) 4);
         for (Cloud cloud : gameWith2.getClouds()) {
             try {
                 cloud.moveAll(islandTest);
@@ -184,6 +186,7 @@ public class NormalGameTest {
             assertEquals(cloud.howManyStudents(), 3);
         }
     }
+
     @Test
     void playCardTest() {
         assertEquals(gameWith2.getCurrentPlayer(), p1_2);
