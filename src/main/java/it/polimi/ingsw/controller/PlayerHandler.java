@@ -118,7 +118,7 @@ public class PlayerHandler implements Runnable {
         } catch (GameException | IllegalArgumentException ex) {
             handleError(ex);
         } catch (NullPointerException ex) {
-            this.sendString("error/Must join a match before");
+            this.sendString("error/Match is not yet started");
         }
     }
 
@@ -142,6 +142,9 @@ public class PlayerHandler implements Runnable {
 
 
     private class Quit implements Message {
+        public Quit() {
+        }
+
         @Override
         public void execute() {
             quit();
@@ -150,6 +153,10 @@ public class PlayerHandler implements Runnable {
 
     private class PlayCard implements Message {
         byte playedCard;
+
+        public PlayCard(byte playedCard) {
+            this.playedCard = playedCard;
+        }
 
         @Override
         public void execute() throws GameException {
@@ -160,6 +167,10 @@ public class PlayerHandler implements Runnable {
     private class ChooseCharacter implements Message {
         byte character;
 
+        public ChooseCharacter(byte character) {
+            this.character = character;
+        }
+
         @Override
         public void execute() throws GameException {
             controller.chooseCharacter(character);
@@ -169,14 +180,22 @@ public class PlayerHandler implements Runnable {
     private class SetCharacterInput implements Message {
         int input;
 
+        public SetCharacterInput(int input) {
+            this.input = input;
+        }
+
         @Override
         public void execute() throws GameException {
             controller.setCharacterInput(input);
         }
     }
 
-    private class TextMessage implements Message {
+    private class TextMessageCS implements Message {
         String message;
+
+        public TextMessageCS(String message) {
+            this.message = message;
+        }
 
         @Override
         public void execute()  {
@@ -186,6 +205,10 @@ public class PlayerHandler implements Runnable {
 
     private class MoveMotherNature implements Message {
         int moves;
+
+        public MoveMotherNature(int moves) {
+            this.moves = moves;
+        }
 
         @Override
         public void execute() throws GameException {
@@ -197,6 +220,11 @@ public class PlayerHandler implements Runnable {
         Color color;
         int idGameComponent;
 
+        public Move(Color color,int idGameComponent) {
+            this.color = color;
+            this.idGameComponent=idGameComponent;
+        }
+
         @Override
         public void execute() throws GameException {
             controller.move(color, idGameComponent);
@@ -204,6 +232,10 @@ public class PlayerHandler implements Runnable {
     }
 
     private class MoveFromCloud implements Message {
+        public MoveFromCloud(int idGameComponent) {
+            this.idGameComponent = idGameComponent;
+        }
+
         int idGameComponent;
 
         @Override
@@ -213,6 +245,9 @@ public class PlayerHandler implements Runnable {
     }
 
     private class PlayCharacter implements Message {
+        public PlayCharacter() {
+        }
+
         @Override
         public void execute() throws GameException {
             controller.playCharacter();
@@ -222,6 +257,10 @@ public class PlayerHandler implements Runnable {
     private class NickName implements Message {
         String nickName;
 
+        public NickName(String nickName) {
+            this.nickName = nickName;
+        }
+
         @Override
         public void execute()  {
             nickName(nickName);
@@ -230,6 +269,10 @@ public class PlayerHandler implements Runnable {
 
     private class GetOldestMatchId implements Message {
         MatchType matchType;
+
+        public GetOldestMatchId(MatchType matchType) {
+            this.matchType = matchType;
+        }
 
         @Override
         public void execute() throws GameException {
@@ -245,6 +288,11 @@ public class PlayerHandler implements Runnable {
 
     private class GetMatchById implements Message {
         Long matchId;
+
+        public GetMatchById(Long matchId) {
+            this.matchId = matchId;
+        }
+
         @Override
         public void execute() throws GameException {
             controller = Server.getMatchById(matchId);
@@ -256,10 +304,37 @@ public class PlayerHandler implements Runnable {
     private class CreateMatch implements Message{
         MatchType matchType;
 
+        public CreateMatch(MatchType matchType) {
+            this.matchType = matchType;
+        }
+
         @Override
         public void execute() throws GameException {
             controller = Server.createMatch(matchType);
             controller.addPlayer(PlayerHandler.this);
+        }
+    }
+    private class OK implements Message{
+        String ok;
+        public OK() {
+            ok="Paolinok";
+        }
+
+        @Override
+        public void execute() throws GameException {
+
+        }
+    }
+    private class Error implements Message{
+        String error;
+
+        public Error(String error) {
+            this.error = error;
+        }
+
+        @Override
+        public void execute() throws GameException {
+
         }
     }
 }
