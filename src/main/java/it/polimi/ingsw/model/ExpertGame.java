@@ -1,5 +1,7 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.controller.ExpertGameDelta;
+import it.polimi.ingsw.controller.GameDelta;
 import it.polimi.ingsw.exceptions.*;
 
 import java.util.ArrayList;
@@ -21,7 +23,7 @@ public class ExpertGame extends NormalGame {
     private transient boolean equalProfessorCalculation; //default false
     private Color ignoredColorInfluence;
     private byte prohibitionLeft;
-    private byte chosenCharacter;
+    private transient byte chosenCharacter;
 
 
     public ExpertGame(byte numberOfPlayers, ArrayList<Team> teamList) {
@@ -62,6 +64,12 @@ public class ExpertGame extends NormalGame {
         this.chosenCharacter = -1;
         this.inputsCharacter = new ArrayList<>();
     }
+
+    @Override
+    protected GameDelta getNewGameDelta() {
+        return new ExpertGameDelta();
+    }
+
 
     private CharacterCard factoryCharacter(byte i) throws UnexpectedValueException {
         charactersId.add(i);
@@ -116,7 +124,7 @@ public class ExpertGame extends NormalGame {
     public void move(Color color, int gameComponentSource, int gameComponentDestination) throws GameException {
         super.move(color, gameComponentSource, gameComponentDestination);
         if (gameComponentDestination == 1 && getCurrentPlayer().getLunchHall().howManyStudents(color) % 3 == 0) {
-            addCoinToPlayer(getCurrentPlayer());
+            addCoinToCurrentPlayer();
         }
     }
 
@@ -208,7 +216,7 @@ public class ExpertGame extends NormalGame {
         // player with the maximum number of students for the current color
         Player newOwner;
         for (Color c : Color.values()) {
-            currentOwner=null;
+            currentOwner = null;
             // player actually controlling that professor
             if (getProfessor()[c.ordinal()] != null)
                 currentOwner = getPlayer((byte) getProfessor()[c.ordinal()].ordinal());
@@ -232,26 +240,31 @@ public class ExpertGame extends NormalGame {
         }
     }
 
-    private void addCoinToPlayer(Player player) throws NotEnoughCoinsException {
+    private void addCoinToCurrentPlayer() throws NotEnoughCoinsException {
         if (coinsLeft == 0) throw new NotEnoughCoinsException();
-        else if (player != null) {
-            coinsPlayer[getPlayers().indexOf(player)]++;
-            coinsLeft--;
-        } else System.err.println("Can't add coin to null player");
+        byte playerIndex = getCurrentPlayerIndex();
+        coinsPlayer[playerIndex]++;
+        coinsLeft--;
+
+        // add to game delta
+        ((ExpertGameDelta) getGameDelta()).setUpdatedCoinPlayer(playerIndex, getCoinsPlayer(playerIndex));
+        ((ExpertGameDelta) getGameDelta()).setNewCoinsLeft(coinsLeft);
 
     }
 
-    private void removeCoinsToPlayer(Player player, byte coins) throws GameException {
+    private void removeCoinsToCurrentPlayer(byte coins) throws GameException {
         if (coins <= 0) throw new UnexpectedValueException();
-        if (player != null) {
-            // player's wizard is its index inside the list
-            int playerIndex = getCurrentPlayer().getWizard().ordinal();
-            if (coinsPlayer[playerIndex] >= coins) {
-                coinsPlayer[playerIndex] -= coins;
-                // add coins to player
-                coinsLeft += coins;
-            } else throw new NotEnoughCoinsException();
-        } else System.err.println("Can't remove coins to null player");
+        // player's wizard is its index inside the list
+        byte playerIndex = getCurrentPlayerIndex();
+        if (coinsPlayer[playerIndex] >= coins) {
+            coinsPlayer[playerIndex] -= coins;
+            // add coins to player
+            coinsLeft += coins;
+
+            // add to game delta
+            ((ExpertGameDelta) getGameDelta()).setUpdatedCoinPlayer(playerIndex, getCoinsPlayer(playerIndex));
+            ((ExpertGameDelta) getGameDelta()).setNewCoinsLeft(coinsLeft);
+        } else throw new NotEnoughCoinsException();
     }
 
     @Override
@@ -274,7 +287,7 @@ public class ExpertGame extends NormalGame {
                 coinsLeft--;
             }
             // remove coins to player
-            removeCoinsToPlayer(getCurrentPlayer(), charCost);
+            removeCoinsToCurrentPlayer(charCost);
 
             chosenCharacter = -1;
             inputsCharacter.clear();
@@ -321,7 +334,12 @@ public class ExpertGame extends NormalGame {
     }
 
     protected void setIgnoredColorInfluence(Color ignoredColorInfluence) {
-        this.ignoredColorInfluence = ignoredColorInfluence;
+        if (this.ignoredColorInfluence != ignoredColorInfluence) {
+            this.ignoredColorInfluence = ignoredColorInfluence;
+
+            // add to game delta
+            ((ExpertGameDelta) getGameDelta()).setIgnoredColorInfluence(ignoredColorInfluence);
+        }
     }
 
     protected void setEqualProfessorCalculation() {
@@ -333,25 +351,32 @@ public class ExpertGame extends NormalGame {
     }
 
     protected void setProhibition(int idIsland) throws NotAllowedException {
-        if (this.prohibitionLeft > 0)
+        if (this.prohibitionLeft > 0) {
             this.prohibitionLeft--;
-        else throw new NotAllowedException("No more prohibitions");
+
+            // add to game delta
+            ((ExpertGameDelta) getGameDelta()).setNewProhibitionsLeft(prohibitionLeft);
+        } else throw new NotAllowedException("No more prohibitions");
         try {
             getIslands().get(idIsland).addProhibitions((byte) 1);
-        } catch (UnexpectedValueException e) {
-            // Passing 1 as argument, 1 > 0 -> no exceptions
-            e.printStackTrace();
+        } catch (UnexpectedValueException ignored) {
         }
     }
 
     private void restoreProhibition() {
         if (this.prohibitionLeft < 4) {
             this.prohibitionLeft++;
+
+            // add to game delta
+            ((ExpertGameDelta) getGameDelta()).setNewProhibitionsLeft(prohibitionLeft);
         }
     }
 
-    public byte getCoinsPlayer(Player p) {
-        return coinsPlayer[getPlayers().indexOf(p)];
-        // return coinsPlayer[p.getWizard().ordinal()]
+    protected byte getCoinsPlayer(Player p) {
+        return coinsPlayer[p.getWizard().ordinal()];
+    }
+
+    protected byte getCoinsPlayer(byte playerIndex) {
+        return coinsPlayer[playerIndex];
     }
 }

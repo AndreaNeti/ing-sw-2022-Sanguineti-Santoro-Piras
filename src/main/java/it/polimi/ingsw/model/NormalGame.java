@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.controller.GameDelta;
 import it.polimi.ingsw.exceptions.EndGameException;
 import it.polimi.ingsw.exceptions.GameException;
 import it.polimi.ingsw.exceptions.NotAllowedException;
@@ -8,6 +9,7 @@ import it.polimi.ingsw.exceptions.NotExpertGameException;
 import java.util.ArrayList;
 
 public class NormalGame implements Game {
+    private final GameDelta gameDelta;
     private final ArrayList<Island> islands;
     private final ArrayList<Cloud> clouds;
     //professors are handled as a 5 player array: professors[i]=j means that professor i (it follows the ordinal of enum) is
@@ -22,6 +24,7 @@ public class NormalGame implements Game {
 
 
     public NormalGame(byte numberOfPlayers, ArrayList<Team> teamList) {
+        gameDelta = getNewGameDelta();
         this.islands = new ArrayList<>(12);
         for (int i = 0; i < 12; i++) {
             islands.add(new Island((byte) (i +2)));
@@ -46,6 +49,9 @@ public class NormalGame implements Game {
         }
     }
 
+    protected GameDelta getNewGameDelta() {
+        return new GameDelta();
+    }
     // checks if the islands before and after the selected island have the same team and in case merges them
 
     private void initializeMotherNature() {
@@ -73,25 +79,38 @@ public class NormalGame implements Game {
 
             island.merge(islandBefore);
             islands.remove(islandBeforeIndex);
-            if (islandBeforeIndex < motherNaturePosition)
-                motherNaturePosition--;
+
+            // add to game delta
+            gameDelta.addDeletedIslands(islandBefore);
+
+            if (islandBeforeIndex < motherNaturePosition) motherNaturePosition--;
             islandAfterIndex--;
         }
         if (islandAfter.getTeamColor() != null && islandAfter.getTeamColor().equals(island.getTeamColor())) {
             island.merge(islandAfter);
             islands.remove(islandAfterIndex);
-            if (islandAfterIndex <= motherNaturePosition)
-                motherNaturePosition--;
+
+            // add to game delta
+            gameDelta.addDeletedIslands(islandAfter);
+
+            if (islandAfterIndex <= motherNaturePosition) motherNaturePosition--;
         }
         if (motherNaturePosition < 0) motherNaturePosition = 0;
-        if (islands.size() <= 3)
-            throw new EndGameException(true);
+
+        // add to game delta
+        gameDelta.setNewMotherNaturePosition(motherNaturePosition);
+        gameDelta.addUpdatedGC(island);
+
+        if (islands.size() <= 3) throw new EndGameException(true);
 
     }
 
     protected void drawStudents(GameComponent gameComponent, byte students) throws EndGameException {
         try {
             bag.drawStudent(gameComponent, students);
+
+            // add to game delta
+            gameDelta.addUpdatedGC(gameComponent);
         } catch (GameException ignored) {
         }
     }
@@ -107,29 +126,34 @@ public class NormalGame implements Game {
     @Override
     public void playCard(byte card) throws GameException, EndGameException {
         getCurrentPlayer().useCard(card);
+
+        // add to game delta
+        gameDelta.setPlayedCard(card);
     }
 
-    private GameComponent getComponentById(int idGameComponent) throws NotAllowedException {
+    private GameComponent getComponentByIndex(int gameComponentIndex) throws NotAllowedException {
         //0 is for the entranceHall, 1 is for the LunchHall, negative numbers are for clouds, and from 2 is islands.
         //for island 2->0; 3->1;4->2 .....
-        if (idGameComponent < (-clouds.size()) || idGameComponent >= (islands.size() + 2)) {
-            throw new NotAllowedException("idGameComponent not valid");
+        if (gameComponentIndex < (-clouds.size()) || gameComponentIndex >= (islands.size() + 2)) {
+            throw new NotAllowedException("gameComponentIndex not valid");
         }
-        if (idGameComponent < 0)
-            return clouds.get(-idGameComponent - 1);
-        if (idGameComponent == 0)
-            return getCurrentPlayer().getEntranceHall();
-        if (idGameComponent == 1)
-            return getCurrentPlayer().getLunchHall();
-        return islands.get(idGameComponent - 2);
+        if (gameComponentIndex < 0) return clouds.get(-gameComponentIndex - 1);
+        if (gameComponentIndex == 0) return getCurrentPlayer().getEntranceHall();
+        if (gameComponentIndex == 1) return getCurrentPlayer().getLunchHall();
+        return islands.get(gameComponentIndex - 2);
     }
 
 
     @Override
     public void move(Color color, int gameComponentSource, int gameComponentDestination) throws GameException {
-        getComponentById(gameComponentSource).moveStudents(color, (byte) 1, getComponentById(gameComponentDestination));
-        if (gameComponentDestination == 1)
-            calculateProfessor();
+        GameComponent source = getComponentByIndex(gameComponentSource), destination = getComponentByIndex(gameComponentDestination);
+        source.moveStudents(color, (byte) 1, destination);
+
+        // add to game delta
+        gameDelta.addUpdatedGC(source);
+        gameDelta.addUpdatedGC(destination);
+
+        if (gameComponentDestination == 1) calculateProfessor();
     }
 
     // compares for each color the lunchHall of each player and then puts the player with the most students
@@ -145,8 +169,7 @@ public class NormalGame implements Game {
             if (getProfessor()[c.ordinal()] != null)
                 currentOwner = getPlayer((byte) getProfessor()[c.ordinal()].ordinal());
 
-            if (currentOwner != null)
-                max = currentOwner.getLunchHall().howManyStudents(c);
+            if (currentOwner != null) max = currentOwner.getLunchHall().howManyStudents(c);
             else max = 0;
             newOwner = currentOwner;
 
@@ -156,9 +179,12 @@ public class NormalGame implements Game {
                     newOwner = p;
                 }
             }
-            if (newOwner != null)
+            if (newOwner != null && !newOwner.equals(currentOwner)) {
                 professors[c.ordinal()] = newOwner.getWizard();
 
+                // add to game delta
+                gameDelta.addUpdatedProfessors(c, newOwner.getWizard());
+            }
         }
     }
 
@@ -172,6 +198,10 @@ public class NormalGame implements Game {
             throw new NotAllowedException("Moves can't be higher than the value of the card");
         motherNaturePosition += moves;
         motherNaturePosition %= islands.size();
+
+        // add to game delta
+        gameDelta.setNewMotherNaturePosition(motherNaturePosition);
+
         calculateInfluence(islands.get(motherNaturePosition));
     }
 
@@ -201,13 +231,26 @@ public class NormalGame implements Game {
         HouseColor oldTeamColor = island.getTeamColor();
         if (winnerColor != null && !winnerColor.equals(oldTeamColor)) {
             island.setTeamColor(winnerColor);
+
+            // add to game delta
+            gameDelta.addUpdatedGC(island);
+
             if (oldTeamColor != null) {
                 try {
-                    getTeams().get(oldTeamColor.ordinal()).addTowers(island.getNumber());
+                    Team oldTeam = getTeams().get(oldTeamColor.ordinal());
+                    oldTeam.addTowers(island.getNumber());
+
+                    // add to game delta
+                    gameDelta.updateTeamTowersLeft(oldTeamColor, oldTeam.getTowersLeft());
                 } catch (NotAllowedException ignored) {
                 }
             }
-            getTeams().get(winnerColor.ordinal()).removeTowers(island.getNumber());
+            Team winnerTeam = getTeams().get(winnerColor.ordinal());
+            winnerTeam.removeTowers(island.getNumber());
+
+            // add to game delta
+            gameDelta.updateTeamTowersLeft(winnerColor, winnerTeam.getTowersLeft());
+
             checkMerge(island);
         }
     }
@@ -269,10 +312,14 @@ public class NormalGame implements Game {
 
     @Override
     public void moveFromCloud(int cloudId) throws NotAllowedException {
-        if (cloudId >= 0 || cloudId < -getClouds().size() || getComponentById(cloudId).howManyStudents() == 0)
+        if (cloudId >= 0 || cloudId < -getClouds().size() || getComponentByIndex(cloudId).howManyStudents() == 0)
             throw new NotAllowedException("Can't move from the selected cloud");
-        GameComponent cloudSource = getComponentById(cloudId);
+        GameComponent cloudSource = getComponentByIndex(cloudId);
         cloudSource.moveAll(getCurrentPlayer().getEntranceHall());
+
+        // add to game delta
+        gameDelta.addUpdatedGC(cloudSource);
+        gameDelta.addUpdatedGC(getCurrentPlayer().getEntranceHall());
     }
 
     public ArrayList<Cloud> getClouds() {
@@ -284,16 +331,31 @@ public class NormalGame implements Game {
         return getPlayer(currentPlayer);
     }
 
+    protected byte getCurrentPlayerIndex(){
+        return currentPlayer;
+    }
+
     // TODO: pass by copy player, team etc..
 
     @Override
     public void setCurrentPlayer(Player p) {
-        this.currentPlayer = (byte) getPlayers().indexOf(p);
+        byte newCurrentPlayer = (byte) p.getWizard().ordinal();
+        if (newCurrentPlayer != this.currentPlayer) {
+            this.currentPlayer = newCurrentPlayer;
+
+            // add to game delta
+            gameDelta.setNewCurrentPlayer(currentPlayer);
+        }
     }
 
     @Override
     public void setCurrentPlayer(byte currentPlayer) {
-        this.currentPlayer = currentPlayer;
+        if (currentPlayer != this.currentPlayer) {
+            this.currentPlayer = currentPlayer;
+
+            // add to game delta
+            gameDelta.setNewCurrentPlayer(currentPlayer);
+        }
     }
 
     protected Player getPlayer(byte b) {
@@ -308,6 +370,16 @@ public class NormalGame implements Game {
             for (Team t : teams)
                 ret.add(t.getPlayers().get(i));
         return ret;
+    }
+
+    public GameDelta getAndClearGameDelta() {
+        GameDelta copy = getGameDelta();
+        gameDelta.clear();
+        return copy;
+    }
+
+    protected GameDelta getGameDelta() {
+        return this.gameDelta;
     }
 
     protected int getPlayerSize() {
