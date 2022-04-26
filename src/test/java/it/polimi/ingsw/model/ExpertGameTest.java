@@ -204,48 +204,55 @@ public class ExpertGameTest {
                 }
             }
             gameWith2.chooseCharacter((byte) 0);
-            try {
-                for (int i = 0; i < 3; i++) {
-                    gameWith2.setCharacterInput(i);
-                }
-            } catch (GameException e) {
-                fail();
-            }
-            assertThrows(UnexpectedValueException.class, () -> gameWith2.playCharacter());
-            try {
-                for (int i = 0; i < 5; i++) {
-                    gameWith2.setCharacterInput(i);
-                }
-            } catch (GameException e) {
-                fail();
-            }
-            assertThrows(UnexpectedValueException.class, () -> gameWith2.playCharacter());
-            try {
-                for (int i = 0; i < 10; i++) {
-                    gameWith2.setCharacterInput(i);
-                }
-            } catch (GameException e) {
-                fail();
-            }
-            assertThrows(UnexpectedValueException.class, () -> gameWith2.playCharacter());
-            try {
-                gameWith2.playCharacter();
-            } catch (UnexpectedValueException | EndGameException e) {
-                gameWith2.setCharacterInput(0);
-                try {
-                    gameWith2.playCharacter();
-                } catch (GameException | EndGameException e1) {
-                    gameWith2.setCharacterInput(0);
-                    gameWith2.setCharacterInput(1);
-                    try {
-                        gameWith2.playCharacter();
-                    } catch (GameException | EndGameException e2) {
-                        fail();
-                    }
-                }
+        } catch (GameException e) {
+            fail();
+        }
+        try {
+            for (int i = 0; i < 3; i++) {
+                gameWith2.setCharacterInput(i);
             }
         } catch (GameException e) {
             fail();
+        }
+        assertThrows(UnexpectedValueException.class, () -> gameWith2.playCharacter());
+        try {
+            for (int i = 0; i < 5; i++) {
+                gameWith2.setCharacterInput(i);
+            }
+        } catch (GameException e) {
+            fail();
+        }
+        assertThrows(UnexpectedValueException.class, () -> gameWith2.playCharacter());
+        try {
+            for (int i = 0; i < 10; i++) {
+                gameWith2.setCharacterInput(i);
+            }
+        } catch (GameException e) {
+            fail();
+        }
+        assertThrows(UnexpectedValueException.class, () -> gameWith2.playCharacter());
+        try {
+            gameWith2.playCharacter();
+        } catch (GameException | EndGameException e) {
+            // additional check if card selected is c0, c6 or c10 and it does not contain the selected color
+            boolean worked = false;
+            for (int i = 0; i < 5 && !worked; i++) {
+                try {
+                    gameWith2.setCharacterInput(i);
+                    gameWith2.playCharacter();
+                    worked = true;
+                } catch (GameException | EndGameException e1) {
+                    try {
+                        gameWith2.setCharacterInput(i);
+                        gameWith2.setCharacterInput(1);
+                        gameWith2.playCharacter();
+                        worked = true;
+                    } catch (GameException | EndGameException ignored) {
+
+                    }
+                }
+            }
+            if (!worked) fail();
         }
         assertThrows(NotAllowedException.class, () -> gameWith2.playCharacter(), "Cannot play character card");
     }
@@ -301,9 +308,9 @@ public class ExpertGameTest {
                 p2_3.getEntranceHall().moveStudents(color, p2_3.getEntranceHall().howManyStudents(color), gameWith3.getBag());
                 p3_3.getEntranceHall().moveStudents(color, p3_3.getEntranceHall().howManyStudents(color), gameWith3.getBag());
             }
-            gameWith3.getBag().moveStudents(Color.RED, (byte) 6, p1_3.getEntranceHall());
-            gameWith3.getBag().moveStudents(Color.BLUE, (byte) 6, p2_3.getEntranceHall());
-            gameWith3.getBag().moveStudents(Color.YELLOW, (byte) 6, p3_3.getEntranceHall());
+            gameWith3.getBag().moveStudents(Color.RED, (byte) 4, p1_3.getEntranceHall());
+            gameWith3.getBag().moveStudents(Color.BLUE, (byte) 4, p2_3.getEntranceHall());
+            gameWith3.getBag().moveStudents(Color.YELLOW, (byte) 4, p3_3.getEntranceHall());
 
             for (Player p : players3) {
                 gameWith3.setCurrentPlayer(p);
@@ -343,7 +350,7 @@ public class ExpertGameTest {
         // p1_3 team is t1
         assertEquals(gameWith3.getIslands().get(0).getTeamColor(), t1.getHouseColor());
         try {
-            gameWith3.getBag().moveStudents(Color.BLUE, (byte) 10, gameWith3.getIslands().get(0));
+            gameWith3.getBag().moveStudents(Color.BLUE, (byte) 7, gameWith3.getIslands().get(0));
             gameWith3.calculateInfluence(gameWith3.getIslands().get(0));
         } catch (GameException | EndGameException e) {
             fail();

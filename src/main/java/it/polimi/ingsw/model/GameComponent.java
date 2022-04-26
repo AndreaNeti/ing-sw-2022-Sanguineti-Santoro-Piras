@@ -85,7 +85,7 @@ public abstract class GameComponent implements Serializable {
                 }
             }
         } else {
-            System.out.println("Bravo, ti sei impegnato per fare questa cacata. Trovati qualcos'altro da fare");
+            System.out.println("Bravo, ti sei impegnato per fare questa mossa. Trovati qualcos'altro da fare");
         }
     }
 
