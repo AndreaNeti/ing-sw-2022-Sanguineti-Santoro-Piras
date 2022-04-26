@@ -83,7 +83,7 @@ public abstract class GameComponent implements Serializable {
                 }
             }
         } else {
-            System.out.println("Bravo, ti sei impegnato per fare questa cacata. Trovati qualcos'altro da fare");
+            System.out.println("Bravo, ti sei impegnato per fare questa mossa. Trovati qualcos'altro da fare");
         }
     }
 
@@ -116,4 +116,5 @@ public abstract class GameComponent implements Serializable {
         GameComponent that = (GameComponent) o;
         return maxStudents == that.maxStudents && Arrays.equals(students, that.students);
     }
+
 }

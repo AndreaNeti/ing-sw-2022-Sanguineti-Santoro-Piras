@@ -39,6 +39,7 @@ class CharacterCardTest {
         try {
             for (Color c : Color.values()) {
                 p1.getEntranceHall().moveStudents(c, p1.getEntranceHall().howManyStudents(c), game.getBag());
+                p2.getEntranceHall().moveStudents(c, p2.getEntranceHall().howManyStudents(c), game.getBag());
             }
             for (Color c : Color.values()) {
                 game.getBag().moveStudents(c, (byte) 3, p1.getEntranceHall());
@@ -408,7 +409,7 @@ class CharacterCardTest {
         }
         game.setCurrentPlayer(p1);
         try {
-            game.getIslands().get(4).moveAll(game.getIslands().get(1));
+            game.getIslands().get(4).moveAll(game.getBag());
             Color color;
 //            for (int i = 0; i < 3; i++) {
 //                color = Color.values()[i];
@@ -423,7 +424,7 @@ class CharacterCardTest {
 //                    int sum = p1.getLunchHall().howManyStudents(color) - p2.getLunchHall().howManyStudents(color) + 1;
 //                    game.getBag().moveStudents(color, (byte) sum, p2.getLunchHall());
 //                }
-                game.getBag().moveStudents(color, (byte) 5, p2.getLunchHall());
+                game.getBag().moveStudents(color, (byte) 4, p2.getLunchHall());
             }
             game.calculateProfessor();
             for (int i = 0; i < 5; i++) {
