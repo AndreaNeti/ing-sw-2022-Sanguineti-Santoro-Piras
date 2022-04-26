@@ -18,14 +18,13 @@ public class Controller {
     // This array is also used to represent the order of round
     private final ArrayList<Byte> playerOrder;
     private Game game;
-    private Player currentPlayer;
     // current phase is true in the planification phase, false during the action phase
     private boolean isPlanificationPhase;
     /* it's a number that goes from 1 to 3, it represents the subsection of the action phase
     1-move 3-4 students; 2-move mother nature(calculate influence and merge); 3-drawStudent from cloud*/
     private byte actionPhase;
     //it's the index of playerOrder: it goes from 0 to players.size() and when it's 3 it changes phase
-    private byte roundIndex;
+    private byte roundIndex, currentPlayerIndex;
     private boolean lastRound;
 
     public Controller(MatchType matchType) {
@@ -44,6 +43,7 @@ public class Controller {
         this.isPlanificationPhase = true;
         this.actionPhase = 0;
         this.roundIndex = 0;
+        this.currentPlayerIndex = 0;
         this.lastRound = false;
     }
 
@@ -52,7 +52,6 @@ public class Controller {
         int idGameComponent = Integer.parseInt(idGameComponentString);
         if (isPlanificationPhase) {
             throw new NotAllowedException("Not in action phase");
-
         }
 
         if (actionPhase == 1) {
@@ -77,16 +76,11 @@ public class Controller {
         ArrayList<Byte> playedCards = new ArrayList<>();
         //loop where I put in playedCard the previous card played by other Player.If it's current Player
         //it breaks the loop 'cause there aren't other previous player
-        for (int i = 0; i < playersList.size(); i++) {
-            Player player = playersList.get((playerOrder.get(0) + roundIndex + i) % playersList.size());
-            if (currentPlayer.equals(player)) {
-                break;
-            } else {
-                playedCards.add(player.getPlayedCard());
-            }
+        for (int i = 0; i < roundIndex; i++) {
+            playedCards.add(playersList.get((playerOrder.get(0) + i) % playersList.size()).getPlayedCard());
         }
 
-        if (currentPlayer.canPlayCard(playedCards, value)) {
+        if (playersList.get(currentPlayerIndex).canPlayCard(playedCards, value)) {
             try {
                 game.playCard(value);
             } catch (EndGameException e) {
@@ -102,7 +96,6 @@ public class Controller {
         int i = Integer.parseInt(moves);
         if (isPlanificationPhase || actionPhase != 2) {
             throw new NotAllowedException("Not allowed in this phase");
-
         }
         try {
             game.moveMotherNature(i);
@@ -144,17 +137,14 @@ public class Controller {
         int input = Integer.parseInt(inputString);
         if (isPlanificationPhase) {
             throw new NotAllowedException("Not in action phase");
-
         }
         game.setCharacterInput(input);
-
     }
 
     public synchronized void chooseCharacter(String characterString) throws GameException {
         byte character = Byte.parseByte(characterString);
         if (isPlanificationPhase) {
             throw new NotAllowedException("Not in action phase");
-
         }
         game.chooseCharacter(character);
 
@@ -194,26 +184,27 @@ public class Controller {
             game = new ExpertGame(matchType.nPlayers(), teams);
         else
             game = new NormalGame(matchType.nPlayers(), teams);
-        currentPlayer = playersList.get(0);
-        game.setCurrentPlayer(currentPlayer);
+        game.setCurrentPlayer(currentPlayerIndex);
         sendGameState();
     }
 
     private void nextPlayer() {
-        int index;
         roundIndex++;
         if (roundIndex >= playersList.size()) nextPhase();
+        if (!isPlanificationPhase)
+            actionPhase = 1;
+        currentPlayerIndex = getCurrentPlayerIndex();
+        game.setCurrentPlayer(currentPlayerIndex);
+    }
+
+    private byte getCurrentPlayerIndex() {
         if (isPlanificationPhase) {
             // is planification phase, clockwise order
-            index = (playerOrder.get(0) + roundIndex) % playersList.size();
+            return (byte) ((playerOrder.get(0) + roundIndex) % playersList.size());
         } else {
             // action phase, follow the playerOrder
-            index = playerOrder.get(roundIndex);
-            actionPhase = 1;
+            return playerOrder.get(roundIndex);
         }
-
-        currentPlayer = playersList.get(index);
-        game.setCurrentPlayer(currentPlayer);
     }
 
     private void nextPhase() {

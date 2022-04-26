@@ -143,7 +143,7 @@ public class NormalGame implements Game {
             currentOwner = null;
             // player actually controlling that professor
             if (getProfessor()[c.ordinal()] != null)
-                currentOwner = getPlayers().get(getProfessor()[c.ordinal()].ordinal());
+                currentOwner = getPlayer((byte) getProfessor()[c.ordinal()].ordinal());
 
             if (currentOwner != null)
                 max = currentOwner.getLunchHall().howManyStudents(c);
@@ -289,6 +289,11 @@ public class NormalGame implements Game {
     @Override
     public void setCurrentPlayer(Player p) {
         this.currentPlayer = (byte) getPlayers().indexOf(p);
+    }
+
+    @Override
+    public void setCurrentPlayer(byte currentPlayer) {
+        this.currentPlayer = currentPlayer;
     }
 
     protected Player getPlayer(byte b) {

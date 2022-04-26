@@ -183,6 +183,18 @@ public class ExpertGame extends NormalGame {
     }
 
     @Override
+    public void setCurrentPlayer(byte currentPlayerIndex) {
+        this.extraInfluence = false;
+        this.towerInfluence = true;
+        this.extraSteps = false;
+        this.equalProfessorCalculation = false;
+        this.ignoredColorInfluence = null;
+        this.chosenCharacter = -1;
+        this.inputsCharacter.clear();
+        super.setCurrentPlayer(currentPlayerIndex);
+    }
+
+    @Override
     protected boolean checkMoveMotherNature(int moves) {
         if (!extraSteps)
             return super.checkMoveMotherNature(moves);
@@ -198,7 +210,7 @@ public class ExpertGame extends NormalGame {
             currentOwner=null;
             // player actually controlling that professor
             if (getProfessor()[c.ordinal()] != null)
-                currentOwner = getPlayers().get(getProfessor()[c.ordinal()].ordinal());
+                currentOwner = getPlayer((byte) getProfessor()[c.ordinal()].ordinal());
 
             if (currentOwner != null)
                 max = currentOwner.getLunchHall().howManyStudents(c);

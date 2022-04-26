@@ -13,6 +13,7 @@ public interface Game extends Serializable {
     void playCard(byte card) throws GameException, EndGameException;
 
     void setCurrentPlayer(Player p);
+    void setCurrentPlayer(byte currentPlayerIndex);
 
     void moveMotherNature(int moves) throws NotAllowedException, EndGameException;
 
