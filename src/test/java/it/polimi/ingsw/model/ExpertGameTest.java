@@ -34,7 +34,7 @@ public class ExpertGameTest {
         players2 = new ArrayList<>(2);
         players2.add(p1_2);
         players2.add(p2_2);
-        gameWith2 = new ExpertGame((byte) 2, teamList2);
+        gameWith2 = new ExpertGame(teamList2);
         gameWith2.setCurrentPlayer(p1_2);
 
 
@@ -60,7 +60,7 @@ public class ExpertGameTest {
         players4.add(p4_4);
 
 
-        gameWith4 = new ExpertGame((byte) 4, teamList4);
+        gameWith4 = new ExpertGame(teamList4);
         gameWith4.setCurrentPlayer(p1_4);
 
         //create a game with 3 people
@@ -85,7 +85,7 @@ public class ExpertGameTest {
         players3.add(p2_3);
         players3.add(p3_3);
 
-        gameWith3 = new ExpertGame((byte) 3, teamList3);
+        gameWith3 = new ExpertGame( teamList3);
         gameWith3.setCurrentPlayer(p1_3);
 
     }

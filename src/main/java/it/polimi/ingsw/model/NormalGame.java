@@ -23,18 +23,22 @@ public class NormalGame implements Game {
     private byte currentPlayer;
 
 
-    public NormalGame(byte numberOfPlayers, ArrayList<Team> teamList) {
+    public NormalGame(ArrayList<Team> teamList) {
         gameDelta = getNewGameDelta();
-        this.islands = new ArrayList<>(12);
-        for (int i = 0; i < 12; i++) {
-            islands.add(new Island((byte) (i +2)));
-        }
-        this.clouds = new ArrayList<>(numberOfPlayers);
-        for (int i = 0; i < numberOfPlayers; i++) {
-            clouds.add(new Cloud(numberOfPlayers,(byte) (-(i+1))));
-        }
-        this.professors = new Wizard[Color.values().length];
         this.teams = new ArrayList<>(teamList);
+        byte numberOfPlayers = this.getPlayerSize();
+
+        this.islands = new ArrayList<>(12);
+        for (byte i = 2; i < 14; i++) {
+            islands.add(new Island(i));
+        }
+
+        this.clouds = new ArrayList<>(numberOfPlayers);
+        for (byte i = -1; i >= -numberOfPlayers; i--) {
+            clouds.add(new Cloud(numberOfPlayers, i));
+        }
+
+        this.professors = new Wizard[Color.values().length];
 
         this.bag = new Bag((byte) 2, (byte) 69);
         initializeMotherNature();
@@ -331,7 +335,7 @@ public class NormalGame implements Game {
         return getPlayer(currentPlayer);
     }
 
-    protected byte getCurrentPlayerIndex(){
+    protected byte getCurrentPlayerIndex() {
         return currentPlayer;
     }
 
@@ -382,8 +386,8 @@ public class NormalGame implements Game {
         return this.gameDelta;
     }
 
-    protected int getPlayerSize() {
-        return teams.size() * teams.get(0).getPlayers().size();
+    protected byte getPlayerSize() {
+        return (byte) (teams.size() * teams.get(0).getPlayers().size());
     }
 
     protected ArrayList<Team> getTeams() {

@@ -7,8 +7,8 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class entranceHallTest {
-    EntranceHall entranceHall = new EntranceHall(9,(byte)0);
+class EntranceHallTest {
+    EntranceHall entranceHall =  new EntranceHall(9,(byte)0);
     Bag bag=new Bag((byte) 10, (byte) 69);
     @Test
     public void entranceTest() {

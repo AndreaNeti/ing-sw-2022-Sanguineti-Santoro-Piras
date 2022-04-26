@@ -16,6 +16,7 @@ public class PlayerHandler implements Runnable {
     private String nickName;
     private boolean nickNameAlreadySet;
     private Controller controller;
+    private boolean quit;
 
     public PlayerHandler(Socket socket) {
         if (socket == null) throw new NullPointerException();
@@ -38,7 +39,7 @@ public class PlayerHandler implements Runnable {
             do {
                 command = in.readLine();
                 callMethod(command);
-            } while (!command.equals("quit"));
+            } while (!quit);
 
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -82,8 +83,8 @@ public class PlayerHandler implements Runnable {
                 case "setCharacterInput" -> controller.setCharacterInput(Integer.parseInt(tokens.get(0)));
                 case "sendMessage" -> controller.sendMessage(nickName, tokens.get(0));
                 case "moveMotherNature" -> controller.moveMotherNature(Integer.parseInt(tokens.get(0)));
-                case "move" -> controller.move(Color.valueOf(tokens.get(0)),Integer.parseInt(tokens.get(1)));
-                case "moveFromCloud"-> controller.moveFromCloud(Integer.parseInt(tokens.get(0)));
+                case "move" -> controller.move(Color.valueOf(tokens.get(0)), Integer.parseInt(tokens.get(1)));
+                case "moveFromCloud" -> controller.moveFromCloud(Integer.parseInt(tokens.get(0)));
                 case "playCharacter" -> controller.playCharacter();
 
                 //Server methods
@@ -131,9 +132,137 @@ public class PlayerHandler implements Runnable {
         this.nickNameAlreadySet = true;
     }
 
+    public void quit() {
+        quit = true;
+    }
+
     public String getNickName() {
         return nickName;
     }
+
+
+    private class Quit implements Message {
+        @Override
+        public void execute() {
+            quit();
+        }
+    }
+
+    private class PlayCard implements Message {
+        byte playedCard;
+
+        @Override
+        public void execute() throws GameException {
+            controller.playCard(playedCard);
+        }
+    }
+
+    private class ChooseCharacter implements Message {
+        byte character;
+
+        @Override
+        public void execute() throws GameException {
+            controller.chooseCharacter(character);
+        }
+    }
+
+    private class SetCharacterInput implements Message {
+        int input;
+
+        @Override
+        public void execute() throws GameException {
+            controller.setCharacterInput(input);
+        }
+    }
+
+    private class TextMessage implements Message {
+        String message;
+
+        @Override
+        public void execute()  {
+            controller.sendMessage(nickName, message);
+        }
+    }
+
+    private class MoveMotherNature implements Message {
+        int moves;
+
+        @Override
+        public void execute() throws GameException {
+            controller.moveMotherNature(moves);
+        }
+    }
+
+    private class Move implements Message {
+        Color color;
+        int idGameComponent;
+
+        @Override
+        public void execute() throws GameException {
+            controller.move(color, idGameComponent);
+        }
+    }
+
+    private class MoveFromCloud implements Message {
+        int idGameComponent;
+
+        @Override
+        public void execute() throws GameException {
+            controller.moveFromCloud(idGameComponent);
+        }
+    }
+
+    private class PlayCharacter implements Message {
+        @Override
+        public void execute() throws GameException {
+            controller.playCharacter();
+        }
+    }
+
+    private class NickName implements Message {
+        String nickName;
+
+        @Override
+        public void execute()  {
+            nickName(nickName);
+        }
+    }
+
+    private class GetOldestMatchId implements Message {
+        MatchType matchType;
+
+        @Override
+        public void execute() throws GameException {
+            Long controllerId;
+            controllerId = Server.getOldestMatchId(matchType);
+            controller = Server.getMatchById(controllerId);
+            //TODO see if this this works
+            if (controller.addPlayer(PlayerHandler.this)) {
+                Server.removeMatch(controllerId);
+            }
+        }
+    }
+
+    private class GetMatchById implements Message {
+        Long matchId;
+        @Override
+        public void execute() throws GameException {
+            controller = Server.getMatchById(matchId);
+            if (controller.addPlayer(PlayerHandler.this)) {
+                Server.removeMatch(matchId);
+            }
+        }
+    }
+    private class CreateMatch implements Message{
+        MatchType matchType;
+
+        @Override
+        public void execute() throws GameException {
+            controller = Server.createMatch(matchType);
+            controller.addPlayer(PlayerHandler.this);
+        }
+    }
 }
+
 
 

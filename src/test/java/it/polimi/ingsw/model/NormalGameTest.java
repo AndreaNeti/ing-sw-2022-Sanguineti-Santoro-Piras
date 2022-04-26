@@ -34,7 +34,7 @@ public class NormalGameTest {
         players2 = new ArrayList<>(2);
         players2.add(p1_2);
         players2.add(p2_2);
-        gameWith2 = new NormalGame((byte) 2, teamList2);
+        gameWith2 = new NormalGame( teamList2);
         gameWith2.setCurrentPlayer(p1_2);
 
 
@@ -58,7 +58,7 @@ public class NormalGameTest {
         players4.add(p2_4);
         players4.add(p3_4);
         players4.add(p4_4);
-        gameWith4 = new NormalGame((byte) 4, teamList4);
+        gameWith4 = new NormalGame( teamList4);
         gameWith4.setCurrentPlayer(p1_4);
 
         //create a game with 3 people
@@ -83,7 +83,7 @@ public class NormalGameTest {
         players3.add(p2_3);
         players3.add(p3_3);
 
-        gameWith3 = new NormalGame((byte) 3, teamList3);
+        gameWith3 = new NormalGame(teamList3);
         gameWith3.setCurrentPlayer(p1_3);
     }
 

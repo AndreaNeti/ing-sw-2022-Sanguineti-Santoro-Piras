@@ -190,9 +190,9 @@ public class Controller {
 
     private void startGame() {
         if (matchType.isExpert())
-            game = new ExpertGame(matchType.nPlayers(), teams);
+            game = new ExpertGame( teams);
         else
-            game = new NormalGame(matchType.nPlayers(), teams);
+            game = new NormalGame( teams);
         game.setCurrentPlayer(currentPlayerIndex);
         sendGameState();
     }

@@ -14,7 +14,7 @@ public class ExpertGame extends NormalGame {
     private transient final ArrayList<CharacterCard> characters;
     private final Set<Byte> charactersId;
     private transient final ArrayList<Integer> inputsCharacter;
-    //TODO put the control that i c3an only use one character card for turn
+    //TODO put the control that i can only use one character card for turn
     private final boolean[] playedCharacters;
     private byte coinsLeft;
     private transient boolean extraInfluence; //default false
@@ -26,8 +26,9 @@ public class ExpertGame extends NormalGame {
     private transient byte chosenCharacter;
 
 
-    public ExpertGame(byte numberOfPlayers, ArrayList<Team> teamList) {
-        super(numberOfPlayers, teamList);
+    public ExpertGame( ArrayList<Team> teamList) {
+        super(teamList);
+        byte numberOfPlayers=super.getPlayerSize();
         this.coinsLeft = (byte) (20 - numberOfPlayers);
         this.coinsPlayer = new byte[numberOfPlayers];
         for (byte i = 0; i < numberOfPlayers; i++)
