@@ -3,6 +3,7 @@ package it.polimi.ingsw.controller;
 import it.polimi.ingsw.exceptions.GameException;
 import it.polimi.ingsw.exceptions.NotAllowedException;
 import it.polimi.ingsw.exceptions.UnexpectedValueException;
+import it.polimi.ingsw.model.Color;
 
 import java.io.*;
 import java.net.Socket;
@@ -76,21 +77,20 @@ public class PlayerHandler implements Runnable {
                 throw new NotAllowedException("Must set a nickName first");
             switch (methodString) {
                 //Controller methods
-                case "playCard" -> controller.playCard(tokens.get(0));
-                case "chooseCharacter" -> controller.chooseCharacter(tokens.get(0));
-                case "setCharacterInput" -> controller.setCharacterInput(tokens.get(0));
+                case "playCard" -> controller.playCard(Byte.parseByte(tokens.get(0)));
+                case "chooseCharacter" -> controller.chooseCharacter(Byte.parseByte(tokens.get(0)));
+                case "setCharacterInput" -> controller.setCharacterInput(Integer.parseInt(tokens.get(0)));
                 case "sendMessage" -> controller.sendMessage(nickName, tokens.get(0));
-                case "moveMotherNature" -> controller.moveMotherNature(tokens.get(0));
-                case "move" -> controller.move(tokens.get(0), tokens.get(1));
+                case "moveMotherNature" -> controller.moveMotherNature(Integer.parseInt(tokens.get(0)));
+                case "move" -> controller.move(Color.valueOf(tokens.get(0)),Integer.parseInt(tokens.get(1)));
+                case "moveFromCloud"-> controller.moveFromCloud(Integer.parseInt(tokens.get(0)));
                 case "playCharacter" -> controller.playCharacter();
 
-                //Player methods
+                //Server methods
                 case "nickName" -> {
                     Server.setNickname(tokens.get(0));
                     this.nickName(tokens.get(0));
                 }
-
-                //Server methods
                 case "getOldestMatchId" -> {
                     Long controllerId;
                     controllerId = Server.getOldestMatchId(new MatchType(Byte.parseByte(tokens.get(0)), Boolean.parseBoolean(tokens.get(1))));
@@ -109,18 +109,19 @@ public class PlayerHandler implements Runnable {
                     controller = Server.createMatch(new MatchType(Byte.parseByte(tokens.get(0)), Boolean.parseBoolean(tokens.get(1))));
                     controller.addPlayer(this);
                 }
+                //TODO ignore notExpertGameException
                 default -> throw new UnexpectedValueException();
             }
             this.sendString("ok");
 
-        } catch (GameException ex) {
+        } catch (GameException | IllegalArgumentException ex) {
             handleError(ex);
         } catch (NullPointerException ex) {
             this.sendString("error/Must join a match before");
         }
     }
 
-    private void handleError(GameException e) {
+    private void handleError(Exception e) {
         this.sendString("error/" + e.getMessage());
     }
 

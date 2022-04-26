@@ -164,7 +164,6 @@ public class NormalGameTest {
             assertEquals(cloud.howManyStudents(), 3);
         }
     }
-
     @Test
     void playCardTest() {
         assertEquals(gameWith2.getCurrentPlayer(), p1_2);
@@ -402,8 +401,4 @@ public class NormalGameTest {
         assertThrows(NotExpertGameException.class, () -> gameWith2.playCharacter());
     }
 
-    @Test
-    void moveFromCloud() {
-
-    }
 }

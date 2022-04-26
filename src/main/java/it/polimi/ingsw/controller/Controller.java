@@ -47,9 +47,7 @@ public class Controller {
         this.lastRound = false;
     }
 
-    public synchronized void move(String colorString, String idGameComponentString) throws GameException {
-        Color color = Color.valueOf(colorString);
-        int idGameComponent = Integer.parseInt(idGameComponentString);
+    public synchronized void move(Color color, int idGameComponent) throws GameException {
         if (isPlanificationPhase) {
             throw new NotAllowedException("Not in action phase");
         }
@@ -57,18 +55,23 @@ public class Controller {
         if (actionPhase == 1) {
             if (idGameComponent <= 0) throw new NotAllowedException("Can't move to the selected GameComponent");
             game.move(color, 0, idGameComponent);
-        } else if (actionPhase == 3) { // move students from cloud, destination is player entrance hall
-            game.moveFromCloud(idGameComponent);
         } else {
             throw new NotAllowedException("Wrong Phase");
         }
 
         nextActionPhase();
     }
+    public synchronized void moveFromCloud( int idGameComponent) throws NotAllowedException{
+
+        if (actionPhase == 3) { // move students from cloud, destination is player entrance hall
+            game.moveFromCloud(idGameComponent);}
+        else
+            throw new NotAllowedException("Wrong Phase");
+    }
 
     //the value here need to go from 1 to 10
-    public synchronized void playCard(String valueString) throws GameException {
-        byte value = Byte.parseByte(valueString);
+    public synchronized void playCard(byte value) throws GameException {
+
         if (!isPlanificationPhase) {
             throw new NotAllowedException("Not in planification phase");
 
@@ -92,8 +95,7 @@ public class Controller {
         }
     }
 
-    public synchronized void moveMotherNature(String moves) throws GameException {
-        int i = Integer.parseInt(moves);
+    public synchronized void moveMotherNature(int i) throws GameException {
         if (isPlanificationPhase || actionPhase != 2) {
             throw new NotAllowedException("Not allowed in this phase");
         }
@@ -133,16 +135,14 @@ public class Controller {
             if (!h.getNickName().equals(me)) h.sendString("message/" + me + ": " + message);
     }
 
-    public synchronized void setCharacterInput(String inputString) throws GameException {
-        int input = Integer.parseInt(inputString);
+    public synchronized void setCharacterInput(int input) throws GameException {
         if (isPlanificationPhase) {
             throw new NotAllowedException("Not in action phase");
         }
         game.setCharacterInput(input);
     }
 
-    public synchronized void chooseCharacter(String characterString) throws GameException {
-        byte character = Byte.parseByte(characterString);
+    public synchronized void chooseCharacter(byte character) throws GameException {
         if (isPlanificationPhase) {
             throw new NotAllowedException("Not in action phase");
         }
