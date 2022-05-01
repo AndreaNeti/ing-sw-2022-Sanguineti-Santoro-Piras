@@ -74,15 +74,12 @@ public class Player implements Serializable {
         return wizard;
     }
 
-    public String getNickName() {
-        return nickName;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Player player)) return false;
-        return nickName.equals(player.getNickName());
+        // only checks nickName, it's unique
+        return this.toString().equals(player.toString());
     }
 
     @Override

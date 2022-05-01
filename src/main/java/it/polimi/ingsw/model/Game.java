@@ -1,6 +1,5 @@
 package it.polimi.ingsw.model;
 
-import it.polimi.ingsw.controller.GameDelta;
 import it.polimi.ingsw.exceptions.EndGameException;
 import it.polimi.ingsw.exceptions.GameException;
 import it.polimi.ingsw.exceptions.NotAllowedException;
@@ -14,6 +13,7 @@ public interface Game extends Serializable {
     void playCard(byte card) throws GameException, EndGameException;
 
     void setCurrentPlayer(Player p);
+
     void setCurrentPlayer(byte currentPlayerIndex);
 
     void moveMotherNature(int moves) throws NotAllowedException, EndGameException;
@@ -29,5 +29,4 @@ public interface Game extends Serializable {
     void playCharacter() throws GameException, EndGameException;
 
     void moveFromCloud(int cloudId) throws NotAllowedException;
-    GameDelta getAndClearGameDelta();
 }

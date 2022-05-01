@@ -328,7 +328,7 @@ public class NormalGame implements Game {
         gameDelta.addUpdatedGC(getCurrentPlayer().getEntranceHall());
     }
 
-    public ArrayList<Cloud> getClouds() {
+    protected ArrayList<Cloud> getClouds() {
         //TODO do the clone
         return clouds;
     }
@@ -378,13 +378,6 @@ public class NormalGame implements Game {
         return ret;
     }
 
-    @Override
-    public GameDelta getAndClearGameDelta() {
-        GameDelta copy = getGameDelta();
-        gameDelta.clear();
-        return copy;
-    }
-
     protected GameDelta getGameDelta() {
         return this.gameDelta;
     }
@@ -409,7 +402,7 @@ public class NormalGame implements Game {
         return professors;
     }
 
-    public byte getMotherNaturePosition() {
+    protected byte getMotherNaturePosition() {
         return motherNaturePosition;
     }
 }

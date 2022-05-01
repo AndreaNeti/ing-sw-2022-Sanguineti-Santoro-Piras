@@ -82,7 +82,7 @@ public class PlayerHandler implements Runnable, GameListener {
 
                 //Server methods
                 case "nickName" -> {
-                    Server.setNickname(tokens.get(0));
+                    Server.setNickNames(tokens.get(0));
                     this.nickName(tokens.get(0));
                 }
                 case "getOldestMatchId" -> {

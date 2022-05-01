@@ -15,7 +15,9 @@ public class Server {
     public static Long matchId = 0L;
 
     public static final HashMap<MatchType, LinkedHashMap<Long, Controller>> matches = new HashMap<>();
-    private static final Set<String> nickname = new HashSet<>();
+
+    // TODO add number if duplicate
+    private static final Set<String> nickNames = new HashSet<>();
 
     public static void main(String[] args) {
         try (ServerSocket server = new ServerSocket(42069)) {
@@ -31,9 +33,9 @@ public class Server {
         }
     }
 
-    public static void setNickname(String nicknameToAdd) throws UnexpectedValueException {
-        synchronized (nickname) {
-            if (!nickname.add(nicknameToAdd))
+    public static void setNickNames(String nicknameToAdd) throws UnexpectedValueException {
+        synchronized (nickNames) {
+            if (!nickNames.add(nicknameToAdd))
                 throw new UnexpectedValueException();
         }
     }
