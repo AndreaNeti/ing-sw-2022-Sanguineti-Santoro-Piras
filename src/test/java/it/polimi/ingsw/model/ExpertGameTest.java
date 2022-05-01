@@ -21,8 +21,8 @@ public class ExpertGameTest {
 
     //constructor of expert game
     public ExpertGameTest() {
-        t1 = new Team(HouseColor.WHITE, (byte) 1, (byte) 8);
-        t2 = new Team(HouseColor.BLACK, (byte) 1, (byte) 8);
+        t1 = new Team(HouseColor.BLACK, (byte) 1, (byte) 8);
+        t2 = new Team(HouseColor.WHITE, (byte) 1, (byte) 8);
 
         teamList2 = new ArrayList<>(2);
         teamList2.add(t1);
@@ -41,8 +41,8 @@ public class ExpertGameTest {
 
 
         teamList4 = new ArrayList<>(2);
-        t1 = new Team(HouseColor.WHITE, (byte) 2, (byte) 8);
-        t2 = new Team(HouseColor.BLACK, (byte) 2, (byte) 8);
+        t1 = new Team(HouseColor.BLACK, (byte) 2, (byte) 8);
+        t2 = new Team(HouseColor.WHITE, (byte) 2, (byte) 8);
         teamList4.add(t1);
 
         teamList4.add(t2);
@@ -66,8 +66,8 @@ public class ExpertGameTest {
         gameWith4.setCurrentPlayer(p1_4);
 
         //create a game with 3 people
-        t1 = new Team(HouseColor.WHITE, (byte) 2, (byte) 6);
-        t2 = new Team(HouseColor.BLACK, (byte) 2, (byte) 6);
+        t1 = new Team(HouseColor.BLACK, (byte) 2, (byte) 6);
+        t2 = new Team(HouseColor.WHITE, (byte) 2, (byte) 6);
         t3 = new Team(HouseColor.GREY, (byte) 1, (byte) 6);
         teamList3 = new ArrayList<>(3);
         teamList3.add(t1);
@@ -333,6 +333,9 @@ public class ExpertGameTest {
         }
         // p3_3 team is t3
         assertEquals(gameWith3.getIslands().get(0).getTeamColor(), t3.getHouseColor());
+        assertEquals(gameWith3.getTeams().get(0).getTowersLeft(), 6);
+        assertEquals(gameWith3.getTeams().get(1).getTowersLeft(), 6);
+        assertEquals(gameWith3.getTeams().get(2).getTowersLeft(), 5);
         gameWith3.setCurrentPlayer(p1_3);
 
         try {
@@ -343,6 +346,9 @@ public class ExpertGameTest {
         }
         // p3_3 team is t3
         assertEquals(gameWith3.getIslands().get(0).getTeamColor(), t3.getHouseColor());
+        assertEquals(gameWith3.getTeams().get(0).getTowersLeft(), 6);
+        assertEquals(gameWith3.getTeams().get(1).getTowersLeft(), 6);
+        assertEquals(gameWith3.getTeams().get(2).getTowersLeft(), 5);
         try {
             gameWith3.getBag().moveStudents(Color.RED, (byte) 1, gameWith3.getIslands().get(0));
             gameWith3.calculateInfluence(gameWith3.getIslands().get(0));
@@ -351,6 +357,9 @@ public class ExpertGameTest {
         }
         // p1_3 team is t1
         assertEquals(gameWith3.getIslands().get(0).getTeamColor(), t1.getHouseColor());
+        assertEquals(gameWith3.getTeams().get(0).getTowersLeft(), 5);
+        assertEquals(gameWith3.getTeams().get(1).getTowersLeft(), 6);
+        assertEquals(gameWith3.getTeams().get(2).getTowersLeft(), 6);
         try {
             gameWith3.getBag().moveStudents(Color.BLUE, (byte) 7, gameWith3.getIslands().get(0));
             gameWith3.calculateInfluence(gameWith3.getIslands().get(0));
@@ -359,6 +368,9 @@ public class ExpertGameTest {
         }
         // p2_3 team is t3
         assertEquals(gameWith3.getIslands().get(0).getTeamColor(), t2.getHouseColor());
+        assertEquals(gameWith3.getTeams().get(0).getTowersLeft(), 6);
+        assertEquals(gameWith3.getTeams().get(1).getTowersLeft(), 5);
+        assertEquals(gameWith3.getTeams().get(2).getTowersLeft(), 6);
 
     }
 

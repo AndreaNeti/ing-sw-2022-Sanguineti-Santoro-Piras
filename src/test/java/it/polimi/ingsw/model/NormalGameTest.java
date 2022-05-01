@@ -21,8 +21,8 @@ public class NormalGameTest {
 
     //constructor of game
     public NormalGameTest() {
-        t1 = new Team(HouseColor.WHITE, (byte) 1, (byte) 8);
-        t2 = new Team(HouseColor.BLACK, (byte) 1, (byte) 8);
+        t1 = new Team(HouseColor.BLACK, (byte) 1, (byte) 8);
+        t2 = new Team(HouseColor.WHITE, (byte) 1, (byte) 8);
 
         teamList2 = new ArrayList<>(2);
         teamList2.add(t1);
@@ -41,8 +41,8 @@ public class NormalGameTest {
 
 
         teamList4 = new ArrayList<>(2);
-        t1 = new Team(HouseColor.WHITE, (byte) 2, (byte) 8);
-        t2 = new Team(HouseColor.BLACK, (byte) 2, (byte) 8);
+        t1 = new Team(HouseColor.BLACK, (byte) 2, (byte) 8);
+        t2 = new Team(HouseColor.WHITE, (byte) 2, (byte) 8);
         teamList4.add(t1);
 
         teamList4.add(t2);
@@ -64,8 +64,8 @@ public class NormalGameTest {
         gameWith4.setCurrentPlayer(p1_4);
 
         //create a game with 3 people
-        t1 = new Team(HouseColor.WHITE, (byte) 2, (byte) 6);
-        t2 = new Team(HouseColor.BLACK, (byte) 2, (byte) 6);
+        t1 = new Team(HouseColor.BLACK, (byte) 2, (byte) 6);
+        t2 = new Team(HouseColor.WHITE, (byte) 2, (byte) 6);
         t3 = new Team(HouseColor.GREY, (byte) 1, (byte) 6);
         teamList3 = new ArrayList<>(3);
         teamList3.add(t1);
@@ -281,7 +281,14 @@ public class NormalGameTest {
             gameWith4.getIslands().get(1).moveAll(gameWith3.getIslands().get(4));
             gameWith4.getIslands().get(2).moveAll(gameWith3.getIslands().get(4));
             gameWith4.getIslands().get(3).moveAll(gameWith3.getIslands().get(4));
+            gameWith4.getIslands().get(4).moveAll(gameWith3.getIslands().get(4));
+            gameWith4.getIslands().get(5).moveAll(gameWith3.getIslands().get(4));
+            gameWith4.getIslands().get(6).moveAll(gameWith3.getIslands().get(4));
             gameWith4.getIslands().get(7).moveAll(gameWith3.getIslands().get(4));
+            gameWith4.getIslands().get(8).moveAll(gameWith3.getIslands().get(4));
+            gameWith4.getIslands().get(9).moveAll(gameWith3.getIslands().get(4));
+            gameWith4.getIslands().get(10).moveAll(gameWith3.getIslands().get(4));
+            gameWith4.getIslands().get(11).moveAll(gameWith3.getIslands().get(4));
         } catch (NotAllowedException e) {
             fail();
         }
@@ -310,14 +317,13 @@ public class NormalGameTest {
         gameWith4.setCurrentPlayer(p1_4);
         //assign to p1_4 professor red
         try {
-            bagTest.moveStudents(Color.RED, (byte) (10 - p1_4.getLunchHall().howManyStudents(Color.RED)), p1_4.getLunchHall());
+            bagTest.moveStudents(Color.RED, (byte) 2, p1_4.getLunchHall());
             gameWith4.calculateProfessor();
             //put on the island 1 some red students so the first player win
             bagTest.moveStudents(Color.RED, (byte) (2), gameWith4.getIslands().get(1));
         } catch (GameException e) {
             fail();
         }
-        int movesToReach1 = Math.floorMod(1 - (gameWith4.getMotherNaturePosition()), gameWith4.getIslands().size());
         assertEquals(gameWith4.getMotherNaturePosition(), 0);
 
         try {
@@ -328,11 +334,13 @@ public class NormalGameTest {
         }
         // p1_4 team is t1
         assertEquals(gameWith4.getIslands().get(1).getTeamColor(), t1.getHouseColor());
+        assertEquals(gameWith4.getTeams().get(0).getTowersLeft(), 7);
+        assertEquals(gameWith4.getTeams().get(1).getTowersLeft(), 8);
         //let's try to merge island 2 and 1 by putting blue student on island 2
         //and the other player of the team has professor
         try {
             gameWith4.setCurrentPlayer(p3_4);
-            bagTest.moveStudents(Color.BLUE, (byte) (10 - p3_4.getLunchHall().howManyStudents(Color.RED)), p3_4.getLunchHall());
+            bagTest.moveStudents(Color.BLUE, (byte) 2, p3_4.getLunchHall());
             gameWith4.calculateProfessor();
             bagTest.moveStudents(Color.BLUE, (byte) (2), gameWith4.getIslands().get(2));
             gameWith4.playCard((byte) 1);
@@ -343,10 +351,13 @@ public class NormalGameTest {
         assertEquals(gameWith4.getIslands().size(), 11);
         // p3_4 team is t1
         assertEquals(gameWith4.getIslands().get(1).getTeamColor(), t1.getHouseColor());
+        assertEquals(gameWith4.getTeams().get(0).getTowersLeft(), 6);
+        assertEquals(gameWith4.getTeams().get(1).getTowersLeft(), 8);
+
         //now blackTeam will have Green professor p2_4 and YellowProfessor p4_4
         try {
-            bagTest.moveStudents(Color.GREEN, (byte) (10 - p2_4.getLunchHall().howManyStudents(Color.GREEN)), p2_4.getLunchHall());
-            bagTest.moveStudents(Color.YELLOW, (byte) (10 - p4_4.getLunchHall().howManyStudents(Color.GREEN)), p4_4.getLunchHall());
+            bagTest.moveStudents(Color.GREEN, (byte) 2, p2_4.getLunchHall());
+            bagTest.moveStudents(Color.YELLOW, (byte) 2, p4_4.getLunchHall());
             gameWith4.calculateProfessor();
             //put on the island 3(which is now 2 after the merge) some green students so the second player win
             bagTest.moveStudents(Color.GREEN, (byte) (2), gameWith4.getIslands().get(2));
@@ -356,6 +367,8 @@ public class NormalGameTest {
         }
         // p2_4 team is t1
         assertEquals(gameWith4.getIslands().get(2).getTeamColor(), t2.getHouseColor());
+        assertEquals(gameWith4.getTeams().get(0).getTowersLeft(), 6);
+        assertEquals(gameWith4.getTeams().get(1).getTowersLeft(), 7);
         //return to the island 1 and let black Team win
         try {
             gameWith4.setCurrentPlayer(p1_4);
@@ -363,8 +376,8 @@ public class NormalGameTest {
 
 
             gameWith4.moveMotherNature(5);
-            bagTest.moveStudents(Color.GREEN, (byte) (4), gameWith4.getIslands().get(1));
-            bagTest.moveStudents(Color.YELLOW, (byte) (3), gameWith4.getIslands().get(1));
+            bagTest.moveStudents(Color.GREEN, (byte) (10), gameWith4.getIslands().get(1));
+            bagTest.moveStudents(Color.YELLOW, (byte) (10), gameWith4.getIslands().get(1));
             gameWith4.moveMotherNature(5);
 
         } catch (GameException | EndGameException ex) {
@@ -373,14 +386,70 @@ public class NormalGameTest {
         assertEquals(gameWith4.getIslands().size(), 10);
         // p2_4 team is t1
         assertEquals(gameWith4.getIslands().get(1).getTeamColor(), t2.getHouseColor());
+        assertEquals(gameWith4.getTeams().get(0).getTowersLeft(), 8);
+        assertEquals(gameWith4.getTeams().get(1).getTowersLeft(), 5);
 
     }
 
     @Test
     void calculateWinnerTest() {
-        //you can win by having the maximum number of tower used
-        //or in case of parity maximum number of professor
 
+        // check winner with one winner
+        try {
+            gameWith2.setCurrentPlayer(p1_2);
+            gameWith2.playCard((byte) 1);
+            gameWith2.getBag().moveStudents(Color.RED, (byte) 2, p1_2.getLunchHall());
+            gameWith2.calculateProfessor();
+            gameWith2.getIslands().get(1).moveAll(gameWith2.getBag());
+            gameWith2.getBag().moveStudents(Color.RED, (byte) 2, gameWith2.getIslands().get(1));
+            gameWith2.moveMotherNature(1);
+        } catch (GameException | EndGameException e) {
+            fail();
+        }
+        ArrayList<Team> winner1 = gameWith2.calculateWinner();
+        assertEquals(winner1.size(), 1);
+        assertEquals(winner1.get(0).getHouseColor(), gameWith2.getTeams().get(0).getHouseColor());
+
+        // check winner with 3 winners
+        try {
+            gameWith3.setCurrentPlayer(p1_3);
+            gameWith3.playCard((byte) 1);
+            for(Player p : players3) {
+                int index = players3.indexOf(p);
+                gameWith3.getBag().moveStudents(Color.values()[index], (byte) 2, p.getLunchHall());
+                gameWith3.getIslands().get(index + 1).moveAll(gameWith3.getBag());
+                gameWith3.getBag().moveStudents(Color.values()[index], (byte) 2, gameWith3.getIslands().get(index + 1));
+                gameWith3.calculateProfessor();
+                gameWith3.moveMotherNature(1);
+            }
+        } catch (GameException | EndGameException e) {
+            fail();
+        }
+        ArrayList<Team> winner3 = gameWith3.calculateWinner();
+        assertEquals(winner3.size(), 3);
+        assertEquals(winner3.get(0).getHouseColor(), gameWith3.getTeams().get(0).getHouseColor());
+        assertEquals(winner3.get(1).getHouseColor(), gameWith3.getTeams().get(1).getHouseColor());
+        assertEquals(winner3.get(2).getHouseColor(), gameWith3.getTeams().get(2).getHouseColor());
+
+        // check winner with 2 winners and also with teams of 2 players
+        try {
+            gameWith4.setCurrentPlayer(p1_4);
+            gameWith4.playCard((byte) 1);
+            for(Player p : players4) {
+                int index = players4.indexOf(p);
+                gameWith4.getBag().moveStudents(Color.values()[index], (byte) 2, p.getLunchHall());
+                gameWith4.getIslands().get(index + 1).moveAll(gameWith4.getBag());
+                gameWith4.getBag().moveStudents(Color.values()[index], (byte) 2, gameWith4.getIslands().get(index + 1));
+                gameWith4.calculateProfessor();
+                gameWith4.moveMotherNature(1);
+            }
+        } catch (GameException | EndGameException e) {
+            fail();
+        }
+        ArrayList<Team> winner4 = gameWith4.calculateWinner();
+        assertEquals(winner4.size(), 2);
+        assertEquals(winner4.get(0).getHouseColor(), gameWith4.getTeams().get(0).getHouseColor());
+        assertEquals(winner4.get(1).getHouseColor(), gameWith4.getTeams().get(1).getHouseColor());
     }
 
     @Test
