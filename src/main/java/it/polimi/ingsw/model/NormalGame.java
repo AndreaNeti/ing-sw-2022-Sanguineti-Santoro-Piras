@@ -19,7 +19,7 @@ public class NormalGame implements Game {
     private final ArrayList<Team> teams;
 
     //a reference to all the pieces contained in the game
-    private transient Bag bag;
+    private Bag bag;
     private byte motherNaturePosition;
     private byte currentPlayer;
 
@@ -364,6 +364,30 @@ public class NormalGame implements Game {
         }
     }
 
+    public GameDelta transformAllGameInDelta(){
+        gameDelta.setAutomaticSending(false);
+        for (Team t: teams) {
+            for(Player p: t.getPlayers()){
+                gameDelta.addUpdatedEntranceHall(p.getWizard(),p.getEntranceHall());
+                gameDelta.addUpdatedLunchHall(p.getWizard(),p.getLunchHall());
+                gameDelta.addMember(p.getWizard(),t.getHouseColor());
+            }
+        }
+        for (Cloud c: clouds) {
+            gameDelta.addUpdatedGC(c);
+        }
+        for(Island i: islands){
+            gameDelta.addUpdatedGC(i);
+        }
+        for(int i=0; i<professors.length;i++) {
+            gameDelta.addUpdatedProfessors(Color.values()[i],professors[i]);
+        }
+        gameDelta.setNewMotherNaturePosition(motherNaturePosition);
+        gameDelta.setNewCurrentPlayer(currentPlayer);
+
+        return gameDelta;
+
+    }
     protected Player getPlayer(byte b) {
         // teams index = b % team size (in 4 players game, players are inserted in team 0, indexOf1, 0, 1)
         // player index (in team members) = b / team size (2 or 3 players -> = 0 (team contains only 1 member), 4 players -> first 2 = 0, last 2 = 1 (3rd player is in team 0 and is member[1]))

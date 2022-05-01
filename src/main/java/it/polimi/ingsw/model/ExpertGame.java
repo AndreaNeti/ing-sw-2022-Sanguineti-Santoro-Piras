@@ -199,6 +199,18 @@ public class ExpertGame extends NormalGame {
     }
 
     @Override
+    public GameDelta transformAllGameInDelta() {
+        ExpertGameDelta g=(ExpertGameDelta) super.transformAllGameInDelta();
+        g.setAutomaticSending(false);
+        g.setNewCoinsLeft(coinsLeft);
+        for(byte i=0;i<characters.size();i++){
+            g.addCharacter(i,characters.get(i).getCharId());
+        }
+        return g;
+
+    }
+
+    @Override
     protected boolean checkMoveMotherNature(int moves) {
         if (!extraSteps)
             return super.checkMoveMotherNature(moves);

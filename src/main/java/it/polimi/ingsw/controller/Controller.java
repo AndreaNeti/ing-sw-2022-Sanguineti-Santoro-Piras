@@ -4,6 +4,7 @@ import it.polimi.ingsw.exceptions.EndGameException;
 import it.polimi.ingsw.exceptions.GameException;
 import it.polimi.ingsw.exceptions.NotAllowedException;
 import it.polimi.ingsw.model.*;
+import it.polimi.ingsw.network.*;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -137,7 +138,7 @@ public class Controller implements GameListener {
     }
 
     public void sendMessage(String me, String message) {
-        notifyClients(new TextMessageSC("[" + me + "]: " + message));
+        notifyClients(new TextMessaceSC("[" + me + "]: " + message));
     }
 
     public synchronized void setCharacterInput(int input) throws GameException, NullPointerException {
@@ -169,12 +170,7 @@ public class Controller implements GameListener {
             handleError(e);
         }
     }
-
-    private void sendGameState() {
-        notifyClients(new GameState(game));
-    }
-
-    private void notifyClients(Message m) {
+    private void notifyClients(ToClientMessage m) {
         for (GameListener gl : playerHandlers) {
             gl.update(m);
         }
@@ -186,7 +182,7 @@ public class Controller implements GameListener {
         else
             game = new NormalGame(teams, this);
         game.setCurrentPlayer(currentPlayerIndex);
-        sendGameState();
+        game.transformAllGameInDelta().send();
     }
 
     private void nextPlayer() {
@@ -256,56 +252,8 @@ public class Controller implements GameListener {
     }
 
     @Override
-    public void update(Message m) {
+    public void update(ToClientMessage m) {
         notifyClients(m);
     }
 
-    private class DeltaUpdate implements Message {
-        GameDelta gameDelta;
-
-        public DeltaUpdate(GameDelta gameDelta) {
-            this.gameDelta = gameDelta;
-        }
-
-        @Override
-        public void execute() {
-        }
-    }
-
-    private class GameState implements Message {
-        Game game;
-
-        public GameState(Game game) {
-            this.game = game;
-        }
-
-        @Override
-        public void execute() {
-        }
-    }
-
-    private class EndGame implements Message {
-        ArrayList<Team> winners;
-
-        public EndGame(ArrayList<Team> winners) {
-            this.winners = winners;
-        }
-
-        @Override
-        public void execute() {
-        }
-    }
-
-    // message from server to clients
-    private class TextMessageSC implements Message {
-        String message;
-
-        public TextMessageSC(String message) {
-            this.message = message;
-        }
-
-        @Override
-        public void execute() {
-        }
-    }
 }

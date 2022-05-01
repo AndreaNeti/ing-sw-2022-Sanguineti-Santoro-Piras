@@ -1,5 +1,7 @@
 package it.polimi.ingsw.controller;
 
+import it.polimi.ingsw.network.ToClientMessage;
+
 public interface GameListener {
-    void update(Message m);
+    void update(ToClientMessage m);
 }
