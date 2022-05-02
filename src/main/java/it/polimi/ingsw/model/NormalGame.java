@@ -30,7 +30,7 @@ public class NormalGame implements Game {
         byte numberOfPlayers = this.getPlayerSize();
 
         this.islands = new ArrayList<>(12);
-        for (byte i = 2; i < 14; i++) {
+        for (byte i = (byte) (2 * numberOfPlayers); i < (byte) (2 * numberOfPlayers + 12); i++) {
             islands.add(new Island(i));
         }
 
@@ -364,23 +364,23 @@ public class NormalGame implements Game {
         }
     }
 
-    public GameDelta transformAllGameInDelta(){
+    public GameDelta transformAllGameInDelta() {
         gameDelta.setAutomaticSending(false);
-        for (Team t: teams) {
-            for(Player p: t.getPlayers()){
-                gameDelta.addUpdatedEntranceHall(p.getWizard(),p.getEntranceHall());
-                gameDelta.addUpdatedLunchHall(p.getWizard(),p.getLunchHall());
-                gameDelta.addMember(p.getWizard(),t.getHouseColor());
+        for (Team t : teams) {
+            for (Player p : t.getPlayers()) {
+                gameDelta.addUpdatedGC(p.getEntranceHall());
+                gameDelta.addUpdatedGC(p.getLunchHall());
+                gameDelta.addMember(p.getWizard(), t.getHouseColor());
             }
         }
-        for (Cloud c: clouds) {
+        for (Cloud c : clouds) {
             gameDelta.addUpdatedGC(c);
         }
-        for(Island i: islands){
+        for (Island i : islands) {
             gameDelta.addUpdatedGC(i);
         }
-        for(int i=0; i<professors.length;i++) {
-            gameDelta.addUpdatedProfessors(Color.values()[i],professors[i]);
+        for (int i = 0; i < professors.length; i++) {
+            gameDelta.addUpdatedProfessors(Color.values()[i], professors[i]);
         }
         gameDelta.setNewMotherNaturePosition(motherNaturePosition);
         gameDelta.setNewCurrentPlayer(currentPlayer);
@@ -388,6 +388,7 @@ public class NormalGame implements Game {
         return gameDelta;
 
     }
+
     protected Player getPlayer(byte b) {
         // teams index = b % team size (in 4 players game, players are inserted in team 0, indexOf1, 0, 1)
         // player index (in team members) = b / team size (2 or 3 players -> = 0 (team contains only 1 member), 4 players -> first 2 = 0, last 2 = 1 (3rd player is in team 0 and is member[1]))

@@ -13,80 +13,48 @@ public class GameDelta implements Serializable {
     // TODO add update() everywhere
     private transient final GameListener listener;
     // GC index, students array
-    private HashMap<Byte, byte[]> updatedGC;
-    private HashMap<Byte, IslandData> updatedIslandData;
-    private HashMap<Wizard, byte[]> updatedEntranceHall;
-    private HashMap<Wizard,byte[]> updatedLunchHall;
+    private HashMap<Byte, GameComponent> updatedGC;
     // deleted islands ids
     private Set<Byte> deletedIslands;
 
     // professor color, new wizard controlling
     private HashMap<Color, Wizard> updatedProfessors;
-    private HashMap<Wizard,HouseColor> members;
+
+    // TODO remove from delta and add a notify when player joins the match?
+    private HashMap<Wizard, HouseColor> members;
     // towers left
     private HashMap<HouseColor, Byte> newTeamTowersLeft;
     private Byte newCurrentPlayer, newMotherNaturePosition, playedCard;
-    private boolean automaticSending; //default true
+    private transient boolean automaticSending; //default true
 
     public GameDelta(GameListener listener) {
         this.listener = listener;
+        automaticSending = true;
     }
 
     public void clear() {
         updatedGC = null;
-        updatedIslandData = null;
         deletedIslands = null;
         newTeamTowersLeft = null;
         updatedProfessors = null;
         newCurrentPlayer = null;
         newMotherNaturePosition = null;
         playedCard = null;
-        automaticSending=true;
+        automaticSending = true;
     }
 
     public void addUpdatedGC(GameComponent gcUpdated) {
         if (updatedGC == null)
             updatedGC = new HashMap<>();
-        byte[] students = new byte[Color.values().length];
-        for (byte i = 0; i < Color.values().length; i++)
-            students[i] = gcUpdated.howManyStudents(Color.values()[i]);
+        updatedGC.put(gcUpdated.getId(), gcUpdated);
+        if (automaticSending)
+            send();
+    }
 
-        updatedGC.put(gcUpdated.getId(), students);
-        if(automaticSending)
-            send();
-    }
-    public void addMember(Wizard wizard,HouseColor houseColor){
-        if(members==null)
-            members=new HashMap<>();
-        members.put(wizard,houseColor);
-        if(automaticSending)
-            send();
-    }
-    public void addUpdatedEntranceHall(Wizard wizard,EntranceHall entranceHall){
-        if(updatedEntranceHall==null)
-            updatedEntranceHall=new HashMap<>();
-        byte[] students = new byte[Color.values().length];
-        for (byte i = 0; i < Color.values().length; i++)
-            students[i] = entranceHall.howManyStudents(Color.values()[i]);
-        updatedEntranceHall.put(wizard,students);
-        if(automaticSending)
-            send();
-    }
-    public void addUpdatedLunchHall(Wizard wizard,LunchHall lunchHall){
-        if( updatedLunchHall==null)
-            updatedLunchHall=new HashMap<>();
-        byte[] students = new byte[Color.values().length];
-        for (byte i = 0; i < Color.values().length; i++)
-            students[i] = lunchHall.howManyStudents(Color.values()[i]);
-        updatedLunchHall.put(wizard,students);
-        if(automaticSending)
-            send();
-    }
-    public void addUpdatedGC(Island updatedIsland) {
-        addUpdatedGC((GameComponent) updatedIsland);
-        if (updatedIslandData == null)
-            updatedIslandData = new HashMap<>();
-        updatedIslandData.put(updatedIsland.getId(), new IslandData(updatedIsland.getProhibitions(), updatedIsland.getTeamColor()));
+    public void addMember(Wizard wizard, HouseColor houseColor) {
+        if (members == null)
+            members = new HashMap<>();
+        members.put(wizard, houseColor);
         if (automaticSending)
             send();
     }
@@ -137,14 +105,12 @@ public class GameDelta implements Serializable {
         this.automaticSending = automaticSending;
     }
 
-    private record IslandData(byte prohibitions, HouseColor team) {
-    }
-
     public void send() {
         listener.update(new DeltaUpdate(this));
         this.clear();
     }
-    public boolean isAutomaticSending(){
+
+    public boolean isAutomaticSending() {
         return automaticSending;
     }
 }

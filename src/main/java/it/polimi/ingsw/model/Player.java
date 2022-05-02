@@ -24,8 +24,8 @@ public class Player implements Serializable {
         this.cardsAvailable = new boolean[]{true, true, true, true, true, true, true, true, true, true};
         this.cardsLeft = 10;
         this.playedCard = 0; // 0 = no card, else 1 to 10
-        this.entranceHall = new EntranceHall(entranceHallSize, (byte) 0);
-        this.lunchHall = new LunchHall(Color.values().length * 10, (byte) 1);
+        this.entranceHall = new EntranceHall(entranceHallSize, (byte) (wizard.ordinal() * 2));
+        this.lunchHall = new LunchHall(Color.values().length * 10, (byte) (wizard.ordinal() * 2 + 1));
     }
 
     public void useCard(byte card) throws UsedCardException, UnexpectedValueException, NotAllowedException, EndGameException {
