@@ -15,24 +15,17 @@ public class GameDelta implements Serializable {
     // GC index, students array
     private HashMap<Byte, byte[]> updatedGC;
     private HashMap<Byte, IslandData> updatedIslandData;
-
     private HashMap<Wizard, byte[]> updatedEntranceHall;
-
     private HashMap<Wizard,byte[]> updatedLunchHall;
-
     // deleted islands ids
     private Set<Byte> deletedIslands;
 
     // professor color, new wizard controlling
     private HashMap<Color, Wizard> updatedProfessors;
-
     private HashMap<Wizard,HouseColor> members;
-
     // towers left
     private HashMap<HouseColor, Byte> newTeamTowersLeft;
-
     private Byte newCurrentPlayer, newMotherNaturePosition, playedCard;
-
     private boolean automaticSending; //default true
 
     public GameDelta(GameListener listener) {

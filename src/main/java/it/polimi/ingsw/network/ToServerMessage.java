@@ -4,6 +4,8 @@ import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.controller.PlayerHandler;
 import it.polimi.ingsw.exceptions.GameException;
 
-public interface ToServerMessage {
+import java.io.Serializable;
+
+public interface ToServerMessage extends Serializable {
     void execute(PlayerHandler playerHandler) throws GameException;
 }

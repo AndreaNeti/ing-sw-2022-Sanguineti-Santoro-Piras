@@ -1,4 +1,6 @@
 package it.polimi.ingsw.network;
 
-public interface ToClientMessage {
+import java.io.Serializable;
+
+public interface ToClientMessage extends Serializable {
 }

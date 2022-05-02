@@ -170,11 +170,20 @@ public class Controller implements GameListener {
             handleError(e);
         }
     }
+
+    public synchronized void disconnectEveryone(GameListener playerAlreadyDisconnected){
+        removePlayer(playerAlreadyDisconnected);
+        notifyClients(new EndGame(null));
+    }
     private void notifyClients(ToClientMessage m) {
         for (GameListener gl : playerHandlers) {
             gl.update(m);
         }
     }
+    public void removePlayer(GameListener toRemovePlayer){
+        playerHandlers.remove(toRemovePlayer);
+    }
+
 
     private void startGame() {
         if (matchType.isExpert())

@@ -18,6 +18,8 @@ public class PlayerHandler implements Runnable, GameListener {
     private boolean nickNameAlreadySet;
     private Controller controller;
     private boolean quit;
+    private ObjectOutputStream objOut;
+    private ObjectInputStream objIn;
 
     public PlayerHandler(Socket socket) {
         if (socket == null) throw new NullPointerException();
@@ -32,37 +34,55 @@ public class PlayerHandler implements Runnable, GameListener {
 
     @Override
     public void run() {
-        BufferedReader in = null;
         try {
-            in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            System.out.println("connesso con client " + socket.getPort());
+            objIn = new ObjectInputStream(socket.getInputStream());
+            objOut = new ObjectOutputStream(socket.getOutputStream());
             // what the server receives from the player
-            String command;
+            ToServerMessage command;
             do {
-                command = in.readLine();
-                callMethod(command);
-            } while (!quit);
-
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } finally {
-            if (in != null) {
                 try {
-                    in.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
+                    command = (ToServerMessage) objIn.readObject();
+                    System.out.println(command);
+                    command.execute(this);
+                    this.update(new OK());
+
+                } catch (GameException e1) {
+                    this.update(new ErrorException(e1.getMessage()));
+
+                } catch (NullPointerException ex) {
+                    update(new ErrorException("Must join a match before"));
+                } catch (IOException | ClassNotFoundException e) {
+                    controller.disconnectEveryone(this);
                 }
             }
-            if (out != null)
-                out.close();
+            while (!quit);
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        } finally {
+            if (objIn != null) {
+                try {
+                    objIn.close();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (objOut != null) {
+                try {
+                    objOut.close();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
             try {
                 socket.close();
             } catch (IOException e) {
-                e.printStackTrace();
+                throw new RuntimeException(e);
             }
         }
     }
 
-    private void callMethod(String command) {
+    /*private void callMethod(String command) {
         List<String> tokens = Arrays.asList(command.split("/"));
 
 
@@ -114,7 +134,7 @@ public class PlayerHandler implements Runnable, GameListener {
         } catch (NullPointerException ex) {
             update(new ErrorException("Must join a match before"));
         }
-    }
+    }*/
 
     public void nickName(String nickName) {
         if (!this.nickNameAlreadySet)
@@ -124,6 +144,9 @@ public class PlayerHandler implements Runnable, GameListener {
 
     public void quit() {
         quit = true;
+        controller.removePlayer(this);
+        //send an ACK to confirm
+        update(new OK());
     }
 
     public String getNickName() {
@@ -134,12 +157,11 @@ public class PlayerHandler implements Runnable, GameListener {
     public void update(ToClientMessage m) {
         synchronized (out) {
             try {
-                ByteArrayOutputStream bo = new ByteArrayOutputStream();
-                ObjectOutputStream so = new ObjectOutputStream(bo);
-                so.writeObject(m);
-                so.flush();
-            } catch (Exception e) {
+                objOut.writeObject(m);
+                objOut.flush();
+            } catch (IOException e) {
                 e.printStackTrace();
+                System.err.println("can't send to the client");
             }
         }
     }
