@@ -6,79 +6,75 @@ import it.polimi.ingsw.exceptions.UnexpectedValueException;
 import it.polimi.ingsw.model.Color;
 import it.polimi.ingsw.network.*;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.Arrays;
 import java.util.List;
 
 public class PlayerHandler implements Runnable, GameListener {
     private final Socket socket;
-    private final PrintWriter out;
     private String nickName;
     private boolean nickNameAlreadySet;
     private Controller controller;
     private boolean quit;
-    private ObjectOutputStream objOut;
-    private ObjectInputStream objIn;
+    private final ObjectOutputStream objOut;
+    private final ObjectInputStream objIn;
 
     public PlayerHandler(Socket socket) {
         if (socket == null) throw new NullPointerException();
         this.socket = socket;
         try {
-            out = new PrintWriter(socket.getOutputStream());
+            objIn = new ObjectInputStream(socket.getInputStream());
+            objOut = new ObjectOutputStream(socket.getOutputStream());
         } catch (IOException e) {
+            e.printStackTrace();
             throw new RuntimeException(e);
         }
         nickNameAlreadySet = false;
+        System.out.println("connesso con client " + socket.getPort());
     }
 
     @Override
     public void run() {
-        try {
-            System.out.println("connesso con client " + socket.getPort());
-            objIn = new ObjectInputStream(socket.getInputStream());
-            objOut = new ObjectOutputStream(socket.getOutputStream());
-            // what the server receives from the player
-            ToServerMessage command;
-            do {
-                try {
-                    command = (ToServerMessage) objIn.readObject();
-                    System.out.println(command);
-                    command.execute(this);
-                    this.update(new OK());
-
-                } catch (GameException e1) {
-                    this.update(new ErrorException(e1.getMessage()));
-
-                } catch (NullPointerException ex) {
-                    update(new ErrorException("Must join a match before"));
-                } catch (IOException | ClassNotFoundException e) {
-                    controller.disconnectEveryone(this);
-                }
-            }
-            while (!quit);
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        } finally {
-            if (objIn != null) {
-                try {
-                    objIn.close();
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-            if (objOut != null) {
-                try {
-                    objOut.close();
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-            }
+        // what the server receives from the player
+        ToServerMessage command;
+        do {
             try {
-                socket.close();
+                command = (ToServerMessage) objIn.readObject();
+                System.out.println(command);
+                command.execute(this);
+                this.update(new OK());
+            } catch (GameException e1) {
+                this.update(new ErrorException(e1.getMessage()));
+            } catch (NullPointerException ex) {
+                update(new ErrorException("Must join a match before"));
+            } catch (IOException | ClassNotFoundException e) {
+                controller.disconnectEveryone(this);
+                // cannot receive a quit message because it's disconnected
+                quit = true;
+            }
+        }
+        while (!quit);
+        if (objIn != null) {
+            try {
+                objIn.close();
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
+        }
+        if (objOut != null) {
+            try {
+                objOut.close();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        try {
+            socket.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -155,7 +151,7 @@ public class PlayerHandler implements Runnable, GameListener {
 
     @Override
     public void update(ToClientMessage m) {
-        synchronized (out) {
+        synchronized (objOut) {
             try {
                 objOut.writeObject(m);
                 objOut.flush();
@@ -191,8 +187,4 @@ public class PlayerHandler implements Runnable, GameListener {
         controller = Server.createMatch(matchType);
         controller.addPlayer(PlayerHandler.this, nickName);
     }
-
 }
-
-
-

@@ -103,7 +103,7 @@ public class NormalGameTest {
         int[] color = {0, 0, 0, 0, 0};
         int j = 0;
         for (Island i : gameWith2.getIslands()) {
-            assertEquals(i.getId(), j + 2);
+            assertEquals(i.getId(), j + 4);
             int index = gameWith2.getIslands().indexOf(i);
             if (index == gameWith2.getMotherNaturePosition() || index == (gameWith2.getMotherNaturePosition() + 6) % 12) {
                 assertEquals(i.howManyStudents(), 0);
@@ -139,21 +139,21 @@ public class NormalGameTest {
 
         for (Player p : gameWith2.getPlayers()) {
             assertEquals(p.getEntranceHall().howManyStudents(), 7);
-            assertEquals(p.getEntranceHall().getId(), 0);
-            assertEquals(p.getLunchHall().getId(), 1);
+            assertEquals(p.getEntranceHall().getId(), p.getWizard().ordinal()*2);
+            assertEquals(p.getLunchHall().getId(), p.getWizard().ordinal()*2 +1);
 
 
         }
         for (Player p : gameWith3.getPlayers()) {
             assertEquals(p.getEntranceHall().howManyStudents(), 9);
-            assertEquals(p.getEntranceHall().getId(), 0);
-            assertEquals(p.getLunchHall().getId(), 1);
+            assertEquals(p.getEntranceHall().getId(), p.getWizard().ordinal()*2);
+            assertEquals(p.getLunchHall().getId(), p.getWizard().ordinal()*2 +1);
 
         }
         for (Player p : gameWith4.getPlayers()) {
             assertEquals(p.getEntranceHall().howManyStudents(), 7);
-            assertEquals(p.getEntranceHall().getId(), 0);
-            assertEquals(p.getLunchHall().getId(), 1);
+            assertEquals(p.getEntranceHall().getId(), p.getWizard().ordinal()*2);
+            assertEquals(p.getLunchHall().getId(), p.getWizard().ordinal()*2 +1);
 
         }
 
