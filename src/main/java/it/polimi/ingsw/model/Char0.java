@@ -8,9 +8,10 @@ import java.util.List;
 
 public class Char0 extends GameComponent implements CharacterCard {
 
-    public Char0(){
-        super(4, (byte) -10);
+    public Char0(byte idGameComponent) {
+        super(4, idGameComponent);
     }
+
     @Override
     public void play(ExpertGame game) throws GameException, EndGameException {
         List<Integer> inputs = game.getCharacterInputs();

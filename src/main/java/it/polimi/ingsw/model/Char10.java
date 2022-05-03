@@ -5,8 +5,8 @@ import it.polimi.ingsw.exceptions.GameException;
 
 public class Char10 extends GameComponent implements CharacterCard {
 
-    public Char10(){
-        super(4, (byte) -12);
+    public Char10(byte idGameComponent){
+        super(4, idGameComponent);
     }
     @Override
     public void play(ExpertGame game) throws GameException, EndGameException {

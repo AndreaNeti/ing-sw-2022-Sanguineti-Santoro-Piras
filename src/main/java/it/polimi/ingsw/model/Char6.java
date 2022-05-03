@@ -7,8 +7,8 @@ import it.polimi.ingsw.exceptions.UnexpectedValueException;
 import java.util.List;
 
 public class Char6 extends GameComponent implements CharacterCard {
-    public Char6() {
-        super(6, (byte) -11);
+    public Char6(byte idGameComponent) {
+        super(6, idGameComponent);
     }
 
     @Override

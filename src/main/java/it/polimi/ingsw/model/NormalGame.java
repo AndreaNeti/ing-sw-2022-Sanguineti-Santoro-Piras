@@ -38,7 +38,7 @@ public class NormalGame implements Game {
 
         this.clouds = new ArrayList<>(numberOfPlayers);
         for (byte i = -1; i >= -numberOfPlayers; i--) {
-            clouds.add(new Cloud(numberOfPlayers, i));
+            clouds.add(new Cloud(matchConstants.studentsToMove(), i));
         }
 
         this.professors = new Wizard[Color.values().length];
@@ -110,7 +110,7 @@ public class NormalGame implements Game {
         }
         if (motherNaturePosition < 0) motherNaturePosition = 0;
 
-        if (islands.size() <= 3) throw new EndGameException(true);
+        if (islands.size() <= matchConstants.minIslands()) throw new EndGameException(true);
 
     }
 

@@ -63,7 +63,7 @@ public class Controller{
             if (idGameComponent <= 0) throw new NotAllowedException("Can't move to the selected GameComponent");
             game.move(color, 0, idGameComponent);
             movesCounter++;
-            if (movesCounter == (matchType.nPlayers() % 2 == 0 ? 3 : 4)) {
+            if (movesCounter == matchConstants.studentsToMove()) {
                 movesCounter = 0;
                 nextActionPhase();
             }

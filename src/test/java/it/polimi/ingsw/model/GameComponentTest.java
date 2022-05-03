@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class GameComponentTest {
     Bag bag = new Bag((byte) 2, (byte) 69);
     GameComponent island = new Island((byte) 3);
-    GameComponent cloud = new Cloud(3, (byte)-3);
+    GameComponent cloud = new Cloud(4, (byte)-3);
     GameComponent island1 = new Island((byte ) 4);
     GameComponent island2 = new Island((byte) 6);
     @Test

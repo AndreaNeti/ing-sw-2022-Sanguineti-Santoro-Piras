@@ -6,10 +6,7 @@ import it.polimi.ingsw.controller.GameListener;
 import it.polimi.ingsw.controller.MatchConstants;
 import it.polimi.ingsw.exceptions.*;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Random;
-import java.util.Set;
+import java.util.*;
 
 public class ExpertGame extends NormalGame {
     private final byte[] coinsPlayer;
@@ -30,20 +27,19 @@ public class ExpertGame extends NormalGame {
 
     public ExpertGame(ArrayList<Team> teamList, MatchConstants matchConstants) {
         super(teamList, matchConstants);
-        byte numberOfPlayers=super.getPlayerSize();
-        this.coinsLeft = (byte) (20 - numberOfPlayers);
+        byte numberOfPlayers = super.getPlayerSize();
+        this.coinsLeft = (byte) (matchConstants.totalCoins() - numberOfPlayers * matchConstants.initialPlayerCoins());
         this.coinsPlayer = new byte[numberOfPlayers];
-        for (byte i = 0; i < numberOfPlayers; i++)
-            coinsPlayer[i] = 1;
+        Arrays.fill(coinsPlayer, (byte) matchConstants.initialPlayerCoins());
 
-        characters = new ArrayList<>(3);
-        charactersId = new HashSet<>(3);
+        characters = new ArrayList<>(matchConstants.numOfCharacterCards());
+        charactersId = new HashSet<>(matchConstants.numOfCharacterCards());
         Random rand = new Random(System.currentTimeMillis());
         byte characterIndex = (byte) rand.nextInt(12);
         byte i = 0;
-        ArrayList<Byte> selectedCharacters = new ArrayList<>(3);
+        ArrayList<Byte> selectedCharacters = new ArrayList<>(matchConstants.numOfCharacterCards());
         CharacterCard c;
-        while (i < 3) {
+        while (i < matchConstants.numOfCharacterCards()) {
             while (selectedCharacters.contains(characterIndex)) {
                 characterIndex = (byte) rand.nextInt(12);
             }
@@ -57,7 +53,7 @@ public class ExpertGame extends NormalGame {
             }
         }
 
-        playedCharacters = new boolean[]{false, false, false};
+        playedCharacters = new boolean[matchConstants.numOfCharacterCards()];
         this.extraInfluence = false;
         this.towerInfluence = true;
         this.extraSteps = false;
@@ -78,7 +74,7 @@ public class ExpertGame extends NormalGame {
         charactersId.add(i);
         switch (i) {
             case 0:
-                Char0 c0 = new Char0();
+                Char0 c0 = new Char0((byte) -10);
                 try {
                     drawStudents(c0, (byte) c0.getMaxStudents());
                 } catch (EndGameException e) {
@@ -96,7 +92,7 @@ public class ExpertGame extends NormalGame {
             case 5:
                 return new Char5();
             case 6:
-                Char6 c6 = new Char6();
+                Char6 c6 = new Char6((byte) -11);
                 try {
                     drawStudents(c6, (byte) c6.getMaxStudents());
                 } catch (EndGameException e) {
@@ -110,7 +106,7 @@ public class ExpertGame extends NormalGame {
             case 9:
                 return new Char9();
             case 10:
-                Char10 c10 = new Char10();
+                Char10 c10 = new Char10((byte) -12);
                 try {
                     drawStudents(c10, (byte) c10.getMaxStudents());
                 } catch (EndGameException e) {
@@ -201,11 +197,11 @@ public class ExpertGame extends NormalGame {
 
     @Override
     public GameDelta transformAllGameInDelta() {
-        ExpertGameDelta g=(ExpertGameDelta) super.transformAllGameInDelta();
+        ExpertGameDelta g = (ExpertGameDelta) super.transformAllGameInDelta();
         g.setAutomaticSending(false);
         g.setNewCoinsLeft(coinsLeft);
-        for(byte i=0;i<characters.size();i++){
-            g.addCharacter(i,characters.get(i).getCharId());
+        for (byte i = 0; i < characters.size(); i++) {
+            g.addCharacter(i, characters.get(i).getCharId());
         }
         return g;
 
