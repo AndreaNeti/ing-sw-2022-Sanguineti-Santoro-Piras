@@ -143,7 +143,8 @@ public class Controller{
         return false;
     }
 
-    public void sendMessage(String me, String message) {
+    public void sendMessage(String me, String message) throws NullPointerException{
+        if(me == null) throw new NullPointerException();
         notifyClients(new TextMessaceSC("[" + me + "]: " + message));
     }
 
@@ -164,7 +165,7 @@ public class Controller{
 
     public synchronized void playCharacter() throws GameException, NullPointerException {
         if (isPlanificationPhase) {
-            throw new NotAllowedException("Not in planification phase");
+            throw new NotAllowedException("Not in action phase");
         }
         if (cardPlayed) {
             throw new NotAllowedException("A card has already been played this turn");
@@ -188,7 +189,9 @@ public class Controller{
         }
     }
 
-    public void removePlayer(GameListener toRemovePlayer) {
+    public void removePlayer(GameListener toRemovePlayer) throws NullPointerException{
+        if(toRemovePlayer == null) throw new NullPointerException();
+        else if(!playerHandlers.contains(toRemovePlayer)) System.err.println("PlayerHandler non presente nel controller");
         playerHandlers.remove(toRemovePlayer);
     }
 
