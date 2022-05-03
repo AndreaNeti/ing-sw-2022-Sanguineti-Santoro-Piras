@@ -3,6 +3,7 @@ package it.polimi.ingsw.model;
 import it.polimi.ingsw.controller.ExpertGameDelta;
 import it.polimi.ingsw.controller.GameDelta;
 import it.polimi.ingsw.controller.GameListener;
+import it.polimi.ingsw.controller.MatchConstants;
 import it.polimi.ingsw.exceptions.*;
 
 import java.util.ArrayList;
@@ -27,8 +28,8 @@ public class ExpertGame extends NormalGame {
     private transient byte chosenCharacter;
 
 
-    public ExpertGame(ArrayList<Team> teamList, GameListener listener) {
-        super(teamList, listener);
+    public ExpertGame(ArrayList<Team> teamList, GameListener listener, MatchConstants matchConstants) {
+        super(teamList, listener, matchConstants);
         byte numberOfPlayers=super.getPlayerSize();
         this.coinsLeft = (byte) (20 - numberOfPlayers);
         this.coinsPlayer = new byte[numberOfPlayers];

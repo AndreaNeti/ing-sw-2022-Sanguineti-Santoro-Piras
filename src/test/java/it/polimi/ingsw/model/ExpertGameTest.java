@@ -1,7 +1,9 @@
 package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.controller.Controller;
+import it.polimi.ingsw.controller.MatchConstants;
 import it.polimi.ingsw.controller.MatchType;
+import it.polimi.ingsw.controller.Server;
 import it.polimi.ingsw.exceptions.EndGameException;
 import it.polimi.ingsw.exceptions.GameException;
 import it.polimi.ingsw.exceptions.NotAllowedException;
@@ -21,6 +23,12 @@ public class ExpertGameTest {
 
     //constructor of expert game
     public ExpertGameTest() {
+        MatchType matchType;
+        MatchConstants matchConstants;
+
+        // create game with 2 players
+        matchType = new MatchType((byte) 2, true);
+        matchConstants = Server.getMatchConstants(matchType);
         t1 = new Team(HouseColor.BLACK, (byte) 1, (byte) 8);
         t2 = new Team(HouseColor.WHITE, (byte) 1, (byte) 8);
 
@@ -28,18 +36,20 @@ public class ExpertGameTest {
         teamList2.add(t1);
         teamList2.add(t2);
         try {
-            p1_2 = new Player("Franco", t1, Wizard.WOODMAGE, 9);
-            p2_2 = new Player("Gigi", t2, Wizard.SANDMAGE, 9);
+            p1_2 = new Player("Franco", t1, Wizard.WOODMAGE, matchConstants);
+            p2_2 = new Player("Gigi", t2, Wizard.SANDMAGE, matchConstants);
         } catch (GameException e) {
             fail();
         }
         players2 = new ArrayList<>(2);
         players2.add(p1_2);
         players2.add(p2_2);
-        gameWith2 = new ExpertGame(teamList2, new Controller(new MatchType((byte) 2, true)));
+        gameWith2 = new ExpertGame(teamList2, new Controller(matchType), matchConstants);
         gameWith2.setCurrentPlayer(p1_2);
 
-
+        // create game with 4 players
+        matchType = new MatchType((byte) 4, true);
+        matchConstants = Server.getMatchConstants(matchType);
         teamList4 = new ArrayList<>(2);
         t1 = new Team(HouseColor.BLACK, (byte) 2, (byte) 8);
         t2 = new Team(HouseColor.WHITE, (byte) 2, (byte) 8);
@@ -47,10 +57,10 @@ public class ExpertGameTest {
 
         teamList4.add(t2);
         try {
-            p1_4 = new Player("Franco", t1, Wizard.WOODMAGE, 7);
-            p2_4 = new Player("Gigi", t2, Wizard.SANDMAGE, 7);
-            p3_4 = new Player("Carola", t1, Wizard.AIRMAGE, 7);
-            p4_4 = new Player("Filomena", t2, Wizard.ELECTROMAGE, 7);
+            p1_4 = new Player("Franco", t1, Wizard.WOODMAGE, matchConstants);
+            p2_4 = new Player("Gigi", t2, Wizard.SANDMAGE, matchConstants);
+            p3_4 = new Player("Carola", t1, Wizard.AIRMAGE, matchConstants);
+            p4_4 = new Player("Filomena", t2, Wizard.ELECTROMAGE, matchConstants);
 
         } catch (GameException e) {
             fail();
@@ -62,10 +72,12 @@ public class ExpertGameTest {
         players4.add(p4_4);
 
 
-        gameWith4 = new ExpertGame(teamList4, new Controller(new MatchType((byte) 4, true)));
+        gameWith4 = new ExpertGame(teamList4, new Controller(matchType), matchConstants);
         gameWith4.setCurrentPlayer(p1_4);
 
         //create a game with 3 people
+        matchType = new MatchType((byte) 3, true);
+        matchConstants = Server.getMatchConstants(matchType);
         t1 = new Team(HouseColor.BLACK, (byte) 2, (byte) 6);
         t2 = new Team(HouseColor.WHITE, (byte) 2, (byte) 6);
         t3 = new Team(HouseColor.GREY, (byte) 1, (byte) 6);
@@ -74,9 +86,9 @@ public class ExpertGameTest {
         teamList3.add(t2);
         teamList3.add(t3);
         try {
-            p1_3 = new Player("Franco", t1, Wizard.WOODMAGE, 9);
-            p2_3 = new Player("Gigi", t2, Wizard.SANDMAGE, 9);
-            p3_3 = new Player("Carola", t3, Wizard.AIRMAGE, 9);
+            p1_3 = new Player("Franco", t1, Wizard.WOODMAGE, matchConstants);
+            p2_3 = new Player("Gigi", t2, Wizard.SANDMAGE, matchConstants);
+            p3_3 = new Player("Carola", t3, Wizard.AIRMAGE, matchConstants);
 
 
         } catch (GameException e) {
@@ -87,7 +99,7 @@ public class ExpertGameTest {
         players3.add(p2_3);
         players3.add(p3_3);
 
-        gameWith3 = new ExpertGame(teamList3, new Controller(new MatchType((byte) 3, true)));
+        gameWith3 = new ExpertGame(teamList3, new Controller(matchType), matchConstants);
         gameWith3.setCurrentPlayer(p1_3);
 
     }
@@ -115,7 +127,7 @@ public class ExpertGameTest {
             fail();
         }
         try {
-            gameWith2.getBag().moveStudents(Color.RED, (byte) 9, p1_2.getEntranceHall());
+            gameWith2.getBag().moveStudents(Color.RED, (byte) 6, p1_2.getEntranceHall());
         } catch (GameException e) {
             fail();
         }
@@ -134,6 +146,8 @@ public class ExpertGameTest {
             gameWith2.move(Color.RED, 0, 1);
             coins += 1;
             assertEquals(gameWith2.getCoinsPlayer(p1_2), coins);
+
+            gameWith2.getBag().moveStudents(Color.RED, (byte) 3, p1_2.getEntranceHall());
             gameWith2.move(Color.RED, 0, 1);
             gameWith2.move(Color.RED, 0, 1);
             gameWith2.move(Color.RED, 0, 1);
@@ -171,8 +185,12 @@ public class ExpertGameTest {
             for (Color color : Color.values()) {
                 p1_2.getEntranceHall().moveStudents(color, p1_2.getEntranceHall().howManyStudents(color), gameWith2.getBag());
             }
-            gameWith2.getBag().moveStudents(Color.RED, (byte) 9, p1_2.getEntranceHall());
-            for (int i = 0; i < 9; i++) {
+            gameWith2.getBag().moveStudents(Color.RED, (byte) 6, p1_2.getEntranceHall());
+            for (byte i = 0; i < 6; i++) {
+                gameWith2.move(Color.RED, 0, 1);
+            }
+            gameWith2.getBag().moveStudents(Color.RED, (byte) 3, p1_2.getEntranceHall());
+            for (byte i = 0; i < 3; i++) {
                 gameWith2.move(Color.RED, 0, 1);
             }
         } catch (GameException e) {
@@ -200,10 +218,13 @@ public class ExpertGameTest {
                 p1_2.getEntranceHall().moveStudents(color, p1_2.getEntranceHall().howManyStudents(color), gameWith2.getBag());
             }
             for (Color color : Color.values()) {
-                gameWith2.getBag().moveStudents(color, (byte) 4, p1_2.getEntranceHall());
-                for (int i = 0; i < 3; i++) {
+                gameWith2.getBag().moveStudents(color, (byte) 3, p1_2.getEntranceHall());
+                for (byte i = 0; i < 3; i++) {
                     gameWith2.move(color, 0, 1);
                 }
+            }
+            for (Color color : Color.values()) {
+                gameWith2.getBag().moveStudents(color, (byte) 1, p1_2.getEntranceHall());
             }
             gameWith2.chooseCharacter((byte) 0);
         } catch (GameException e) {

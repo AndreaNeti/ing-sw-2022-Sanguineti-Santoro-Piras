@@ -2,6 +2,7 @@ package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.controller.GameDelta;
 import it.polimi.ingsw.controller.GameListener;
+import it.polimi.ingsw.controller.MatchConstants;
 import it.polimi.ingsw.exceptions.EndGameException;
 import it.polimi.ingsw.exceptions.GameException;
 import it.polimi.ingsw.exceptions.NotAllowedException;
@@ -22,9 +23,10 @@ public class NormalGame implements Game {
     private Bag bag;
     private byte motherNaturePosition;
     private byte currentPlayer;
+    private final MatchConstants matchConstants;
 
-
-    public NormalGame(ArrayList<Team> teamList, GameListener listener) {
+    public NormalGame(ArrayList<Team> teamList, GameListener listener, MatchConstants matchConstants) {
+        this.matchConstants = matchConstants;
         gameDelta = getNewGameDelta(listener);
         this.teams = new ArrayList<>(teamList);
         byte numberOfPlayers = this.getPlayerSize();

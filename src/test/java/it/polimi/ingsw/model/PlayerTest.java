@@ -1,5 +1,8 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.controller.MatchConstants;
+import it.polimi.ingsw.controller.MatchType;
+import it.polimi.ingsw.controller.Server;
 import it.polimi.ingsw.exceptions.*;
 import org.junit.jupiter.api.Test;
 
@@ -8,14 +11,15 @@ import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.*;
 
 class PlayerTest {
+    MatchConstants matchConstants = Server.getMatchConstants(new MatchType((byte) 2, false));
     Team t = new Team(HouseColor.WHITE, (byte) 2, (byte) 2);
     Team t1 = new Team(HouseColor.BLACK, (byte) 1, (byte) 2);
     Player p, p1;
 
     {
         try {
-            p = new Player("Franco", t, Wizard.AIRMAGE, 7);
-            p1 = new Player("Gigi", t1, Wizard.WOODMAGE, 7);
+            p = new Player("Franco", t, Wizard.AIRMAGE, matchConstants);
+            p1 = new Player("Gigi", t1, Wizard.WOODMAGE, matchConstants);
         } catch (GameException e) {
             fail();
         }
@@ -23,10 +27,10 @@ class PlayerTest {
 
     @Test
     void constructorAndEqualsAndCompareTest() {
-        assertThrows(UnexpectedValueException.class, () -> new Player(null, null, null, 5));
+        assertThrows(UnexpectedValueException.class, () -> new Player(null, null, null, null));
         Player p2 = null;
         try {
-            p2 = new Player("Filippo", t, Wizard.AIRMAGE, 7);
+            p2 = new Player("Filippo", t, Wizard.AIRMAGE, matchConstants);
         } catch (GameException e) {
             fail();
         }

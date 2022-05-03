@@ -1,7 +1,9 @@
 package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.controller.Controller;
+import it.polimi.ingsw.controller.MatchConstants;
 import it.polimi.ingsw.controller.MatchType;
+import it.polimi.ingsw.controller.Server;
 import it.polimi.ingsw.exceptions.EndGameException;
 import it.polimi.ingsw.exceptions.GameException;
 import it.polimi.ingsw.exceptions.NotAllowedException;
@@ -21,25 +23,32 @@ public class NormalGameTest {
 
     //constructor of game
     public NormalGameTest() {
+        MatchType matchType;
+        MatchConstants matchConstants;
         t1 = new Team(HouseColor.BLACK, (byte) 1, (byte) 8);
         t2 = new Team(HouseColor.WHITE, (byte) 1, (byte) 8);
 
         teamList2 = new ArrayList<>(2);
         teamList2.add(t1);
         teamList2.add(t2);
+
+        matchType = new MatchType((byte) 2, false);
+        matchConstants = Server.getMatchConstants(matchType);
         try {
-            p1_2 = new Player("Franco", t1, Wizard.WOODMAGE, 7);
-            p2_2 = new Player("Gigi", t2, Wizard.SANDMAGE, 7);
+            p1_2 = new Player("Franco", t1, Wizard.WOODMAGE, matchConstants);
+            p2_2 = new Player("Gigi", t2, Wizard.SANDMAGE, matchConstants);
         } catch (GameException e) {
             fail();
         }
         players2 = new ArrayList<>(2);
         players2.add(p1_2);
         players2.add(p2_2);
-        gameWith2 = new NormalGame(teamList2, new Controller(new MatchType((byte) 2, false)));
+        gameWith2 = new NormalGame(teamList2, new Controller(matchType), matchConstants);
         gameWith2.setCurrentPlayer(p1_2);
 
-
+        // create game with 4 people
+        matchType = new MatchType((byte) 4, false);
+        matchConstants = Server.getMatchConstants(matchType);
         teamList4 = new ArrayList<>(2);
         t1 = new Team(HouseColor.BLACK, (byte) 2, (byte) 8);
         t2 = new Team(HouseColor.WHITE, (byte) 2, (byte) 8);
@@ -47,10 +56,10 @@ public class NormalGameTest {
 
         teamList4.add(t2);
         try {
-            p1_4 = new Player("Franco", t1, Wizard.WOODMAGE, 7);
-            p2_4 = new Player("Gigi", t2, Wizard.SANDMAGE, 7);
-            p3_4 = new Player("Carola", t1, Wizard.AIRMAGE, 7);
-            p4_4 = new Player("Filomena", t2, Wizard.ELECTROMAGE, 7);
+            p1_4 = new Player("Franco", t1, Wizard.WOODMAGE, matchConstants);
+            p2_4 = new Player("Gigi", t2, Wizard.SANDMAGE, matchConstants);
+            p3_4 = new Player("Carola", t1, Wizard.AIRMAGE, matchConstants);
+            p4_4 = new Player("Filomena", t2, Wizard.ELECTROMAGE, matchConstants);
 
         } catch (GameException e) {
             fail();
@@ -60,10 +69,12 @@ public class NormalGameTest {
         players4.add(p2_4);
         players4.add(p3_4);
         players4.add(p4_4);
-        gameWith4 = new NormalGame(teamList4, new Controller(new MatchType((byte) 4, false)));
+        gameWith4 = new NormalGame(teamList4, new Controller(matchType), matchConstants);
         gameWith4.setCurrentPlayer(p1_4);
 
         //create a game with 3 people
+        matchType = new MatchType((byte) 3, false);
+        matchConstants = Server.getMatchConstants(matchType);
         t1 = new Team(HouseColor.BLACK, (byte) 2, (byte) 6);
         t2 = new Team(HouseColor.WHITE, (byte) 2, (byte) 6);
         t3 = new Team(HouseColor.GREY, (byte) 1, (byte) 6);
@@ -72,9 +83,9 @@ public class NormalGameTest {
         teamList3.add(t2);
         teamList3.add(t3);
         try {
-            p1_3 = new Player("Franco", t1, Wizard.WOODMAGE, 9);
-            p2_3 = new Player("Gigi", t2, Wizard.SANDMAGE, 9);
-            p3_3 = new Player("Carola", t3, Wizard.AIRMAGE, 9);
+            p1_3 = new Player("Franco", t1, Wizard.WOODMAGE, matchConstants);
+            p2_3 = new Player("Gigi", t2, Wizard.SANDMAGE, matchConstants);
+            p3_3 = new Player("Carola", t3, Wizard.AIRMAGE, matchConstants);
 
 
         } catch (GameException e) {
@@ -85,7 +96,7 @@ public class NormalGameTest {
         players3.add(p2_3);
         players3.add(p3_3);
 
-        gameWith3 = new NormalGame(teamList3, new Controller(new MatchType((byte) 3, false)));
+        gameWith3 = new NormalGame(teamList3, new Controller(matchType), matchConstants);
         gameWith3.setCurrentPlayer(p1_3);
     }
 
@@ -139,21 +150,21 @@ public class NormalGameTest {
 
         for (Player p : gameWith2.getPlayers()) {
             assertEquals(p.getEntranceHall().howManyStudents(), 7);
-            assertEquals(p.getEntranceHall().getId(), p.getWizard().ordinal()*2);
-            assertEquals(p.getLunchHall().getId(), p.getWizard().ordinal()*2 +1);
+            assertEquals(p.getEntranceHall().getId(), p.getWizard().ordinal() * 2);
+            assertEquals(p.getLunchHall().getId(), p.getWizard().ordinal() * 2 + 1);
 
 
         }
         for (Player p : gameWith3.getPlayers()) {
             assertEquals(p.getEntranceHall().howManyStudents(), 9);
-            assertEquals(p.getEntranceHall().getId(), p.getWizard().ordinal()*2);
-            assertEquals(p.getLunchHall().getId(), p.getWizard().ordinal()*2 +1);
+            assertEquals(p.getEntranceHall().getId(), p.getWizard().ordinal() * 2);
+            assertEquals(p.getLunchHall().getId(), p.getWizard().ordinal() * 2 + 1);
 
         }
         for (Player p : gameWith4.getPlayers()) {
             assertEquals(p.getEntranceHall().howManyStudents(), 7);
-            assertEquals(p.getEntranceHall().getId(), p.getWizard().ordinal()*2);
-            assertEquals(p.getLunchHall().getId(), p.getWizard().ordinal()*2 +1);
+            assertEquals(p.getEntranceHall().getId(), p.getWizard().ordinal() * 2);
+            assertEquals(p.getLunchHall().getId(), p.getWizard().ordinal() * 2 + 1);
 
         }
 
@@ -414,7 +425,7 @@ public class NormalGameTest {
         try {
             gameWith3.setCurrentPlayer(p1_3);
             gameWith3.playCard((byte) 1);
-            for(Player p : players3) {
+            for (Player p : players3) {
                 int index = players3.indexOf(p);
                 gameWith3.getBag().moveStudents(Color.values()[index], (byte) 2, p.getLunchHall());
                 gameWith3.getIslands().get(index + 1).moveAll(gameWith3.getBag());
@@ -435,7 +446,7 @@ public class NormalGameTest {
         try {
             gameWith4.setCurrentPlayer(p1_4);
             gameWith4.playCard((byte) 1);
-            for(Player p : players4) {
+            for (Player p : players4) {
                 int index = players4.indexOf(p);
                 gameWith4.getBag().moveStudents(Color.values()[index], (byte) 2, p.getLunchHall());
                 gameWith4.getIslands().get(index + 1).moveAll(gameWith4.getBag());

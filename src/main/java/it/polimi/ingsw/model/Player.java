@@ -1,10 +1,12 @@
 package it.polimi.ingsw.model;
 
 
+import it.polimi.ingsw.controller.MatchConstants;
 import it.polimi.ingsw.exceptions.*;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Player implements Serializable {
     private final String nickName;
@@ -15,17 +17,18 @@ public class Player implements Serializable {
     private byte playedCard;
     private byte cardsLeft;
 
-    public Player(String nickName, Team team, Wizard wizard, int entranceHallSize) throws GameException {
-        if (nickName == null || team == null || entranceHallSize < 1)
+    public Player(String nickName, Team team, Wizard wizard, MatchConstants matchConstants) throws GameException {
+        if (nickName == null || team == null || matchConstants == null)
             throw new UnexpectedValueException();
         this.nickName = nickName;
         team.addPlayer(this);
         this.wizard = wizard;
-        this.cardsAvailable = new boolean[]{true, true, true, true, true, true, true, true, true, true};
-        this.cardsLeft = 10;
+        this.cardsAvailable = new boolean[matchConstants.numOfCards()];
+        Arrays.fill(this.cardsAvailable, true);
+        this.cardsLeft = (byte) matchConstants.numOfCards();
         this.playedCard = 0; // 0 = no card, else 1 to 10
-        this.entranceHall = new EntranceHall(entranceHallSize, (byte) (wizard.ordinal() * 2));
-        this.lunchHall = new LunchHall(Color.values().length * 10, (byte) (wizard.ordinal() * 2 + 1));
+        this.entranceHall = new EntranceHall(matchConstants.entranceHallStudents(), (byte) (wizard.ordinal() * 2));
+        this.lunchHall = new LunchHall(Color.values().length * matchConstants.maxLunchHallStudents(), (byte) (wizard.ordinal() * 2 + 1));
     }
 
     public void useCard(byte card) throws UsedCardException, UnexpectedValueException, NotAllowedException, EndGameException {

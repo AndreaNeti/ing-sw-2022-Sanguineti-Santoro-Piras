@@ -1,7 +1,9 @@
 package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.controller.Controller;
+import it.polimi.ingsw.controller.MatchConstants;
 import it.polimi.ingsw.controller.MatchType;
+import it.polimi.ingsw.controller.Server;
 import it.polimi.ingsw.exceptions.EndGameException;
 import it.polimi.ingsw.exceptions.GameException;
 import it.polimi.ingsw.exceptions.NotEnoughStudentsException;
@@ -22,12 +24,13 @@ class CharacterCardTest {
     CharacterCard c0, c1, c2, c3, c4, c5, c6, c7, c8, c9, c10, c11;
 
     public CharacterCardTest() {
+        MatchType matchType = new MatchType((byte) 2, true);
+        MatchConstants matchConstants = Server.getMatchConstants(matchType);
         t1 = new Team(HouseColor.WHITE, (byte) 1, (byte) 8);
         t2 = new Team(HouseColor.BLACK, (byte) 1, (byte) 8);
         try {
-            // 14 students are the minimum to get 3 coins after moving them all to the lunch all in the worst case
-            p1 = new Player("Franco", t1, Wizard.WOODMAGE, 9);
-            p2 = new Player("Gigi", t2, Wizard.SANDMAGE, 9);
+            p1 = new Player("Franco", t1, Wizard.WOODMAGE, matchConstants);
+            p2 = new Player("Gigi", t2, Wizard.SANDMAGE, matchConstants);
         } catch (GameException e) {
             fail();
         }
@@ -35,7 +38,7 @@ class CharacterCardTest {
         teamList.add(t2);
         playerList.add(p1);
         playerList.add(p2);
-        game = new ExpertGame(teamList, new Controller(new MatchType((byte) 2, true)));
+        game = new ExpertGame(teamList, new Controller(matchType), matchConstants);
         // fill lunch halls, p1 will gain enough coins to test char.play methods
         game.setCurrentPlayer(p1);
         try {

@@ -4,12 +4,15 @@ import it.polimi.ingsw.exceptions.EndGameException;
 import it.polimi.ingsw.exceptions.GameException;
 import it.polimi.ingsw.exceptions.NotAllowedException;
 import it.polimi.ingsw.model.*;
-import it.polimi.ingsw.network.*;
+import it.polimi.ingsw.network.EndGame;
+import it.polimi.ingsw.network.TextMessaceSC;
+import it.polimi.ingsw.network.ToClientMessage;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 
 public class Controller implements GameListener {
+    private final MatchConstants matchConstants;
     private final MatchType matchType;
     private final ArrayList<Player> playersList;
     private final ArrayList<GameListener> playerHandlers;
@@ -31,6 +34,7 @@ public class Controller implements GameListener {
     private boolean cardPlayed;
 
     public Controller(MatchType matchType) {
+        this.matchConstants = Server.getMatchConstants(matchType);
         this.matchType = matchType;
         this.playersList = new ArrayList<>(matchType.nPlayers());
         this.playerHandlers = new ArrayList<>(matchType.nPlayers());
@@ -38,10 +42,9 @@ public class Controller implements GameListener {
         for (byte i = 0; i < matchType.nPlayers(); i++)
             playerOrder.add(i);
         byte nTeams = (byte) ((matchType.nPlayers() % 2) + 2); // size is 2 or 3
-        byte maxTowers = (byte) (12 - nTeams * 2); // 2 teams -> 8 towers, 3 teams -> 6 towers
         this.teams = new ArrayList<>(nTeams);
         for (byte i = 0; i < nTeams; i++) {
-            teams.add(new Team(HouseColor.values()[i], (byte) (matchType.nPlayers() / nTeams), maxTowers));
+            teams.add(new Team(HouseColor.values()[i], (byte) (matchType.nPlayers() / nTeams), (byte) matchConstants.towersForTeam()));
         }
         this.isPlanificationPhase = true;
         this.actionPhase = 0;
@@ -128,9 +131,8 @@ public class Controller implements GameListener {
 
         }
         int teamIndex = playersList.size() % teams.size(); // circular team selection
-        int entranceHallSize = (teams.size() % 2 == 0) ? 7 : 9;
         Player newPlayer;
-        newPlayer = new Player(nickName, teams.get(teamIndex), Wizard.values()[playersList.size()], entranceHallSize);
+        newPlayer = new Player(nickName, teams.get(teamIndex), Wizard.values()[playersList.size()], matchConstants);
 
         playersList.add(newPlayer);
         playerHandlers.add(handler);
@@ -193,9 +195,9 @@ public class Controller implements GameListener {
 
     private void startGame() {
         if (matchType.isExpert())
-            game = new ExpertGame(teams, this);
+            game = new ExpertGame(teams, this, matchConstants);
         else
-            game = new NormalGame(teams, this);
+            game = new NormalGame(teams, this, matchConstants);
         game.setCurrentPlayer(currentPlayerIndex);
         game.transformAllGameInDelta().send();
     }

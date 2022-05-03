@@ -1,5 +1,8 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.controller.MatchConstants;
+import it.polimi.ingsw.controller.MatchType;
+import it.polimi.ingsw.controller.Server;
 import it.polimi.ingsw.exceptions.EndGameException;
 import it.polimi.ingsw.exceptions.GameException;
 import it.polimi.ingsw.exceptions.NotAllowedException;
@@ -11,11 +14,12 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class TeamTest {
     Team t = new Team(HouseColor.GREY, (byte) 2, (byte) 6);
+    MatchConstants matchConstants = Server.getMatchConstants(new MatchType((byte) 2, true));
     Player p;
 
     {
         try {
-            p = new Player("Franco", t, Wizard.AIRMAGE, 7);
+            p = new Player("Franco", t, Wizard.AIRMAGE, matchConstants);
         } catch (GameException e) {
             fail();
         }
@@ -34,7 +38,7 @@ class TeamTest {
         assertThrows(NotAllowedException.class, () -> t.addPlayer(p), "player already present in team");
         try {
             t.addPlayer(null);
-            Player p1 = new Player("Gigi", new Team(HouseColor.BLACK, (byte) 2, (byte) 6), Wizard.WOODMAGE, 7);
+            Player p1 = new Player("Gigi", new Team(HouseColor.BLACK, (byte) 2, (byte) 6), Wizard.WOODMAGE, matchConstants);
             t.addPlayer(p1);
         } catch (GameException ex) {
             fail();
