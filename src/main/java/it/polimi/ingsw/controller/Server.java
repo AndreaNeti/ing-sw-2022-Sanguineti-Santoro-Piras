@@ -1,7 +1,6 @@
 package it.polimi.ingsw.controller;
 
 import it.polimi.ingsw.exceptions.NotAllowedException;
-import it.polimi.ingsw.exceptions.UnexpectedValueException;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -40,13 +39,18 @@ public class Server {
         }
     }
 
-    public static void setNickNames(String nicknameToAdd) throws UnexpectedValueException {
+    public static void setNickName(String nickNameToAdd) throws NotAllowedException {
         synchronized (nickNames) {
-            if (!nickNames.add(nicknameToAdd))
-                throw new UnexpectedValueException();
+            if (!nickNames.add(nickNameToAdd))
+                throw new NotAllowedException("Nickname already taken");
         }
     }
 
+    public static void removeNickName(String nickNameToRemove) {
+        synchronized (nickNames) {
+            nickNames.remove(nickNameToRemove);
+        }
+    }
 
     public static Controller createMatch(MatchType matchType) {
         synchronized (matches) {

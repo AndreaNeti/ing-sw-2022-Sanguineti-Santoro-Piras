@@ -11,6 +11,6 @@ public class NickName implements ToServerMessage{
     }
     @Override
     public void execute(PlayerHandler playerHandler) throws GameException {
-        playerHandler.nickName(nickName);
+        playerHandler.setNickName(nickName);
     }
 }

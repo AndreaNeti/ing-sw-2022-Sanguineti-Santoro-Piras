@@ -2,16 +2,15 @@ package it.polimi.ingsw.controller;
 
 import it.polimi.ingsw.exceptions.GameException;
 import it.polimi.ingsw.exceptions.NotAllowedException;
-import it.polimi.ingsw.exceptions.UnexpectedValueException;
-import it.polimi.ingsw.model.Color;
-import it.polimi.ingsw.network.*;
+import it.polimi.ingsw.network.ErrorException;
+import it.polimi.ingsw.network.OK;
+import it.polimi.ingsw.network.ToClientMessage;
+import it.polimi.ingsw.network.ToServerMessage;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.util.Arrays;
-import java.util.List;
 
 public class PlayerHandler implements Runnable, GameListener {
     private final Socket socket;
@@ -48,7 +47,7 @@ public class PlayerHandler implements Runnable, GameListener {
                 command.execute(this);
                 this.update(new OK());
             } catch (GameException e1) {
-                this.update(new ErrorException(e1.getMessage()));
+                update(new ErrorException(e1.getMessage()));
             } catch (NullPointerException ex) {
                 update(new ErrorException("Must join a match before"));
             } catch (IOException | ClassNotFoundException e) {
@@ -58,6 +57,7 @@ public class PlayerHandler implements Runnable, GameListener {
             }
         }
         while (!quit);
+        Server.removeNickName(nickName);
         if (objIn != null) {
             try {
                 objIn.close();
@@ -85,41 +85,41 @@ public class PlayerHandler implements Runnable, GameListener {
 
         String methodString = tokens.remove(0);
         try {
-            if (!nickNameAlreadySet && !methodString.equals("nickName"))
-                throw new NotAllowedException("Must set a nickName first");
+            if (!nickNameAlreadySet && !methodString.equals("setNickName"))
+                throw new NotAllowedException("Must set a setNickName first");
             switch (methodString) {
                 //Controller methods
                 case "playCard" -> controller.playCard(Byte.parseByte(tokens.get(0)));
                 case "chooseCharacter" -> controller.chooseCharacter(Byte.parseByte(tokens.get(0)));
                 case "setCharacterInput" -> controller.setCharacterInput(Integer.parseInt(tokens.get(0)));
-                case "sendMessage" -> controller.sendMessage(nickName, tokens.get(0));
+                case "sendMessage" -> controller.sendMessage(setNickName, tokens.get(0));
                 case "moveMotherNature" -> controller.moveMotherNature(Integer.parseInt(tokens.get(0)));
                 case "move" -> controller.move(Color.valueOf(tokens.get(0)), Integer.parseInt(tokens.get(1)));
                 case "moveFromCloud" -> controller.moveFromCloud(Integer.parseInt(tokens.get(0)));
                 case "playCharacter" -> controller.playCharacter();
 
                 //Server methods
-                case "nickName" -> {
-                    Server.setNickNames(tokens.get(0));
-                    this.nickName(tokens.get(0));
+                case "setNickName" -> {
+                    Server.setNickName(tokens.get(0));
+                    this.setNickName(tokens.get(0));
                 }
                 case "getOldestMatchId" -> {
                     Long controllerId;
                     controllerId = Server.getOldestMatchId(new MatchType(Byte.parseByte(tokens.get(0)), Boolean.parseBoolean(tokens.get(1))));
                     controller = Server.getMatchById(controllerId);
-                    if (controller.addPlayer(this, nickName)) {
+                    if (controller.addPlayer(this, setNickName)) {
                         Server.removeMatch(controllerId);
                     }
                 }
                 case "getMatchById" -> {
                     controller = Server.getMatchById(Long.parseLong(tokens.get(0)));
-                    if (controller.addPlayer(this, nickName)) {
+                    if (controller.addPlayer(this, setNickName)) {
                         Server.removeMatch(Long.parseLong(tokens.get(0)));
                     }
                 }
                 case "createMatch" -> {
                     controller = Server.createMatch(new MatchType(Byte.parseByte(tokens.get(0)), Boolean.parseBoolean(tokens.get(1))));
-                    controller.addPlayer(this, nickName);
+                    controller.addPlayer(this, setNickName);
                 }
                 //TODO ignore notExpertGameException
                 default -> throw new UnexpectedValueException();
@@ -133,9 +133,11 @@ public class PlayerHandler implements Runnable, GameListener {
         }
     }*/
 
-    public void nickName(String nickName) {
-        if (!this.nickNameAlreadySet)
+    public void setNickName(String nickName) throws NotAllowedException {
+        if (!this.nickNameAlreadySet) {
+            Server.setNickName(nickName);
             this.nickName = nickName;
+        }
         this.nickNameAlreadySet = true;
     }
 
@@ -173,7 +175,7 @@ public class PlayerHandler implements Runnable, GameListener {
         controller = Server.getMatchById(controllerId);
         //TODO see if this this works
         if (controller.addPlayer(PlayerHandler.this, nickName)) {
-            gameDelta=controller.getGameDelta();
+            gameDelta = controller.getGameDelta();
             gameDelta.addListener(this);
             Server.removeMatch(controllerId);
         }
@@ -182,7 +184,7 @@ public class PlayerHandler implements Runnable, GameListener {
     public void joinMatchId(Long matchId) throws GameException {
         controller = Server.getMatchById(matchId);
         if (controller.addPlayer(PlayerHandler.this, nickName)) {
-            gameDelta=controller.getGameDelta();
+            gameDelta = controller.getGameDelta();
             gameDelta.addListener(this);
             Server.removeMatch(matchId);
         }
@@ -191,7 +193,7 @@ public class PlayerHandler implements Runnable, GameListener {
     public void createMatch(MatchType matchType) throws GameException {
         controller = Server.createMatch(matchType);
         controller.addPlayer(PlayerHandler.this, nickName);
-        gameDelta=controller.getGameDelta();
+        gameDelta = controller.getGameDelta();
         gameDelta.addListener(this);
     }
 }
