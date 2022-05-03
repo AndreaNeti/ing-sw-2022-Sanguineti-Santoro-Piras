@@ -20,7 +20,7 @@ public class Server {
     private static final Set<String> nickNames = new HashSet<>();
 
     public static void main(String[] args) {
-        try (ServerSocket server = new ServerSocket(7896)) {
+        try (ServerSocket server = new ServerSocket(4206)) {
             while (true) {
                 try {
                     new Thread(new PlayerHandler(server.accept())).start();
