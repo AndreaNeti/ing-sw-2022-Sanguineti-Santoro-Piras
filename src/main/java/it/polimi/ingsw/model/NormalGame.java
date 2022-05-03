@@ -318,7 +318,7 @@ public class NormalGame implements Game {
 
     @Override
     public void moveFromCloud(int cloudId) throws NotAllowedException {
-        if (cloudId >= 0 || cloudId < -getClouds().size() || getComponentByIndex(cloudId).howManyStudents() == 0)
+        if (getComponentByIndex(cloudId).howManyStudents() == 0)
             throw new NotAllowedException("Can't move from the selected cloud");
         GameComponent cloudSource = getComponentByIndex(cloudId);
         cloudSource.moveAll(getCurrentPlayer().getEntranceHall());

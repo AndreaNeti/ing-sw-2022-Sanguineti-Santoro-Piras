@@ -52,12 +52,10 @@ public class Controller implements GameListener {
         this.cardPlayed = false;
     }
 
-    //TODO Check a player can move only three/four students for turn
     public synchronized void move(Color color, int idGameComponent) throws GameException, NullPointerException {
         if (isPlanificationPhase) {
             throw new NotAllowedException("Not in action phase");
         }
-
         if (actionPhase == 1) {
             if (idGameComponent <= 0) throw new NotAllowedException("Can't move to the selected GameComponent");
             game.move(color, 0, idGameComponent);
@@ -73,17 +71,21 @@ public class Controller implements GameListener {
     }
 
     public synchronized void moveFromCloud(int idGameComponent) throws NotAllowedException, NullPointerException {
-
+        if (isPlanificationPhase) {
+            throw new NotAllowedException("Not in action phase");
+        }
         if (actionPhase == 3) { // move students from cloud, destination is player entrance hall
+            if (idGameComponent >= 0 || idGameComponent < -matchType.nPlayers())
+                throw new NotAllowedException("Component is not a cloud");
             game.moveFromCloud(idGameComponent);
             nextActionPhase();
         } else
             throw new NotAllowedException("Wrong Phase");
+
     }
 
     //the value here need to go from 1 to 10
     public synchronized void playCard(byte value) throws GameException, NullPointerException {
-
         if (!isPlanificationPhase) {
             throw new NotAllowedException("Not in planification phase");
         }
@@ -107,8 +109,10 @@ public class Controller implements GameListener {
     }
 
     public synchronized void moveMotherNature(int i) throws GameException, NullPointerException {
-        if (isPlanificationPhase || actionPhase != 2) {
-            throw new NotAllowedException("Not allowed in this phase");
+        if (isPlanificationPhase) {
+            throw new NotAllowedException("Not in action phase");
+        } else if (actionPhase != 2) {
+            throw new NotAllowedException("Wrong phase");
         }
         try {
             game.moveMotherNature(i);
@@ -171,16 +175,18 @@ public class Controller implements GameListener {
         }
     }
 
-    public synchronized void disconnectEveryone(GameListener playerAlreadyDisconnected){
+    public synchronized void disconnectEveryone(GameListener playerAlreadyDisconnected) {
         removePlayer(playerAlreadyDisconnected);
         notifyClients(new EndGame(null));
     }
+
     private void notifyClients(ToClientMessage m) {
         for (GameListener gl : playerHandlers) {
             gl.update(m);
         }
     }
-    public void removePlayer(GameListener toRemovePlayer){
+
+    public void removePlayer(GameListener toRemovePlayer) {
         playerHandlers.remove(toRemovePlayer);
     }
 
