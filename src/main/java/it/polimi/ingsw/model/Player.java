@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Player implements Serializable {
+    // TODO transient
     private final String nickName;
     private final Wizard wizard;
     private final boolean[] cardsAvailable;

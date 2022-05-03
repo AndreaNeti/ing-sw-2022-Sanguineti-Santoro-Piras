@@ -1,8 +1,8 @@
 package it.polimi.ingsw.controller;
 
 import it.polimi.ingsw.model.*;
-import it.polimi.ingsw.network.DeltaUpdate;
-import it.polimi.ingsw.network.ToClientMessage;
+import it.polimi.ingsw.network.toClientMessage.DeltaUpdate;
+import it.polimi.ingsw.network.toClientMessage.ToClientMessage;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -25,11 +25,11 @@ public class GameDelta implements Serializable {
     // towers left
     private HashMap<HouseColor, Byte> newTeamTowersLeft;
     private Byte newCurrentPlayer, newMotherNaturePosition, playedCard;
-    private transient boolean automaticSending; //default true
+    private transient boolean automaticSending;
 
     public GameDelta() {
         listeners = new ArrayList<>();
-        automaticSending = true;
+        automaticSending = false;
     }
 
     public void clear() {

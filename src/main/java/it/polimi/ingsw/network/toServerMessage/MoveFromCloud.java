@@ -1,4 +1,4 @@
-package it.polimi.ingsw.network;
+package it.polimi.ingsw.network.toServerMessage;
 
 import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.controller.PlayerHandler;
@@ -6,11 +6,11 @@ import it.polimi.ingsw.exceptions.GameException;
 import it.polimi.ingsw.exceptions.NotAllowedException;
 
 public class MoveFromCloud implements ToServerMessage {
+    int idGameComponent;
+
     public MoveFromCloud(int idGameComponent) {
         this.idGameComponent = idGameComponent;
     }
-
-    int idGameComponent;
 
     @Override
     public void execute(PlayerHandler playerHandler) throws GameException {

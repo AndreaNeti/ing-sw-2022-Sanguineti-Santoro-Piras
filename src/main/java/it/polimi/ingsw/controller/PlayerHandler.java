@@ -2,10 +2,10 @@ package it.polimi.ingsw.controller;
 
 import it.polimi.ingsw.exceptions.GameException;
 import it.polimi.ingsw.exceptions.NotAllowedException;
-import it.polimi.ingsw.network.ErrorException;
-import it.polimi.ingsw.network.OK;
-import it.polimi.ingsw.network.ToClientMessage;
-import it.polimi.ingsw.network.ToServerMessage;
+import it.polimi.ingsw.network.toClientMessage.ErrorException;
+import it.polimi.ingsw.network.toClientMessage.OK;
+import it.polimi.ingsw.network.toClientMessage.ToClientMessage;
+import it.polimi.ingsw.network.toServerMessage.ToServerMessage;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -15,7 +15,6 @@ import java.net.Socket;
 public class PlayerHandler implements Runnable, GameListener {
     private final Socket socket;
     private String nickName;
-    private boolean nickNameAlreadySet;
     private Controller controller;
     private boolean quit;
     private final ObjectOutputStream objOut;
@@ -31,7 +30,6 @@ public class PlayerHandler implements Runnable, GameListener {
             e.printStackTrace();
             throw new RuntimeException(e);
         }
-        nickNameAlreadySet = false;
         System.out.println("connesso con client " + socket.getPort());
     }
 
@@ -44,12 +42,15 @@ public class PlayerHandler implements Runnable, GameListener {
                 command = (ToServerMessage) objIn.readObject();
                 System.out.println(command);
                 command.execute(this);
-                this.update(new OK());
+                update(new OK());
             } catch (GameException e1) {
                 update(new ErrorException(e1.getMessage()));
             } catch (NullPointerException ex) {
                 // controller or game are null somewhere
-                update(new ErrorException("Not in game"));
+                if (controller == null)
+                    update(new ErrorException("Must join a match before"));
+                else
+                    update(new ErrorException("Game not started yet"));
             } catch (IOException | ClassNotFoundException e) {
                 controller.disconnectEveryone(this);
                 // cannot receive a quit message because it's disconnected
@@ -134,16 +135,16 @@ public class PlayerHandler implements Runnable, GameListener {
     }*/
 
     public void setNickName(String nickName) throws NotAllowedException {
-        if (!this.nickNameAlreadySet) {
+        if (this.nickName == null) {
             Server.setNickName(nickName);
             this.nickName = nickName;
         }
-        this.nickNameAlreadySet = true;
     }
 
     public void quit() {
         quit = true;
         controller.removePlayer(this);
+        controller = null;
         //send an ACK to confirm
         update(new OK());
     }
@@ -169,7 +170,7 @@ public class PlayerHandler implements Runnable, GameListener {
         return controller;
     }
 
-    public void joinOldestMatchId(MatchType matchType) throws GameException {
+    public void joinByMatchType(MatchType matchType) throws GameException {
         Long controllerId;
         controllerId = Server.getOldestMatchId(matchType);
         controller = Server.getMatchById(controllerId);

@@ -4,9 +4,9 @@ import it.polimi.ingsw.exceptions.EndGameException;
 import it.polimi.ingsw.exceptions.GameException;
 import it.polimi.ingsw.exceptions.NotAllowedException;
 import it.polimi.ingsw.model.*;
-import it.polimi.ingsw.network.EndGame;
-import it.polimi.ingsw.network.TextMessaceSC;
-import it.polimi.ingsw.network.ToClientMessage;
+import it.polimi.ingsw.network.toClientMessage.EndGame;
+import it.polimi.ingsw.network.toClientMessage.TextMessaceSC;
+import it.polimi.ingsw.network.toClientMessage.ToClientMessage;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -203,6 +203,7 @@ public class Controller {
             playerHandlers.remove(toRemovePlayer);
         }
     }
+
     private void startGame() {
         if (matchType.isExpert())
             game = new ExpertGame(teams, matchConstants);

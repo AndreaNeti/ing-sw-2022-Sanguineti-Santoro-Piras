@@ -8,10 +8,11 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class Team implements Serializable {
+    // TODO transient
     private final HouseColor houseColor;
     private final ArrayList<Player> members;
     private final byte teamSize;
-    private  final byte maxTowers;
+    private final byte maxTowers;
     private byte towersLeft;
 
     public Team(HouseColor hc, byte teamSize, byte maxTowers) {
@@ -34,27 +35,29 @@ public class Team implements Serializable {
         } else
             System.err.println("Player cannot be null");
     }
-/*
-    public void removePlayer(Player p) throws NotAllowedException {
-        if (p != null) {
-            if (!members.remove(p)) throw new NotAllowedException("Player not present");
-        } else
-            System.err.println("Player cannot be null");
 
-    }
-*/
+    /*
+        public void removePlayer(Player p) throws NotAllowedException {
+            if (p != null) {
+                if (!members.remove(p)) throw new NotAllowedException("Player not present");
+            } else
+                System.err.println("Player cannot be null");
+
+        }
+    */
     public HouseColor getHouseColor() {
         return houseColor;
     }
-/*
-    public void movePlayer(Player p, Team t) throws NotAllowedException {
-        if (p != null && t != null && !t.isFull()) {
-            removePlayer(p);
-            t.addPlayer(p);
-        } else
-            System.err.println("Player and Team cannot be null");
-    }
-*/
+
+    /*
+        public void movePlayer(Player p, Team t) throws NotAllowedException {
+            if (p != null && t != null && !t.isFull()) {
+                removePlayer(p);
+                t.addPlayer(p);
+            } else
+                System.err.println("Player and Team cannot be null");
+        }
+    */
     public boolean isFull() {
         return teamSize == members.size();
     }

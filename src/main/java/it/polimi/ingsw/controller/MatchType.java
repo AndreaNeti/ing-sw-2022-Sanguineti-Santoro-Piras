@@ -1,6 +1,8 @@
 package it.polimi.ingsw.controller;
 
 
-public record MatchType(byte nPlayers, boolean isExpert) {
+import java.io.Serializable;
+
+public record MatchType(byte nPlayers, boolean isExpert) implements Serializable {
 
 }
