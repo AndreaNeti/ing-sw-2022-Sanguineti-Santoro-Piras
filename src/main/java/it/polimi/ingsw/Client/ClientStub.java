@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.Scanner;
 
 import it.polimi.ingsw.Client.model.GameComponentClient;
 import it.polimi.ingsw.controller.MatchType;
@@ -63,12 +64,13 @@ public class ClientStub {
         ObjectOutputStream objOut=new ObjectOutputStream(socket.getOutputStream());
         ObjectInputStream objIn= new ObjectInputStream(socket.getInputStream());
         int number;
+        Scanner myInput = new Scanner( System.in );
         do{
-            number =System.in.read();
+            number = myInput.nextInt();
             try {
                 ToServerMessage send=switchNumber(number);
                 objOut.writeObject(send);
-                GameComponentClient received=Adapter.transform((GameComponent)  objIn.readObject());
+                ToClientMessage received=(ToClientMessage) objIn.readObject();
                 System.out.println(received);
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
