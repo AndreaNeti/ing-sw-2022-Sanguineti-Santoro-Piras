@@ -1,6 +1,5 @@
 package it.polimi.ingsw.model;
 
-import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.controller.MatchConstants;
 import it.polimi.ingsw.controller.MatchType;
 import it.polimi.ingsw.controller.Server;

@@ -81,7 +81,7 @@ public class Player implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Player player)) return false;
-        // only checks setNickName, it's unique
+        // only checks nickname, it's unique
         return this.toString().equals(player.toString());
     }
 

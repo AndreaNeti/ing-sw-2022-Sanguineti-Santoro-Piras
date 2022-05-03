@@ -1,16 +1,14 @@
 package it.polimi.ingsw.Client;
 
+import it.polimi.ingsw.controller.MatchType;
+import it.polimi.ingsw.model.Color;
+import it.polimi.ingsw.network.*;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.Scanner;
-
-import it.polimi.ingsw.Client.model.GameComponentClient;
-import it.polimi.ingsw.controller.MatchType;
-import it.polimi.ingsw.model.Color;
-import it.polimi.ingsw.model.GameComponent;
-import it.polimi.ingsw.network.*;
 
 
 public class ClientStub {

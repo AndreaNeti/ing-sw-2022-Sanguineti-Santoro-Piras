@@ -1,7 +1,6 @@
 package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.controller.GameDelta;
-import it.polimi.ingsw.controller.GameListener;
 import it.polimi.ingsw.controller.MatchConstants;
 import it.polimi.ingsw.exceptions.EndGameException;
 import it.polimi.ingsw.exceptions.GameException;

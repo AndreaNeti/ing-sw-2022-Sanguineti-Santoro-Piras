@@ -11,10 +11,8 @@ import static java.util.Map.entry;
 public class Server {
 
     public static Long matchId = 0L;
-
+// TODO use concurrent collection?
     public static final HashMap<MatchType, LinkedHashMap<Long, Controller>> matches = new HashMap<>();
-
-    // TODO add number if duplicate
     private static final Set<String> nickNames = new HashSet<>();
     private static final Map<MatchType, MatchConstants> matchConstants = Map.ofEntries(
             entry(new MatchType((byte) 2, false), new MatchConstants(10, 3, 0, 0, 0, 7, 10, 8, 3)),

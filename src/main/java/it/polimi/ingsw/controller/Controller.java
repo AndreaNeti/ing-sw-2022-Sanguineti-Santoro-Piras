@@ -11,7 +11,7 @@ import it.polimi.ingsw.network.ToClientMessage;
 import java.util.ArrayList;
 import java.util.Comparator;
 
-public class Controller{
+public class Controller {
     private final MatchConstants matchConstants;
     private final MatchType matchType;
     private final ArrayList<Player> playersList;
@@ -20,18 +20,16 @@ public class Controller{
     // This array is also used to represent the order of round
     private final ArrayList<Byte> playerOrder;
     private Game game;
-    // current phase is true in the planification phase, false during the action phase
-    private boolean isPlanificationPhase;
     /* it's a number that goes from 1 to 3, it represents the subsection of the action phase
     1-move 3-4 students; 2-move mother nature(calculate influence and merge); 3-drawStudent from cloud*/
     private byte actionPhase;
     //it's the index of playerOrder: it goes from 0 to players.size() and when it's 3 it changes phase
-    private byte roundIndex, currentPlayerIndex;
-    private boolean lastRound;
-
+    private byte roundIndex;
+    // counts the number of students moved during the action phase
     private byte movesCounter;
-
-    private boolean cardPlayed;
+    // Byte so it's immutalbe
+    private Byte currentPlayerIndex;
+    private boolean isPlanificationPhase, lastRound, cardPlayed;
 
     public Controller(MatchType matchType) {
         this.matchConstants = Server.getMatchConstants(matchType);
@@ -53,6 +51,12 @@ public class Controller{
         this.lastRound = false;
         this.movesCounter = 0;
         this.cardPlayed = false;
+    }
+
+    public boolean isMyTurn(PlayerHandler caller) {
+        synchronized (playerHandlers) {
+            return currentPlayerIndex == playerHandlers.indexOf(caller);
+        }
     }
 
     public synchronized void move(Color color, int idGameComponent) throws GameException, NullPointerException {
@@ -143,8 +147,8 @@ public class Controller{
         return false;
     }
 
-    public void sendMessage(String me, String message) throws NullPointerException{
-        if(me == null) throw new NullPointerException();
+    public void sendMessage(String me, String message) throws NullPointerException {
+        if (me == null) throw new NullPointerException();
         notifyClients(new TextMessaceSC("[" + me + "]: " + message));
     }
 
@@ -178,25 +182,26 @@ public class Controller{
         }
     }
 
-    public synchronized void disconnectEveryone(GameListener playerAlreadyDisconnected) {
+    public void disconnectEveryone(GameListener playerAlreadyDisconnected) {
         removePlayer(playerAlreadyDisconnected);
         notifyClients(new EndGame(null));
     }
 
     private void notifyClients(ToClientMessage m) {
-        for (GameListener gl : playerHandlers) {
-            gl.update(m);
+        synchronized (playerHandlers) {
+            for (GameListener gl : playerHandlers) {
+                gl.update(m);
+            }
         }
     }
 
-    public void removePlayer(GameListener toRemovePlayer) throws NullPointerException{
-        if(toRemovePlayer == null) throw new NullPointerException();
-        else if(!playerHandlers.contains(toRemovePlayer)) System.err.println("PlayerHandler non presente nel controller");
-        playerHandlers.remove(toRemovePlayer);
-    }
-
-    public GameDelta getGameDelta(){
-        return game.getGameDelta();
+    public void removePlayer(GameListener toRemovePlayer) throws NullPointerException {
+        synchronized (playerHandlers) {
+            if (toRemovePlayer == null) throw new NullPointerException();
+            else if (!playerHandlers.contains(toRemovePlayer))
+                System.err.println("PlayerHandler non presente nel controller");
+            playerHandlers.remove(toRemovePlayer);
+        }
     }
     private void startGame() {
         if (matchType.isExpert())
@@ -204,6 +209,11 @@ public class Controller{
         else
             game = new NormalGame(teams, matchConstants);
         game.setCurrentPlayer(currentPlayerIndex);
+        // TODO find a better way
+        GameDelta gameDelta = game.getGameDelta();
+        for (GameListener listener : playerHandlers)
+            gameDelta.addListener(listener);
+
         game.transformAllGameInDelta().send();
     }
 

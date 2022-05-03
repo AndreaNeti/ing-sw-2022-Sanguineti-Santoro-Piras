@@ -2,6 +2,7 @@ package it.polimi.ingsw.controller;
 
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.network.DeltaUpdate;
+import it.polimi.ingsw.network.ToClientMessage;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -10,8 +11,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class GameDelta implements Serializable {
-
-    // TODO add update() everywhere
     private final transient ArrayList<GameListener> listeners;
     // GC index, students array
     private HashMap<Byte, GameComponent> updatedGC;
@@ -111,10 +110,10 @@ public class GameDelta implements Serializable {
     }
 
     public void send() {
-        for (GameListener listener : listeners) {
-            listener.update(new DeltaUpdate(this));
-            this.clear();
-        }
+        ToClientMessage m = new DeltaUpdate(this);
+        for (GameListener listener : listeners)
+            listener.update(m);
+        this.clear();
     }
 
     public boolean isAutomaticSending() {

@@ -20,7 +20,6 @@ public class PlayerHandler implements Runnable, GameListener {
     private boolean quit;
     private final ObjectOutputStream objOut;
     private final ObjectInputStream objIn;
-    private GameDelta gameDelta;
 
     public PlayerHandler(Socket socket) {
         if (socket == null) throw new NullPointerException();
@@ -49,7 +48,8 @@ public class PlayerHandler implements Runnable, GameListener {
             } catch (GameException e1) {
                 update(new ErrorException(e1.getMessage()));
             } catch (NullPointerException ex) {
-                update(new ErrorException("Must join a match before"));
+                // controller or game are null somewhere
+                update(new ErrorException("Not in game"));
             } catch (IOException | ClassNotFoundException e) {
                 controller.disconnectEveryone(this);
                 // cannot receive a quit message because it's disconnected
@@ -173,27 +173,20 @@ public class PlayerHandler implements Runnable, GameListener {
         Long controllerId;
         controllerId = Server.getOldestMatchId(matchType);
         controller = Server.getMatchById(controllerId);
-        //TODO see if this this works
-        if (controller.addPlayer(PlayerHandler.this, nickName)) {
-            gameDelta = controller.getGameDelta();
-            gameDelta.addListener(this);
+        if (controller.addPlayer(this, nickName)) {
             Server.removeMatch(controllerId);
         }
     }
 
     public void joinMatchId(Long matchId) throws GameException {
         controller = Server.getMatchById(matchId);
-        if (controller.addPlayer(PlayerHandler.this, nickName)) {
-            gameDelta = controller.getGameDelta();
-            gameDelta.addListener(this);
+        if (controller.addPlayer(this, nickName)) {
             Server.removeMatch(matchId);
         }
     }
 
     public void createMatch(MatchType matchType) throws GameException {
         controller = Server.createMatch(matchType);
-        controller.addPlayer(PlayerHandler.this, nickName);
-        gameDelta = controller.getGameDelta();
-        gameDelta.addListener(this);
+        controller.addPlayer(this, nickName);
     }
 }
