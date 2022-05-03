@@ -21,6 +21,7 @@ public class PlayerHandler implements Runnable, GameListener {
     private boolean quit;
     private final ObjectOutputStream objOut;
     private final ObjectInputStream objIn;
+    private GameDelta gameDelta;
 
     public PlayerHandler(Socket socket) {
         if (socket == null) throw new NullPointerException();
@@ -172,6 +173,8 @@ public class PlayerHandler implements Runnable, GameListener {
         controller = Server.getMatchById(controllerId);
         //TODO see if this this works
         if (controller.addPlayer(PlayerHandler.this, nickName)) {
+            gameDelta=controller.getGameDelta();
+            gameDelta.addListener(this);
             Server.removeMatch(controllerId);
         }
     }
@@ -179,6 +182,8 @@ public class PlayerHandler implements Runnable, GameListener {
     public void joinMatchId(Long matchId) throws GameException {
         controller = Server.getMatchById(matchId);
         if (controller.addPlayer(PlayerHandler.this, nickName)) {
+            gameDelta=controller.getGameDelta();
+            gameDelta.addListener(this);
             Server.removeMatch(matchId);
         }
     }
@@ -186,5 +191,7 @@ public class PlayerHandler implements Runnable, GameListener {
     public void createMatch(MatchType matchType) throws GameException {
         controller = Server.createMatch(matchType);
         controller.addPlayer(PlayerHandler.this, nickName);
+        gameDelta=controller.getGameDelta();
+        gameDelta.addListener(this);
     }
 }

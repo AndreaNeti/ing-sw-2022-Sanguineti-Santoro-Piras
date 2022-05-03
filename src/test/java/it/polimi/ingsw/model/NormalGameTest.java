@@ -43,7 +43,7 @@ public class NormalGameTest {
         players2 = new ArrayList<>(2);
         players2.add(p1_2);
         players2.add(p2_2);
-        gameWith2 = new NormalGame(teamList2, new Controller(matchType), matchConstants);
+        gameWith2 = new NormalGame(teamList2, matchConstants);
         gameWith2.setCurrentPlayer(p1_2);
 
         // create game with 4 people
@@ -69,7 +69,7 @@ public class NormalGameTest {
         players4.add(p2_4);
         players4.add(p3_4);
         players4.add(p4_4);
-        gameWith4 = new NormalGame(teamList4, new Controller(matchType), matchConstants);
+        gameWith4 = new NormalGame(teamList4,  matchConstants);
         gameWith4.setCurrentPlayer(p1_4);
 
         //create a game with 3 people
@@ -96,7 +96,7 @@ public class NormalGameTest {
         players3.add(p2_3);
         players3.add(p3_3);
 
-        gameWith3 = new NormalGame(teamList3, new Controller(matchType), matchConstants);
+        gameWith3 = new NormalGame(teamList3,  matchConstants);
         gameWith3.setCurrentPlayer(p1_3);
     }
 

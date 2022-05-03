@@ -25,9 +25,9 @@ public class NormalGame implements Game {
     private byte currentPlayer;
     private final MatchConstants matchConstants;
 
-    public NormalGame(ArrayList<Team> teamList, GameListener listener, MatchConstants matchConstants) {
+    public NormalGame(ArrayList<Team> teamList, MatchConstants matchConstants) {
         this.matchConstants = matchConstants;
-        gameDelta = getNewGameDelta(listener);
+        gameDelta = getNewGameDelta();
         this.teams = new ArrayList<>(teamList);
         byte numberOfPlayers = this.getPlayerSize();
 
@@ -56,10 +56,10 @@ public class NormalGame implements Game {
         }
     }
 
-    protected GameDelta getNewGameDelta(GameListener listener) {
-        return new GameDelta(listener);
+    protected GameDelta getNewGameDelta() {
+        return new GameDelta();
     }
-    // checks if the islands before and after the selected island have the same team and in case merges them
+
 
     private void initializeMotherNature() {
         this.motherNaturePosition = 0;
@@ -75,6 +75,7 @@ public class NormalGame implements Game {
         this.bag = new Bag((byte) 24, (byte) 69);
     }
 
+    // checks if the islands before and after the selected island have the same team and in case merges them
     protected void checkMerge(Island island) throws EndGameException {
         int islandBeforeIndex = Math.floorMod(islands.indexOf(island) - 1, islands.size());
         int islandAfterIndex = (islands.indexOf(island) + 1) % islands.size();
@@ -405,7 +406,7 @@ public class NormalGame implements Game {
         return ret;
     }
 
-    protected GameDelta getGameDelta() {
+    public GameDelta getGameDelta() {
         return this.gameDelta;
     }
 

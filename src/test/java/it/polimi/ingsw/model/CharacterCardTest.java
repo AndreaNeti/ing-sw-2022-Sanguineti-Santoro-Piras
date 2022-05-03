@@ -38,7 +38,7 @@ class CharacterCardTest {
         teamList.add(t2);
         playerList.add(p1);
         playerList.add(p2);
-        game = new ExpertGame(teamList, new Controller(matchType), matchConstants);
+        game = new ExpertGame(teamList,  matchConstants);
         // fill lunch halls, p1 will gain enough coins to test char.play methods
         game.setCurrentPlayer(p1);
         try {

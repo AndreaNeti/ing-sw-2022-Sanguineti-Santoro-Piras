@@ -29,6 +29,6 @@ public interface Game extends Serializable {
     void playCharacter() throws GameException, EndGameException;
 
     void moveFromCloud(int cloudId) throws NotAllowedException;
-
+    GameDelta getGameDelta();
     GameDelta transformAllGameInDelta();
 }

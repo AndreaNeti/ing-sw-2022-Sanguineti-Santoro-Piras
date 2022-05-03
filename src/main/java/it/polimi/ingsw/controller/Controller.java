@@ -11,7 +11,7 @@ import it.polimi.ingsw.network.ToClientMessage;
 import java.util.ArrayList;
 import java.util.Comparator;
 
-public class Controller implements GameListener {
+public class Controller{
     private final MatchConstants matchConstants;
     private final MatchType matchType;
     private final ArrayList<Player> playersList;
@@ -192,12 +192,14 @@ public class Controller implements GameListener {
         playerHandlers.remove(toRemovePlayer);
     }
 
-
+    public GameDelta getGameDelta(){
+        return game.getGameDelta();
+    }
     private void startGame() {
         if (matchType.isExpert())
-            game = new ExpertGame(teams, this, matchConstants);
+            game = new ExpertGame(teams, matchConstants);
         else
-            game = new NormalGame(teams, this, matchConstants);
+            game = new NormalGame(teams, matchConstants);
         game.setCurrentPlayer(currentPlayerIndex);
         game.transformAllGameInDelta().send();
     }
@@ -268,9 +270,5 @@ public class Controller implements GameListener {
         else lastRound = true;
     }
 
-    @Override
-    public void update(ToClientMessage m) {
-        notifyClients(m);
-    }
 
 }

@@ -4,6 +4,7 @@ import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.network.DeltaUpdate;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
@@ -11,7 +12,7 @@ import java.util.Set;
 public class GameDelta implements Serializable {
 
     // TODO add update() everywhere
-    private transient final GameListener listener;
+    private final transient ArrayList<GameListener> listeners;
     // GC index, students array
     private HashMap<Byte, GameComponent> updatedGC;
     // deleted islands ids
@@ -27,8 +28,8 @@ public class GameDelta implements Serializable {
     private Byte newCurrentPlayer, newMotherNaturePosition, playedCard;
     private transient boolean automaticSending; //default true
 
-    public GameDelta(GameListener listener) {
-        this.listener = listener;
+    public GameDelta() {
+        listeners = new ArrayList<>();
         automaticSending = true;
     }
 
@@ -105,9 +106,15 @@ public class GameDelta implements Serializable {
         this.automaticSending = automaticSending;
     }
 
+    public void addListener(GameListener gameListener) {
+        listeners.add(gameListener);
+    }
+
     public void send() {
-        listener.update(new DeltaUpdate(this));
-        this.clear();
+        for (GameListener listener : listeners) {
+            listener.update(new DeltaUpdate(this));
+            this.clear();
+        }
     }
 
     public boolean isAutomaticSending() {

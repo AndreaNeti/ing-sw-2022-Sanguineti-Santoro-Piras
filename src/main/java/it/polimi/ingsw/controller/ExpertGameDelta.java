@@ -12,8 +12,8 @@ public class ExpertGameDelta extends GameDelta {
     private Byte newCoinsLeft, newProhibitionsLeft;
     private Color ignoredColorInfluence;
 
-    public ExpertGameDelta(GameListener listener) {
-        super(listener);
+    public ExpertGameDelta() {
+        super();
     }
 
     @Override

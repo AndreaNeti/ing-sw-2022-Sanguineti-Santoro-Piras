@@ -28,8 +28,8 @@ public class ExpertGame extends NormalGame {
     private transient byte chosenCharacter;
 
 
-    public ExpertGame(ArrayList<Team> teamList, GameListener listener, MatchConstants matchConstants) {
-        super(teamList, listener, matchConstants);
+    public ExpertGame(ArrayList<Team> teamList, MatchConstants matchConstants) {
+        super(teamList, matchConstants);
         byte numberOfPlayers=super.getPlayerSize();
         this.coinsLeft = (byte) (20 - numberOfPlayers);
         this.coinsPlayer = new byte[numberOfPlayers];
@@ -69,8 +69,8 @@ public class ExpertGame extends NormalGame {
     }
 
     @Override
-    protected GameDelta getNewGameDelta(GameListener listener) {
-        return new ExpertGameDelta(listener);
+    protected GameDelta getNewGameDelta() {
+        return new ExpertGameDelta();
     }
 
 
