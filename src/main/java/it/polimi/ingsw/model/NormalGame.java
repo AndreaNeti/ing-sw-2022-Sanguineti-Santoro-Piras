@@ -153,15 +153,15 @@ public class NormalGame implements Game {
 
 
     @Override
-    public void move(Color color, int gameComponentSource, int gameComponentDestination) throws GameException {
-        GameComponent source = getComponentByIndex(gameComponentSource), destination = getComponentByIndex(gameComponentDestination);
+    public void move(Color color, int indexGameComponentSource, int indexGameComponentDestination) throws GameException {
+        GameComponent source = getComponentByIndex(indexGameComponentSource), destination = getComponentByIndex(indexGameComponentDestination);
         source.moveStudents(color, (byte) 1, destination);
 
         // add to game delta
         gameDelta.addUpdatedGC(source);
         gameDelta.addUpdatedGC(destination);
 
-        if (gameComponentDestination == 1) calculateProfessor();
+        if (indexGameComponentDestination == 1) calculateProfessor();
     }
 
     // compares for each color the lunchHall of each player and then puts the player with the most students
@@ -319,10 +319,10 @@ public class NormalGame implements Game {
     }
 
     @Override
-    public void moveFromCloud(int cloudId) throws NotAllowedException {
-        if (getComponentByIndex(cloudId).howManyStudents() == 0)
+    public void moveFromCloud(int cloudIndex) throws NotAllowedException {
+        if (getComponentByIndex(cloudIndex).howManyStudents() == 0)
             throw new NotAllowedException("Can't move from the selected cloud");
-        GameComponent cloudSource = getComponentByIndex(cloudId);
+        GameComponent cloudSource = getComponentByIndex(cloudIndex);
         cloudSource.moveAll(getCurrentPlayer().getEntranceHall());
 
         // add to game delta

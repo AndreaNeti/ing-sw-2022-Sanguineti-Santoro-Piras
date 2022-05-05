@@ -109,7 +109,7 @@ public class GameDelta implements Serializable {
         listeners.add(gameListener);
     }
 
-    public void send() {
+    public void send()  {
         ToClientMessage m = new DeltaUpdate(this);
         for (GameListener listener : listeners)
             listener.update(m);
@@ -118,5 +118,45 @@ public class GameDelta implements Serializable {
 
     public boolean isAutomaticSending() {
         return automaticSending;
+    }
+
+    public void addCharacter(byte index, byte id){
+    }
+    public void setUpdatedCoinPlayer(byte playerId, byte newCoindsLeft){}
+
+    public void setNewCoinsLeft(byte newCoinsLeft){}
+    public void setNewProhibitionsLeft(byte newProhibitionsLeft){}
+    public void setIgnoredColorInfluence(Color ignoredColorInfluence){}
+
+    public HashMap<Byte, GameComponent> getUpdatedGC() {
+        return updatedGC;
+    }
+
+    public Byte getNewCurrentPlayer() {
+        return newCurrentPlayer;
+    }
+
+    public Byte getNewMotherNaturePosition() {
+        return newMotherNaturePosition;
+    }
+
+    public HashMap<Color, Wizard> getUpdatedProfessors() {
+        return updatedProfessors;
+    }
+
+    public Byte getPlayedCard() {
+        return playedCard;
+    }
+
+    public HashMap<Wizard, HouseColor> getMembers() {
+        return members;
+    }
+
+    public Set<Byte> getDeletedIslands() {
+        return deletedIslands;
+    }
+
+    public HashMap<HouseColor, Byte> getNewTeamTowersLeft() {
+        return newTeamTowersLeft;
     }
 }

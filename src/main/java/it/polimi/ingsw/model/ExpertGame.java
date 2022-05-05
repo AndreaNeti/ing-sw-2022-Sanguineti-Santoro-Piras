@@ -234,7 +234,7 @@ public class ExpertGame extends NormalGame {
                     if (p.getLunchHall().howManyStudents(c) > max) {
                         max = p.getLunchHall().howManyStudents(c);
                         newOwner = p;
-                    } else if (equalProfessorCalculation && p.equals(getCurrentPlayer()) && p.getLunchHall().howManyStudents(c) == max)
+                    } else if (equalProfessorCalculation && p.equals(getCurrentPlayer()) && p.getLunchHall().howManyStudents(c) == max &&currentOwner!=null)
                         newOwner = p;
                 }
             }
@@ -250,8 +250,8 @@ public class ExpertGame extends NormalGame {
         coinsLeft--;
 
         // add to game delta
-        ((ExpertGameDelta) getGameDelta()).setUpdatedCoinPlayer(playerIndex, getCoinsPlayer(playerIndex));
-        ((ExpertGameDelta) getGameDelta()).setNewCoinsLeft(coinsLeft);
+        getGameDelta().setUpdatedCoinPlayer(playerIndex, getCoinsPlayer(playerIndex));
+        getGameDelta().setNewCoinsLeft(coinsLeft);
 
     }
 
@@ -265,8 +265,8 @@ public class ExpertGame extends NormalGame {
             coinsLeft += coins;
 
             // add to game delta
-            ((ExpertGameDelta) getGameDelta()).setUpdatedCoinPlayer(playerIndex, getCoinsPlayer(playerIndex));
-            ((ExpertGameDelta) getGameDelta()).setNewCoinsLeft(coinsLeft);
+            getGameDelta().setUpdatedCoinPlayer(playerIndex, getCoinsPlayer(playerIndex));
+            getGameDelta().setNewCoinsLeft(coinsLeft);
         } else throw new NotEnoughCoinsException();
     }
 
@@ -341,7 +341,7 @@ public class ExpertGame extends NormalGame {
             this.ignoredColorInfluence = ignoredColorInfluence;
 
             // add to game delta
-            ((ExpertGameDelta) getGameDelta()).setIgnoredColorInfluence(ignoredColorInfluence);
+            getGameDelta().setIgnoredColorInfluence(ignoredColorInfluence);
         }
     }
 
@@ -358,7 +358,7 @@ public class ExpertGame extends NormalGame {
             this.prohibitionLeft--;
 
             // add to game delta
-            ((ExpertGameDelta) getGameDelta()).setNewProhibitionsLeft(prohibitionLeft);
+            getGameDelta().setNewProhibitionsLeft(prohibitionLeft);
         } else throw new NotAllowedException("No more prohibitions");
         try {
             getIslands().get(idIsland).addProhibitions((byte) 1);
@@ -371,7 +371,7 @@ public class ExpertGame extends NormalGame {
             this.prohibitionLeft++;
 
             // add to game delta
-            ((ExpertGameDelta) getGameDelta()).setNewProhibitionsLeft(prohibitionLeft);
+            getGameDelta().setNewProhibitionsLeft(prohibitionLeft);
         }
     }
 

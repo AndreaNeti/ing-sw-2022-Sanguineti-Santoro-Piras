@@ -64,13 +64,13 @@ public class Controller {
         }
     }
 
-    public synchronized void move(Color color, int idGameComponent) throws GameException, NullPointerException {
+    public synchronized void move(Color color, int indexGameComponent) throws GameException, NullPointerException {
         if (isPlanificationPhase) {
             throw new NotAllowedException("Not in action phase");
         }
         if (actionPhase == 1) {
-            if (idGameComponent <= 0) throw new NotAllowedException("Can't move to the selected GameComponent");
-            game.move(color, 0, idGameComponent);
+            if (indexGameComponent <= 0) throw new NotAllowedException("Can't move to the selected GameComponent");
+            game.move(color, 0, indexGameComponent);
             movesCounter++;
             if (movesCounter == matchConstants.studentsToMove()) {
                 movesCounter = 0;
@@ -82,14 +82,14 @@ public class Controller {
 
     }
 
-    public synchronized void moveFromCloud(int idGameComponent) throws NotAllowedException, NullPointerException {
+    public synchronized void moveFromCloud(int indexGameComponent) throws NotAllowedException, NullPointerException {
         if (isPlanificationPhase) {
             throw new NotAllowedException("Not in action phase");
         }
         if (actionPhase == 3) { // move students from cloud, destination is player entrance hall
-            if (idGameComponent >= 0 || idGameComponent < -matchType.nPlayers())
+            if (indexGameComponent >= 0 || indexGameComponent < -matchType.nPlayers())
                 throw new NotAllowedException("Component is not a cloud");
-            game.moveFromCloud(idGameComponent);
+            game.moveFromCloud(indexGameComponent);
             nextActionPhase();
         } else
             throw new NotAllowedException("Wrong Phase");

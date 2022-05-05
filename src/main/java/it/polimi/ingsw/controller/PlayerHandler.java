@@ -52,7 +52,8 @@ public class PlayerHandler implements Runnable, GameListener {
                 else
                     update(new ErrorException("Game not started yet"));
             } catch (IOException | ClassNotFoundException e) {
-                controller.disconnectEveryone(this);
+                if(controller!=null)
+                    controller.disconnectEveryone(this);
                 // cannot receive a quit message because it's disconnected
                 quit = true;
             }

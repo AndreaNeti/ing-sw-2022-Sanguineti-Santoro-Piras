@@ -55,7 +55,6 @@ public class ClientStub {
                 return new Quit();
             }
         }
-
     }
 
     public static void main(String[] args) throws IOException {
