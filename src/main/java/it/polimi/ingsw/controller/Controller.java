@@ -31,6 +31,9 @@ public class Controller {
     private Byte currentPlayerIndex;
     private boolean isPlanificationPhase, lastRound, cardPlayed;
 
+    private ArrayList<Team> winners;
+    private boolean gameFinished;
+
     public Controller(MatchType matchType) {
         this.matchConstants = Server.getMatchConstants(matchType);
         this.matchType = matchType;
@@ -51,6 +54,8 @@ public class Controller {
         this.lastRound = false;
         this.movesCounter = 0;
         this.cardPlayed = false;
+        this.winners = null;
+        this.gameFinished = false;
     }
 
     public boolean isMyTurn(PlayerHandler caller) {
@@ -273,7 +278,8 @@ public class Controller {
     }
 
     private void endGame() {
-        ArrayList<Team> winners = game.calculateWinner();
+        winners = game.calculateWinner();
+        gameFinished = true;
         notifyClients(new EndGame(winners));
         if (winners.size() == 3) System.out.println("Paolino tvb <3");
     }
@@ -284,5 +290,12 @@ public class Controller {
         else lastRound = true;
     }
 
+    protected ArrayList<Team> getWinners() {
+        return winners;
+    }
+
+    public boolean isGameFinished() {
+        return gameFinished;
+    }
 
 }

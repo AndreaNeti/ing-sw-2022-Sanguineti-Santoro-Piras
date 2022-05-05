@@ -2,8 +2,11 @@ package it.polimi.ingsw.controller;
 
 import it.polimi.ingsw.exceptions.GameException;
 import it.polimi.ingsw.model.Color;
+import it.polimi.ingsw.model.Game;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+
+import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -213,6 +216,7 @@ class ControllerTest {
         chooseCharacterTest();
         assertDoesNotThrow(() -> controllerExpert2.setCharacterInput(0));
     }
+
     @Test
     void playCharacterTest() {
         assertThrows(GameException.class, () -> controllerExpert2.playCharacter(), "Not in action phase");
@@ -255,38 +259,73 @@ class ControllerTest {
         assertDoesNotThrow(() -> controllerExpert.disconnectEveryone(p1));
     }
 
-//    @Test
-//    void endGameTest() {
-//        chooseCharacterTest();
-//        try {
-//            controllerExpert2.playCard((byte) 9);
-//            controllerExpert2.playCard((byte) 10);
-//        } catch (GameException e) {
-//            fail(e.getMessage());
-//        }
-//            for (int k = 0; k < 2; k++) {
-//                int moved = 0;
-//                for (Color c : Color.values()) {
-//                    for (int j = 0; j < 3 && moved != 3; j++) {
-//                        try {
-//                            controllerExpert2.move(c, 1);
-//                            moved++;
-//                        } catch (GameException ignored) {
-//                        }
-//                    }
-//                }
-//                if (moved != 3) fail();
-//                try {
-//                    controllerExpert2.moveMotherNature((i + 1) / 2);
-//                } catch (GameException e) {
-//                    fail(e.getMessage());
-//                }
-//                try {
-//                    controllerExpert2.moveFromCloud(-1 - k % 2);
-//                } catch (GameException e) {
-//                    fail(e.getMessage());
-//                }
-//            }
-//        }
-//    }
+    @Test
+    void endGameTest() {
+        assertFalse(controllerExpert2.isGameFinished());
+        for (int i = 0; i < 10; i++) {
+            for (int j = i; j < i + 2; j++) {
+                try {
+                    controllerExpert2.playCard((byte) (j % 10 + 1));
+                } catch (GameException e) {
+                    fail(e.getMessage());
+                }
+            }
+            assertFalse(controllerExpert2.isGameFinished());
+            for (int k = 0; k < 2; k++) {
+                int moved = 0;
+                for (Color c : Color.values()) {
+                    for (int j = 0; j < 3 && moved != 3; j++) {
+                        try {
+                            controllerExpert2.move(c, 2);
+                            moved++;
+                        } catch (GameException ignored) {
+                        }
+                    }
+                }
+                assertFalse(controllerExpert2.isGameFinished());
+                if (moved != 3) fail();
+                try {
+                    controllerExpert2.moveMotherNature(1);
+                } catch (GameException e) {
+                    fail(e.getMessage());
+                }
+                assertFalse(controllerExpert2.isGameFinished());
+                try {
+                    controllerExpert2.moveFromCloud(-1 - k % 2);
+                } catch (GameException e) {
+                    fail(e.getMessage());
+                }
+            }
+        }
+        assertTrue(controllerExpert2.isGameFinished());
+    }
+
+    @Test
+    void isMyTurnTest() {
+        ArrayList<PlayerHandler> players = new ArrayList<>();
+        players.add(p1);
+        players.add(p2);
+        players.add(p3);
+        players.add(p4);
+        for (int i = 0; i < 4; i++) {
+            for (PlayerHandler p : players) {
+                if (i == players.indexOf(p))
+                    assertTrue(controllerExpert.isMyTurn(p));
+                else
+                    assertFalse(controllerExpert.isMyTurn(p));
+            }
+            try {
+                controllerExpert.playCard((byte) (i + 1));
+            } catch (GameException e) {
+                fail();
+            }
+        }
+    }
+
+    @Test
+    void getWinnersTest() {
+        assertNull(controllerExpert2.getWinners());
+        endGameTest();
+        assertNotNull(controllerExpert2.getWinners());
+    }
 }
