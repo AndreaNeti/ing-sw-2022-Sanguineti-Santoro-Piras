@@ -9,14 +9,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Player implements Serializable {
-    // TODO transient
     private final String nickName;
-    private final Wizard wizard;
-    private final boolean[] cardsAvailable;
-    private final EntranceHall entranceHall;
-    private final LunchHall lunchHall;
-    private byte playedCard;
-    private byte cardsLeft;
+    private transient final Wizard wizard;
+    private transient final boolean[] cardsAvailable;
+    private transient final EntranceHall entranceHall;
+    private transient final LunchHall lunchHall;
+    private transient byte playedCard;
+    private transient byte cardsLeft;
 
     public Player(String nickName, Team team, Wizard wizard, MatchConstants matchConstants) throws GameException {
         if (nickName == null || team == null || matchConstants == null)
