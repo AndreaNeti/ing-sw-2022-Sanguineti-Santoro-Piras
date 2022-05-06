@@ -1,6 +1,6 @@
 package it.polimi.ingsw.network.toServerMessage;
 
-import it.polimi.ingsw.controller.PlayerHandler;
+import it.polimi.ingsw.Server.controller.PlayerHandler;
 
 public class TextMessageCS implements ToServerMessage {
     String message;

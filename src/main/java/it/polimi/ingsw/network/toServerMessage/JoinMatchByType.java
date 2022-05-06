@@ -1,7 +1,7 @@
 package it.polimi.ingsw.network.toServerMessage;
 
-import it.polimi.ingsw.controller.MatchType;
-import it.polimi.ingsw.controller.PlayerHandler;
+import it.polimi.ingsw.Server.controller.MatchType;
+import it.polimi.ingsw.Server.controller.PlayerHandler;
 import it.polimi.ingsw.exceptions.GameException;
 import it.polimi.ingsw.exceptions.NotAllowedException;
 
