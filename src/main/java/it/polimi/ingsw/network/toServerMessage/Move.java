@@ -1,28 +1,28 @@
 package it.polimi.ingsw.network.toServerMessage;
 
 import it.polimi.ingsw.Server.controller.Controller;
-import it.polimi.ingsw.Server.controller.PlayerHandler;
+import it.polimi.ingsw.Server.controller.ClientHandler;
 import it.polimi.ingsw.exceptions.GameException;
 import it.polimi.ingsw.exceptions.NotAllowedException;
 import it.polimi.ingsw.Server.model.Color;
 
 public class Move implements ToServerMessage {
     Color color;
-    int indexGameComponent;
+    int idGameComponent;
 
     public Move(Color color, int indexGameComponent) {
         this.color = color;
-        this.indexGameComponent = indexGameComponent;
+        this.idGameComponent = idGameComponent;
     }
 
     @Override
-    public void execute(PlayerHandler playerHandler) throws GameException {
-        Controller c = playerHandler.getController();
+    public void execute(ClientHandler clientHandler) throws GameException {
+        Controller c = clientHandler.getController();
         if(c.isGameFinished()){
             throw new NotAllowedException("Game is already finished");
         }
-        if (c.isMyTurn(playerHandler))
-            c.move(color, indexGameComponent);
+        if (c.isMyTurn(clientHandler))
+            c.move(color, idGameComponent);
         else throw new NotAllowedException("It's not your turn");
     }
 }

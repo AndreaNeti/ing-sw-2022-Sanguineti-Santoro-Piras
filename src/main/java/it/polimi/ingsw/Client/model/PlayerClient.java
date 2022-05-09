@@ -11,18 +11,17 @@ public class PlayerClient {
     private final boolean[] usedCards;
     private final GameComponentClient entranceHall;
     private final GameComponentClient lunchHall;
-    private byte playedCard;
+    private int playedCard;
     private byte towersLeft;
     private final HouseColor houseColor;
 
-    public PlayerClient(String nickName, Wizard wizard, byte numberOfCards, GameComponentClient entranceHall, GameComponentClient lunchHall, byte playedCard, byte towersLeft, HouseColor houseColor) {
+    public PlayerClient(String nickName, Wizard wizard, byte numberOfCards, byte towersLeft, HouseColor houseColor) {
         this.nickName = nickName;
         this.wizard = wizard;
         this.usedCards = new boolean[numberOfCards];
         Arrays.fill(usedCards,false);
-        this.entranceHall = entranceHall;
-        this.lunchHall = lunchHall;
-        this.playedCard = playedCard;
+        this.entranceHall = new GameComponentClient(2*wizard.ordinal());
+        this.lunchHall = new GameComponentClient(2*wizard.ordinal()+1);
         this.towersLeft=towersLeft;
         this.houseColor = houseColor;
     }
@@ -35,11 +34,11 @@ public class PlayerClient {
         return lunchHall;
     }
 
-    public byte getPlayedCard() {
+    public int getPlayedCard() {
         return playedCard;
     }
 
-    public void playCard(byte playedCard) {
+    public void playCard(int playedCard) {
         this.playedCard = playedCard;
         this.usedCards[playedCard-1]=true;
     }

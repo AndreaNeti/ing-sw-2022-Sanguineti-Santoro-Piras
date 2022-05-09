@@ -400,7 +400,7 @@ public class NormalGame implements Game {
             for (Player p : t.getPlayers()) {
                 gameDelta.addUpdatedGC(p.getEntranceHall());
                 gameDelta.addUpdatedGC(p.getLunchHall());
-                gameDelta.addMember(p.getWizard(), t.getHouseColor());
+                gameDelta.addMember(p, t.getHouseColor());
             }
         }
         for (Cloud c : clouds) {

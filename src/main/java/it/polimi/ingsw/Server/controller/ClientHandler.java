@@ -12,7 +12,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
-public class PlayerHandler implements Runnable, GameListener {
+public class ClientHandler implements Runnable, GameListener {
     private final Socket socket;
     private String nickName;
     private Controller controller;
@@ -20,12 +20,13 @@ public class PlayerHandler implements Runnable, GameListener {
     private final ObjectOutputStream objOut;
     private final ObjectInputStream objIn;
 
-    public PlayerHandler(Socket socket) {
+    public ClientHandler(Socket socket) {
         if (socket == null) throw new NullPointerException();
         this.socket = socket;
         try {
-            objIn = new ObjectInputStream(socket.getInputStream());
             objOut = new ObjectOutputStream(socket.getOutputStream());
+            objIn = new ObjectInputStream(socket.getInputStream());
+
         } catch (IOException e) {
             e.printStackTrace();
             throw new RuntimeException(e);
@@ -156,15 +157,16 @@ public class PlayerHandler implements Runnable, GameListener {
 
     @Override
     public void update(ToClientMessage m) {
-        synchronized (objOut) {
+
             try {
                 objOut.writeObject(m);
                 objOut.flush();
+                System.out.println("Message send");
             } catch (IOException e) {
                 e.printStackTrace();
                 System.err.println("can't send to the client");
             }
-        }
+
     }
 
     public Controller getController() {

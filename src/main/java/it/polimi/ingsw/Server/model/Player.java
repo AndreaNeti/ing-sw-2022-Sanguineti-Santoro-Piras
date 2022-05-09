@@ -10,7 +10,7 @@ import java.util.Arrays;
 
 public class Player implements Serializable {
     private final String nickName;
-    private transient final Wizard wizard;
+    private final Wizard wizard;
     private transient final boolean[] cardsAvailable;
     private transient final EntranceHall entranceHall;
     private transient final LunchHall lunchHall;
@@ -83,6 +83,10 @@ public class Player implements Serializable {
         if (!(o instanceof Player player)) return false;
         // only checks nickname, it's unique
         return this.toString().equals(player.toString());
+    }
+
+    public String getNickName() {
+        return nickName;
     }
 
     @Override

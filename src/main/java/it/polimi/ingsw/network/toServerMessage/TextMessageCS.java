@@ -1,6 +1,6 @@
 package it.polimi.ingsw.network.toServerMessage;
 
-import it.polimi.ingsw.Server.controller.PlayerHandler;
+import it.polimi.ingsw.Server.controller.ClientHandler;
 
 public class TextMessageCS implements ToServerMessage {
     String message;
@@ -10,7 +10,7 @@ public class TextMessageCS implements ToServerMessage {
     }
 
     @Override
-    public void execute(PlayerHandler playerHandler) {
-        playerHandler.getController().sendMessage(playerHandler.getNickName(), message);
+    public void execute(ClientHandler clientHandler) {
+        clientHandler.getController().sendMessage(clientHandler.getNickName(), message);
     }
 }

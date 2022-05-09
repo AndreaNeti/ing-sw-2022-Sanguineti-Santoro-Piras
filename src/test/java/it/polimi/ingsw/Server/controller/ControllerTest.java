@@ -1,8 +1,5 @@
 package it.polimi.ingsw.Server.controller;
 
-import it.polimi.ingsw.Server.controller.Controller;
-import it.polimi.ingsw.Server.controller.MatchType;
-import it.polimi.ingsw.Server.controller.PlayerHandler;
 import it.polimi.ingsw.exceptions.GameException;
 import it.polimi.ingsw.Server.model.Color;
 import org.junit.jupiter.api.Test;
@@ -15,17 +12,17 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class ControllerTest {
     Controller controllerExpert, controllerExpert2, controllerNormal;
-    PlayerHandler p1, p2, p3, p4;
+    ClientHandler p1, p2, p3, p4;
 
     public ControllerTest() {
         controllerExpert = new Controller(new MatchType((byte) 4, true));
         controllerExpert2 = new Controller(new MatchType((byte) 2, true));
         controllerNormal = new Controller(new MatchType((byte) 3, false));
 
-        p1 = Mockito.mock(PlayerHandler.class);
-        p2 = Mockito.mock(PlayerHandler.class);
-        p3 = Mockito.mock(PlayerHandler.class);
-        p4 = Mockito.mock(PlayerHandler.class);
+        p1 = Mockito.mock(ClientHandler.class);
+        p2 = Mockito.mock(ClientHandler.class);
+        p3 = Mockito.mock(ClientHandler.class);
+        p4 = Mockito.mock(ClientHandler.class);
 
         try {
             controllerExpert.addPlayer(p1, "Gigi");
@@ -54,7 +51,7 @@ class ControllerTest {
 
     @Test
     void addPlayerTest() {
-        PlayerHandler p = Mockito.mock(PlayerHandler.class);
+        ClientHandler p = Mockito.mock(ClientHandler.class);
         assertThrows(GameException.class, () -> controllerExpert.addPlayer(p, "Impostor"), "Match is full");
         assertThrows(GameException.class, () -> controllerNormal.addPlayer(p, "Impostor"), "Match is full");
     }
@@ -304,13 +301,13 @@ class ControllerTest {
 
     @Test
     void isMyTurnTest() {
-        ArrayList<PlayerHandler> players = new ArrayList<>();
+        ArrayList<ClientHandler> players = new ArrayList<>();
         players.add(p1);
         players.add(p2);
         players.add(p3);
         players.add(p4);
         for (int i = 0; i < 4; i++) {
-            for (PlayerHandler p : players) {
+            for (ClientHandler p : players) {
                 if (i == players.indexOf(p))
                     assertTrue(controllerExpert.isMyTurn(p));
                 else

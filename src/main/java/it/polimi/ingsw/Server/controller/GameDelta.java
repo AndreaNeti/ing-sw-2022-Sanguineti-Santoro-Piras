@@ -1,14 +1,13 @@
 package it.polimi.ingsw.Server.controller;
 
 import it.polimi.ingsw.Server.model.*;
+import it.polimi.ingsw.Server.model.Color;
 import it.polimi.ingsw.network.toClientMessage.DeltaUpdate;
 import it.polimi.ingsw.network.toClientMessage.ToClientMessage;
 
+import java.awt.*;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 public class GameDelta implements Serializable {
     private final transient ArrayList<GameListener> listeners;
@@ -21,7 +20,7 @@ public class GameDelta implements Serializable {
     private HashMap<Color, Wizard> updatedProfessors;
 
     // TODO remove from delta and add a notify when player joins the match?
-    private HashMap<Wizard, HouseColor> members;
+    private HashMap<Player, HouseColor> members;
     // towers left
     private HashMap<HouseColor, Byte> newTeamTowersLeft;
     private Byte newCurrentPlayer, newMotherNaturePosition, playedCard;
@@ -33,7 +32,7 @@ public class GameDelta implements Serializable {
     }
 
     public void clear() {
-        updatedGC = null;
+        updatedGC=null;
         deletedIslands = null;
         newTeamTowersLeft = null;
         updatedProfessors = null;
@@ -51,10 +50,10 @@ public class GameDelta implements Serializable {
             send();
     }
 
-    public void addMember(Wizard wizard, HouseColor houseColor) {
+    public void addMember(Player player, HouseColor houseColor) {
         if (members == null)
             members = new HashMap<>();
-        members.put(wizard, houseColor);
+        members.put(player, houseColor);
         if (automaticSending)
             send();
     }
@@ -148,7 +147,7 @@ public class GameDelta implements Serializable {
         return playedCard;
     }
 
-    public HashMap<Wizard, HouseColor> getMembers() {
+    public HashMap<Player, HouseColor> getMembers() {
         return members;
     }
 

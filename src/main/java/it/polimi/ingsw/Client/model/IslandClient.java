@@ -4,13 +4,20 @@ import it.polimi.ingsw.Server.model.GameComponent;
 import it.polimi.ingsw.Server.model.HouseColor;
 import it.polimi.ingsw.Server.model.Island;
 
-public class IslandClient extends GameComponentClient{
+public class IslandClient extends GameComponentClient {
     private HouseColor team;
     private byte prohibition;
     private byte number;
 
-
-
+    public IslandClient(int i){
+        super(i);
+    }
+    public IslandClient(IslandClient islandClient){
+        super(islandClient.getId());
+        this.team=islandClient.team;
+        this.prohibition=islandClient.prohibition;
+        this.number=islandClient.number;
+    }
     public HouseColor getTeam() {
         return team;
     }
@@ -38,9 +45,18 @@ public class IslandClient extends GameComponentClient{
     @Override
     public void modifyGameComponent(GameComponent gameComponent) {
         super.modifyGameComponent(gameComponent);
-        Island island= (Island) gameComponent;
-        team=island.getTeamColor();
-        number=island.getNumber();
-        prohibition=island.getProhibitions();
+        Island island = (Island) gameComponent;
+        team = island.getTeamColor();
+        number = island.getNumber();
+        prohibition = island.getProhibitions();
     }
+
+    @Override
+    public String toString() {
+        if (prohibition != 0)
+            return super.toString() + "; owned by " + team + "; number of towers " + number + "; numberOf prohibition= " + prohibition;
+        else
+            return super.toString() + "; owned by " + team + "; number of towers " + number;
+    }
+
 }

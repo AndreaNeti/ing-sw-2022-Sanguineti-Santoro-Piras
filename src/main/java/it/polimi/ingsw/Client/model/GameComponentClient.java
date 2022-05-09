@@ -7,11 +7,14 @@ import java.util.Arrays;
 
 
 public class GameComponentClient {
-    private byte[] students;
+    private final byte[]  students;
     private int id;
 
 
-
+    public GameComponentClient(int id){
+        students=new byte[5];
+        this.id=id;
+    }
     public byte[] getStudents() {
         byte[] clonedStudents=new byte[5];
         System.arraycopy(students, 0, clonedStudents, 0, 5);
@@ -20,18 +23,16 @@ public class GameComponentClient {
 
     @Override
     public String toString() {
-        return "students= " + Arrays.toString(students);
+        return "Component:"+ id+ "; students= " + Arrays.toString(students);
     }
 
     public int getId() {
         return id;
     }
     public void modifyGameComponent(GameComponent gameComponent){
-        byte[] students= new byte[5];
         for (Color c: Color.values()) {
-            students[c.ordinal()]= gameComponent.howManyStudents(c);
+            this.students[c.ordinal()]= gameComponent.howManyStudents(c);
         }
         this.id= gameComponent.getId();
-        this.students=students;
     }
 }

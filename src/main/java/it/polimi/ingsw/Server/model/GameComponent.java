@@ -10,7 +10,7 @@ import java.util.Arrays;
 public abstract class GameComponent implements Serializable {
     private final byte[] students;
     private transient final int maxStudents;
-    private transient final byte idGameComponent;
+    private final byte idGameComponent;
     private GameComponent(int maxStudents, byte studentsPerColor, byte idGameComponent) {
         this.students = new byte[Color.values().length];
         for (byte i = 0; i < students.length; i++) {

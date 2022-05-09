@@ -1,6 +1,6 @@
 package it.polimi.ingsw.network.toServerMessage;
 
-import it.polimi.ingsw.Server.controller.PlayerHandler;
+import it.polimi.ingsw.Server.controller.ClientHandler;
 import it.polimi.ingsw.exceptions.GameException;
 
 public class NickName implements ToServerMessage{
@@ -10,7 +10,7 @@ public class NickName implements ToServerMessage{
         this.nickName = nickName;
     }
     @Override
-    public void execute(PlayerHandler playerHandler) throws GameException {
-        playerHandler.setNickName(nickName);
+    public void execute(ClientHandler clientHandler) throws GameException {
+        clientHandler.setNickName(nickName);
     }
 }

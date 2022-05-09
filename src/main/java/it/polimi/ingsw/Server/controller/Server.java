@@ -9,7 +9,7 @@ import java.util.*;
 import static java.util.Map.entry;
 
 public class Server {
-
+    private static final int serverPort=4026;
     public static Long matchId = 0L;
 // TODO use concurrent collection?
     public static final HashMap<MatchType, LinkedHashMap<Long, Controller>> matches = new HashMap<>();
@@ -24,10 +24,13 @@ public class Server {
     );
 
     public static void main(String[] args) {
-        try (ServerSocket server = new ServerSocket(4206)) {
+        try (ServerSocket server = new ServerSocket(serverPort)) {
+
             while (true) {
+                System.out.println("Server ready to receive on "+serverPort);
                 try {
-                    new Thread(new PlayerHandler(server.accept())).start();
+                    Thread t=new Thread(new ClientHandler(server.accept()));
+                    t.start();
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
@@ -65,7 +68,12 @@ public class Server {
             LinkedHashMap<Long, Controller> filteredMatches = matches.get(matchType);
             if (filteredMatches == null) throw new NotAllowedException("No matches found :(");
             // get oldest
-            Long c = filteredMatches.entrySet().iterator().next().getKey();
+            Long c;
+            try{
+                 c= filteredMatches.entrySet().iterator().next().getKey();
+            }catch (NoSuchElementException ex){
+                throw new NotAllowedException("No matches found :(");
+            }
             if (c == null) throw new NotAllowedException("No matches found :(");
             return c;
         }

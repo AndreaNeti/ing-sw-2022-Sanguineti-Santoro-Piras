@@ -1,23 +1,20 @@
 package it.polimi.ingsw.Client.model;
 
+import it.polimi.ingsw.Client.GameClientListened;
 import it.polimi.ingsw.Client.GameClientListener;
 import it.polimi.ingsw.Server.controller.MatchConstants;
 import it.polimi.ingsw.Server.controller.MatchType;
-import it.polimi.ingsw.Server.model.Color;
-import it.polimi.ingsw.Server.model.GameComponent;
-import it.polimi.ingsw.Server.model.Island;
-import it.polimi.ingsw.Server.model.Wizard;
+import it.polimi.ingsw.Server.model.*;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 
-public class GameClient {
+public class GameClient extends GameClientListened {
     public ArrayList<IslandClient> islands;
     public ArrayList<GameComponentClient> clouds;
     private Wizard[] professors;
-    public ArrayList<GameClientListener> listeners;
     private byte motherNaturePosition;
     private byte currentPlayer;
     private final MatchConstants matchConstants;
@@ -30,38 +27,37 @@ public class GameClient {
         this.matchConstants = matchConstants;
         islands = new ArrayList<>(12);
         clouds = new ArrayList<>(matchConstants.studentsToMove());
+        for(int i=0;i<matchConstants.studentsToMove();i++){
+            clouds.add(new GameComponentClient(-(i+1)));
+        }
+        for(int i=0;i<matchConstants.studentsToMove();i++){
+            islands.add(new IslandClient(2*players.size()+i));
+        }
         this.players = players;
 
     }
 
-    public byte getCurrentPlayer() {
-        return currentPlayer;
+    public PlayerClient getCurrentPlayer() {
+        return players.get(currentPlayer);
     }
 
-    public void setCurrentPlayer(byte currentPlayer) {
+    public void setCurrentPlayer(Byte currentPlayer) {
         this.currentPlayer = currentPlayer;
-        for (GameClientListener listener : listeners) {
-            listener.update(professors);
-        }
+        notify(players.get(currentPlayer));
     }
 
     public Wizard[] getProfessors() {
         return Arrays.copyOf(professors, professors.length);
     }
 
-    public void setProfessors(Wizard[] professors) {
-        this.professors = professors;
-        for (GameClientListener listener : listeners) {
-            listener.update(professors);
-        }
-    }
-
-    public void addListener(GameClientListener listener) {
-        listeners.add(listener);
+    public void setProfessors(Color color, Wizard owner) {
+        this.professors[color.ordinal()]=owner;
+        notify(professors);
     }
 
     //I am trusting server pls
-    public void setGameComponent(byte idGameComponent, GameComponent gameComponent) {
+    public void setGameComponent(Byte idGameComponent, GameComponent gameComponent) {
+
         /*here the id is static
         from 0 to 2*numberOfPlayer-1 is entranceHall,LunchHall
         from 2*numberOfPlayer to 2*numberOfPlayer+12 are the island
@@ -73,44 +69,73 @@ public class GameClient {
             if (idGameComponent % 2 == 0) {
                 GameComponentClient entranceHall = players.get(idGameComponent / 2).getEntranceHall();
                 entranceHall.modifyGameComponent(gameComponent);
-                for (GameClientListener listener : listeners) {
-                    listener.update(entranceHall);
-                }
+                notify(entranceHall);
+
             } else {
                 GameComponentClient lunchHall = players.get(idGameComponent / 2).getEntranceHall();
                 lunchHall.modifyGameComponent(gameComponent);
-                for (GameClientListener listener : listeners) {
-                    listener.update(lunchHall);
-                }
+                notify(lunchHall);
             }
 
-        } else if (idGameComponent > 2 * players.size()) {
-            IslandClient islandToReturn=null;
-            for (IslandClient island:islands) {
-                if(island.getId()==idGameComponent){
-                    islandToReturn=island;
-                }
-            }
+        } else if (idGameComponent >= 2 * players.size()) {
+            IslandClient islandToReturn=getIslandById(idGameComponent);
+            //TODO bug here
             if (islandToReturn == null) {
                 throw new RuntimeException("error in passing parameters probably");
             }
             islandToReturn.modifyGameComponent(gameComponent);
-            for (GameClientListener listener : listeners) {
-                listener.update(islandToReturn);
-            }
+
+            notify(islandToReturn);
         } else {
             GameComponentClient cloud = clouds.get(-(idGameComponent + 1));
             cloud.modifyGameComponent(gameComponent);
-            for (GameClientListener listener : listeners) {
-                listener.update(cloud);
+            notify(cloud);
+        }
+    }
+    private IslandClient getIslandById(byte idIsland){
+        IslandClient islandToReturn=null;
+        for (IslandClient island:islands) {
+            if(island.getId()==idIsland){
+                islandToReturn=island;
+                break;
+            }
+        }
+        return islandToReturn;
+    }
+    public void removeIsland(byte idIsland){
+        IslandClient islandToRemove=getIslandById(idIsland);
+        if (islandToRemove == null) {
+            throw new RuntimeException("error in passing parameters probably");
+        }
+        islands.remove(islandToRemove);
+        notify(islands);
+    }
+    public void setMotherNaturePosition(byte motherNaturePosition){
+        this.motherNaturePosition=motherNaturePosition;
+        notify(motherNaturePosition);
+    }
+
+    public byte getMotherNaturePosition() {
+        return motherNaturePosition;
+    }
+    public void playCard(int value){
+        getCurrentPlayer().playCard(value);
+        notify(value);
+    }
+    public void setTowerLeft(HouseColor houseColor,Byte towerLeft){
+        for(PlayerClient p:players){
+            if(p.getHouseColor()==houseColor) {
+                p.setTowersLeft(towerLeft);
+                notify(houseColor, towerLeft);
             }
         }
     }
 
-    public void removeIsland(byte indexIsland){
-        islands.remove(indexIsland);
-    }
-    public void setMotherNaturePosition(byte motherNaturePosition){
-        this.motherNaturePosition=motherNaturePosition;
+    public ArrayList<IslandClient> getIslands() {
+        ArrayList<IslandClient> clone=new ArrayList<>();
+        for (IslandClient i:islands) {
+            clone.add(new IslandClient(i));
+        }
+        return clone;
     }
 }

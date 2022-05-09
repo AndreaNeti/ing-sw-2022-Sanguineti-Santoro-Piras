@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import java.net.Socket;
 
-class PlayerHandlerTest {
+class ClientHandlerTest {
     Socket socket=new Socket();
 
     @Test

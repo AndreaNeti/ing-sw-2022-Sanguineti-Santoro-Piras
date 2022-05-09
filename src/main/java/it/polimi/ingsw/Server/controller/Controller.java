@@ -58,7 +58,7 @@ public class Controller {
         this.gameFinished = false;
     }
 
-    public boolean isMyTurn(PlayerHandler caller) {
+    public boolean isMyTurn(ClientHandler caller) {
         synchronized (playerHandlers) {
             return currentPlayerIndex == playerHandlers.indexOf(caller);
         }

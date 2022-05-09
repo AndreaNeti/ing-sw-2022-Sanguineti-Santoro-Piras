@@ -1,5 +1,6 @@
 package it.polimi.ingsw.network.toClientMessage;
 
+import it.polimi.ingsw.Client.Controller.ControllerClient;
 import it.polimi.ingsw.Server.controller.GameDelta;
 
 public class DeltaUpdate implements ToClientMessage {
@@ -9,4 +10,8 @@ public class DeltaUpdate implements ToClientMessage {
         this.gameDelta = gameDelta;
     }
 
+    @Override
+    public void execute(ControllerClient controllerClient) {
+        controllerClient.changeGame(gameDelta);
+    }
 }
