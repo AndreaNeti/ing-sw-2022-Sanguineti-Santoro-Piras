@@ -5,16 +5,16 @@ import it.polimi.ingsw.exceptions.NotAllowedException;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 import static java.util.Map.entry;
 
 public class Server {
 
     public static Long matchId = 0L;
-// TODO use concurrent collection?
-    public static final HashMap<MatchType, LinkedHashMap<Long, Controller>> matches = new HashMap<>();
-    private static final Set<String> nickNames = new HashSet<>();
-    private static final Map<MatchType, MatchConstants> matchConstants = Map.ofEntries(
+    public static final ConcurrentHashMap<MatchType, Map<Long, Controller>> matches = new ConcurrentHashMap<>();
+    private static final Set<String> nickNames = Collections.synchronizedSet(new HashSet<>());
+    private static final ConcurrentHashMap<MatchType, MatchConstants> matchConstants = (ConcurrentHashMap<MatchType, MatchConstants>) Map.ofEntries(
             entry(new MatchType((byte) 2, false), new MatchConstants(10, 3, 0, 0, 0, 7, 10, 8, 3)),
             entry(new MatchType((byte) 2, true), new MatchConstants(10, 3, 3, 20, 1, 7, 10, 8, 3)),
             entry(new MatchType((byte) 3, false), new MatchConstants(10, 3, 0, 0, 0, 9, 10, 6, 4)),
@@ -38,59 +38,45 @@ public class Server {
     }
 
     public static void setNickName(String nickNameToAdd) throws NotAllowedException {
-        synchronized (nickNames) {
-            if (!nickNames.add(nickNameToAdd))
-                throw new NotAllowedException("Nickname already taken");
-        }
+        if (!nickNames.add(nickNameToAdd))
+            throw new NotAllowedException("Nickname already taken");
     }
 
     public static void removeNickName(String nickNameToRemove) {
-        synchronized (nickNames) {
-            nickNames.remove(nickNameToRemove);
-        }
+        nickNames.remove(nickNameToRemove);
     }
 
     public static Controller createMatch(MatchType matchType) {
-        synchronized (matches) {
-            LinkedHashMap<Long, Controller> filteredMatches = matches.computeIfAbsent(matchType, k -> new LinkedHashMap<>());
-            Controller c = new Controller(matchType);
-            filteredMatches.put(matchId, c);
-            matchId++;
-            return c;
-        }
+        Map<Long, Controller> filteredMatches = matches.computeIfAbsent(matchType, k -> Collections.synchronizedMap(new LinkedHashMap<>()));
+        Controller c = new Controller(matchType);
+        filteredMatches.put(matchId, c);
+        matchId++;
+        return c;
     }
 
     public static Long getOldestMatchId(MatchType matchType) throws NotAllowedException {
-        synchronized (matches) {
-            LinkedHashMap<Long, Controller> filteredMatches = matches.get(matchType);
-            if (filteredMatches == null) throw new NotAllowedException("No matches found :(");
-            // get oldest
-            Long c = filteredMatches.entrySet().iterator().next().getKey();
-            if (c == null) throw new NotAllowedException("No matches found :(");
-            return c;
-        }
+        Map<Long, Controller> filteredMatches = matches.get(matchType);
+        if (filteredMatches == null) throw new NotAllowedException("No matches found :(");
+        // get oldest
+        Long c = filteredMatches.entrySet().iterator().next().getKey();
+        if (c == null) throw new NotAllowedException("No matches found :(");
+        return c;
     }
 
     public static Controller getMatchById(Long id) throws NotAllowedException {
-        synchronized (matches) {
-            Controller c = null;
-            for (LinkedHashMap<Long, Controller> matches : matches.values())
-                if ((c = matches.get(id)) != null) break;
-            if (c == null) throw new NotAllowedException("No matches found :(");
-            return c;
-        }
+        Controller c = null;
+        for (Map<Long, Controller> matches : matches.values())
+            if ((c = matches.get(id)) != null) break;
+        if (c == null) throw new NotAllowedException("No matches found :(");
+        return c;
     }
 
     public static void removeMatch(Long id) {
-        synchronized (matches) {
-            for (LinkedHashMap<Long, Controller> matches : matches.values())
-                if (matches.remove(id) != null) break;
-        }
+        for (Map<Long, Controller> matches : matches.values())
+            if (matches.remove(id) != null) break;
     }
 
     public static MatchConstants getMatchConstants(MatchType matchType) {
-        synchronized (matchConstants) {
-            return matchConstants.get(matchType);
-        }
+        return matchConstants.get(matchType);
     }
 }
