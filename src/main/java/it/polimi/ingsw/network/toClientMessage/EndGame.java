@@ -1,6 +1,6 @@
 package it.polimi.ingsw.network.toClientMessage;
 
-import it.polimi.ingsw.model.Team;
+import it.polimi.ingsw.Server.model.Team;
 
 import java.util.ArrayList;
 

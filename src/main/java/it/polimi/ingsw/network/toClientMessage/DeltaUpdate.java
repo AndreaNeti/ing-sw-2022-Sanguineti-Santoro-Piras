@@ -1,6 +1,6 @@
 package it.polimi.ingsw.network.toClientMessage;
 
-import it.polimi.ingsw.controller.GameDelta;
+import it.polimi.ingsw.Server.controller.GameDelta;
 
 public class DeltaUpdate implements ToClientMessage {
     GameDelta gameDelta;
