@@ -10,9 +10,7 @@ import java.util.*;
 public class ExpertGame extends NormalGame {
     private final byte[] coinsPlayer;
     private transient final ArrayList<CharacterCard> characters;
-    private final Set<Byte> charactersId;
     private transient final ArrayList<Integer> inputsCharacter;
-    //TODO put the control that i can only use one character card for turn
     private final boolean[] playedCharacters;
     private byte coinsLeft;
     private transient boolean extraInfluence; //default false
@@ -32,7 +30,6 @@ public class ExpertGame extends NormalGame {
         Arrays.fill(coinsPlayer, (byte) matchConstants.initialPlayerCoins());
 
         characters = new ArrayList<>(matchConstants.numOfCharacterCards());
-        charactersId = new HashSet<>(matchConstants.numOfCharacterCards());
         Random rand = new Random(System.currentTimeMillis());
         byte characterIndex = (byte) rand.nextInt(12);
         byte i = 0;
@@ -44,6 +41,7 @@ public class ExpertGame extends NormalGame {
             }
             try {
                 c = factoryCharacter(characterIndex);
+                getGameDelta().addCharacter(i, characterIndex);
                 characters.add(c);
                 selectedCharacters.add(c.getCharId());
                 i++;
@@ -70,7 +68,6 @@ public class ExpertGame extends NormalGame {
 
 
     private CharacterCard factoryCharacter(byte i) throws UnexpectedValueException {
-        charactersId.add(i);
         switch (i) {
             case 0:
                 Char0 c0 = new Char0((byte) -10);
@@ -234,7 +231,7 @@ public class ExpertGame extends NormalGame {
                     if (p.getLunchHall().howManyStudents(c) > max) {
                         max = p.getLunchHall().howManyStudents(c);
                         newOwner = p;
-                    } else if (equalProfessorCalculation && p.equals(getCurrentPlayer()) && p.getLunchHall().howManyStudents(c) == max &&currentOwner!=null)
+                    } else if (equalProfessorCalculation && p.equals(getCurrentPlayer()) && p.getLunchHall().howManyStudents(c) == max && currentOwner != null)
                         newOwner = p;
                 }
             }

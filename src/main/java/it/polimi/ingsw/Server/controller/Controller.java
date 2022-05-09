@@ -27,7 +27,7 @@ public class Controller {
     private byte roundIndex;
     // counts the number of students moved during the action phase
     private byte movesCounter;
-    // Byte so it's immutalbe
+    // Byte so it's immutable
     private Byte currentPlayerIndex;
     private boolean isPlanificationPhase, lastRound, cardPlayed;
 
