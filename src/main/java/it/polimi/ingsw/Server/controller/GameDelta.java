@@ -19,12 +19,9 @@ public class GameDelta implements Serializable {
 
     // professor color, new wizard controlling
     private HashMap<Color, Wizard> updatedProfessors;
-
-    // TODO remove from delta and add a notify when player joins the match?
-    private HashMap<Player, HouseColor> members;
     // towers left
     private HashMap<HouseColor, Byte> newTeamTowersLeft;
-    private Byte newCurrentPlayer, newMotherNaturePosition, playedCard;
+    private Byte newMotherNaturePosition, playedCard;
     private transient boolean automaticSending;
 
     public GameDelta() {
@@ -37,7 +34,6 @@ public class GameDelta implements Serializable {
         deletedIslands = null;
         newTeamTowersLeft = null;
         updatedProfessors = null;
-        newCurrentPlayer = null;
         newMotherNaturePosition = null;
         playedCard = null;
         automaticSending = true;
@@ -47,14 +43,6 @@ public class GameDelta implements Serializable {
         if (updatedGC == null)
             updatedGC = new HashMap<>();
         updatedGC.put(gcUpdated.getId(), gcUpdated);
-        if (automaticSending)
-            send();
-    }
-
-    public void addMember(Player player, HouseColor houseColor) {
-        if (members == null)
-            members = new HashMap<>();
-        members.put(player, houseColor);
         if (automaticSending)
             send();
     }
@@ -79,12 +67,6 @@ public class GameDelta implements Serializable {
         if (updatedProfessors == null)
             updatedProfessors = new HashMap<>();
         updatedProfessors.put(professorColor, newController);
-        if (automaticSending)
-            send();
-    }
-
-    public void setNewCurrentPlayer(byte newCurrentPlayer) {
-        this.newCurrentPlayer = newCurrentPlayer;
         if (automaticSending)
             send();
     }
@@ -132,10 +114,6 @@ public class GameDelta implements Serializable {
         return updatedGC;
     }
 
-    public Byte getNewCurrentPlayer() {
-        return newCurrentPlayer;
-    }
-
     public Byte getNewMotherNaturePosition() {
         return newMotherNaturePosition;
     }
@@ -146,10 +124,6 @@ public class GameDelta implements Serializable {
 
     public Byte getPlayedCard() {
         return playedCard;
-    }
-
-    public HashMap<Player, HouseColor> getMembers() {
-        return members;
     }
 
     public Set<Byte> getDeletedIslands() {

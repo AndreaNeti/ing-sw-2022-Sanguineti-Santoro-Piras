@@ -82,60 +82,6 @@ public class ClientHandler implements Runnable, GameListener {
         }
     }
 
-    /*private void callMethod(String command) {
-        List<String> tokens = Arrays.asList(command.split("/"));
-
-
-        String methodString = tokens.remove(0);
-        try {
-            if (!nickNameAlreadySet && !methodString.equals("setNickName"))
-                throw new NotAllowedException("Must set a setNickName first");
-            switch (methodString) {
-                //Controller methods
-                case "playCard" -> controller.playCard(Byte.parseByte(tokens.get(0)));
-                case "chooseCharacter" -> controller.chooseCharacter(Byte.parseByte(tokens.get(0)));
-                case "setCharacterInput" -> controller.setCharacterInput(Integer.parseInt(tokens.get(0)));
-                case "sendMessage" -> controller.sendMessage(setNickName, tokens.get(0));
-                case "moveMotherNature" -> controller.moveMotherNature(Integer.parseInt(tokens.get(0)));
-                case "move" -> controller.move(Color.valueOf(tokens.get(0)), Integer.parseInt(tokens.get(1)));
-                case "moveFromCloud" -> controller.moveFromCloud(Integer.parseInt(tokens.get(0)));
-                case "playCharacter" -> controller.playCharacter();
-
-                //Server methods
-                case "setNickName" -> {
-                    Server.setNickName(tokens.get(0));
-                    this.setNickName(tokens.get(0));
-                }
-                case "getOldestMatchId" -> {
-                    Long controllerId;
-                    controllerId = Server.getOldestMatchId(new MatchType(Byte.parseByte(tokens.get(0)), Boolean.parseBoolean(tokens.get(1))));
-                    controller = Server.getMatchById(controllerId);
-                    if (controller.addPlayer(this, setNickName)) {
-                        Server.removeMatch(controllerId);
-                    }
-                }
-                case "getMatchById" -> {
-                    controller = Server.getMatchById(Long.parseLong(tokens.get(0)));
-                    if (controller.addPlayer(this, setNickName)) {
-                        Server.removeMatch(Long.parseLong(tokens.get(0)));
-                    }
-                }
-                case "createMatch" -> {
-                    controller = Server.createMatch(new MatchType(Byte.parseByte(tokens.get(0)), Boolean.parseBoolean(tokens.get(1))));
-                    controller.addPlayer(this, setNickName);
-                }
-                //TODO ignore notExpertGameException
-                default -> throw new UnexpectedValueException();
-            }
-            update(new OK());
-
-        } catch (GameException | IllegalArgumentException ex) {
-            update(new ErrorException(ex.getMessage()));
-        } catch (NullPointerException ex) {
-            update(new ErrorException("Must join a match before"));
-        }
-    }*/
-
     public void setNickName(String nickName) throws NotAllowedException {
         if (this.nickName == null) {
             Server.setNickName(nickName);

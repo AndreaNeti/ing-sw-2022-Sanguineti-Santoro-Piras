@@ -8,11 +8,10 @@ import it.polimi.ingsw.Server.model.*;
 import it.polimi.ingsw.exceptions.EndGameException;
 import it.polimi.ingsw.exceptions.GameException;
 import it.polimi.ingsw.exceptions.NotAllowedException;
-import it.polimi.ingsw.network.toClientMessage.EndGame;
-import it.polimi.ingsw.network.toClientMessage.TextMessaceSC;
-import it.polimi.ingsw.network.toClientMessage.ToClientMessage;
+import it.polimi.ingsw.network.toClientMessage.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Controller {
     private final MatchConstants matchConstants;
@@ -147,6 +146,12 @@ public class Controller {
 
         playersList.add(newPlayer);
         playerHandlers.add(handler);
+        HashMap<Player, HouseColor> playerMap = new HashMap<>();
+        for (Team t : teams)
+            for (Player p : t.getPlayers())
+                playerMap.put(p, t.getHouseColor());
+
+        notifyClients(new PlayersInMatch(playerMap));
         if (playersList.size() == matchType.nPlayers()) {
             startGame();
             return true;
@@ -302,7 +307,7 @@ public class Controller {
 
     private void setPhase(GamePhase gamePhase) {
         this.gamePhase = gamePhase;
-        //TODO add notify
+        notifyClients(new Phase(gamePhase, currentPlayerIndex));
     }
 
     private void endGame() {

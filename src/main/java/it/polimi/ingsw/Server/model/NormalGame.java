@@ -361,7 +361,6 @@ public class NormalGame implements Game {
     }
 
     protected ArrayList<Cloud> getClouds() {
-        //TODO do the clone
         return clouds;
     }
 
@@ -373,16 +372,11 @@ public class NormalGame implements Game {
         return currentPlayer;
     }
 
-    // TODO: pass by copy player, team etc..
-
     @Override
     public void setCurrentPlayer(Player p) {
         byte newCurrentPlayer = (byte) p.getWizard().ordinal();
         if (newCurrentPlayer != this.currentPlayer) {
             this.currentPlayer = newCurrentPlayer;
-
-            // add to game delta
-            gameDelta.setNewCurrentPlayer(currentPlayer);
         }
     }
 
@@ -390,9 +384,6 @@ public class NormalGame implements Game {
     public void setCurrentPlayer(byte currentPlayer) {
         if (currentPlayer != this.currentPlayer) {
             this.currentPlayer = currentPlayer;
-
-            // add to game delta
-            gameDelta.setNewCurrentPlayer(currentPlayer);
         }
     }
 
@@ -402,7 +393,6 @@ public class NormalGame implements Game {
             for (Player p : t.getPlayers()) {
                 gameDelta.addUpdatedGC(p.getEntranceHall());
                 gameDelta.addUpdatedGC(p.getLunchHall());
-                gameDelta.addMember(p, t.getHouseColor());
             }
         }
         for (Cloud c : clouds) {
@@ -415,7 +405,6 @@ public class NormalGame implements Game {
             gameDelta.addUpdatedProfessors(Color.values()[i], professors[i]);
         }
         gameDelta.setNewMotherNaturePosition(motherNaturePosition);
-        gameDelta.setNewCurrentPlayer(currentPlayer);
 
         return gameDelta;
 

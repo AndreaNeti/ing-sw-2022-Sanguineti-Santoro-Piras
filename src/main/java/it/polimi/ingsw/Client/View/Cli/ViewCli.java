@@ -34,7 +34,7 @@ public class ViewCli implements GameClientListener {
                 return new Move(Color.BLUE, 4);
             }
             case 3 -> {
-                MatchType mt=new MatchType((byte) myInput.nextInt(), myInput.nextBoolean());
+                MatchType mt = new MatchType((byte) myInput.nextInt(), myInput.nextBoolean());
                 controllerClient.setMatchType(mt);
                 return new CreateMatch(mt);
             }
@@ -42,7 +42,7 @@ public class ViewCli implements GameClientListener {
                 return new JoinMatchById(myInput.nextLong());
             }
             case 5 -> {
-                MatchType mt=new MatchType((byte) myInput.nextInt(), myInput.nextBoolean());
+                MatchType mt = new MatchType((byte) myInput.nextInt(), myInput.nextBoolean());
                 controllerClient.setMatchType(mt);
                 return new JoinMatchByType(mt);
             }
@@ -64,9 +64,9 @@ public class ViewCli implements GameClientListener {
             case 11 -> {
                 return new PlayCharacter();
             }
-            case 12->{
+            case 12 -> {
 
-                if(!controllerClient.connect(myInput.nextInt())){
+                if (!controllerClient.connect(new byte[]{127, 0, 0, 1}, myInput.nextInt())) {
                     System.out.println("Cannot connect to this server");
                 }
                 return null;
@@ -86,7 +86,7 @@ public class ViewCli implements GameClientListener {
             System.out.println("What do you want to do?");
             number = myInput.nextInt();
             ToServerMessage send = switchNumber(number);
-            if(send!=null)
+            if (send != null)
                 controllerClient.sendMessage(send);
         } while (number != -1);
     }
@@ -135,14 +135,13 @@ public class ViewCli implements GameClientListener {
 
     @Override
     public void error(String e) {
-        System.out.println("Operation failed because "+ e);
+        System.out.println("Operation failed because " + e);
     }
 
     @Override
     public void ok() {
         System.out.println("Successful operation");
     }
-
 
 
 }

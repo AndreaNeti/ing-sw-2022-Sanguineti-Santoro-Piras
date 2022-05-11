@@ -9,6 +9,7 @@ import it.polimi.ingsw.exceptions.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Objects;
 
 public class Player implements Serializable {
     private final String nickName;
@@ -87,12 +88,13 @@ public class Player implements Serializable {
         return this.toString().equals(player.toString());
     }
 
-    public String getNickName() {
+    @Override
+    public String toString() {
         return nickName;
     }
 
     @Override
-    public String toString() {
-        return nickName;
+    public int hashCode() {
+        return Objects.hash(nickName);
     }
 }
