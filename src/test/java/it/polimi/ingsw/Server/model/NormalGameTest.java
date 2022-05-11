@@ -1,9 +1,11 @@
 package it.polimi.ingsw.Server.model;
 
+import it.polimi.ingsw.Enum.Color;
+import it.polimi.ingsw.Enum.HouseColor;
+import it.polimi.ingsw.Enum.Wizard;
 import it.polimi.ingsw.Server.controller.MatchConstants;
 import it.polimi.ingsw.Server.controller.MatchType;
 import it.polimi.ingsw.Server.controller.Server;
-import it.polimi.ingsw.Server.model.*;
 import it.polimi.ingsw.exceptions.EndGameException;
 import it.polimi.ingsw.exceptions.GameException;
 import it.polimi.ingsw.exceptions.NotAllowedException;
@@ -220,6 +222,7 @@ public class NormalGameTest {
 
     @Test
     void calculateProfessorTest() {
+        Bag test=new Bag((byte) 100, (byte) 69);
         //at the beginning after the calculation no one should have professor
         gameWith2.calculateProfessor();
         for (Wizard w : gameWith2.getProfessor()) {
@@ -234,7 +237,7 @@ public class NormalGameTest {
             assertNull(w);
         }
         try {
-            gameWith4.getBag().moveStudents(Color.BLUE, (byte) 5, gameWith4.getCurrentPlayer().getLunchHall());
+            test.moveStudents(Color.BLUE, (byte) 5, gameWith4.getCurrentPlayer().getLunchHall());
         } catch (GameException ex) {
             fail();
         }
@@ -242,15 +245,15 @@ public class NormalGameTest {
         assertEquals(gameWith4.getProfessor()[1], gameWith4.getCurrentPlayer().getWizard());
 
         try {
-            gameWith3.getBag().moveStudents(Color.BLUE, (byte) 5, p3_3.getLunchHall());
+            test.moveStudents(Color.BLUE, (byte) 5, p3_3.getLunchHall());
         } catch (GameException ex) {
             fail();
         }
         gameWith3.calculateProfessor();
         assertEquals(p3_3.getWizard(), gameWith3.getProfessor()[1]);
         try {
-            gameWith3.getBag().moveStudents(Color.RED, (byte) 5, p1_3.getLunchHall());
-            gameWith3.getBag().moveStudents(Color.RED, (byte) 5, p2_3.getLunchHall());
+            test.moveStudents(Color.RED, (byte) 5, p1_3.getLunchHall());
+            test.moveStudents(Color.RED, (byte) 5, p2_3.getLunchHall());
         } catch (GameException ex) {
             fail();
         }
@@ -258,12 +261,14 @@ public class NormalGameTest {
         assertEquals(gameWith3.getProfessor()[0], p1_3.getWizard());
 
         try {
-            gameWith3.getBag().moveStudents(Color.BLUE, (byte) 6, p2_3.getLunchHall());
+            test.moveStudents(Color.PINK, (byte) 6, p2_3.getLunchHall());
         } catch (GameException ex) {
+            ex.printStackTrace();
+            System.out.println(ex.getMessage());
             fail();
         }
         gameWith3.calculateProfessor();
-        assertEquals(p2_3.getWizard(), gameWith3.getProfessor()[1]);
+        assertEquals(p2_3.getWizard(), gameWith3.getProfessor()[4]);
     }
 
     @Test

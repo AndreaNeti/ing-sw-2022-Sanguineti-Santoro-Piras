@@ -1,9 +1,11 @@
 package it.polimi.ingsw.Server.model;
 
+import it.polimi.ingsw.Enum.Color;
+import it.polimi.ingsw.Enum.HouseColor;
+import it.polimi.ingsw.Enum.Wizard;
 import it.polimi.ingsw.Server.controller.MatchConstants;
 import it.polimi.ingsw.Server.controller.MatchType;
 import it.polimi.ingsw.Server.controller.Server;
-import it.polimi.ingsw.Server.model.*;
 import it.polimi.ingsw.exceptions.EndGameException;
 import it.polimi.ingsw.exceptions.GameException;
 import it.polimi.ingsw.exceptions.NotAllowedException;
@@ -44,7 +46,7 @@ public class ExpertGameTest {
         players2 = new ArrayList<>(2);
         players2.add(p1_2);
         players2.add(p2_2);
-        gameWith2 = new ExpertGame(teamList2,  matchConstants);
+        gameWith2 = new ExpertGame(teamList2, matchConstants);
         gameWith2.setCurrentPlayer(p1_2);
 
         // create game with 4 players
@@ -162,7 +164,7 @@ public class ExpertGameTest {
     void prohibitionsTest() {
         try {
             for (int i = 0; i < 4; i++) {
-                gameWith2.setProhibition(new Island((byte) (i+2*gameWith2.getPlayerSize())));
+                gameWith2.setProhibition(new Island((byte) (i + 2 * gameWith2.getPlayerSize())));
             }
         } catch (GameException e) {
             fail();
@@ -265,18 +267,24 @@ public class ExpertGameTest {
                     gameWith2.playCharacter();
                     worked = true;
                 } catch (GameException | EndGameException e1) {
-                    try {
-                        gameWith2.setCharacterInput(i);
-                        gameWith2.setCharacterInput(1);
-                        gameWith2.playCharacter();
-                        worked = true;
-                    } catch (GameException | EndGameException ignored) {
+                    for (int j = 0; j < 5 && !worked; j++) {
+                        try {
+                            gameWith2.setCharacterInput(j);
+                            gameWith2.setCharacterInput(i);
+                            gameWith2.playCharacter();
+                            worked = true;
+                        } catch (GameException | EndGameException ignored) {
+                        }
 
                     }
                 }
+
             }
-            if (!worked) fail();
+            if (!worked)
+
+                fail();
         }
+
         assertThrows(NotAllowedException.class, () -> gameWith2.playCharacter(), "Cannot play character card");
     }
 
@@ -295,7 +303,7 @@ public class ExpertGameTest {
             gameWith4.getBag().moveStudents(Color.GREEN, (byte) 1, p4_4.getEntranceHall());
             for (Player p : players4) {
                 gameWith4.setCurrentPlayer(p);
-                gameWith4.move(Color.values()[players4.indexOf(p)], 2*p.getWizard().ordinal(), 2*p.getWizard().ordinal()+1);
+                gameWith4.move(Color.values()[players4.indexOf(p)], 2 * p.getWizard().ordinal(), 2 * p.getWizard().ordinal() + 1);
             }
         } catch (GameException e) {
             fail();
@@ -337,7 +345,7 @@ public class ExpertGameTest {
 
             for (Player p : players3) {
                 gameWith3.setCurrentPlayer(p);
-                gameWith3.move(Color.values()[players3.indexOf(p)], 2*p.getWizard().ordinal(), 2*p.getWizard().ordinal()+1);
+                gameWith3.move(Color.values()[players3.indexOf(p)], 2 * p.getWizard().ordinal(), 2 * p.getWizard().ordinal() + 1);
             }
         } catch (GameException e) {
             fail();

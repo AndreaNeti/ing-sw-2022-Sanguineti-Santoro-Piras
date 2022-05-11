@@ -1,9 +1,11 @@
 package it.polimi.ingsw.Server.model;
 
+import it.polimi.ingsw.Enum.Color;
+import it.polimi.ingsw.Enum.HouseColor;
+import it.polimi.ingsw.Enum.Wizard;
 import it.polimi.ingsw.Server.controller.MatchConstants;
 import it.polimi.ingsw.Server.controller.MatchType;
 import it.polimi.ingsw.Server.controller.Server;
-import it.polimi.ingsw.Server.model.*;
 import it.polimi.ingsw.exceptions.*;
 import org.junit.jupiter.api.Test;
 
@@ -410,11 +412,13 @@ class CharacterCardTest {
 
     @Test
     void playChar8() {
+        Bag test=new Bag((byte)50, (byte)69);
         try {
             game.chooseCharacter((byte) 0);
             game.setCharacterInput(-1);
             assertThrows(UnexpectedValueException.class, () -> c8.play(game), "not valid inputs");
         } catch (GameException e) {
+            e.printStackTrace();
             fail();
         }
         game.setCurrentPlayer(p1);
@@ -434,14 +438,15 @@ class CharacterCardTest {
 //                    int sum = p1.getLunchHall().howManyStudents(color) - p2.getLunchHall().howManyStudents(color) + 1;
 //                    game.getBag().moveStudents(color, (byte) sum, p2.getLunchHall());
 //                }
-                game.getBag().moveStudents(color, (byte) 4, p2.getLunchHall());
+                test.moveStudents(color, (byte) 4, p2.getLunchHall());
             }
             game.calculateProfessor();
             for (int i = 0; i < 5; i++) {
                 color = Color.values()[i];
-                game.getBag().moveStudents(color, (byte) (i + 1), game.getIslands().get(4));
+                test.moveStudents(color, (byte) (i + 1), game.getIslands().get(4));
             }
         } catch (GameException e) {
+            e.printStackTrace();
             fail();
         }
         try {
@@ -450,6 +455,7 @@ class CharacterCardTest {
             c8.play(game);
             game.calculateInfluence(game.getIslands().get(4));
         } catch (GameException | EndGameException e) {
+            e.printStackTrace();
             fail();
         }
         // p1 team is t1

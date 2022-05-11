@@ -33,9 +33,8 @@ public class ServerListener implements Runnable {
         ToClientMessage received;
         do {
             try {
-                System.out.println("Ready to receive");
+                //TODO catch exception when server is down
                 received = (ToClientMessage) objIn.readObject();
-                System.out.println(received);
                 received.execute(controllerClient);
             } catch (IOException | ClassNotFoundException e) {
                 throw new RuntimeException(e);

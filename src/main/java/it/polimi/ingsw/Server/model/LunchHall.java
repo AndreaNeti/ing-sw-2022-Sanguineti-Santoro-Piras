@@ -1,5 +1,6 @@
 package it.polimi.ingsw.Server.model;
 
+import it.polimi.ingsw.Enum.Color;
 import it.polimi.ingsw.exceptions.NotAllowedException;
 
 //Lunch hall is that part of the boar that is called Dining Room. There is only one for player and it has a reference to it.

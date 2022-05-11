@@ -1,5 +1,6 @@
 package it.polimi.ingsw.Server.model;
 
+import it.polimi.ingsw.Enum.Color;
 import it.polimi.ingsw.exceptions.UnexpectedValueException;
 
 public class Char8 implements CharacterCard {

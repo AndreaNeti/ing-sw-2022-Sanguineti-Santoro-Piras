@@ -1,5 +1,8 @@
 package it.polimi.ingsw.Server.model;
 
+import it.polimi.ingsw.Enum.Color;
+import it.polimi.ingsw.Enum.HouseColor;
+import it.polimi.ingsw.Enum.Wizard;
 import it.polimi.ingsw.Server.controller.GameDelta;
 import it.polimi.ingsw.Server.controller.MatchConstants;
 import it.polimi.ingsw.exceptions.EndGameException;
@@ -66,8 +69,7 @@ public class NormalGame implements Game {
             if (!(i == 0 || i == (6) % 12)) {
                 try {
                     drawStudents(islands.get(i), (byte) 1);
-                } catch (EndGameException e) {
-                    System.out.println("Initialized islands");
+                } catch (EndGameException ignored) {
                 }
             }
         }

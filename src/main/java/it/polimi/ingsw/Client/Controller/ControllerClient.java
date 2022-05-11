@@ -3,12 +3,14 @@ package it.polimi.ingsw.Client.Controller;
 import it.polimi.ingsw.Client.GameClientListened;
 import it.polimi.ingsw.Client.model.GameClient;
 import it.polimi.ingsw.Client.model.PlayerClient;
+import it.polimi.ingsw.Enum.Color;
+import it.polimi.ingsw.Enum.HouseColor;
+import it.polimi.ingsw.Enum.Wizard;
 import it.polimi.ingsw.Server.controller.GameDelta;
 import it.polimi.ingsw.Server.controller.MatchConstants;
 import it.polimi.ingsw.Server.controller.MatchType;
 import it.polimi.ingsw.Server.controller.Server;
 import it.polimi.ingsw.Server.model.*;
-import it.polimi.ingsw.exceptions.GameException;
 import it.polimi.ingsw.network.toServerMessage.*;
 
 import java.io.IOException;
@@ -16,7 +18,6 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Scanner;
 
 public class ControllerClient extends GameClientListened {
     private Socket socket;
@@ -41,7 +42,7 @@ public class ControllerClient extends GameClientListened {
         return true;
     }
 
-    public void sendMessage(ToServerMessage command){
+    public synchronized void sendMessage(ToServerMessage command){
         if(serverSender==null)
             notify("Must connect to a Server Before");
         else{

@@ -1,7 +1,7 @@
 package it.polimi.ingsw.Client;
 
 import it.polimi.ingsw.Server.controller.MatchType;
-import it.polimi.ingsw.Server.model.Color;
+import it.polimi.ingsw.Enum.Color;
 import it.polimi.ingsw.network.toClientMessage.ToClientMessage;
 import it.polimi.ingsw.network.toServerMessage.*;
 

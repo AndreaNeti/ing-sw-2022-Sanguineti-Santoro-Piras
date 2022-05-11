@@ -1,11 +1,12 @@
 package it.polimi.ingsw.Server.controller;
 
+import it.polimi.ingsw.Enum.HouseColor;
+import it.polimi.ingsw.Enum.Wizard;
 import it.polimi.ingsw.Server.model.*;
-import it.polimi.ingsw.Server.model.Color;
+import it.polimi.ingsw.Enum.Color;
 import it.polimi.ingsw.network.toClientMessage.DeltaUpdate;
 import it.polimi.ingsw.network.toClientMessage.ToClientMessage;
 
-import java.awt.*;
 import java.io.Serializable;
 import java.util.*;
 

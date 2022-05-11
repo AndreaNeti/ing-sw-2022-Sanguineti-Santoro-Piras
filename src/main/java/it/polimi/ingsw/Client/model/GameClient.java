@@ -1,20 +1,19 @@
 package it.polimi.ingsw.Client.model;
 
 import it.polimi.ingsw.Client.GameClientListened;
-import it.polimi.ingsw.Client.GameClientListener;
+import it.polimi.ingsw.Enum.Color;
+import it.polimi.ingsw.Enum.HouseColor;
+import it.polimi.ingsw.Enum.Wizard;
 import it.polimi.ingsw.Server.controller.MatchConstants;
-import it.polimi.ingsw.Server.controller.MatchType;
 import it.polimi.ingsw.Server.model.*;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 
 public class GameClient extends GameClientListened {
     public ArrayList<IslandClient> islands;
     public ArrayList<GameComponentClient> clouds;
-    private Wizard[] professors;
+    private final Wizard[] professors;
     private byte motherNaturePosition;
     private byte currentPlayer;
     private final MatchConstants matchConstants;
@@ -30,7 +29,7 @@ public class GameClient extends GameClientListened {
         for(int i=0;i<matchConstants.studentsToMove();i++){
             clouds.add(new GameComponentClient(-(i+1)));
         }
-        for(int i=0;i<matchConstants.studentsToMove();i++){
+        for(int i=0;i<12;i++){
             islands.add(new IslandClient(2*players.size()+i));
         }
         this.players = players;
@@ -122,7 +121,7 @@ public class GameClient extends GameClientListened {
         getCurrentPlayer().playCard(value);
         notify(value);
     }
-    public void setTowerLeft(HouseColor houseColor,Byte towerLeft){
+    public void setTowerLeft(HouseColor houseColor, Byte towerLeft){
         for(PlayerClient p:players){
             if(p.getHouseColor()==houseColor) {
                 p.setTowersLeft(towerLeft);

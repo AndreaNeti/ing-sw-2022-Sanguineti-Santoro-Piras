@@ -1,6 +1,6 @@
 package it.polimi.ingsw.Server.controller;
 
-import it.polimi.ingsw.Server.model.Color;
+import it.polimi.ingsw.Enum.Color;
 
 import java.util.HashMap;
 

@@ -1,7 +1,7 @@
 package it.polimi.ingsw.Client.model;
 
-import it.polimi.ingsw.Server.model.HouseColor;
-import it.polimi.ingsw.Server.model.Wizard;
+import it.polimi.ingsw.Enum.HouseColor;
+import it.polimi.ingsw.Enum.Wizard;
 
 import java.util.Arrays;
 

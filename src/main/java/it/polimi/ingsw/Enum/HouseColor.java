@@ -1,4 +1,4 @@
-package it.polimi.ingsw.Server.model;
+package it.polimi.ingsw.Enum;
 
 public enum HouseColor {
     BLACK, WHITE, GREY

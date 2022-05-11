@@ -3,11 +3,8 @@ package it.polimi.ingsw.Client;
 import it.polimi.ingsw.Client.model.GameComponentClient;
 import it.polimi.ingsw.Client.model.IslandClient;
 import it.polimi.ingsw.Client.model.PlayerClient;
-import it.polimi.ingsw.Server.model.GameComponent;
-import it.polimi.ingsw.Server.model.HouseColor;
-import it.polimi.ingsw.Server.model.Island;
-import it.polimi.ingsw.Server.model.Wizard;
-import it.polimi.ingsw.exceptions.GameException;
+import it.polimi.ingsw.Enum.HouseColor;
+import it.polimi.ingsw.Enum.Wizard;
 
 import java.util.ArrayList;
 

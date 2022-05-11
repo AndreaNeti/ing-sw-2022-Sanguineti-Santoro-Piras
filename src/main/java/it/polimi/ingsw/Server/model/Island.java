@@ -1,5 +1,6 @@
 package it.polimi.ingsw.Server.model;
 
+import it.polimi.ingsw.Enum.HouseColor;
 import it.polimi.ingsw.exceptions.NotAllowedException;
 import it.polimi.ingsw.exceptions.UnexpectedValueException;
 

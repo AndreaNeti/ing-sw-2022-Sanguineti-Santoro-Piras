@@ -1,7 +1,7 @@
 package it.polimi.ingsw.Server.controller;
 
 import it.polimi.ingsw.exceptions.GameException;
-import it.polimi.ingsw.Server.model.Color;
+import it.polimi.ingsw.Enum.Color;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
@@ -179,6 +179,7 @@ class ControllerTest {
                 for (Color c : Color.values()) {
                     for (int j = 0; j < 3 && moved != 3; j++) {
                         try {
+                            //2k+1 is the lunch hall
                             controllerExpert2.move(c, 2*k+1);
                             moved++;
                         } catch (GameException ignored) {
@@ -275,7 +276,7 @@ class ControllerTest {
                 for (Color c : Color.values()) {
                     for (int j = 0; j < 3 && moved != 3; j++) {
                         try {
-                            controllerExpert2.move(c, 4);
+                            controllerExpert2.move(c, 10);
                             moved++;
                         } catch (GameException ignored) {
                         }

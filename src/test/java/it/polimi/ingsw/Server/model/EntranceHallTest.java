@@ -1,8 +1,6 @@
 package it.polimi.ingsw.Server.model;
 
-import it.polimi.ingsw.Server.model.Bag;
-import it.polimi.ingsw.Server.model.Color;
-import it.polimi.ingsw.Server.model.EntranceHall;
+import it.polimi.ingsw.Enum.Color;
 import it.polimi.ingsw.exceptions.EndGameException;
 import it.polimi.ingsw.exceptions.GameException;
 import it.polimi.ingsw.exceptions.NotAllowedException;

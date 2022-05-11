@@ -6,18 +6,16 @@ import it.polimi.ingsw.Client.model.GameComponentClient;
 import it.polimi.ingsw.Client.model.IslandClient;
 import it.polimi.ingsw.Client.model.PlayerClient;
 import it.polimi.ingsw.Server.controller.MatchType;
-import it.polimi.ingsw.Server.model.Color;
-import it.polimi.ingsw.Server.model.HouseColor;
-import it.polimi.ingsw.Server.model.Wizard;
-import it.polimi.ingsw.exceptions.GameException;
-import it.polimi.ingsw.network.toClientMessage.ToClientMessage;
+import it.polimi.ingsw.Enum.Color;
+import it.polimi.ingsw.Enum.HouseColor;
+import it.polimi.ingsw.Enum.Wizard;
 import it.polimi.ingsw.network.toServerMessage.*;
 
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class ViewCli implements GameClientListener {
-    private ControllerClient controllerClient;
+    private final ControllerClient controllerClient;
     private final Scanner myInput = new Scanner(System.in);
 
     public ViewCli(ControllerClient controllerClient) {

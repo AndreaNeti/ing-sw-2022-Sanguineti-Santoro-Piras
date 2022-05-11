@@ -4,13 +4,13 @@ import it.polimi.ingsw.Server.controller.Controller;
 import it.polimi.ingsw.Server.controller.ClientHandler;
 import it.polimi.ingsw.exceptions.GameException;
 import it.polimi.ingsw.exceptions.NotAllowedException;
-import it.polimi.ingsw.Server.model.Color;
+import it.polimi.ingsw.Enum.Color;
 
 public class Move implements ToServerMessage {
     Color color;
     int idGameComponent;
 
-    public Move(Color color, int indexGameComponent) {
+    public Move(Color color, int idGameComponent) {
         this.color = color;
         this.idGameComponent = idGameComponent;
     }
