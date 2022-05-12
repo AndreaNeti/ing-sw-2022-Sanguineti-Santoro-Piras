@@ -16,6 +16,6 @@ public class PlayersInMatch implements ToClientMessage{
 
     @Override
     public void execute(ControllerClient controllerClient) {
-
+        controllerClient.addMembers(members);
     }
 }

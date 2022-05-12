@@ -4,6 +4,7 @@ import it.polimi.ingsw.Client.GameClientListened;
 import it.polimi.ingsw.Client.model.GameClient;
 import it.polimi.ingsw.Client.model.PlayerClient;
 import it.polimi.ingsw.Enum.Color;
+import it.polimi.ingsw.Enum.GamePhase;
 import it.polimi.ingsw.Enum.HouseColor;
 import it.polimi.ingsw.Enum.Wizard;
 import it.polimi.ingsw.Server.controller.GameDelta;
@@ -11,6 +12,7 @@ import it.polimi.ingsw.Server.controller.MatchConstants;
 import it.polimi.ingsw.Server.controller.MatchType;
 import it.polimi.ingsw.Server.controller.Server;
 import it.polimi.ingsw.Server.model.GameComponent;
+import it.polimi.ingsw.Server.model.Player;
 import it.polimi.ingsw.network.toServerMessage.ToServerMessage;
 
 import java.io.IOException;
@@ -18,6 +20,7 @@ import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 public class ControllerClient extends GameClientListened {
@@ -25,8 +28,8 @@ public class ControllerClient extends GameClientListened {
     private ServerSender serverSender;
     private GameClient gameClient;
     private MatchType matchType;
-
-    private final ArrayList<PlayerClient> playerClients;
+    private GamePhase gamePhase;
+    private ArrayList<PlayerClient> playerClients;
 
     public ControllerClient() {
         socket = new Socket();
@@ -46,6 +49,27 @@ public class ControllerClient extends GameClientListened {
         return true;
     }
 
+    public void setGamePhase(GamePhase gamePhase) {
+        //se arriva il messaggio e se stesso è il current player si imposta fase del messaggio
+        //currentPlayer!=se stesso-> wait Phase
+        //fase intermedio undo
+        this.gamePhase = gamePhase;
+        super.notify(gamePhase);
+    }
+
+    public void addMembers(HashMap<Player, HouseColor> members) {
+        this.playerClients = new ArrayList<>();
+        for (Map.Entry<Player, HouseColor> entry : members.entrySet()) {
+           playerClients.add(new PlayerClient(entry.getKey(), entry.getValue(), Server.getMatchConstants(matchType)));
+        }
+        if(playerClients.size()== matchType.nPlayers()){
+            gameClient=new GameClient(playerClients,Server.getMatchConstants(matchType));
+        }
+        super.notifyMembers( matchType.nPlayers()-playerClients.size());
+    }
+    public void setCurrentPlayer(byte currentPlayer){
+        gameClient.setCurrentPlayer(currentPlayer);
+    }
     public synchronized void sendMessage(ToServerMessage command) {
         if (serverSender == null)
             notify("Must connect to a Server Before");

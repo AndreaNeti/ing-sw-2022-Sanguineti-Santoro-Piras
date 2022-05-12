@@ -3,6 +3,7 @@ package it.polimi.ingsw.Client;
 import it.polimi.ingsw.Client.model.GameComponentClient;
 import it.polimi.ingsw.Client.model.IslandClient;
 import it.polimi.ingsw.Client.model.PlayerClient;
+import it.polimi.ingsw.Enum.GamePhase;
 import it.polimi.ingsw.Enum.HouseColor;
 import it.polimi.ingsw.Enum.Wizard;
 
@@ -11,9 +12,9 @@ import java.util.ArrayList;
 public class GameClientListened {
     private ArrayList<GameClientListener> listeners;
 
-    public void notify(Byte motherNaturePosition) {
+    public void notifyMotherNature(Byte motherNaturePosition) {
         for (GameClientListener listener : listeners) {
-            listener.update(motherNaturePosition);
+            listener.updateMotherNature(motherNaturePosition);
         }
     }
 
@@ -28,7 +29,11 @@ public class GameClientListened {
             listener.update(island);
         }
     }
-
+    public void notify(GamePhase phase){
+        for (GameClientListener listener : listeners) {
+            listener.update(phase);
+        }
+    }
     public void notify(ArrayList<IslandClient> islands){
         for (GameClientListener listener : listeners) {
             listener.update(islands);
@@ -52,9 +57,9 @@ public class GameClientListened {
         }
     }
 
-    public void notify(Integer playedCard){
+    public void notifyCardPlayed(Byte playedCard){
         for (GameClientListener listener : listeners) {
-            listener.update(playedCard);
+            listener.updateCardPlayed(playedCard);
         }
     }
     public void notify(String e){
@@ -68,6 +73,11 @@ public class GameClientListened {
         }
     }
 
+    public void notifyMembers(int membersLeftToStart){
+        for (GameClientListener listener : listeners) {
+            listener.updateMembers(membersLeftToStart);
+        }
+    }
     public void addListener(GameClientListener listener) {
         if(listeners==null)
             listeners=new ArrayList<>();
@@ -75,7 +85,8 @@ public class GameClientListened {
     }
     public void addListener(GameClientListened gameClientListened){
         if(listeners==null)
-            listeners=new ArrayList<>();
-        listeners=gameClientListened.listeners;
+            listeners=gameClientListened.listeners;
+        
     }
+
 }

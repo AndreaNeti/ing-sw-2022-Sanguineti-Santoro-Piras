@@ -5,6 +5,7 @@ import it.polimi.ingsw.Client.GameClientListener;
 import it.polimi.ingsw.Client.model.GameComponentClient;
 import it.polimi.ingsw.Client.model.IslandClient;
 import it.polimi.ingsw.Client.model.PlayerClient;
+import it.polimi.ingsw.Enum.GamePhase;
 import it.polimi.ingsw.Server.controller.MatchType;
 import it.polimi.ingsw.Enum.Color;
 import it.polimi.ingsw.Enum.HouseColor;
@@ -17,6 +18,7 @@ import java.util.Scanner;
 public class ViewCli implements GameClientListener {
     private final ControllerClient controllerClient;
     private final Scanner myInput = new Scanner(System.in);
+
 
     public ViewCli(ControllerClient controllerClient) {
         this.controllerClient = controllerClient;
@@ -92,7 +94,7 @@ public class ViewCli implements GameClientListener {
     }
 
     @Override
-    public void update(Byte motherNaturePosition) {
+    public void updateMotherNature(Byte motherNaturePosition) {
         System.out.println("New motherNaturePosition is " + motherNaturePosition);
     }
 
@@ -124,12 +126,24 @@ public class ViewCli implements GameClientListener {
     }
 
     @Override
-    public void update(Integer playedCard) {
+    public void update(PlayerClient currentPlayer) {
 
     }
 
     @Override
-    public void update(PlayerClient currentPlayer) {
+    public void updateMembers(int membersLeftToStart) {
+        if (membersLeftToStart > 0)
+            System.out.println(membersLeftToStart + " members left before game starts");
+        else System.out.println("Game is about to start");
+    }
+
+    @Override
+    public void update(GamePhase gamePhase) {
+
+    }
+
+    @Override
+    public void updateCardPlayed(Byte playedCard) {
 
     }
 

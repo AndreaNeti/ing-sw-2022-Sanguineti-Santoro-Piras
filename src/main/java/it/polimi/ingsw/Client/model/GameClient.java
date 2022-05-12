@@ -114,7 +114,7 @@ public class GameClient extends GameClientListened {
 
     public void setMotherNaturePosition(byte motherNaturePosition) {
         this.motherNaturePosition = motherNaturePosition;
-        notify(motherNaturePosition);
+        notifyMotherNature(motherNaturePosition);
     }
 
     public byte getMotherNaturePosition() {
@@ -123,7 +123,7 @@ public class GameClient extends GameClientListened {
 
     public void playCard(byte value) {
         getCurrentPlayer().playCard(value);
-        notify(value);
+        notifyCardPlayed(value);
     }
 
     public void setTowerLeft(HouseColor houseColor, Byte towerLeft) {
