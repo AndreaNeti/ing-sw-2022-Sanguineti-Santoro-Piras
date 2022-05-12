@@ -9,7 +9,7 @@ import it.polimi.ingsw.exceptions.*;
 
 import java.util.*;
 
-public class ExpertGame extends NormalGame {
+public class ExpertGame extends NormalGame implements CharacterCardGame {
     private final byte[] coinsPlayer;
     private transient final ArrayList<CharacterCard> characters;
     private transient final ArrayList<Integer> inputsCharacter;
@@ -123,7 +123,7 @@ public class ExpertGame extends NormalGame {
 
     //calculate expertInfluence(it checks all the boolean) and then calls checkMerge
 
-    protected void calculateInfluence(Island island) throws EndGameException {
+    public void calculateInfluence(Island island) throws EndGameException {
         if (island == null) throw new IllegalArgumentException("Cannot calculate influence on null island");
         //prohibition is handled by prohibitionsLeft
         if (island.getProhibitions() > 0) {
@@ -318,7 +318,7 @@ public class ExpertGame extends NormalGame {
     }
 
     @Override
-    protected GameComponent getComponentById(int idGameComponent) throws GameException {
+    public GameComponent getComponentById(int idGameComponent) throws GameException {
         return super.getComponentById(idGameComponent);
     }
 
@@ -326,19 +326,23 @@ public class ExpertGame extends NormalGame {
         return characters.get(chosenCharacter);
     }
 
-    protected void setExtraInfluence() {
+    @Override
+    public void setExtraInfluence() {
         this.extraInfluence = true;
     }
 
-    protected void removeTowerInfluence() {
+    @Override
+    public void removeTowerInfluence() {
         this.towerInfluence = false;
     }
 
-    protected void setExtraSteps() {
+    @Override
+    public void setExtraSteps() {
         this.extraSteps = true;
     }
 
-    protected void setIgnoredColorInfluence(Color ignoredColorInfluence) {
+    @Override
+    public void setIgnoredColorInfluence(Color ignoredColorInfluence) {
         if (ignoredColorInfluence == null) throw new IllegalArgumentException("Null color");
         if (this.ignoredColorInfluence != ignoredColorInfluence) {
             this.ignoredColorInfluence = ignoredColorInfluence;
@@ -348,15 +352,19 @@ public class ExpertGame extends NormalGame {
         }
     }
 
-    protected void setEqualProfessorCalculation() {
+    @Override
+    public void setEqualProfessorCalculation() {
         this.equalProfessorCalculation = true;
+        calculateProfessor();
     }
 
-    protected ArrayList<Integer> getCharacterInputs() {
+    @Override
+    public ArrayList<Integer> getCharacterInputs() {
         return new ArrayList<>(inputsCharacter);
     }
 
-    protected void setProhibition(Island island) throws NotAllowedException {
+    @Override
+    public void setProhibition(Island island) throws NotAllowedException {
         if (island == null) throw new IllegalArgumentException("Cannot set prohibition to a null island");
         if (this.prohibitionLeft <= 0) throw new NotAllowedException("No more prohibitions to set");
         this.prohibitionLeft--;
@@ -384,5 +392,25 @@ public class ExpertGame extends NormalGame {
         if (playerIndex < 0 || playerIndex >= getPlayerSize())
             throw new IllegalArgumentException("Not a valid player index");
         return coinsPlayer[playerIndex];
+    }
+
+    @Override
+    public void drawStudents(GameComponent gc, byte n) throws EndGameException {
+        super.drawStudents(gc, n);
+    }
+
+    @Override
+    public byte getPlayerSize() {
+        return super.getPlayerSize();
+    }
+
+    @Override
+    public Player getCurrentPlayer() {
+        return super.getCurrentPlayer();
+    }
+
+    @Override
+    public GameDelta getGameDelta() {
+        return super.getGameDelta();
     }
 }

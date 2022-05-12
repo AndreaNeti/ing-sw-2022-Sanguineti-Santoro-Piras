@@ -12,7 +12,7 @@ public class Char9 implements CharacterCard {
 
     // switch the students between the lunch hall and the entrance hall one pair at a time
     @Override
-    public void play(ExpertGame game) throws GameException {
+    public void play(CharacterCardGame game) throws GameException {
         List<Integer> inputs = game.getCharacterInputs();
         // input 0 and 2 are the colors of lunch hall students, input 1 and 3 are the colors of entrance hall students
         int lunchHallColor, entranceHallColor;

@@ -7,7 +7,7 @@ public class Char4 implements CharacterCard {
 
 
     @Override
-    public void play(ExpertGame game) throws GameException {
+    public void play(CharacterCardGame game) throws GameException {
         //TODO check this idIsland
         int idIsland = game.getCharacterInputs().get(0);
         if (idIsland > 2 * game.getPlayerSize() + 12 || idIsland < 2 * game.getPlayerSize())

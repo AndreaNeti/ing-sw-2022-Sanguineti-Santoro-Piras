@@ -7,7 +7,7 @@ import it.polimi.ingsw.exceptions.NotAllowedException;
 public class Char2 implements CharacterCard {
 
     @Override
-    public void play(ExpertGame game) throws GameException, EndGameException {
+    public void play(CharacterCardGame game) throws GameException, EndGameException {
         int idIsland = game.getCharacterInputs().get(0);
         if (idIsland > 2 * game.getPlayerSize() + 12 || idIsland < 2 * game.getPlayerSize())
             throw new NotAllowedException("Set wrong inputs");

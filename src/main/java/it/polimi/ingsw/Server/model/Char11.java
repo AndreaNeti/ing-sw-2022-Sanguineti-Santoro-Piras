@@ -8,20 +8,20 @@ import it.polimi.ingsw.exceptions.NotEnoughStudentsException;
 public class Char11 implements CharacterCard {
 
     @Override
-    public void play(ExpertGame game) throws GameException {
+    public void play(CharacterCardGame game) throws GameException {
         int color = game.getCharacterInputs().get(0);
         if (color < 0 || color >= Color.values().length) throw new NotAllowedException("Set wrong inputs");
-        for (Player p : game.getPlayers()) {
-            byte s = (byte) Math.min(3, p.getLunchHall().howManyStudents(Color.values()[color]));
-            try {
-                p.getLunchHall().moveStudents(Color.values()[color], s, game.getBag());
+        for (byte i = 0; i < game.getPlayerSize(); i++) {
+            // getComponentById(2*i+1) returns the lunch hall of the player i
+            byte s = (byte) Math.min(3, game.getComponentById(2 * i + 1).howManyStudents(Color.values()[color]));
+            try { // nice bag bro
+                game.getComponentById(2 * i + 1).moveStudents(Color.values()[color], s, game.getComponentById(69));
             } catch (NotEnoughStudentsException ignored) {
                 //it shouldn't happen because we calculate the minimum value of the students of that color
             }
             //TODO check if there is a better way
-            game.getGameDelta().addUpdatedGC(p.getLunchHall());
+            game.getGameDelta().addUpdatedGC(game.getComponentById(2 * i + 1));
         }
-
     }
 
     @Override

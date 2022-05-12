@@ -6,7 +6,7 @@ import it.polimi.ingsw.exceptions.NotAllowedException;
 public class Char8 implements CharacterCard {
 
     @Override
-    public void play(ExpertGame game) throws NotAllowedException {
+    public void play(CharacterCardGame game) throws NotAllowedException {
         int color = game.getCharacterInputs().get(0);
         if (color < 0 || color >= Color.values().length)
             throw new NotAllowedException("Set wrong inputs");

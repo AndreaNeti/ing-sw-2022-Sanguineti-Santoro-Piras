@@ -14,7 +14,7 @@ public class Char0 extends GameComponent implements CharacterCard {
     }
 
     @Override
-    public void play(ExpertGame game) throws GameException, EndGameException {
+    public void play(CharacterCardGame game) throws GameException, EndGameException {
         List<Integer> inputs = game.getCharacterInputs();
         // input 0 is the color chosen, input 1 is the island id chosen
         int color = inputs.get(0), idIsland = inputs.get(1);

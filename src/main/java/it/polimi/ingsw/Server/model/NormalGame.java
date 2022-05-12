@@ -154,8 +154,11 @@ public class NormalGame implements Game {
         from -1 to -4 are clouds;
         from -10 to -12 are the characters, here I ignore this because you can never move to this component
         */
+        if (idGameComponent == 69)
+            return bag;
+
         if (idGameComponent < (-clouds.size()) || idGameComponent >= (2 * getPlayerSize() + 12)) {
-            throw new NotAllowedException("Not a valid gameComponent id");
+            throw new NotAllowedException(idGameComponent + " is not a valid gameComponent id");
         }
         if (idGameComponent < 0) {
             return clouds.get(-idGameComponent - 1);
@@ -174,14 +177,10 @@ public class NormalGame implements Game {
                 return islandToReturn;
         }
         if (idGameComponent < 2 * getPlayerSize()) {
-            Wizard wizard = Wizard.values()[idGameComponent / 2];
-            for (Player p : getPlayers()) {
-                if (p.getWizard() == wizard) {
-                    if (idGameComponent % 2 == 0)
-                        return p.getEntranceHall();
-                    else return p.getLunchHall();
-                }
-            }
+            Player p = getPlayer((byte) (idGameComponent / 2));
+            if (idGameComponent % 2 == 0)
+                return p.getEntranceHall();
+            else return p.getLunchHall();
         }
         throw new NotAllowedException("Not a valid gameComponent id");
     }
@@ -447,6 +446,7 @@ public class NormalGame implements Game {
         return teams;
     }
 
+    // used only in tests
     protected ArrayList<Island> getIslands() {
         return islands;
     }
@@ -459,6 +459,7 @@ public class NormalGame implements Game {
         return professors;
     }
 
+    // used only in tests
     protected byte getMotherNaturePosition() {
         return motherNaturePosition;
     }

@@ -52,6 +52,7 @@ class CharacterCardTest {
                 }
             }
         } catch (GameException e) {
+            e.printStackTrace();
             fail();
         }
 //            for (Player p : playerList) {
@@ -603,6 +604,7 @@ class CharacterCardTest {
         try {
             c11.play(game);
         } catch (GameException | EndGameException e) {
+            e.printStackTrace();
             fail();
         }
         for (byte i = 0; i < players.size(); i++) {

@@ -98,8 +98,6 @@ public class ClientHandler implements Runnable, GameListener {
             controller.disconnectPlayerQuitted(this);
             controller = null;
         }
-        //send an ACK to confirm
-        update(new OK());
     }
 
     public String getNickName() {

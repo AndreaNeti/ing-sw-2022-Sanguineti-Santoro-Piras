@@ -12,7 +12,7 @@ public class Char10 extends GameComponent implements CharacterCard {
     }
 
     @Override
-    public void play(ExpertGame game) throws GameException, EndGameException {
+    public void play(CharacterCardGame game) throws GameException, EndGameException {
         int color = game.getCharacterInputs().get(0);
         if (color < 0 || color >= Color.values().length) {
             throw new NotAllowedException("Set wrong inputs");

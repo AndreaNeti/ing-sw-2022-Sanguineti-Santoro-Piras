@@ -13,7 +13,7 @@ public class Char6 extends GameComponent implements CharacterCard {
     }
 
     @Override
-    public void play(ExpertGame game) throws GameException {
+    public void play(CharacterCardGame game) throws GameException {
         List<Integer> inputs = game.getCharacterInputs();
         // input 0 and 2 and 4 are the colors of this character, input 1 and 3 and 5 are the colors of entrance hall students
         int characterColor, entranceHallColor;

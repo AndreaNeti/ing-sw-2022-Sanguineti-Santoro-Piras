@@ -28,7 +28,6 @@ public class ControllerClient extends GameClientListened {
     private ServerSender serverSender;
     private GameClient gameClient;
     private MatchType matchType;
-    private GamePhase gamePhase;
     private ArrayList<PlayerClient> playerClients;
 
     public ControllerClient() {
@@ -53,7 +52,8 @@ public class ControllerClient extends GameClientListened {
         //se arriva il messaggio e se stesso è il current player si imposta fase del messaggio
         //currentPlayer!=se stesso-> wait Phase
         //fase intermedio undo
-        this.gamePhase = gamePhase;
+        // TODO set phase in view cli
+        // this.gamePhase = gamePhase;
         super.notify(gamePhase);
     }
 

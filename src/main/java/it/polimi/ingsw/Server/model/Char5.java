@@ -2,7 +2,7 @@ package it.polimi.ingsw.Server.model;
 
 public class Char5 implements CharacterCard {
     @Override
-    public void play(ExpertGame game) {
+    public void play(CharacterCardGame game) {
         game.removeTowerInfluence();
     }
 

@@ -125,7 +125,7 @@ public class Controller {
     }
 
     public synchronized void moveMotherNature(int i) throws GameException, NullPointerException {
-        if (gamePhase == GamePhase.MOVE_MT_PHASE) {
+        if (gamePhase == GamePhase.MOVE_MN_PHASE) {
             try {
                 game.moveMotherNature(i);
             } catch (EndGameException e) {
