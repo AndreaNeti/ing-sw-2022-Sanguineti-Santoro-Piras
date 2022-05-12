@@ -85,7 +85,7 @@ public class Controller {
 
     }
 
-    public synchronized void moveFromCloud(int idGameComponent) throws NotAllowedException, NullPointerException {
+    public synchronized void moveFromCloud(int idGameComponent) throws GameException, NullPointerException {
 
         if (gamePhase == GamePhase.MOVE_CL_PHASE) { // move students from cloud, destination is player entrance hall
             if (idGameComponent >= 0 || idGameComponent < -matchType.nPlayers())
@@ -176,7 +176,6 @@ public class Controller {
             throw new NotAllowedException("Not in action phase");
         }
         game.chooseCharacter(character);
-
     }
 
     public synchronized void playCharacter() throws GameException, NullPointerException {

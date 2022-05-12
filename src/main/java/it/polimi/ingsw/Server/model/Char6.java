@@ -2,8 +2,8 @@ package it.polimi.ingsw.Server.model;
 
 import it.polimi.ingsw.Enum.Color;
 import it.polimi.ingsw.exceptions.GameException;
+import it.polimi.ingsw.exceptions.NotAllowedException;
 import it.polimi.ingsw.exceptions.NotEnoughStudentsException;
-import it.polimi.ingsw.exceptions.UnexpectedValueException;
 
 import java.util.List;
 
@@ -21,7 +21,7 @@ public class Char6 extends GameComponent implements CharacterCard {
             characterColor = inputs.get(i);
             entranceHallColor = inputs.get(i + 1);
             if (characterColor < 0 || characterColor >= Color.values().length || entranceHallColor < 0 || entranceHallColor > Color.values().length) {
-                throw new UnexpectedValueException();
+                throw new NotAllowedException("Set wrong inputs");
             }
 
             if (game.getCurrentPlayer().getEntranceHall().howManyStudents(Color.values()[entranceHallColor]) == 0 ||

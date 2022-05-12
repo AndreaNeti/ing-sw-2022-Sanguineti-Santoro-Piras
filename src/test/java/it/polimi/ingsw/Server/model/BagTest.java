@@ -4,14 +4,13 @@ import it.polimi.ingsw.Enum.Color;
 import it.polimi.ingsw.exceptions.EndGameException;
 import it.polimi.ingsw.exceptions.GameException;
 import it.polimi.ingsw.exceptions.NotAllowedException;
-import it.polimi.ingsw.exceptions.UnexpectedValueException;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class BagTest {
     byte nStudentPerColor = 24;
-    Bag bag = new Bag(nStudentPerColor,(byte) 69);
+    Bag bag = new Bag(nStudentPerColor);
 
     @Test
     void constructorTest() {
@@ -40,7 +39,7 @@ class BagTest {
         assertEquals(island.howManyStudents(), 3);
 
 
-        assertThrows(UnexpectedValueException.class, () -> bag.drawStudent(island, (byte) -4), "it's negative value, should launch exception");
+        assertThrows(IllegalArgumentException.class, () -> bag.drawStudent(island, (byte) -4), "it's negative value, should launch exception");
         //another extraction to the same island
         try {
             bag.drawStudent(island, (byte) 7);
@@ -54,7 +53,7 @@ class BagTest {
         assertThrows(NotAllowedException.class, () -> bag.drawStudent(cloud, (byte) 5), "Can't add 5 students to cloud");
 
         assertThrows(EndGameException.class, () -> bag.drawStudent(island, (byte) (bag.howManyStudents() + 1)), "Not enough student in the bag should launch the exception");
-        assertThrows(NotAllowedException.class, () -> bag.moveAll(island), "Can't move pieces from the Bag");
+        assertThrows(IllegalArgumentException.class, () -> bag.moveAll(island), "Can't move pieces from the Bag");
 
     }
 }

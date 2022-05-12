@@ -12,33 +12,40 @@ public abstract class GameComponent implements Serializable {
     private final byte[] students;
     private transient final int maxStudents;
     private final byte idGameComponent;
+
     private GameComponent(int maxStudents, byte studentsPerColor, byte idGameComponent) {
+        if (maxStudents < 0 || studentsPerColor < 0)
+            throw new IllegalArgumentException("Cannot create a gameComponent that contains negative students");
         this.students = new byte[Color.values().length];
         for (byte i = 0; i < students.length; i++) {
             students[i] = studentsPerColor;
         }
         this.maxStudents = maxStudents;
-        this.idGameComponent=idGameComponent;
+        this.idGameComponent = idGameComponent;
     }
 
-    public GameComponent(int maxStudents,byte idGameComponent) {
-        this(maxStudents, (byte) 0,idGameComponent);
+    public GameComponent(int maxStudents, byte idGameComponent) {
+        this(maxStudents, (byte) 0, idGameComponent);
     }
 
-    public GameComponent(byte studentsPerColor,byte idGameComponent) {
+    public GameComponent(byte studentsPerColor, byte idGameComponent) {
 
         this(Color.values().length * studentsPerColor, studentsPerColor, idGameComponent);
     }
 
     public GameComponent(byte idGameComponent) {
-        this(Integer.MAX_VALUE, (byte) 0,idGameComponent);
+        this(Integer.MAX_VALUE, (byte) 0, idGameComponent);
     }
 
     private void addStudents(Color color, byte number) {
+        if (color == null) throw new IllegalArgumentException("Null color");
+        if (number < 0) throw new IllegalArgumentException("Cannot add negative students");
         students[color.ordinal()] += number;
     }
 
     private void removeStudents(Color color, byte number) throws NotEnoughStudentsException {
+        if (color == null) throw new IllegalArgumentException("Null color");
+        if (number < 0) throw new IllegalArgumentException("Cannot add negative students");
         if (students[color.ordinal()] >= number)
             students[color.ordinal()] -= number;
         else
@@ -46,14 +53,17 @@ public abstract class GameComponent implements Serializable {
     }
 
     public void moveStudents(Color color, byte number, GameComponent destination) throws GameException {
-        if (number != 0) {
-            if (destination.canAddStudents(color, number)) this.removeStudents(color, number);
-            else throw new NotAllowedException("Can't add more students to this component");
-            destination.addStudents(color, number);
-        }
+        if (color == null) throw new IllegalArgumentException("Null color");
+        if (number < 0) throw new IllegalArgumentException("Cannot add negative students");
+
+        if (destination.canAddStudents(color, number)) this.removeStudents(color, number);
+        else throw new NotAllowedException("Can't add more students to this component");
+        destination.addStudents(color, number);
+
     }
 
     public void swapStudents(Color toGive, Color toGet, GameComponent other) throws GameException {
+        if (toGive == null || toGet == null || other == null) throw new IllegalArgumentException("Null argument");
         // swapping between same gameComponent or same color
         if (this == other || toGive == toGet) return;
         removeStudents(toGive, (byte) 1);
@@ -96,6 +106,7 @@ public abstract class GameComponent implements Serializable {
 
     // returns the number of students with color c
     public byte howManyStudents(Color c) {
+        if (c == null) throw new IllegalArgumentException("Null color");
         return students[c.ordinal()];
     }
 

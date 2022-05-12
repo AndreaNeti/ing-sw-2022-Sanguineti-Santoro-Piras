@@ -3,7 +3,7 @@ package it.polimi.ingsw.Server.model;
 import it.polimi.ingsw.Enum.Color;
 import it.polimi.ingsw.exceptions.EndGameException;
 import it.polimi.ingsw.exceptions.GameException;
-import it.polimi.ingsw.exceptions.UnexpectedValueException;
+import it.polimi.ingsw.exceptions.NotAllowedException;
 
 import java.util.List;
 
@@ -19,9 +19,9 @@ public class Char0 extends GameComponent implements CharacterCard {
         // input 0 is the color chosen, input 1 is the island id chosen
         int color = inputs.get(0), idIsland = inputs.get(1);
         //TODO Check this idIsland
-        if (color < 0 || color >= Color.values().length || idIsland>2*game.getPlayerSize()+12||idIsland<2* game.getPlayerSize())
-            throw new UnexpectedValueException();
-        this.moveStudents(Color.values()[color],(byte) 1,game.getComponentById(idIsland) );
+        if (color < 0 || color >= Color.values().length || idIsland > 2 * game.getPlayerSize() + 12 || idIsland < 2 * game.getPlayerSize())
+            throw new NotAllowedException("Set wrong inputs");
+        this.moveStudents(Color.values()[color], (byte) 1, game.getComponentById(idIsland));
         game.drawStudents(this, (byte) 1);
         game.getGameDelta().addUpdatedGC(this);
     }

@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class EntranceHallTest {
     EntranceHall entranceHall =  new EntranceHall(9,(byte)0);
-    Bag bag=new Bag((byte) 10, (byte) 69);
+    Bag bag=new Bag((byte) 10);
     @Test
     public void entranceTest() {
         assertEquals(entranceHall.howManyStudents(), 0);

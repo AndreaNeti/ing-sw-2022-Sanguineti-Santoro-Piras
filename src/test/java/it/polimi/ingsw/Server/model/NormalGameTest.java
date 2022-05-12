@@ -222,7 +222,7 @@ public class NormalGameTest {
 
     @Test
     void calculateProfessorTest() {
-        Bag test=new Bag((byte) 100, (byte) 69);
+        Bag test=new Bag((byte) 100);
         //at the beginning after the calculation no one should have professor
         gameWith2.calculateProfessor();
         for (Wizard w : gameWith2.getProfessor()) {
@@ -291,7 +291,7 @@ public class NormalGameTest {
 
     @Test
     void moveMotherNatureTest() {
-        Bag bagTest = new Bag((byte) 20, (byte) 69);
+        Bag bagTest = new Bag((byte) 20);
         //svuoto l'isola 0,1,2,3 così posso metterci gli studenti che voglio
         try {
             gameWith4.getIslands().get(0).moveAll(gameWith3.getIslands().get(4));
@@ -486,7 +486,7 @@ public class NormalGameTest {
 
         try {
             gameWith4.moveFromCloud(-4);
-        } catch (NotAllowedException e) {
+        } catch (GameException e) {
             fail();
         }
         assertEquals(gameWith4.getClouds().get(3).howManyStudents(), 0);

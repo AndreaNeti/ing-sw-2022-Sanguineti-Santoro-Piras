@@ -22,7 +22,7 @@ public class Player implements Serializable {
 
     public Player(String nickName, Team team, Wizard wizard, MatchConstants matchConstants) throws GameException {
         if (nickName == null || team == null || matchConstants == null)
-            throw new UnexpectedValueException();
+            throw new IllegalArgumentException("Cannot pass null argument");
         this.nickName = nickName;
         team.addPlayer(this);
         this.wizard = wizard;
@@ -34,8 +34,8 @@ public class Player implements Serializable {
         this.lunchHall = new LunchHall(Color.values().length * matchConstants.maxLunchHallStudents(), (byte) (wizard.ordinal() * 2 + 1));
     }
 
-    public void useCard(byte card) throws UsedCardException, UnexpectedValueException, NotAllowedException, EndGameException {
-        if (card < 1 || card > 10) throw new UnexpectedValueException();
+    public void useCard(byte card) throws UsedCardException, NotAllowedException, EndGameException {
+        if (card < 1 || card > cardsAvailable.length) throw new IllegalArgumentException("Not a valid card");
         if (cardsLeft < 1) throw new NotAllowedException("No more cards");
         if (!cardsAvailable[card - 1]) throw new UsedCardException();
         playedCard = card;
@@ -54,6 +54,8 @@ public class Player implements Serializable {
     }
 
     public boolean canPlayCard(ArrayList<Byte> playedCards, byte value) {
+        if (playedCards == null) throw new IllegalArgumentException("Passing null played cards list");
+        if (value < 1 || value > cardsAvailable.length) throw new IllegalArgumentException("Not a valid card to play");
         //the value goes from 1 to 10
         if (playedCards.size() == 0)
             return true;

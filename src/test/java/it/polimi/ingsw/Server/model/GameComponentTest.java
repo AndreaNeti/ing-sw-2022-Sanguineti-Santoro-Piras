@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class GameComponentTest {
-    Bag bag = new Bag((byte) 2, (byte) 69);
+    Bag bag = new Bag((byte) 2);
     GameComponent island = new Island((byte) 3);
     GameComponent cloud = new Cloud(4, (byte)-3);
     GameComponent island1 = new Island((byte ) 4);
@@ -49,10 +49,10 @@ public class GameComponentTest {
     @Test
     public void swapTest() {
         try {
-            bag = new Bag((byte) 2, (byte) 69);
+            bag = new Bag((byte) 2);
             // at least one per color
             bag.drawStudent(island1, (byte) (bag.howManyStudents() - 1));
-            bag = new Bag((byte) 2, (byte)  69);
+            bag = new Bag((byte) 2);
             bag.drawStudent(island2, (byte) (bag.howManyStudents() - 1));
         } catch (EndGameException | GameException e) {
             fail();
@@ -85,7 +85,7 @@ public class GameComponentTest {
         // island is empty, can't swap
         assertThrows(NotEnoughStudentsException.class, () -> island.swapStudents(Color.PINK, Color.BLUE, island1));
         assertThrows(NotEnoughStudentsException.class, () -> island1.swapStudents(Color.BLUE, Color.PINK, island));
-        bag = new Bag((byte) 11, (byte) 69);
+        bag = new Bag((byte) 11);
         LunchHall lh = new LunchHall(50, (byte) 10);
         try {
             bag.drawStudent(lh, (byte) 50);

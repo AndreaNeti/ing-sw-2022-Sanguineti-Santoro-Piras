@@ -2,21 +2,20 @@ package it.polimi.ingsw.Server.model;
 
 import it.polimi.ingsw.Enum.Color;
 import it.polimi.ingsw.exceptions.GameException;
+import it.polimi.ingsw.exceptions.NotAllowedException;
 import it.polimi.ingsw.exceptions.NotEnoughStudentsException;
-import it.polimi.ingsw.exceptions.UnexpectedValueException;
 
 public class Char11 implements CharacterCard {
 
     @Override
     public void play(ExpertGame game) throws GameException {
         int color = game.getCharacterInputs().get(0);
-        if (color < 0 || color >= Color.values().length) throw new UnexpectedValueException();
+        if (color < 0 || color >= Color.values().length) throw new NotAllowedException("Set wrong inputs");
         for (Player p : game.getPlayers()) {
             byte s = (byte) Math.min(3, p.getLunchHall().howManyStudents(Color.values()[color]));
             try {
                 p.getLunchHall().moveStudents(Color.values()[color], s, game.getBag());
             } catch (NotEnoughStudentsException ignored) {
-
                 //it shouldn't happen because we calculate the minimum value of the students of that color
             }
             //TODO check if there is a better way

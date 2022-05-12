@@ -4,7 +4,6 @@ import it.polimi.ingsw.Enum.Color;
 import it.polimi.ingsw.exceptions.EndGameException;
 import it.polimi.ingsw.exceptions.GameException;
 import it.polimi.ingsw.exceptions.NotAllowedException;
-import it.polimi.ingsw.exceptions.UnexpectedValueException;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -15,13 +14,14 @@ public class Bag extends GameComponent {
 
     private final Random rand;
 
-    public Bag(byte studentsPerColor, byte idGameComponet) {
-        super(studentsPerColor,(byte) 69);
+    public Bag(byte studentsPerColor) {
+        super(studentsPerColor, (byte) 69);
         rand = new Random(System.currentTimeMillis());
     }
 
     public void drawStudent(GameComponent gameComponent, byte number) throws EndGameException, GameException {
-        if (number < 0) throw new UnexpectedValueException();
+        if (gameComponent == null) throw new IllegalArgumentException("Cannot draw students to null gameComponent");
+        if (number < 0) throw new IllegalArgumentException("Cannot draw negative students");
         else if (number > gameComponent.getMaxStudents() - gameComponent.howManyStudents())
             throw new NotAllowedException("Can't draw " + number + " students to this gameComponent");
         byte i = 0;
@@ -47,8 +47,8 @@ public class Bag extends GameComponent {
     }
 
     @Override
-    public void moveAll(GameComponent destination) throws NotAllowedException {
-        throw new NotAllowedException("It's a bag i can't moveMyStudents");
+    public void moveAll(GameComponent destination) {
+        throw new IllegalArgumentException("It's a bag, cannot do move All");
     }
 }
 

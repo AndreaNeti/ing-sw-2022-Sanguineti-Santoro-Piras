@@ -9,7 +9,6 @@ import it.polimi.ingsw.Server.controller.Server;
 import it.polimi.ingsw.exceptions.EndGameException;
 import it.polimi.ingsw.exceptions.GameException;
 import it.polimi.ingsw.exceptions.NotAllowedException;
-import it.polimi.ingsw.exceptions.UnexpectedValueException;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -174,8 +173,8 @@ public class ExpertGameTest {
 
     @Test
     void chooseCharacterTest() {
-        assertThrows(UnexpectedValueException.class, () -> gameWith2.chooseCharacter((byte) -1));
-        assertThrows(UnexpectedValueException.class, () -> gameWith2.chooseCharacter((byte) 3));
+        assertThrows(NotAllowedException.class, () -> gameWith2.chooseCharacter((byte) -1));
+        assertThrows(NotAllowedException.class, () -> gameWith2.chooseCharacter((byte) 3));
     }
 
     @Test
@@ -239,7 +238,7 @@ public class ExpertGameTest {
         } catch (GameException e) {
             fail();
         }
-        assertThrows(UnexpectedValueException.class, () -> gameWith2.playCharacter());
+        assertThrows(NotAllowedException.class, () -> gameWith2.playCharacter());
         try {
             for (int i = 0; i < 5; i++) {
                 gameWith2.setCharacterInput(i);
@@ -247,7 +246,7 @@ public class ExpertGameTest {
         } catch (GameException e) {
             fail();
         }
-        assertThrows(UnexpectedValueException.class, () -> gameWith2.playCharacter());
+        assertThrows(NotAllowedException.class, () -> gameWith2.playCharacter());
         try {
             for (int i = 0; i < 10; i++) {
                 gameWith2.setCharacterInput(i);
@@ -255,7 +254,7 @@ public class ExpertGameTest {
         } catch (GameException e) {
             fail();
         }
-        assertThrows(UnexpectedValueException.class, () -> gameWith2.playCharacter());
+        assertThrows(NotAllowedException.class, () -> gameWith2.playCharacter());
         try {
             gameWith2.playCharacter();
         } catch (GameException | EndGameException e) {

@@ -29,7 +29,7 @@ public interface Game extends Serializable {
 
     void playCharacter() throws GameException, EndGameException;
 
-    void moveFromCloud(int cloudId) throws NotAllowedException;
+    void moveFromCloud(int cloudId) throws GameException;
     GameDelta getGameDelta();
     GameDelta transformAllGameInDelta();
 }

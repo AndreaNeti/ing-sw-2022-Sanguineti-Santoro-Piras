@@ -41,15 +41,11 @@ public class ExpertGame extends NormalGame {
             while (selectedCharacters.contains(characterIndex)) {
                 characterIndex = (byte) rand.nextInt(12);
             }
-            try {
-                c = factoryCharacter(characterIndex);
-                getGameDelta().addCharacterCard(i, characterIndex);
-                characters.add(c);
-                selectedCharacters.add(c.getCharId());
-                i++;
-            } catch (UnexpectedValueException e) {
-                e.printStackTrace();
-            }
+            c = factoryCharacter(characterIndex);
+            getGameDelta().addCharacterCard(i, characterIndex);
+            characters.add(c);
+            selectedCharacters.add(c.getCharId());
+            i++;
         }
 
         playedCharacters = new boolean[matchConstants.numOfCharacterCards()];
@@ -69,7 +65,7 @@ public class ExpertGame extends NormalGame {
     }
 
 
-    private CharacterCard factoryCharacter(byte i) throws UnexpectedValueException {
+    private CharacterCard factoryCharacter(byte i) {
         switch (i) {
             case 0:
                 Char0 c0 = new Char0((byte) -10);
@@ -114,7 +110,7 @@ public class ExpertGame extends NormalGame {
             case 11:
                 return new Char11();
         }
-        throw new UnexpectedValueException();
+        throw new IllegalArgumentException("Character card " + i + " doesn't exists");
     }
 
     @Override
@@ -128,6 +124,7 @@ public class ExpertGame extends NormalGame {
     //calculate expertInfluence(it checks all the boolean) and then calls checkMerge
 
     protected void calculateInfluence(Island island) throws EndGameException {
+        if (island == null) throw new IllegalArgumentException("Cannot calculate influence on null island");
         //prohibition is handled by prohibitionsLeft
         if (island.getProhibitions() > 0) {
             island.removeProhibition();
@@ -164,11 +161,7 @@ public class ExpertGame extends NormalGame {
             if (winnerColor != null && !winnerColor.equals(oldTeamColor)) {
                 island.setTeamColor(winnerColor);
                 if (oldTeamColor != null) {
-                    try {
-                        getTeams().get(oldTeamColor.ordinal()).addTowers(island.getNumber());
-                    } catch (NotAllowedException ex) {
-                        System.err.println(ex.getMessage());
-                    }
+                    getTeams().get(oldTeamColor.ordinal()).addTowers(island.getNumber());
                 }
                 getTeams().get(winnerColor.ordinal()).removeTowers(island.getNumber());
                 checkMerge(island);
@@ -178,11 +171,13 @@ public class ExpertGame extends NormalGame {
 
     @Override
     public void setCurrentPlayer(Player p) {
+        if (p == null) throw new IllegalArgumentException("Cannot set null current player");
         setCurrentPlayer((byte) p.getWizard().ordinal());
     }
 
     @Override
     public void setCurrentPlayer(byte currentPlayerIndex) {
+        super.setCurrentPlayer(currentPlayerIndex);
         this.extraInfluence = false;
         this.towerInfluence = true;
         this.extraSteps = false;
@@ -190,7 +185,6 @@ public class ExpertGame extends NormalGame {
         this.ignoredColorInfluence = null;
         this.chosenCharacter = -1;
         this.inputsCharacter.clear();
-        super.setCurrentPlayer(currentPlayerIndex);
     }
 
     @Override
@@ -209,6 +203,7 @@ public class ExpertGame extends NormalGame {
     protected boolean checkMoveMotherNature(int moves) {
         if (!extraSteps)
             return super.checkMoveMotherNature(moves);
+        if (moves < 0) throw new IllegalArgumentException("Cannot move backwards");
         return moves <= getCurrentPlayer().getPlayedCardMoves() + 2;
     }
 
@@ -255,7 +250,8 @@ public class ExpertGame extends NormalGame {
     }
 
     private void removeCoinsToCurrentPlayer(byte coins) throws GameException {
-        if (coins <= 0) throw new UnexpectedValueException();
+        if (coins < 0)
+            throw new IllegalArgumentException("Cannot remove negative amount of coins to the current player");
         // player's wizard is its index inside the list
         byte playerIndex = getCurrentPlayerIndex();
         if (coinsPlayer[playerIndex] >= coins) {
@@ -274,6 +270,7 @@ public class ExpertGame extends NormalGame {
         if (chosenCharacter == -1) throw new NotAllowedException("No character card selected");
         if (getChosenCharacter().canPlay(inputsCharacter.size())) {
             try {
+                // TODO pass something else instead of ExpertGame
                 getChosenCharacter().play(this);
             } catch (GameException e) {
                 // something gone wrong while playing the card, reset inputs
@@ -295,13 +292,14 @@ public class ExpertGame extends NormalGame {
             inputsCharacter.clear();
         } else {
             inputsCharacter.clear();
-            throw new UnexpectedValueException(); // canPlay returned false, needs a different amount of inputs
+            throw new NotAllowedException("You didn't set all the parameters needed to play this card"); // canPlay returned false, needs a different amount of inputs
         }
     }
 
     @Override
     public void chooseCharacter(byte indexCharacter) throws GameException {
-        if (indexCharacter < 0 || indexCharacter >= characters.size()) throw new UnexpectedValueException();
+        if (indexCharacter < 0 || indexCharacter >= characters.size())
+            throw new NotAllowedException("Not an available character card");
         CharacterCard characterToPlay = characters.get(indexCharacter);
         byte charCost = characterToPlay.getCost();
         // this character card has already been used, increase its cost
@@ -316,11 +314,11 @@ public class ExpertGame extends NormalGame {
     public void setCharacterInput(int input) throws GameException {
         if (chosenCharacter != -1)
             inputsCharacter.add(input);
-        else throw new NotAllowedException("There is no played character card");
+        else throw new NotAllowedException("There is no chosen character card");
     }
 
     @Override
-    protected GameComponent getComponentById(int idGameComponent) throws NotAllowedException {
+    protected GameComponent getComponentById(int idGameComponent) throws GameException {
         return super.getComponentById(idGameComponent);
     }
 
@@ -341,6 +339,7 @@ public class ExpertGame extends NormalGame {
     }
 
     protected void setIgnoredColorInfluence(Color ignoredColorInfluence) {
+        if (ignoredColorInfluence == null) throw new IllegalArgumentException("Null color");
         if (this.ignoredColorInfluence != ignoredColorInfluence) {
             this.ignoredColorInfluence = ignoredColorInfluence;
 
@@ -358,16 +357,13 @@ public class ExpertGame extends NormalGame {
     }
 
     protected void setProhibition(Island island) throws NotAllowedException {
-        if (this.prohibitionLeft > 0) {
-            this.prohibitionLeft--;
+        if (island == null) throw new IllegalArgumentException("Cannot set prohibition to a null island");
+        if (this.prohibitionLeft <= 0) throw new NotAllowedException("No more prohibitions to set");
+        this.prohibitionLeft--;
+        island.addProhibitions((byte) 1);
 
-            // add to game delta
-            getGameDelta().setNewProhibitionsLeft(prohibitionLeft);
-        } else throw new NotAllowedException("No more prohibitions");
-        try {
-            island.addProhibitions((byte) 1);
-        } catch (UnexpectedValueException ignored) {
-        }
+        // add to game delta
+        getGameDelta().setNewProhibitionsLeft(prohibitionLeft);
     }
 
     private void restoreProhibition() {
@@ -380,10 +376,13 @@ public class ExpertGame extends NormalGame {
     }
 
     protected byte getCoinsPlayer(Player p) {
+        if (p == null) throw new IllegalArgumentException("Cannot get coins of null player");
         return coinsPlayer[p.getWizard().ordinal()];
     }
 
     protected byte getCoinsPlayer(byte playerIndex) {
+        if (playerIndex < 0 || playerIndex >= getPlayerSize())
+            throw new IllegalArgumentException("Not a valid player index");
         return coinsPlayer[playerIndex];
     }
 }

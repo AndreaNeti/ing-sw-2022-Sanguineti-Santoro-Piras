@@ -28,6 +28,8 @@ public class NormalGame implements Game {
     private final MatchConstants matchConstants;
 
     public NormalGame(ArrayList<Team> teamList, MatchConstants matchConstants) {
+        if (teamList == null || matchConstants == null) throw new IllegalArgumentException("Passing null parameter");
+        if (teamList.size() < 2) throw new IllegalArgumentException("Cannot initialize a game with less than 2 teams");
         this.matchConstants = matchConstants;
         gameDelta = getNewGameDelta();
         this.teams = new ArrayList<>(teamList);
@@ -45,7 +47,7 @@ public class NormalGame implements Game {
 
         this.professors = new Wizard[Color.values().length];
 
-        this.bag = new Bag((byte) 2, (byte) 69);
+        this.bag = new Bag((byte) 2);
         initializeMotherNature();
 
         try {
@@ -73,11 +75,12 @@ public class NormalGame implements Game {
                 }
             }
         }
-        this.bag = new Bag((byte) 24, (byte) 69);
+        this.bag = new Bag((byte) 24);
     }
 
     // checks if the islands before and after the selected island have the same team and in case merges them
     protected void checkMerge(Island island) throws EndGameException {
+        if (island == null) throw new IllegalArgumentException("Passing null island");
         int islandBeforeIndex = Math.floorMod(islands.indexOf(island) - 1, islands.size());
         int islandAfterIndex = (islands.indexOf(island) + 1) % islands.size();
 
@@ -116,6 +119,7 @@ public class NormalGame implements Game {
     }
 
     protected void drawStudents(GameComponent gameComponent, byte students) throws EndGameException {
+        if (gameComponent == null) throw new IllegalArgumentException("Drawing students to null gameComponent");
         try {
             bag.drawStudent(gameComponent, students);
 
@@ -135,13 +139,15 @@ public class NormalGame implements Game {
 
     @Override
     public void playCard(byte card) throws GameException, EndGameException {
+        if (card < 1 || card > matchConstants.numOfCards())
+            throw new IllegalArgumentException("Not a valid card to play");
         getCurrentPlayer().useCard(card);
 
         // add to game delta
         gameDelta.setPlayedCard(card);
     }
 
-    protected GameComponent getComponentById(int idGameComponent) throws NotAllowedException {
+    protected GameComponent getComponentById(int idGameComponent) throws GameException {
         /*here the id is static
         from 0 to 2*numberOfPlayer-1 is entranceHall,LunchHall
         from 2*numberOfPlayer to 2*numberOfPlayer+12 are the island
@@ -149,7 +155,7 @@ public class NormalGame implements Game {
         from -10 to -12 are the characters, here I ignore this because you can never move to this component
         */
         if (idGameComponent < (-clouds.size()) || idGameComponent >= (2 * getPlayerSize() + 12)) {
-            throw new NotAllowedException("gameComponentId not valid");
+            throw new NotAllowedException("Not a valid gameComponent id");
         }
         if (idGameComponent < 0) {
             return clouds.get(-idGameComponent - 1);
@@ -163,7 +169,7 @@ public class NormalGame implements Game {
                 }
             }
             if (islandToReturn == null)
-                throw new NotAllowedException("gameComponentId not valid, island non existing");
+                throw new NotAllowedException("gameComponent id not valid, island non exists");
             else
                 return islandToReturn;
         }
@@ -177,12 +183,13 @@ public class NormalGame implements Game {
                 }
             }
         }
-        throw new NotAllowedException("gameComponentId not valid");
+        throw new NotAllowedException("Not a valid gameComponent id");
     }
 
 
     @Override
     public void move(Color color, int idGameComponentSource, int idGameComponentDestination) throws GameException {
+        if (color == null) throw new IllegalArgumentException("Null color");
         GameComponent source = getComponentById(idGameComponentSource), destination = getComponentById(idGameComponentDestination);
         source.moveStudents(color, (byte) 1, destination);
 
@@ -190,7 +197,7 @@ public class NormalGame implements Game {
         gameDelta.addUpdatedGC(source);
         gameDelta.addUpdatedGC(destination);
 
-        if (idGameComponentDestination < 2*getPlayerSize() && idGameComponentDestination%2==1)
+        if (idGameComponentDestination < 2 * getPlayerSize() && idGameComponentDestination % 2 == 1)
             calculateProfessor();
     }
 
@@ -232,6 +239,7 @@ public class NormalGame implements Game {
 
     @Override
     public void moveMotherNature(int moves) throws NotAllowedException, EndGameException {
+        if (moves < 0) throw new IllegalArgumentException("Cannot move backwards");
         if (!checkMoveMotherNature(moves))
             throw new NotAllowedException("Moves can't be higher than the value of the card");
         motherNaturePosition += moves;
@@ -244,6 +252,7 @@ public class NormalGame implements Game {
     }
 
     private void calculateInfluence(Island island) throws EndGameException {
+        if (island == null) throw new IllegalArgumentException("Calculating influence on null island");
         HouseColor oldController = island.getTeamColor();
         int maxInfluence = 0;
         HouseColor winnerColor = null;
@@ -274,14 +283,11 @@ public class NormalGame implements Game {
             gameDelta.addUpdatedGC(island);
 
             if (oldTeamColor != null) {
-                try {
-                    Team oldTeam = getTeams().get(oldTeamColor.ordinal());
-                    oldTeam.addTowers(island.getNumber());
+                Team oldTeam = getTeams().get(oldTeamColor.ordinal());
+                oldTeam.addTowers(island.getNumber());
 
-                    // add to game delta
-                    gameDelta.updateTeamTowersLeft(oldTeamColor, oldTeam.getTowersLeft());
-                } catch (NotAllowedException ignored) {
-                }
+                // add to game delta
+                gameDelta.updateTeamTowersLeft(oldTeamColor, oldTeam.getTowersLeft());
             }
             Team winnerTeam = getTeams().get(winnerColor.ordinal());
             winnerTeam.removeTowers(island.getNumber());
@@ -349,10 +355,12 @@ public class NormalGame implements Game {
     }
 
     @Override
-    public void moveFromCloud(int cloudId) throws NotAllowedException {
-        if (getComponentById(cloudId).howManyStudents() == 0)
-            throw new NotAllowedException("Can't move from the selected cloud");
+    public void moveFromCloud(int cloudId) throws GameException {
         GameComponent cloudSource = getComponentById(cloudId);
+
+        if (cloudSource.howManyStudents() == 0)
+            throw new NotAllowedException("Can't move from the selected cloud");
+
         cloudSource.moveAll(getCurrentPlayer().getEntranceHall());
 
         // add to game delta
@@ -374,6 +382,7 @@ public class NormalGame implements Game {
 
     @Override
     public void setCurrentPlayer(Player p) {
+        if (p == null) throw new IllegalArgumentException("Cannot set null current player");
         byte newCurrentPlayer = (byte) p.getWizard().ordinal();
         if (newCurrentPlayer != this.currentPlayer) {
             this.currentPlayer = newCurrentPlayer;
@@ -382,9 +391,9 @@ public class NormalGame implements Game {
 
     @Override
     public void setCurrentPlayer(byte currentPlayer) {
-        if (currentPlayer != this.currentPlayer) {
-            this.currentPlayer = currentPlayer;
-        }
+        if (currentPlayer < 0 || currentPlayer >= getPlayerSize())
+            throw new IllegalArgumentException("Not a valid current player index");
+        this.currentPlayer = currentPlayer;
     }
 
     public GameDelta transformAllGameInDelta() {
@@ -411,6 +420,8 @@ public class NormalGame implements Game {
     }
 
     protected Player getPlayer(byte b) {
+        if (b < 0 || b >= getPlayerSize())
+            throw new IllegalArgumentException("Not a valid player index");
         // teams index = b % team size (in 4 players game, players are inserted in team 0, indexOf1, 0, 1)
         // player index (in team members) = b / team size (2 or 3 players -> = 0 (team contains only 1 member), 4 players -> first 2 = 0, last 2 = 1 (3rd player is in team 0 and is member[1]))
         return teams.get(b % teams.size()).getPlayers().get(b / teams.size());

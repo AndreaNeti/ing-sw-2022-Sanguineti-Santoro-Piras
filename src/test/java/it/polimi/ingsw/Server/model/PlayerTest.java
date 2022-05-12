@@ -29,7 +29,7 @@ class PlayerTest {
 
     @Test
     void constructorAndEqualsAndCompareTest() {
-        assertThrows(UnexpectedValueException.class, () -> new Player(null, null, null, null));
+        assertThrows(IllegalArgumentException.class, () -> new Player(null, null, null, null));
         Player p2 = null;
         try {
             p2 = new Player("Filippo", t, Wizard.AIRMAGE, matchConstants);
@@ -50,14 +50,14 @@ class PlayerTest {
         try {
             p.useCard((byte) 4);
             p1.useCard((byte) 3);
-        } catch (UsedCardException | UnexpectedValueException | NotAllowedException | EndGameException ex) {
+        } catch (UsedCardException | NotAllowedException | EndGameException ex) {
             fail();
         }
         assertEquals(p.getPlayedCard(), 4);
         assertEquals(p.getPlayedCardMoves(), 2);
 
 
-        assertThrows(UnexpectedValueException.class, () -> p.useCard((byte) -5), "negative value");
+        assertThrows(IllegalArgumentException.class, () -> p.useCard((byte) -5), "negative value");
         assertThrows(UsedCardException.class, () -> p.useCard((byte) 4), "negative value");
         try {
             p.useCard((byte) 1);
@@ -85,13 +85,13 @@ class PlayerTest {
             p.useCard((byte) 9);
             assertEquals(p.getPlayedCard(), 9);
             assertEquals(p.getPlayedCardMoves(), 5);
-        } catch (UsedCardException | UnexpectedValueException | NotAllowedException | EndGameException ex) {
+        } catch (UsedCardException | NotAllowedException | EndGameException ex) {
             fail();
         }
         assertThrows(UsedCardException.class, () -> p.useCard((byte) 4), "negative value");
         assertThrows(EndGameException.class, () -> p.useCard((byte) 10), "used last card");
         assertThrows(NotAllowedException.class, () -> p.useCard((byte) 3), "no cards to use");
-        assertThrows(UnexpectedValueException.class, () -> p.useCard((byte) -1), "not a valid input");
+        assertThrows(IllegalArgumentException.class, () -> p.useCard((byte) -1), "not a valid input");
     }
 
 
@@ -120,7 +120,7 @@ class PlayerTest {
             p.useCard((byte) 8);
             p.useCard((byte) 9);
             p.useCard((byte) 10);
-        } catch (UsedCardException | UnexpectedValueException | NotAllowedException | EndGameException e) {
+        } catch (UsedCardException | NotAllowedException | EndGameException e) {
             fail();
         }
 

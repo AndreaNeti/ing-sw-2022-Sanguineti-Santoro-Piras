@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class LunchHallTest {
-    Bag bag = new Bag((byte) 20,(byte) 69);
+    Bag bag = new Bag((byte) 20);
 
     @Test
     void lunchHallTest() {
@@ -30,6 +30,6 @@ class LunchHallTest {
         }
         assertEquals(10, lunchHall.howManyStudents());
         assertEquals(10, lunchHall.howManyStudents(Color.BLUE));
-        assertThrows(NotAllowedException.class,()->lunchHall.moveAll(bag),"Should launch cause you can't use this method");
+        assertThrows(IllegalArgumentException.class, () -> lunchHall.moveAll(bag), "Should launch cause you can't use this method");
     }
 }

@@ -1,15 +1,15 @@
 package it.polimi.ingsw.Server.model;
 
 import it.polimi.ingsw.Enum.Color;
-import it.polimi.ingsw.exceptions.UnexpectedValueException;
+import it.polimi.ingsw.exceptions.NotAllowedException;
 
 public class Char8 implements CharacterCard {
 
     @Override
-    public void play(ExpertGame game) throws UnexpectedValueException{
+    public void play(ExpertGame game) throws NotAllowedException {
         int color = game.getCharacterInputs().get(0);
         if (color < 0 || color >= Color.values().length)
-            throw new UnexpectedValueException();
+            throw new NotAllowedException("Set wrong inputs");
         game.setIgnoredColorInfluence(Color.values()[color]);
     }
 

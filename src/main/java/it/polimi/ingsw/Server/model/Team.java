@@ -16,6 +16,7 @@ public class Team implements Serializable {
     private transient byte towersLeft;
 
     public Team(HouseColor hc, byte teamSize, byte maxTowers) {
+        if (hc == null) throw new IllegalArgumentException("Null house color");
         this.houseColor = hc;
         this.teamSize = teamSize;
         this.maxTowers = maxTowers;
@@ -28,12 +29,10 @@ public class Team implements Serializable {
     }
 
     protected void addPlayer(Player p) throws NotAllowedException {
+        if (p == null) throw new IllegalArgumentException("Adding null player");
         if (isFull()) throw new NotAllowedException("Team is already full");
-        if (members.contains(p)) throw new NotAllowedException("Player already present");
-        if (p != null) {
-            members.add(p);
-        } else
-            System.err.println("Player cannot be null");
+        if (members.contains(p)) throw new NotAllowedException("Player already in the team");
+        members.add(p);
     }
 
     /*
@@ -66,17 +65,15 @@ public class Team implements Serializable {
         return this.towersLeft;
     }
 
-    public void addTowers(byte b) throws NotAllowedException {
-        if (b < 0) System.err.println("Cannot add negative towers");
-        else if (b > 0) {
-            if (towersLeft + b > maxTowers) throw new NotAllowedException("Max towers exceeded");
-            towersLeft += b;
-        }
+    public void addTowers(byte b) {
+        if (b < 0) throw new IllegalArgumentException("Cannot add negative towers");
+        if (towersLeft + b > maxTowers) throw new IllegalArgumentException("Max towers exceeded");
+        towersLeft += b;
     }
 
     public void removeTowers(byte b) throws EndGameException {
-        if (b < 0) System.err.println("Cannot remove negative towers");
-        else if (b > 0) {
+        if (b < 0) throw new IllegalArgumentException("Cannot remove negative towers");
+        if (b > 0) {
             if (towersLeft > b)
                 towersLeft -= b;
             else {

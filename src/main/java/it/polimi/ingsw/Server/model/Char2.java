@@ -1,16 +1,17 @@
 package it.polimi.ingsw.Server.model;
 
 import it.polimi.ingsw.exceptions.EndGameException;
-import it.polimi.ingsw.exceptions.UnexpectedValueException;
+import it.polimi.ingsw.exceptions.GameException;
+import it.polimi.ingsw.exceptions.NotAllowedException;
 
 public class Char2 implements CharacterCard {
 
     @Override
-    public void play(ExpertGame game) throws UnexpectedValueException, EndGameException {
+    public void play(ExpertGame game) throws GameException, EndGameException {
         int idIsland = game.getCharacterInputs().get(0);
-        if (idIsland < 0 || idIsland >= game.getIslands().size())
-            throw new UnexpectedValueException();
-        game.calculateInfluence(game.getIslands().get(idIsland));
+        if (idIsland > 2 * game.getPlayerSize() + 12 || idIsland < 2 * game.getPlayerSize())
+            throw new NotAllowedException("Set wrong inputs");
+        game.calculateInfluence((Island) game.getComponentById(idIsland));
     }
 
     @Override

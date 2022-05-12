@@ -2,7 +2,6 @@ package it.polimi.ingsw.Server.model;
 
 import it.polimi.ingsw.Enum.HouseColor;
 import it.polimi.ingsw.exceptions.NotAllowedException;
-import it.polimi.ingsw.exceptions.UnexpectedValueException;
 
 public class Island extends GameComponent {
     private HouseColor team;
@@ -22,28 +21,23 @@ public class Island extends GameComponent {
         return team;
     }
 
-    public void setTeamColor(HouseColor team) {
-        this.team = team;
+    public void setTeamColor(HouseColor teamColor) {
+        if (teamColor == null) throw new IllegalArgumentException("Cannot set null house color");
+        this.team = teamColor;
     }
 
     //merge function is used to send all the students from another island to this: the try catch block is due to the fact that an island knows
     //exactly how many students are present, and therefore it will never throw the exception
 
     public void merge(Island island) {
-        if (island != null) {
-            try {
-                island.moveAll(this);
-            } catch (NotAllowedException ignored) {
+        if (island == null) throw new IllegalArgumentException("Cannot merge to null island");
+        try {
+            island.moveAll(this);
+        } catch (NotAllowedException ignored) {
 
-            }
-            this.number += island.getNumber();
-            try {
-                addProhibitions(island.getProhibitions());
-            } catch (UnexpectedValueException ignored) {
-                // getProhibition should never return negative values
-
-            }
-        } else System.err.println("Cannot merge to null island");
+        }
+        this.number += island.getNumber();
+        addProhibitions(island.getProhibitions());
     }
 
     public byte getNumber() {
@@ -54,8 +48,8 @@ public class Island extends GameComponent {
         return prohibition;
     }
 
-    public void addProhibitions(byte value) throws UnexpectedValueException {
-        if (value < 0) throw new UnexpectedValueException();
+    public void addProhibitions(byte value) {
+        if (value < 0) throw new IllegalArgumentException("Cannot add negative prohibitions");
         else prohibition += value;
     }
 
@@ -63,6 +57,4 @@ public class Island extends GameComponent {
         if (prohibition > 0)
             prohibition--;
     }
-
-
 }
