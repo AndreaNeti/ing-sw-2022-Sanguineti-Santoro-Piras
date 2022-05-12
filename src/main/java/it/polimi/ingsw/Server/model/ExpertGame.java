@@ -43,7 +43,7 @@ public class ExpertGame extends NormalGame {
             }
             try {
                 c = factoryCharacter(characterIndex);
-                getGameDelta().addCharacter(i, characterIndex);
+                getGameDelta().addCharacterCard(i, characterIndex);
                 characters.add(c);
                 selectedCharacters.add(c.getCharId());
                 i++;
@@ -199,7 +199,7 @@ public class ExpertGame extends NormalGame {
         g.setAutomaticSending(false);
         g.setNewCoinsLeft(coinsLeft);
         for (byte i = 0; i < characters.size(); i++) {
-            g.addCharacter(i, characters.get(i).getCharId());
+            g.addCharacterCard(i, characters.get(i).getCharId());
         }
         return g;
 

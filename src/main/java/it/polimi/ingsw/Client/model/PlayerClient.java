@@ -2,6 +2,8 @@ package it.polimi.ingsw.Client.model;
 
 import it.polimi.ingsw.Enum.HouseColor;
 import it.polimi.ingsw.Enum.Wizard;
+import it.polimi.ingsw.Server.controller.MatchConstants;
+import it.polimi.ingsw.Server.model.Player;
 
 import java.util.Arrays;
 
@@ -11,19 +13,18 @@ public class PlayerClient {
     private final boolean[] usedCards;
     private final GameComponentClient entranceHall;
     private final GameComponentClient lunchHall;
-    private int playedCard;
-    private byte towersLeft;
+    private byte playedCard, towersLeft;
     private final HouseColor houseColor;
 
-    public PlayerClient(String nickName, Wizard wizard, byte numberOfCards, byte towersLeft, HouseColor houseColor) {
-        this.nickName = nickName;
-        this.wizard = wizard;
-        this.usedCards = new boolean[numberOfCards];
-        Arrays.fill(usedCards,false);
-        this.entranceHall = new GameComponentClient(2*wizard.ordinal());
-        this.lunchHall = new GameComponentClient(2*wizard.ordinal()+1);
-        this.towersLeft=towersLeft;
-        this.houseColor = houseColor;
+    public PlayerClient(Player p, HouseColor teamColor, MatchConstants matchConstants) {
+        this.nickName = p.toString();
+        this.wizard = p.getWizard();
+        this.usedCards = new boolean[matchConstants.numOfCards()];
+        Arrays.fill(usedCards, false);
+        this.entranceHall = new GameComponentClient(2 * wizard.ordinal());
+        this.lunchHall = new GameComponentClient(2 * wizard.ordinal() + 1);
+        this.towersLeft = (byte) matchConstants.towersForTeam();
+        this.houseColor = teamColor;
     }
 
     public GameComponentClient getEntranceHall() {
@@ -34,17 +35,13 @@ public class PlayerClient {
         return lunchHall;
     }
 
-    public int getPlayedCard() {
+    public byte getPlayedCard() {
         return playedCard;
     }
 
-    public void playCard(int playedCard) {
+    public void playCard(byte playedCard) {
         this.playedCard = playedCard;
-        this.usedCards[playedCard-1]=true;
-    }
-
-    public String getNickName() {
-        return nickName;
+        this.usedCards[playedCard - 1] = true;
     }
 
     public Wizard getWizard() {
@@ -61,5 +58,10 @@ public class PlayerClient {
 
     public HouseColor getHouseColor() {
         return houseColor;
+    }
+
+    @Override
+    public String toString() {
+        return nickName;
     }
 }

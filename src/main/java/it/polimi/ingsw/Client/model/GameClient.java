@@ -26,11 +26,11 @@ public class GameClient extends GameClientListened {
         this.matchConstants = matchConstants;
         islands = new ArrayList<>(12);
         clouds = new ArrayList<>(matchConstants.studentsToMove());
-        for(int i=0;i<matchConstants.studentsToMove();i++){
-            clouds.add(new GameComponentClient(-(i+1)));
+        for (int i = 0; i < matchConstants.studentsToMove(); i++) {
+            clouds.add(new GameComponentClient(-(i + 1)));
         }
-        for(int i=0;i<12;i++){
-            islands.add(new IslandClient(2*players.size()+i));
+        for (int i = 0; i < 12; i++) {
+            islands.add(new IslandClient(2 * players.size() + i));
         }
         this.players = players;
 
@@ -50,7 +50,7 @@ public class GameClient extends GameClientListened {
     }
 
     public void setProfessors(Color color, Wizard owner) {
-        this.professors[color.ordinal()]=owner;
+        this.professors[color.ordinal()] = owner;
         notify(professors);
     }
 
@@ -71,13 +71,13 @@ public class GameClient extends GameClientListened {
                 notify(entranceHall);
 
             } else {
-                GameComponentClient lunchHall = players.get(idGameComponent / 2).getEntranceHall();
+                GameComponentClient lunchHall = players.get(idGameComponent / 2).getLunchHall();
                 lunchHall.modifyGameComponent(gameComponent);
                 notify(lunchHall);
             }
 
         } else if (idGameComponent >= 2 * players.size()) {
-            IslandClient islandToReturn=getIslandById(idGameComponent);
+            IslandClient islandToReturn = getIslandById(idGameComponent);
             //TODO bug here
             if (islandToReturn == null) {
                 throw new RuntimeException("error in passing parameters probably");
@@ -91,39 +91,44 @@ public class GameClient extends GameClientListened {
             notify(cloud);
         }
     }
-    private IslandClient getIslandById(byte idIsland){
-        IslandClient islandToReturn=null;
-        for (IslandClient island:islands) {
-            if(island.getId()==idIsland){
-                islandToReturn=island;
+
+    private IslandClient getIslandById(byte idIsland) {
+        IslandClient islandToReturn = null;
+        for (IslandClient island : islands) {
+            if (island.getId() == idIsland) {
+                islandToReturn = island;
                 break;
             }
         }
         return islandToReturn;
     }
-    public void removeIsland(byte idIsland){
-        IslandClient islandToRemove=getIslandById(idIsland);
+
+    public void removeIsland(byte idIsland) {
+        IslandClient islandToRemove = getIslandById(idIsland);
         if (islandToRemove == null) {
             throw new RuntimeException("error in passing parameters probably");
         }
         islands.remove(islandToRemove);
         notify(islands);
     }
-    public void setMotherNaturePosition(byte motherNaturePosition){
-        this.motherNaturePosition=motherNaturePosition;
+
+    public void setMotherNaturePosition(byte motherNaturePosition) {
+        this.motherNaturePosition = motherNaturePosition;
         notify(motherNaturePosition);
     }
 
     public byte getMotherNaturePosition() {
         return motherNaturePosition;
     }
-    public void playCard(int value){
+
+    public void playCard(byte value) {
         getCurrentPlayer().playCard(value);
         notify(value);
     }
-    public void setTowerLeft(HouseColor houseColor, Byte towerLeft){
-        for(PlayerClient p:players){
-            if(p.getHouseColor()==houseColor) {
+
+    public void setTowerLeft(HouseColor houseColor, Byte towerLeft) {
+        for (PlayerClient p : players) {
+            if (p.getHouseColor() == houseColor) {
                 p.setTowersLeft(towerLeft);
                 notify(houseColor, towerLeft);
             }
@@ -131,8 +136,8 @@ public class GameClient extends GameClientListened {
     }
 
     public ArrayList<IslandClient> getIslands() {
-        ArrayList<IslandClient> clone=new ArrayList<>();
-        for (IslandClient i:islands) {
+        ArrayList<IslandClient> clone = new ArrayList<>();
+        for (IslandClient i : islands) {
             clone.add(new IslandClient(i));
         }
         return clone;

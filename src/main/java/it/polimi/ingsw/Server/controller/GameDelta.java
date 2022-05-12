@@ -13,30 +13,30 @@ import java.util.*;
 public class GameDelta implements Serializable {
     private final transient ArrayList<GameListener> listeners;
     // GC index, students array
-    private HashMap<Byte, GameComponent> updatedGC;
+    private Map<Byte, GameComponent> updatedGC;
     // deleted islands ids
     private Set<Byte> deletedIslands;
 
     // professor color, new wizard controlling
-    private HashMap<Color, Wizard> updatedProfessors;
+    private Map<Color, Wizard> updatedProfessors;
     // towers left
-    private HashMap<HouseColor, Byte> newTeamTowersLeft;
+    private Map<HouseColor, Byte> newTeamTowersLeft;
     private Byte newMotherNaturePosition, playedCard;
     private transient boolean automaticSending;
 
     public GameDelta() {
         listeners = new ArrayList<>();
+        clear();
         automaticSending = false;
     }
 
     public void clear() {
-        updatedGC=null;
+        updatedGC = null;
         deletedIslands = null;
         newTeamTowersLeft = null;
         updatedProfessors = null;
         newMotherNaturePosition = null;
         playedCard = null;
-        automaticSending = true;
     }
 
     public void addUpdatedGC(GameComponent gcUpdated) {
@@ -91,46 +91,78 @@ public class GameDelta implements Serializable {
         listeners.add(gameListener);
     }
 
-    public void send()  {
+    public void send() {
         ToClientMessage m = new DeltaUpdate(this);
         for (GameListener listener : listeners)
             listener.update(m);
-        this.clear();
+        clear();
+        automaticSending = true;
     }
 
     public boolean isAutomaticSending() {
         return automaticSending;
     }
 
-    public void addCharacter(byte index, byte id){
+    public void addCharacterCard(byte index, byte id) {
     }
-    public void setUpdatedCoinPlayer(byte playerId, byte newCoindsLeft){}
 
-    public void setNewCoinsLeft(byte newCoinsLeft){}
-    public void setNewProhibitionsLeft(byte newProhibitionsLeft){}
-    public void setIgnoredColorInfluence(Color ignoredColorInfluence){}
+    public void setUpdatedCoinPlayer(byte playerId, byte newCoinsPlayer) {
+    }
 
-    public HashMap<Byte, GameComponent> getUpdatedGC() {
+    public void setNewCoinsLeft(byte newCoinsLeft) {
+    }
+
+    public void setNewProhibitionsLeft(byte newProhibitionsLeft) {
+    }
+
+    public void setIgnoredColorInfluence(Color ignoredColorInfluence) {
+    }
+
+    public Map<Byte, Byte> getCharacters() {
+        return Collections.emptyMap();
+    }
+
+    public Map<Byte, Byte> getUpdatedCoinPlayer() {
+        return Collections.emptyMap();
+    }
+
+    public Optional<Byte> getNewCoinsLeft() {
+        return Optional.empty();
+    }
+
+    public Optional<Byte> getNewProhibitionsLeft() {
+        return Optional.empty();
+    }
+
+    public Optional<Color> getIgnoredColorInfluence() {
+        return Optional.empty();
+    }
+
+    public Map<Byte, GameComponent> getUpdatedGC() {
+        if (updatedGC == null) return Collections.emptyMap();
         return updatedGC;
     }
 
-    public Byte getNewMotherNaturePosition() {
-        return newMotherNaturePosition;
+    public Optional<Byte> getNewMotherNaturePosition() {
+        return Optional.ofNullable(newMotherNaturePosition);
     }
 
-    public HashMap<Color, Wizard> getUpdatedProfessors() {
+    public Map<Color, Wizard> getUpdatedProfessors() {
+        if (updatedProfessors == null) return Collections.emptyMap();
         return updatedProfessors;
     }
 
-    public Byte getPlayedCard() {
-        return playedCard;
+    public Optional<Byte> getPlayedCard() {
+        return Optional.ofNullable(playedCard);
     }
 
     public Set<Byte> getDeletedIslands() {
+        if (deletedIslands == null) return Collections.emptySet();
         return deletedIslands;
     }
 
-    public HashMap<HouseColor, Byte> getNewTeamTowersLeft() {
+    public Map<HouseColor, Byte> getNewTeamTowersLeft() {
+        if (newTeamTowersLeft == null) return Collections.emptyMap();
         return newTeamTowersLeft;
     }
 }

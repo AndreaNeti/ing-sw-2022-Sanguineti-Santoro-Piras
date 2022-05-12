@@ -70,31 +70,25 @@ public class ControllerClient extends GameClientListened {
             gameClient = new GameClient(playerClients, matchConstants);
             gameClient.addListener(this);
         }
-        if (gameDelta.getUpdatedGC() != null) {
-            for (Map.Entry<Byte, GameComponent> entry : gameDelta.getUpdatedGC().entrySet()) {
-                gameClient.setGameComponent(entry.getKey(), entry.getValue());
-            }
+
+        for (Map.Entry<Byte, GameComponent> entry : gameDelta.getUpdatedGC().entrySet()) {
+            gameClient.setGameComponent(entry.getKey(), entry.getValue());
         }
-        if (gameDelta.getUpdatedProfessors() != null) {
-            for (Map.Entry<Color, Wizard> entry : gameDelta.getUpdatedProfessors().entrySet()) {
-                gameClient.setProfessors(entry.getKey(), entry.getValue());
-            }
+
+        for (Map.Entry<Color, Wizard> entry : gameDelta.getUpdatedProfessors().entrySet()) {
+            gameClient.setProfessors(entry.getKey(), entry.getValue());
         }
-        if (gameDelta.getDeletedIslands() != null) {
-            for (Byte b : gameDelta.getDeletedIslands()) {
-                gameClient.removeIsland(b);
-            }
+
+        for (Byte b : gameDelta.getDeletedIslands()) {
+            gameClient.removeIsland(b);
         }
-        if (gameDelta.getNewMotherNaturePosition() != null) {
-            gameClient.setMotherNaturePosition(gameDelta.getNewMotherNaturePosition());
-        }
-        if (gameDelta.getNewTeamTowersLeft() != null) {
-            for (Map.Entry<HouseColor, Byte> entry : gameDelta.getNewTeamTowersLeft().entrySet()) {
-                gameClient.setTowerLeft(entry.getKey(), entry.getValue());
-            }
-        }
-        if (gameDelta.getPlayedCard() != null) {
-            gameClient.playCard(gameDelta.getPlayedCard());
+
+        gameDelta.getNewMotherNaturePosition().ifPresent(mnPosition -> gameClient.setMotherNaturePosition(mnPosition));
+
+        gameDelta.getPlayedCard().ifPresent(playedCard -> gameClient.playCard(playedCard));
+
+        for (Map.Entry<HouseColor, Byte> entry : gameDelta.getNewTeamTowersLeft().entrySet()) {
+            gameClient.setTowerLeft(entry.getKey(), entry.getValue());
         }
     }
 
