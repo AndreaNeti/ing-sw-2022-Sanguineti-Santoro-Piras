@@ -15,6 +15,6 @@ public class JoinMatchById implements ToServerMessage {
     public void execute(ClientHandler clientHandler) throws GameException {
         if (clientHandler.getNickName() == null) throw new NotAllowedException("Nickname not set");
         if (clientHandler.getController() != null) throw new NotAllowedException("Already joined a match");
-        clientHandler.joinMatchId(matchId);
+        clientHandler.joinByMatchId(matchId);
     }
 }

@@ -13,6 +13,7 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 
 public class ClientHandler implements Runnable, GameListener {
+    // TODO: Maybe move here check for turn, nickname and match joined
     private final Socket socket;
     private String nickName;
     private Controller controller;
@@ -31,7 +32,7 @@ public class ClientHandler implements Runnable, GameListener {
             e.printStackTrace();
             throw new RuntimeException(e);
         }
-        System.out.println("connesso con client " + socket.getPort());
+        System.out.println("Connected with client " + socket.getPort());
     }
 
     @Override
@@ -54,7 +55,7 @@ public class ClientHandler implements Runnable, GameListener {
                     update(new ErrorException("Game not started yet"));
             } catch (IOException | ClassNotFoundException e) {
                 if(controller!=null)
-                    controller.disconnectEveryone(this);
+                    controller.disconnectPlayerQuitted(this);
                 // cannot receive a quit message because it's disconnected
                 quit = true;
             }
@@ -86,13 +87,17 @@ public class ClientHandler implements Runnable, GameListener {
         if (this.nickName == null) {
             Server.setNickName(nickName);
             this.nickName = nickName;
+        } else {
+            throw new NotAllowedException("Nickname already set");
         }
     }
 
     public void quit() {
-        quit = true;
-        controller.removePlayer(this);
-        controller = null;
+        if(controller == null) quit = true;
+        else {
+            controller.disconnectPlayerQuitted(this);
+            controller = null;
+        }
         //send an ACK to confirm
         update(new OK());
     }
@@ -103,16 +108,14 @@ public class ClientHandler implements Runnable, GameListener {
 
     @Override
     public void update(ToClientMessage m) {
-
-            try {
-                objOut.writeObject(m);
-                objOut.flush();
-                System.out.println("Message send");
-            } catch (IOException e) {
-                e.printStackTrace();
-                System.err.println("can't send to the client");
-            }
-
+        try {
+            objOut.writeObject(m);
+            objOut.flush();
+            System.out.println("Message send");
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.err.println("can't send to the client");
+        }
     }
 
     public Controller getController() {
@@ -120,6 +123,7 @@ public class ClientHandler implements Runnable, GameListener {
     }
 
     public void joinByMatchType(MatchType matchType) throws GameException {
+        if(controller != null) throw new NotAllowedException("Already joined a match");
         Long controllerId;
         controllerId = Server.getOldestMatchId(matchType);
         controller = Server.getMatchById(controllerId);
@@ -128,7 +132,8 @@ public class ClientHandler implements Runnable, GameListener {
         }
     }
 
-    public void joinMatchId(Long matchId) throws GameException {
+    public void joinByMatchId(Long matchId) throws GameException {
+        if(controller != null) throw new NotAllowedException("Already joined a match");
         controller = Server.getMatchById(matchId);
         if (controller.addPlayer(this, nickName)) {
             Server.removeMatch(matchId);
@@ -136,7 +141,9 @@ public class ClientHandler implements Runnable, GameListener {
     }
 
     public void createMatch(MatchType matchType) throws GameException {
+        if(controller != null) throw new NotAllowedException("Already joined a match");
         controller = Server.createMatch(matchType);
         controller.addPlayer(this, nickName);
     }
+
 }
