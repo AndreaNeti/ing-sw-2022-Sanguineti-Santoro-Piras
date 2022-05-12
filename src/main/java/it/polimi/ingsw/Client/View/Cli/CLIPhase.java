@@ -1,0 +1,6 @@
+package it.polimi.ingsw.Client.View.Cli;
+
+public enum CLIPhase {
+    INIT_PHASE, NICK_PHASE, SELECT_MATCH_PHASE, LOBBY_PHASE, PLAN_PHASE, MOVE_STUDENT_PHASE, MOVE_MN_PHASE,
+    MOVE_FC_PHASE, CARD_INPUT_PHASE
+}
