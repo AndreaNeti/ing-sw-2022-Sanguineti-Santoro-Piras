@@ -35,7 +35,9 @@ public class Controller {
     private ArrayList<Team> winners;
     private boolean gameFinished;
 
-    public Controller(MatchType matchType) {
+    private final Long matchId;
+
+    public Controller(MatchType matchType, Long id) {
         this.matchConstants = Server.getMatchConstants(matchType);
         this.matchType = matchType;
         this.playersList = new ArrayList<>(matchType.nPlayers());
@@ -56,6 +58,7 @@ public class Controller {
         this.characterCardPlayed = false;
         this.winners = null;
         this.gameFinished = false;
+        this.matchId = id;
     }
 
     public boolean isMyTurn(ClientHandler caller) {
@@ -193,7 +196,7 @@ public class Controller {
         }
     }
 
-    public void disconnectEveryone(GameListener playerAlreadyDisconnected) {
+    public void disconnectPlayerQuitted(GameListener playerAlreadyDisconnected) {
         removePlayer(playerAlreadyDisconnected);
         notifyClients(new EndGame(null));
     }
@@ -328,6 +331,10 @@ public class Controller {
 
     public boolean isGameFinished() {
         return gameFinished;
+    }
+
+    public Long getMatchId() {
+        return matchId;
     }
 
 }

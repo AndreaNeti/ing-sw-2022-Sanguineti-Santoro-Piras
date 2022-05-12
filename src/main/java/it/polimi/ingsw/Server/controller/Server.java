@@ -51,7 +51,7 @@ public class Server {
 
     public static Controller createMatch(MatchType matchType) {
         Map<Long, Controller> filteredMatches = matches.computeIfAbsent(matchType, k -> Collections.synchronizedMap(new LinkedHashMap<>()));
-        Controller c = new Controller(matchType);
+        Controller c = new Controller(matchType, matchId);
         filteredMatches.put(matchId, c);
         matchId++;
         return c;

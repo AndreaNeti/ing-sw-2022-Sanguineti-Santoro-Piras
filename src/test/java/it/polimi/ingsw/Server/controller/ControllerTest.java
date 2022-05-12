@@ -15,9 +15,9 @@ class ControllerTest {
     ClientHandler p1, p2, p3, p4;
 
     public ControllerTest() {
-        controllerExpert = new Controller(new MatchType((byte) 4, true));
-        controllerExpert2 = new Controller(new MatchType((byte) 2, true));
-        controllerNormal = new Controller(new MatchType((byte) 3, false));
+        controllerExpert = new Controller(new MatchType((byte) 4, true), 69L);
+        controllerExpert2 = new Controller(new MatchType((byte) 2, true), 69L);
+        controllerNormal = new Controller(new MatchType((byte) 3, false), 69L);
 
         p1 = Mockito.mock(ClientHandler.class);
         p2 = Mockito.mock(ClientHandler.class);
@@ -186,7 +186,19 @@ class ControllerTest {
                         }
                     }
                 }
-                if (moved != 3) fail();
+                if (moved != 3) {
+                    for (Color c : Color.values()) {
+                        for (int j = 0; j < 3 && moved != 3; j++) {
+                            try {
+                                controllerExpert2.move(c, 6);
+                                moved++;
+                            } catch (GameException ignored) {
+                            }
+                        }
+                    }
+                    if (moved != 3) fail();
+                }
+
                 try {
                     controllerExpert2.moveMotherNature((i + 1) / 2);
                 } catch (GameException e) {
@@ -227,18 +239,20 @@ class ControllerTest {
             // additional check if card selected is c0, c6 or c10 and it does not contain the selected color
             boolean worked = false;
             for (int i = 0; i < 5 && !worked; i++) {
-                for (int j = 0; j < 5; j++) {
+                for (int j = 0; j < 5 && !worked; j++) {
                     try {
                         controllerExpert2.setCharacterInput(i);
                         controllerExpert2.playCharacter();
                         worked = true;
                     } catch (GameException e1) {
+                        System.out.println(e1.getMessage());
                         try {
                             controllerExpert2.setCharacterInput(i);
                             controllerExpert2.setCharacterInput(j);
                             controllerExpert2.playCharacter();
                             worked = true;
-                        } catch (GameException ignored) {
+                        } catch (GameException e2) {
+                            System.out.println(e2.getMessage());
                         }
                     }
                 }
@@ -256,7 +270,7 @@ class ControllerTest {
 
     @Test
     void disconnectTest() {
-        assertDoesNotThrow(() -> controllerExpert.disconnectEveryone(p1));
+        assertDoesNotThrow(() -> controllerExpert.disconnectPlayerQuitted(p1));
     }
 
     @Test
