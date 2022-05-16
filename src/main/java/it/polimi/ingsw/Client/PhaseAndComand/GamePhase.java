@@ -21,7 +21,7 @@ public abstract class GamePhase implements GamePhaseView, GamePhaseController {
             i++;
         }
         viewCli.print("What do you want to do?");
-        getGameCommands().get(viewCli.getIntInput()).playCLICommand();
+        //getGameCommands().get(viewCli.getIntInput()).playCLICommand();
     }
     public List<GameCommand> getGameCommands() {
         return gameCommands;

@@ -192,12 +192,13 @@ public class ViewCli extends AbstractView implements GameClientListener {
     }
 
     private int getIntInput(int min, int max, String message) {
-        int ret = getIntInput(message + " (from " + min + " to " + max + ")");
+        int ret = getIntInput(message + " (from " + min + " to " + max + "): ");
         while (ret < min || ret > max) {
-            ret = getIntInput("Not a valid input (from " + min + " to " + max + ")\n" + message);
+            ret = getIntInput("Not a valid input (from " + min + " to " + max + ")\n" + message + ": ");
         }
         return ret;
     }
+
     private String getOptions(Object[] options) {
         StringBuilder ret = new StringBuilder();
         for (int i = 0; i < options.length; i++)
@@ -205,12 +206,16 @@ public class ViewCli extends AbstractView implements GameClientListener {
         return ret.toString();
     }
 
+    public int getServerPortInput() {
+        return getIntInput(0, 65535, "Select server port");
+    }
+
     public int getColorInput() {
-        return getIntInput(0, Color.values().length, "Choose a color: " + getOptions(Color.values()));
+        return getIntInput(0, Color.values().length, "Choose a color" + getOptions(Color.values()));
     }
 
     public MatchType getMatchTypeInput() {
-        return new MatchType((byte) getIntInput(2, 4, "Choose the number of players:"), getBooleanInput("Do you want to play in expert mode?"));
+        return new MatchType((byte) getIntInput(2, 4, "Choose the number of players"), getBooleanInput("Do you want to play in expert mode?"));
     }
 
     public byte getAssistantCardToPlayInput() {
