@@ -1,5 +1,6 @@
 package it.polimi.ingsw.Client;
 
+import it.polimi.ingsw.Client.View.AbstractView;
 import it.polimi.ingsw.Client.View.GameClientListener;
 import it.polimi.ingsw.Client.model.GameComponentClient;
 import it.polimi.ingsw.Client.model.IslandClient;
@@ -10,7 +11,7 @@ import it.polimi.ingsw.Enum.Wizard;
 import java.util.ArrayList;
 
 public abstract class GameClientListened {
-    private ArrayList<GameClientListener> listeners;
+    private ArrayList<AbstractView> listeners;
 
     public void notifyMotherNature(Byte motherNaturePosition) {
         for (GameClientListener listener : listeners) {
@@ -74,7 +75,7 @@ public abstract class GameClientListened {
             listener.updateMembers(membersLeftToStart);
         }
     }
-    public void addListener(GameClientListener listener) {
+    public void addListener(AbstractView listener) {
         if(listeners==null)
             listeners=new ArrayList<>();
         listeners.add(listener);

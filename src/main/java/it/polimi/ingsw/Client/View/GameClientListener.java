@@ -26,6 +26,5 @@ public interface GameClientListener {
     //TODO update withcoins, character
     void update(GamePhase gamePhase);
     void updateCardPlayed(Byte playedCard);
-    void setView(GamePhaseView gamePhaseView);
 
 }

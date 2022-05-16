@@ -1,6 +1,7 @@
 package it.polimi.ingsw.Client.View.Cli;
 
 import it.polimi.ingsw.Client.Controller.ControllerClient;
+import it.polimi.ingsw.Client.View.AbstractView;
 import it.polimi.ingsw.Client.View.GameClientListener;
 import it.polimi.ingsw.Client.View.GamePhaseView;
 import it.polimi.ingsw.Client.model.GameComponentClient;
@@ -13,11 +14,11 @@ import java.util.*;
 
 import static java.util.Map.entry;
 
-public class ViewCli implements GameClientListener {
-    private final ControllerClient controllerClient;
+public class ViewCli extends AbstractView implements GameClientListener   {
+
     private final Scanner myInput = new Scanner(System.in);
 
-    private GamePhase gamePhase, oldPhase;
+    private GamePhase gamePhase;
 
     private static final Map<GamePhase, List<CLICommands>> phaseCommands = Map.ofEntries(
             entry(GamePhase.INIT_PHASE, new ArrayList<>(Arrays.asList(CLICommands.CONNECT_SERVER, CLICommands.QUIT))),
@@ -53,7 +54,7 @@ public class ViewCli implements GameClientListener {
             }
             case CREATE_MATCH -> {
                 MatchType mt = new MatchType((byte) myInput.nextInt(), myInput.nextBoolean());
-                controllerClient.setMatchType(mt);
+
                 return new CreateMatch(mt);
             }
             case JOIN_MATCH_BY_ID -> {
@@ -113,7 +114,7 @@ public class ViewCli implements GameClientListener {
             number = myInput.nextInt();
             ToServerMessage send = playCLICommand(availableCommands.get(number));
             if (send != null)
-                controllerClient.sendMessage(send);
+                sendToServer(send);
         } while (number != -1);
     }
     @Override
@@ -163,7 +164,7 @@ public class ViewCli implements GameClientListener {
 
     @Override
     public void update(GamePhase newPhase) {
-        oldPhase = gamePhase;
+      
         gamePhase = newPhase;
     }
 
@@ -174,7 +175,7 @@ public class ViewCli implements GameClientListener {
 
     @Override
     public void setView(GamePhaseView gamePhaseView) {
-
+        gamePhaseView.playPhase(this);
     }
 
     @Override
@@ -186,6 +187,20 @@ public class ViewCli implements GameClientListener {
     public void ok() {
         System.out.println("Successful operation");
     }
-
+    public int getIntInput(){
+        return myInput.nextInt();
+    }
+    public boolean getBooleanInput(){
+        return myInput.nextBoolean();
+    }
+    public String getStringInput(){
+        return myInput.next();
+    }
+    public void print(String s){
+        System.out.println(s);
+    }
+    public Long getLongInput(){
+        return myInput.nextLong();
+    }
 
 }

@@ -44,7 +44,7 @@ public class ClientHandler implements Runnable, GameListener {
                 command = (ToServerMessage) objIn.readObject();
                 System.out.println(command);
                 command.execute(this);
-                update(new OK());
+
             } catch (GameException e1) {
                 update(new ErrorException(e1.getMessage()));
             } catch (NullPointerException ex) {
@@ -90,6 +90,7 @@ public class ClientHandler implements Runnable, GameListener {
         } else {
             throw new NotAllowedException("Nickname already set");
         }
+        update(new OK());
     }
 
     public void quit() {
@@ -114,6 +115,7 @@ public class ClientHandler implements Runnable, GameListener {
             e.printStackTrace();
             System.err.println("can't send to the client");
         }
+
     }
 
     public Controller getController() {
@@ -128,6 +130,7 @@ public class ClientHandler implements Runnable, GameListener {
         if (controller.addPlayer(this, nickName)) {
             Server.removeMatch(controllerId);
         }
+        update(new OK());
     }
 
     public void joinByMatchId(Long matchId) throws GameException {
@@ -136,12 +139,14 @@ public class ClientHandler implements Runnable, GameListener {
         if (controller.addPlayer(this, nickName)) {
             Server.removeMatch(matchId);
         }
+        update(new OK());
     }
 
     public void createMatch(MatchType matchType) throws GameException {
         if(controller != null) throw new NotAllowedException("Already joined a match");
         controller = Server.createMatch(matchType);
         controller.addPlayer(this, nickName);
+        update(new OK());
     }
 
 }

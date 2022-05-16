@@ -8,7 +8,6 @@ public class App {
     public static void main(String[] args) {
         ControllerClient controllerClient=new ControllerClient();
         ViewCli viewCli=new ViewCli(controllerClient);
-
         controllerClient.addListener(viewCli);
         viewCli.start();
     }

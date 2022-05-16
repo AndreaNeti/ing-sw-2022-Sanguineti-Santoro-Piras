@@ -1,28 +1,38 @@
-/*package it.polimi.ingsw.Client.PhaseAndComand;
+package it.polimi.ingsw.Client.PhaseAndComand;
 
 import it.polimi.ingsw.Client.Controller.ControllerClient;
 import it.polimi.ingsw.Client.Controller.GamePhaseController;
+import it.polimi.ingsw.Client.View.AbstractView;
+import it.polimi.ingsw.Client.View.Cli.ViewCli;
 import it.polimi.ingsw.Client.View.GameClientListener;
 import it.polimi.ingsw.Client.View.GamePhaseView;
 
 import java.util.List;
 
 public abstract class GamePhase implements GamePhaseView, GamePhaseController {
-    List<GameCommand> gameCommands;
-    ControllerClient controllerClient;
-    public void GamePhase(List<GameCommand> gameCommands, ControllerClient controllerClient){
+    private List<GameCommand> gameCommands;
+    public GamePhase(List<GameCommand> gameCommands){
         this.gameCommands=gameCommands;
-        this.controllerClient=controllerClient;
-    };
-
+    }
+    @Override
+    public void playPhase(ViewCli viewCli) {
+        System.out.println("You are in "+this);
+        int i=0;
+        for (GameCommand gC : getGameCommands()) {
+            viewCli.print("["+i+"]:"+gC);
+            i++;
+        }
+        viewCli.print("What do you want to do?");
+        getGameCommands().get(viewCli.getIntInput()).playCLICommand(viewCli);
+    }
     public List<GameCommand> getGameCommands() {
         return gameCommands;
     }
     @Override
-    public void setView(List<GameClientListener> gameClientListeners) {
-        for (GameClientListener gL : gameClientListeners) {
-            gL.setView(this);
+    public void setView(List<AbstractView> views) {
+        for (AbstractView abstractView : views) {
+            abstractView.setView(this);
         }
     }
+
 }
-*/
