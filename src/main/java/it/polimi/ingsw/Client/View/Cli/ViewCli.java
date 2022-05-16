@@ -1,10 +1,10 @@
 package it.polimi.ingsw.Client.View.Cli;
 
 import it.polimi.ingsw.Client.Controller.ControllerClient;
-import it.polimi.ingsw.Client.GameClientListener;
+import it.polimi.ingsw.Client.View.GameClientListener;
+import it.polimi.ingsw.Client.View.GamePhaseView;
 import it.polimi.ingsw.Client.model.GameComponentClient;
 import it.polimi.ingsw.Client.model.IslandClient;
-import it.polimi.ingsw.Client.model.PlayerClient;
 import it.polimi.ingsw.Enum.*;
 import it.polimi.ingsw.Server.controller.MatchType;
 import it.polimi.ingsw.network.toServerMessage.*;
@@ -34,9 +34,10 @@ public class ViewCli implements GameClientListener {
     );
 
     public ViewCli(ControllerClient controllerClient) {
+        System.out.println("You've chosen to play with client line interface");
         this.controllerClient = controllerClient;
         gamePhase = GamePhase.INIT_PHASE;
-        oldPhase = gamePhase;
+        //oldPhase = gamePhase;
     }
 
     public ToServerMessage playCLICommand(CLICommands command) {
@@ -44,7 +45,7 @@ public class ViewCli implements GameClientListener {
             case CONNECT_SERVER -> {
                 if (!controllerClient.connect(new byte[]{127, 0, 0, 1}, myInput.nextInt())) {
                     System.out.println("Cannot connect to this server");
-                } else update(GamePhase.NICK_PHASE);
+                } else controllerClient.setNewGamePhase();
                 return null;
             }
             case SET_NICKNAME -> {
@@ -97,7 +98,7 @@ public class ViewCli implements GameClientListener {
         }
     }
 
-    public void run() {
+    public void start() {
         System.out.println("You've chosen to play with command-line");
         List<CLICommands> availableCommands;
 
@@ -115,7 +116,6 @@ public class ViewCli implements GameClientListener {
                 controllerClient.sendMessage(send);
         } while (number != -1);
     }
-
     @Override
     public void updateMotherNature(Byte motherNaturePosition) {
         System.out.println("New motherNaturePosition is " + motherNaturePosition);
@@ -133,6 +133,7 @@ public class ViewCli implements GameClientListener {
 
     @Override
     public void update(ArrayList<IslandClient> islands) {
+        System.out.println("Printing all the island");
         for (IslandClient i : islands) {
             System.out.println(i);
         }
@@ -149,8 +150,8 @@ public class ViewCli implements GameClientListener {
     }
 
     @Override
-    public void update(PlayerClient currentPlayer) {
-
+    public void update(String currentPlayer) {
+        System.out.println(currentPlayer +" is now playing his turn");
     }
 
     @Override
@@ -168,6 +169,11 @@ public class ViewCli implements GameClientListener {
 
     @Override
     public void updateCardPlayed(Byte playedCard) {
+
+    }
+
+    @Override
+    public void setView(GamePhaseView gamePhaseView) {
 
     }
 

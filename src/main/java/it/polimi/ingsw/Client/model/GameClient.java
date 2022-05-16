@@ -19,7 +19,6 @@ public class GameClient extends GameClientListened {
     private final MatchConstants matchConstants;
     //players are in the same order of wizard.ordinal
     private final ArrayList<PlayerClient> players;
-
     public GameClient(ArrayList<PlayerClient> players, MatchConstants matchConstants) {
         this.professors = new Wizard[Color.values().length];
         Arrays.fill(professors, null);
@@ -42,7 +41,7 @@ public class GameClient extends GameClientListened {
 
     public void setCurrentPlayer(Byte currentPlayer) {
         this.currentPlayer = currentPlayer;
-        notify(players.get(currentPlayer));
+        notify(players.get(currentPlayer).toString());
     }
 
     public Wizard[] getProfessors() {

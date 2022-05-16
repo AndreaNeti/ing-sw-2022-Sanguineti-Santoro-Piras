@@ -29,10 +29,14 @@ public class ControllerClient extends GameClientListened {
     private GameClient gameClient;
     private MatchType matchType;
     private ArrayList<PlayerClient> playerClients;
+    private GamePhase oldPhase;
+    private Wizard wizardLocal;
 
     public ControllerClient() {
         socket = new Socket();
         playerClients = new ArrayList<>();
+        this.oldPhase = GamePhase.INIT_PHASE;
+        wizardLocal = null;
     }
 
     public boolean connect(byte[] ipAddress, int port) {
@@ -48,38 +52,56 @@ public class ControllerClient extends GameClientListened {
         return true;
     }
 
-    public void setGamePhase(GamePhase gamePhase) {
+    public void setNewGamePhase() {
+        //TODO check if this work with quit
+        super.notify(GamePhase.values()[oldPhase.ordinal() + 1]);
+        oldPhase = GamePhase.values()[oldPhase.ordinal() + 1];
+    }
+
+    public void changePhaseAndCurrentPlayer(GamePhase gamePhase, Byte currentPlayer) {
         //se arriva il messaggio e se stesso è il current player si imposta fase del messaggio
-        //currentPlayer!=se stesso-> wait Phase
-        //fase intermedio undo
+        //currentPlayer!=se stesso-> wait Phas
         // TODO set phase in view cli
         // this.gamePhase = gamePhase;
-        super.notify(gamePhase);
+        gameClient.setCurrentPlayer(currentPlayer);
+        if (gameClient.getCurrentPlayer().getWizard() != wizardLocal) {
+            super.notify(GamePhase.WAIT_PHASE);
+        } else {
+            oldPhase = gamePhase;
+            super.notify(gamePhase);
+        }
     }
 
     public void addMembers(HashMap<Player, HouseColor> members) {
         this.playerClients = new ArrayList<>();
+        if (wizardLocal == null) {
+            wizardLocal = Wizard.values()[members.size() - 1];
+        }
         for (Map.Entry<Player, HouseColor> entry : members.entrySet()) {
-           playerClients.add(new PlayerClient(entry.getKey(), entry.getValue(), Server.getMatchConstants(matchType)));
+            playerClients.add(new PlayerClient(entry.getKey(), entry.getValue(), Server.getMatchConstants(matchType)));
         }
-        if(playerClients.size()== matchType.nPlayers()){
-            gameClient=new GameClient(playerClients,Server.getMatchConstants(matchType));
+        if (playerClients.size() == matchType.nPlayers()) {
+            //create a game
+            gameClient = new GameClient(playerClients, Server.getMatchConstants(matchType));
+
         }
-        super.notifyMembers( matchType.nPlayers()-playerClients.size());
+        super.notifyMembers(matchType.nPlayers() - playerClients.size());
     }
-    public void setCurrentPlayer(byte currentPlayer){
+
+    public void setCurrentPlayer(byte currentPlayer) {
         gameClient.setCurrentPlayer(currentPlayer);
     }
+
     public synchronized void sendMessage(ToServerMessage command) {
         if (serverSender == null)
-            notify("Must connect to a Server Before");
+            error("Must connect to a Server Before");
         else {
             serverSender.sendServerMessage(command);
         }
     }
 
     public void error(String e) {
-        notify(e);
+        notifyError(e);
     }
 
     public void ok() {

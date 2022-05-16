@@ -1,15 +1,15 @@
 package it.polimi.ingsw.Client;
 
+import it.polimi.ingsw.Client.View.GameClientListener;
 import it.polimi.ingsw.Client.model.GameComponentClient;
 import it.polimi.ingsw.Client.model.IslandClient;
-import it.polimi.ingsw.Client.model.PlayerClient;
 import it.polimi.ingsw.Enum.GamePhase;
 import it.polimi.ingsw.Enum.HouseColor;
 import it.polimi.ingsw.Enum.Wizard;
 
 import java.util.ArrayList;
 
-public class GameClientListened {
+public abstract class GameClientListened {
     private ArrayList<GameClientListener> listeners;
 
     public void notifyMotherNature(Byte motherNaturePosition) {
@@ -51,7 +51,7 @@ public class GameClientListened {
             listener.update(professors);
         }
     }
-    public void notify(PlayerClient currentPlayer) {
+    public void notify(String currentPlayer) {
         for (GameClientListener listener : listeners) {
             listener.update(currentPlayer);
         }
@@ -62,11 +62,7 @@ public class GameClientListened {
             listener.updateCardPlayed(playedCard);
         }
     }
-    public void notify(String e){
-        for (GameClientListener listener : listeners) {
-            listener.error(e);
-        }
-    }
+
     public void notifyOk(){
         for (GameClientListener listener : listeners) {
             listener.ok();
@@ -86,7 +82,11 @@ public class GameClientListened {
     public void addListener(GameClientListened gameClientListened){
         if(listeners==null)
             listeners=gameClientListened.listeners;
-        
+    }
+    public void notifyError(String e){
+        for (GameClientListener listener : listeners) {
+            listener.error(e);
+        }
     }
 
 }

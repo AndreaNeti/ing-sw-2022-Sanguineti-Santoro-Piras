@@ -14,7 +14,6 @@ public class Phase implements ToClientMessage{
 
     @Override
     public void execute(ControllerClient controllerClient) {
-        controllerClient.setGamePhase(gamePhase);
-        controllerClient.setCurrentPlayer(currentPlayer);
+        controllerClient.changePhaseAndCurrentPlayer(gamePhase,currentPlayer);
     }
 }

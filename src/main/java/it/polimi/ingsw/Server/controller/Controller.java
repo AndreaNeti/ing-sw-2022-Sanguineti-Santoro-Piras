@@ -59,6 +59,7 @@ public class Controller {
         this.winners = null;
         this.gameFinished = false;
         this.matchId = id;
+
     }
 
     public boolean isMyTurn(ClientHandler caller) {
