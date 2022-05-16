@@ -39,6 +39,10 @@ public class PlayerClient {
         return playedCard;
     }
 
+    public boolean[] getUsedCards() {
+        return Arrays.copyOf(usedCards, usedCards.length);
+    }
+
     public void playCard(byte playedCard) {
         this.playedCard = playedCard;
         this.usedCards[playedCard - 1] = true;
@@ -52,7 +56,7 @@ public class PlayerClient {
         return towersLeft;
     }
 
-    public void setTowersLeft(byte towersLeft) {
+    protected void setTowersLeft(byte towersLeft) {
         this.towersLeft = towersLeft;
     }
 
@@ -65,5 +69,8 @@ public class PlayerClient {
         return nickName;
     }
 
-
+    public byte getPlayedCardMoves() {
+        // card max movement is 1 for card 1 and 2, 2 for card 3 and 4, ..., 5 for card 9 and 10
+        return (byte) ((playedCard + 1) / 2);
+    }
 }

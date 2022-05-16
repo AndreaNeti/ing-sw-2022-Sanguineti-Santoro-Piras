@@ -14,11 +14,9 @@ import java.util.*;
 
 import static java.util.Map.entry;
 
-public class ViewCli extends AbstractView implements GameClientListener   {
+public class ViewCli extends AbstractView implements GameClientListener {
 
     private final Scanner myInput = new Scanner(System.in);
-
-    private GamePhase gamePhase;
 
     private static final Map<GamePhase, List<CLICommands>> phaseCommands = Map.ofEntries(
             entry(GamePhase.INIT_PHASE, new ArrayList<>(Arrays.asList(CLICommands.CONNECT_SERVER, CLICommands.QUIT))),
@@ -35,18 +33,17 @@ public class ViewCli extends AbstractView implements GameClientListener   {
     );
 
     public ViewCli(ControllerClient controllerClient) {
+        super(controllerClient);
         System.out.println("You've chosen to play with client line interface");
-        this.controllerClient = controllerClient;
-        gamePhase = GamePhase.INIT_PHASE;
         //oldPhase = gamePhase;
     }
 
     public ToServerMessage playCLICommand(CLICommands command) {
         switch (command) {
             case CONNECT_SERVER -> {
-                if (!controllerClient.connect(new byte[]{127, 0, 0, 1}, myInput.nextInt())) {
+                if (!getControllerClient().connect(new byte[]{127, 0, 0, 1}, myInput.nextInt())) {
                     System.out.println("Cannot connect to this server");
-                } else controllerClient.setNewGamePhase();
+                } else getControllerClient().setNewGamePhase();
                 return null;
             }
             case SET_NICKNAME -> {
@@ -62,14 +59,14 @@ public class ViewCli extends AbstractView implements GameClientListener   {
             }
             case JOIN_MATCH_BY_TYPE -> {
                 MatchType mt = new MatchType((byte) myInput.nextInt(), myInput.nextBoolean());
-                controllerClient.setMatchType(mt);
+                getControllerClient().setMatchType(mt);
                 return new JoinMatchByType(mt);
             }
             case PLAY_CARD -> {
                 return new PlayCard((byte) 3);
             }
             case MOVE_STUDENT -> {
-                return new Move(Color.BLUE, 4);
+                return new MoveStudent(Color.BLUE, 4);
             }
             case MOVE_MOTHER_NATURE -> {
                 return new MoveMotherNature(3);
@@ -117,6 +114,7 @@ public class ViewCli extends AbstractView implements GameClientListener   {
                 sendToServer(send);
         } while (number != -1);
     }
+
     @Override
     public void updateMotherNature(Byte motherNaturePosition) {
         System.out.println("New motherNaturePosition is " + motherNaturePosition);
@@ -152,7 +150,7 @@ public class ViewCli extends AbstractView implements GameClientListener   {
 
     @Override
     public void update(String currentPlayer) {
-        System.out.println(currentPlayer +" is now playing his turn");
+        System.out.println(currentPlayer + " is now playing his turn");
     }
 
     @Override
@@ -164,7 +162,6 @@ public class ViewCli extends AbstractView implements GameClientListener   {
 
     @Override
     public void update(GamePhase newPhase) {
-      
         gamePhase = newPhase;
     }
 
@@ -187,19 +184,84 @@ public class ViewCli extends AbstractView implements GameClientListener   {
     public void ok() {
         System.out.println("Successful operation");
     }
-    public int getIntInput(){
+
+    // Message is the string printed before asking the input
+    private int getIntInput(String message) {
+        System.out.println(message);
         return myInput.nextInt();
     }
-    public boolean getBooleanInput(){
+
+    private int getIntInput(int min, int max, String message) {
+        int ret = getIntInput(message + " (from " + min + " to " + max + ")");
+        while (ret < min || ret > max) {
+            ret = getIntInput("Not a valid input (from " + min + " to " + max + ")\n" + message);
+        }
+        return ret;
+    }
+    private String getOptions(Object[] options) {
+        StringBuilder ret = new StringBuilder();
+        for (int i = 0; i < options.length; i++)
+            ret.append(i).append(") ").append(options[i].toString()).append("\n");
+        return ret.toString();
+    }
+
+    public int getColorInput() {
+        return getIntInput(0, Color.values().length, "Choose a color: " + getOptions(Color.values()));
+    }
+
+    public MatchType getMatchTypeInput() {
+        return new MatchType((byte) getIntInput(2, 4, "Choose the number of players:"), getBooleanInput("Do you want to play in expert mode?"));
+    }
+
+    public byte getAssistantCardToPlayInput() {
+        boolean[] usedCards = getModel().getCurrentPlayer().getUsedCards();
+        byte ret = (byte) getIntInput(1, usedCards.length, "Choose an assistant card to play");
+        while (!usedCards[ret]) {
+            System.out.println("Card already played");
+            ret = (byte) getIntInput(1, usedCards.length, "Choose an assistant card to play");
+        }
+        return ret;
+    }
+
+    public byte getMotherNatureMovesInput() {
+        return (byte) getIntInput(1, getModel().getCurrentPlayer().getPlayedCardMoves(), "How many steps do you want mother nature to move?");
+    }
+
+    public int getCloudSource() {
+        ArrayList<GameComponentClient> availableClouds = new ArrayList<>();
+        int i = 0;
+        // Add and prints only the not-empty clouds
+        for (GameComponentClient cloud : getModel().getClouds()) {
+            if (cloud.howManyStudents() > 0)
+                availableClouds.add(cloud);
+        }
+        System.out.println(getOptions(availableClouds.toArray()));
+        int cloudIndex = getIntInput(0, availableClouds.size() - 1, "Choose a cloud source");
+        return availableClouds.get(cloudIndex).getId();
+    }
+
+    public boolean getBooleanInput(String message) {
+        System.out.println(message + "(TRUE/FALSE):");
         return myInput.nextBoolean();
     }
-    public String getStringInput(){
-        return myInput.next();
+
+
+    public String getStringInput(String message) {
+        System.out.println(message);
+        String ret = myInput.next();
+        while (ret.isBlank()) {
+            System.out.println("Input can't be empty.\n" + message);
+            ret = myInput.next();
+        }
+        return ret;
     }
-    public void print(String s){
+
+    public void print(String s) {
         System.out.println(s);
     }
-    public Long getLongInput(){
+
+    public Long getLongInput(String message) {
+        System.out.println(message);
         return myInput.nextLong();
     }
 

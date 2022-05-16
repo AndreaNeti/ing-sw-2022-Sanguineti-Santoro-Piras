@@ -1,8 +1,8 @@
 package it.polimi.ingsw.Client.View;
 
+import it.polimi.ingsw.Client.model.GameClientView;
 import it.polimi.ingsw.Client.model.GameComponentClient;
 import it.polimi.ingsw.Client.model.IslandClient;
-import it.polimi.ingsw.Client.model.PlayerClient;
 import it.polimi.ingsw.Enum.GamePhase;
 import it.polimi.ingsw.Enum.HouseColor;
 import it.polimi.ingsw.Enum.Wizard;
@@ -26,5 +26,5 @@ public interface GameClientListener {
     //TODO update withcoins, character
     void update(GamePhase gamePhase);
     void updateCardPlayed(Byte playedCard);
-
+    void setModel(GameClientView model);
 }

@@ -10,7 +10,7 @@ import it.polimi.ingsw.Server.model.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class GameClient extends GameClientListened {
+public class GameClient extends GameClientListened implements GameClientView {
     public ArrayList<IslandClient> islands;
     public ArrayList<GameComponentClient> clouds;
     private final Wizard[] professors;
@@ -19,6 +19,7 @@ public class GameClient extends GameClientListened {
     private final MatchConstants matchConstants;
     //players are in the same order of wizard.ordinal
     private final ArrayList<PlayerClient> players;
+
     public GameClient(ArrayList<PlayerClient> players, MatchConstants matchConstants) {
         this.professors = new Wizard[Color.values().length];
         Arrays.fill(professors, null);
@@ -77,7 +78,6 @@ public class GameClient extends GameClientListened {
 
         } else if (idGameComponent >= 2 * players.size()) {
             IslandClient islandToReturn = getIslandById(idGameComponent);
-            //TODO bug here
             if (islandToReturn == null) {
                 throw new RuntimeException("error in passing parameters probably");
             }
@@ -134,11 +134,13 @@ public class GameClient extends GameClientListened {
         }
     }
 
+    @Override
+    public ArrayList<GameComponentClient> getClouds() {
+        // not editable out of model package
+        return clouds;
+    }
+
     public ArrayList<IslandClient> getIslands() {
-        ArrayList<IslandClient> clone = new ArrayList<>();
-        for (IslandClient i : islands) {
-            clone.add(new IslandClient(i));
-        }
-        return clone;
+        return islands;
     }
 }

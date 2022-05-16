@@ -2,6 +2,7 @@ package it.polimi.ingsw.Client;
 
 import it.polimi.ingsw.Client.View.AbstractView;
 import it.polimi.ingsw.Client.View.GameClientListener;
+import it.polimi.ingsw.Client.model.GameClientView;
 import it.polimi.ingsw.Client.model.GameComponentClient;
 import it.polimi.ingsw.Client.model.IslandClient;
 import it.polimi.ingsw.Enum.GamePhase;
@@ -30,20 +31,22 @@ public abstract class GameClientListened {
             listener.update(island);
         }
     }
-    public void notify(GamePhase phase){
+
+    public void notify(GamePhase phase) {
         for (GameClientListener listener : listeners) {
             listener.update(phase);
         }
     }
-    public void notify(ArrayList<IslandClient> islands){
+
+    public void notify(ArrayList<IslandClient> islands) {
         for (GameClientListener listener : listeners) {
             listener.update(islands);
         }
     }
 
-    public void notify(HouseColor houseColor,Byte towerLefts) {
+    public void notify(HouseColor houseColor, Byte towerLefts) {
         for (GameClientListener listener : listeners) {
-            listener.update(houseColor,towerLefts);
+            listener.update(houseColor, towerLefts);
         }
     }
 
@@ -52,42 +55,50 @@ public abstract class GameClientListened {
             listener.update(professors);
         }
     }
+
     public void notify(String currentPlayer) {
         for (GameClientListener listener : listeners) {
             listener.update(currentPlayer);
         }
     }
 
-    public void notifyCardPlayed(Byte playedCard){
+    public void notifyCardPlayed(Byte playedCard) {
         for (GameClientListener listener : listeners) {
             listener.updateCardPlayed(playedCard);
         }
     }
 
-    public void notifyOk(){
+    public void notifyOk() {
         for (GameClientListener listener : listeners) {
             listener.ok();
         }
     }
 
-    public void notifyMembers(int membersLeftToStart){
+    public void notifyMembers(int membersLeftToStart) {
         for (GameClientListener listener : listeners) {
             listener.updateMembers(membersLeftToStart);
         }
     }
+
     public void addListener(AbstractView listener) {
-        if(listeners==null)
-            listeners=new ArrayList<>();
+        if (listeners == null)
+            listeners = new ArrayList<>();
         listeners.add(listener);
     }
-    public void addListener(GameClientListened gameClientListened){
-        if(listeners==null)
-            listeners=gameClientListened.listeners;
+
+    public void addListener(GameClientListened gameClientListened) {
+        if (listeners == null)
+            listeners = gameClientListened.listeners;
     }
-    public void notifyError(String e){
+
+    public void notifyError(String e) {
         for (GameClientListener listener : listeners) {
             listener.error(e);
         }
     }
 
+    public void attachModel(GameClientView model) {
+        for (GameClientListener listener : listeners)
+            listener.setModel(model);
+    }
 }

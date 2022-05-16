@@ -13,6 +13,9 @@ public class MoveStudentCommand extends GameCommand {
     @Override
     void playCLICommand() {
         ViewCli viewCli = (ViewCli) getView();
+        System.out.println("Select student color:");
+
+        //viewCli.sendToServer(new MoveStudent());
     }
 
     @Override

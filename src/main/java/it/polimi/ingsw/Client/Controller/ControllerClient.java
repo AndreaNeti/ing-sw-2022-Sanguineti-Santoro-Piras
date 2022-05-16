@@ -8,7 +8,6 @@ import it.polimi.ingsw.Enum.GamePhase;
 import it.polimi.ingsw.Enum.HouseColor;
 import it.polimi.ingsw.Enum.Wizard;
 import it.polimi.ingsw.Server.controller.GameDelta;
-import it.polimi.ingsw.Server.controller.MatchConstants;
 import it.polimi.ingsw.Server.controller.MatchType;
 import it.polimi.ingsw.Server.controller.Server;
 import it.polimi.ingsw.Server.model.GameComponent;
@@ -83,7 +82,8 @@ public class ControllerClient extends GameClientListened {
         if (playerClients.size() == matchType.nPlayers()) {
             //create a game
             gameClient = new GameClient(playerClients, Server.getMatchConstants(matchType));
-
+            gameClient.addListener(this);
+            attachModel(gameClient);
         }
         super.notifyMembers(matchType.nPlayers() - playerClients.size());
     }
@@ -109,14 +109,6 @@ public class ControllerClient extends GameClientListened {
     }
 
     public synchronized void changeGame(GameDelta gameDelta) {
-        if (gameClient == null) {
-            //TODO set matchType when using the function createMatch in the view
-            MatchConstants matchConstants = Server.getMatchConstants(matchType);
-
-            gameClient = new GameClient(playerClients, matchConstants);
-            gameClient.addListener(this);
-        }
-
         for (Map.Entry<Byte, GameComponent> entry : gameDelta.getUpdatedGC().entrySet()) {
             gameClient.setGameComponent(entry.getKey(), entry.getValue());
         }

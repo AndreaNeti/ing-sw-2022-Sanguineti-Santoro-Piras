@@ -43,7 +43,7 @@ public class Player implements Serializable {
         cardsAvailable[card - 1] = false;
         if (cardsLeft == 0) throw new EndGameException(false);
     }
-
+    // TODO forse a gianpaolino non piace
     public byte getPlayedCardMoves() {
         // card max movement is 1 for card 1 and 2, 2 for card 3 and 4, ..., 5 for card 9 and 10
         return (byte) ((playedCard + 1) / 2);
