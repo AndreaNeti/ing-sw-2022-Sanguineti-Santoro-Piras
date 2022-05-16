@@ -1,23 +1,19 @@
 package it.polimi.ingsw.Client.PhaseAndComand;
 
-import it.polimi.ingsw.Client.View.Cli.ViewCli;
-import it.polimi.ingsw.Client.View.Gui.ViewGUI;
+import it.polimi.ingsw.Client.View.AbstractView;
 
 import java.awt.event.ActionListener;
 
 public abstract class GameCommand implements ActionListener {
-    private final ViewGUI viewGUI;
+    private final AbstractView view;
 
-    public GameCommand(ViewGUI viewGUI) {
-        this.viewGUI = viewGUI;
-    }
-    public GameCommand(){
-        this.viewGUI=null;
+    public GameCommand(AbstractView view) {
+        this.view = view;
     }
 
-    abstract void playCLICommand(ViewCli viewCli);
+    abstract void playCLICommand();
 
-    public ViewGUI getViewGUI() {
-        return viewGUI;
+    protected AbstractView getView() {
+        return view;
     }
 }
