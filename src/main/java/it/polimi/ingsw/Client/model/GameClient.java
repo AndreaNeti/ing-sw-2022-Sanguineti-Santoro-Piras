@@ -140,6 +140,7 @@ public class GameClient extends GameClientListened implements GameClientView {
         return clouds;
     }
 
+    @Override
     public ArrayList<IslandClient> getIslands() {
         return islands;
     }

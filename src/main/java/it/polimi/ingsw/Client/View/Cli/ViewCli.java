@@ -185,24 +185,30 @@ public class ViewCli extends AbstractView implements GameClientListener {
         System.out.println("Successful operation");
     }
 
-    // Message is the string printed before asking the input
-    private int getIntInput(String message) {
-        System.out.println(message);
-        return myInput.nextInt();
+    public int getIntInput(Object[] options, String message) {
+        System.out.println("--OPTIONS--");
+        System.out.println(getOptions(options));
+        return getIntInput(0, options.length - 1, message);
     }
 
-    private int getIntInput(int min, int max, String message) {
-        int ret = getIntInput(message + " (from " + min + " to " + max + "): ");
+    public int getIntInput(int min, int max, String message) {
+        int ret = getIntInput(message + " (from " + min + " to " + max + ")");
         while (ret < min || ret > max) {
-            ret = getIntInput("Not a valid input (from " + min + " to " + max + ")\n" + message + ": ");
+            ret = getIntInput("Not a valid input (from " + min + " to " + max + ")\n" + message);
         }
         return ret;
+    }
+
+    // Message is the string printed before asking the input
+    public int getIntInput(String message) {
+        System.out.println(message + ":");
+        return myInput.nextInt();
     }
 
     private String getOptions(Object[] options) {
         StringBuilder ret = new StringBuilder();
         for (int i = 0; i < options.length; i++)
-            ret.append(i).append(") ").append(options[i].toString()).append("\n");
+            ret.append("[").append(i).append("] ").append(options[i].toString()).append("\n");
         return ret.toString();
     }
 
@@ -219,6 +225,7 @@ public class ViewCli extends AbstractView implements GameClientListener {
     }
 
     public byte getAssistantCardToPlayInput() {
+        // TODO use getIntInput Options[] and a record for assistant cards
         boolean[] usedCards = getModel().getCurrentPlayer().getUsedCards();
         byte ret = (byte) getIntInput(1, usedCards.length, "Choose an assistant card to play");
         while (!usedCards[ret]) {
@@ -226,6 +233,14 @@ public class ViewCli extends AbstractView implements GameClientListener {
             ret = (byte) getIntInput(1, usedCards.length, "Choose an assistant card to play");
         }
         return ret;
+    }
+
+    public int getMoveStudentDestination() {
+        List<GameComponentClient> validDestinations = new ArrayList<>();
+        validDestinations.add(getModel().getCurrentPlayer().getLunchHall());
+        validDestinations.addAll(getModel().getIslands());
+        int index = getIntInput(validDestinations.toArray(), "Select a destination");
+        return validDestinations.get(index).getId();
     }
 
     public byte getMotherNatureMovesInput() {
@@ -240,8 +255,7 @@ public class ViewCli extends AbstractView implements GameClientListener {
             if (cloud.howManyStudents() > 0)
                 availableClouds.add(cloud);
         }
-        System.out.println(getOptions(availableClouds.toArray()));
-        int cloudIndex = getIntInput(0, availableClouds.size() - 1, "Choose a cloud source");
+        int cloudIndex = getIntInput(availableClouds.toArray(), "Choose a cloud source");
         return availableClouds.get(cloudIndex).getId();
     }
 
