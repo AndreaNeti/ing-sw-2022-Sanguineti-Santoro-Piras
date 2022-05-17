@@ -10,9 +10,6 @@ import it.polimi.ingsw.Enum.Wizard;
 import java.util.ArrayList;
 
 public interface GameClientListener {
-
-
-
     void updateMotherNature(Byte motherNaturePosition);
     void update(GameComponentClient gameComponent);
     void update(IslandClient island);

@@ -1,12 +1,14 @@
 package it.polimi.ingsw.Client.Controller;
 
 import it.polimi.ingsw.Client.GameClientListened;
+import it.polimi.ingsw.Client.PhaseAndComand.Commands.ConnectServerCommand;
+import it.polimi.ingsw.Client.PhaseAndComand.Commands.GameCommand;
+import it.polimi.ingsw.Client.PhaseAndComand.Phases.InitPhaseClient;
+import it.polimi.ingsw.Client.PhaseAndComand.Phases.MoveCloudPhaseClient;
 import it.polimi.ingsw.Client.model.GameClient;
+import it.polimi.ingsw.Client.model.GameComponentClient;
 import it.polimi.ingsw.Client.model.PlayerClient;
-import it.polimi.ingsw.Enum.Color;
-import it.polimi.ingsw.Enum.GamePhase;
-import it.polimi.ingsw.Enum.HouseColor;
-import it.polimi.ingsw.Enum.Wizard;
+import it.polimi.ingsw.Enum.*;
 import it.polimi.ingsw.Server.controller.GameDelta;
 import it.polimi.ingsw.Server.controller.MatchType;
 import it.polimi.ingsw.Server.controller.Server;
@@ -18,9 +20,7 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.Socket;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class ControllerClient extends GameClientListened {
     private final Socket socket;
@@ -28,6 +28,8 @@ public class ControllerClient extends GameClientListened {
     private GameClient gameClient;
     private MatchType matchType;
     private ArrayList<PlayerClient> playerClients;
+    private List<ClientPhaseController> clientPhaseController;
+    private Map<CLICommands,GameCommand> commands;
     private GamePhase oldPhase;
     private Wizard wizardLocal;
 
@@ -36,8 +38,19 @@ public class ControllerClient extends GameClientListened {
         playerClients = new ArrayList<>();
         this.oldPhase = GamePhase.INIT_PHASE;
         wizardLocal = null;
+
     }
 
+    public void setCommands(Map<CLICommands,GameCommand> commands) {
+        this.commands = commands;
+    }
+
+    /*private List<ClientPhaseController> instantiateAllPhase(){
+        List<ClientPhaseController> phaseControllers=new ArrayList<>();
+
+        phaseControllers.add(new InitPhaseClient());
+        phaseControllers.add(new MoveCloudPhaseClient());
+    }*/
     public boolean connect(byte[] ipAddress, int port) {
         try {
             socket.connect(new InetSocketAddress(InetAddress.getByAddress(ipAddress), port));
@@ -47,7 +60,7 @@ public class ControllerClient extends GameClientListened {
         new Thread(new ServerListener(socket, this)).start();
         serverSender = new ServerSender(socket);
 
-        System.out.println("connesso con server " + socket.getPort());
+        setNewGamePhase();
         return true;
     }
 
@@ -88,13 +101,8 @@ public class ControllerClient extends GameClientListened {
         super.notifyMembers(matchType.nPlayers() - playerClients.size());
     }
 
-    public void setCurrentPlayer(byte currentPlayer) {
-        gameClient.setCurrentPlayer(currentPlayer);
-    }
-
     public synchronized void sendMessage(ToServerMessage command) {
-        if (serverSender == null)
-            error("Must connect to a Server Before");
+        if (serverSender == null) error("Must connect to a Server Before");
         else {
             serverSender.sendServerMessage(command);
         }

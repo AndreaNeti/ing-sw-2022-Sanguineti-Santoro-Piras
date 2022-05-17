@@ -27,4 +27,9 @@ public class CreateMatchCommand extends GameCommand {
         // TODO: set the phase
     }
 
+    @Override
+    public String toString() {
+        return "create match";
+    }
+
 }

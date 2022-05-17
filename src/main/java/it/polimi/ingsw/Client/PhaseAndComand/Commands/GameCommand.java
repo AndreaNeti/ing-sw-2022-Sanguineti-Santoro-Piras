@@ -16,4 +16,6 @@ public abstract class GameCommand implements ActionListener {
     protected AbstractView getView() {
         return view;
     }
+    public abstract String toString();
+
 }

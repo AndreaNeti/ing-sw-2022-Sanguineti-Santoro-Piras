@@ -24,4 +24,9 @@ public class JoinMatchByIdCommand extends GameCommand {
         Long ID = viewCli.getLongInput("Write game ID");
         viewCli.sendToServer(new JoinMatchById(ID));
     }
+
+    @Override
+    public String toString() {
+        return "join match by id";
+    }
 }

@@ -14,7 +14,7 @@ import java.util.*;
 
 import static java.util.Map.entry;
 
-public class ViewCli extends AbstractView implements GameClientListener {
+public class ViewCli extends AbstractView {
 
     private final Scanner myInput = new Scanner(System.in);
 

@@ -2,25 +2,24 @@ package it.polimi.ingsw.Client.PhaseAndComand.Commands;
 
 import it.polimi.ingsw.Client.View.AbstractView;
 import it.polimi.ingsw.Client.View.Cli.ViewCli;
+import it.polimi.ingsw.network.toServerMessage.MoveFromCloud;
 
 import java.awt.event.ActionEvent;
 
-public class MoveStudentCommand extends GameCommand {
-    public MoveStudentCommand(AbstractView view) {
+public class MoveFromCloudCommand extends GameCommand{
+    public MoveFromCloudCommand(AbstractView view) {
         super(view);
     }
 
     @Override
     void playCLICommand() {
-        ViewCli viewCli = (ViewCli) getView();
-        System.out.println("Select student color:");
-
-        //viewCli.sendToServer(new MoveStudent());
+        ViewCli viewCli= (ViewCli) getView();
+        viewCli.sendToServer(new MoveFromCloud(viewCli.getCloudSource()));
     }
 
     @Override
     public String toString() {
-        return "move student";
+        return "move from cloud";
     }
 
     @Override

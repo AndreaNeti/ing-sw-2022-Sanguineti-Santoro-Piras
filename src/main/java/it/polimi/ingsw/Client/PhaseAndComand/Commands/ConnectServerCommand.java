@@ -24,4 +24,9 @@ public class ConnectServerCommand extends GameCommand {
             viewCli.print("Cannot connect to this server");
         //TODO set the phase
     }
+
+    @Override
+    public String toString() {
+        return "Connect to server";
+    }
 }
