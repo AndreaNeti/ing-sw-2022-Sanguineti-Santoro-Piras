@@ -1,4 +1,4 @@
-package it.polimi.ingsw.Client.PhaseAndComand;
+package it.polimi.ingsw.Client.PhaseAndComand.Commands;
 
 import it.polimi.ingsw.Client.View.AbstractView;
 

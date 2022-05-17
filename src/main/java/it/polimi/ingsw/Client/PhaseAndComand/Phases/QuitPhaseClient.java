@@ -1,12 +1,13 @@
-package it.polimi.ingsw.Client.PhaseAndComand;
+package it.polimi.ingsw.Client.PhaseAndComand.Phases;
 
+import it.polimi.ingsw.Client.PhaseAndComand.Commands.GameCommand;
 import it.polimi.ingsw.Client.View.Gui.ViewGUI;
 
 import java.util.List;
 
-public class QuitPhase extends ClientPhase {
+public class QuitPhaseClient extends AbstractClientGamePhase {
 
-    public QuitPhase(List<GameCommand> gameCommands) {
+    public QuitPhaseClient(List<GameCommand> gameCommands) {
         super(gameCommands);
     }
 
