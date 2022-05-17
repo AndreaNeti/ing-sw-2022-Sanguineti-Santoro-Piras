@@ -2,7 +2,6 @@ package it.polimi.ingsw.Client.View.Cli;
 
 import it.polimi.ingsw.Client.Controller.ControllerClient;
 import it.polimi.ingsw.Client.View.AbstractView;
-import it.polimi.ingsw.Client.View.GameClientListener;
 import it.polimi.ingsw.Client.View.ClientPhaseView;
 import it.polimi.ingsw.Client.model.GameComponentClient;
 import it.polimi.ingsw.Client.model.IslandClient;
@@ -27,7 +26,7 @@ public class ViewCli extends AbstractView {
             entry(GamePhase.MOVE_ST_PHASE, new ArrayList<>(Arrays.asList(CLICommands.MOVE_STUDENT, CLICommands.CHOOSE_CHARACTER, CLICommands.TEXT_MESSAGE, CLICommands.QUIT))),
             entry(GamePhase.MOVE_MN_PHASE, new ArrayList<>(Arrays.asList(CLICommands.MOVE_MOTHER_NATURE, CLICommands.CHOOSE_CHARACTER, CLICommands.TEXT_MESSAGE, CLICommands.QUIT))),
             entry(GamePhase.MOVE_CL_PHASE, new ArrayList<>(Arrays.asList(CLICommands.MOVE_FROM_CLOUD, CLICommands.CHOOSE_CHARACTER, CLICommands.TEXT_MESSAGE, CLICommands.QUIT))),
-            entry(GamePhase.CH_CARD_PHASE, new ArrayList<>(Arrays.asList(CLICommands.SET_CHARACTER_INPUT, CLICommands.PLAY_CHARACTER, CLICommands.DELETE_LAST_INPUT, CLICommands.UNDO, CLICommands.QUIT))),
+            entry(GamePhase.SET_CH_CARD_PHASE, new ArrayList<>(Arrays.asList(CLICommands.SET_CHARACTER_INPUT, CLICommands.PLAY_CHARACTER, CLICommands.DELETE_LAST_INPUT, CLICommands.UNDO, CLICommands.QUIT))),
             entry(GamePhase.PLAY_CH_CARD_PHASE, new ArrayList<>(Arrays.asList(CLICommands.PLAY_CHARACTER, CLICommands.DELETE_LAST_INPUT, CLICommands.UNDO, CLICommands.QUIT))),
             entry(GamePhase.QUIT_PHASE, new ArrayList<>(Arrays.asList(CLICommands.UNDO, CLICommands.QUIT)))
     );

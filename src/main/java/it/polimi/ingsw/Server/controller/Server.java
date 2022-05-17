@@ -3,6 +3,7 @@ package it.polimi.ingsw.Server.controller;
 import it.polimi.ingsw.exceptions.NotAllowedException;
 
 import java.io.IOException;
+import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
@@ -25,9 +26,9 @@ public class Server {
 
     public static void main(String[] args) {
         try (ServerSocket server = new ServerSocket(serverPort)) {
-
+            String serverIp = InetAddress.getLocalHost().getHostAddress();
             while (true) {
-                System.out.println("Server ready to receive on " + serverPort);
+                System.out.println("Server ready to receive on " + serverIp + ":" + serverPort);
                 try {
                     Thread t = new Thread(new ClientHandler(server.accept()));
                     t.start();
