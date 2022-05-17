@@ -19,7 +19,6 @@ public class ConnectServerCommand extends GameCommand {
     @Override
     public void playCLICommand() {
         ViewCli viewCli = (ViewCli) getView();
-        viewCli.print("Select the port of the server");
         if (!viewCli.connectToServer(viewCli.getIpAddressInput(), viewCli.getServerPortInput()))
             viewCli.print("Cannot connect to this server");
     }

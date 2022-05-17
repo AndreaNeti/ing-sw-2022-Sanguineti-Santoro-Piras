@@ -231,12 +231,14 @@ public class ViewCli extends AbstractView {
         if (bytes.length != 4) return null;
         byte[] ret = new byte[4];
         for (byte i = 0; i < 4; i++) {
+            int x; // just because java doesn't have unsigned bytes
             try {
-                ret[i] = Byte.parseByte(bytes[i]);
+                x = Integer.parseInt(bytes[i]);
             } catch (NumberFormatException e) {
                 return null;
             }
-            if (ret[i] < 0) return null;
+            if (x < 0 || x > 255) return null;
+            ret[i] = (byte) x;
         }
         return ret;
     }
