@@ -266,10 +266,10 @@ public class ViewCli extends AbstractView implements GameClientListener {
 
 
     public String getStringInput(String message) {
-        System.out.println(message);
+        System.out.println(message + ": ");
         String ret = myInput.next();
         while (ret.isBlank()) {
-            System.out.println("Input can't be empty.\n" + message);
+            System.out.println("Input can't be empty.\n" + message + ": ");
             ret = myInput.next();
         }
         return ret;
