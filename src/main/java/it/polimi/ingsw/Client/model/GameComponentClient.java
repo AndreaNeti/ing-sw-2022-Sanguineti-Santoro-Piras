@@ -3,8 +3,6 @@ package it.polimi.ingsw.Client.model;
 import it.polimi.ingsw.Enum.Color;
 import it.polimi.ingsw.Server.model.GameComponent;
 
-import java.util.Arrays;
-
 
 public class GameComponentClient {
     private final byte[]  students;
@@ -24,7 +22,7 @@ public class GameComponentClient {
 
     @Override
     public String toString() {
-        return getNameOfComponent()+ ": students= " + studentsToString();
+        return getNameOfComponent()+ "| Students: " + studentsToString();
     }
     private String studentsToString() {
         StringBuilder ret = new StringBuilder();

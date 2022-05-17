@@ -1,15 +1,11 @@
 package it.polimi.ingsw.Client.Controller;
 
-import it.polimi.ingsw.exceptions.GameException;
-import it.polimi.ingsw.network.toClientMessage.ErrorException;
-import it.polimi.ingsw.network.toClientMessage.OK;
 import it.polimi.ingsw.network.toClientMessage.ToClientMessage;
-import it.polimi.ingsw.network.toServerMessage.ToServerMessage;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.net.SocketException;
 
 public class ServerListener implements Runnable {
     private final ControllerClient controllerClient;
@@ -25,7 +21,7 @@ public class ServerListener implements Runnable {
             throw new RuntimeException(e);
         }
         this.controllerClient = controllerClient;
-        quit=false;
+        quit = false;
     }
 
     @Override
@@ -33,9 +29,12 @@ public class ServerListener implements Runnable {
         ToClientMessage received;
         do {
             try {
-                //TODO catch exception when server is down
                 received = (ToClientMessage) objIn.readObject();
                 received.execute(controllerClient);
+            } catch (SocketException e) {
+                //TODO catch exception when server is down
+                System.err.println("Server connection lost");
+                return;
             } catch (IOException | ClassNotFoundException e) {
                 throw new RuntimeException(e);
             }

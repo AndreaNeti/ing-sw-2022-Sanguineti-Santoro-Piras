@@ -19,6 +19,7 @@ public class IslandClient extends GameComponentClient {
         this.prohibition = islandClient.prohibition;
         this.number = islandClient.number;
     }
+
     public HouseColor getTeam() {
         return team;
     }
@@ -54,10 +55,13 @@ public class IslandClient extends GameComponentClient {
 
     @Override
     public String toString() {
+        String s = super.toString();
+        if (team != null) {
+            s += "| Owned by " + team + " with " + number + " towers ";
+        }
         if (prohibition != 0)
-            return super.toString() + "; owned by " + team + "; number of towers " + number + "; number of prohibitions= " + prohibition;
-        else
-            return super.toString() + "; owned by " + team + "; number of towers " + number;
+            s += "| Number of prohibitions: " + prohibition;
+        return s;
     }
 
     @Override
