@@ -19,7 +19,6 @@ public class PlayCardCommand extends GameCommand {
     @Override
     public void playCLICommand() {
         ViewCli viewCli = (ViewCli) getView();
-        viewCli.print("Insert the number of the assistant card you want to play");
         viewCli.sendToServer(new PlayCard(viewCli.getAssistantCardToPlayInput()));
     }
 
