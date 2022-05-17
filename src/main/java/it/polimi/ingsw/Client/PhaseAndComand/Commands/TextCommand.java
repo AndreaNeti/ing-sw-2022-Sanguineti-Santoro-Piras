@@ -16,7 +16,7 @@ public class TextCommand extends GameCommand{
 
     @Override
     public String toString() {
-        return "insert message";
+        return "Send message";
     }
 
     @Override

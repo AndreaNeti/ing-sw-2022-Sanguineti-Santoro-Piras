@@ -19,7 +19,7 @@ public class MoveFromCloudCommand extends GameCommand{
 
     @Override
     public String toString() {
-        return "move from cloud";
+        return "Move from cloud";
     }
 
     @Override

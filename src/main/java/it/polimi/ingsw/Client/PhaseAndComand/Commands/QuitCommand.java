@@ -17,7 +17,7 @@ public class QuitCommand extends GameCommand{
 
     @Override
     public String toString() {
-        return "quit";
+        return "Quit";
     }
 
     @Override

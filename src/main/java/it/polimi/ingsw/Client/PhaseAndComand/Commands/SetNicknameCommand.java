@@ -1,6 +1,5 @@
 package it.polimi.ingsw.Client.PhaseAndComand.Commands;
 
-import it.polimi.ingsw.Client.Controller.ControllerClient;
 import it.polimi.ingsw.Client.View.AbstractView;
 import it.polimi.ingsw.Client.View.Cli.ViewCli;
 import it.polimi.ingsw.network.toServerMessage.NickName;
@@ -28,6 +27,6 @@ public class SetNicknameCommand extends GameCommand {
 
     @Override
     public String toString() {
-        return "set nickname";
+        return "Set nickname";
     }
 }

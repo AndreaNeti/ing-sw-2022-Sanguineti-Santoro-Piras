@@ -28,6 +28,6 @@ public class JoinMatchByTypeCommand extends GameCommand {
 
     @Override
     public String toString() {
-        return "join match by type";
+        return "Join match by type";
     }
 }

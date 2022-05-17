@@ -1,6 +1,5 @@
 package it.polimi.ingsw.Client.PhaseAndComand.Commands;
 
-import it.polimi.ingsw.Client.Controller.ControllerClient;
 import it.polimi.ingsw.Client.View.AbstractView;
 import it.polimi.ingsw.Client.View.Cli.ViewCli;
 import it.polimi.ingsw.network.toServerMessage.JoinMatchById;
@@ -27,6 +26,6 @@ public class JoinMatchByIdCommand extends GameCommand {
 
     @Override
     public String toString() {
-        return "join match by id";
+        return "Join match by id";
     }
 }

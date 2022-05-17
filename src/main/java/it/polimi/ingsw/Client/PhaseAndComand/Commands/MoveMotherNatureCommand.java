@@ -20,7 +20,7 @@ public class MoveMotherNatureCommand extends GameCommand {
 
     @Override
     public String toString() {
-        return null;
+        return "Move mother nature";
     }
 
     @Override

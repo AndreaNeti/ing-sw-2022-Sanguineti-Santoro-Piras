@@ -1,6 +1,5 @@
 package it.polimi.ingsw.Client.PhaseAndComand.Commands;
 
-import it.polimi.ingsw.Client.Controller.ControllerClient;
 import it.polimi.ingsw.Client.View.AbstractView;
 import it.polimi.ingsw.Client.View.Cli.ViewCli;
 import it.polimi.ingsw.Server.controller.MatchType;
@@ -29,7 +28,7 @@ public class CreateMatchCommand extends GameCommand {
 
     @Override
     public String toString() {
-        return "create match";
+        return "Create match";
     }
 
 }

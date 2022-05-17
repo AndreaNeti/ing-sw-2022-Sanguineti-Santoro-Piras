@@ -21,7 +21,7 @@ public class MoveStudentCommand extends GameCommand {
 
     @Override
     public String toString() {
-        return "move student";
+        return "Move student";
     }
 
     @Override

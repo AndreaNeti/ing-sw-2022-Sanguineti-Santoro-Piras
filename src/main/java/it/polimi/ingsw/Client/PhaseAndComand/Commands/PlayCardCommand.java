@@ -24,6 +24,6 @@ public class PlayCardCommand extends GameCommand {
 
     @Override
     public String toString() {
-        return "play card";
+        return "Play card";
     }
 }
