@@ -5,8 +5,8 @@ import it.polimi.ingsw.Client.View.Gui.ViewGUI;
 
 import java.util.List;
 
-public class MoveStudentsPhaseClient extends AbstractClientGamePhase {
-    public MoveStudentsPhaseClient(List<GameCommand> gameCommands) {
+public class MoveStudentsPhase extends ClientPhase {
+    public MoveStudentsPhase(List<GameCommand> gameCommands) {
         super(gameCommands);
     }
 

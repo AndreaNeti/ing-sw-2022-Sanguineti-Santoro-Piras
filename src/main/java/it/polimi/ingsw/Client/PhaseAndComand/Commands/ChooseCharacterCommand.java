@@ -11,7 +11,7 @@ public class ChooseCharacterCommand extends GameCommand{
     }
 
     @Override
-    void playCLICommand() {
+    public void playCLICommand() {
         ViewCli viewCli = (ViewCli) getView();
 //        viewCli.getChoosenCharacterInput();
    }

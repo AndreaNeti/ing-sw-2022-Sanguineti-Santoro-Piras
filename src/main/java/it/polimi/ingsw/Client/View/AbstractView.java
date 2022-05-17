@@ -10,10 +10,12 @@ public abstract class AbstractView implements GameClientListener {
     private final ControllerClient controllerClient;
     protected GamePhase gamePhase;
     private GameClientView model;
+    private boolean quit;
 
     public AbstractView(ControllerClient controllerClient) {
         this.controllerClient = controllerClient;
         gamePhase = GamePhase.INIT_PHASE;
+        quit=false;
     }
 
     protected GameClientView getModel() {
@@ -33,14 +35,23 @@ public abstract class AbstractView implements GameClientListener {
         controllerClient.sendMessage(toServerMessage);
     }
 
-    public abstract void setView(it.polimi.ingsw.Client.View.ClientPhaseView clientPhaseView);
+    public abstract void setPhaseInView(it.polimi.ingsw.Client.View.ClientPhaseView clientPhaseView);
 
     public boolean connectToServer(byte[] ipAddress, int port) {
         return controllerClient.connect(ipAddress, port);
-    }
 
+    }
+    public void setNewPhase(){
+        controllerClient.setNewGamePhase();
+    }
     public void setMatchType(MatchType mt) {
         controllerClient.setMatchType(mt);
     }
-    public abstract void start();
+    public abstract void start() throws InterruptedException;
+    public void setQuit(){
+        quit=true;
+    }
+    public boolean canQuit(){
+        return quit;
+    }
 }

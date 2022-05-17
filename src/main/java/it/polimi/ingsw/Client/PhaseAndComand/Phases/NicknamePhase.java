@@ -4,7 +4,7 @@ import it.polimi.ingsw.Client.View.Gui.ViewGUI;
 
 import java.util.List;
 
-public class NicknamePhase extends AbstractClientGamePhase {
+public class NicknamePhase extends ClientPhase {
 
     public NicknamePhase(List<GameCommand> gameCommands) {
         super(gameCommands);

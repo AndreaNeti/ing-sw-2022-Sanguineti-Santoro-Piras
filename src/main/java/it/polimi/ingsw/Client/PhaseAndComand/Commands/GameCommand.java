@@ -11,7 +11,7 @@ public abstract class GameCommand implements ActionListener {
         this.view = view;
     }
 
-    abstract void playCLICommand();
+   public abstract void playCLICommand();
 
     protected AbstractView getView() {
         return view;

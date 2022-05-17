@@ -5,8 +5,8 @@ import it.polimi.ingsw.Client.View.Gui.ViewGUI;
 
 import java.util.List;
 
-public class WaitPhaseClient extends AbstractClientGamePhase {
-    public WaitPhaseClient(List<GameCommand> gameCommands) {
+public class MoveCloudPhase extends ClientPhase {
+    public MoveCloudPhase(List<GameCommand> gameCommands) {
         super(gameCommands);
     }
 
@@ -15,9 +15,8 @@ public class WaitPhaseClient extends AbstractClientGamePhase {
 
     }
 
-
     @Override
     public String toString() {
-        return " wait phase";
+        return super.toString();
     }
 }

@@ -1,11 +1,11 @@
 package it.polimi.ingsw.Client;
 
+import it.polimi.ingsw.Client.Controller.ClientPhaseController;
 import it.polimi.ingsw.Client.View.AbstractView;
 import it.polimi.ingsw.Client.View.GameClientListener;
 import it.polimi.ingsw.Client.model.GameClientView;
 import it.polimi.ingsw.Client.model.GameComponentClient;
 import it.polimi.ingsw.Client.model.IslandClient;
-import it.polimi.ingsw.Enum.GamePhase;
 import it.polimi.ingsw.Enum.HouseColor;
 import it.polimi.ingsw.Enum.Wizard;
 
@@ -29,12 +29,6 @@ public abstract class GameClientListened {
     public void notify(IslandClient island) {
         for (GameClientListener listener : listeners) {
             listener.update(island);
-        }
-    }
-
-    public void notify(GamePhase phase) {
-        for (GameClientListener listener : listeners) {
-            listener.update(phase);
         }
     }
 
@@ -81,20 +75,22 @@ public abstract class GameClientListened {
     }
 
     public void addListener(AbstractView listener) {
-        if (listeners == null)
-            listeners = new ArrayList<>();
+        if (listeners == null) listeners = new ArrayList<>();
         listeners.add(listener);
     }
 
     public void addListener(GameClientListened gameClientListened) {
-        if (listeners == null)
-            listeners = gameClientListened.listeners;
+        if (listeners == null) listeners = gameClientListened.listeners;
     }
 
     public void notifyError(String e) {
         for (GameClientListener listener : listeners) {
             listener.error(e);
         }
+    }
+
+    public void notifyClientPhase(ClientPhaseController clientPhaseController) {
+        clientPhaseController.setPhaseInView(listeners);
     }
 
     public void attachModel(GameClientView model) {

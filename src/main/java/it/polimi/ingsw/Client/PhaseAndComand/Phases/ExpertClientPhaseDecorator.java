@@ -7,10 +7,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class ExpertClientGamePhaseDecorator extends AbstractClientGamePhase {
-    private final AbstractClientGamePhase decorated;
+public class ExpertClientPhaseDecorator extends ClientPhase {
+    private final ClientPhase decorated;
 
-    public ExpertClientGamePhaseDecorator(AbstractClientGamePhase toDecorate, List<GameCommand> expertCommands) {
+    public ExpertClientPhaseDecorator(ClientPhase toDecorate, List<GameCommand> expertCommands) {
         super(expertCommands);
         decorated = toDecorate;
     }

@@ -17,16 +17,17 @@ public class App {
     public static void main(String[] args) {
         ControllerClient controllerClient = new ControllerClient();
 
-        if (args[1].equals("gui"))
-            view = new ViewGUI(controllerClient);
-        else {
-            view = new ViewCli(controllerClient);
-        }
+        view = new ViewCli(controllerClient);
+
 
         controllerClient.addListener(view);
         controllerClient.setCommands(instantiateCommands(view));
         controllerClient.instantiateAllPhases();
-        view.start();
+        try {
+            view.start();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private static Map<CLICommands, GameCommand> instantiateCommands(AbstractView view) {
@@ -37,12 +38,16 @@ public class App {
                 entry(CLICommands.JOIN_MATCH_BY_TYPE, new JoinMatchByTypeCommand(view)),
                 entry(CLICommands.JOIN_MATCH_BY_ID, new JoinMatchByIdCommand(view)),
                 entry(CLICommands.PLAY_CARD, new PlayCardCommand(view)),
-                entry(CLICommands.MOVE_STUDENT, new MoveStudentCommand(view)),
+                entry(CLICommands.MOVE_STUDENT,new MoveStudentCommand(view)),
+                entry(CLICommands.CHOOSE_CHARACTER,new ChooseCharacterCommand(view)),
+                entry(CLICommands.SET_CHARACTER_INPUT,new SetCharacterInputCommand(view)),
+                entry(CLICommands.PLAY_CHARACTER, new PlayCharacterCommand(view)),
                 entry(CLICommands.MOVE_MOTHER_NATURE, new MoveMotherNatureCommand(view)),
                 entry(CLICommands.MOVE_FROM_CLOUD, new MoveFromCloudCommand(view)),
                 entry(CLICommands.TEXT_MESSAGE, new TextCommand(view)),
                 entry(CLICommands.QUIT, new QuitCommand(view))
-        );
+
+         );
 
     }
 }

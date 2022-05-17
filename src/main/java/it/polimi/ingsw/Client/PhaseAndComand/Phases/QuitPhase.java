@@ -5,9 +5,9 @@ import it.polimi.ingsw.Client.View.Gui.ViewGUI;
 
 import java.util.List;
 
-public class MoveMotherNaturePhaseClient extends AbstractClientGamePhase {
+public class QuitPhase extends ClientPhase {
 
-    public MoveMotherNaturePhaseClient(List<GameCommand> gameCommands) {
+    public QuitPhase(List<GameCommand> gameCommands) {
         super(gameCommands);
     }
 
@@ -18,6 +18,6 @@ public class MoveMotherNaturePhaseClient extends AbstractClientGamePhase {
 
     @Override
     public String toString() {
-        return "Move mother nature phase";
+        return "quit phase";
     }
 }

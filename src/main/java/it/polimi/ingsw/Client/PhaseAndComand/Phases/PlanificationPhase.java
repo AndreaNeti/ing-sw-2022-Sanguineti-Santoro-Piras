@@ -5,8 +5,8 @@ import it.polimi.ingsw.Client.View.Gui.ViewGUI;
 
 import java.util.List;
 
-public class SelectMatchPhaseClient extends AbstractClientGamePhase {
-    public SelectMatchPhaseClient(List<GameCommand> gameCommands) {
+public class PlanificationPhase extends ClientPhase {
+    public PlanificationPhase(List<GameCommand> gameCommands) {
         super(gameCommands);
     }
 
@@ -14,7 +14,9 @@ public class SelectMatchPhaseClient extends AbstractClientGamePhase {
     public void playPhase(ViewGUI viewGUI) {
 
     }
-    public String toString(){
-        return "Select match phase";
+
+    @Override
+    public String toString() {
+        return "Planification Phase";
     }
 }

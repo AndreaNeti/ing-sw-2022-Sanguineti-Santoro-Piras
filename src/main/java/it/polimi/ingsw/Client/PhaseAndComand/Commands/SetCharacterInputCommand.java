@@ -10,7 +10,7 @@ public class SetCharacterInputCommand extends GameCommand{
     }
 
     @Override
-    void playCLICommand() {
+    public void playCLICommand() {
 
     }
 

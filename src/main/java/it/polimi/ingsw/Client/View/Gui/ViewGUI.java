@@ -17,14 +17,20 @@ public class ViewGUI extends AbstractView {
     }
 
     @Override
-    public void setView(ClientPhaseView clientPhaseView) {
+    public void setPhaseInView(ClientPhaseView clientPhaseView) {
 
     }
 
     @Override
-    public void start() {
+    public void start() throws InterruptedException {
 
     }
+
+    @Override
+    public void setQuit() {
+
+    }
+
 
     @Override
     public void updateMotherNature(Byte motherNaturePosition) {
@@ -76,10 +82,6 @@ public class ViewGUI extends AbstractView {
 
     }
 
-    @Override
-    public void update(GamePhase gamePhase) {
-
-    }
 
     @Override
     public void updateCardPlayed(Byte playedCard) {

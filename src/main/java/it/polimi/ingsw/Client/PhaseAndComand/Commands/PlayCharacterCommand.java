@@ -10,7 +10,7 @@ public class PlayCharacterCommand extends GameCommand{
     }
 
     @Override
-    void playCLICommand() {
+    public void playCLICommand() {
 
     }
 

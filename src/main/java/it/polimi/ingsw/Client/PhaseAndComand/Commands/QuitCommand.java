@@ -11,7 +11,7 @@ public class QuitCommand extends GameCommand{
     }
 
     @Override
-    void playCLICommand() {
+    public void playCLICommand() {
         //TODO implement
     }
 

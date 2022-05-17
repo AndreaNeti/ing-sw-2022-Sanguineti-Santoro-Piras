@@ -18,7 +18,7 @@ public class JoinMatchByIdCommand extends GameCommand {
     }
 
     @Override
-    void playCLICommand() {
+    public void playCLICommand() {
         ViewCli viewCli = (ViewCli) getView();
         Long ID = viewCli.getLongInput("Write game ID");
         viewCli.sendToServer(new JoinMatchById(ID));
