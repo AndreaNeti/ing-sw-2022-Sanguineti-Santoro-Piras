@@ -168,7 +168,7 @@ public class ViewCli extends AbstractView {
         // TODO use getIntInput Options[] and a record for assistant cards
         boolean[] usedCards = getModel().getCurrentPlayer().getUsedCards();
         byte ret = (byte) getIntInput(1, usedCards.length, "Choose an assistant card to play");
-        while (!usedCards[ret]) {
+        while (usedCards[ret]) {
             System.out.println("Card already played");
             ret = (byte) getIntInput(1, usedCards.length, "Choose an assistant card to play");
         }
