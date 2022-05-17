@@ -215,6 +215,32 @@ public class ViewCli extends AbstractView {
         return getIntInput(0, 65535, "Select server port");
     }
 
+    public byte[] getIpAddressInput() {
+        String input = getStringInput("Select server IP");
+        byte[] ret = getIpFromString(input);
+        while (ret == null) {
+            input = getStringInput("Select a valid server IP");
+            ret = getIpFromString(input);
+        }
+        return ret;
+    }
+
+    // return null if it's not a valid ip, otherwise returns the IP bytes
+    private byte[] getIpFromString(String ip) {
+        String[] bytes = ip.split("[.]");
+        if (bytes.length != 4) return null;
+        byte[] ret = new byte[4];
+        for (byte i = 0; i < 4; i++) {
+            try {
+                ret[i] = Byte.parseByte(bytes[i]);
+            } catch (NumberFormatException e) {
+                return null;
+            }
+            if (ret[i] < 0) return null;
+        }
+        return ret;
+    }
+
     public int getColorInput() {
         return getIntInput(0, Color.values().length, "Choose a color" + getOptions(Color.values()));
     }

@@ -20,9 +20,8 @@ public class ConnectServerCommand extends GameCommand {
     public void playCLICommand() {
         ViewCli viewCli = (ViewCli) getView();
         viewCli.print("Select the port of the server");
-        if (!viewCli.connectToServer(new byte[]{127, 0, 0, 1}, viewCli.getServerPortInput()))
+        if (!viewCli.connectToServer(viewCli.getIpAddressInput(), viewCli.getServerPortInput()))
             viewCli.print("Cannot connect to this server");
-        //TODO set the phase
     }
 
     @Override
