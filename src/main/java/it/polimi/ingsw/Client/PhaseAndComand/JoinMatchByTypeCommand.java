@@ -17,6 +17,7 @@ public class JoinMatchByTypeCommand extends GameCommand {
 
     @Override
     public void playCLICommand() {
+
         ViewCli viewCli = (ViewCli) getView();
         viewCli.setMatchType(viewCli.getMatchTypeInput());
     }

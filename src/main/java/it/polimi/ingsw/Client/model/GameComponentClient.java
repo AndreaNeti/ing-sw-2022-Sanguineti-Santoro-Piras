@@ -3,9 +3,11 @@ package it.polimi.ingsw.Client.model;
 import it.polimi.ingsw.Enum.Color;
 import it.polimi.ingsw.Server.model.GameComponent;
 
+import java.util.Arrays;
+
 
 public class GameComponentClient {
-    private final byte[] students;
+    private final byte[]  students;
     private int id;
 
 
@@ -22,16 +24,14 @@ public class GameComponentClient {
 
     @Override
     public String toString() {
-        return "Students: " + studentsToString();
+        return getNameOfComponent()+ ": students= " + studentsToString();
     }
-
     private String studentsToString() {
         StringBuilder ret = new StringBuilder();
         for (Color c : Color.values())
             ret.append(c).append("=").append(students[c.ordinal()]).append(" ");
         return ret.toString();
     }
-
     public int getId() {
         return id;
     }
@@ -50,5 +50,16 @@ public class GameComponentClient {
             this.students[c.ordinal()] = gameComponent.howManyStudents(c);
         }
         this.id = gameComponent.getId();
+    }
+    protected String getNameOfComponent(){
+        if(id<0){
+            return "Cloud";
+        }
+        else{
+            if(id%2==0)
+                return "EntranceHall";
+            else
+                return "LunchHall";
+        }
     }
 }

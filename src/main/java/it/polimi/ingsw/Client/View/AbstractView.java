@@ -33,7 +33,7 @@ public abstract class AbstractView implements GameClientListener {
         controllerClient.sendMessage(toServerMessage);
     }
 
-    public abstract void setView(GamePhaseView gamePhaseView);
+    public abstract void setView(ClientPhaseView clientPhaseView);
 
     public boolean connectToServer(byte[] ipAddress, int port) {
         return controllerClient.connect(ipAddress, port);

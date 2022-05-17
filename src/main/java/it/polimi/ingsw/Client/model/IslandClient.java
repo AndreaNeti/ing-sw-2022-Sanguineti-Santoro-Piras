@@ -19,19 +19,29 @@ public class IslandClient extends GameComponentClient {
         this.prohibition = islandClient.prohibition;
         this.number = islandClient.number;
     }
-
     public HouseColor getTeam() {
         return team;
+    }
+
+    public void setTeam(HouseColor team) {
+        this.team = team;
     }
 
     public byte getProhibition() {
         return prohibition;
     }
 
+    public void setProhibition(byte prohibition) {
+        this.prohibition = prohibition;
+    }
+
     public byte getNumber() {
         return number;
     }
 
+    public void setNumber(byte number) {
+        this.number = number;
+    }
 
     @Override
     protected void modifyGameComponent(GameComponent gameComponent) {
@@ -45,9 +55,13 @@ public class IslandClient extends GameComponentClient {
     @Override
     public String toString() {
         if (prohibition != 0)
-            return super.toString() + "; owned by " + team + "; number of towers " + number + "; numberOf prohibition= " + prohibition;
+            return super.toString() + "; owned by " + team + "; number of towers " + number + "; number of prohibitions= " + prohibition;
         else
             return super.toString() + "; owned by " + team + "; number of towers " + number;
     }
 
+    @Override
+    protected String getNameOfComponent() {
+        return "Island";
+    }
 }

@@ -1,13 +1,11 @@
 package it.polimi.ingsw.Client.PhaseAndComand;
 
-import it.polimi.ingsw.Client.View.Cli.ViewCli;
-import it.polimi.ingsw.Client.View.GameClientListener;
 import it.polimi.ingsw.Client.View.Gui.ViewGUI;
 
 import java.util.List;
 
-public class INIT_PHASE extends GamePhase {
-    public INIT_PHASE(List<GameCommand> gameCommands) {
+public class MoveCloudPhase extends ClientPhase {
+    public MoveCloudPhase(List<GameCommand> gameCommands) {
         super(gameCommands);
     }
 
@@ -18,6 +16,6 @@ public class INIT_PHASE extends GamePhase {
 
     @Override
     public String toString() {
-        return "INIT_PHASE";
+        return super.toString();
     }
 }

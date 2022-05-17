@@ -3,7 +3,7 @@ package it.polimi.ingsw.Client.View.Cli;
 import it.polimi.ingsw.Client.Controller.ControllerClient;
 import it.polimi.ingsw.Client.View.AbstractView;
 import it.polimi.ingsw.Client.View.GameClientListener;
-import it.polimi.ingsw.Client.View.GamePhaseView;
+import it.polimi.ingsw.Client.View.ClientPhaseView;
 import it.polimi.ingsw.Client.model.GameComponentClient;
 import it.polimi.ingsw.Client.model.IslandClient;
 import it.polimi.ingsw.Enum.*;
@@ -171,8 +171,8 @@ public class ViewCli extends AbstractView implements GameClientListener {
     }
 
     @Override
-    public void setView(GamePhaseView gamePhaseView) {
-        gamePhaseView.playPhase(this);
+    public void setView(ClientPhaseView clientPhaseView) {
+        clientPhaseView.playPhase(this);
     }
 
     @Override
