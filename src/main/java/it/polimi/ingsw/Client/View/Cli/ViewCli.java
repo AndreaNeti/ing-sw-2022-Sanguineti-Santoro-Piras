@@ -147,6 +147,7 @@ public class ViewCli extends AbstractView {
 
     public byte[] getIpAddressInput() {
         String input = getStringInput("Select server IP");
+        if (input.equals("localhost")) return new byte[]{127, 0, 0, 1};
         byte[] ret = getIpFromString(input);
         while (ret == null) {
             input = getStringInput("Select a valid server IP");
