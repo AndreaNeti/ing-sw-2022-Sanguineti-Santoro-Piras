@@ -21,10 +21,8 @@ public class ConnectServerCommand extends GameCommand {
         ViewCli viewCli = (ViewCli) getView();
         if (!viewCli.connectToServer(viewCli.getIpAddressInput(), viewCli.getServerPortInput()))
             viewCli.print("Cannot connect to this server");
-        else {
+        else
             System.out.println("Connected with server");
-            viewCli.setNewPhase();
-        }
     }
 
     @Override
