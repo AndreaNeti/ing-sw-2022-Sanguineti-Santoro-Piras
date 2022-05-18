@@ -50,7 +50,6 @@ public class Controller {
         for (byte i = 0; i < nTeams; i++) {
             teams.add(new Team(HouseColor.values()[i], (byte) (matchType.nPlayers() / nTeams), (byte) matchConstants.towersForTeam()));
         }
-        this.gamePhase = GamePhase.PLANIFICATION_PHASE;
         this.roundIndex = 0;
         this.currentPlayerIndex = 0;
         this.lastRound = false;
@@ -199,6 +198,7 @@ public class Controller {
 
     public void disconnectPlayerQuitted(GameListener playerAlreadyDisconnected) {
         removePlayer(playerAlreadyDisconnected);
+        Server.removeMatch(matchId);
         notifyClients(new EndGame(null));
     }
 
@@ -231,6 +231,7 @@ public class Controller {
             gameDelta.addListener(listener);
 
         game.transformAllGameInDelta().send();
+        setPhase(GamePhase.PLANIFICATION_PHASE);
     }
 
     private void nextPlayer() {

@@ -16,4 +16,9 @@ public class Phase implements ToClientMessage{
     public void execute(ControllerClient controllerClient) {
         controllerClient.changePhaseAndCurrentPlayer(gamePhase,currentPlayer);
     }
+
+    @Override
+    public String toString() {
+        return "current player:" +currentPlayer + gamePhase.toString();
+    }
 }

@@ -2,6 +2,7 @@ package it.polimi.ingsw.Client.PhaseAndComand.Commands;
 
 import it.polimi.ingsw.Client.View.AbstractView;
 import it.polimi.ingsw.Client.View.Cli.ViewCli;
+import it.polimi.ingsw.exceptions.StoppedInputException;
 
 import java.awt.event.ActionEvent;
 
@@ -17,7 +18,7 @@ public class ConnectServerCommand extends GameCommand {
     }
 
     @Override
-    public void playCLICommand() {
+    public void playCLICommand() throws StoppedInputException {
         ViewCli viewCli = (ViewCli) getView();
         if (!viewCli.connectToServer(viewCli.getIpAddressInput(), viewCli.getServerPortInput()))
             viewCli.print("Cannot connect to this server");

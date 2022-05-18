@@ -7,17 +7,17 @@ import it.polimi.ingsw.Client.model.GameComponentClient;
 import it.polimi.ingsw.Client.model.IslandClient;
 import it.polimi.ingsw.Enum.*;
 import it.polimi.ingsw.Server.controller.MatchType;
+import it.polimi.ingsw.exceptions.StoppedInputException;
 
 import java.util.*;
 
 public class ViewCli extends AbstractView {
     ClientPhaseView phaseToExecute;
-    private final Scanner myInput = new Scanner(System.in);
+    private Scanner myInput = new Scanner(System.in);
 
     public ViewCli(ControllerClient controllerClient) {
         super(controllerClient);
         System.out.println("You've chosen to play with client line interface");
-
     }
 
 
@@ -25,13 +25,16 @@ public class ViewCli extends AbstractView {
         do {
             while (phaseToExecute == null)
                 wait();
+
             phaseToExecute.playPhase(this);
         } while (!canQuit());
 
     }
-    public void resetPhase(){
-        this.phaseToExecute=null;
+
+    public void unsetPhase() {
+        this.phaseToExecute = null;
     }
+
     @Override
     public void updateMotherNature(Byte motherNaturePosition) {
         System.out.println("New motherNaturePosition is " + motherNaturePosition);
@@ -97,13 +100,17 @@ public class ViewCli extends AbstractView {
         System.out.println("Successful operation");
     }
 
-    public int getIntInput(Object[] options, String message) {
+    public void resetScanner() {
+        myInput.next();
+    }
+
+    public int getIntInput(Object[] options, String message) throws StoppedInputException {
         System.out.println("--OPTIONS--");
         System.out.println(getOptions(options));
         return getIntInput(0, options.length - 1, message);
     }
 
-    public int getIntInput(int min, int max, String message) {
+    public int getIntInput(int min, int max, String message) throws StoppedInputException {
         int ret = getIntInput(message + " (from " + min + " to " + max + ")");
         while (ret < min || ret > max) {
             ret = getIntInput("Not a valid input (from " + min + " to " + max + ")\n" + message);
@@ -112,9 +119,13 @@ public class ViewCli extends AbstractView {
     }
 
     // Message is the string printed before asking the input
-    public int getIntInput(String message) {
+    public int getIntInput(String message) throws StoppedInputException {
         System.out.println(message + ":");
-        return myInput.nextInt();
+        try {
+            return myInput.nextInt();
+        } catch (Exception ex) {
+            throw new StoppedInputException();
+        }
     }
 
     private String getOptions(Object[] options) {
@@ -124,11 +135,11 @@ public class ViewCli extends AbstractView {
         return ret.toString();
     }
 
-    public int getServerPortInput() {
+    public int getServerPortInput() throws StoppedInputException {
         return getIntInput(0, 65535, "Select server port");
     }
 
-    public byte[] getIpAddressInput() {
+    public byte[] getIpAddressInput() throws StoppedInputException {
         String input = getStringInput("Select server IP");
         byte[] ret = getIpFromString(input);
         while (ret == null) {
@@ -156,15 +167,15 @@ public class ViewCli extends AbstractView {
         return ret;
     }
 
-    public int getColorInput() {
+    public int getColorInput() throws StoppedInputException {
         return getIntInput(0, Color.values().length, "Choose a color" + getOptions(Color.values()));
     }
 
-    public MatchType getMatchTypeInput() {
+    public MatchType getMatchTypeInput() throws StoppedInputException {
         return new MatchType((byte) getIntInput(2, 4, "Choose the number of players"), getBooleanInput("Do you want to play in expert mode?"));
     }
 
-    public byte getAssistantCardToPlayInput() {
+    public byte getAssistantCardToPlayInput() throws StoppedInputException {
         // TODO use getIntInput Options[] and a record for assistant cards
         boolean[] usedCards = getModel().getCurrentPlayer().getUsedCards();
         byte ret = (byte) getIntInput(1, usedCards.length, "Choose an assistant card to play");
@@ -175,7 +186,7 @@ public class ViewCli extends AbstractView {
         return ret;
     }
 
-    public int getMoveStudentDestination() {
+    public int getMoveStudentDestination() throws StoppedInputException {
         List<GameComponentClient> validDestinations = new ArrayList<>();
         validDestinations.add(getModel().getCurrentPlayer().getLunchHall());
         validDestinations.addAll(getModel().getIslands());
@@ -183,11 +194,11 @@ public class ViewCli extends AbstractView {
         return validDestinations.get(index).getId();
     }
 
-    public byte getMotherNatureMovesInput() {
+    public byte getMotherNatureMovesInput() throws StoppedInputException {
         return (byte) getIntInput(1, getModel().getCurrentPlayer().getPlayedCardMoves(), "How many steps do you want mother nature to move?");
     }
 
-    public int getCloudSource() {
+    public int getCloudSource() throws StoppedInputException {
         ArrayList<GameComponentClient> availableClouds = new ArrayList<>();
         int i = 0;
         // Add and prints only the not-empty clouds
@@ -205,23 +216,32 @@ public class ViewCli extends AbstractView {
     }
 
 
-    public String getStringInput(String message) {
-        System.out.println(message + ": ");
-        String ret = myInput.next();
-        while (ret.isBlank()) {
-            System.out.println("Input can't be empty.\n" + message + ": ");
-            ret = myInput.next();
+    public String getStringInput(String message) throws StoppedInputException {
+        try {
+            System.out.println(message + ": ");
+            String ret = myInput.next();
+
+            while (ret.isBlank()) {
+                System.out.println("Input can't be empty.\n" + message + ": ");
+                ret = myInput.next();
+            }
+            return ret;
+        } catch (Exception ex) {
+            throw new StoppedInputException();
         }
-        return ret;
     }
 
     public void print(String s) {
         System.out.println(s);
     }
 
-    public Long getLongInput(String message) {
-        System.out.println(message);
-        return myInput.nextLong();
+    public Long getLongInput(String message) throws StoppedInputException {
+        try {
+            System.out.println(message);
+            return myInput.nextLong();
+        }catch (Exception ex){
+            throw new StoppedInputException();
+        }
     }
 
 }
