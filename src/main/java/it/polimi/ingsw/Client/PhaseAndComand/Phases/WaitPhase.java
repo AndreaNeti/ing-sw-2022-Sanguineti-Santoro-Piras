@@ -18,6 +18,6 @@ public class WaitPhase extends ClientPhase {
 
     @Override
     public String toString() {
-        return " wait phase";
+        return "Wait phase";
     }
 }
