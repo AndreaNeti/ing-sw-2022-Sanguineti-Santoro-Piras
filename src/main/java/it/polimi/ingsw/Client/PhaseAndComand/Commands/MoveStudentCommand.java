@@ -3,7 +3,6 @@ package it.polimi.ingsw.Client.PhaseAndComand.Commands;
 import it.polimi.ingsw.Client.View.AbstractView;
 import it.polimi.ingsw.Client.View.Cli.ViewCli;
 import it.polimi.ingsw.Enum.Color;
-import it.polimi.ingsw.exceptions.StoppedInputException;
 import it.polimi.ingsw.network.toServerMessage.MoveStudent;
 
 import java.awt.event.ActionEvent;
@@ -14,7 +13,7 @@ public class MoveStudentCommand extends GameCommand {
     }
 
     @Override
-    public void playCLICommand() throws StoppedInputException {
+    public void playCLICommand() {
         ViewCli viewCli = (ViewCli) getView();
         Color color = Color.values()[viewCli.getColorInput()];
         viewCli.sendToServer(new MoveStudent(color, viewCli.getMoveStudentDestination()));

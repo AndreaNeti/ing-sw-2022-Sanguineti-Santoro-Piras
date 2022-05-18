@@ -8,3 +8,5 @@
 !resources/
 !src/
 !javadoc/
+/out/
+/src/main/java/META-INF/

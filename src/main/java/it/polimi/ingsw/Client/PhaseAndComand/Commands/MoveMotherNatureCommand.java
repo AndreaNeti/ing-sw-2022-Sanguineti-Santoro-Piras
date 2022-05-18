@@ -2,7 +2,6 @@ package it.polimi.ingsw.Client.PhaseAndComand.Commands;
 
 import it.polimi.ingsw.Client.View.AbstractView;
 import it.polimi.ingsw.Client.View.Cli.ViewCli;
-import it.polimi.ingsw.exceptions.StoppedInputException;
 import it.polimi.ingsw.network.toServerMessage.MoveMotherNature;
 
 import java.awt.event.ActionEvent;
@@ -14,7 +13,7 @@ public class MoveMotherNatureCommand extends GameCommand {
     }
 
     @Override
-    public void playCLICommand() throws StoppedInputException {
+    public void playCLICommand() {
         ViewCli viewCli = (ViewCli) getView();
         viewCli.sendToServer(new MoveMotherNature(viewCli.getMotherNatureMovesInput()));
     }

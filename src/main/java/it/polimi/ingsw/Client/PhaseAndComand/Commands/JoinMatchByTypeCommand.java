@@ -3,7 +3,6 @@ package it.polimi.ingsw.Client.PhaseAndComand.Commands;
 import it.polimi.ingsw.Client.View.AbstractView;
 import it.polimi.ingsw.Client.View.Cli.ViewCli;
 import it.polimi.ingsw.Server.controller.MatchType;
-import it.polimi.ingsw.exceptions.StoppedInputException;
 import it.polimi.ingsw.network.toServerMessage.JoinMatchByType;
 
 import java.awt.event.ActionEvent;
@@ -20,9 +19,9 @@ public class JoinMatchByTypeCommand extends GameCommand {
     }
 
     @Override
-    public void playCLICommand() throws StoppedInputException {
+    public void playCLICommand() {
         ViewCli viewCli = (ViewCli) getView();
-        MatchType matchType=viewCli.getMatchTypeInput();
+        MatchType matchType = viewCli.getMatchTypeInput();
         viewCli.setMatchType(matchType);
         viewCli.sendToServer(new JoinMatchByType(matchType));
     }

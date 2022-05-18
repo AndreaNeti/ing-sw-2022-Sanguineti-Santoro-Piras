@@ -18,9 +18,8 @@ public abstract class ClientPhase implements ClientPhaseView, ClientPhaseControl
 
     @Override
     public void playPhase(ViewCli viewCli) {
-        viewCli.resetPhase();
+        viewCli.clearConsole();
         System.out.println("You are in " + this);
-
         getGameCommands().get(viewCli.getIntInput(gameCommands.toArray(), "Select the command to play")).playCLICommand();
     }
 

@@ -2,7 +2,6 @@ package it.polimi.ingsw.Client.PhaseAndComand.Commands;
 
 import it.polimi.ingsw.Client.View.AbstractView;
 import it.polimi.ingsw.Client.View.Cli.ViewCli;
-import it.polimi.ingsw.exceptions.StoppedInputException;
 import it.polimi.ingsw.network.toServerMessage.JoinMatchById;
 
 import java.awt.event.ActionEvent;
@@ -19,7 +18,7 @@ public class JoinMatchByIdCommand extends GameCommand {
     }
 
     @Override
-    public void playCLICommand() throws StoppedInputException {
+    public void playCLICommand() {
         ViewCli viewCli = (ViewCli) getView();
         Long ID = viewCli.getLongInput("Write game ID");
         viewCli.sendToServer(new JoinMatchById(ID));

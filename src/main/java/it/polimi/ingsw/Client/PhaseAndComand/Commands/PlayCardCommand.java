@@ -2,7 +2,6 @@ package it.polimi.ingsw.Client.PhaseAndComand.Commands;
 
 import it.polimi.ingsw.Client.View.AbstractView;
 import it.polimi.ingsw.Client.View.Cli.ViewCli;
-import it.polimi.ingsw.exceptions.StoppedInputException;
 import it.polimi.ingsw.network.toServerMessage.PlayCard;
 
 import java.awt.event.ActionEvent;
@@ -18,7 +17,7 @@ public class PlayCardCommand extends GameCommand {
     }
 
     @Override
-    public void playCLICommand() throws StoppedInputException {
+    public void playCLICommand() {
         ViewCli viewCli = (ViewCli) getView();
         viewCli.sendToServer(new PlayCard(viewCli.getAssistantCardToPlayInput()));
     }
