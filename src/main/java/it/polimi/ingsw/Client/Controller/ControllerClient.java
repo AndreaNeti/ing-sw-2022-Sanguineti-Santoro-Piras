@@ -30,12 +30,12 @@ public class ControllerClient extends GameClientListened {
     private Map<CLICommands, GameCommand> commands;
     private Map<GamePhase, ClientPhaseController> phases;
     private GamePhase oldPhase;
-    private Wizard wizardLocal;
+    private Wizard myWizard;
 
     public ControllerClient() {
         socket = new Socket();
         playerClients = new ArrayList<>();
-        wizardLocal = null;
+        myWizard = null;
 
     }
 
@@ -70,12 +70,11 @@ public class ControllerClient extends GameClientListened {
         serverSender = new ServerSender(socket);
 
 
-
         return true;
     }
 
     public void setNewGamePhase() {
-        GamePhase newPhase=GamePhase.values()[oldPhase.ordinal() + 1];
+        GamePhase newPhase = GamePhase.values()[oldPhase.ordinal() + 1];
         super.notifyClientPhase(phases.get(newPhase));
         oldPhase = newPhase;
 
@@ -86,8 +85,8 @@ public class ControllerClient extends GameClientListened {
         //currentPlayer!=se stesso-> wait Phase
         // this.gamePhase = gamePhase;
         gameClient.setCurrentPlayer(currentPlayer);
-        if (gameClient.getCurrentPlayer().getWizard() != wizardLocal) {
-            oldPhase=GamePhase.WAIT_PHASE;
+        if (gameClient.getCurrentPlayer().getWizard() != myWizard) {
+            oldPhase = GamePhase.WAIT_PHASE;
             super.notifyClientPhase(phases.get(GamePhase.WAIT_PHASE));
         } else {
             oldPhase = gamePhase;
@@ -97,15 +96,15 @@ public class ControllerClient extends GameClientListened {
 
     public void addMembers(HashMap<Player, HouseColor> members) {
         this.playerClients = new ArrayList<>();
-        if (wizardLocal == null) {
-            wizardLocal = Wizard.values()[members.size() - 1];
+        if (myWizard == null) {
+            myWizard = Wizard.values()[members.size() - 1];
         }
         for (Map.Entry<Player, HouseColor> entry : members.entrySet()) {
             playerClients.add(new PlayerClient(entry.getKey(), entry.getValue(), Server.getMatchConstants(matchType)));
         }
         if (playerClients.size() == matchType.nPlayers()) {
             //create a game
-            gameClient = new GameClient(playerClients, Server.getMatchConstants(matchType));
+            gameClient = new GameClient(playerClients, myWizard, Server.getMatchConstants(matchType));
             // decorate phases
             if (matchType.isExpert()) {
                 // TODO find a way to remove cast
@@ -129,8 +128,8 @@ public class ControllerClient extends GameClientListened {
     }
 
     public void error(String e) {
-        notifyError(e);
         notifyClientPhase(phases.get(oldPhase));
+        notifyError(e);
     }
 
     public void ok() {

@@ -50,9 +50,9 @@ public abstract class GameClientListened {
         }
     }
 
-    public void notify(String currentPlayer) {
+    public void notify(String currentPlayer, boolean isMyTurn) {
         for (GameClientListener listener : listeners) {
-            listener.update(currentPlayer);
+            listener.update(currentPlayer, isMyTurn);
         }
     }
 

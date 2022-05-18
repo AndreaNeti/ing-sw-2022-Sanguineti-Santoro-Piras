@@ -71,8 +71,9 @@ public class ViewCli extends AbstractView {
     }
 
     @Override
-    public void update(String currentPlayer) {
-        System.out.println(currentPlayer + " is now playing his turn");
+    public void update(String currentPlayer, boolean isMyTurn) {
+        if (isMyTurn) System.out.println("It's your turn");
+        else System.out.println(currentPlayer + " is now playing his turn");
     }
 
     @Override

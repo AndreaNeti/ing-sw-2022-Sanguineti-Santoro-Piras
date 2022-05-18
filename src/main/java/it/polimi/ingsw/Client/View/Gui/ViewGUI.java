@@ -21,7 +21,7 @@ public class ViewGUI extends AbstractView {
     }
 
     @Override
-    public void start() throws InterruptedException {
+    public void start() {
 
     }
 
@@ -72,7 +72,7 @@ public class ViewGUI extends AbstractView {
     }
 
     @Override
-    public void update(String currentPlayer) {
+    public void update(String currentPlayer, boolean isMyTurn) {
 
     }
 

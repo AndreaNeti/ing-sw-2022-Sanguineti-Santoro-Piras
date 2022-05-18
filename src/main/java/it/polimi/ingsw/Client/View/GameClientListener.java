@@ -3,7 +3,6 @@ package it.polimi.ingsw.Client.View;
 import it.polimi.ingsw.Client.model.GameClientView;
 import it.polimi.ingsw.Client.model.GameComponentClient;
 import it.polimi.ingsw.Client.model.IslandClient;
-import it.polimi.ingsw.Enum.GamePhase;
 import it.polimi.ingsw.Enum.HouseColor;
 import it.polimi.ingsw.Enum.Wizard;
 
@@ -26,7 +25,7 @@ public interface GameClientListener {
 
     void ok();
 
-    void update(String currentPlayer);
+    void update(String currentPlayer, boolean isMyTurn);
 
     void updateMembers(int membersLeftToStart);
 

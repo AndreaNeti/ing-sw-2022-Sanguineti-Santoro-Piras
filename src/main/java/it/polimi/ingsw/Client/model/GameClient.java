@@ -16,11 +16,13 @@ public class GameClient extends GameClientListened implements GameClientView {
     private final Wizard[] professors;
     private byte motherNaturePosition;
     private byte currentPlayer;
+    private final Wizard myWizard;
     private final MatchConstants matchConstants;
     //players are in the same order of wizard.ordinal
     private final ArrayList<PlayerClient> players;
 
-    public GameClient(ArrayList<PlayerClient> players, MatchConstants matchConstants) {
+    public GameClient(ArrayList<PlayerClient> players, Wizard myWizard, MatchConstants matchConstants) {
+        this.myWizard = myWizard;
         this.professors = new Wizard[Color.values().length];
         Arrays.fill(professors, null);
         this.matchConstants = matchConstants;
@@ -42,7 +44,7 @@ public class GameClient extends GameClientListened implements GameClientView {
 
     public void setCurrentPlayer(Byte currentPlayer) {
         this.currentPlayer = currentPlayer;
-        notify(players.get(currentPlayer).toString());
+        notify(players.get(currentPlayer).toString(), currentPlayer== myWizard.ordinal());
     }
 
     public Wizard[] getProfessors() {
