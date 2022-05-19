@@ -112,7 +112,7 @@ public class ClientHandler implements Runnable, GameListener {
         try {
             objOut.writeObject(m);
             objOut.flush();
-            System.out.println("Message send");
+            System.out.println(m);
         } catch (IOException e) {
             e.printStackTrace();
             System.err.println("can't send to the client");

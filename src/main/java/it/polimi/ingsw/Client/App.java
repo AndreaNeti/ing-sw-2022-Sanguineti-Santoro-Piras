@@ -7,6 +7,7 @@ import it.polimi.ingsw.Client.View.Cli.ViewCli;
 import it.polimi.ingsw.Client.View.Gui.ViewGUI;
 import it.polimi.ingsw.Enum.CLICommands;
 
+import java.io.IOException;
 import java.util.Map;
 
 import static java.util.Map.entry;
@@ -15,6 +16,7 @@ public class App {
     static AbstractView view;
 
     public static void main(String[] args) {
+
         ControllerClient controllerClient = new ControllerClient();
 
         view = new ViewCli(controllerClient);

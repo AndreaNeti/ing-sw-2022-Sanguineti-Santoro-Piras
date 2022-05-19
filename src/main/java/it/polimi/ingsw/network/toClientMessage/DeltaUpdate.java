@@ -14,4 +14,9 @@ public class DeltaUpdate implements ToClientMessage {
     public void execute(ControllerClient controllerClient) {
         controllerClient.changeGame(gameDelta);
     }
+
+    @Override
+    public String toString() {
+        return gameDelta.toString();
+    }
 }

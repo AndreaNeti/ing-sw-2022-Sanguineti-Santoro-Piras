@@ -285,6 +285,7 @@ public class ViewCli extends AbstractView {
 
     public synchronized String getInput() throws PhaseChangedException {
         isInputReady = false;
+        phaseChanged = false;
         this.input = null;
         try {
             while (!isInputReady && !phaseChanged) {
@@ -295,7 +296,7 @@ public class ViewCli extends AbstractView {
             return null;
         }
         if (isInputReady) return this.input;
-        phaseChanged = false;
+
         throw new PhaseChangedException();
     }
 

@@ -165,4 +165,18 @@ public class GameDelta implements Serializable {
         if (newTeamTowersLeft == null) return Collections.emptyMap();
         return newTeamTowersLeft;
     }
+
+    @Override
+    public String toString() {
+        return "GameDelta{" +
+                "listeners=" + listeners +
+                ", updatedGC=" + updatedGC +
+                ", deletedIslands=" + deletedIslands +
+                ", updatedProfessors=" + updatedProfessors +
+                ", newTeamTowersLeft=" + newTeamTowersLeft +
+                ", newMotherNaturePosition=" + newMotherNaturePosition +
+                ", playedCard=" + playedCard +
+                ", automaticSending=" + automaticSending +
+                '}';
+    }
 }
