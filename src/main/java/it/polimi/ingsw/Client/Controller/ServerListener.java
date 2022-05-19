@@ -33,9 +33,8 @@ public class ServerListener implements Runnable {
                 received = (ToClientMessage) objIn.readObject();
                 received.execute(controllerClient);
             } catch (SocketException e) {
-                //TODO catch exception when server is down
                 System.err.println("Server connection lost");
-                controllerClient.changePhaseAndCurrentPlayer(GamePhase.INIT_PHASE, null);
+                controllerClient.changePhase(GamePhase.INIT_PHASE);
                 return;
             } catch (IOException | ClassNotFoundException e) {
                 throw new RuntimeException(e);

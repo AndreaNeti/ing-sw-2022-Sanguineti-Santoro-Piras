@@ -50,7 +50,7 @@ public class ControllerClient extends GameClientListened {
                 entry(GamePhase.SELECT_MATCH_PHASE, new SelectMatchPhase(new ArrayList<>(Arrays.asList(commands.get(CLICommands.CREATE_MATCH), commands.get(CLICommands.JOIN_MATCH_BY_TYPE), commands.get(CLICommands.JOIN_MATCH_BY_ID), commands.get(CLICommands.QUIT))))),
                 entry(GamePhase.WAIT_PHASE, new WaitPhase(new ArrayList<>(Arrays.asList(commands.get(CLICommands.TEXT_MESSAGE), commands.get(CLICommands.QUIT))))),
                 entry(GamePhase.PLANIFICATION_PHASE, new PlanificationPhase(new ArrayList<>(Arrays.asList(commands.get(CLICommands.PLAY_CARD), commands.get(CLICommands.TEXT_MESSAGE), commands.get(CLICommands.QUIT))))),
-                entry(GamePhase.MOVE_ST_PHASE, new MoveStudentsPhase(new ArrayList<>(Arrays.asList(commands.get(CLICommands.SHOW_ENTRANCE_HALL),commands.get(CLICommands.MOVE_STUDENT), commands.get(CLICommands.TEXT_MESSAGE), commands.get(CLICommands.QUIT))))),
+                entry(GamePhase.MOVE_ST_PHASE, new MoveStudentsPhase(new ArrayList<>(Arrays.asList(commands.get(CLICommands.SHOW_ENTRANCE_HALL), commands.get(CLICommands.MOVE_STUDENT), commands.get(CLICommands.TEXT_MESSAGE), commands.get(CLICommands.QUIT))))),
                 entry(GamePhase.MOVE_MN_PHASE, new MoveMotherNaturePhase(new ArrayList<>(Arrays.asList(commands.get(CLICommands.MOVE_MOTHER_NATURE), commands.get(CLICommands.TEXT_MESSAGE), commands.get(CLICommands.QUIT))))),
                 entry(GamePhase.MOVE_CL_PHASE, new MoveCloudPhase(new ArrayList<>(Arrays.asList(commands.get(CLICommands.MOVE_FROM_CLOUD), commands.get(CLICommands.TEXT_MESSAGE), commands.get(CLICommands.QUIT))))),
                 entry(GamePhase.SET_CH_CARD_PHASE, new SetCharacterInputPhase(new ArrayList<>(List.of(commands.get(CLICommands.QUIT))))),
@@ -84,20 +84,29 @@ public class ControllerClient extends GameClientListened {
         notifyClientPhase(phases.get(oldPhase), notifyScanner);
     }
 
-    public void changePhaseAndCurrentPlayer(GamePhase gamePhase, Byte currentPlayer) {
+    public void changePhase(GamePhase newGamePhase) {
+        oldPhase = newGamePhase;
+        super.notifyClientPhase(phases.get(newGamePhase), true);
+    }
+
+    public void changePhase(GamePhase newGamePhase, boolean setOldPhase) {
+        if (setOldPhase)
+            changePhase(newGamePhase);
+        else
+            super.notifyClientPhase(phases.get(newGamePhase), true);
+    }
+
+    public void changePhase(GamePhase gamePhase, Byte currentPlayer) {
         // se arriva il messaggio e se stesso è il current player si imposta fase del messaggio
         // currentPlayer!=se stesso-> wait Phase
         // this.gamePhase = gamePhase;
-        if (currentPlayer != null) {
-            gameClient.setCurrentPlayer(currentPlayer);
-            if (gameClient.getCurrentPlayer().getWizard() != myWizard) {
-                gamePhase = GamePhase.WAIT_PHASE;
-                oldPhase = gamePhase;
-            } else {
-                oldPhase = gamePhase;
-            }
+        if (currentPlayer == null) return;
+        gameClient.setCurrentPlayer(currentPlayer);
+        if (gameClient.getCurrentPlayer().getWizard() != myWizard) {
+            changePhase(GamePhase.WAIT_PHASE);
+        } else {
+            changePhase(gamePhase);
         }
-        super.notifyClientPhase(phases.get(gamePhase), true);
     }
 
     public void addMembers(HashMap<Player, HouseColor> members) {
@@ -148,7 +157,7 @@ public class ControllerClient extends GameClientListened {
         }
 
         for (Map.Entry<Color, Wizard> entry : gameDelta.getUpdatedProfessors().entrySet()) {
-            if(entry.getValue()!=null)
+            if (entry.getValue() != null)
                 gameClient.setProfessors(entry.getKey(), entry.getValue());
         }
 
@@ -172,10 +181,10 @@ public class ControllerClient extends GameClientListened {
     // returns true if the client process has to quit
     public boolean setQuit() {
         if (gameClient != null) {
-            changePhaseAndCurrentPlayer(GamePhase.SELECT_MATCH_PHASE, null);
+            changePhase(GamePhase.SELECT_MATCH_PHASE);
             return false;
         } else if (oldPhase != GamePhase.INIT_PHASE) {
-            changePhaseAndCurrentPlayer(GamePhase.INIT_PHASE, null);
+            changePhase(GamePhase.INIT_PHASE);
             return false;
         } else
             return true;
