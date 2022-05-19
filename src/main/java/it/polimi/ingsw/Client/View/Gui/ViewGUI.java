@@ -5,6 +5,7 @@ import it.polimi.ingsw.Client.View.AbstractView;
 import it.polimi.ingsw.Client.View.ClientPhaseView;
 import it.polimi.ingsw.Client.model.GameComponentClient;
 import it.polimi.ingsw.Client.model.IslandClient;
+import it.polimi.ingsw.Enum.Color;
 import it.polimi.ingsw.Enum.HouseColor;
 import it.polimi.ingsw.Enum.Wizard;
 
@@ -57,7 +58,7 @@ public class ViewGUI extends AbstractView {
     }
 
     @Override
-    public void update(Wizard[] professors) {
+    public void update(Color color, Wizard wizard) {
 
     }
 

@@ -6,6 +6,7 @@ import it.polimi.ingsw.Client.View.GameClientListener;
 import it.polimi.ingsw.Client.model.GameClientView;
 import it.polimi.ingsw.Client.model.GameComponentClient;
 import it.polimi.ingsw.Client.model.IslandClient;
+import it.polimi.ingsw.Enum.Color;
 import it.polimi.ingsw.Enum.HouseColor;
 import it.polimi.ingsw.Enum.Wizard;
 
@@ -44,9 +45,9 @@ public abstract class GameClientListened {
         }
     }
 
-    public void notify(Wizard[] professors) {
+    public void notify(Color color, Wizard wizard) {
         for (GameClientListener listener : listeners) {
-            listener.update(professors);
+            listener.update(color, wizard);
         }
     }
 

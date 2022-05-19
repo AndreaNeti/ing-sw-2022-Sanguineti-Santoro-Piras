@@ -56,7 +56,7 @@ public class GameClient extends GameClientListened implements GameClientView {
 
     public void setProfessors(Color color, Wizard owner) {
         this.professors[color.ordinal()] = owner;
-        notify(professors);
+        notify(color,owner);
     }
 
     //I am trusting server pls

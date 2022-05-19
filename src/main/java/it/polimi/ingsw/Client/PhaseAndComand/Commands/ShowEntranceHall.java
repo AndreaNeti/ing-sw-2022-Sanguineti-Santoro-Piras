@@ -14,7 +14,7 @@ public class ShowEntranceHall extends GameCommand {
     @Override
     public void playCLICommand() throws PhaseChangedException {
         ViewCli viewCli = (ViewCli) getView();
-                viewCli.printEntranceHall(viewCli.getIntInput(viewCli.getModel().getPlayers().toArray(),"Select the player of which you want to see the entrance hall"));
+        viewCli.printEntranceHall(viewCli.getIntInput(0,3,"Select the player of which you want to see the entrance hall"));
         viewCli.repeatPhase(true);
     }
 

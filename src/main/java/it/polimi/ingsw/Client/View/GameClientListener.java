@@ -3,6 +3,7 @@ package it.polimi.ingsw.Client.View;
 import it.polimi.ingsw.Client.model.GameClientView;
 import it.polimi.ingsw.Client.model.GameComponentClient;
 import it.polimi.ingsw.Client.model.IslandClient;
+import it.polimi.ingsw.Enum.Color;
 import it.polimi.ingsw.Enum.HouseColor;
 import it.polimi.ingsw.Enum.Wizard;
 
@@ -19,7 +20,7 @@ public interface GameClientListener {
 
     void update(HouseColor houseColor, Byte towerLefts);
 
-    void update(Wizard[] professors);
+    void update(Color color, Wizard wizard);
 
     void error(String e);
 
