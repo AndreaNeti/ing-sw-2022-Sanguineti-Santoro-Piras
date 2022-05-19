@@ -22,6 +22,7 @@ public class GameClient extends GameClientListened implements GameClientView {
     private final ArrayList<PlayerClient> players;
 
     public GameClient(ArrayList<PlayerClient> players, Wizard myWizard, MatchConstants matchConstants) {
+        System.out.println(players.toString());
         this.myWizard = myWizard;
         this.professors = new Wizard[Color.values().length];
         Arrays.fill(professors, null);

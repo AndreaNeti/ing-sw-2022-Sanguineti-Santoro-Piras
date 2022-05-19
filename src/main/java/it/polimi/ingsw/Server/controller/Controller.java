@@ -12,6 +12,7 @@ import it.polimi.ingsw.network.toClientMessage.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 public class Controller {
     private final MatchConstants matchConstants;
@@ -149,7 +150,7 @@ public class Controller {
 
         playersList.add(newPlayer);
         playerHandlers.add(handler);
-        HashMap<Player, HouseColor> playerMap = new HashMap<>();
+        HashMap<Player, HouseColor> playerMap = new LinkedHashMap<>();
         for (Team t : teams)
             for (Player p : t.getPlayers())
                 playerMap.put(p, t.getHouseColor());

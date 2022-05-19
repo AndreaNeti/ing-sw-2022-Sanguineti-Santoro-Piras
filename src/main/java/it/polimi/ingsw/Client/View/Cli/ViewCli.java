@@ -79,12 +79,17 @@ public class ViewCli extends AbstractView {
 
     @Override
     public void update(HouseColor houseColor, Byte towerLefts) {
-
+        if (towerLefts > 1)
+            System.out.println("Team " + houseColor + "has now " + towerLefts + " towers");
+        else
+            System.out.println("Team " + houseColor + "has now " + towerLefts + " tower");
     }
 
     @Override
     public void update(Wizard[] professors) {
-
+        for (int i = 0; i < professors.length; i++) {
+            System.out.println(Color.values()[i] + " professor is owned by" + professors[i]);
+        }
     }
 
     @Override
@@ -102,6 +107,7 @@ public class ViewCli extends AbstractView {
 
     @Override
     public void updateCardPlayed(Byte playedCard) {
+        System.out.println(getModel().getCurrentPlayer().getWizard() + "played assistant card" + playedCard);
     }
 
     @Override

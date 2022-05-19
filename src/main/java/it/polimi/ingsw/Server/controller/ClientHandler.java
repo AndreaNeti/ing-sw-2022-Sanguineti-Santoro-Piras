@@ -109,10 +109,12 @@ public class ClientHandler implements Runnable, GameListener {
 
     @Override
     public void update(ToClientMessage m) {
+        System.out.println(m);
         try {
+            objOut.reset();
             objOut.writeObject(m);
             objOut.flush();
-            System.out.println(m);
+
         } catch (IOException e) {
             e.printStackTrace();
             System.err.println("can't send to the client");
@@ -129,26 +131,29 @@ public class ClientHandler implements Runnable, GameListener {
         Long controllerId;
         controllerId = Server.getOldestMatchId(matchType);
         controller = Server.getMatchById(controllerId);
+        update(new OK());
         if (controller.addPlayer(this, nickName)) {
             Server.removeMatch(controllerId);
         }
-        update(new OK());
+
     }
 
     public void joinByMatchId(Long matchId) throws GameException {
         if(controller != null) throw new NotAllowedException("Already joined a match");
         controller = Server.getMatchById(matchId);
+        update(new OK());
         if (controller.addPlayer(this, nickName)) {
             Server.removeMatch(matchId);
         }
-        update(new OK());
+
     }
 
     public void createMatch(MatchType matchType) throws GameException {
         if(controller != null) throw new NotAllowedException("Already joined a match");
         controller = Server.createMatch(matchType);
-        controller.addPlayer(this, nickName);
         update(new OK());
+        controller.addPlayer(this, nickName);
+
     }
 
 }
