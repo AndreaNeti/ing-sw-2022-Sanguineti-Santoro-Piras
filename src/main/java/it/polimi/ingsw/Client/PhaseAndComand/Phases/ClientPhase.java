@@ -5,8 +5,8 @@ import it.polimi.ingsw.Client.PhaseAndComand.Commands.GameCommand;
 import it.polimi.ingsw.Client.View.AbstractView;
 import it.polimi.ingsw.Client.View.Cli.ViewCli;
 import it.polimi.ingsw.Client.View.ClientPhaseView;
+import it.polimi.ingsw.exceptions.PhaseChangedException;
 
-import java.util.Arrays;
 import java.util.List;
 
 public abstract class ClientPhase implements ClientPhaseView, ClientPhaseController {
@@ -21,10 +21,13 @@ public abstract class ClientPhase implements ClientPhaseView, ClientPhaseControl
     public void playPhase(ViewCli viewCli) {
         viewCli.clearConsole();
         System.out.println("You are in " + this);
-        int index = viewCli.playOptions(gameCommands.toArray(), "Select the command to play");
-        if(index != -1)
+        int index;
+        try {
+            viewCli.unsetPhase();
+            index = viewCli.getIntInput(gameCommands.toArray(), "Select the command to play");
             gameCommands.get(index).playCLICommand();
-        viewCli.unsetPhase();
+        } catch (PhaseChangedException ignored) {
+        }
     }
 
     @Override
@@ -33,9 +36,9 @@ public abstract class ClientPhase implements ClientPhaseView, ClientPhaseControl
     }
 
     @Override
-    public void setPhaseInView(List<AbstractView> views) {
+    public void setPhaseInView(List<AbstractView> views, boolean notifyScanner) {
         for (AbstractView abstractView : views) {
-            abstractView.setPhaseInView(this);
+            abstractView.setPhaseInView(this, notifyScanner);
         }
     }
 

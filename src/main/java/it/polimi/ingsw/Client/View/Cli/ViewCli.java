@@ -7,81 +7,39 @@ import it.polimi.ingsw.Client.model.GameComponentClient;
 import it.polimi.ingsw.Client.model.IslandClient;
 import it.polimi.ingsw.Enum.*;
 import it.polimi.ingsw.Server.controller.MatchType;
+import it.polimi.ingsw.exceptions.PhaseChangedException;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.*;
 
 public class ViewCli extends AbstractView {
 
     private final static String operatingSystem = System.getProperty("os.name");
     private ClientPhaseView phaseToExecute;
-
-    private String inputMessage;
-    private Boolean ready, phaseChanged, waitingScanner;
-
-    private Integer optionIndex = 0;
-    private Object[] options;
-
-    private Object lock;
+    private Boolean isInputReady, phaseChanged;
+    private String input;
 
     public ViewCli(ControllerClient controllerClient) {
         super(controllerClient);
         Thread t = new Thread(() -> {
-            BufferedReader inp = new BufferedReader(new InputStreamReader(System.in));
-            int a;
-//            Reader r = new Reader() {
-//                @Override
-//                public int read(char[] cbuf, int off, int len) throws IOException {
-//                    return 0;
-//                }
-//
-//                @Override
-//                public void close() throws IOException {
-//
-//                }
-//            };
-
+            final Scanner myInput = new Scanner(System.in);
             while (true) {
-                while (waitingScanner) {
-                    try {
-                        lock.wait();
-                    } catch (InterruptedException e) {
-                        throw new RuntimeException(e);
-                    }
-                }
-                try {
-                    a = inp.read();
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-                if (a == '1' || a == '2') {
-                    clearConsole();
-                    System.out.println(listOptions());
-                    if (a == '1')
-                        setIndex(true);
-                    else
-                        setIndex(false);
-                    System.out.println(optionIndex);
-                } else if (a == 10) {
-                    System.out.println("Ciao");
-                    ready = true;
-                    notifyInput();
-                }
+                input = myInput.next();
+                notifyInput();
             }
         });
         t.start();
         System.out.println("You've chosen to play with client line interface");
+        isInputReady = false;
+        phaseChanged = false;
     }
 
     private synchronized void notifyInput() {
-        ready = true;
+        isInputReady = true;
         notifyAll();
     }
 
     public void start() throws InterruptedException {
-
         do {
             synchronized (this) {
                 while (phaseToExecute == null)
@@ -90,11 +48,6 @@ public class ViewCli extends AbstractView {
             }
         } while (!canQuit());
 
-    }
-
-    private void setIndex(boolean moveDown) {
-        optionIndex += (moveDown) ? 1 : -1;
-        optionIndex = Math.floorMod(optionIndex, options.length);
     }
 
     public void unsetPhase() {
@@ -152,9 +105,10 @@ public class ViewCli extends AbstractView {
     }
 
     @Override
-    public synchronized void setPhaseInView(ClientPhaseView clientPhaseView) {
+    public synchronized void setPhaseInView(ClientPhaseView clientPhaseView, boolean notifyScanner) {
         this.phaseToExecute = clientPhaseView;
-        phaseChanged = true;
+        if (notifyScanner)
+            phaseChanged = true;
         notifyAll();
     }
 
@@ -179,12 +133,20 @@ public class ViewCli extends AbstractView {
         }
     }
 
-//    public int getIntInput(Object[] options, String message) {
-//        System.out.println(listOptions());
-//        return getIntInput(0, options.length - 1, message);
-//    }
+    private String listOptions(Object[] options) {
+        StringBuilder ret = new StringBuilder();
+        ret.append("--OPTIONS--\n");
+        for (int i = 0; i < options.length; i++)
+            ret.append("[").append(i).append("] ").append(options[i]).append("\n");
+        return ret.toString();
+    }
 
-    public int getIntInput(int min, int max, String message) {
+    public int getIntInput(Object[] options, String message) throws PhaseChangedException {
+        System.out.println(listOptions(options));
+        return getIntInput(0, options.length - 1, message);
+    }
+
+    public int getIntInput(int min, int max, String message) throws PhaseChangedException {
         int ret = getIntInput(message + " (from " + min + " to " + max + ")");
         while (ret < min || ret > max) {
             ret = getIntInput("Not a valid input (from " + min + " to " + max + ")\n" + message);
@@ -193,28 +155,27 @@ public class ViewCli extends AbstractView {
     }
 
     //     Message is the string printed before asking the input
-    public int getIntInput(String message) {
-        System.out.println(message + ":");
-
-        final Scanner myInput = new Scanner(System.in);
-        int ret = myInput.nextInt();
-        myInput.close();
+    public int getIntInput(String message) throws PhaseChangedException {
+        int ret = 0;
+        boolean err;
+        do {
+            err = false;
+            System.out.println(message + ":");
+            try {
+                ret = Integer.parseInt(getInput());
+            } catch (NumberFormatException ex) {
+                err = true;
+                print("Not a valid input");
+            }
+        } while (err);
         return ret;
     }
 
-    private String listOptions() {
-        StringBuilder ret = new StringBuilder();
-        ret.append(inputMessage).append("--OPTIONS--\n");
-        for (int i = 0; i < options.length; i++)
-            ret.append("[").append(i).append("] ").append(options[i]).append("\n");
-        return ret.toString();
-    }
-
-    public int getServerPortInput() {
+    public int getServerPortInput() throws PhaseChangedException {
         return getIntInput(0, 65535, "Select server port");
     }
 
-    public byte[] getIpAddressInput() {
+    public byte[] getIpAddressInput() throws PhaseChangedException {
         String input = getStringInput("Select server IP");
         byte[] ret = getIpFromString(input);
         while (ret == null) {
@@ -243,15 +204,15 @@ public class ViewCli extends AbstractView {
         return ret;
     }
 
-    public int getColorInput() {
-        return playOptions(Color.values(), "Choose a color");
+    public int getColorInput() throws PhaseChangedException {
+        return getIntInput(Color.values(), "Choose a color");
     }
 
-    public MatchType getMatchTypeInput() {
+    public MatchType getMatchTypeInput() throws PhaseChangedException {
         return new MatchType((byte) getIntInput(2, 4, "Choose the number of players"), getBooleanInput("Do you want to play in expert mode?"));
     }
 
-    public byte getAssistantCardToPlayInput() {
+    public byte getAssistantCardToPlayInput() throws PhaseChangedException {
         // TODO use getIntInput Options[] and a record for assistant cards
         boolean[] usedCards = getModel().getCurrentPlayer().getUsedCards();
         byte ret = (byte) getIntInput(1, usedCards.length, "Choose an assistant card to play");
@@ -262,50 +223,49 @@ public class ViewCli extends AbstractView {
         return ret;
     }
 
-    public int getMoveStudentDestination() {
+    public int getMoveStudentDestination() throws PhaseChangedException {
         List<GameComponentClient> validDestinations = new ArrayList<>();
         validDestinations.add(getModel().getCurrentPlayer().getLunchHall());
         validDestinations.addAll(getModel().getIslands());
-        int index = playOptions(validDestinations.toArray(), "Select a destination");
+        int index = getIntInput(validDestinations.toArray(), "Select a destination");
 //        int index = getIntInput(validDestinations.toArray(), "Select a destination");
         return validDestinations.get(index).getId();
     }
 
-    public byte getMotherNatureMovesInput() {
+    public byte getMotherNatureMovesInput() throws PhaseChangedException {
         return (byte) getIntInput(1, getModel().getCurrentPlayer().getPlayedCardMoves(), "How many steps do you want mother nature to move?");
     }
 
-    public int getCloudSource() {
+    public int getCloudSource() throws PhaseChangedException {
         ArrayList<GameComponentClient> availableClouds = new ArrayList<>();
         // Add and prints only the not-empty clouds
         for (GameComponentClient cloud : getModel().getClouds()) {
             if (cloud.howManyStudents() > 0)
                 availableClouds.add(cloud);
         }
-        int cloudIndex = playOptions(availableClouds.toArray(), "Choose a cloud source");
+        int cloudIndex = getIntInput(availableClouds.toArray(), "Choose a cloud source");
         return availableClouds.get(cloudIndex).getId();
     }
 
-    public boolean getBooleanInput(String message) {
-        Object[] trueFalse = new Object[]{"Yes", "No"};
-        return playOptions(trueFalse, message) == 0;
-//        System.out.println(message + "(TRUE/FALSE):");
-//        return myInput.nextBoolean();
+    public boolean getBooleanInput(String message) throws PhaseChangedException {
+        System.out.println(message + "(Y/N):");
+        String s = getInput().toLowerCase();
+        while (!s.equals("y") && !s.equals("n")) {
+            print("Not a valid input\n" + message + "(Y/N):");
+            s = getInput().toLowerCase();
+        }
+        return s.equals("y");
     }
 
 
-    public String getStringInput(String message) {
-        waitingScanner=true;
-        final Scanner myInput = new Scanner(System.in);
+    public String getStringInput(String message) throws PhaseChangedException {
         System.out.println(message + ": ");
-        String ret = myInput.next();
+        String ret = getInput();
 
         while (ret.isBlank()) {
             System.out.println("Input can't be empty.\n" + message + ": ");
-            ret = myInput.next();
+            ret = getInput();
         }
-        myInput.close();
-        lock.notify();
 
         return ret;
     }
@@ -323,22 +283,20 @@ public class ViewCli extends AbstractView {
         return ret;
     }
 
-    public synchronized int playOptions(Object[] options, String message) {
-        ready = false;
-        this.options = options;
-        optionIndex = 0;
-        inputMessage = message;
-        listOptions();
+    public synchronized String getInput() throws PhaseChangedException {
+        isInputReady = false;
+        this.input = null;
         try {
-            while (!ready || !phaseChanged) {
+            while (!isInputReady && !phaseChanged) {
                 wait();
             }
         } catch (InterruptedException e) {
             e.printStackTrace();
+            return null;
         }
-        if (ready) return optionIndex;
+        if (isInputReady) return this.input;
         phaseChanged = false;
-        return -1;
+        throw new PhaseChangedException();
     }
 
 

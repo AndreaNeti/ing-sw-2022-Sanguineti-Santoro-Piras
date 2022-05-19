@@ -12,6 +12,6 @@ public class OK implements ToClientMessage{
     @Override
     public void execute(ControllerClient controllerClient) {
         controllerClient.ok();
-        controllerClient.setNewGamePhase();
+        controllerClient.setNextClientPhase();
     }
 }

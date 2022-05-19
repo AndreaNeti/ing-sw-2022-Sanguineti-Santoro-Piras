@@ -15,7 +15,7 @@ public abstract class AbstractView implements GameClientListener {
     public AbstractView(ControllerClient controllerClient) {
         this.controllerClient = controllerClient;
         gamePhase = GamePhase.INIT_PHASE;
-        quit=false;
+        quit = false;
     }
 
     protected GameClientView getModel() {
@@ -35,23 +35,28 @@ public abstract class AbstractView implements GameClientListener {
         controllerClient.sendMessage(toServerMessage);
     }
 
-    public abstract void setPhaseInView(ClientPhaseView clientPhaseView);
+    public abstract void setPhaseInView(ClientPhaseView clientPhaseView, boolean notifyScanner);
+
+    public void repeatPhase(boolean notifyScanner) {
+        controllerClient.repeatPhase(notifyScanner);
+    }
 
     public boolean connectToServer(byte[] ipAddress, int port) {
         return controllerClient.connect(ipAddress, port);
 
     }
-    public void setNewPhase(){
-        controllerClient.setNewGamePhase();
-    }
+
     public void setMatchType(MatchType mt) {
         controllerClient.setMatchType(mt);
     }
+
     public abstract void start() throws InterruptedException;
-    public void setQuit(){
-        quit=true;
+
+    public void setQuit() {
+        quit = true;
     }
-    public boolean canQuit(){
+
+    public boolean canQuit() {
         return quit;
     }
 }

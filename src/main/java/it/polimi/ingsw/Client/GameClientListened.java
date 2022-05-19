@@ -89,8 +89,8 @@ public abstract class GameClientListened {
         }
     }
 
-    public void notifyClientPhase(ClientPhaseController clientPhaseController) {
-        clientPhaseController.setPhaseInView(listeners);
+    public void notifyClientPhase(ClientPhaseController clientPhaseController, boolean notifyScanner) {
+        clientPhaseController.setPhaseInView(listeners, notifyScanner);
     }
 
     public void attachModel(GameClientView model) {

@@ -57,7 +57,7 @@ public class ControllerClient extends GameClientListened {
                 entry(GamePhase.PLAY_CH_CARD_PHASE, new PlayCharacterCardPhase(new ArrayList<>(List.of(commands.get(CLICommands.QUIT))))),
                 entry(GamePhase.QUIT_PHASE, new QuitPhase(new ArrayList<>(Arrays.asList(commands.get(CLICommands.UNDO), commands.get(CLICommands.QUIT))))));
         oldPhase = GamePhase.INIT_PHASE;
-        notifyClientPhase(phases.get(oldPhase));
+        notifyClientPhase(phases.get(oldPhase), false);
     }
 
     public boolean connect(byte[] ipAddress, int port) {
@@ -73,11 +73,15 @@ public class ControllerClient extends GameClientListened {
         return true;
     }
 
-    public void setNewGamePhase() {
+    public void setNextClientPhase() {
         GamePhase newPhase = GamePhase.values()[oldPhase.ordinal() + 1];
-        super.notifyClientPhase(phases.get(newPhase));
+        super.notifyClientPhase(phases.get(newPhase), true);
         oldPhase = newPhase;
 
+    }
+
+    public void repeatPhase(boolean notifyScanner) {
+        notifyClientPhase(phases.get(oldPhase), notifyScanner);
     }
 
     public void changePhaseAndCurrentPlayer(GamePhase gamePhase, Byte currentPlayer) {
@@ -87,10 +91,10 @@ public class ControllerClient extends GameClientListened {
         gameClient.setCurrentPlayer(currentPlayer);
         if (gameClient.getCurrentPlayer().getWizard() != myWizard) {
             oldPhase = GamePhase.WAIT_PHASE;
-            super.notifyClientPhase(phases.get(GamePhase.WAIT_PHASE));
+            super.notifyClientPhase(phases.get(GamePhase.WAIT_PHASE), true);
         } else {
             oldPhase = gamePhase;
-            super.notifyClientPhase(phases.get(gamePhase));
+            super.notifyClientPhase(phases.get(gamePhase), true);
         }
     }
 
@@ -128,7 +132,7 @@ public class ControllerClient extends GameClientListened {
     }
 
     public void error(String e) {
-        notifyClientPhase(phases.get(oldPhase));
+        repeatPhase(true);
         notifyError(e);
     }
 
