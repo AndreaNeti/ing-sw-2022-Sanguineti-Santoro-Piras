@@ -16,7 +16,7 @@ public abstract class AbstractView implements GameClientListener {
         quit = false;
     }
 
-    protected GameClientView getModel() {
+    public GameClientView getModel() {
         return model;
     }
 

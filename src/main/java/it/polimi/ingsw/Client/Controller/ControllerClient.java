@@ -187,7 +187,6 @@ public class ControllerClient extends GameClientListened {
             return false;
         } else if (oldPhase != GamePhase.INIT_PHASE) {
             sendMessage(new Quit());
-            changePhase(GamePhase.INIT_PHASE);
             // quit connection to server
             serverListener.quit();
             serverSender.closeStream();
