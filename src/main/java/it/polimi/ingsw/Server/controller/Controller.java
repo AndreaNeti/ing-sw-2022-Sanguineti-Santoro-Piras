@@ -90,7 +90,6 @@ public class Controller {
     }
 
     public synchronized void moveFromCloud(int idGameComponent) throws GameException, NullPointerException {
-
         if (gamePhase == GamePhase.MOVE_CL_PHASE) { // move students from cloud, destination is player entrance hall
             if (idGameComponent >= 0 || idGameComponent < -matchType.nPlayers())
                 throw new NotAllowedException("Component is not a cloud");
@@ -165,7 +164,7 @@ public class Controller {
 
     public void sendMessage(String me, String message) throws NullPointerException {
         if (me == null) throw new NullPointerException();
-        notifyClients(new TextMessaceSC("[" + me + "]: " + message));
+        notifyClients(new TextMessageSC("[" + me + "]: " + message));
     }
 
     public synchronized void setCharacterInput(int input) throws GameException, NullPointerException {
@@ -336,8 +335,11 @@ public class Controller {
         return gameFinished;
     }
 
-    public Long getMatchId() {
+    protected Long getMatchId() {
         return matchId;
     }
 
+    protected MatchType getMatchType() {
+        return matchType;
+    }
 }

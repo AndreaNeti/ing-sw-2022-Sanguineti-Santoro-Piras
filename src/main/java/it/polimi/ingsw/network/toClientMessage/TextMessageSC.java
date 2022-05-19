@@ -2,10 +2,10 @@ package it.polimi.ingsw.network.toClientMessage;
 
 import it.polimi.ingsw.Client.Controller.ControllerClient;
 
-public class TextMessaceSC implements ToClientMessage {
+public class TextMessageSC implements ToClientMessage {
     String message;
 
-    public TextMessaceSC(String message) {
+    public TextMessageSC(String message) {
         this.message = message;
     }
 
@@ -16,6 +16,6 @@ public class TextMessaceSC implements ToClientMessage {
 
     @Override
     public void execute(ControllerClient controllerClient) {
-
+        System.out.println(message);
     }
 }

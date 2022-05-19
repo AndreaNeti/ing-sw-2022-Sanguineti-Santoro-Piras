@@ -222,7 +222,7 @@ public class ViewCli extends AbstractView {
         // TODO use getIntInput Options[] and a record for assistant cards
         boolean[] usedCards = getModel().getCurrentPlayer().getUsedCards();
         byte ret = (byte) getIntInput(1, usedCards.length, "Choose an assistant card to play");
-        while (usedCards[ret]) {
+        while (usedCards[ret - 1]) {
             System.out.println("Card already played");
             ret = (byte) getIntInput(1, usedCards.length, "Choose an assistant card to play");
         }
@@ -234,7 +234,6 @@ public class ViewCli extends AbstractView {
         validDestinations.add(getModel().getCurrentPlayer().getLunchHall());
         validDestinations.addAll(getModel().getIslands());
         int index = getIntInput(validDestinations.toArray(), "Select a destination");
-//        int index = getIntInput(validDestinations.toArray(), "Select a destination");
         return validDestinations.get(index).getId();
     }
 
@@ -280,12 +279,19 @@ public class ViewCli extends AbstractView {
         System.out.println(s);
     }
 
-    public Long getLongInput(String message) {
-        System.out.println(message + ":");
-
-        final Scanner myInput = new Scanner(System.in);
-        long ret = myInput.nextLong();
-        myInput.close();
+    public long getLongInput(String message) throws PhaseChangedException {
+        long ret = 0;
+        boolean err;
+        do {
+            err = false;
+            System.out.println(message + ":");
+            try {
+                ret = Long.parseLong(getInput());
+            } catch (NumberFormatException ex) {
+                err = true;
+                print("Not a valid input");
+            }
+        } while (err);
         return ret;
     }
 

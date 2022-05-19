@@ -15,7 +15,7 @@ public class GameClient extends GameClientListened implements GameClientView {
     public ArrayList<GameComponentClient> clouds;
     private final Wizard[] professors;
     private byte motherNaturePosition;
-    private byte currentPlayer;
+    private Byte currentPlayer;
     private final Wizard myWizard;
     private final MatchConstants matchConstants;
     //players are in the same order of wizard.ordinal
@@ -45,7 +45,9 @@ public class GameClient extends GameClientListened implements GameClientView {
 
     public void setCurrentPlayer(Byte currentPlayer) {
         this.currentPlayer = currentPlayer;
-        notify(players.get(currentPlayer).toString(), currentPlayer== myWizard.ordinal());
+        if (currentPlayer == null) return;
+        boolean isMyTurn = currentPlayer == myWizard.ordinal();
+        notify(players.get(currentPlayer).toString(), isMyTurn);
     }
 
     public Wizard[] getProfessors() {

@@ -3,6 +3,7 @@ package it.polimi.ingsw.Server.controller;
 import it.polimi.ingsw.exceptions.GameException;
 import it.polimi.ingsw.exceptions.NotAllowedException;
 import it.polimi.ingsw.network.toClientMessage.ErrorException;
+import it.polimi.ingsw.network.toClientMessage.MatchInfo;
 import it.polimi.ingsw.network.toClientMessage.OK;
 import it.polimi.ingsw.network.toClientMessage.ToClientMessage;
 import it.polimi.ingsw.network.toServerMessage.ToServerMessage;
@@ -56,7 +57,7 @@ public class ClientHandler implements Runnable, GameListener {
                 else
                     update(new ErrorException("Game not started yet"));
             } catch (IOException | ClassNotFoundException e) {
-                if(controller!=null)
+                if (controller != null)
                     controller.disconnectPlayerQuitted(this);
                 // cannot receive a quit message because it's disconnected
                 quit = true;
@@ -96,7 +97,7 @@ public class ClientHandler implements Runnable, GameListener {
     }
 
     public void quit() {
-        if(controller == null) quit = true;
+        if (controller == null) quit = true;
         else {
             controller.disconnectPlayerQuitted(this);
             controller = null;
@@ -114,7 +115,6 @@ public class ClientHandler implements Runnable, GameListener {
             objOut.reset();
             objOut.writeObject(m);
             objOut.flush();
-
         } catch (IOException e) {
             e.printStackTrace();
             System.err.println("can't send to the client");
@@ -127,10 +127,11 @@ public class ClientHandler implements Runnable, GameListener {
     }
 
     public void joinByMatchType(MatchType matchType) throws GameException {
-        if(controller != null) throw new NotAllowedException("Already joined a match");
+        if (controller != null) throw new NotAllowedException("Already joined a match");
         Long controllerId;
         controllerId = Server.getOldestMatchId(matchType);
         controller = Server.getMatchById(controllerId);
+        update(new MatchInfo(controller.getMatchType(), controller.getMatchId()));
         update(new OK());
         if (controller.addPlayer(this, nickName)) {
             Server.removeMatch(controllerId);
@@ -139,18 +140,19 @@ public class ClientHandler implements Runnable, GameListener {
     }
 
     public void joinByMatchId(Long matchId) throws GameException {
-        if(controller != null) throw new NotAllowedException("Already joined a match");
+        if (controller != null) throw new NotAllowedException("Already joined a match");
         controller = Server.getMatchById(matchId);
+        update(new MatchInfo(controller.getMatchType(), controller.getMatchId()));
         update(new OK());
         if (controller.addPlayer(this, nickName)) {
             Server.removeMatch(matchId);
         }
-
     }
 
     public void createMatch(MatchType matchType) throws GameException {
-        if(controller != null) throw new NotAllowedException("Already joined a match");
+        if (controller != null) throw new NotAllowedException("Already joined a match");
         controller = Server.createMatch(matchType);
+        update(new MatchInfo(controller.getMatchType(), controller.getMatchId()));
         update(new OK());
         controller.addPlayer(this, nickName);
 
