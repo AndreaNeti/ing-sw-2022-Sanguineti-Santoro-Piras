@@ -8,13 +8,11 @@ import it.polimi.ingsw.network.toServerMessage.ToServerMessage;
 
 public abstract class AbstractView implements GameClientListener {
     private final ControllerClient controllerClient;
-    protected GamePhase gamePhase;
     private GameClientView model;
     private boolean quit;
 
     public AbstractView(ControllerClient controllerClient) {
         this.controllerClient = controllerClient;
-        gamePhase = GamePhase.INIT_PHASE;
         quit = false;
     }
 
@@ -53,7 +51,8 @@ public abstract class AbstractView implements GameClientListener {
     public abstract void start() throws InterruptedException;
 
     public void setQuit() {
-        quit = true;
+        // true quits all, only if called during init phase
+        quit = controllerClient.setQuit();
     }
 
     public boolean canQuit() {

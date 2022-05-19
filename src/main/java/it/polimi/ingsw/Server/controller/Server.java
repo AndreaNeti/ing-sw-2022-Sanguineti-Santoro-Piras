@@ -11,7 +11,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import static java.util.Map.entry;
 
 public class Server {
-    private static final int serverPort = 4026;
+    private static final int serverPort = 42069;
     public static Long matchId = 0L;
     public static final ConcurrentHashMap<MatchType, Map<Long, Controller>> matches = new ConcurrentHashMap<>();
     private static final Set<String> nickNames = Collections.synchronizedSet(new HashSet<>());
