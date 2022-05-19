@@ -21,14 +21,14 @@ public class ViewCli extends AbstractView {
 
     public ViewCli(ControllerClient controllerClient) {
         super(controllerClient);
-        Thread t = new Thread(() -> {
+        Thread scannerThread = new Thread(() -> {
             final Scanner myInput = new Scanner(System.in);
-            while (true) {
+            while (!canQuit()) {
                 input = myInput.nextLine();
                 notifyInput();
             }
         });
-        t.start();
+        scannerThread.start();
         System.out.println("You've chosen to play with client line interface");
         isInputReady = false;
         phaseChanged = false;
@@ -47,7 +47,6 @@ public class ViewCli extends AbstractView {
                 phaseToExecute.playPhase(this);
             }
         } while (!canQuit());
-
     }
 
     public void unsetPhase() {

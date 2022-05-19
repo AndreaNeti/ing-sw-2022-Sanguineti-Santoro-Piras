@@ -85,13 +85,10 @@ public class ControllerClient extends GameClientListened {
     }
 
     public void changePhaseAndCurrentPlayer(GamePhase gamePhase, Byte currentPlayer) {
-        //se arriva il messaggio e se stesso è il current player si imposta fase del messaggio
-        //currentPlayer!=se stesso-> wait Phase
+        // se arriva il messaggio e se stesso è il current player si imposta fase del messaggio
+        // currentPlayer!=se stesso-> wait Phase
         // this.gamePhase = gamePhase;
-        if (currentPlayer == null) {
-            gamePhase = GamePhase.INIT_PHASE;
-            oldPhase = gamePhase;
-        } else {
+        if (currentPlayer != null) {
             gameClient.setCurrentPlayer(currentPlayer);
             if (gameClient.getCurrentPlayer().getWizard() != myWizard) {
                 gamePhase = GamePhase.WAIT_PHASE;
@@ -170,5 +167,17 @@ public class ControllerClient extends GameClientListened {
 
     public void setMatchType(MatchType matchType) {
         this.matchType = matchType;
+    }
+
+    // returns true if the client process has to quit
+    public boolean setQuit() {
+        if (gameClient != null) {
+            changePhaseAndCurrentPlayer(GamePhase.SELECT_MATCH_PHASE, null);
+            return false;
+        } else if (oldPhase != GamePhase.INIT_PHASE) {
+            changePhaseAndCurrentPlayer(GamePhase.INIT_PHASE, null);
+            return false;
+        } else
+            return true;
     }
 }
