@@ -1,6 +1,7 @@
 package it.polimi.ingsw.Client.model;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public interface GameClientView {
     PlayerClient getCurrentPlayer();
@@ -8,4 +9,5 @@ public interface GameClientView {
     ArrayList<GameComponentClient> getClouds();
 
     ArrayList<IslandClient> getIslands();
+    List<PlayerClient> getPlayers();
 }

@@ -50,7 +50,7 @@ public class ControllerClient extends GameClientListened {
                 entry(GamePhase.SELECT_MATCH_PHASE, new SelectMatchPhase(new ArrayList<>(Arrays.asList(commands.get(CLICommands.CREATE_MATCH), commands.get(CLICommands.JOIN_MATCH_BY_TYPE), commands.get(CLICommands.JOIN_MATCH_BY_ID), commands.get(CLICommands.QUIT))))),
                 entry(GamePhase.WAIT_PHASE, new WaitPhase(new ArrayList<>(Arrays.asList(commands.get(CLICommands.TEXT_MESSAGE), commands.get(CLICommands.QUIT))))),
                 entry(GamePhase.PLANIFICATION_PHASE, new PlanificationPhase(new ArrayList<>(Arrays.asList(commands.get(CLICommands.PLAY_CARD), commands.get(CLICommands.TEXT_MESSAGE), commands.get(CLICommands.QUIT))))),
-                entry(GamePhase.MOVE_ST_PHASE, new MoveStudentsPhase(new ArrayList<>(Arrays.asList(commands.get(CLICommands.MOVE_STUDENT), commands.get(CLICommands.TEXT_MESSAGE), commands.get(CLICommands.QUIT))))),
+                entry(GamePhase.MOVE_ST_PHASE, new MoveStudentsPhase(new ArrayList<>(Arrays.asList(commands.get(CLICommands.SHOW_ENTRANCE_HALL),commands.get(CLICommands.MOVE_STUDENT), commands.get(CLICommands.TEXT_MESSAGE), commands.get(CLICommands.QUIT))))),
                 entry(GamePhase.MOVE_MN_PHASE, new MoveMotherNaturePhase(new ArrayList<>(Arrays.asList(commands.get(CLICommands.MOVE_MOTHER_NATURE), commands.get(CLICommands.TEXT_MESSAGE), commands.get(CLICommands.QUIT))))),
                 entry(GamePhase.MOVE_CL_PHASE, new MoveCloudPhase(new ArrayList<>(Arrays.asList(commands.get(CLICommands.MOVE_FROM_CLOUD), commands.get(CLICommands.TEXT_MESSAGE), commands.get(CLICommands.QUIT))))),
                 entry(GamePhase.SET_CH_CARD_PHASE, new SetCharacterInputPhase(new ArrayList<>(List.of(commands.get(CLICommands.QUIT))))),

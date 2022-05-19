@@ -313,4 +313,8 @@ public class ViewCli extends AbstractView {
     }
 
 
+    public void printEntranceHall(Integer player) {
+        System.out.println(getModel().getPlayers().get(player).getEntranceHall());
+
+    }
 }

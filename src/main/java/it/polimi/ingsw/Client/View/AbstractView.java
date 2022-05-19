@@ -43,7 +43,6 @@ public abstract class AbstractView implements GameClientListener {
 
     public boolean connectToServer(byte[] ipAddress, int port) {
         return controllerClient.connect(ipAddress, port);
-
     }
 
     public void setMatchType(MatchType mt) {

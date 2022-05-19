@@ -6,6 +6,7 @@ import it.polimi.ingsw.Client.View.AbstractView;
 import it.polimi.ingsw.Client.View.Cli.ViewCli;
 import it.polimi.ingsw.Client.View.Gui.ViewGUI;
 import it.polimi.ingsw.Enum.CLICommands;
+import it.polimi.ingsw.Server.model.EntranceHall;
 
 import java.io.IOException;
 import java.util.Map;
@@ -47,8 +48,8 @@ public class App {
                 entry(CLICommands.MOVE_MOTHER_NATURE, new MoveMotherNatureCommand(view)),
                 entry(CLICommands.MOVE_FROM_CLOUD, new MoveFromCloudCommand(view)),
                 entry(CLICommands.TEXT_MESSAGE, new TextCommand(view)),
-                entry(CLICommands.QUIT, new QuitCommand(view))
-
+                entry(CLICommands.QUIT, new QuitCommand(view)),
+                entry(CLICommands.SHOW_ENTRANCE_HALL, new ShowEntranceHall(view))
          );
 
     }
