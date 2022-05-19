@@ -85,10 +85,9 @@ public class ViewCli extends AbstractView {
     }
 
     @Override
-    public void update(Wizard[] professors) {
-        for (int i = 0; i < professors.length; i++) {
-            System.out.println(Color.values()[i] + " professor is owned by " + professors[i]);
-        }
+    public void update(Color color, Wizard wizard) {
+        System.out.println(color + " professor is owned by " + wizard);
+
     }
 
     @Override
@@ -106,7 +105,7 @@ public class ViewCli extends AbstractView {
 
     @Override
     public void updateCardPlayed(Byte playedCard) {
-        System.out.println(getModel().getCurrentPlayer().getWizard() + "played assistant card" + playedCard);
+        System.out.println(getModel().getCurrentPlayer().getWizard() + " played assistant card " + playedCard);
     }
 
     @Override

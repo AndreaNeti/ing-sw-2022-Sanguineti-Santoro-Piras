@@ -17,6 +17,6 @@ public class MoveCloudPhase extends ClientPhase {
 
     @Override
     public String toString() {
-        return super.toString();
+        return "Cloud phase";
     }
 }
