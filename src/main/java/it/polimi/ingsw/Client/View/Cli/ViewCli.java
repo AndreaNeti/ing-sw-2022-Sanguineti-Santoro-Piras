@@ -87,7 +87,7 @@ public class ViewCli extends AbstractView {
     @Override
     public void update(Wizard[] professors) {
         for (int i = 0; i < professors.length; i++) {
-            System.out.println(Color.values()[i] + " professor is owned by" + professors[i]);
+            System.out.println(Color.values()[i] + " professor is owned by " + professors[i]);
         }
     }
 

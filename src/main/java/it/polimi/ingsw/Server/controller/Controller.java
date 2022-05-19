@@ -82,6 +82,8 @@ public class Controller {
             if (movesCounter == matchConstants.studentsToMove()) {
                 movesCounter = 0;
                 nextPhase();
+            } else {
+                setPhase(GamePhase.MOVE_ST_PHASE);
             }
         } else {
             throw new NotAllowedException("Wrong Phase");
