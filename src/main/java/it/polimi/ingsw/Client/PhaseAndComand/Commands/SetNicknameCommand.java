@@ -22,7 +22,6 @@ public class SetNicknameCommand extends GameCommand {
         ViewCli viewCli = (ViewCli) getView();
         String nick = viewCli.getStringInput("Select nickname");
         viewCli.sendToServer(new NickName(nick));
-        // TODO: set the phase
     }
 
     @Override

@@ -8,29 +8,93 @@ import it.polimi.ingsw.Client.model.IslandClient;
 import it.polimi.ingsw.Enum.*;
 import it.polimi.ingsw.Server.controller.MatchType;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.*;
 
 public class ViewCli extends AbstractView {
 
     private final static String operatingSystem = System.getProperty("os.name");
-    ClientPhaseView phaseToExecute;
-    private Scanner myInput = new Scanner(System.in);
+    private ClientPhaseView phaseToExecute;
+
+    private String inputMessage;
+    private Boolean ready, phaseChanged, waitingScanner;
+
+    private Integer optionIndex = 0;
+    private Object[] options;
+
+    private Object lock;
 
     public ViewCli(ControllerClient controllerClient) {
         super(controllerClient);
+        Thread t = new Thread(() -> {
+            BufferedReader inp = new BufferedReader(new InputStreamReader(System.in));
+            int a;
+//            Reader r = new Reader() {
+//                @Override
+//                public int read(char[] cbuf, int off, int len) throws IOException {
+//                    return 0;
+//                }
+//
+//                @Override
+//                public void close() throws IOException {
+//
+//                }
+//            };
+
+            while (true) {
+                while (waitingScanner) {
+                    try {
+                        lock.wait();
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+                try {
+                    a = inp.read();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                if (a == '1' || a == '2') {
+                    clearConsole();
+                    System.out.println(listOptions());
+                    if (a == '1')
+                        setIndex(true);
+                    else
+                        setIndex(false);
+                    System.out.println(optionIndex);
+                } else if (a == 10) {
+                    System.out.println("Ciao");
+                    ready = true;
+                    notifyInput();
+                }
+            }
+        });
+        t.start();
         System.out.println("You've chosen to play with client line interface");
     }
 
+    private synchronized void notifyInput() {
+        ready = true;
+        notifyAll();
+    }
 
-    public synchronized void start() throws InterruptedException {
+    public void start() throws InterruptedException {
+
         do {
-            while (phaseToExecute == null)
-                wait();
-
-            phaseToExecute.playPhase(this);
+            synchronized (this) {
+                while (phaseToExecute == null)
+                    wait();
+                phaseToExecute.playPhase(this);
+            }
         } while (!canQuit());
 
+    }
+
+    private void setIndex(boolean moveDown) {
+        optionIndex += (moveDown) ? 1 : -1;
+        optionIndex = Math.floorMod(optionIndex, options.length);
     }
 
     public void unsetPhase() {
@@ -90,6 +154,7 @@ public class ViewCli extends AbstractView {
     @Override
     public synchronized void setPhaseInView(ClientPhaseView clientPhaseView) {
         this.phaseToExecute = clientPhaseView;
+        phaseChanged = true;
         notifyAll();
     }
 
@@ -105,21 +170,19 @@ public class ViewCli extends AbstractView {
 
     public void clearConsole() {
         try {
-            if (operatingSystem.contains("Windows")) {
-                Runtime.getRuntime().exec("cls");
-            } else {
+            if (operatingSystem.contains("Windows"))
+                new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+            else
                 Runtime.getRuntime().exec("clear");
-            }
-        } catch (IOException e) {
+        } catch (IOException | InterruptedException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public int getIntInput(Object[] options, String message) {
-        System.out.println("--OPTIONS--");
-        System.out.println(getOptions(options));
-        return getIntInput(0, options.length - 1, message);
-    }
+//    public int getIntInput(Object[] options, String message) {
+//        System.out.println(listOptions());
+//        return getIntInput(0, options.length - 1, message);
+//    }
 
     public int getIntInput(int min, int max, String message) {
         int ret = getIntInput(message + " (from " + min + " to " + max + ")");
@@ -129,16 +192,21 @@ public class ViewCli extends AbstractView {
         return ret;
     }
 
-    // Message is the string printed before asking the input
+    //     Message is the string printed before asking the input
     public int getIntInput(String message) {
         System.out.println(message + ":");
-        return myInput.nextInt();
+
+        final Scanner myInput = new Scanner(System.in);
+        int ret = myInput.nextInt();
+        myInput.close();
+        return ret;
     }
 
-    private String getOptions(Object[] options) {
+    private String listOptions() {
         StringBuilder ret = new StringBuilder();
+        ret.append(inputMessage).append("--OPTIONS--\n");
         for (int i = 0; i < options.length; i++)
-            ret.append("[").append(i).append("] ").append(options[i].toString()).append("\n");
+            ret.append("[").append(i).append("] ").append(options[i]).append("\n");
         return ret.toString();
     }
 
@@ -176,7 +244,7 @@ public class ViewCli extends AbstractView {
     }
 
     public int getColorInput() {
-        return getIntInput(0, Color.values().length, "Choose a color" + getOptions(Color.values()));
+        return playOptions(Color.values(), "Choose a color");
     }
 
     public MatchType getMatchTypeInput() {
@@ -198,7 +266,8 @@ public class ViewCli extends AbstractView {
         List<GameComponentClient> validDestinations = new ArrayList<>();
         validDestinations.add(getModel().getCurrentPlayer().getLunchHall());
         validDestinations.addAll(getModel().getIslands());
-        int index = getIntInput(validDestinations.toArray(), "Select a destination");
+        int index = playOptions(validDestinations.toArray(), "Select a destination");
+//        int index = getIntInput(validDestinations.toArray(), "Select a destination");
         return validDestinations.get(index).getId();
     }
 
@@ -213,17 +282,21 @@ public class ViewCli extends AbstractView {
             if (cloud.howManyStudents() > 0)
                 availableClouds.add(cloud);
         }
-        int cloudIndex = getIntInput(availableClouds.toArray(), "Choose a cloud source");
+        int cloudIndex = playOptions(availableClouds.toArray(), "Choose a cloud source");
         return availableClouds.get(cloudIndex).getId();
     }
 
     public boolean getBooleanInput(String message) {
-        System.out.println(message + "(TRUE/FALSE):");
-        return myInput.nextBoolean();
+        Object[] trueFalse = new Object[]{"Yes", "No"};
+        return playOptions(trueFalse, message) == 0;
+//        System.out.println(message + "(TRUE/FALSE):");
+//        return myInput.nextBoolean();
     }
 
 
     public String getStringInput(String message) {
+        waitingScanner=true;
+        final Scanner myInput = new Scanner(System.in);
         System.out.println(message + ": ");
         String ret = myInput.next();
 
@@ -231,6 +304,9 @@ public class ViewCli extends AbstractView {
             System.out.println("Input can't be empty.\n" + message + ": ");
             ret = myInput.next();
         }
+        myInput.close();
+        lock.notify();
+
         return ret;
     }
 
@@ -239,8 +315,31 @@ public class ViewCli extends AbstractView {
     }
 
     public Long getLongInput(String message) {
-        System.out.println(message + ": ");
-        return myInput.nextLong();
+        System.out.println(message + ":");
+
+        final Scanner myInput = new Scanner(System.in);
+        long ret = myInput.nextLong();
+        myInput.close();
+        return ret;
     }
+
+    public synchronized int playOptions(Object[] options, String message) {
+        ready = false;
+        this.options = options;
+        optionIndex = 0;
+        inputMessage = message;
+        listOptions();
+        try {
+            while (!ready || !phaseChanged) {
+                wait();
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        if (ready) return optionIndex;
+        phaseChanged = false;
+        return -1;
+    }
+
 
 }
