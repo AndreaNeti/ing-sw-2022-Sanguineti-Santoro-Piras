@@ -9,6 +9,7 @@ import it.polimi.ingsw.Server.model.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class GameClient extends GameClientListened implements GameClientView {
     public ArrayList<IslandClient> islands;
@@ -147,5 +148,10 @@ public class GameClient extends GameClientListened implements GameClientView {
     @Override
     public ArrayList<IslandClient> getIslands() {
         return islands;
+    }
+
+    @Override
+    public List<PlayerClient> getPlayers() {
+        return players;
     }
 }
