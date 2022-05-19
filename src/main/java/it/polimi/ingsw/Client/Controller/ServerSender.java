@@ -35,4 +35,11 @@ public class ServerSender {
             }
         }
     }
+    public void closeStream(){
+        try {
+            objOut.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

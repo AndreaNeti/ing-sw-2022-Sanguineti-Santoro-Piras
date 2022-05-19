@@ -11,6 +11,7 @@ import it.polimi.ingsw.Server.controller.MatchType;
 import it.polimi.ingsw.Server.controller.Server;
 import it.polimi.ingsw.Server.model.GameComponent;
 import it.polimi.ingsw.Server.model.Player;
+import it.polimi.ingsw.network.toServerMessage.Quit;
 import it.polimi.ingsw.network.toServerMessage.ToServerMessage;
 
 import java.io.IOException;
@@ -31,6 +32,7 @@ public class ControllerClient extends GameClientListened {
     private Map<GamePhase, ClientPhaseController> phases;
     private GamePhase oldPhase;
     private Wizard myWizard;
+    private ServerListener serverListener;
 
     public ControllerClient() {
         socket = new Socket();
@@ -66,10 +68,9 @@ public class ControllerClient extends GameClientListened {
         } catch (IOException | NumberFormatException e) {
             return false;
         }
-        new Thread(new ServerListener(socket, this)).start();
+        serverListener = new ServerListener(socket, this);
+        new Thread(serverListener).start();
         serverSender = new ServerSender(socket);
-
-
         return true;
     }
 
@@ -181,10 +182,15 @@ public class ControllerClient extends GameClientListened {
     // returns true if the client process has to quit
     public boolean setQuit() {
         if (gameClient != null) {
+            sendMessage(new Quit());
             changePhase(GamePhase.SELECT_MATCH_PHASE);
             return false;
         } else if (oldPhase != GamePhase.INIT_PHASE) {
+            sendMessage(new Quit());
             changePhase(GamePhase.INIT_PHASE);
+            // quit connection to server
+            serverListener.quit();
+            serverSender.closeStream();
             return false;
         } else
             return true;

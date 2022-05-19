@@ -13,8 +13,10 @@ public class ServerListener implements Runnable {
     private boolean quit;
     private final ObjectInputStream objIn;
 
-    public ServerListener(Socket socket, ControllerClient controllerClient) {
+    private final Socket socket;
 
+    public ServerListener(Socket socket, ControllerClient controllerClient) {
+        this.socket = socket;
         try {
             objIn = new ObjectInputStream(socket.getInputStream());
         } catch (IOException e) {
@@ -41,9 +43,19 @@ public class ServerListener implements Runnable {
             }
 
         } while (!quit);
+        try {
+            objIn.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            socket.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void quit() {
-        this.quit = true;
+        quit = true;
     }
 }

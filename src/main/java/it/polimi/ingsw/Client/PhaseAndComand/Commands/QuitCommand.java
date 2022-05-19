@@ -17,10 +17,10 @@ public class QuitCommand extends GameCommand {
     @Override
     public void playCLICommand() throws PhaseChangedException {
         ViewCli viewCli = (ViewCli) getView();
-        boolean quit = viewCli.getBooleanInput("Quit?");
-        if (quit)
+        boolean quit = viewCli.getBooleanInput("Quit? ");
+        if (quit) {
             viewCli.setQuit();
-        else
+        } else
             viewCli.repeatPhase(false);
     }
 
