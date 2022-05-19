@@ -88,14 +88,19 @@ public class ControllerClient extends GameClientListened {
         //se arriva il messaggio e se stesso è il current player si imposta fase del messaggio
         //currentPlayer!=se stesso-> wait Phase
         // this.gamePhase = gamePhase;
-        gameClient.setCurrentPlayer(currentPlayer);
-        if (gameClient.getCurrentPlayer().getWizard() != myWizard) {
-            oldPhase = GamePhase.WAIT_PHASE;
-            super.notifyClientPhase(phases.get(GamePhase.WAIT_PHASE), true);
-        } else {
+        if (currentPlayer == null) {
+            gamePhase = GamePhase.INIT_PHASE;
             oldPhase = gamePhase;
-            super.notifyClientPhase(phases.get(gamePhase), true);
+        } else {
+            gameClient.setCurrentPlayer(currentPlayer);
+            if (gameClient.getCurrentPlayer().getWizard() != myWizard) {
+                gamePhase = GamePhase.WAIT_PHASE;
+                oldPhase = gamePhase;
+            } else {
+                oldPhase = gamePhase;
+            }
         }
+        super.notifyClientPhase(phases.get(gamePhase), true);
     }
 
     public void addMembers(HashMap<Player, HouseColor> members) {

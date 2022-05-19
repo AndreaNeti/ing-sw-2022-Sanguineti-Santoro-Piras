@@ -24,7 +24,7 @@ public class ViewCli extends AbstractView {
         Thread t = new Thread(() -> {
             final Scanner myInput = new Scanner(System.in);
             while (true) {
-                input = myInput.next();
+                input = myInput.nextLine();
                 notifyInput();
             }
         });

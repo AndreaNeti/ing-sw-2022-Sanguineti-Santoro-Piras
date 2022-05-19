@@ -45,7 +45,6 @@ public class GameClient extends GameClientListened implements GameClientView {
 
     public void setCurrentPlayer(Byte currentPlayer) {
         this.currentPlayer = currentPlayer;
-        if (currentPlayer == null) return;
         boolean isMyTurn = currentPlayer == myWizard.ordinal();
         notify(players.get(currentPlayer).toString(), isMyTurn);
     }
