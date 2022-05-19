@@ -151,7 +151,8 @@ public class ControllerClient extends GameClientListened {
         }
 
         for (Map.Entry<Color, Wizard> entry : gameDelta.getUpdatedProfessors().entrySet()) {
-            gameClient.setProfessors(entry.getKey(), entry.getValue());
+            if(entry.getValue()!=null)
+                gameClient.setProfessors(entry.getKey(), entry.getValue());
         }
 
         for (Byte b : gameDelta.getDeletedIslands()) {

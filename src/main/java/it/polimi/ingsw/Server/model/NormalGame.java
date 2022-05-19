@@ -409,9 +409,6 @@ public class NormalGame implements Game {
         for (Island i : islands) {
             gameDelta.addUpdatedGC(i);
         }
-        for (int i = 0; i < professors.length; i++) {
-            gameDelta.addUpdatedProfessors(Color.values()[i], professors[i]);
-        }
         gameDelta.setNewMotherNaturePosition(motherNaturePosition);
 
         return gameDelta;
