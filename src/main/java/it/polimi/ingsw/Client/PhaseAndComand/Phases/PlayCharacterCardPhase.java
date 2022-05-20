@@ -6,8 +6,8 @@ import it.polimi.ingsw.Client.View.Gui.ViewGUI;
 import java.util.List;
 
 public class PlayCharacterCardPhase extends ClientPhase {
-    public PlayCharacterCardPhase(List<GameCommand> gameCommands) {
-        super(gameCommands);
+    public PlayCharacterCardPhase() {
+        super();
     }
 
     @Override

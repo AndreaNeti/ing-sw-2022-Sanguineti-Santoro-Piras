@@ -25,7 +25,6 @@ public class App {
         GameClientListener updateCLI=new UpdateCli((ViewCli) view);
         controllerClient.addListener(updateCLI);
 
-        controllerClient.setCommands(instantiateCommands(view));
         controllerClient.instantiateAllPhases();
         try {
             view.start();
@@ -34,24 +33,5 @@ public class App {
         }
     }
 
-    private static Map<CLICommands, GameCommand> instantiateCommands(AbstractView view) {
-        return Map.ofEntries(
-                entry(CLICommands.CONNECT_SERVER, new ConnectServerCommand(view)),
-                entry(CLICommands.SET_NICKNAME, new SetNicknameCommand(view)),
-                entry(CLICommands.CREATE_MATCH, new CreateMatchCommand(view)),
-                entry(CLICommands.JOIN_MATCH_BY_TYPE, new JoinMatchByTypeCommand(view)),
-                entry(CLICommands.JOIN_MATCH_BY_ID, new JoinMatchByIdCommand(view)),
-                entry(CLICommands.PLAY_CARD, new PlayCardCommand(view)),
-                entry(CLICommands.MOVE_STUDENT,new MoveStudentCommand(view)),
-                entry(CLICommands.CHOOSE_CHARACTER,new ChooseCharacterCommand(view)),
-                entry(CLICommands.SET_CHARACTER_INPUT,new SetCharacterInputCommand(view)),
-                entry(CLICommands.PLAY_CHARACTER, new PlayCharacterCommand(view)),
-                entry(CLICommands.MOVE_MOTHER_NATURE, new MoveMotherNatureCommand(view)),
-                entry(CLICommands.MOVE_FROM_CLOUD, new MoveFromCloudCommand(view)),
-                entry(CLICommands.TEXT_MESSAGE, new TextCommand(view)),
-                entry(CLICommands.QUIT, new QuitCommand(view)),
-                entry(CLICommands.SHOW_ENTRANCE_HALL, new ShowEntranceHall(view))
-         );
 
-    }
 }

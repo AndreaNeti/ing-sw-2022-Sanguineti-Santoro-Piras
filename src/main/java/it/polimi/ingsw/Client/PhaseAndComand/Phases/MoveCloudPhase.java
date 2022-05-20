@@ -6,8 +6,8 @@ import it.polimi.ingsw.Client.View.Gui.ViewGUI;
 import java.util.List;
 
 public class MoveCloudPhase extends ClientPhase {
-    public MoveCloudPhase(List<GameCommand> gameCommands) {
-        super(gameCommands);
+    public MoveCloudPhase() {
+        super();
     }
 
     @Override

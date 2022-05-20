@@ -6,8 +6,8 @@ import java.util.List;
 
 public class NicknamePhase extends ClientPhase {
 
-    public NicknamePhase(List<GameCommand> gameCommands) {
-        super(gameCommands);
+    public NicknamePhase() {
+        super();
     }
 
     public void playPhase(ViewGUI viewGUI) {

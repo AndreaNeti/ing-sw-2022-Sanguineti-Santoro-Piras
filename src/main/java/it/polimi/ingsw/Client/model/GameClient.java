@@ -12,6 +12,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class GameClient extends GameClientListened implements GameClientView {
+
     public ArrayList<IslandClient> islands;
     public ArrayList<GameComponentClient> clouds;
     private final Wizard[] professors;
@@ -90,7 +91,7 @@ public class GameClient extends GameClientListened implements GameClientView {
 
             notify(islandToReturn);
         } else {
-            GameComponentClient cloud = clouds.get(-(idGameComponent + 1));
+            GameComponentClient cloud = clouds. get(-(idGameComponent + 1));
             cloud.modifyGameComponent(gameComponent);
             notify(cloud);
         }

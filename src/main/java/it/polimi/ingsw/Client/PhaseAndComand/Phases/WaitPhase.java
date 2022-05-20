@@ -6,8 +6,8 @@ import it.polimi.ingsw.Client.View.Gui.ViewGUI;
 import java.util.List;
 
 public class WaitPhase extends ClientPhase {
-    public WaitPhase(List<GameCommand> gameCommands) {
-        super(gameCommands);
+    public WaitPhase() {
+        super();
     }
 
     @Override

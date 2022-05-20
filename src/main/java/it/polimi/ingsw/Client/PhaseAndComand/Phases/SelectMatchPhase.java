@@ -6,8 +6,8 @@ import it.polimi.ingsw.Client.View.Gui.ViewGUI;
 import java.util.List;
 
 public class SelectMatchPhase extends ClientPhase {
-    public SelectMatchPhase(List<GameCommand> gameCommands) {
-        super(gameCommands);
+    public SelectMatchPhase() {
+        super();
     }
 
     @Override

@@ -8,4 +8,5 @@ import java.util.List;
 public interface ClientPhaseController {
     void setPhaseInView(AbstractView view, boolean notifyScanner);
     List<GameCommand> getGameCommands();
+    void addCommand(GameCommand gameCommand);
 }

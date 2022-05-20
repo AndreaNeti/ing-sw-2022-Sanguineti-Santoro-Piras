@@ -1,11 +1,10 @@
 package it.polimi.ingsw.Client.Controller;
 
 import it.polimi.ingsw.Client.GameClientListened;
-import it.polimi.ingsw.Client.PhaseAndComand.Commands.GameCommand;
+import it.polimi.ingsw.Client.PhaseAndComand.Commands.*;
 import it.polimi.ingsw.Client.PhaseAndComand.Phases.*;
 import it.polimi.ingsw.Client.View.AbstractView;
 import it.polimi.ingsw.Client.model.GameClient;
-import it.polimi.ingsw.Client.model.GameClientView;
 import it.polimi.ingsw.Client.model.PlayerClient;
 import it.polimi.ingsw.Enum.*;
 import it.polimi.ingsw.Server.controller.GameDelta;
@@ -34,34 +33,80 @@ public class ControllerClient extends GameClientListened {
     private GamePhase oldPhase;
     private Wizard myWizard;
     private ServerListener serverListener;
-    private  AbstractView abstractView;
+    private AbstractView abstractView;
 
     private boolean isInMatch;
 
     public ControllerClient() {
         playerClients = new ArrayList<>();
         myWizard = null;
-    }
 
-    public void setCommands(Map<CLICommands, GameCommand> commands) {
-        this.commands = commands;
     }
 
     public void instantiateAllPhases() {
         phases = Map.ofEntries(
-                entry(GamePhase.INIT_PHASE, new InitPhase(Arrays.asList(commands.get(CLICommands.CONNECT_SERVER), commands.get(CLICommands.QUIT)))),
-                entry(GamePhase.NICK_PHASE, new NicknamePhase(new ArrayList<>(Arrays.asList(commands.get(CLICommands.SET_NICKNAME), commands.get(CLICommands.QUIT))))),
-                entry(GamePhase.SELECT_MATCH_PHASE, new SelectMatchPhase(new ArrayList<>(Arrays.asList(commands.get(CLICommands.CREATE_MATCH), commands.get(CLICommands.JOIN_MATCH_BY_TYPE), commands.get(CLICommands.JOIN_MATCH_BY_ID), commands.get(CLICommands.QUIT))))),
-                entry(GamePhase.WAIT_PHASE, new WaitPhase(new ArrayList<>(Arrays.asList(commands.get(CLICommands.TEXT_MESSAGE), commands.get(CLICommands.QUIT))))),
-                entry(GamePhase.PLANIFICATION_PHASE, new PlanificationPhase(new ArrayList<>(Arrays.asList(commands.get(CLICommands.PLAY_CARD), commands.get(CLICommands.TEXT_MESSAGE), commands.get(CLICommands.QUIT))))),
-                entry(GamePhase.MOVE_ST_PHASE, new MoveStudentsPhase(new ArrayList<>(Arrays.asList(commands.get(CLICommands.SHOW_ENTRANCE_HALL), commands.get(CLICommands.MOVE_STUDENT), commands.get(CLICommands.TEXT_MESSAGE), commands.get(CLICommands.QUIT))))),
-                entry(GamePhase.MOVE_MN_PHASE, new MoveMotherNaturePhase(new ArrayList<>(Arrays.asList(commands.get(CLICommands.MOVE_MOTHER_NATURE), commands.get(CLICommands.TEXT_MESSAGE), commands.get(CLICommands.QUIT))))),
-                entry(GamePhase.MOVE_CL_PHASE, new MoveCloudPhase(new ArrayList<>(Arrays.asList(commands.get(CLICommands.MOVE_FROM_CLOUD), commands.get(CLICommands.TEXT_MESSAGE), commands.get(CLICommands.QUIT))))),
-                entry(GamePhase.SET_CH_CARD_PHASE, new SetCharacterInputPhase(new ArrayList<>(List.of(commands.get(CLICommands.QUIT))))),
-                entry(GamePhase.PLAY_CH_CARD_PHASE, new PlayCharacterCardPhase(new ArrayList<>(List.of(commands.get(CLICommands.QUIT))))),
-                entry(GamePhase.QUIT_PHASE, new QuitPhase(new ArrayList<>(Arrays.asList(commands.get(CLICommands.UNDO), commands.get(CLICommands.QUIT))))));
+                entry(GamePhase.INIT_PHASE, new InitPhase()),
+                entry(GamePhase.NICK_PHASE, new NicknamePhase()),
+                entry(GamePhase.SELECT_MATCH_PHASE, new SelectMatchPhase()),
+                entry(GamePhase.WAIT_PHASE, new WaitPhase()),
+                entry(GamePhase.PLANIFICATION_PHASE, new PlanificationPhase()),
+                entry(GamePhase.MOVE_ST_PHASE, new MoveStudentsPhase()),
+                entry(GamePhase.MOVE_MN_PHASE, new MoveMotherNaturePhase()),
+                entry(GamePhase.MOVE_CL_PHASE, new MoveCloudPhase()),
+                entry(GamePhase.SET_CH_CARD_PHASE, new SetCharacterInputPhase()),
+                entry(GamePhase.PLAY_CH_CARD_PHASE, new PlayCharacterCardPhase())
+        );
         oldPhase = GamePhase.INIT_PHASE;
+        attachCommandToPhase();
         notifyClientPhase(phases.get(oldPhase), false);
+    }
+
+    private void instantiateCommands() {
+        commands = Map.ofEntries(
+                entry(CLICommands.CONNECT_SERVER, new ConnectServerCommand(abstractView)),
+                entry(CLICommands.SET_NICKNAME, new SetNicknameCommand(abstractView)),
+                entry(CLICommands.CREATE_MATCH, new CreateMatchCommand(abstractView)),
+                entry(CLICommands.JOIN_MATCH_BY_TYPE, new JoinMatchByTypeCommand(abstractView)),
+                entry(CLICommands.JOIN_MATCH_BY_ID, new JoinMatchByIdCommand(abstractView)),
+                entry(CLICommands.PLAY_CARD, new PlayCardCommand(abstractView)),
+                entry(CLICommands.MOVE_STUDENT, new MoveStudentCommand(abstractView)),
+                entry(CLICommands.MOVE_MOTHER_NATURE, new MoveMotherNatureCommand(abstractView)),
+                entry(CLICommands.MOVE_FROM_CLOUD, new MoveFromCloudCommand(abstractView)),
+                entry(CLICommands.TEXT_MESSAGE, new TextCommand(abstractView)),
+                entry(CLICommands.QUIT, new QuitCommand(abstractView)),
+                entry(CLICommands.SHOW_ENTRANCE_HALL, new ShowEntranceHall(abstractView)),
+                entry(CLICommands.CHOOSE_CHARACTER, new ChooseCharacterCommand(abstractView)),
+                entry(CLICommands.SET_CHARACTER_INPUT, new SetCharacterInputCommand(abstractView)),
+                entry(CLICommands.PLAY_CHARACTER, new PlayCharacterCommand(abstractView)),
+                entry(CLICommands.DELETE_LAST_INPUT, new DeleteLastInputCommand(abstractView)),
+                entry(CLICommands.UNDO, new UndoCommands(abstractView))
+        );
+    }
+
+    private void attachCommandToPhase() {
+        commands.get(CLICommands.CONNECT_SERVER).attachToAPhase(List.of(phases.get(GamePhase.INIT_PHASE)));
+        commands.get(CLICommands.SET_NICKNAME).attachToAPhase(List.of(phases.get(GamePhase.NICK_PHASE)));
+        commands.get(CLICommands.CREATE_MATCH).attachToAPhase(List.of(phases.get(GamePhase.SELECT_MATCH_PHASE)));
+        commands.get(CLICommands.JOIN_MATCH_BY_TYPE).attachToAPhase(List.of(phases.get(GamePhase.SELECT_MATCH_PHASE)));
+        commands.get(CLICommands.JOIN_MATCH_BY_ID).attachToAPhase(List.of(phases.get(GamePhase.SELECT_MATCH_PHASE)));
+        commands.get(CLICommands.PLAY_CARD).attachToAPhase(List.of(phases.get(GamePhase.PLANIFICATION_PHASE)));
+        commands.get(CLICommands.MOVE_STUDENT).attachToAPhase(List.of(phases.get(GamePhase.MOVE_ST_PHASE)));
+        commands.get(CLICommands.SHOW_ENTRANCE_HALL).attachToAPhase(Arrays.asList(phases.get(GamePhase.MOVE_ST_PHASE), phases.get(GamePhase.MOVE_CL_PHASE), phases.get(GamePhase.MOVE_MN_PHASE)));
+        commands.get(CLICommands.MOVE_MOTHER_NATURE).attachToAPhase(List.of(phases.get(GamePhase.MOVE_MN_PHASE)));
+        commands.get(CLICommands.MOVE_FROM_CLOUD).attachToAPhase(List.of(phases.get(GamePhase.MOVE_CL_PHASE)));
+        commands.get(CLICommands.QUIT).attachToAPhase(new ArrayList<>(phases.values()));
+        commands.get(CLICommands.TEXT_MESSAGE).attachToAPhase(List.of(phases.get(GamePhase.WAIT_PHASE)));
+    }
+
+    private void attachExpertCommand() {
+
+
+        commands.get(CLICommands.CHOOSE_CHARACTER).attachToAPhase(Arrays.asList(phases.get(GamePhase.MOVE_ST_PHASE), phases.get(GamePhase.MOVE_CL_PHASE), phases.get(GamePhase.MOVE_MN_PHASE)));
+        commands.get(CLICommands.SET_CHARACTER_INPUT).attachToAPhase(List.of(phases.get(GamePhase.SET_CH_CARD_PHASE)));
+        commands.get(CLICommands.PLAY_CHARACTER).attachToAPhase(Arrays.asList(phases.get(GamePhase.PLAY_CH_CARD_PHASE), phases.get(GamePhase.SET_CH_CARD_PHASE)));
+        commands.get(CLICommands.DELETE_LAST_INPUT).attachToAPhase(List.of(phases.get(GamePhase.SET_CH_CARD_PHASE)));
+        commands.get(CLICommands.UNDO).attachToAPhase(List.of(phases.get(GamePhase.PLAY_CH_CARD_PHASE)));
+
     }
 
     public boolean connect(byte[] ipAddress, int port) {
@@ -121,12 +166,7 @@ public class ControllerClient extends GameClientListened {
             gameClient = new GameClient(playerClients, myWizard, Server.getMatchConstants(matchType));
             // decorate phases
             if (matchType.isExpert()) {
-                // TODO find a way to remove cast
-                phases.put(GamePhase.MOVE_ST_PHASE, new ExpertClientPhaseDecorator((ClientPhase) phases.get(GamePhase.MOVE_ST_PHASE), List.of(commands.get(CLICommands.CHOOSE_CHARACTER))));
-                phases.put(GamePhase.MOVE_MN_PHASE, new ExpertClientPhaseDecorator((ClientPhase) phases.get(GamePhase.MOVE_MN_PHASE), List.of(commands.get(CLICommands.CHOOSE_CHARACTER))));
-                phases.put(GamePhase.MOVE_CL_PHASE, new ExpertClientPhaseDecorator((ClientPhase) phases.get(GamePhase.MOVE_CL_PHASE), List.of(commands.get(CLICommands.CHOOSE_CHARACTER))));
-                phases.put(GamePhase.PLAY_CH_CARD_PHASE, new ExpertClientPhaseDecorator((ClientPhase) phases.get(GamePhase.PLAY_CH_CARD_PHASE), Arrays.asList(commands.get(CLICommands.PLAY_CHARACTER), commands.get(CLICommands.DELETE_LAST_INPUT), commands.get(CLICommands.UNDO))));
-                phases.put(GamePhase.SET_CH_CARD_PHASE, new ExpertClientPhaseDecorator((ClientPhase) phases.get(GamePhase.SET_CH_CARD_PHASE), Arrays.asList(commands.get(CLICommands.SET_CHARACTER_INPUT), commands.get(CLICommands.PLAY_CHARACTER), commands.get(CLICommands.DELETE_LAST_INPUT), commands.get(CLICommands.UNDO))));
+                attachExpertCommand();
             }
             gameClient.addListener(this);
             abstractView.setModel(gameClient);
@@ -193,11 +233,14 @@ public class ControllerClient extends GameClientListened {
         } else
             return true;
     }
+
     public void notifyClientPhase(ClientPhaseController clientPhaseController, boolean notifyScanner) {
         clientPhaseController.setPhaseInView(abstractView, notifyScanner);
     }
-    public void attachView(AbstractView view){
-        this.abstractView=view;
+
+    public void attachView(AbstractView view) {
+        this.abstractView = view;
+        instantiateCommands();
     }
 
 }

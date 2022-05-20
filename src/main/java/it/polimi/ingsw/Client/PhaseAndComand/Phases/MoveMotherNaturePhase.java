@@ -7,8 +7,8 @@ import java.util.List;
 
 public class MoveMotherNaturePhase extends ClientPhase {
 
-    public MoveMotherNaturePhase(List<GameCommand> gameCommands) {
-        super(gameCommands);
+    public MoveMotherNaturePhase() {
+        super();
     }
 
     @Override

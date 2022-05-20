@@ -7,8 +7,8 @@ import java.util.List;
 
 public class SetCharacterInputPhase extends ClientPhase {
 
-    public SetCharacterInputPhase(List<GameCommand> gameCommands) {
-        super(gameCommands);
+    public SetCharacterInputPhase() {
+        super();
     }
 
     @Override

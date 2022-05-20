@@ -6,8 +6,8 @@ import it.polimi.ingsw.Client.View.Gui.ViewGUI;
 import java.util.List;
 
 public class PlanificationPhase extends ClientPhase {
-    public PlanificationPhase(List<GameCommand> gameCommands) {
-        super(gameCommands);
+    public PlanificationPhase() {
+        super();
     }
 
     @Override
