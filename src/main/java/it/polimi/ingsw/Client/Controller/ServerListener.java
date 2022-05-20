@@ -10,7 +10,7 @@ import java.net.SocketException;
 
 public class ServerListener implements Runnable {
     private final ControllerClient controllerClient;
-    private boolean quit;
+    private volatile boolean quit;
     private final ObjectInputStream objIn;
 
     private final Socket socket;
@@ -35,11 +35,15 @@ public class ServerListener implements Runnable {
                 received = (ToClientMessage) objIn.readObject();
                 received.execute(controllerClient);
             } catch (IOException | ClassNotFoundException e) {
-                if (!quit) {
-                    System.err.println("Server connection lost");
-                    quit = true;
+                synchronized (this) {
+                    if (!quit) {
+                        // server disconnection not caused by quit command
+                        System.err.println("Server connection lost");
+                        quit = true;
+                    } else
+                        System.out.println("Disconnected from server");
                 }
-                controllerClient.changePhase(GamePhase.INIT_PHASE);
+                controllerClient.changePhase(GamePhase.INIT_PHASE, true);
             }
 
         } while (!quit);
@@ -55,7 +59,7 @@ public class ServerListener implements Runnable {
         }
     }
 
-    public void quit() {
+    public synchronized void quit() {
         quit = true;
     }
 }

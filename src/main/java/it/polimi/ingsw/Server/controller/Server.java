@@ -30,9 +30,9 @@ public class Server {
             while (true) {
                 System.out.println("Server ready to receive on " + serverIp + ":" + serverPort);
                 try {
-                    Thread t = new Thread(new ClientHandler(server.accept()));
-                    t.start();
+                    new Thread(new ClientHandler(server.accept())).start();
                 } catch (IOException e) {
+                    server.close();
                     throw new RuntimeException(e);
                 }
             }

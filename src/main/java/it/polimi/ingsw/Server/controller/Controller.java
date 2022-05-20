@@ -69,7 +69,6 @@ public class Controller {
     }
 
     public synchronized void move(Color color, int idGameComponent) throws GameException, NullPointerException {
-
         if (gamePhase == GamePhase.MOVE_ST_PHASE) {
             if (idGameComponent <= 0 || idGameComponent >= 2 * matchType.nPlayers() + 12)
                 throw new NotAllowedException("Can't move to the selected GameComponent");
@@ -198,7 +197,7 @@ public class Controller {
         }
     }
 
-    public void disconnectPlayerQuitted(GameListener playerAlreadyDisconnected) {
+    public void disconnectPlayerQuit(GameListener playerAlreadyDisconnected) {
         removePlayer(playerAlreadyDisconnected);
         Server.removeMatch(matchId);
         notifyClients(new EndGame(null));

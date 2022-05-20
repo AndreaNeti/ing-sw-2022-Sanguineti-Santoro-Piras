@@ -16,27 +16,37 @@ public class ViewCli extends AbstractView {
 
     private final static String operatingSystem = System.getProperty("os.name");
     private ClientPhaseView phaseToExecute;
-    private Boolean isInputReady, phaseChanged;
+    private volatile boolean isInputReady, phaseChanged, requestInput;
     private String input;
 
     public ViewCli(ControllerClient controllerClient) {
         super(controllerClient);
         Thread scannerThread = new Thread(() -> {
+            System.out.println(this.getClass());
             final Scanner myInput = new Scanner(System.in);
-            while (!canQuit()) {
-                input = myInput.nextLine();
-                notifyInput();
+            try {
+                synchronized (this) {
+                    while (!requestInput)
+                        wait();
+                }
+                while (!canQuit()) {
+                    input = myInput.nextLine();
+                    synchronized (this) {
+                        isInputReady = true;
+                        requestInput = false;
+                        notify();
+                        while (!requestInput && !canQuit())
+                            wait();
+                    }
+                }
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
             }
         });
         scannerThread.start();
         System.out.println("You've chosen to play with client line interface");
         isInputReady = false;
         phaseChanged = false;
-    }
-
-    private synchronized void notifyInput() {
-        isInputReady = true;
-        notifyAll();
     }
 
     public void start() throws InterruptedException {
@@ -169,7 +179,7 @@ public class ViewCli extends AbstractView {
                 ret = Integer.parseInt(getInput());
             } catch (NumberFormatException ex) {
                 err = true;
-                print("Not a valid input");
+                System.out.println("Not a valid input");
             }
         } while (err);
         return ret;
@@ -254,7 +264,7 @@ public class ViewCli extends AbstractView {
         System.out.println(message + "(Y/N):");
         String s = getInput().toLowerCase();
         while (!s.equals("y") && !s.equals("n")) {
-            print("Not a valid input\n" + message + "(Y/N):");
+            System.out.println("Not a valid input\n" + message + "(Y/N):");
             s = getInput().toLowerCase();
         }
         return s.equals("y");
@@ -262,19 +272,19 @@ public class ViewCli extends AbstractView {
 
 
     public String getStringInput(String message) throws PhaseChangedException {
-        System.out.println(message + ": ");
-        String ret = getInput();
-
-        while (ret.isBlank()) {
-            System.out.println("Input can't be empty.\n" + message + ": ");
+        String ret;
+        boolean err;
+        do {
+            err = false;
+            System.out.println(message + ": ");
             ret = getInput();
+            if (ret.isBlank()) {
+                System.out.println("Input can't be empty");
+                err = true;
+            }
         }
-
+        while (err);
         return ret;
-    }
-
-    public void print(String s) {
-        System.out.println(s);
     }
 
     public long getLongInput(String message) throws PhaseChangedException {
@@ -287,7 +297,7 @@ public class ViewCli extends AbstractView {
                 ret = Long.parseLong(getInput());
             } catch (NumberFormatException ex) {
                 err = true;
-                print("Not a valid input");
+                System.out.println("Not a valid input");
             }
         } while (err);
         return ret;
@@ -296,8 +306,12 @@ public class ViewCli extends AbstractView {
     public synchronized String getInput() throws PhaseChangedException {
         isInputReady = false;
         phaseChanged = false;
-        this.input = null;
+        this.input = "";
+        // wakes up scanner thread
+        requestInput = true;
+        notify();
         try {
+            // wait for scanner notify or phase changed flag
             while (!isInputReady && !phaseChanged) {
                 wait();
             }
@@ -313,6 +327,12 @@ public class ViewCli extends AbstractView {
 
     public void printEntranceHall(Integer player) {
         System.out.println(getModel().getPlayers().get(player).getEntranceHall());
+    }
 
+    @Override
+    public void setQuit() {
+        super.setQuit();
+        // notifies scanner to wakeup and terminate
+        notify();
     }
 }

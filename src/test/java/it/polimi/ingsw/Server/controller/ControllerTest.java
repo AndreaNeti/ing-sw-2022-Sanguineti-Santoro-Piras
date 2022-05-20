@@ -270,7 +270,7 @@ class ControllerTest {
 
     @Test
     void disconnectTest() {
-        assertDoesNotThrow(() -> controllerExpert.disconnectPlayerQuitted(p1));
+        assertDoesNotThrow(() -> controllerExpert.disconnectPlayerQuit(p1));
     }
 
     @Test

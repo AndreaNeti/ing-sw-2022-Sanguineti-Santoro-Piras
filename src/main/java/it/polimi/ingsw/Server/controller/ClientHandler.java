@@ -58,7 +58,7 @@ public class ClientHandler implements Runnable, GameListener {
                     update(new ErrorException("Game not started yet"));
             } catch (IOException | ClassNotFoundException e) {
                 if (controller != null)
-                    controller.disconnectPlayerQuitted(this);
+                    controller.disconnectPlayerQuit(this);
                 // cannot receive a quit message because it's disconnected
                 quit = true;
             }
@@ -99,7 +99,7 @@ public class ClientHandler implements Runnable, GameListener {
     public void quit() {
         if (controller == null) quit = true;
         else {
-            controller.disconnectPlayerQuitted(this);
+            controller.disconnectPlayerQuit(this);
             controller = null;
         }
     }

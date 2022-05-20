@@ -23,7 +23,6 @@ import java.util.*;
 import static java.util.Map.entry;
 
 public class ControllerClient extends GameClientListened {
-    private final Socket socket;
     private ServerSender serverSender;
     private GameClient gameClient;
     private MatchType matchType;
@@ -34,11 +33,11 @@ public class ControllerClient extends GameClientListened {
     private Wizard myWizard;
     private ServerListener serverListener;
 
+    private boolean isInMatch;
+
     public ControllerClient() {
-        socket = new Socket();
         playerClients = new ArrayList<>();
         myWizard = null;
-
     }
 
     public void setCommands(Map<CLICommands, GameCommand> commands) {
@@ -63,9 +62,12 @@ public class ControllerClient extends GameClientListened {
     }
 
     public boolean connect(byte[] ipAddress, int port) {
+        Socket socket;
         try {
+            socket = new Socket();
             socket.connect(new InetSocketAddress(InetAddress.getByAddress(ipAddress), port));
         } catch (IOException | NumberFormatException e) {
+            e.printStackTrace();
             return false;
         }
         serverListener = new ServerListener(socket, this);
@@ -85,16 +87,10 @@ public class ControllerClient extends GameClientListened {
         notifyClientPhase(phases.get(oldPhase), notifyScanner);
     }
 
-    public void changePhase(GamePhase newGamePhase) {
-        oldPhase = newGamePhase;
-        super.notifyClientPhase(phases.get(newGamePhase), true);
-    }
-
-    public void changePhase(GamePhase newGamePhase, boolean setOldPhase) {
+    public synchronized void changePhase(GamePhase newGamePhase, boolean setOldPhase) {
         if (setOldPhase)
-            changePhase(newGamePhase);
-        else
-            super.notifyClientPhase(phases.get(newGamePhase), true);
+            oldPhase = newGamePhase;
+        super.notifyClientPhase(phases.get(newGamePhase), true);
     }
 
     public void changePhase(GamePhase gamePhase, Byte currentPlayer) {
@@ -104,9 +100,9 @@ public class ControllerClient extends GameClientListened {
         if (currentPlayer == null) return;
         gameClient.setCurrentPlayer(currentPlayer);
         if (gameClient.getCurrentPlayer().getWizard() != myWizard) {
-            changePhase(GamePhase.WAIT_PHASE);
+            changePhase(GamePhase.WAIT_PHASE, true);
         } else {
-            changePhase(gamePhase);
+            changePhase(gamePhase, true);
         }
     }
 
@@ -136,11 +132,10 @@ public class ControllerClient extends GameClientListened {
         super.notifyMembers(matchType.nPlayers() - playerClients.size());
     }
 
-    public synchronized void sendMessage(ToServerMessage command) {
+    public void sendMessage(ToServerMessage command) {
         if (serverSender == null) error("Must connect to a Server Before");
-        else {
+        else
             serverSender.sendServerMessage(command);
-        }
     }
 
     public void error(String e) {
@@ -152,7 +147,7 @@ public class ControllerClient extends GameClientListened {
         notifyOk();
     }
 
-    public synchronized void changeGame(GameDelta gameDelta) {
+    public void changeGame(GameDelta gameDelta) {
         for (Map.Entry<Byte, GameComponent> entry : gameDelta.getUpdatedGC().entrySet()) {
             gameClient.setGameComponent(entry.getKey(), entry.getValue());
         }
@@ -176,14 +171,16 @@ public class ControllerClient extends GameClientListened {
     }
 
     public void setMatchType(MatchType matchType) {
+        isInMatch = true;
         this.matchType = matchType;
     }
 
     // returns true if the client process has to quit
-    public boolean setQuit() {
-        if (gameClient != null) {
+    public synchronized boolean setQuit() {
+        if (isInMatch) {
             sendMessage(new Quit());
-            changePhase(GamePhase.SELECT_MATCH_PHASE);
+            changePhase(GamePhase.SELECT_MATCH_PHASE, true);
+            isInMatch = false;
             return false;
         } else if (oldPhase != GamePhase.INIT_PHASE) {
             sendMessage(new Quit());

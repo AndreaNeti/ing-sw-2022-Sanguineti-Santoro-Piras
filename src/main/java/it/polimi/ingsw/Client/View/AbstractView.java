@@ -9,7 +9,7 @@ import it.polimi.ingsw.network.toServerMessage.ToServerMessage;
 public abstract class AbstractView implements GameClientListener {
     private final ControllerClient controllerClient;
     private GameClientView model;
-    private boolean quit;
+    private volatile boolean quit;
 
     public AbstractView(ControllerClient controllerClient) {
         this.controllerClient = controllerClient;
