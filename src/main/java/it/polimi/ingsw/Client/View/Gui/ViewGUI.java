@@ -32,59 +32,5 @@ public class ViewGUI extends AbstractView {
     }
 
 
-    @Override
-    public void updateMotherNature(Byte motherNaturePosition) {
 
-    }
-
-    @Override
-    public void update(GameComponentClient gameComponent) {
-
-    }
-
-    @Override
-    public void update(IslandClient island) {
-
-    }
-
-    @Override
-    public void update(ArrayList<IslandClient> islands) {
-
-    }
-
-    @Override
-    public void update(HouseColor houseColor, Byte towerLefts) {
-
-    }
-
-    @Override
-    public void update(Color color, Wizard wizard) {
-
-    }
-
-    @Override
-    public void error(String e) {
-
-    }
-
-    @Override
-    public void ok() {
-
-    }
-
-    @Override
-    public void update(String currentPlayer, boolean isMyTurn) {
-
-    }
-
-    @Override
-    public void updateMembers(int membersLeftToStart) {
-
-    }
-
-
-    @Override
-    public void updateCardPlayed(Byte playedCard) {
-
-    }
 }

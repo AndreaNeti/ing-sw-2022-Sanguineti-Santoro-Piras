@@ -6,7 +6,7 @@ import it.polimi.ingsw.Enum.GamePhase;
 import it.polimi.ingsw.Server.controller.MatchType;
 import it.polimi.ingsw.network.toServerMessage.ToServerMessage;
 
-public abstract class AbstractView implements GameClientListener {
+public abstract class AbstractView {
     private final ControllerClient controllerClient;
     private GameClientView model;
     private volatile boolean quit;
@@ -20,7 +20,6 @@ public abstract class AbstractView implements GameClientListener {
         return model;
     }
 
-    @Override
     public void setModel(GameClientView model) {
         this.model = model;
     }

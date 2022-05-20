@@ -11,9 +11,10 @@ import it.polimi.ingsw.Enum.HouseColor;
 import it.polimi.ingsw.Enum.Wizard;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public abstract class GameClientListened {
-    private ArrayList<AbstractView> listeners;
+    private List<GameClientListener> listeners;
 
     public void notifyMotherNature(Byte motherNaturePosition) {
         for (GameClientListener listener : listeners) {
@@ -75,7 +76,7 @@ public abstract class GameClientListened {
         }
     }
 
-    public void addListener(AbstractView listener) {
+    public void addListener(GameClientListener listener) {
         if (listeners == null) listeners = new ArrayList<>();
         listeners.add(listener);
     }
@@ -90,12 +91,4 @@ public abstract class GameClientListened {
         }
     }
 
-    public void notifyClientPhase(ClientPhaseController clientPhaseController, boolean notifyScanner) {
-        clientPhaseController.setPhaseInView(listeners, notifyScanner);
-    }
-
-    public void attachModel(GameClientView model) {
-        for (GameClientListener listener : listeners)
-            listener.setModel(model);
-    }
 }

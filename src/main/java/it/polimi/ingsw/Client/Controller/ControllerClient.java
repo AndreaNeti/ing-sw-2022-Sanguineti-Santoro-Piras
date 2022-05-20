@@ -3,7 +3,9 @@ package it.polimi.ingsw.Client.Controller;
 import it.polimi.ingsw.Client.GameClientListened;
 import it.polimi.ingsw.Client.PhaseAndComand.Commands.GameCommand;
 import it.polimi.ingsw.Client.PhaseAndComand.Phases.*;
+import it.polimi.ingsw.Client.View.AbstractView;
 import it.polimi.ingsw.Client.model.GameClient;
+import it.polimi.ingsw.Client.model.GameClientView;
 import it.polimi.ingsw.Client.model.PlayerClient;
 import it.polimi.ingsw.Enum.*;
 import it.polimi.ingsw.Server.controller.GameDelta;
@@ -32,6 +34,7 @@ public class ControllerClient extends GameClientListened {
     private GamePhase oldPhase;
     private Wizard myWizard;
     private ServerListener serverListener;
+    private  AbstractView abstractView;
 
     private boolean isInMatch;
 
@@ -67,7 +70,6 @@ public class ControllerClient extends GameClientListened {
             socket = new Socket();
             socket.connect(new InetSocketAddress(InetAddress.getByAddress(ipAddress), port));
         } catch (IOException | NumberFormatException e) {
-            e.printStackTrace();
             return false;
         }
         serverListener = new ServerListener(socket, this);
@@ -78,7 +80,7 @@ public class ControllerClient extends GameClientListened {
 
     public void setNextClientPhase() {
         GamePhase newPhase = GamePhase.values()[oldPhase.ordinal() + 1];
-        super.notifyClientPhase(phases.get(newPhase), true);
+        notifyClientPhase(phases.get(newPhase), true);
         oldPhase = newPhase;
 
     }
@@ -90,7 +92,7 @@ public class ControllerClient extends GameClientListened {
     public synchronized void changePhase(GamePhase newGamePhase, boolean setOldPhase) {
         if (setOldPhase)
             oldPhase = newGamePhase;
-        super.notifyClientPhase(phases.get(newGamePhase), true);
+        notifyClientPhase(phases.get(newGamePhase), true);
     }
 
     public void changePhase(GamePhase gamePhase, Byte currentPlayer) {
@@ -127,7 +129,7 @@ public class ControllerClient extends GameClientListened {
                 phases.put(GamePhase.SET_CH_CARD_PHASE, new ExpertClientPhaseDecorator((ClientPhase) phases.get(GamePhase.SET_CH_CARD_PHASE), Arrays.asList(commands.get(CLICommands.SET_CHARACTER_INPUT), commands.get(CLICommands.PLAY_CHARACTER), commands.get(CLICommands.DELETE_LAST_INPUT), commands.get(CLICommands.UNDO))));
             }
             gameClient.addListener(this);
-            attachModel(gameClient);
+            abstractView.setModel(gameClient);
         }
         super.notifyMembers(matchType.nPlayers() - playerClients.size());
     }
@@ -191,4 +193,11 @@ public class ControllerClient extends GameClientListened {
         } else
             return true;
     }
+    public void notifyClientPhase(ClientPhaseController clientPhaseController, boolean notifyScanner) {
+        clientPhaseController.setPhaseInView(abstractView, notifyScanner);
+    }
+    public void attachView(AbstractView view){
+        this.abstractView=view;
+    }
+
 }

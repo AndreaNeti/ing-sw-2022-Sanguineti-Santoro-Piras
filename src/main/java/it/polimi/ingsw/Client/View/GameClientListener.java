@@ -33,6 +33,6 @@ public interface GameClientListener {
     //TODO update withcoins, character
     void updateCardPlayed(Byte playedCard);
 
-    void setModel(GameClientView model);
+    //void setModel(GameClientView model);
 
 }

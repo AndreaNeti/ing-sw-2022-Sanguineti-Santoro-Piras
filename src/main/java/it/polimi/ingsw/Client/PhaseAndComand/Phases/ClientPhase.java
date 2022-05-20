@@ -27,6 +27,7 @@ public abstract class ClientPhase implements ClientPhaseView, ClientPhaseControl
             index = viewCli.getIntInput(gameCommands.toArray(), "Select the command to play");
             gameCommands.get(index).playCLICommand();
         } catch (PhaseChangedException ignored) {
+            System.out.println("Phase has changed");
         }
     }
 
@@ -36,10 +37,9 @@ public abstract class ClientPhase implements ClientPhaseView, ClientPhaseControl
     }
 
     @Override
-    public void setPhaseInView(List<AbstractView> views, boolean notifyScanner) {
-        for (AbstractView abstractView : views) {
-            abstractView.setPhaseInView(this, notifyScanner);
-        }
+    public void setPhaseInView(AbstractView view, boolean notifyScanner) {
+        view.setPhaseInView(this, notifyScanner);
+
     }
 
 }

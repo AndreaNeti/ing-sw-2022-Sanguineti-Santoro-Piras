@@ -6,6 +6,6 @@ import it.polimi.ingsw.Client.View.AbstractView;
 import java.util.List;
 
 public interface ClientPhaseController {
-    void setPhaseInView(List<AbstractView> views, boolean notifyScanner);
+    void setPhaseInView(AbstractView view, boolean notifyScanner);
     List<GameCommand> getGameCommands();
 }
