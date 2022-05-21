@@ -13,7 +13,6 @@ import java.util.List;
 public abstract class ClientPhase implements ClientPhaseView, ClientPhaseController {
 
     private final List<GameCommand> gameCommands;
-    private static Thread t;
     public ClientPhase() {
         this.gameCommands = new ArrayList<>();
     }

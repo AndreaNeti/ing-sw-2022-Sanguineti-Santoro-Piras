@@ -40,7 +40,6 @@ public class ControllerClient extends GameClientListened {
     public ControllerClient() {
         playerClients = new ArrayList<>();
         myWizard = null;
-
     }
 
     public void instantiateAllPhases() {
@@ -91,16 +90,14 @@ public class ControllerClient extends GameClientListened {
         commands.get(CLICommands.JOIN_MATCH_BY_ID).attachToAPhase(List.of(phases.get(GamePhase.SELECT_MATCH_PHASE)));
         commands.get(CLICommands.PLAY_CARD).attachToAPhase(List.of(phases.get(GamePhase.PLANIFICATION_PHASE)));
         commands.get(CLICommands.MOVE_STUDENT).attachToAPhase(List.of(phases.get(GamePhase.MOVE_ST_PHASE)));
-        commands.get(CLICommands.SHOW_ENTRANCE_HALL).attachToAPhase(Arrays.asList(phases.get(GamePhase.MOVE_ST_PHASE), phases.get(GamePhase.MOVE_CL_PHASE), phases.get(GamePhase.MOVE_MN_PHASE)));
+        commands.get(CLICommands.SHOW_ENTRANCE_HALL).attachToAPhase(Arrays.asList(phases.get(GamePhase.MOVE_ST_PHASE), phases.get(GamePhase.MOVE_MN_PHASE), phases.get(GamePhase.MOVE_CL_PHASE)));
         commands.get(CLICommands.MOVE_MOTHER_NATURE).attachToAPhase(List.of(phases.get(GamePhase.MOVE_MN_PHASE)));
         commands.get(CLICommands.MOVE_FROM_CLOUD).attachToAPhase(List.of(phases.get(GamePhase.MOVE_CL_PHASE)));
         commands.get(CLICommands.QUIT).attachToAPhase(new ArrayList<>(phases.values()));
-        commands.get(CLICommands.TEXT_MESSAGE).attachToAPhase(List.of(phases.get(GamePhase.WAIT_PHASE)));
+        commands.get(CLICommands.TEXT_MESSAGE).attachToAPhase(List.of(phases.get(GamePhase.WAIT_PHASE), phases.get(GamePhase.PLANIFICATION_PHASE), phases.get(GamePhase.MOVE_ST_PHASE), phases.get(GamePhase.MOVE_MN_PHASE), phases.get(GamePhase.MOVE_CL_PHASE)));
     }
 
     private void attachExpertCommand() {
-
-
         commands.get(CLICommands.CHOOSE_CHARACTER).attachToAPhase(Arrays.asList(phases.get(GamePhase.MOVE_ST_PHASE), phases.get(GamePhase.MOVE_CL_PHASE), phases.get(GamePhase.MOVE_MN_PHASE)));
         commands.get(CLICommands.SET_CHARACTER_INPUT).attachToAPhase(List.of(phases.get(GamePhase.SET_CH_CARD_PHASE)));
         commands.get(CLICommands.PLAY_CHARACTER).attachToAPhase(Arrays.asList(phases.get(GamePhase.PLAY_CH_CARD_PHASE), phases.get(GamePhase.SET_CH_CARD_PHASE)));
@@ -109,11 +106,11 @@ public class ControllerClient extends GameClientListened {
 
     }
 
-    public boolean connect(byte[] ipAddress, int port) {
+    public boolean connect(byte[] ipAddress) {
         Socket socket;
         try {
             socket = new Socket();
-            socket.connect(new InetSocketAddress(InetAddress.getByAddress(ipAddress), port));
+            socket.connect(new InetSocketAddress(InetAddress.getByAddress(ipAddress), Server.serverPort));
         } catch (IOException | NumberFormatException e) {
             return false;
         }
@@ -155,9 +152,6 @@ public class ControllerClient extends GameClientListened {
 
     public void addMembers(HashMap<Player, HouseColor> members) {
         this.playerClients = new ArrayList<>();
-        if (myWizard == null) {
-            myWizard = Wizard.values()[members.size() - 1];
-        }
         for (Map.Entry<Player, HouseColor> entry : members.entrySet()) {
             playerClients.add(new PlayerClient(entry.getKey(), entry.getValue(), Server.getMatchConstants(matchType)));
         }
@@ -212,7 +206,8 @@ public class ControllerClient extends GameClientListened {
         }
     }
 
-    public void setMatchType(MatchType matchType) {
+    public void setMatchTypeAndWizard(MatchType matchType, Wizard myWizard) {
+        this.myWizard = myWizard;
         isInMatch = true;
         this.matchType = matchType;
     }

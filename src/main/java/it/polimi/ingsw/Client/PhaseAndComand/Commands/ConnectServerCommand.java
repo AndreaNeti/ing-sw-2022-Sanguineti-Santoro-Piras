@@ -20,7 +20,7 @@ public class ConnectServerCommand extends GameCommand {
     @Override
     public void playCLICommand() throws PhaseChangedException {
         ViewCli viewCli = (ViewCli) getView();
-        if (!viewCli.connectToServer(viewCli.getIpAddressInput(), viewCli.getServerPortInput())) {
+        if (!viewCli.connectToServer(viewCli.getIpAddressInput())) {
             System.err.println("Cannot connect to this server");
             viewCli.repeatPhase(false);
         } else

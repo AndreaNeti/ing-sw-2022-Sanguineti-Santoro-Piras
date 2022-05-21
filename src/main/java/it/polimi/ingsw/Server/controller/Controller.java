@@ -139,10 +139,9 @@ public class Controller {
         }
     }
 
-    public synchronized boolean addPlayer(GameListener handler, String nickName) throws GameException {
+    public synchronized void addPlayer(GameListener handler, String nickName) throws GameException {
         if (playersList.size() == matchType.nPlayers()) {
             throw new NotAllowedException("Match is full");
-
         }
         int teamIndex = playersList.size() % teams.size(); // circular team selection
         Player newPlayer;
@@ -158,9 +157,8 @@ public class Controller {
         notifyClients(new PlayersInMatch(playerMap));
         if (playersList.size() == matchType.nPlayers()) {
             startGame();
-            return true;
+            Server.removeMatch(matchId);
         }
-        return false;
     }
 
     public void sendMessage(String me, String message) throws NullPointerException {
@@ -342,5 +340,8 @@ public class Controller {
 
     protected MatchType getMatchType() {
         return matchType;
+    }
+    protected int getPlayersInMatch(){
+        return playersList.size();
     }
 }

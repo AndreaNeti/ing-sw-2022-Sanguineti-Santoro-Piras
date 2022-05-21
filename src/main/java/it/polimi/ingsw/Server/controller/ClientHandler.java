@@ -1,5 +1,6 @@
 package it.polimi.ingsw.Server.controller;
 
+import it.polimi.ingsw.Enum.Wizard;
 import it.polimi.ingsw.exceptions.GameException;
 import it.polimi.ingsw.exceptions.NotAllowedException;
 import it.polimi.ingsw.network.toClientMessage.ErrorException;
@@ -128,34 +129,24 @@ public class ClientHandler implements Runnable, GameListener {
 
     public void joinByMatchType(MatchType matchType) throws GameException {
         if (controller != null) throw new NotAllowedException("Already joined a match");
-        Long controllerId;
-        controllerId = Server.getOldestMatchId(matchType);
-        controller = Server.getMatchById(controllerId);
-        update(new MatchInfo(controller.getMatchType(), controller.getMatchId()));
-        update(new OK());
-        if (controller.addPlayer(this, nickName)) {
-            Server.removeMatch(controllerId);
-        }
-
+        Long controllerId = Server.getOldestMatchId(matchType);
+        joinMatch(Server.getMatchById(controllerId));
     }
 
     public void joinByMatchId(Long matchId) throws GameException {
         if (controller != null) throw new NotAllowedException("Already joined a match");
-        controller = Server.getMatchById(matchId);
-        update(new MatchInfo(controller.getMatchType(), controller.getMatchId()));
-        update(new OK());
-        if (controller.addPlayer(this, nickName)) {
-            Server.removeMatch(matchId);
-        }
+        joinMatch(Server.getMatchById(matchId));
     }
 
     public void createMatch(MatchType matchType) throws GameException {
         if (controller != null) throw new NotAllowedException("Already joined a match");
-        controller = Server.createMatch(matchType);
-        update(new MatchInfo(controller.getMatchType(), controller.getMatchId()));
-        update(new OK());
-        controller.addPlayer(this, nickName);
-
+        joinMatch(Server.createMatch(matchType));
     }
 
+    private void joinMatch(Controller match) throws GameException {
+        controller = match;
+        update(new MatchInfo(controller.getMatchType(), controller.getMatchId(), Wizard.values()[controller.getPlayersInMatch()]));
+        update(new OK());
+        controller.addPlayer(this, nickName);
+    }
 }

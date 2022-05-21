@@ -22,7 +22,6 @@ public class ViewCli extends AbstractView {
     public ViewCli(ControllerClient controllerClient) {
         super(controllerClient);
         Thread scannerThread = new Thread(() -> {
-            System.out.println(this.getClass());
             final Scanner myInput = new Scanner(System.in);
             try {
                 synchronized (this) {
@@ -30,7 +29,9 @@ public class ViewCli extends AbstractView {
                         wait();
                 }
                 while (!canQuit()) {
-                    input = myInput.nextLine();
+                    do {
+                        input = myInput.nextLine();
+                    } while (input.isBlank());
                     synchronized (this) {
                         isInputReady = true;
                         requestInput = false;
@@ -122,10 +123,6 @@ public class ViewCli extends AbstractView {
         return ret;
     }
 
-    public int getServerPortInput() throws PhaseChangedException {
-        return getIntInput(0, 65535, "Select server port");
-    }
-
     public byte[] getIpAddressInput() throws PhaseChangedException {
         String input = getStringInput("Select server IP");
         byte[] ret = getIpFromString(input);
@@ -209,19 +206,8 @@ public class ViewCli extends AbstractView {
 
 
     public String getStringInput(String message) throws PhaseChangedException {
-        String ret;
-        boolean err;
-        do {
-            err = false;
-            System.out.println(message + ": ");
-            ret = getInput();
-            if (ret.isBlank()) {
-                System.out.println("Input can't be empty");
-                err = true;
-            }
-        }
-        while (err);
-        return ret;
+        System.out.println(message + ": ");
+        return getInput();
     }
 
     public long getLongInput(String message) throws PhaseChangedException {
