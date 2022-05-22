@@ -1,6 +1,7 @@
 package it.polimi.ingsw.Client.View.Cli;
 
 import it.polimi.ingsw.Client.View.GameClientListener;
+import it.polimi.ingsw.Client.model.CharacterCardClient;
 import it.polimi.ingsw.Client.model.GameComponentClient;
 import it.polimi.ingsw.Client.model.IslandClient;
 import it.polimi.ingsw.Enum.Color;
@@ -8,6 +9,7 @@ import it.polimi.ingsw.Enum.HouseColor;
 import it.polimi.ingsw.Enum.Wizard;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public record UpdateCli(ViewCli viewCli) implements GameClientListener {
 
@@ -75,6 +77,26 @@ public record UpdateCli(ViewCli viewCli) implements GameClientListener {
     @Override
     public void updateCardPlayed(Byte playedCard) {
         System.out.println(viewCli.getModel().getCurrentPlayer().getWizard() + " played assistant card " + playedCard);
+    }
+
+    @Override
+    public void updateIgnoredColor(Color color) {
+        System.out.println(viewCli.getModel().getCurrentPlayer().getWizard() + " decided that in this turn, " + color + " will not be used to calculate influence");
+    }
+
+    @Override
+    public void updateCharacter(List<CharacterCardClient> characters) {
+        int counter=1;
+        for (CharacterCardClient character : characters) {
+            System.out.println("Character card n° "+counter+" is "+character.toString());
+            counter++;
+        }
+
+    }
+
+    @Override
+    public void updateCoins(Byte coins) {
+        System.out.println("Game has " +coins);
     }
 
 }

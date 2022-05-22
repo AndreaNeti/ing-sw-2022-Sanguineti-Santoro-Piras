@@ -2,14 +2,11 @@ package it.polimi.ingsw.Server.controller;
 
 import it.polimi.ingsw.Enum.Color;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 public class ExpertGameDelta extends GameDelta {
     //index of the character, id of the character
-    private Map<Byte, Byte> characters;
+    private List<Byte> characters;
     // player id, new playerCoinsLeft
     private Map<Byte, Byte> updatedCoinPlayer;
     private Byte newCoinsLeft, newProhibitionsLeft;
@@ -31,10 +28,10 @@ public class ExpertGameDelta extends GameDelta {
 
     @Override
     public void addCharacterCard(byte index, byte id) {
-        if (characters == null) {
-            characters = new HashMap<>();
-        }
-        characters.put(index, id);
+        System.out.println("added a char");
+        if (characters == null)
+            characters = new ArrayList<>();
+        characters.add(index,id);
         if (super.isAutomaticSending()) {
             super.send();
         }
@@ -75,8 +72,8 @@ public class ExpertGameDelta extends GameDelta {
     }
 
     @Override
-    public Map<Byte, Byte> getCharacters() {
-        if (characters == null) return Collections.emptyMap();
+    public List<Byte> getCharacters() {
+        if (characters == null) return new ArrayList<>();
         return characters;
     }
 

@@ -4,7 +4,6 @@ import it.polimi.ingsw.Client.Controller.ControllerClient;
 import it.polimi.ingsw.Client.View.AbstractView;
 import it.polimi.ingsw.Client.View.ClientPhaseView;
 import it.polimi.ingsw.Client.model.GameComponentClient;
-import it.polimi.ingsw.Client.model.IslandClient;
 import it.polimi.ingsw.Enum.*;
 import it.polimi.ingsw.Server.controller.MatchType;
 import it.polimi.ingsw.exceptions.PhaseChangedException;
@@ -12,7 +11,7 @@ import it.polimi.ingsw.exceptions.PhaseChangedException;
 import java.io.IOException;
 import java.util.*;
 
-public class ViewCli extends AbstractView {
+public class ViewCli extends AbstractView implements ViewForCharacterCli {
 
     private final static String operatingSystem = System.getProperty("os.name");
     private ClientPhaseView phaseToExecute;
@@ -177,6 +176,9 @@ public class ViewCli extends AbstractView {
         validDestinations.addAll(getModel().getIslands());
         int index = getIntInput(validDestinations.toArray(), "Select a destination");
         return validDestinations.get(index).getId();
+    }
+    public int getIslandDestination(String message) throws PhaseChangedException{
+        return getIntInput(getModel().getIslands().toArray(),message);
     }
 
     public byte getMotherNatureMovesInput() throws PhaseChangedException {

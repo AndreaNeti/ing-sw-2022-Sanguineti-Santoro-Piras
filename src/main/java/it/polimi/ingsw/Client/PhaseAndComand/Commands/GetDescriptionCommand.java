@@ -1,26 +1,28 @@
 package it.polimi.ingsw.Client.PhaseAndComand.Commands;
 
 import it.polimi.ingsw.Client.View.AbstractView;
+import it.polimi.ingsw.Client.View.Cli.ViewCli;
+import it.polimi.ingsw.Client.model.GameComponentClient;
 import it.polimi.ingsw.Enum.GamePhase;
 import it.polimi.ingsw.exceptions.PhaseChangedException;
 
 import java.awt.event.ActionEvent;
 
-public class DeleteLastInputCommand extends GameCommand{
-    public DeleteLastInputCommand(AbstractView view) {
+public class GetDescriptionCommand extends GameCommand {
+    public GetDescriptionCommand(AbstractView view) {
         super(view);
     }
 
     @Override
     public void playCLICommand() throws PhaseChangedException {
-        //TODO
-        System.out.println("Not yet implemented");
-        getView().setPhaseInView(GamePhase.PLAY_CH_CARD_PHASE, false);
+        ViewCli viewCli= (ViewCli) getView();
+        System.out.println(viewCli.getCurrentCharacterCard().getDescription());
+        viewCli.setPhaseInView(GamePhase.PLAY_CH_CARD_PHASE, false);
     }
 
     @Override
     public String toString() {
-        return "Delete last input";
+        return "Get Description";
     }
 
     @Override

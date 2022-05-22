@@ -52,7 +52,6 @@ public class ControllerClient extends GameClientListened {
                 entry(GamePhase.MOVE_ST_PHASE, new MoveStudentsPhase()),
                 entry(GamePhase.MOVE_MN_PHASE, new MoveMotherNaturePhase()),
                 entry(GamePhase.MOVE_CL_PHASE, new MoveCloudPhase()),
-                entry(GamePhase.SET_CH_CARD_PHASE, new SetCharacterInputPhase()),
                 entry(GamePhase.PLAY_CH_CARD_PHASE, new PlayCharacterCardPhase())
         );
         oldPhase = GamePhase.INIT_PHASE;
@@ -78,6 +77,7 @@ public class ControllerClient extends GameClientListened {
                 entry(CLICommands.SET_CHARACTER_INPUT, new SetCharacterInputCommand(abstractView)),
                 entry(CLICommands.PLAY_CHARACTER, new PlayCharacterCommand(abstractView)),
                 entry(CLICommands.DELETE_LAST_INPUT, new DeleteLastInputCommand(abstractView)),
+                entry(CLICommands.GET_DESCRIPTION, new GetDescriptionCommand(abstractView)),
                 entry(CLICommands.UNDO, new UndoCommands(abstractView))
         );
     }
@@ -93,18 +93,19 @@ public class ControllerClient extends GameClientListened {
         commands.get(CLICommands.SHOW_ENTRANCE_HALL).attachToAPhase(Arrays.asList(phases.get(GamePhase.MOVE_ST_PHASE), phases.get(GamePhase.MOVE_MN_PHASE), phases.get(GamePhase.MOVE_CL_PHASE)));
         commands.get(CLICommands.MOVE_MOTHER_NATURE).attachToAPhase(List.of(phases.get(GamePhase.MOVE_MN_PHASE)));
         commands.get(CLICommands.MOVE_FROM_CLOUD).attachToAPhase(List.of(phases.get(GamePhase.MOVE_CL_PHASE)));
-        commands.get(CLICommands.QUIT).attachToAPhase(new ArrayList<>(phases.values()));
         commands.get(CLICommands.TEXT_MESSAGE).attachToAPhase(List.of(phases.get(GamePhase.WAIT_PHASE), phases.get(GamePhase.PLANIFICATION_PHASE), phases.get(GamePhase.MOVE_ST_PHASE), phases.get(GamePhase.MOVE_MN_PHASE), phases.get(GamePhase.MOVE_CL_PHASE)));
+        commands.get(CLICommands.QUIT).attachToAPhase(new ArrayList<>(phases.values()));
     }
 
     private void attachExpertCommand() {
         commands.get(CLICommands.CHOOSE_CHARACTER).attachToAPhase(Arrays.asList(phases.get(GamePhase.MOVE_ST_PHASE), phases.get(GamePhase.MOVE_CL_PHASE), phases.get(GamePhase.MOVE_MN_PHASE)));
-        commands.get(CLICommands.SET_CHARACTER_INPUT).attachToAPhase(List.of(phases.get(GamePhase.SET_CH_CARD_PHASE)));
-        commands.get(CLICommands.PLAY_CHARACTER).attachToAPhase(Arrays.asList(phases.get(GamePhase.PLAY_CH_CARD_PHASE), phases.get(GamePhase.SET_CH_CARD_PHASE)));
-        commands.get(CLICommands.DELETE_LAST_INPUT).attachToAPhase(List.of(phases.get(GamePhase.SET_CH_CARD_PHASE)));
+        commands.get(CLICommands.SET_CHARACTER_INPUT).attachToAPhase(List.of(phases.get(GamePhase.PLAY_CH_CARD_PHASE)));
+        commands.get(CLICommands.PLAY_CHARACTER).attachToAPhase(List.of(phases.get(GamePhase.PLAY_CH_CARD_PHASE)));
+        commands.get(CLICommands.DELETE_LAST_INPUT).attachToAPhase(List.of(phases.get(GamePhase.PLAY_CH_CARD_PHASE)));
         commands.get(CLICommands.UNDO).attachToAPhase(List.of(phases.get(GamePhase.PLAY_CH_CARD_PHASE)));
-
+        commands.get(CLICommands.GET_DESCRIPTION).attachToAPhase(List.of(phases.get(GamePhase.PLAY_CH_CARD_PHASE)));
     }
+
 
     public boolean connect(byte[] ipAddress) {
         Socket socket;
@@ -135,6 +136,10 @@ public class ControllerClient extends GameClientListened {
         if (setOldPhase)
             oldPhase = newGamePhase;
         notifyClientPhase(phases.get(newGamePhase), true);
+    }
+
+    public synchronized void goToOldPhase() {
+        notifyClientPhase(phases.get(oldPhase), true);
     }
 
     public void changePhase(GamePhase gamePhase, Byte currentPlayer) {
@@ -203,6 +208,13 @@ public class ControllerClient extends GameClientListened {
 
         for (Map.Entry<HouseColor, Byte> entry : gameDelta.getNewTeamTowersLeft().entrySet()) {
             gameClient.setTowerLeft(entry.getKey(), entry.getValue());
+        }
+        if (matchType.isExpert()) {
+            if (gameDelta.getCharacters().size()!=0)
+                gameClient.setCharacters(gameDelta.getCharacters());
+            gameDelta.getNewCoinsLeft().ifPresent(newCoinsLeft -> gameClient.setNewCoinsLeft(newCoinsLeft));
+            gameDelta.getNewProhibitionsLeft().ifPresent(newProhibitionsLeft -> gameClient.setNewProhibitionsLeft(newProhibitionsLeft));
+            gameClient.setUpdatedCoinPlayer(gameDelta.getUpdatedCoinPlayer());
         }
     }
 

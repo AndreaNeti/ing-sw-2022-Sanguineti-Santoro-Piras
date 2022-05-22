@@ -42,7 +42,6 @@ public class ExpertGame extends NormalGame implements CharacterCardGame {
                 characterIndex = (byte) rand.nextInt(12);
             }
             c = factoryCharacter(characterIndex);
-            getGameDelta().addCharacterCard(i, characterIndex);
             characters.add(c);
             selectedCharacters.add(c.getCharId());
             i++;

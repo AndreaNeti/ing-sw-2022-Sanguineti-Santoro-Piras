@@ -156,6 +156,7 @@ public class Controller {
 
         notifyClients(new PlayersInMatch(playerMap));
         if (playersList.size() == matchType.nPlayers()) {
+            System.out.println("game is starting");
             startGame();
             Server.removeMatch(matchId);
         }

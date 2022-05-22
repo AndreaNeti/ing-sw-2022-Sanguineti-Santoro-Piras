@@ -1,7 +1,9 @@
 package it.polimi.ingsw.Client.View;
 
 import it.polimi.ingsw.Client.Controller.ControllerClient;
+import it.polimi.ingsw.Client.model.CharacterCardClient;
 import it.polimi.ingsw.Client.model.GameClientView;
+import it.polimi.ingsw.Enum.GamePhase;
 import it.polimi.ingsw.Server.controller.MatchType;
 import it.polimi.ingsw.network.toServerMessage.ToServerMessage;
 
@@ -9,6 +11,7 @@ public abstract class AbstractView {
     private final ControllerClient controllerClient;
     private GameClientView model;
     private volatile boolean quit;
+    private CharacterCardClient currentCharacterCard;
 
     public AbstractView(ControllerClient controllerClient) {
         this.controllerClient = controllerClient;
@@ -33,9 +36,14 @@ public abstract class AbstractView {
 
     public abstract void setPhaseInView(ClientPhaseView clientPhaseView, boolean notifyScanner);
 
+    public void setPhaseInView(GamePhase gamePhase, boolean setOldPhase) {
+        controllerClient.changePhase(gamePhase, setOldPhase);
+    }
+
     public void repeatPhase(boolean notifyScanner) {
         controllerClient.repeatPhase(notifyScanner);
     }
+
 
     public boolean connectToServer(byte[] ipAddress) {
         return controllerClient.connect(ipAddress);
@@ -50,5 +58,13 @@ public abstract class AbstractView {
 
     public boolean canQuit() {
         return quit;
+    }
+
+    public void setCurrentCharacterCard(CharacterCardClient currentCharacterCard) {
+        this.currentCharacterCard = currentCharacterCard;
+    }
+
+    public CharacterCardClient getCurrentCharacterCard() {
+        return currentCharacterCard;
     }
 }

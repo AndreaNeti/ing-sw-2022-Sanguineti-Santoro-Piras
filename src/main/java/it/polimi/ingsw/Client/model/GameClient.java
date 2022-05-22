@@ -10,6 +10,9 @@ import it.polimi.ingsw.Server.model.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class GameClient extends GameClientListened implements GameClientView {
 
@@ -21,7 +24,14 @@ public class GameClient extends GameClientListened implements GameClientView {
     private final Wizard myWizard;
     private final MatchConstants matchConstants;
     //players are in the same order of wizard.ordinal
-    private final ArrayList<PlayerClient> players;
+    private final List<PlayerClient> players;
+    private final List<CharacterCardClient> characters;
+    private final List<CharacterCardClientWithStudents> charactersWithStudents;
+
+    // player id, new playerCoinsLeft
+    private Map<Byte, Byte> updatedCoinPlayer;
+    private Byte newCoinsLeft, newProhibitionsLeft;
+    private Color ignoredColorInfluence;
 
     public GameClient(ArrayList<PlayerClient> players, Wizard myWizard, MatchConstants matchConstants) {
         System.out.println(players.toString());
@@ -38,6 +48,8 @@ public class GameClient extends GameClientListened implements GameClientView {
             islands.add(new IslandClient(2 * players.size() + i));
         }
         this.players = players;
+        this.characters = new ArrayList<>();
+        this.charactersWithStudents = new ArrayList<>();
 
     }
 
@@ -57,7 +69,7 @@ public class GameClient extends GameClientListened implements GameClientView {
 
     public void setProfessors(Color color, Wizard owner) {
         this.professors[color.ordinal()] = owner;
-        notify(color,owner);
+        notify(color, owner);
     }
 
     //I am trusting server pls
@@ -90,8 +102,14 @@ public class GameClient extends GameClientListened implements GameClientView {
             islandToReturn.modifyGameComponent(gameComponent);
 
             notify(islandToReturn);
+        } else if (idGameComponent <= -10) {
+            for (CharacterCardClientWithStudents ch : charactersWithStudents) {
+                if (ch.getId() == idGameComponent) {
+                    ch.modifyGameComponent(gameComponent);
+                }
+            }
         } else {
-            GameComponentClient cloud = clouds. get(-(idGameComponent + 1));
+            GameComponentClient cloud = clouds.get(-(idGameComponent + 1));
             cloud.modifyGameComponent(gameComponent);
             notify(cloud);
         }
@@ -154,5 +172,83 @@ public class GameClient extends GameClientListened implements GameClientView {
     @Override
     public List<PlayerClient> getPlayers() {
         return players;
+    }
+
+    public Byte getNewCoinsLeft() {
+        return newCoinsLeft;
+    }
+
+    public void setNewCoinsLeft(Byte newCoinsLeft) {
+        this.newCoinsLeft = newCoinsLeft;
+        //TODO add update
+    }
+
+    public Byte getNewProhibitionsLeft() {
+        return newProhibitionsLeft;
+    }
+
+    public void setNewProhibitionsLeft(Byte newProhibitionsLeft) {
+        this.newProhibitionsLeft = newProhibitionsLeft;
+        //TODO add update
+    }
+
+    public Color getIgnoredColorInfluence() {
+        return ignoredColorInfluence;
+    }
+
+    public void setIgnoredColorInfluence(Color ignoredColorInfluence) {
+        this.ignoredColorInfluence = ignoredColorInfluence;
+        notifyIgnoredColor(ignoredColorInfluence);
+    }
+
+    public void setUpdatedCoinPlayer(Map<Byte, Byte> updatedCoinPlayer) {
+        this.updatedCoinPlayer = updatedCoinPlayer;
+    }
+
+    @Override
+    public List<CharacterCardClient> getCharacters() {
+        return Stream.concat(characters.stream(), charactersWithStudents.stream()).collect(Collectors.toList());
+    }
+
+    public void setCharacters(List<Byte> charactersReceived) {
+
+        for (Byte character : charactersReceived) {
+            if (character == 0 || character == 6 || character == 10) {
+                charactersWithStudents.add((CharacterCardClientWithStudents) factoryCharacter(character));
+            } else {
+                this.characters.add(factoryCharacter(character));
+            }
+        }
+        notifyCharacter(getCharacters());
+    }
+
+    private CharacterCardClient factoryCharacter(byte i) {
+        switch (i) {
+            case 0:
+                return new Char0Client();
+            case 1:
+                return new Char1Client();
+            case 2:
+                return new Char2Client();
+            case 3:
+                return new Char3Client();
+            case 4:
+                return new Char4Client();
+            case 5:
+                return new Char5Client();
+            case 6:
+                return new Char6Client();
+            case 7:
+                return new Char7Client();
+            case 8:
+                return new Char8Client();
+            case 9:
+                return new Char9Client();
+            case 10:
+                return new Char10Client();
+            case 11:
+                return new Char11Client();
+        }
+        throw new IllegalArgumentException("Character card " + i + " doesn't exists");
     }
 }

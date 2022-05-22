@@ -52,6 +52,7 @@ public class ClientHandler implements Runnable, GameListener {
             } catch (GameException e1) {
                 update(new ErrorException(e1.getMessage()));
             } catch (NullPointerException ex) {
+                ex.printStackTrace();
                 // controller or game are null somewhere
                 if (controller == null)
                     update(new ErrorException("Must join a match before"));

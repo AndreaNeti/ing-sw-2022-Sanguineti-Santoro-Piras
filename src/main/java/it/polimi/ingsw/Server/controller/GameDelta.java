@@ -118,8 +118,8 @@ public class GameDelta implements Serializable {
     public void setIgnoredColorInfluence(Color ignoredColorInfluence) {
     }
 
-    public Map<Byte, Byte> getCharacters() {
-        return Collections.emptyMap();
+    public List<Byte> getCharacters() {
+        return new ArrayList<>();
     }
 
     public Map<Byte, Byte> getUpdatedCoinPlayer() {

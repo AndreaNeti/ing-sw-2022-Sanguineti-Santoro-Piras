@@ -1,6 +1,6 @@
 package it.polimi.ingsw.Client.View;
 
-import it.polimi.ingsw.Client.model.GameClientView;
+import it.polimi.ingsw.Client.model.CharacterCardClient;
 import it.polimi.ingsw.Client.model.GameComponentClient;
 import it.polimi.ingsw.Client.model.IslandClient;
 import it.polimi.ingsw.Enum.Color;
@@ -8,6 +8,7 @@ import it.polimi.ingsw.Enum.HouseColor;
 import it.polimi.ingsw.Enum.Wizard;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public interface GameClientListener {
     void updateMotherNature(Byte motherNaturePosition);
@@ -32,6 +33,10 @@ public interface GameClientListener {
 
     //TODO update withcoins, character
     void updateCardPlayed(Byte playedCard);
+
+    void updateIgnoredColor(Color color);
+    void updateCharacter(List<CharacterCardClient> characters);
+    void updateCoins(Byte coins);
 
     //void setModel(GameClientView model);
 

@@ -5,7 +5,7 @@ import java.util.List;
 
 public interface GameClientView {
     PlayerClient getCurrentPlayer();
-
+    List<CharacterCardClient> getCharacters();
     ArrayList<GameComponentClient> getClouds();
 
     ArrayList<IslandClient> getIslands();

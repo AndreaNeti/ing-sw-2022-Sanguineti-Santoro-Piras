@@ -1,9 +1,7 @@
 package it.polimi.ingsw.Client;
 
-import it.polimi.ingsw.Client.Controller.ClientPhaseController;
-import it.polimi.ingsw.Client.View.AbstractView;
 import it.polimi.ingsw.Client.View.GameClientListener;
-import it.polimi.ingsw.Client.model.GameClientView;
+import it.polimi.ingsw.Client.model.CharacterCardClient;
 import it.polimi.ingsw.Client.model.GameComponentClient;
 import it.polimi.ingsw.Client.model.IslandClient;
 import it.polimi.ingsw.Enum.Color;
@@ -69,7 +67,16 @@ public abstract class GameClientListened {
             listener.ok();
         }
     }
-
+    public void notifyIgnoredColor(Color color){
+        for (GameClientListener listener : listeners) {
+            listener.updateIgnoredColor(color);
+        }
+    }
+    public void notifyCharacter(List<CharacterCardClient> characters){
+        for (GameClientListener listener : listeners) {
+            listener.updateCharacter(characters);
+        }
+    }
     public void notifyMembers(int membersLeftToStart) {
         for (GameClientListener listener : listeners) {
             listener.updateMembers(membersLeftToStart);
