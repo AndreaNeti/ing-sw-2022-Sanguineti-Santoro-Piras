@@ -16,5 +16,6 @@ public interface CharacterCardClient {
     boolean isFull();
     void resetInput();
     List<Integer> getInputs();
+    int getCharId();
 
 }

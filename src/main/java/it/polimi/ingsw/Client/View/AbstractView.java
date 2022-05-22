@@ -4,14 +4,12 @@ import it.polimi.ingsw.Client.Controller.ControllerClient;
 import it.polimi.ingsw.Client.model.CharacterCardClient;
 import it.polimi.ingsw.Client.model.GameClientView;
 import it.polimi.ingsw.Enum.GamePhase;
-import it.polimi.ingsw.Server.controller.MatchType;
 import it.polimi.ingsw.network.toServerMessage.ToServerMessage;
 
 public abstract class AbstractView {
     private final ControllerClient controllerClient;
     private GameClientView model;
     private volatile boolean quit;
-    private CharacterCardClient currentCharacterCard;
 
     public AbstractView(ControllerClient controllerClient) {
         this.controllerClient = controllerClient;
@@ -26,10 +24,6 @@ public abstract class AbstractView {
         this.model = model;
     }
 
-    protected ControllerClient getControllerClient() {
-        return controllerClient;
-    }
-
     public void sendToServer(ToServerMessage toServerMessage) {
         controllerClient.sendMessage(toServerMessage);
     }
@@ -40,10 +34,9 @@ public abstract class AbstractView {
         controllerClient.changePhase(gamePhase, setOldPhase);
     }
 
-    public void repeatPhase(boolean notifyScanner) {
+    public void goToOldPhase(boolean notifyScanner) {
         controllerClient.repeatPhase(notifyScanner);
     }
-
 
     public boolean connectToServer(byte[] ipAddress) {
         return controllerClient.connect(ipAddress);
@@ -60,11 +53,11 @@ public abstract class AbstractView {
         return quit;
     }
 
-    public void setCurrentCharacterCard(CharacterCardClient currentCharacterCard) {
-        this.currentCharacterCard = currentCharacterCard;
+    public void setCurrentCharacterCard(int currentCharacterCardIndex) {
+        controllerClient.setCurrentCharacterCard(currentCharacterCardIndex);
     }
 
     public CharacterCardClient getCurrentCharacterCard() {
-        return currentCharacterCard;
+        return getModel().getCurrentCharacterCard();
     }
 }

@@ -57,9 +57,11 @@ public class GameComponentClient {
     }
 
     protected String getNameOfComponent() {
-        if (id < 0) {
+        if (id < -10) {
+            return "Character card";
+        } else if (id < 0)
             return "Cloud";
-        } else {
+        else {
             if (id % 2 == 0)
                 return "EntranceHall";
             else

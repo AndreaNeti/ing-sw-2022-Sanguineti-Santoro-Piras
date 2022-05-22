@@ -29,7 +29,7 @@ public class GameClient extends GameClientListened implements GameClientView {
     private final List<PlayerClient> players;
     private final List<CharacterCardClient> characters;
     private final List<CharacterCardClientWithStudents> charactersWithStudents;
-
+    private CharacterCardClient currentCharacterCard;
     // player id, new playerCoinsLeft
     private Map<Byte, Byte> updatedCoinPlayer;
     private Byte newCoinsLeft, newProhibitionsLeft;
@@ -279,5 +279,13 @@ public class GameClient extends GameClientListened implements GameClientView {
                 return new Char11Client();
         }
         throw new IllegalArgumentException("Character card " + i + " doesn't exists");
+    }
+    @Override
+    public CharacterCardClient getCurrentCharacterCard() {
+        return currentCharacterCard;
+    }
+
+    public void setCurrentCharacterCard(int indexCharacter) {
+        this.currentCharacterCard = getCharacters().get(indexCharacter);
     }
 }

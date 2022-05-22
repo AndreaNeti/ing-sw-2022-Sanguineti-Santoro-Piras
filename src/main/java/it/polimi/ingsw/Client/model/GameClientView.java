@@ -10,4 +10,5 @@ public interface GameClientView {
 
     ArrayList<IslandClient> getIslands();
     List<PlayerClient> getPlayers();
+    CharacterCardClient getCurrentCharacterCard();
 }

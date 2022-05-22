@@ -49,6 +49,11 @@ public class Char2Client implements CharacterCardClient {
     }
 
     @Override
+    public int getCharId() {
+        return 2;
+    }
+
+    @Override
     public String toString() {
         return "Herald";
     }

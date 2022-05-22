@@ -52,6 +52,11 @@ public class Char4Client implements CharacterCardClient {
     }
 
     @Override
+    public int getCharId() {
+        return 4;
+    }
+
+    @Override
     public String toString() {
         return "Grandma weeds";
     }

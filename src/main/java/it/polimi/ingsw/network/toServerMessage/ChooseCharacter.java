@@ -6,10 +6,10 @@ import it.polimi.ingsw.exceptions.GameException;
 import it.polimi.ingsw.exceptions.NotAllowedException;
 
 public class ChooseCharacter implements ToServerMessage {
-    byte character;
+    byte charId;
 
-    public ChooseCharacter(byte character) {
-        this.character = character;
+    public ChooseCharacter(byte charId) {
+        this.charId = charId;
     }
 
     @Override
@@ -19,7 +19,7 @@ public class ChooseCharacter implements ToServerMessage {
             throw new NotAllowedException("Game is already finished");
         }
         if (c.isMyTurn(clientHandler))
-            c.chooseCharacter(character);
+            c.chooseCharacter(charId);
         else throw new NotAllowedException("It's not your turn");
     }
 }

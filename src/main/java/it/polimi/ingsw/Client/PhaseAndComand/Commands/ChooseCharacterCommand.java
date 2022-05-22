@@ -20,11 +20,9 @@ public class ChooseCharacterCommand extends GameCommand {
         ViewCli viewCli = (ViewCli) getView();
         List<CharacterCardClient> characters = viewCli.getModel().getCharacters();
         int index = viewCli.getIntInput((characters.toArray()), "Select the character you want to play");
-        CharacterCardClient current = characters.get(index);
-        viewCli.setCurrentCharacterCard(current);
-        viewCli.sendToServer(new ChooseCharacter((byte) index));
+        viewCli.setCurrentCharacterCard(index);
+        viewCli.sendToServer(new ChooseCharacter((byte) characters.get(index).getCharId()));
         viewCli.setPhaseInView(GamePhase.PLAY_CH_CARD_PHASE, false);
-
     }
 
     @Override

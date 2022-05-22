@@ -174,11 +174,11 @@ public class Controller {
         game.setCharacterInput(input);
     }
 
-    public synchronized void chooseCharacter(byte character) throws GameException, NullPointerException {
+    public synchronized void chooseCharacter(byte charId) throws GameException, NullPointerException {
         if (gamePhase == GamePhase.PLANIFICATION_PHASE) {
             throw new NotAllowedException("Not in action phase");
         }
-        game.chooseCharacter(character);
+        game.chooseCharacter(charId);
     }
 
     public synchronized void playCharacter() throws GameException, NullPointerException {

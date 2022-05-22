@@ -55,6 +55,11 @@ public class Char6Client extends CharacterCardClientWithStudents {
     }
 
     @Override
+    public int getCharId() {
+        return 6;
+    }
+
+    @Override
     public String toString() {
         return "Jester";
     }

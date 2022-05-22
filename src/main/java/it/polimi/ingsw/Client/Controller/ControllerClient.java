@@ -36,6 +36,7 @@ public class ControllerClient extends GameClientListened {
     private AbstractView abstractView;
 
     private boolean isInMatch;
+    private boolean alreadyAttachedExpert = false;
 
     public ControllerClient() {
         playerClients = new ArrayList<>();
@@ -43,43 +44,14 @@ public class ControllerClient extends GameClientListened {
     }
 
     public void instantiateAllPhases() {
-        phases = Map.ofEntries(
-                entry(GamePhase.INIT_PHASE, new InitPhase()),
-                entry(GamePhase.NICK_PHASE, new NicknamePhase()),
-                entry(GamePhase.SELECT_MATCH_PHASE, new SelectMatchPhase()),
-                entry(GamePhase.WAIT_PHASE, new WaitPhase()),
-                entry(GamePhase.PLANIFICATION_PHASE, new PlanificationPhase()),
-                entry(GamePhase.MOVE_ST_PHASE, new MoveStudentsPhase()),
-                entry(GamePhase.MOVE_MN_PHASE, new MoveMotherNaturePhase()),
-                entry(GamePhase.MOVE_CL_PHASE, new MoveCloudPhase()),
-                entry(GamePhase.PLAY_CH_CARD_PHASE, new PlayCharacterCardPhase())
-        );
+        phases = Map.ofEntries(entry(GamePhase.INIT_PHASE, new InitPhase()), entry(GamePhase.NICK_PHASE, new NicknamePhase()), entry(GamePhase.SELECT_MATCH_PHASE, new SelectMatchPhase()), entry(GamePhase.WAIT_PHASE, new WaitPhase()), entry(GamePhase.PLANIFICATION_PHASE, new PlanificationPhase()), entry(GamePhase.MOVE_ST_PHASE, new MoveStudentsPhase()), entry(GamePhase.MOVE_MN_PHASE, new MoveMotherNaturePhase()), entry(GamePhase.MOVE_CL_PHASE, new MoveCloudPhase()), entry(GamePhase.PLAY_CH_CARD_PHASE, new PlayCharacterCardPhase()));
         oldPhase = GamePhase.INIT_PHASE;
         attachCommandToPhase();
         notifyClientPhase(phases.get(oldPhase), false);
     }
 
     private void instantiateCommands() {
-        commands = Map.ofEntries(
-                entry(CLICommands.CONNECT_SERVER, new ConnectServerCommand(abstractView)),
-                entry(CLICommands.SET_NICKNAME, new SetNicknameCommand(abstractView)),
-                entry(CLICommands.CREATE_MATCH, new CreateMatchCommand(abstractView)),
-                entry(CLICommands.JOIN_MATCH_BY_TYPE, new JoinMatchByTypeCommand(abstractView)),
-                entry(CLICommands.JOIN_MATCH_BY_ID, new JoinMatchByIdCommand(abstractView)),
-                entry(CLICommands.PLAY_CARD, new PlayCardCommand(abstractView)),
-                entry(CLICommands.MOVE_STUDENT, new MoveStudentCommand(abstractView)),
-                entry(CLICommands.MOVE_MOTHER_NATURE, new MoveMotherNatureCommand(abstractView)),
-                entry(CLICommands.MOVE_FROM_CLOUD, new MoveFromCloudCommand(abstractView)),
-                entry(CLICommands.TEXT_MESSAGE, new TextCommand(abstractView)),
-                entry(CLICommands.QUIT, new QuitCommand(abstractView)),
-                entry(CLICommands.SHOW_ENTRANCE_HALL, new ShowEntranceHall(abstractView)),
-                entry(CLICommands.CHOOSE_CHARACTER, new ChooseCharacterCommand(abstractView)),
-                entry(CLICommands.SET_CHARACTER_INPUT, new SetCharacterInputCommand(abstractView)),
-                entry(CLICommands.PLAY_CHARACTER, new PlayCharacterCommand(abstractView)),
-                entry(CLICommands.DELETE_LAST_INPUT, new DeleteLastInputCommand(abstractView)),
-                entry(CLICommands.GET_DESCRIPTION, new GetDescriptionCommand(abstractView)),
-                entry(CLICommands.UNDO, new UndoCommands(abstractView))
-        );
+        commands = Map.ofEntries(entry(CLICommands.CONNECT_SERVER, new ConnectServerCommand(abstractView)), entry(CLICommands.SET_NICKNAME, new SetNicknameCommand(abstractView)), entry(CLICommands.CREATE_MATCH, new CreateMatchCommand(abstractView)), entry(CLICommands.JOIN_MATCH_BY_TYPE, new JoinMatchByTypeCommand(abstractView)), entry(CLICommands.JOIN_MATCH_BY_ID, new JoinMatchByIdCommand(abstractView)), entry(CLICommands.PLAY_CARD, new PlayCardCommand(abstractView)), entry(CLICommands.MOVE_STUDENT, new MoveStudentCommand(abstractView)), entry(CLICommands.MOVE_MOTHER_NATURE, new MoveMotherNatureCommand(abstractView)), entry(CLICommands.MOVE_FROM_CLOUD, new MoveFromCloudCommand(abstractView)), entry(CLICommands.TEXT_MESSAGE, new TextCommand(abstractView)), entry(CLICommands.QUIT, new QuitCommand(abstractView)), entry(CLICommands.SHOW_ENTRANCE_HALL, new ShowEntranceHall(abstractView)), entry(CLICommands.CHOOSE_CHARACTER, new ChooseCharacterCommand(abstractView)), entry(CLICommands.SET_CHARACTER_INPUT, new SetCharacterInputCommand(abstractView)), entry(CLICommands.PLAY_CHARACTER, new PlayCharacterCommand(abstractView)), entry(CLICommands.DELETE_LAST_INPUT, new DeleteLastInputCommand(abstractView)), entry(CLICommands.GET_DESCRIPTION, new GetDescriptionCommand(abstractView)), entry(CLICommands.UNDO, new UndoCommands(abstractView)));
     }
 
     private void attachCommandToPhase() {
@@ -98,12 +70,15 @@ public class ControllerClient extends GameClientListened {
     }
 
     private void attachExpertCommand() {
-        commands.get(CLICommands.CHOOSE_CHARACTER).attachToAPhase(Arrays.asList(phases.get(GamePhase.MOVE_ST_PHASE), phases.get(GamePhase.MOVE_CL_PHASE), phases.get(GamePhase.MOVE_MN_PHASE)));
-        commands.get(CLICommands.SET_CHARACTER_INPUT).attachToAPhase(List.of(phases.get(GamePhase.PLAY_CH_CARD_PHASE)));
-        commands.get(CLICommands.PLAY_CHARACTER).attachToAPhase(List.of(phases.get(GamePhase.PLAY_CH_CARD_PHASE)));
-        commands.get(CLICommands.DELETE_LAST_INPUT).attachToAPhase(List.of(phases.get(GamePhase.PLAY_CH_CARD_PHASE)));
-        commands.get(CLICommands.UNDO).attachToAPhase(List.of(phases.get(GamePhase.PLAY_CH_CARD_PHASE)));
-        commands.get(CLICommands.GET_DESCRIPTION).attachToAPhase(List.of(phases.get(GamePhase.PLAY_CH_CARD_PHASE)));
+        //this is needed, so it doesn't attach commands multiple times
+        if (!alreadyAttachedExpert) {
+            commands.get(CLICommands.CHOOSE_CHARACTER).attachToAPhase(Arrays.asList(phases.get(GamePhase.MOVE_ST_PHASE), phases.get(GamePhase.MOVE_CL_PHASE), phases.get(GamePhase.MOVE_MN_PHASE)));
+            commands.get(CLICommands.SET_CHARACTER_INPUT).attachToAPhase(List.of(phases.get(GamePhase.PLAY_CH_CARD_PHASE)));
+            commands.get(CLICommands.PLAY_CHARACTER).attachToAPhase(List.of(phases.get(GamePhase.PLAY_CH_CARD_PHASE)));
+            commands.get(CLICommands.UNDO).attachToAPhase(List.of(phases.get(GamePhase.PLAY_CH_CARD_PHASE)));
+            commands.get(CLICommands.GET_DESCRIPTION).attachToAPhase(List.of(phases.get(GamePhase.PLAY_CH_CARD_PHASE)));
+            alreadyAttachedExpert = true;
+        }
     }
 
 
@@ -137,8 +112,7 @@ public class ControllerClient extends GameClientListened {
     }
 
     public synchronized void changePhase(GamePhase newGamePhase, boolean setOldPhase) {
-        if (setOldPhase)
-            oldPhase = newGamePhase;
+        if (setOldPhase) oldPhase = newGamePhase;
         notifyClientPhase(phases.get(newGamePhase), true);
     }
 
@@ -179,8 +153,7 @@ public class ControllerClient extends GameClientListened {
 
     public void sendMessage(ToServerMessage command) {
         if (serverSender == null) error("Must connect to a Server Before");
-        else
-            serverSender.sendServerMessage(command);
+        else serverSender.sendServerMessage(command);
     }
 
     public void error(String e) {
@@ -198,8 +171,7 @@ public class ControllerClient extends GameClientListened {
         }
 
         for (Map.Entry<Color, Wizard> entry : gameDelta.getUpdatedProfessors().entrySet()) {
-            if (entry.getValue() != null)
-                gameClient.setProfessors(entry.getKey(), entry.getValue());
+            if (entry.getValue() != null) gameClient.setProfessors(entry.getKey(), entry.getValue());
         }
 
         for (Byte b : gameDelta.getDeletedIslands()) {
@@ -214,8 +186,7 @@ public class ControllerClient extends GameClientListened {
             gameClient.setTowerLeft(entry.getKey(), entry.getValue());
         }
         if (matchType.isExpert()) {
-            if (gameDelta.getCharacters().size()!=0)
-                gameClient.setCharacters(gameDelta.getCharacters());
+            if (gameDelta.getCharacters().size() != 0) gameClient.setCharacters(gameDelta.getCharacters());
             gameDelta.getNewCoinsLeft().ifPresent(newCoinsLeft -> gameClient.setNewCoinsLeft(newCoinsLeft));
             gameDelta.getNewProhibitionsLeft().ifPresent(newProhibitionsLeft -> gameClient.setNewProhibitionsLeft(newProhibitionsLeft));
             gameClient.setUpdatedCoinPlayer(gameDelta.getUpdatedCoinPlayer());
@@ -241,8 +212,7 @@ public class ControllerClient extends GameClientListened {
             serverListener.quit();
             serverSender.closeStream();
             return false;
-        } else
-            return true;
+        } else return true;
     }
 
     public void notifyClientPhase(ClientPhaseController clientPhaseController, boolean notifyScanner) {
@@ -254,4 +224,7 @@ public class ControllerClient extends GameClientListened {
         instantiateCommands();
     }
 
+    public void setCurrentCharacterCard(int currentCharacterCardIndex) {
+        gameClient.setCurrentCharacterCard(currentCharacterCardIndex);
+    }
 }

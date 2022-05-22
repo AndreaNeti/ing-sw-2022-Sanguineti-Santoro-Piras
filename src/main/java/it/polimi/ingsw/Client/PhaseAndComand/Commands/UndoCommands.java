@@ -1,7 +1,6 @@
 package it.polimi.ingsw.Client.PhaseAndComand.Commands;
 
 import it.polimi.ingsw.Client.View.AbstractView;
-import it.polimi.ingsw.Enum.GamePhase;
 import it.polimi.ingsw.exceptions.PhaseChangedException;
 
 import java.awt.event.ActionEvent;
@@ -13,9 +12,8 @@ public class UndoCommands extends GameCommand {
 
     @Override
     public void playCLICommand() throws PhaseChangedException {
-        //TODO
-        System.out.println("Not yet implemented");
-        getView().setPhaseInView(GamePhase.PLAY_CH_CARD_PHASE, false);
+        System.out.println("Reset all input");
+        getView().goToOldPhase(true);
     }
 
     @Override

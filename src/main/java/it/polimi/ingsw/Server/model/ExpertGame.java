@@ -296,11 +296,18 @@ public class ExpertGame extends NormalGame implements CharacterCardGame {
     }
 
     @Override
-    public void chooseCharacter(byte indexCharacter) throws GameException {
-        if (indexCharacter < 0 || indexCharacter >= characters.size())
-            throw new NotAllowedException("Not an available character card");
-        CharacterCard characterToPlay = characters.get(indexCharacter);
-        byte charCost = characterToPlay.getCost();
+    public void chooseCharacter(byte charId) throws GameException {
+        Byte indexCharacter=null;
+        byte charCost=0;
+        for (int i=0; i<characters.size();i++) {
+            CharacterCard character = characters.get(i);
+            if(character.getCharId()==charId) {
+                charCost= character.getCost();
+                indexCharacter=(byte) i;
+            }
+        }
+        if(indexCharacter==null)
+            throw new NotAllowedException("Card not available");
         // this character card has already been used, increase its cost
         if (playedCharacters[indexCharacter]) charCost++;
         if (charCost > coinsPlayer[getCurrentPlayer().getWizard().ordinal()])

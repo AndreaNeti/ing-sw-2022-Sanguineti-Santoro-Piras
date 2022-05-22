@@ -50,6 +50,11 @@ public class Char8Client implements CharacterCardClient {
     }
 
     @Override
+    public int getCharId() {
+        return 8;
+    }
+
+    @Override
     public String toString() {
         return "Mushroom man";
     }

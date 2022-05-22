@@ -42,6 +42,11 @@ public class Char3Client implements CharacterCardClient{
     }
 
     @Override
+    public int getCharId() {
+        return 3;
+    }
+
+    @Override
     public String toString() {
         return "Magic postman";
     }

@@ -53,5 +53,10 @@ public class Char11Client implements CharacterCardClient {
     public List<Integer> getInputs() {
         return inputs;
     }
+
+    @Override
+    public int getCharId() {
+        return 11;
+    }
 }
 

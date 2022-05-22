@@ -57,4 +57,10 @@ public class Char0Client extends CharacterCardClientWithStudents {
     public List<Integer> getInputs() {
         return inputs;
     }
+
+    @Override
+    public int getCharId() {
+        return 0;
+    }
+
 }
