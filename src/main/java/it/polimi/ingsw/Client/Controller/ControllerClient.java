@@ -128,6 +128,10 @@ public class ControllerClient extends GameClientListened {
 
     }
 
+    public void addMessage(String message) {
+        gameClient.addMessage(message);
+    }
+
     public void repeatPhase(boolean notifyScanner) {
         notifyClientPhase(phases.get(oldPhase), notifyScanner);
     }

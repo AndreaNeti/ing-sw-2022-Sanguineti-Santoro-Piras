@@ -1,5 +1,6 @@
 package it.polimi.ingsw.Client.View.Cli;
 
+import it.polimi.ingsw.Client.LimitedChat;
 import it.polimi.ingsw.Client.model.*;
 import it.polimi.ingsw.Enum.Color;
 import it.polimi.ingsw.Enum.HouseColor;
@@ -13,7 +14,7 @@ import java.util.List;
 
 public class CliPrinter {
 
-    private GameClient game;
+    private final GameClient game;
 
     public CliPrinter(GameClient game) {
         this.game = game;
@@ -75,7 +76,7 @@ public class CliPrinter {
             String green = g < 10 ? ("0" + g) : String.valueOf(g);
             byte p = island.howManyStudents(Color.PINK);
             String pink = p < 10 ? ("0" + p) : String.valueOf(p);
-            islandPrint.append(" \u2572 \u001b[42;1m ").append(green).append(" \u001b[0m\u001b[45;1m ").append(pink).append(" \u001b[0m \u2571 ");
+            islandPrint.append("  \u2572\u001b[42;1m ").append(green).append(" \u001b[0m\u001b[45;1m ").append(pink).append(" \u001b[0m\u2571  ");
         }
         islandPrint.append("\n");
         // print bottom line of each island
@@ -158,6 +159,7 @@ public class CliPrinter {
         StringBuilder boardsCharChatPrint = new StringBuilder();
         byte numOfPlayers = (byte) players.size();
         boolean expert = game.isExpert();
+        LimitedChat<String> chat = game.getChat();
         // upper line of boards
         boardsCharChatPrint.append(" \u2554\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2557 ".repeat(numOfPlayers));
 
@@ -199,7 +201,7 @@ public class CliPrinter {
                     boardsCharChatPrint.append("\u2502\u001b[44;1m ").append(((CharacterCardClientWithStudents) ch).howManyStudents(Color.BLUE))
                             .append(" \u001b[0m \u001b[43;1m ").append(((CharacterCardClientWithStudents) ch).howManyStudents(Color.YELLOW)).append(" \u001b[0m");
                 else
-                    boardsCharChatPrint.append("\u2502          \u2502");
+                    boardsCharChatPrint.append("\u2502       \u2502");
             }
         }
         boardsCharChatPrint.append("\n");
@@ -225,6 +227,8 @@ public class CliPrinter {
                                         .append(" \u001b[0m \u001b[45;1m ").append(((CharacterCardClientWithStudents) ch).howManyStudents(Color.PINK)).append(" \u001b[0m");
                             else if(ch.toString().equals("Grandma weeds"))
                                 boardsCharChatPrint.append("\u2502   \u001b[31mX\u001b[0m: ").append(game.getNewProhibitionsLeft()).append("\u2502");
+                            else
+                                boardsCharChatPrint.append("\u2502       \u2502");
                         }
                     }
                     boardsCharChatPrint.append("\n");
@@ -245,16 +249,17 @@ public class CliPrinter {
                         boardsCharChatPrint.append("\t\u2500".repeat(35)).append("\u2524\u001b[4m CHAT \u001b[0m\u251c").append("\u2500".repeat(35)).append("\n");
                 // print messages of chat
                 default -> {
-                    String mex = "\t\u2502\u001b[1m Franco: \u001b[0mCiao!";
-                    boardsCharChatPrint.append(mex).append(" ".repeat((78 - mex.length() + 8))).append("\u2502\n");
+                    String mex = chat.get(6 - i);
+                    boardsCharChatPrint.append("\t\u2502 ").append(mex).append(" ".repeat((78 - mex.length() + 8))).append("\u2502\n");
                 }
             }
         }
         // board separator between lunch and entrance hall
         boardsCharChatPrint.append(" \u255f\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2562 ".repeat(numOfPlayers));
         // messages
-        String mex = "\t\u2502\u001b[1m Paolino: \u001b[0mCome va?";
-        boardsCharChatPrint.append(mex).append(" ".repeat((78 - mex.length() + 8))).append("\u2502\n");
+        String mex = chat.get(6);
+//        "\t\u2502\u001b[1m Paolino: \u001b[0mCome va?";
+        boardsCharChatPrint.append("\t\u2502 ").append(mex).append(" ".repeat((78 - mex.length() + 8))).append("\u2502\n");
         // calculate entrance hall students (its color) of each player
         HashMap<PlayerClient, ArrayList<Character>> entranceStud = new HashMap<>();
         for (PlayerClient p : players) {
@@ -274,8 +279,8 @@ public class CliPrinter {
             boardsCharChatPrint.append("\u2551 ");
         }
         // message
-        mex = "\t\u2502\u001b[1m Paolino: \u001b[0mCome va?";
-        boardsCharChatPrint.append(mex).append(" ".repeat((78 - mex.length() + 8))).append("\u2502\n");
+        mex = chat.get(7);
+        boardsCharChatPrint.append("\t\u2502 ").append(mex).append(" ".repeat((78 - mex.length() + 8))).append("\u2502\n");
 
         // print second row of entrance hall students
         for (PlayerClient p : players) {
@@ -289,8 +294,8 @@ public class CliPrinter {
             boardsCharChatPrint.append("\u2551 ");
         }
         // message
-        mex = "\t\u2502\u001b[1m Paolino: \u001b[0mCome va?";
-        boardsCharChatPrint.append(mex).append(" ".repeat((78 - mex.length() + 8))).append("\u2502\n");
+        mex = chat.get(8);
+        boardsCharChatPrint.append("\t\u2502 ").append(mex).append(" ".repeat((78 - mex.length() + 8))).append("\u2502\n");
 
         // bottom line of boards and chat
         boardsCharChatPrint.append(" \u255a\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u255d ".repeat(players.size()));

@@ -1,6 +1,7 @@
 package it.polimi.ingsw.Client.model;
 
 import it.polimi.ingsw.Client.GameClientListened;
+import it.polimi.ingsw.Client.LimitedChat;
 import it.polimi.ingsw.Enum.Color;
 import it.polimi.ingsw.Enum.HouseColor;
 import it.polimi.ingsw.Enum.Wizard;
@@ -9,10 +10,7 @@ import it.polimi.ingsw.Server.controller.MatchType;
 import it.polimi.ingsw.Server.controller.Server;
 import it.polimi.ingsw.Server.model.*;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -37,6 +35,8 @@ public class GameClient extends GameClientListened implements GameClientView {
     private Byte newCoinsLeft, newProhibitionsLeft;
     private Color ignoredColorInfluence;
 
+    private final LimitedChat<String> chat;
+
     public GameClient(ArrayList<PlayerClient> players, Wizard myWizard, MatchType matchType) {
         System.out.println(players.toString());
         this.myWizard = myWizard;
@@ -55,7 +55,15 @@ public class GameClient extends GameClientListened implements GameClientView {
         this.players = players;
         this.characters = new ArrayList<>();
         this.charactersWithStudents = new ArrayList<>();
+        this.chat = new LimitedChat<>(9);
+    }
 
+    public void addMessage(String message) {
+        chat.add(message);
+    }
+
+    public LimitedChat<String> getChat() {
+        return chat;
     }
 
     public MatchConstants getMatchConstants() {

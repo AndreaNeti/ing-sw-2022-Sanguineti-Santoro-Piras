@@ -16,6 +16,6 @@ public class TextMessageSC implements ToClientMessage {
 
     @Override
     public void execute(ControllerClient controllerClient) {
-        System.out.println(message);
+        controllerClient.addMessage(message);
     }
 }
