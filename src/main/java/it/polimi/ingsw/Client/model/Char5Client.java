@@ -24,6 +24,11 @@ public class Char5Client implements CharacterCardClient{
     }
 
     @Override
+    public byte getCost() {
+        return 3;
+    }
+
+    @Override
     public boolean isFull() {
         return true;
     }

@@ -162,7 +162,7 @@ public class ControllerClient extends GameClientListened {
         }
         if (playerClients.size() == matchType.nPlayers()) {
             //create a game
-            gameClient = new GameClient(playerClients, myWizard, Server.getMatchConstants(matchType));
+            gameClient = new GameClient(playerClients, myWizard, matchType);
             // decorate phases
             if (matchType.isExpert()) {
                 attachExpertCommand();

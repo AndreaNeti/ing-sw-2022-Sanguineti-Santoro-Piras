@@ -22,6 +22,11 @@ public class Char3Client implements CharacterCardClient{
     }
 
     @Override
+    public byte getCost() {
+        return 1;
+    }
+
+    @Override
     public boolean isFull() {
         return true;
     }

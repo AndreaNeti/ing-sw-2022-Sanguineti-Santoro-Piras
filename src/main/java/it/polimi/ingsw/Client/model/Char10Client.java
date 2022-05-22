@@ -31,6 +31,11 @@ public class Char10Client extends CharacterCardClientWithStudents {
     }
 
     @Override
+    public byte getCost() {
+        return 2;
+    }
+
+    @Override
     public boolean isFull() {
         return inputs.size()==1;
     }

@@ -45,6 +45,10 @@ public class GameComponentClient {
         return sum;
     }
 
+    public byte howManyStudents(Color c) {
+        return students[c.ordinal()];
+    }
+
     protected void modifyGameComponent(GameComponent gameComponent) {
         for (Color c : Color.values()) {
             this.students[c.ordinal()] = gameComponent.howManyStudents(c);

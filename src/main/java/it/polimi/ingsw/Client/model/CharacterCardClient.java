@@ -12,7 +12,7 @@ public interface CharacterCardClient {
     void setNextInput(ViewForCharacterCli view) throws PhaseChangedException;
 
     boolean canPlay();
-
+    byte getCost();
     boolean isFull();
     void resetInput();
     List<Integer> getInputs();

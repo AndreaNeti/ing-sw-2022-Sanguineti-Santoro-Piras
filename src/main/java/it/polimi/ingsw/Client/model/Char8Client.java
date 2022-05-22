@@ -30,6 +30,11 @@ public class Char8Client implements CharacterCardClient {
     }
 
     @Override
+    public byte getCost() {
+        return 3;
+    }
+
+    @Override
     public boolean isFull() {
         return inputs.size()==1;
     }

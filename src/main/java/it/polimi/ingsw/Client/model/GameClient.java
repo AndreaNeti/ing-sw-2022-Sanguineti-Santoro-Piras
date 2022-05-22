@@ -5,6 +5,8 @@ import it.polimi.ingsw.Enum.Color;
 import it.polimi.ingsw.Enum.HouseColor;
 import it.polimi.ingsw.Enum.Wizard;
 import it.polimi.ingsw.Server.controller.MatchConstants;
+import it.polimi.ingsw.Server.controller.MatchType;
+import it.polimi.ingsw.Server.controller.Server;
 import it.polimi.ingsw.Server.model.*;
 
 import java.util.ArrayList;
@@ -23,6 +25,8 @@ public class GameClient extends GameClientListened implements GameClientView {
     private Byte currentPlayer;
     private final Wizard myWizard;
     private final MatchConstants matchConstants;
+
+    private final MatchType matchType;
     //players are in the same order of wizard.ordinal
     private final List<PlayerClient> players;
     private final List<CharacterCardClient> characters;
@@ -33,12 +37,13 @@ public class GameClient extends GameClientListened implements GameClientView {
     private Byte newCoinsLeft, newProhibitionsLeft;
     private Color ignoredColorInfluence;
 
-    public GameClient(ArrayList<PlayerClient> players, Wizard myWizard, MatchConstants matchConstants) {
+    public GameClient(ArrayList<PlayerClient> players, Wizard myWizard, MatchType matchType) {
         System.out.println(players.toString());
         this.myWizard = myWizard;
         this.professors = new Wizard[Color.values().length];
         Arrays.fill(professors, null);
-        this.matchConstants = matchConstants;
+        this.matchType = matchType;
+        this.matchConstants = Server.getMatchConstants(matchType);
         islands = new ArrayList<>(12);
         clouds = new ArrayList<>(matchConstants.studentsToMove());
         for (int i = 0; i < matchConstants.studentsToMove(); i++) {
@@ -51,6 +56,14 @@ public class GameClient extends GameClientListened implements GameClientView {
         this.characters = new ArrayList<>();
         this.charactersWithStudents = new ArrayList<>();
 
+    }
+
+    public MatchConstants getMatchConstants() {
+        return matchConstants;
+    }
+
+    public boolean isExpert() {
+        return matchType.isExpert();
     }
 
     public PlayerClient getCurrentPlayer() {
@@ -164,6 +177,10 @@ public class GameClient extends GameClientListened implements GameClientView {
         return clouds;
     }
 
+    public Wizard getMyWizard() {
+        return myWizard;
+    }
+
     @Override
     public ArrayList<IslandClient> getIslands() {
         return islands;
@@ -203,6 +220,10 @@ public class GameClient extends GameClientListened implements GameClientView {
 
     public void setUpdatedCoinPlayer(Map<Byte, Byte> updatedCoinPlayer) {
         this.updatedCoinPlayer = updatedCoinPlayer;
+    }
+
+    public byte getCoinsPlayer(byte id) {
+        return updatedCoinPlayer.get(id);
     }
 
     @Override

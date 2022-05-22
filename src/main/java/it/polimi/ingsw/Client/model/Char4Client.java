@@ -32,6 +32,11 @@ public class Char4Client implements CharacterCardClient {
     }
 
     @Override
+    public byte getCost() {
+        return 2;
+    }
+
+    @Override
     public boolean isFull() {
         return inputs.size() == 1;
     }
