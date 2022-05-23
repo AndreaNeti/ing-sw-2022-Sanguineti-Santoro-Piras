@@ -130,9 +130,9 @@ public class CliPrinter implements GameClientListener {
         StringBuilder secondRow = new StringBuilder();
         // print team members
         for (TeamClient t : teams) {
-            cloudsTeamsPrint.append("\t\t").append(t.getPlayers().get(0).getWizard()).append(": ").append(t.getPlayers().get(0));
+            cloudsTeamsPrint.append("\t\t\t").append(t.getPlayers().get(0).getWizard()).append(": ").append(t.getPlayers().get(0));
             if (game.getMatchType().nPlayers() >= 4) {
-                secondRow.append("\t").append(t.getPlayers().get(1).getWizard()).append(": ").append(t.getPlayers().get(1));
+                secondRow.append("\t\t\t").append(t.getPlayers().get(1).getWizard()).append(": ").append(t.getPlayers().get(1));
             }
         }
         cloudsTeamsPrint.append("\n");
@@ -189,7 +189,7 @@ public class CliPrinter implements GameClientListener {
             // print cost of character cards and students if there's any
             for (CharacterCardClient ch : game.getCharacters()) {
                 boardsCharChatPrint.append("\t\u2502 Cost: ").append(ch.getCost()).append("  ");
-                if (ch.toString().equals("Monk") || ch.toString().equals("Jester") || ch.toString().equals("Spoiled Princess"))
+                if (ch.getCharId() == 0 || ch.getCharId() == 6 || ch.getCharId() == 10)
                     boardsCharChatPrint.append("\u2502  \u001b[41;1m ").append(((CharacterCardClientWithStudents) ch).howManyStudents(Color.RED)).append(" \u001b[0m  \u2502");
                 else
                     boardsCharChatPrint.append("\u2502       \u2502");
@@ -202,7 +202,7 @@ public class CliPrinter implements GameClientListener {
         if (expert) {
             for (CharacterCardClient ch : game.getCharacters()) {
                 boardsCharChatPrint.append("\t\u2502          ");
-                if (ch.toString().equals("Monk") || ch.toString().equals("Jester") || ch.toString().equals("Spoiled Princess"))
+                if (ch.getCharId() == 0 || ch.getCharId() == 6 || ch.getCharId() == 10)
                     boardsCharChatPrint.append("\u2502\u001b[44;1m ").append(((CharacterCardClientWithStudents) ch).howManyStudents(Color.BLUE))
                             .append(" \u001b[0m \u001b[43;1m ").append(((CharacterCardClientWithStudents) ch).howManyStudents(Color.YELLOW)).append(" \u001b[0m\u2502");
                 else
@@ -227,10 +227,10 @@ public class CliPrinter implements GameClientListener {
                         // print third row of character cards with students if present
                         for (CharacterCardClient ch : game.getCharacters()) {
                             if(ch.toString().equals("Grandma weeds"))
-                                boardsCharChatPrint.append("\t\u2502   \u001b[31mX\u001b[0m: ").append(game.getNewProhibitionsLeft()).append("\u2502");
+                                boardsCharChatPrint.append("\t\u2502   \u001b[31mX\u001b[0m: ").append(game.getNewProhibitionsLeft()).append("   ");
                             else
                                 boardsCharChatPrint.append("\t\u2502          ");
-                            if (ch.toString().equals("Monk") || ch.toString().equals("Jester") || ch.toString().equals("Spoiled Princess"))
+                            if (ch.getCharId() == 0 || ch.getCharId() == 6 || ch.getCharId() == 10)
                                 boardsCharChatPrint.append("\u2502\u001b[42;1m ").append(((CharacterCardClientWithStudents) ch).howManyStudents(Color.GREEN))
                                         .append(" \u001b[0m \u001b[45;1m ").append(((CharacterCardClientWithStudents) ch).howManyStudents(Color.PINK)).append(" \u001b[0m\u2502");
                             else
@@ -256,7 +256,7 @@ public class CliPrinter implements GameClientListener {
                 // print messages of chat
                 default -> {
                     String mex = "";
-                    if(chat.size() > (7 - i))
+                    if(chat.size() >= (7 - i))
                         mex = chat.get(6 - i);
                     boardsCharChatPrint.append("\t\u2502 ").append(mex).append(" ".repeat((78 - mex.length() + 7))).append("\u2502\n");
                 }
@@ -266,7 +266,7 @@ public class CliPrinter implements GameClientListener {
         boardsCharChatPrint.append(" \u255f\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2562 ".repeat(numOfPlayers));
         // messages
         String mex = "";
-        if(chat.size() > 7)
+        if(chat.size() >= 7)
             mex = chat.get(6);
 //        "\t\u2502\u001b[1m Paolino: \u001b[0mCome va?";
         boardsCharChatPrint.append("\t\u2502 ").append(mex).append(" ".repeat((78 - mex.length() + 7))).append("\u2502\n");
@@ -293,7 +293,7 @@ public class CliPrinter implements GameClientListener {
         }
         // message
         mex = "";
-        if(chat.size() > 8)
+        if(chat.size() >= 8)
             mex = chat.get(7);
         boardsCharChatPrint.append("\t\u2502 ").append(mex).append(" ".repeat((78 - mex.length() + 7))).append("\u2502\n");
 
@@ -301,7 +301,7 @@ public class CliPrinter implements GameClientListener {
         for (PlayerClient p : players) {
             boardsCharChatPrint.append(" \u2551");
             for (int i = 5; i < 10; i++) {
-                if (i < game.getCurrentPlayer().getEntranceHall().howManyStudents())
+                if (i < p.getEntranceHall().howManyStudents())
                     boardsCharChatPrint.append(entranceStud.get(p).get(i)).append(" \u25cf \u001b[0m");
                 else
                     boardsCharChatPrint.append("   ");
@@ -310,7 +310,7 @@ public class CliPrinter implements GameClientListener {
         }
         // message
         mex = "";
-        if(chat.size() > 9)
+        if(chat.size() >= 9)
             mex = chat.get(8);
         boardsCharChatPrint.append("\t\u2502 ").append(mex).append(" ".repeat((78 - mex.length() + 7))).append("\u2502\n");
 
