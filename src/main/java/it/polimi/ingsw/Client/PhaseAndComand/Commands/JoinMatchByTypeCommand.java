@@ -22,7 +22,7 @@ public class JoinMatchByTypeCommand extends GameCommand {
     @Override
     public void playCLICommand() throws PhaseChangedException {
         ViewCli viewCli = (ViewCli) getView();
-        MatchType matchType = viewCli.getMatchTypeInput();
+        MatchType matchType = viewCli.getMatchTypeInput(false);
         viewCli.sendToServer(new JoinMatchByType(matchType));
     }
 

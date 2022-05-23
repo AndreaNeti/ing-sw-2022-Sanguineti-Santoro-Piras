@@ -11,8 +11,6 @@ import it.polimi.ingsw.exceptions.NotAllowedException;
 import it.polimi.ingsw.network.toClientMessage.*;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
 
 public class Controller {
     private final MatchConstants matchConstants;
@@ -139,7 +137,7 @@ public class Controller {
         }
     }
 
-    public synchronized void addPlayer(GameListener handler, String nickName) throws GameException {
+    public synchronized void addPlayer(GameListener newPlayerHandler, String nickName) throws GameException {
         if (playersList.size() == matchType.nPlayers()) {
             throw new NotAllowedException("Match is full");
         }
@@ -147,18 +145,20 @@ public class Controller {
         Player newPlayer;
         newPlayer = new Player(nickName, teams.get(teamIndex), Wizard.values()[playersList.size()], matchConstants);
 
-        playersList.add(newPlayer);
-        playerHandlers.add(handler);
-        HashMap<Player, HouseColor> playerMap = new LinkedHashMap<>();
-        for (Team t : teams)
-            for (Player p : t.getPlayers())
-                playerMap.put(p, t.getHouseColor());
+        // notify other players in lobby about the new player
+        notifyClients(new PlayerJoined(newPlayer, HouseColor.values()[teamIndex]));
+        // notify the new player about match info and other players in lobby
+        newPlayerHandler.update(new MatchInfo(matchType, matchId, teams, Wizard.values()[playersList.size()]));
 
-        notifyClients(new PlayersInMatch(playerMap));
+        playersList.add(newPlayer);
+        playerHandlers.add(newPlayerHandler);
+
         if (playersList.size() == matchType.nPlayers()) {
             System.out.println("game is starting");
             startGame();
             Server.removeMatch(matchId);
+        } else { // sends ok only if need to wait other players, otherwise newPlayer will receive Phase message
+            newPlayerHandler.update(new OK());
         }
     }
 
@@ -337,12 +337,5 @@ public class Controller {
 
     protected Long getMatchId() {
         return matchId;
-    }
-
-    protected MatchType getMatchType() {
-        return matchType;
-    }
-    protected int getPlayersInMatch(){
-        return playersList.size();
     }
 }

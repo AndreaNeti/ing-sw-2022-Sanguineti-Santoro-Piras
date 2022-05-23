@@ -21,7 +21,7 @@ public class JoinMatchByIdCommand extends GameCommand {
     @Override
     public void playCLICommand() throws PhaseChangedException {
         ViewCli viewCli = (ViewCli) getView();
-        Long ID = viewCli.getLongInput("Write game ID");
+        Long ID = viewCli.getLongInput("Write game ID", false);
         viewCli.sendToServer(new JoinMatchById(ID));
     }
 

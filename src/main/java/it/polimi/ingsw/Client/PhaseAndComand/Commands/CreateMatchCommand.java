@@ -21,7 +21,7 @@ public class CreateMatchCommand extends GameCommand {
     @Override
     public void playCLICommand() throws PhaseChangedException {
         ViewCli viewCli = (ViewCli) getView();
-        viewCli.sendToServer(new CreateMatch(viewCli.getMatchTypeInput()));
+        viewCli.sendToServer(new CreateMatch(viewCli.getMatchTypeInput(false)));
     }
 
     @Override

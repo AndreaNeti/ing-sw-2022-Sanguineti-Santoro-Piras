@@ -19,10 +19,10 @@ public class ChooseCharacterCommand extends GameCommand {
     public void playCLICommand() throws PhaseChangedException {
         ViewCli viewCli = (ViewCli) getView();
         List<CharacterCardClient> characters = viewCli.getModel().getCharacters();
-        int index = viewCli.getIntInput((characters.toArray()), "Select the character you want to play");
+        int index = viewCli.getIntInput((characters.toArray()), "Select the character you want to play", false);
         viewCli.setCurrentCharacterCard(index);
         viewCli.sendToServer(new ChooseCharacter((byte) characters.get(index).getCharId()));
-        viewCli.setPhaseInView(GamePhase.PLAY_CH_CARD_PHASE, false);
+        viewCli.setPhaseInView(GamePhase.PLAY_CH_CARD_PHASE, false, false);
     }
 
     @Override

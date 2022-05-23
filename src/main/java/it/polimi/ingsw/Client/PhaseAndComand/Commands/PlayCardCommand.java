@@ -20,7 +20,7 @@ public class PlayCardCommand extends GameCommand {
     @Override
     public void playCLICommand() throws PhaseChangedException {
         ViewCli viewCli = (ViewCli) getView();
-        viewCli.sendToServer(new PlayCard(viewCli.getAssistantCardToPlayInput()));
+        viewCli.sendToServer(new PlayCard(viewCli.getAssistantCardToPlayInput(false)));
     }
 
     @Override

@@ -13,18 +13,15 @@ public class PlayerClient {
     private final boolean[] usedCards;
     private final GameComponentClient entranceHall;
     private final GameComponentClient lunchHall;
-    private byte playedCard, towersLeft;
-    private final HouseColor houseColor;
+    private byte playedCard;
 
-    public PlayerClient(Player p, HouseColor teamColor, MatchConstants matchConstants) {
+    public PlayerClient(Player p, MatchConstants matchConstants) {
         this.nickName = p.toString();
         this.wizard = p.getWizard();
         this.usedCards = new boolean[matchConstants.numOfCards()];
         Arrays.fill(usedCards, false);
         this.entranceHall = new GameComponentClient(2 * wizard.ordinal());
         this.lunchHall = new GameComponentClient(2 * wizard.ordinal() + 1);
-        this.towersLeft = (byte) matchConstants.towersForTeam();
-        this.houseColor = teamColor;
     }
 
     public GameComponentClient getEntranceHall() {
@@ -50,18 +47,6 @@ public class PlayerClient {
 
     public Wizard getWizard() {
         return wizard;
-    }
-
-    public byte getTowersLeft() {
-        return towersLeft;
-    }
-
-    protected void setTowersLeft(byte towersLeft) {
-        this.towersLeft = towersLeft;
-    }
-
-    public HouseColor getHouseColor() {
-        return houseColor;
     }
 
     @Override

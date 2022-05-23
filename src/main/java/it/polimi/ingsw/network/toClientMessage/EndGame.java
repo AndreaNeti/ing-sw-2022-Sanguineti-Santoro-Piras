@@ -19,7 +19,7 @@ public class EndGame implements ToClientMessage {
         if (winners == null) {
             // return to select match phase, do not lose connection to server nor nickName set
             System.out.println("Someone disconnected from match");
-            controllerClient.setQuit();
+            controllerClient.setQuit(true);
         }
     }
 }

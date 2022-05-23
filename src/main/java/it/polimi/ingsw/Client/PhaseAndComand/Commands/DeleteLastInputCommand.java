@@ -6,7 +6,7 @@ import it.polimi.ingsw.exceptions.PhaseChangedException;
 
 import java.awt.event.ActionEvent;
 
-public class DeleteLastInputCommand extends GameCommand{
+public class DeleteLastInputCommand extends GameCommand {
     public DeleteLastInputCommand(AbstractView view) {
         super(view);
     }
@@ -15,7 +15,7 @@ public class DeleteLastInputCommand extends GameCommand{
     public void playCLICommand() throws PhaseChangedException {
         //TODO
         System.out.println("Not yet implemented");
-        getView().setPhaseInView(GamePhase.PLAY_CH_CARD_PHASE, false);
+        getView().setPhaseInView(GamePhase.PLAY_CH_CARD_PHASE, false, false);
     }
 
     @Override

@@ -25,7 +25,7 @@ public class Char9Client implements CharacterCardClient {
         else
             System.out.println("Select the color of the student from your entrance ");
 
-        inputs.add(view.getColorInput());
+        inputs.add(view.getColorInput(false));
     }
 
     @Override

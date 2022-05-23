@@ -22,7 +22,7 @@ public class Char10Client extends CharacterCardClientWithStudents {
     @Override
     public void setNextInput(ViewForCharacterCli view) throws PhaseChangedException {
         System.out.println("Select the color of the student from this card "+super.toString());
-        inputs.add(view.getColorInput());
+        inputs.add(view.getColorInput(false));
     }
 
     @Override

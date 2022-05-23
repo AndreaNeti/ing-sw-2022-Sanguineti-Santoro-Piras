@@ -26,7 +26,7 @@ public class Char6Client extends CharacterCardClientWithStudents {
         else
             System.out.println("Select the color of the student from your entrance ");
 
-        inputs.add(view.getColorInput());
+        inputs.add(view.getColorInput(false));
     }
 
     @Override

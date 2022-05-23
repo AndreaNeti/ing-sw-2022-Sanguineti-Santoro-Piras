@@ -26,7 +26,7 @@ public class GameClient extends GameClientListened implements GameClientView {
 
     private final MatchType matchType;
     //players are in the same order of wizard.ordinal
-    private final List<PlayerClient> players;
+    private final List<TeamClient> teams;
     private final List<CharacterCardClient> characters;
     private final List<CharacterCardClientWithStudents> charactersWithStudents;
     private CharacterCardClient currentCharacterCard;
@@ -37,22 +37,22 @@ public class GameClient extends GameClientListened implements GameClientView {
 
     private final LimitedChat<String> chat;
 
-    public GameClient(ArrayList<PlayerClient> players, Wizard myWizard, MatchType matchType) {
-        System.out.println(players.toString());
+    public GameClient(ArrayList<TeamClient> teamsClient, Wizard myWizard, MatchType matchType) {
+        System.out.println(teamsClient.toString());
         this.myWizard = myWizard;
         this.professors = new Wizard[Color.values().length];
         Arrays.fill(professors, null);
         this.matchType = matchType;
         this.matchConstants = Server.getMatchConstants(matchType);
         islands = new ArrayList<>(12);
-        clouds = new ArrayList<>(matchConstants.studentsToMove());
-        for (int i = 0; i < matchConstants.studentsToMove(); i++) {
-            clouds.add(new GameComponentClient(-(i + 1)));
+        clouds = new ArrayList<>(matchType.nPlayers());
+        for (int i = 1; i <= matchType.nPlayers(); i++) {
+            clouds.add(new GameComponentClient(-i));
         }
         for (int i = 0; i < 12; i++) {
-            islands.add(new IslandClient(2 * players.size() + i));
+            islands.add(new IslandClient(2 * matchType.nPlayers() + i));
         }
-        this.players = players;
+        this.teams = teamsClient;
         this.characters = new ArrayList<>();
         this.charactersWithStudents = new ArrayList<>();
         this.chat = new LimitedChat<>(9);
@@ -75,13 +75,13 @@ public class GameClient extends GameClientListened implements GameClientView {
     }
 
     public PlayerClient getCurrentPlayer() {
-        return players.get(currentPlayer);
+        return getPlayer(currentPlayer);
     }
 
     public void setCurrentPlayer(Byte currentPlayer) {
         this.currentPlayer = currentPlayer;
         boolean isMyTurn = currentPlayer == myWizard.ordinal();
-        notify(players.get(currentPlayer).toString(), isMyTurn);
+        notify(getPlayer(currentPlayer).toString(), isMyTurn);
     }
 
     public Wizard[] getProfessors() {
@@ -102,20 +102,20 @@ public class GameClient extends GameClientListened implements GameClientView {
         from -1 to -4 are clouds;
         from -10 to -12 are the characters, here I ignore this
         */
-        if (idGameComponent >= 0 && idGameComponent < 2 * players.size()) {
+        if (idGameComponent >= 0 && idGameComponent < 2 * matchType.nPlayers()) {
             int playerIndex = idGameComponent / 2;
             if (idGameComponent % 2 == 0) {
-                GameComponentClient entranceHall = players.get(idGameComponent / 2).getEntranceHall();
+                GameComponentClient entranceHall = getPlayer(idGameComponent / 2).getEntranceHall();
                 entranceHall.modifyGameComponent(gameComponent);
                 notify(entranceHall);
 
             } else {
-                GameComponentClient lunchHall = players.get(idGameComponent / 2).getLunchHall();
+                GameComponentClient lunchHall = getPlayer(idGameComponent / 2).getLunchHall();
                 lunchHall.modifyGameComponent(gameComponent);
                 notify(lunchHall);
             }
 
-        } else if (idGameComponent >= 2 * players.size()) {
+        } else if (idGameComponent >= 2 * matchType.nPlayers()) {
             IslandClient islandToReturn = getIslandById(idGameComponent);
             if (islandToReturn == null) {
                 throw new RuntimeException("error in passing parameters probably");
@@ -130,7 +130,7 @@ public class GameClient extends GameClientListened implements GameClientView {
                 }
             }
         } else {
-            GameComponentClient cloud = clouds.get(-(idGameComponent + 1));
+            GameComponentClient cloud = clouds.get(-idGameComponent - 1);
             cloud.modifyGameComponent(gameComponent);
             notify(cloud);
         }
@@ -171,12 +171,8 @@ public class GameClient extends GameClientListened implements GameClientView {
     }
 
     public void setTowerLeft(HouseColor houseColor, Byte towerLeft) {
-        for (PlayerClient p : players) {
-            if (p.getHouseColor() == houseColor) {
-                p.setTowersLeft(towerLeft);
-                notify(houseColor, towerLeft);
-            }
-        }
+        teams.get(houseColor.ordinal()).setTowersLeft(towerLeft);
+        notify(houseColor, towerLeft);
     }
 
     @Override
@@ -195,8 +191,8 @@ public class GameClient extends GameClientListened implements GameClientView {
     }
 
     @Override
-    public List<PlayerClient> getPlayers() {
-        return players;
+    public List<TeamClient> getTeams() {
+        return teams;
     }
 
     public Byte getNewCoinsLeft() {
@@ -280,12 +276,27 @@ public class GameClient extends GameClientListened implements GameClientView {
         }
         throw new IllegalArgumentException("Character card " + i + " doesn't exists");
     }
+
     @Override
     public CharacterCardClient getCurrentCharacterCard() {
         return currentCharacterCard;
     }
 
+    @Override
+    public MatchType getMatchType() {
+        return matchType;
+    }
+
     public void setCurrentCharacterCard(int indexCharacter) {
         this.currentCharacterCard = getCharacters().get(indexCharacter);
+    }
+
+    @Override
+    public PlayerClient getPlayer(int n) {
+        if (n < 0 || n >= matchType.nPlayers())
+            throw new IllegalArgumentException("Not a valid player index");
+        // teams index = b % team size (in 4 players game, players are inserted in team 0, indexOf1, 0, 1)
+        // player index (in team members) = b / team size (2 or 3 players -> = 0 (team contains only 1 member), 4 players -> first 2 = 0, last 2 = 1 (3rd player is in team 0 and is member[1]))
+        return teams.get(n % teams.size()).getPlayers().get(n / teams.size());
     }
 }

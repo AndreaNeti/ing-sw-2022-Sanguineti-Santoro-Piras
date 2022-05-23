@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import java.io.IOException;
 
@@ -13,7 +14,10 @@ public class HelloApplication extends Application {
     public void start(Stage stage) throws IOException {
 
         Parent fxmlLoader = FXMLLoader.load(getClass().getResource("/sample.fxml"));
-        Scene scene = new Scene(fxmlLoader, 320, 240);
+        Scene scene = new Scene(fxmlLoader);
+        stage.setMaximized(true);
+        stage.setResizable(false);
+        stage.initStyle(StageStyle.UTILITY);
         stage.setTitle("Hello!");
         stage.setScene(scene);
         stage.show();

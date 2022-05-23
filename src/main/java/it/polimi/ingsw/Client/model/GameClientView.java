@@ -1,5 +1,8 @@
 package it.polimi.ingsw.Client.model;
 
+import it.polimi.ingsw.Server.controller.MatchType;
+import it.polimi.ingsw.network.toClientMessage.MatchInfo;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,6 +12,9 @@ public interface GameClientView {
     ArrayList<GameComponentClient> getClouds();
 
     ArrayList<IslandClient> getIslands();
-    List<PlayerClient> getPlayers();
+    List<TeamClient> getTeams();
     CharacterCardClient getCurrentCharacterCard();
+    MatchType getMatchType();
+
+    PlayerClient getPlayer(int index);
 }

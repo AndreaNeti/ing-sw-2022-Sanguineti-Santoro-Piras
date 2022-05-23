@@ -22,9 +22,9 @@ public class Char0Client extends CharacterCardClientWithStudents {
     @Override
     public void setNextInput(ViewForCharacterCli view) throws PhaseChangedException {
         if (inputs.size() == 0) {
-            inputs.add(view.getColorInput());
+            inputs.add(view.getColorInput(false));
         } else {
-            inputs.add(view.getIslandDestination("Select the island where you want to put the student"));
+            inputs.add(view.getIslandDestination("Select the island where you want to put the student", false));
         }
     }
 

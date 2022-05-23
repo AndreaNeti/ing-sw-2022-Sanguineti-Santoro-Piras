@@ -16,8 +16,8 @@ public class MoveStudentCommand extends GameCommand {
     @Override
     public void playCLICommand() throws PhaseChangedException {
         ViewCli viewCli = (ViewCli) getView();
-        Color color = Color.values()[viewCli.getColorInput()];
-        viewCli.sendToServer(new MoveStudent(color, viewCli.getMoveStudentDestination()));
+        Color color = Color.values()[viewCli.getColorInput(false)];
+        viewCli.sendToServer(new MoveStudent(color, viewCli.getMoveStudentDestination(false)));
     }
 
     @Override

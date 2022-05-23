@@ -25,7 +25,7 @@ public class SetCharacterInputCommand extends GameCommand {
         else {
             current.setNextInput(viewCli);
         }
-        viewCli.setPhaseInView(GamePhase.PLAY_CH_CARD_PHASE, false);
+        viewCli.setPhaseInView(GamePhase.PLAY_CH_CARD_PHASE, false, false);
     }
 
     @Override

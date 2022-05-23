@@ -43,7 +43,7 @@ public class ServerListener implements Runnable {
                     } else
                         System.out.println("Disconnected from server");
                 }
-                controllerClient.changePhase(GamePhase.INIT_PHASE, true);
+                controllerClient.changePhase(GamePhase.INIT_PHASE, true, true);
             }
 
         } while (!quit);

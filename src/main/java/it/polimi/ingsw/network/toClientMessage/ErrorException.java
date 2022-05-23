@@ -16,6 +16,6 @@ public class ErrorException implements ToClientMessage {
 
     @Override
     public void execute(ControllerClient controllerClient) {
-        controllerClient.error(error);
+        controllerClient.error(error, false);
     }
 }

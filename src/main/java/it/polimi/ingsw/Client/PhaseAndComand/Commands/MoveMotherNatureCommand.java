@@ -16,7 +16,7 @@ public class MoveMotherNatureCommand extends GameCommand {
     @Override
     public void playCLICommand() throws PhaseChangedException {
         ViewCli viewCli = (ViewCli) getView();
-        viewCli.sendToServer(new MoveMotherNature(viewCli.getMotherNatureMovesInput()));
+        viewCli.sendToServer(new MoveMotherNature(viewCli.getMotherNatureMovesInput(false)));
     }
 
     @Override

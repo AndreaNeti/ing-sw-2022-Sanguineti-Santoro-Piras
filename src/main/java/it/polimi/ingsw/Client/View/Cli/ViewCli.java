@@ -4,22 +4,26 @@ import it.polimi.ingsw.Client.Controller.ControllerClient;
 import it.polimi.ingsw.Client.View.AbstractView;
 import it.polimi.ingsw.Client.View.ClientPhaseView;
 import it.polimi.ingsw.Client.model.GameComponentClient;
+import it.polimi.ingsw.Client.model.PlayerClient;
+import it.polimi.ingsw.Client.model.TeamClient;
 import it.polimi.ingsw.Enum.*;
 import it.polimi.ingsw.Server.controller.MatchType;
 import it.polimi.ingsw.exceptions.PhaseChangedException;
 
 import java.io.IOException;
 import java.util.*;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class ViewCli extends AbstractView implements ViewForCharacterCli {
 
     private final static String operatingSystem = System.getProperty("os.name");
-    private ClientPhaseView phaseToExecute;
-    private volatile boolean isInputReady, phaseChanged, requestInput;
+    private final Queue<ClientPhaseView> phasesToExecute;
+    private volatile boolean isInputReady, phaseChanged, requestInput, forcedScannerSkip;
     private String input;
 
     public ViewCli(ControllerClient controllerClient) {
         super(controllerClient);
+        phasesToExecute = new ConcurrentLinkedQueue<>();
         Thread scannerThread = new Thread(() -> {
             final Scanner myInput = new Scanner(System.in);
             try {
@@ -47,28 +51,26 @@ public class ViewCli extends AbstractView implements ViewForCharacterCli {
         System.out.println("You've chosen to play with client line interface");
         isInputReady = false;
         phaseChanged = false;
+        forcedScannerSkip = false;
+        requestInput = false;
     }
 
     public void start() throws InterruptedException {
         do {
             synchronized (this) {
-                while (phaseToExecute == null)
+                while (phasesToExecute.isEmpty())
                     wait();
-                phaseToExecute.playPhase(this);
+                phasesToExecute.poll().playPhase(this);
             }
         } while (!canQuit());
     }
 
-    public void unsetPhase() {
-        this.phaseToExecute = null;
-    }
-
-
     @Override
-    public synchronized void setPhaseInView(ClientPhaseView clientPhaseView, boolean notifyScanner) {
-        this.phaseToExecute = clientPhaseView;
-        if (notifyScanner)
-            phaseChanged = true;
+    public synchronized void setPhaseInView(ClientPhaseView clientPhaseView, boolean forceScannerSkip) {
+        phasesToExecute.offer(clientPhaseView);
+        phaseChanged = true;
+        if (forceScannerSkip)
+            forcedScannerSkip = true;
         notifyAll();
     }
 
@@ -92,28 +94,28 @@ public class ViewCli extends AbstractView implements ViewForCharacterCli {
         return ret.toString();
     }
 
-    public int getIntInput(Object[] options, String message) throws PhaseChangedException {
+    public int getIntInput(Object[] options, String message, boolean canBeStopped) throws PhaseChangedException {
         System.out.println(listOptions(options));
-        return getIntInput(0, options.length - 1, message);
+        return getIntInput(0, options.length - 1, message, canBeStopped);
     }
 
-    public int getIntInput(int min, int max, String message) throws PhaseChangedException {
-        int ret = getIntInput(message + " (from " + min + " to " + max + ")");
+    public int getIntInput(int min, int max, String message, boolean canBeStopped) throws PhaseChangedException {
+        int ret = getIntInput(message + " (from " + min + " to " + max + ")", canBeStopped);
         while (ret < min || ret > max) {
-            ret = getIntInput("Not a valid input (from " + min + " to " + max + ")\n" + message);
+            ret = getIntInput("Not a valid input (from " + min + " to " + max + ")\n" + message, canBeStopped);
         }
         return ret;
     }
 
     //     Message is the string printed before asking the input
-    public int getIntInput(String message) throws PhaseChangedException {
+    public int getIntInput(String message, boolean canBeStopped) throws PhaseChangedException {
         int ret = 0;
         boolean err;
         do {
             err = false;
             System.out.println(message + ":");
             try {
-                ret = Integer.parseInt(getInput());
+                ret = Integer.parseInt(getInput(canBeStopped));
             } catch (NumberFormatException ex) {
                 err = true;
                 System.out.println("Not a valid input");
@@ -122,11 +124,11 @@ public class ViewCli extends AbstractView implements ViewForCharacterCli {
         return ret;
     }
 
-    public byte[] getIpAddressInput() throws PhaseChangedException {
-        String input = getStringInput("Select server IP");
+    public byte[] getIpAddressInput(boolean canBeStopped) throws PhaseChangedException {
+        String input = getStringInput("Select server IP", canBeStopped);
         byte[] ret = getIpFromString(input);
         while (ret == null) {
-            input = getStringInput("Select a valid server IP");
+            input = getStringInput("Select a valid server IP", canBeStopped);
             ret = getIpFromString(input);
         }
         return ret;
@@ -151,75 +153,76 @@ public class ViewCli extends AbstractView implements ViewForCharacterCli {
         return ret;
     }
 
-    public int getColorInput() throws PhaseChangedException {
-        return getIntInput(Color.values(), "Choose a color");
+    public int getColorInput(boolean canBeStopped) throws PhaseChangedException {
+        return getIntInput(Color.values(), "Choose a color", canBeStopped);
     }
 
-    public MatchType getMatchTypeInput() throws PhaseChangedException {
-        return new MatchType((byte) getIntInput(2, 4, "Choose the number of players"), getBooleanInput("Do you want to play in expert mode?"));
+    public MatchType getMatchTypeInput(boolean canBeStopped) throws PhaseChangedException {
+        return new MatchType((byte) getIntInput(2, 4, "Choose the number of players", canBeStopped), getBooleanInput("Do you want to play in expert mode?", canBeStopped));
     }
 
-    public byte getAssistantCardToPlayInput() throws PhaseChangedException {
+    public byte getAssistantCardToPlayInput(boolean canBeStopped) throws PhaseChangedException {
         // TODO use getIntInput Options[] and a record for assistant cards
         boolean[] usedCards = getModel().getCurrentPlayer().getUsedCards();
-        byte ret = (byte) getIntInput(1, usedCards.length, "Choose an assistant card to play");
+        byte ret = (byte) getIntInput(1, usedCards.length, "Choose an assistant card to play", canBeStopped);
         while (usedCards[ret - 1]) {
             System.out.println("Card already played");
-            ret = (byte) getIntInput(1, usedCards.length, "Choose an assistant card to play");
+            ret = (byte) getIntInput(1, usedCards.length, "Choose an assistant card to play", canBeStopped);
         }
         return ret;
     }
 
-    public int getMoveStudentDestination() throws PhaseChangedException {
+    public int getMoveStudentDestination(boolean canBeStopped) throws PhaseChangedException {
         List<GameComponentClient> validDestinations = new ArrayList<>();
         validDestinations.add(getModel().getCurrentPlayer().getLunchHall());
         validDestinations.addAll(getModel().getIslands());
-        int index = getIntInput(validDestinations.toArray(), "Select a destination");
+        int index = getIntInput(validDestinations.toArray(), "Select a destination", canBeStopped);
         return validDestinations.get(index).getId();
     }
-    public int getIslandDestination(String message) throws PhaseChangedException{
-        return getIntInput(getModel().getIslands().toArray(),message);
+
+    public int getIslandDestination(String message, boolean canBeStopped) throws PhaseChangedException {
+        return getIntInput(getModel().getIslands().toArray(), message, canBeStopped);
     }
 
-    public byte getMotherNatureMovesInput() throws PhaseChangedException {
-        return (byte) getIntInput(1, getModel().getCurrentPlayer().getPlayedCardMoves(), "How many steps do you want mother nature to move?");
+    public byte getMotherNatureMovesInput(boolean canBeStopped) throws PhaseChangedException {
+        return (byte) getIntInput(1, getModel().getCurrentPlayer().getPlayedCardMoves(), "How many steps do you want mother nature to move?", canBeStopped);
     }
 
-    public int getCloudSource() throws PhaseChangedException {
+    public int getCloudSource(boolean canBeStopped) throws PhaseChangedException {
         ArrayList<GameComponentClient> availableClouds = new ArrayList<>();
         // Add and prints only the not-empty clouds
         for (GameComponentClient cloud : getModel().getClouds()) {
             if (cloud.howManyStudents() > 0)
                 availableClouds.add(cloud);
         }
-        int cloudIndex = getIntInput(availableClouds.toArray(), "Choose a cloud source");
+        int cloudIndex = getIntInput(availableClouds.toArray(), "Choose a cloud source", canBeStopped);
         return availableClouds.get(cloudIndex).getId();
     }
 
-    public boolean getBooleanInput(String message) throws PhaseChangedException {
+    public boolean getBooleanInput(String message, boolean canBeStopped) throws PhaseChangedException {
         System.out.println(message + "(Y/N):");
-        String s = getInput().toLowerCase();
+        String s = getInput(canBeStopped).toLowerCase();
         while (!s.equals("y") && !s.equals("n")) {
             System.out.println("Not a valid input\n" + message + "(Y/N):");
-            s = getInput().toLowerCase();
+            s = getInput(canBeStopped).toLowerCase();
         }
         return s.equals("y");
     }
 
 
-    public String getStringInput(String message) throws PhaseChangedException {
+    public String getStringInput(String message, boolean canBeStopped) throws PhaseChangedException {
         System.out.println(message + ": ");
-        return getInput();
+        return getInput(canBeStopped);
     }
 
-    public long getLongInput(String message) throws PhaseChangedException {
+    public long getLongInput(String message, boolean canBeStopped) throws PhaseChangedException {
         long ret = 0;
         boolean err;
         do {
             err = false;
             System.out.println(message + ":");
             try {
-                ret = Long.parseLong(getInput());
+                ret = Long.parseLong(getInput(canBeStopped));
             } catch (NumberFormatException ex) {
                 err = true;
                 System.out.println("Not a valid input");
@@ -228,16 +231,17 @@ public class ViewCli extends AbstractView implements ViewForCharacterCli {
         return ret;
     }
 
-    public synchronized String getInput() throws PhaseChangedException {
+    public synchronized String getInput(boolean canBeStopped) throws PhaseChangedException {
         isInputReady = false;
         phaseChanged = false;
+        forcedScannerSkip = false;
         this.input = "";
         // wakes up scanner thread
         requestInput = true;
         notify();
         try {
-            // wait for scanner notify or phase changed flag
-            while (!isInputReady && !phaseChanged) {
+            // wait for scanner notify or phase changed flag (if it can be stopped) or fored skip (used if someone lost connection)
+            while (!isInputReady && (!phaseChanged || !canBeStopped) && !forcedScannerSkip) {
                 wait();
             }
         } catch (InterruptedException e) {
@@ -251,12 +255,12 @@ public class ViewCli extends AbstractView implements ViewForCharacterCli {
 
 
     public void printEntranceHall(Integer player) {
-        System.out.println(getModel().getPlayers().get(player).getEntranceHall());
+        System.out.println(getModel().getPlayer(player).getEntranceHall());
     }
 
     @Override
-    public void setQuit() {
-        super.setQuit();
+    public void setQuit(boolean forceScannerSkip) {
+        super.setQuit(forceScannerSkip);
         // notifies scanner to wakeup and terminate
         notify();
     }

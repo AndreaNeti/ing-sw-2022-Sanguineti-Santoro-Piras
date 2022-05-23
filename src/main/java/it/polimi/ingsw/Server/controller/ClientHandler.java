@@ -1,10 +1,8 @@
 package it.polimi.ingsw.Server.controller;
 
-import it.polimi.ingsw.Enum.Wizard;
 import it.polimi.ingsw.exceptions.GameException;
 import it.polimi.ingsw.exceptions.NotAllowedException;
 import it.polimi.ingsw.network.toClientMessage.ErrorException;
-import it.polimi.ingsw.network.toClientMessage.MatchInfo;
 import it.polimi.ingsw.network.toClientMessage.OK;
 import it.polimi.ingsw.network.toClientMessage.ToClientMessage;
 import it.polimi.ingsw.network.toServerMessage.ToServerMessage;
@@ -146,8 +144,6 @@ public class ClientHandler implements Runnable, GameListener {
 
     private void joinMatch(Controller match) throws GameException {
         controller = match;
-        update(new MatchInfo(controller.getMatchType(), controller.getMatchId(), Wizard.values()[controller.getPlayersInMatch()]));
-        update(new OK());
         controller.addPlayer(this, nickName);
     }
 }

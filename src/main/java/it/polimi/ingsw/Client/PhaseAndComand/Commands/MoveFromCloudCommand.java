@@ -15,7 +15,7 @@ public class MoveFromCloudCommand extends GameCommand {
     @Override
     public void playCLICommand() throws PhaseChangedException {
         ViewCli viewCli = (ViewCli) getView();
-        viewCli.sendToServer(new MoveFromCloud(viewCli.getCloudSource()));
+        viewCli.sendToServer(new MoveFromCloud(viewCli.getCloudSource(false)));
     }
 
     @Override

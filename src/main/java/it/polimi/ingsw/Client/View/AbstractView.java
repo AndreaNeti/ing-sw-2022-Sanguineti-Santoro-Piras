@@ -28,14 +28,14 @@ public abstract class AbstractView {
         controllerClient.sendMessage(toServerMessage);
     }
 
-    public abstract void setPhaseInView(ClientPhaseView clientPhaseView, boolean notifyScanner);
+    public abstract void setPhaseInView(ClientPhaseView clientPhaseView, boolean forceScannerSkip);
 
-    public void setPhaseInView(GamePhase gamePhase, boolean setOldPhase) {
-        controllerClient.changePhase(gamePhase, setOldPhase);
+    public void setPhaseInView(GamePhase gamePhase, boolean setOldPhase, boolean forceScannerSkip) {
+        controllerClient.changePhase(gamePhase, setOldPhase, forceScannerSkip);
     }
 
-    public void goToOldPhase(boolean notifyScanner) {
-        controllerClient.repeatPhase(notifyScanner);
+    public void goToOldPhase(boolean forceScannerSkip) {
+        controllerClient.repeatPhase(forceScannerSkip);
     }
 
     public boolean connectToServer(byte[] ipAddress) {
@@ -44,9 +44,9 @@ public abstract class AbstractView {
 
     public abstract void start() throws InterruptedException;
 
-    public void setQuit() {
+    public void setQuit(boolean forceScannerSkip) {
         // true quits all, only if called during init phase
-        quit = controllerClient.setQuit();
+        quit = controllerClient.setQuit(forceScannerSkip);
     }
 
     public boolean canQuit() {

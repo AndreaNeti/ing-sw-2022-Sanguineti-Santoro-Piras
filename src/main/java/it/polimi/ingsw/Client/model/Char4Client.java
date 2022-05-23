@@ -22,7 +22,7 @@ public class Char4Client implements CharacterCardClient {
     @Override
     public void setNextInput(ViewForCharacterCli view) throws PhaseChangedException {
 
-        inputs.add(view.getIslandDestination("Select the island where you want to put a prohibition"));
+        inputs.add(view.getIslandDestination("Select the island where you want to put a prohibition", false));
 
     }
 

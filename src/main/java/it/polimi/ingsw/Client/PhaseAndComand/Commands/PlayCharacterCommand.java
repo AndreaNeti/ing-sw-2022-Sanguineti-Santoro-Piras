@@ -19,8 +19,8 @@ public class PlayCharacterCommand extends GameCommand {
     @Override
     public void playCLICommand() throws PhaseChangedException {
         ViewCli viewCli = (ViewCli) super.getView();
-        CharacterCardClient current =viewCli.getCurrentCharacterCard();
-        if (current.canPlay() && viewCli.getBooleanInput("Confirm you want to play this character card?")) {
+        CharacterCardClient current = viewCli.getCurrentCharacterCard();
+        if (current.canPlay() && viewCli.getBooleanInput("Confirm you want to play this character card?", false)) {
             List<Integer> inputs = current.getInputs();
             if (inputs != null)
                 for (Integer i : inputs)
@@ -30,7 +30,7 @@ public class PlayCharacterCommand extends GameCommand {
 
         } else {
             System.out.println("Card cannot be played because it needs more input");
-            viewCli.setPhaseInView(GamePhase.PLAY_CH_CARD_PHASE, false);
+            viewCli.goToOldPhase(false);
         }
     }
 

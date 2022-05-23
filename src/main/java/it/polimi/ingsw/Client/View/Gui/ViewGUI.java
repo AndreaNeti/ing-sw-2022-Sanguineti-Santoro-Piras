@@ -17,7 +17,7 @@ public class ViewGUI extends AbstractView {
     }
 
     @Override
-    public void setPhaseInView(ClientPhaseView clientPhaseView, boolean notifyScanner) {
+    public void setPhaseInView(ClientPhaseView clientPhaseView, boolean forceScannerSkip) {
 
     }
 
@@ -27,7 +27,7 @@ public class ViewGUI extends AbstractView {
     }
 
     @Override
-    public void setQuit() {
+    public void setQuit(boolean forceScannerSkip) {
 
     }
 

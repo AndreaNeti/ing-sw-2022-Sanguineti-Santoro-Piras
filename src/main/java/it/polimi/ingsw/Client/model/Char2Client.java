@@ -20,7 +20,7 @@ public class Char2Client implements CharacterCardClient {
 
     @Override
     public void setNextInput(ViewForCharacterCli view) throws PhaseChangedException {
-        inputs.add(view.getIslandDestination("Select the island where you want to calculate influence"));
+        inputs.add(view.getIslandDestination("Select the island where you want to calculate influence", false));
     }
 
     @Override
