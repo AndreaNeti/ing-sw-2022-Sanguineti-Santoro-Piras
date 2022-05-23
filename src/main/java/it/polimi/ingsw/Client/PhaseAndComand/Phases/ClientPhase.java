@@ -21,6 +21,7 @@ public abstract class ClientPhase implements ClientPhaseView, ClientPhaseControl
     @Override
     public void playPhase(ViewCli viewCli) {
         viewCli.clearConsole();
+        viewCli.print();
         System.out.println("You are in " + this);
         int index;
         try {

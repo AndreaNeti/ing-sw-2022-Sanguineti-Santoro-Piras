@@ -23,9 +23,9 @@ public interface GameClientListener {
 
     void update(Color color, Wizard wizard);
 
-    void error(String e);
-
-    void ok();
+//    void error(String e);
+//
+//    void ok();
 
     void update(String currentPlayer, boolean isMyTurn);
 
@@ -38,6 +38,7 @@ public interface GameClientListener {
     void updateCharacter(List<CharacterCardClient> characters);
     void updateCoins(Byte coins);
 
+    void update();
     //void setModel(GameClientView model);
 
 }

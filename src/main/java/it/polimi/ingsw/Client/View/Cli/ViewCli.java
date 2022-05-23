@@ -4,8 +4,6 @@ import it.polimi.ingsw.Client.Controller.ControllerClient;
 import it.polimi.ingsw.Client.View.AbstractView;
 import it.polimi.ingsw.Client.View.ClientPhaseView;
 import it.polimi.ingsw.Client.model.GameComponentClient;
-import it.polimi.ingsw.Client.model.PlayerClient;
-import it.polimi.ingsw.Client.model.TeamClient;
 import it.polimi.ingsw.Enum.*;
 import it.polimi.ingsw.Server.controller.MatchType;
 import it.polimi.ingsw.exceptions.PhaseChangedException;
@@ -21,6 +19,7 @@ public class ViewCli extends AbstractView implements ViewForCharacterCli {
     private volatile boolean isInputReady, phaseChanged, requestInput, forcedScannerSkip;
     private String input;
 
+    private CliPrinter printer;
     public ViewCli(ControllerClient controllerClient) {
         super(controllerClient);
         phasesToExecute = new ConcurrentLinkedQueue<>();
@@ -138,7 +137,7 @@ public class ViewCli extends AbstractView implements ViewForCharacterCli {
 
     // return null if it's not a valid ip, otherwise returns the IP bytes
     private byte[] getIpFromString(String ip) {
-        if (ip.equals("localhost")) return new byte[]{127, 0, 0, 1};
+        if (ip.equals("localhost") || ip.equals("l") || ip.equals("paolino")) return new byte[]{127, 0, 0, 1};
         String[] bytes = ip.split("[.]");
         if (bytes.length != 4) return null;
         byte[] ret = new byte[4];
@@ -272,5 +271,13 @@ public class ViewCli extends AbstractView implements ViewForCharacterCli {
         super.setQuit(forceScannerSkip);
         // notifies scanner to wakeup and terminate
         notify();
+    }
+
+    public void print() {
+        if(getModel() != null) {
+            if (printer == null)
+                printer = new CliPrinter(getModel());
+            printer.printGame();
+        }
     }
 }

@@ -11,7 +11,7 @@ public class OK implements ToClientMessage{
 
     @Override
     public void execute(ControllerClient controllerClient) {
-        controllerClient.ok();
+        controllerClient.addMessage("Server: Successful operation");
         controllerClient.setNextClientPhase();
     }
 }

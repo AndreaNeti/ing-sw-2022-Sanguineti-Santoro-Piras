@@ -117,7 +117,8 @@ class ClientHandlerTest {
             fail();
         }
         try {
-            in2.readObject();
+//            in1.readObject();
+//            in2.readObject();
             in2.readObject();
             in2.readObject();
         } catch (IOException | ClassNotFoundException e) {
@@ -136,7 +137,7 @@ class ClientHandlerTest {
             fail();
         }
         try {
-            in2.readObject();
+//            in2.readObject();
             in2.readObject();
             in2.readObject();
         } catch (IOException | ClassNotFoundException e) {

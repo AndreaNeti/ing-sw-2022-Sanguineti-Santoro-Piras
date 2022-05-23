@@ -3,6 +3,7 @@ package it.polimi.ingsw.Client;
 import it.polimi.ingsw.Client.Controller.ControllerClient;
 import it.polimi.ingsw.Client.PhaseAndComand.Commands.*;
 import it.polimi.ingsw.Client.View.AbstractView;
+import it.polimi.ingsw.Client.View.Cli.CliPrinter;
 import it.polimi.ingsw.Client.View.Cli.UpdateCli;
 import it.polimi.ingsw.Client.View.Cli.ViewCli;
 import it.polimi.ingsw.Client.View.GameClientListener;
@@ -22,7 +23,7 @@ public class App {
         view = new ViewCli(controllerClient);
 
         controllerClient.attachView(view);
-        GameClientListener updateCLI=new UpdateCli((ViewCli) view);
+        GameClientListener updateCLI=new CliPrinter(view.getModel());
         controllerClient.addListener(updateCLI);
 
         controllerClient.instantiateAllPhases();

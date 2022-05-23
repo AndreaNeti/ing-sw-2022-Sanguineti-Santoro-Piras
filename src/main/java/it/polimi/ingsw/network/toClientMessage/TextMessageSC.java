@@ -17,5 +17,6 @@ public class TextMessageSC implements ToClientMessage {
     @Override
     public void execute(ControllerClient controllerClient) {
         controllerClient.addMessage(message);
+        controllerClient.repeatPhase(false);
     }
 }

@@ -56,24 +56,31 @@ public class GameClient extends GameClientListened implements GameClientView {
         this.characters = new ArrayList<>();
         this.charactersWithStudents = new ArrayList<>();
         this.chat = new LimitedChat<>(9);
+        this.updatedCoinPlayer = new HashMap<>();
+        for(byte i = 0; i < matchType.nPlayers(); i++) {
+            updatedCoinPlayer.put(i, (byte) matchConstants.initialPlayerCoins());
+        }
     }
 
     public void addMessage(String message) {
         chat.add(message);
     }
 
-    public LimitedChat<String> getChat() {
-        return chat;
+    public ArrayList<String> getChat() {
+        return new ArrayList<>(chat);
     }
 
+    @Override
     public MatchConstants getMatchConstants() {
         return matchConstants;
     }
 
+    @Override
     public boolean isExpert() {
         return matchType.isExpert();
     }
 
+    @Override
     public PlayerClient getCurrentPlayer() {
         return getPlayer(currentPlayer);
     }
@@ -84,6 +91,7 @@ public class GameClient extends GameClientListened implements GameClientView {
         notify(getPlayer(currentPlayer).toString(), isMyTurn);
     }
 
+    @Override
     public Wizard[] getProfessors() {
         return Arrays.copyOf(professors, professors.length);
     }
@@ -161,6 +169,7 @@ public class GameClient extends GameClientListened implements GameClientView {
         notifyMotherNature(motherNaturePosition);
     }
 
+    @Override
     public byte getMotherNaturePosition() {
         return motherNaturePosition;
     }
@@ -181,6 +190,7 @@ public class GameClient extends GameClientListened implements GameClientView {
         return clouds;
     }
 
+    @Override
     public Wizard getMyWizard() {
         return myWizard;
     }
@@ -204,6 +214,7 @@ public class GameClient extends GameClientListened implements GameClientView {
         //TODO add update
     }
 
+    @Override
     public Byte getNewProhibitionsLeft() {
         return newProhibitionsLeft;
     }
@@ -222,12 +233,13 @@ public class GameClient extends GameClientListened implements GameClientView {
         notifyIgnoredColor(ignoredColorInfluence);
     }
 
-    public void setUpdatedCoinPlayer(Map<Byte, Byte> updatedCoinPlayer) {
-        this.updatedCoinPlayer = updatedCoinPlayer;
+    public void setUpdatedCoinPlayer(byte playerIndex, byte newCoins) {
+        this.updatedCoinPlayer.put(playerIndex, newCoins);
     }
 
-    public byte getCoinsPlayer(byte id) {
-        return updatedCoinPlayer.get(id);
+    @Override
+    public byte getCoinsPlayer(byte wizardIndex) {
+        return updatedCoinPlayer.get(wizardIndex);
     }
 
     @Override

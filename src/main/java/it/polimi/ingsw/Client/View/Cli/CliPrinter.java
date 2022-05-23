@@ -1,27 +1,33 @@
 package it.polimi.ingsw.Client.View.Cli;
 
-import it.polimi.ingsw.Client.LimitedChat;
+import it.polimi.ingsw.Client.View.AbstractView;
+import it.polimi.ingsw.Client.View.GameClientListener;
 import it.polimi.ingsw.Client.model.*;
 import it.polimi.ingsw.Enum.Color;
 import it.polimi.ingsw.Enum.HouseColor;
 import it.polimi.ingsw.Enum.Wizard;
 import org.fusesource.jansi.AnsiConsole;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
-public class CliPrinter {
+public class CliPrinter implements GameClientListener {
 
-    private final GameClient game;
+    private final Random random;
+    private final GameClientView game;
 
-    public CliPrinter(GameClient game) {
+    public CliPrinter(GameClientView game) {
         this.game = game;
+        random = new Random(0);
     }
 
-    public void print() {
+    public void printLobby() {
+//        System.out.println("----------------------ERYANTIS----------------------");
+//        for (String m : game.getChat()) {
+//            System.out.println(m);
+//        }
 
+    }
+    public void printGame() {
 //        System.setOut(new PrintStream(new FileOutputStream(FileDescriptor.out), true, StandardCharsets.UTF_8));
         AnsiConsole.systemInstall();
         // List<PlayerClient> players = game.getTeams();
@@ -58,11 +64,15 @@ public class CliPrinter {
         // print number of red students per island and mother nature if it's on that island
         for (IslandClient island : islands) {
             String mt = " ";
-            if (game.getMotherNaturePosition() == islands.indexOf(island))
+            String mt2 = "   ";
+            if (game.getMotherNaturePosition() == islands.indexOf(island)) {
                 mt = "MT ";
+                mt2 = " ";
+            }
             byte r = island.howManyStudents(Color.RED);
             String red = r < 10 ? ("0" + r) : String.valueOf(r);
-            islandPrint.append(" \u2571  ").append(mt).append("\u001b[41;1m ").append(red).append(" \u001b[0m   \u2572 ");
+            islandPrint.append(" \u2571  ").append(mt).append("\u001b[41;1m ").append(red).append(" \u001b[0m")
+                    .append(mt2).append("\u2572 ");
         }
         islandPrint.append("\n");
         // print number of blue and yellow students per island
@@ -97,7 +107,7 @@ public class CliPrinter {
         }
         // print team names
         for (TeamClient t : teams) {
-            cloudsTeamsPrint.append("\t\u001b[7m ").append(t.getHouseColor()).append(" TEAM \u001b[0m\t");
+            cloudsTeamsPrint.append("\t\t\u001b[7m ").append(t.getHouseColor()).append(" TEAM \u001b[0m\t");
         }
         cloudsTeamsPrint.append("\u001b[0m \n");
         // print red students per cloud
@@ -107,7 +117,7 @@ public class CliPrinter {
         }
         // print number of towers per team
         for (TeamClient t : teams) {
-            cloudsTeamsPrint.append("\t\u25d8  x ").append(t.getTowersLeft()).append("\t\t");
+            cloudsTeamsPrint.append("\t\t\u25d8  x ").append(t.getTowersLeft()).append("\t\t");
         }
         cloudsTeamsPrint.append("\n");
         // print blue and yellow students per cloud
@@ -120,18 +130,18 @@ public class CliPrinter {
         StringBuilder secondRow = new StringBuilder();
         // print team members
         for (TeamClient t : teams) {
-            cloudsTeamsPrint.append("\t").append(t.getPlayers().get(0).getWizard()).append(": ").append(t.getPlayers().get(0));
+            cloudsTeamsPrint.append("\t\t").append(t.getPlayers().get(0).getWizard()).append(": ").append(t.getPlayers().get(0));
             if (game.getMatchType().nPlayers() >= 4) {
                 secondRow.append("\t").append(t.getPlayers().get(1).getWizard()).append(": ").append(t.getPlayers().get(1));
             }
-            cloudsTeamsPrint.append("\n");
-            // print green and pink students per cloud
-            for (
-                    GameComponentClient cloud : clouds) {
-                byte green = cloud.howManyStudents(Color.GREEN);
-                byte pink = cloud.howManyStudents(Color.PINK);
-                cloudsTeamsPrint.append(" \u2502\u001b[44;1m ").append(green).append(" \u001b[0m \u001b[43;1m ").append(pink).append(" \u001b[0m\u2502  ");
-            }
+        }
+        cloudsTeamsPrint.append("\n");
+        // print green and pink students per cloud
+        for (
+                GameComponentClient cloud : clouds) {
+            byte green = cloud.howManyStudents(Color.GREEN);
+            byte pink = cloud.howManyStudents(Color.PINK);
+            cloudsTeamsPrint.append(" \u2502\u001b[42;1m ").append(green).append(" \u001b[0m \u001b[45;1m ").append(pink).append(" \u001b[0m\u2502  ");
         }
         // print second team members, if present
         cloudsTeamsPrint.append(secondRow).append("\n");
@@ -145,33 +155,42 @@ public class CliPrinter {
         StringBuilder boardsCharChatPrint = new StringBuilder();
         byte numOfPlayers = (byte) players.size();
         boolean expert = game.isExpert();
-        LimitedChat<String> chat = game.getChat();
+        ArrayList<String> chat = game.getChat();
         // upper line of boards
         boardsCharChatPrint.append(" \u2554\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2557 ".repeat(numOfPlayers));
 
         // names of the character cards
-        for (CharacterCardClient ch : game.getCharacters()) {
-            String name = ch.toString();
-            boardsCharChatPrint.append("\t\u256d\u2500").append(name).append("\u2500".repeat(17 - name.length())).append("\u256e");
+        if(expert) {
+            for (CharacterCardClient ch : game.getCharacters()) {
+                String name = ch.toString();
+                if (game.getCurrentCharacterCard() != null && game.getCurrentCharacterCard().getCharId() == ch.getCharId())
+                    boardsCharChatPrint.append("\t\u256d\u2500\u001b[31;1m");
+                else
+                    boardsCharChatPrint.append("\t\u256d\u2500");
+                boardsCharChatPrint.append(name).append("\u001b[0m\u2500".repeat(17 - name.length())).append("\u256e");
+            }
         }
+        boardsCharChatPrint.append("\n");
         // colors
-        StringBuilder colors = new StringBuilder("\u001b[31m\u001b[34m\u001b[33m\u001b[32m\u001b[35m\u001b[0m");
+        String[] colors = new String[]{"\u001b[31m","\u001b[34m","\u001b[33m","\u001b[32m","\u001b[35m","\u001b[0m"};
+//        StringBuilder colors = new StringBuilder("\u001b[31m\u001b[34m\u001b[33m\u001b[32m\u001b[35m\u001b[0m");
         // print professors of each player
+        Wizard[] professors = game.getProfessors();
         for (int i = 0; i < numOfPlayers; i++) {
             StringBuilder profs = new StringBuilder();
             for (int j = 0; j < Color.values().length; j++) {
-                if (game.getProfessors()[0] == players.get(i).getWizard())
-                    profs.append(" ").append(colors.charAt(j)).append("\u25d9 ");
-                else profs.append(colors.charAt(j)).append("   ");
+                if (professors[j] == players.get(i).getWizard())
+                    profs.append(" ").append(colors[j]).append("\u25d9 ");
+                else profs.append(colors[j]).append("   ");
             }
-            boardsCharChatPrint.append(" \u2551").append(profs).append("\u2551 ");
+            boardsCharChatPrint.append("\u001b[0m").append(" \u2551").append(profs).append("\u001b[0m").append("\u2551 ");
         }
         if (expert) {
             // print cost of character cards and students if there's any
             for (CharacterCardClient ch : game.getCharacters()) {
                 boardsCharChatPrint.append("\t\u2502 Cost: ").append(ch.getCost()).append("  ");
                 if (ch.toString().equals("Monk") || ch.toString().equals("Jester") || ch.toString().equals("Spoiled Princess"))
-                    boardsCharChatPrint.append("\u2502  \u001b[41;1m ").append(((CharacterCardClientWithStudents) ch).howManyStudents(Color.RED)).append(" \u001b[0m  ");
+                    boardsCharChatPrint.append("\u2502  \u001b[41;1m ").append(((CharacterCardClientWithStudents) ch).howManyStudents(Color.RED)).append(" \u001b[0m  \u2502");
                 else
                     boardsCharChatPrint.append("\u2502       \u2502");
             }
@@ -185,7 +204,7 @@ public class CliPrinter {
                 boardsCharChatPrint.append("\t\u2502          ");
                 if (ch.toString().equals("Monk") || ch.toString().equals("Jester") || ch.toString().equals("Spoiled Princess"))
                     boardsCharChatPrint.append("\u2502\u001b[44;1m ").append(((CharacterCardClientWithStudents) ch).howManyStudents(Color.BLUE))
-                            .append(" \u001b[0m \u001b[43;1m ").append(((CharacterCardClientWithStudents) ch).howManyStudents(Color.YELLOW)).append(" \u001b[0m");
+                            .append(" \u001b[0m \u001b[43;1m ").append(((CharacterCardClientWithStudents) ch).howManyStudents(Color.YELLOW)).append(" \u001b[0m\u2502");
                 else
                     boardsCharChatPrint.append("\u2502       \u2502");
             }
@@ -197,22 +216,23 @@ public class CliPrinter {
                 StringBuilder stud = new StringBuilder();
                 for (Color c : Color.values()) {
                     if (p.getLunchHall().howManyStudents(c) >= i)
-                        stud.append(" ").append(colors.charAt(c.ordinal())).append("\u25cf ");
-                    else stud.append(colors.charAt(c.ordinal())).append("   ");
+                        stud.append(" ").append(colors[c.ordinal()]).append("\u25cf ");
+                    else stud.append(colors[c.ordinal()]).append("   ");
                 }
-                boardsCharChatPrint.append(" \u2551").append(stud).append("\u2551 ");
+                boardsCharChatPrint.append(" \u2551").append(stud).append("\u001b[0m").append("\u2551 ");
             }
             switch (i) {
                 case 10 -> {
                     if (expert) {
                         // print third row of character cards with students if present
                         for (CharacterCardClient ch : game.getCharacters()) {
-                            boardsCharChatPrint.append("\t\u2502          ");
+                            if(ch.toString().equals("Grandma weeds"))
+                                boardsCharChatPrint.append("\t\u2502   \u001b[31mX\u001b[0m: ").append(game.getNewProhibitionsLeft()).append("\u2502");
+                            else
+                                boardsCharChatPrint.append("\t\u2502          ");
                             if (ch.toString().equals("Monk") || ch.toString().equals("Jester") || ch.toString().equals("Spoiled Princess"))
                                 boardsCharChatPrint.append("\u2502\u001b[42;1m ").append(((CharacterCardClientWithStudents) ch).howManyStudents(Color.GREEN))
-                                        .append(" \u001b[0m \u001b[45;1m ").append(((CharacterCardClientWithStudents) ch).howManyStudents(Color.PINK)).append(" \u001b[0m");
-                            else if (ch.toString().equals("Grandma weeds"))
-                                boardsCharChatPrint.append("\u2502   \u001b[31mX\u001b[0m: ").append(game.getNewProhibitionsLeft()).append("\u2502");
+                                        .append(" \u001b[0m \u001b[45;1m ").append(((CharacterCardClientWithStudents) ch).howManyStudents(Color.PINK)).append(" \u001b[0m\u2502");
                             else
                                 boardsCharChatPrint.append("\u2502       \u2502");
                         }
@@ -229,50 +249,42 @@ public class CliPrinter {
                     boardsCharChatPrint.append("\n");
                 }
                 // line separator between chat and cards
-                case 8 -> boardsCharChatPrint.append("\n");
+                case 8 -> boardsCharChatPrint.append("\t").append(" ".repeat(41)).append("_".repeat(6)).append("\n");
                 // first chat line
                 case 7 ->
-                        boardsCharChatPrint.append("\t\u2500".repeat(35)).append("\u2524\u001b[4m CHAT \u001b[0m\u251c").append("\u2500".repeat(35)).append("\n");
+                        boardsCharChatPrint.append("\t\u250c").append("\u2500".repeat(39)).append("\u2524\u001b[4m CHAT \u001b[0m\u251c").append("\u2500".repeat(39)).append("\u2510\n");
                 // print messages of chat
                 default -> {
-                    String mex = chat.get(6 - i);
-                    boardsCharChatPrint.append("\t\u2502 ").append(mex).append(" ".repeat((78 - mex.length() + 8))).append("\u2502\n");
+                    String mex = "";
+                    if(chat.size() > (7 - i))
+                        mex = chat.get(6 - i);
+                    boardsCharChatPrint.append("\t\u2502 ").append(mex).append(" ".repeat((78 - mex.length() + 7))).append("\u2502\n");
                 }
             }
         }
         // board separator between lunch and entrance hall
         boardsCharChatPrint.append(" \u255f\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2562 ".repeat(numOfPlayers));
         // messages
-        String mex = chat.get(6);
+        String mex = "";
+        if(chat.size() > 7)
+            mex = chat.get(6);
 //        "\t\u2502\u001b[1m Paolino: \u001b[0mCome va?";
-        boardsCharChatPrint.append("\t\u2502 ").append(mex).append(" ".repeat((78 - mex.length() + 8))).append("\u2502\n");
+        boardsCharChatPrint.append("\t\u2502 ").append(mex).append(" ".repeat((78 - mex.length() + 7))).append("\u2502\n");
         // calculate entrance hall students (its color) of each player
-        HashMap<PlayerClient, ArrayList<Character>> entranceStud = new HashMap<>();
+        HashMap<PlayerClient, ArrayList<String>> entranceStud = new HashMap<>();
         for (PlayerClient p : players) {
-            ArrayList<Character> studs = new ArrayList<>();
-            for (int i = 0; i < colors.length() - 1; i++)
-                for (int j = 0; j < p.getEntranceHall().howManyStudents(Color.values()[i]); j++)
-                    studs.add(colors.charAt(i));
-            Collections.shuffle(studs);
+            ArrayList<String> studs = new ArrayList<>();
+            for (Color c : Color.values())
+                for (int j = 0; j < p.getEntranceHall().howManyStudents(c); j++)
+                    studs.add(colors[c.ordinal()]);
+            Collections.shuffle(studs, random);
             entranceStud.put(p, studs);
         }
         // print first row of entrance hall students
         for (PlayerClient p : players) {
             boardsCharChatPrint.append(" \u2551");
             for (int i = 0; i < 5; i++) {
-                boardsCharChatPrint.append(entranceStud.get(p).get(i)).append(" \u25cf \u001b[0m");
-            }
-            boardsCharChatPrint.append("\u2551 ");
-        }
-        // message
-        mex = chat.get(7);
-        boardsCharChatPrint.append("\t\u2502 ").append(mex).append(" ".repeat((78 - mex.length() + 8))).append("\u2502\n");
-
-        // print second row of entrance hall students
-        for (PlayerClient p : players) {
-            boardsCharChatPrint.append(" \u2551");
-            for (int i = 5; i < 10; i++) {
-                if (i < game.getMatchConstants().entranceHallStudents() - 1)
+                if (i < p.getEntranceHall().howManyStudents())
                     boardsCharChatPrint.append(entranceStud.get(p).get(i)).append(" \u25cf \u001b[0m");
                 else
                     boardsCharChatPrint.append("   ");
@@ -280,30 +292,53 @@ public class CliPrinter {
             boardsCharChatPrint.append("\u2551 ");
         }
         // message
-        mex = chat.get(8);
-        boardsCharChatPrint.append("\t\u2502 ").append(mex).append(" ".repeat((78 - mex.length() + 8))).append("\u2502\n");
+        mex = "";
+        if(chat.size() > 8)
+            mex = chat.get(7);
+        boardsCharChatPrint.append("\t\u2502 ").append(mex).append(" ".repeat((78 - mex.length() + 7))).append("\u2502\n");
+
+        // print second row of entrance hall students
+        for (PlayerClient p : players) {
+            boardsCharChatPrint.append(" \u2551");
+            for (int i = 5; i < 10; i++) {
+                if (i < game.getCurrentPlayer().getEntranceHall().howManyStudents())
+                    boardsCharChatPrint.append(entranceStud.get(p).get(i)).append(" \u25cf \u001b[0m");
+                else
+                    boardsCharChatPrint.append("   ");
+            }
+            boardsCharChatPrint.append("\u2551 ");
+        }
+        // message
+        mex = "";
+        if(chat.size() > 9)
+            mex = chat.get(8);
+        boardsCharChatPrint.append("\t\u2502 ").append(mex).append(" ".repeat((78 - mex.length() + 7))).append("\u2502\n");
 
         // bottom line of boards and chat
         boardsCharChatPrint.append(" \u255a\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u255d ".repeat(players.size()));
         boardsCharChatPrint.append("\t\u2514");
-        boardsCharChatPrint.append("\u2500".repeat(78));
+        boardsCharChatPrint.append("\u2500".repeat(86));
         boardsCharChatPrint.append("\u2518\n");
         // print wizard names under each board
         for (int i = 0; i < players.size(); i++) {
-            String a = i == 2 ? "   " : "  ";
-            String b = i == 2 ? " " : "  ";
+            String spacing1 = i == 2 ? "   " : "  ";
+            String spacing2 = i == 2 ? " " : "  ";
             // if wizard is current player wizard name is going to be highlighted
-            if (game.getCurrentPlayer().getWizard() == players.get(i).getWizard()) {
+            boardsCharChatPrint.append(spacing1);
+            if(game.getCurrentPlayer().getWizard() == players.get(i).getWizard())
                 boardsCharChatPrint.append("\u001b[31;1m");
-            }
-            boardsCharChatPrint.append(a).append(Wizard.values()[i]).append("\u001b[0m");
+
+            if(game.getMyWizard() == players.get(i).getWizard())
+                boardsCharChatPrint.append("\u001b[47;1m");
+
+            boardsCharChatPrint.append(Wizard.values()[i]).append("\u001b[0m");
             if (expert) {
                 byte c = game.getCoinsPlayer((byte) i);
                 String coins = c < 10 ? "0" + c : String.valueOf(c);
-                boardsCharChatPrint.append("\u001b[33;1m \u25cb\u001b[0m x ").append(coins).append(b);
-            } else boardsCharChatPrint.append("       ").append(b);
+                boardsCharChatPrint.append("\u001b[33;1m \u25cb\u001b[0m x ").append(coins).append(spacing2);
+            } else boardsCharChatPrint.append("       ").append(spacing2);
         }
-        boardsCharChatPrint.append("\n\n ");
+        boardsCharChatPrint.append("\n\n");
         return boardsCharChatPrint;
 
     }
@@ -349,5 +384,70 @@ public class CliPrinter {
         }
         assistantCardsPrint.append("\n");
         return assistantCardsPrint;
+    }
+
+    @Override
+    public void updateMotherNature(Byte motherNaturePosition) {
+//        printGame();
+    }
+
+    @Override
+    public void update(GameComponentClient gameComponent) {
+//        printGame();
+    }
+
+    @Override
+    public void update(IslandClient island) {
+//        printGame();
+    }
+
+    @Override
+    public void update(ArrayList<IslandClient> islands) {
+//        printGame();
+    }
+
+    @Override
+    public void update(HouseColor houseColor, Byte towerLefts) {
+//        printGame();
+    }
+
+    @Override
+    public void update(Color color, Wizard wizard) {
+//        printGame();
+    }
+
+    @Override
+    public void update(String currentPlayer, boolean isMyTurn) {
+//        printGame();
+    }
+
+    @Override
+    public void updateMembers(int membersLeftToStart) {
+//        printGame();
+    }
+
+    @Override
+    public void updateCardPlayed(Byte playedCard) {
+//        printGame();
+    }
+
+    @Override
+    public void updateIgnoredColor(Color color) {
+//        printGame();
+    }
+
+    @Override
+    public void updateCharacter(List<CharacterCardClient> characters) {
+//        printGame();
+    }
+
+    @Override
+    public void updateCoins(Byte coins) {
+//        printGame();
+    }
+
+    @Override
+    public void update() {
+//        printGame();
     }
 }

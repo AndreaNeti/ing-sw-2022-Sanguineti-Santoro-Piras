@@ -103,7 +103,10 @@ public class ControllerClient extends GameClientListened {
     }
 
     public void addMessage(String message) {
-        gameClient.addMessage(message);
+        if(gameClient != null)
+            gameClient.addMessage(message);
+        notifyView();
+//        repeatPhase(false);
     }
 
     public void repeatPhase(boolean forceScannerSkip) {
@@ -135,6 +138,7 @@ public class ControllerClient extends GameClientListened {
     public void addMember(Player playerJoined, HouseColor teamColor) {
         teamsClient.get(teamColor.ordinal()).addPlayer(new PlayerClient(playerJoined, matchConstants));
         super.notifyMembers(matchType.nPlayers() - playersInMatch());
+        if (playersInMatch() == matchType.nPlayers()) startGame();
     }
 
     public void sendMessage(ToServerMessage command) {
@@ -144,11 +148,11 @@ public class ControllerClient extends GameClientListened {
 
     public void error(String e, boolean forceScannerSkip) {
         repeatPhase(forceScannerSkip);
-        notifyError(e);
+//        notifyError(e);
     }
 
     public void ok() {
-        notifyOk();
+//        notifyOk();
     }
 
     public void changeGame(GameDelta gameDelta) {
@@ -175,7 +179,8 @@ public class ControllerClient extends GameClientListened {
             if (gameDelta.getCharacters().size() != 0) gameClient.setCharacters(gameDelta.getCharacters());
             gameDelta.getNewCoinsLeft().ifPresent(newCoinsLeft -> gameClient.setNewCoinsLeft(newCoinsLeft));
             gameDelta.getNewProhibitionsLeft().ifPresent(newProhibitionsLeft -> gameClient.setNewProhibitionsLeft(newProhibitionsLeft));
-            gameClient.setUpdatedCoinPlayer(gameDelta.getUpdatedCoinPlayer());
+            for (Map.Entry<Byte, Byte> newEntry : gameDelta.getUpdatedCoinPlayer().entrySet())
+                gameClient.setUpdatedCoinPlayer(newEntry.getKey(), newEntry.getValue());
         }
     }
 
@@ -187,7 +192,10 @@ public class ControllerClient extends GameClientListened {
         teamsClient = new ArrayList<>();
         for (Team t : teams)
             teamsClient.add(new TeamClient(t.getHouseColor(), t.getPlayers(), matchConstants));
+        if (playersInMatch() == matchType.nPlayers()) startGame();
+    }
 
+    private void startGame() {
         //create a game
         gameClient = new GameClient(teamsClient, myWizard, matchType);
         // decorate phases

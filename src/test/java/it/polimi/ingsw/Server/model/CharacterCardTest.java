@@ -116,7 +116,7 @@ class CharacterCardTest {
             game.setCharacterInput(color);
             game.setCharacterInput(islandId);
         } catch (GameException e) {
-            fail();
+            fail(e.getMessage());
         }
         byte old=0 ;
         try {
@@ -305,7 +305,7 @@ class CharacterCardTest {
             c5.play(game);
             game.calculateInfluence(game.getIslands().get(4));
         } catch (GameException | EndGameException e) {
-            fail();
+            fail(e.getMessage());
         }
         assertNotEquals(game.getIslands().get(4).getTeamColor(), old);
     }

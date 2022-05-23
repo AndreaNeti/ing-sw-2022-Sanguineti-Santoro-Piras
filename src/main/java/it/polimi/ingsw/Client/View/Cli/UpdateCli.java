@@ -14,15 +14,15 @@ import java.util.List;
 public record UpdateCli(ViewCli viewCli) implements GameClientListener {
 
 
-    @Override
-    public void error(String e) {
-        System.out.println("Operation failed because " + e);
-    }
+//    @Override
+//    public void error(String e) {
+//        System.out.println("Operation failed because " + e);
+//    }
 
-    @Override
-    public void ok() {
-        System.out.println("Successful operation");
-    }
+//    @Override
+//    public void ok() {
+//        System.out.println("Successful operation");
+//    }
 
     @Override
     public void updateMotherNature(Byte motherNaturePosition) {
@@ -97,6 +97,11 @@ public record UpdateCli(ViewCli viewCli) implements GameClientListener {
     @Override
     public void updateCoins(Byte coins) {
         System.out.println("Game has " +coins);
+    }
+
+    @Override
+    public void update() {
+
     }
 
 }

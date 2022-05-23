@@ -191,6 +191,7 @@ public class ExpertGame extends NormalGame implements CharacterCardGame {
         ExpertGameDelta g = (ExpertGameDelta) super.transformAllGameInDelta();
         g.setAutomaticSending(false);
         g.setNewCoinsLeft(coinsLeft);
+        g.setNewProhibitionsLeft(prohibitionLeft);
         for (byte i = 0; i < characters.size(); i++) {
             g.addCharacterCard(i, characters.get(i).getCharId());
         }
@@ -231,8 +232,12 @@ public class ExpertGame extends NormalGame implements CharacterCardGame {
                         newOwner = p;
                 }
             }
-            if (newOwner != null)
+            if (newOwner != null && !newOwner.equals(currentOwner)) {
                 getProfessor()[c.ordinal()] = newOwner.getWizard();
+
+                // add to game delta
+                getGameDelta().addUpdatedProfessors(c, newOwner.getWizard());
+            }
         }
     }
 

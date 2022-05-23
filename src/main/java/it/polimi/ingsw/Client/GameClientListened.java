@@ -62,11 +62,11 @@ public abstract class GameClientListened {
         }
     }
 
-    public void notifyOk() {
-        for (GameClientListener listener : listeners) {
-            listener.ok();
-        }
-    }
+//    public void notifyOk() {
+//        for (GameClientListener listener : listeners) {
+//            listener.ok();
+//        }
+//    }
     public void notifyIgnoredColor(Color color){
         for (GameClientListener listener : listeners) {
             listener.updateIgnoredColor(color);
@@ -92,9 +92,15 @@ public abstract class GameClientListened {
         if (listeners == null) listeners = gameClientListened.listeners;
     }
 
-    public void notifyError(String e) {
+//    public void notifyError(String e) {
+//        for (GameClientListener listener : listeners) {
+//            listener.error(e);
+//        }
+//    }
+
+    public void notifyView() {
         for (GameClientListener listener : listeners) {
-            listener.error(e);
+            listener.update();
         }
     }
 
