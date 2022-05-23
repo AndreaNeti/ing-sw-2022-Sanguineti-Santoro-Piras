@@ -103,7 +103,7 @@ public class ControllerClient extends GameClientListened {
     }
 
     public void addMessage(String message) {
-        if(gameClient != null)
+        if (gameClient != null)
             gameClient.addMessage(message);
         notifyView();
 //        repeatPhase(false);
@@ -156,6 +156,14 @@ public class ControllerClient extends GameClientListened {
     }
 
     public void changeGame(GameDelta gameDelta) {
+        if (matchType.isExpert()) {
+            if (gameDelta.getCharacters().size() != 0) gameClient.setCharacters(gameDelta.getCharacters());
+            gameDelta.getNewCoinsLeft().ifPresent(newCoinsLeft -> gameClient.setNewCoinsLeft(newCoinsLeft));
+            gameDelta.getNewProhibitionsLeft().ifPresent(newProhibitionsLeft -> gameClient.setNewProhibitionsLeft(newProhibitionsLeft));
+            for (Map.Entry<Byte, Byte> newEntry : gameDelta.getUpdatedCoinPlayer().entrySet())
+                gameClient.setUpdatedCoinPlayer(newEntry.getKey(), newEntry.getValue());
+        }
+
         for (Map.Entry<Byte, GameComponent> entry : gameDelta.getUpdatedGC().entrySet()) {
             gameClient.setGameComponent(entry.getKey(), entry.getValue());
         }
@@ -174,13 +182,6 @@ public class ControllerClient extends GameClientListened {
 
         for (Map.Entry<HouseColor, Byte> entry : gameDelta.getNewTeamTowersLeft().entrySet()) {
             gameClient.setTowerLeft(entry.getKey(), entry.getValue());
-        }
-        if (matchType.isExpert()) {
-            if (gameDelta.getCharacters().size() != 0) gameClient.setCharacters(gameDelta.getCharacters());
-            gameDelta.getNewCoinsLeft().ifPresent(newCoinsLeft -> gameClient.setNewCoinsLeft(newCoinsLeft));
-            gameDelta.getNewProhibitionsLeft().ifPresent(newProhibitionsLeft -> gameClient.setNewProhibitionsLeft(newProhibitionsLeft));
-            for (Map.Entry<Byte, Byte> newEntry : gameDelta.getUpdatedCoinPlayer().entrySet())
-                gameClient.setUpdatedCoinPlayer(newEntry.getKey(), newEntry.getValue());
         }
     }
 
@@ -213,6 +214,7 @@ public class ControllerClient extends GameClientListened {
             changePhase(GamePhase.SELECT_MATCH_PHASE, true, forceScannerSkip);
             isInMatch = false;
             gameClient = null;
+            abstractView.setModel(null);
             return false;
         } else if (oldPhase != GamePhase.INIT_PHASE) {
             sendMessage(new Quit());

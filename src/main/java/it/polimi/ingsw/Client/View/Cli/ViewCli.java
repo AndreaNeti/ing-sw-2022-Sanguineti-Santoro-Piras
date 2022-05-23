@@ -3,6 +3,7 @@ package it.polimi.ingsw.Client.View.Cli;
 import it.polimi.ingsw.Client.Controller.ControllerClient;
 import it.polimi.ingsw.Client.View.AbstractView;
 import it.polimi.ingsw.Client.View.ClientPhaseView;
+import it.polimi.ingsw.Client.model.GameClientView;
 import it.polimi.ingsw.Client.model.GameComponentClient;
 import it.polimi.ingsw.Enum.*;
 import it.polimi.ingsw.Server.controller.MatchType;
@@ -20,6 +21,7 @@ public class ViewCli extends AbstractView implements ViewForCharacterCli {
     private String input;
 
     private CliPrinter printer;
+
     public ViewCli(ControllerClient controllerClient) {
         super(controllerClient);
         phasesToExecute = new ConcurrentLinkedQueue<>();
@@ -274,10 +276,14 @@ public class ViewCli extends AbstractView implements ViewForCharacterCli {
     }
 
     public void print() {
-        if(getModel() != null) {
-            if (printer == null)
-                printer = new CliPrinter(getModel());
+        if (getModel() != null && printer != null) {
             printer.printGame();
         }
+    }
+
+    @Override
+    public void setModel(GameClientView model) {
+        super.setModel(model);
+        printer = new CliPrinter(model);
     }
 }

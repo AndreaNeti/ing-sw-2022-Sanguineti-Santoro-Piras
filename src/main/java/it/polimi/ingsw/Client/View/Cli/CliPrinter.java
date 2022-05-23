@@ -12,12 +12,10 @@ import java.util.*;
 
 public class CliPrinter implements GameClientListener {
 
-    private final Random random;
     private final GameClientView game;
 
     public CliPrinter(GameClientView game) {
         this.game = game;
-        random = new Random(0);
     }
 
     public void printLobby() {
@@ -27,6 +25,7 @@ public class CliPrinter implements GameClientListener {
 //        }
 
     }
+
     public void printGame() {
 //        System.setOut(new PrintStream(new FileOutputStream(FileDescriptor.out), true, StandardCharsets.UTF_8));
         AnsiConsole.systemInstall();
@@ -160,7 +159,7 @@ public class CliPrinter implements GameClientListener {
         boardsCharChatPrint.append(" \u2554\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2557 ".repeat(numOfPlayers));
 
         // names of the character cards
-        if(expert) {
+        if (expert) {
             for (CharacterCardClient ch : game.getCharacters()) {
                 String name = ch.toString();
                 if (game.getCurrentCharacterCard() != null && game.getCurrentCharacterCard().getCharId() == ch.getCharId())
@@ -172,7 +171,7 @@ public class CliPrinter implements GameClientListener {
         }
         boardsCharChatPrint.append("\n");
         // colors
-        String[] colors = new String[]{"\u001b[31m","\u001b[34m","\u001b[33m","\u001b[32m","\u001b[35m","\u001b[0m"};
+        String[] colors = new String[]{"\u001b[31m", "\u001b[34m", "\u001b[33m", "\u001b[32m", "\u001b[35m", "\u001b[0m"};
 //        StringBuilder colors = new StringBuilder("\u001b[31m\u001b[34m\u001b[33m\u001b[32m\u001b[35m\u001b[0m");
         // print professors of each player
         Wizard[] professors = game.getProfessors();
@@ -226,7 +225,7 @@ public class CliPrinter implements GameClientListener {
                     if (expert) {
                         // print third row of character cards with students if present
                         for (CharacterCardClient ch : game.getCharacters()) {
-                            if(ch.toString().equals("Grandma weeds"))
+                            if (ch.toString().equals("Grandma weeds"))
                                 boardsCharChatPrint.append("\t\u2502   \u001b[31mX\u001b[0m: ").append(game.getNewProhibitionsLeft()).append("   ");
                             else
                                 boardsCharChatPrint.append("\t\u2502          ");
@@ -256,7 +255,7 @@ public class CliPrinter implements GameClientListener {
                 // print messages of chat
                 default -> {
                     String mex = "";
-                    if(chat.size() >= (7 - i))
+                    if (chat.size() >= (7 - i))
                         mex = chat.get(6 - i);
                     boardsCharChatPrint.append("\t\u2502 ").append(mex).append(" ".repeat((78 - mex.length() + 7))).append("\u2502\n");
                 }
@@ -266,7 +265,7 @@ public class CliPrinter implements GameClientListener {
         boardsCharChatPrint.append(" \u255f\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2562 ".repeat(numOfPlayers));
         // messages
         String mex = "";
-        if(chat.size() >= 7)
+        if (chat.size() >= 7)
             mex = chat.get(6);
 //        "\t\u2502\u001b[1m Paolino: \u001b[0mCome va?";
         boardsCharChatPrint.append("\t\u2502 ").append(mex).append(" ".repeat((78 - mex.length() + 7))).append("\u2502\n");
@@ -277,7 +276,7 @@ public class CliPrinter implements GameClientListener {
             for (Color c : Color.values())
                 for (int j = 0; j < p.getEntranceHall().howManyStudents(c); j++)
                     studs.add(colors[c.ordinal()]);
-            Collections.shuffle(studs, random);
+            Collections.shuffle(studs);
             entranceStud.put(p, studs);
         }
         // print first row of entrance hall students
@@ -293,7 +292,7 @@ public class CliPrinter implements GameClientListener {
         }
         // message
         mex = "";
-        if(chat.size() >= 8)
+        if (chat.size() >= 8)
             mex = chat.get(7);
         boardsCharChatPrint.append("\t\u2502 ").append(mex).append(" ".repeat((78 - mex.length() + 7))).append("\u2502\n");
 
@@ -310,7 +309,7 @@ public class CliPrinter implements GameClientListener {
         }
         // message
         mex = "";
-        if(chat.size() >= 9)
+        if (chat.size() >= 9)
             mex = chat.get(8);
         boardsCharChatPrint.append("\t\u2502 ").append(mex).append(" ".repeat((78 - mex.length() + 7))).append("\u2502\n");
 
@@ -325,10 +324,10 @@ public class CliPrinter implements GameClientListener {
             String spacing2 = i == 2 ? " " : "  ";
             // if wizard is current player wizard name is going to be highlighted
             boardsCharChatPrint.append(spacing1);
-            if(game.getCurrentPlayer().getWizard() == players.get(i).getWizard())
+            if (game.getCurrentPlayer().getWizard() == players.get(i).getWizard())
                 boardsCharChatPrint.append("\u001b[31;1m");
 
-            if(game.getMyWizard() == players.get(i).getWizard())
+            if (game.getMyWizard() == players.get(i).getWizard())
                 boardsCharChatPrint.append("\u001b[47;1m");
 
             boardsCharChatPrint.append(Wizard.values()[i]).append("\u001b[0m");

@@ -115,7 +115,7 @@ public class ExpertGame extends NormalGame implements CharacterCardGame {
     @Override
     public void move(Color color, int gameComponentSource, int gameComponentDestination) throws GameException {
         super.move(color, gameComponentSource, gameComponentDestination);
-        if (gameComponentDestination == 1 && getCurrentPlayer().getLunchHall().howManyStudents(color) % 3 == 0) {
+        if ((gameComponentDestination < 2 * getPlayerSize() && gameComponentDestination % 2 == 1) && getCurrentPlayer().getLunchHall().howManyStudents(color) % 3 == 0) {
             addCoinToCurrentPlayer();
         }
     }
@@ -302,16 +302,16 @@ public class ExpertGame extends NormalGame implements CharacterCardGame {
 
     @Override
     public void chooseCharacter(byte charId) throws GameException {
-        Byte indexCharacter=null;
-        byte charCost=0;
-        for (int i=0; i<characters.size();i++) {
+        Byte indexCharacter = null;
+        byte charCost = 0;
+        for (int i = 0; i < characters.size(); i++) {
             CharacterCard character = characters.get(i);
-            if(character.getCharId()==charId) {
-                charCost= character.getCost();
-                indexCharacter=(byte) i;
+            if (character.getCharId() == charId) {
+                charCost = character.getCost();
+                indexCharacter = (byte) i;
             }
         }
-        if(indexCharacter==null)
+        if (indexCharacter == null)
             throw new NotAllowedException("Card not available");
         // this character card has already been used, increase its cost
         if (playedCharacters[indexCharacter]) charCost++;
