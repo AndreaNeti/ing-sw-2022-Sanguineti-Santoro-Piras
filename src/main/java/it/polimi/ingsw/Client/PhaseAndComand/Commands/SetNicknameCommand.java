@@ -21,7 +21,7 @@ public class SetNicknameCommand extends GameCommand {
     @Override
     public void playCLICommand() throws PhaseChangedException {
         ViewCli viewCli = (ViewCli) getView();
-        String nick = viewCli.getStringInput("Select nickname", false);
+        String nick = viewCli.getStringInput("Select nickname", 16,false);
         viewCli.sendToServer(new NickName(nick));
     }
 

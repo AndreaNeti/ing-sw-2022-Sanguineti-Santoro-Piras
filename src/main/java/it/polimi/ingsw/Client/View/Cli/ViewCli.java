@@ -102,7 +102,8 @@ public class ViewCli extends AbstractView implements ViewForCharacterCli {
     public int getIntInput(int min, int max, String message, boolean canBeStopped) throws PhaseChangedException {
         int ret = getIntInput(message + " (from " + min + " to " + max + ")", canBeStopped);
         while (ret < min || ret > max) {
-            ret = getIntInput("Not a valid input (from " + min + " to " + max + ")\n" + message, canBeStopped);
+            System.err.println("Not a valid input (from " + min + " to " + max + ")");
+            ret = getIntInput(message, canBeStopped);
         }
         return ret;
     }
@@ -118,17 +119,18 @@ public class ViewCli extends AbstractView implements ViewForCharacterCli {
                 ret = Integer.parseInt(getInput(canBeStopped));
             } catch (NumberFormatException ex) {
                 err = true;
-                System.out.println("Not a valid input");
+                System.err.println("Not a valid input");
             }
         } while (err);
         return ret;
     }
 
     public byte[] getIpAddressInput(boolean canBeStopped) throws PhaseChangedException {
-        String input = getStringInput("Select server IP", canBeStopped);
+        String input = getStringInput("Select server IP", 15, canBeStopped);
         byte[] ret = getIpFromString(input);
         while (ret == null) {
-            input = getStringInput("Select a valid server IP", canBeStopped);
+            System.err.println("Not a valid IP");
+            input = getStringInput("Select server IP", 15, canBeStopped);
             ret = getIpFromString(input);
         }
         return ret;
@@ -166,7 +168,7 @@ public class ViewCli extends AbstractView implements ViewForCharacterCli {
         boolean[] usedCards = getModel().getCurrentPlayer().getUsedCards();
         byte ret = (byte) getIntInput(1, usedCards.length, "Choose an assistant card to play", canBeStopped);
         while (usedCards[ret - 1]) {
-            System.out.println("Card already played");
+            System.err.println("Card already played");
             ret = (byte) getIntInput(1, usedCards.length, "Choose an assistant card to play", canBeStopped);
         }
         return ret;
@@ -200,19 +202,26 @@ public class ViewCli extends AbstractView implements ViewForCharacterCli {
     }
 
     public boolean getBooleanInput(String message, boolean canBeStopped) throws PhaseChangedException {
-        System.out.println(message + "(Y/N):");
+        System.out.println(message + " (Y/N):");
         String s = getInput(canBeStopped).toLowerCase();
         while (!s.equals("y") && !s.equals("n")) {
-            System.out.println("Not a valid input\n" + message + "(Y/N):");
+            System.err.println("Not a valid input");
+            System.out.println(message + " (Y/N):");
             s = getInput(canBeStopped).toLowerCase();
         }
         return s.equals("y");
     }
 
 
-    public String getStringInput(String message, boolean canBeStopped) throws PhaseChangedException {
+    public String getStringInput(String message, int maxLength, boolean canBeStopped) throws PhaseChangedException {
         System.out.println(message + ": ");
-        return getInput(canBeStopped);
+        String s = getInput(canBeStopped);
+        while (s.length() > maxLength) {
+            System.err.println("Max length is " + maxLength);
+            System.out.println(message + ": ");
+            s = getInput(canBeStopped);
+        }
+        return s;
     }
 
     public long getLongInput(String message, boolean canBeStopped) throws PhaseChangedException {
@@ -225,7 +234,7 @@ public class ViewCli extends AbstractView implements ViewForCharacterCli {
                 ret = Long.parseLong(getInput(canBeStopped));
             } catch (NumberFormatException ex) {
                 err = true;
-                System.out.println("Not a valid input");
+                System.err.println("Not a valid input");
             }
         } while (err);
         return ret;

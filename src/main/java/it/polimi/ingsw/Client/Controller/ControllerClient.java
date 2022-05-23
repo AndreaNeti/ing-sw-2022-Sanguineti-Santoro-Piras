@@ -204,6 +204,7 @@ public class ControllerClient extends GameClientListened {
             sendMessage(new Quit());
             changePhase(GamePhase.SELECT_MATCH_PHASE, true, forceScannerSkip);
             isInMatch = false;
+            gameClient = null;
             return false;
         } else if (oldPhase != GamePhase.INIT_PHASE) {
             sendMessage(new Quit());
