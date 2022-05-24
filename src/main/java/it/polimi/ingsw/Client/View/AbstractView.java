@@ -1,7 +1,6 @@
 package it.polimi.ingsw.Client.View;
 
 import it.polimi.ingsw.Client.Controller.ControllerClient;
-import it.polimi.ingsw.Client.LimitedChat;
 import it.polimi.ingsw.Client.model.CharacterCardClient;
 import it.polimi.ingsw.Client.model.GameClientView;
 import it.polimi.ingsw.Enum.GamePhase;
@@ -13,12 +12,9 @@ public abstract class AbstractView {
     private final ControllerClient controllerClient;
     private GameClientView model;
     private volatile boolean quit;
-    private final LimitedChat<String> chat;
 
     public AbstractView(ControllerClient controllerClient) {
         this.controllerClient = controllerClient;
-
-        this.chat = new LimitedChat<>(15);
         quit = false;
     }
 
@@ -39,9 +35,11 @@ public abstract class AbstractView {
     public void setPhaseInView(GamePhase gamePhase, boolean setOldPhase, boolean forceScannerSkip) {
         controllerClient.changePhase(gamePhase, setOldPhase, forceScannerSkip);
     }
-
-    public void goToOldPhase(boolean forceScannerSkip) {
+    public void repeatPhase(boolean forceScannerSkip){
         controllerClient.repeatPhase(forceScannerSkip);
+    }
+    public void goToOldPhase() {
+        controllerClient.goToOldPhase();
     }
 
     public boolean connectToServer(byte[] ipAddress) {
@@ -51,7 +49,6 @@ public abstract class AbstractView {
     public abstract void start() throws InterruptedException;
 
     public void setQuit(boolean forceScannerSkip) {
-        chat.clear();
         // true quits all, only if called during init phase
         quit = controllerClient.setQuit(forceScannerSkip);
     }
@@ -72,15 +69,11 @@ public abstract class AbstractView {
     }
 
     public void addMessage(String message) {
-        chat.add(message);
-        //controllerClient.repeatPhase(false);
+        controllerClient.addMessage(message);
     }
 
     public ArrayList<String> getChat() {
-        return new ArrayList<>(chat);
+        return controllerClient.getChat();
     }
 
-    public void clearChat() {
-        chat.clear();
-    }
 }

@@ -15,7 +15,6 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class GameClient extends GameClientListened implements GameClientView {
-
     public ArrayList<IslandClient> islands;
     public ArrayList<GameComponentClient> clouds;
     private final Wizard[] professors;

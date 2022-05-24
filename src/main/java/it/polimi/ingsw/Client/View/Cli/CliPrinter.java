@@ -1,6 +1,5 @@
 package it.polimi.ingsw.Client.View.Cli;
 
-import it.polimi.ingsw.Client.View.AbstractView;
 import it.polimi.ingsw.Client.View.GameClientListener;
 import it.polimi.ingsw.Client.model.*;
 import it.polimi.ingsw.Enum.Color;
@@ -15,21 +14,21 @@ public class CliPrinter implements GameClientListener {
 
 
     private final static String operatingSystem = System.getProperty("os.name");
-    private final AbstractView view;
+    private final ViewCli view;
     private GameClientView game;
 
-    public CliPrinter(AbstractView view) {
+    public CliPrinter(ViewCli view) {
         this.view = view;
     }
 
-    public void printLobby() {
+    private void printLobby() {
         ArrayList<String> chatCopy = view.getChat();
 //        Collections.reverse(chatCopy);
         StringBuilder chat = new StringBuilder();
         chat.append(" \u250c").append("\u2500".repeat(39)).append("\u2524\u001b[4m CHAT \u001b[0m\u251c").append("\u2500".repeat(39)).append("\u2510\n");
         String mex;
-        for(int i = 14; i >= 0; i--) {
-            if(chatCopy.size() >= i+1) {
+        for (int i = 14; i >= 0; i--) {
+            if (chatCopy.size() >= i + 1) {
                 mex = chatCopy.get(i);
                 chat.append(" \u2502 ").append(chatCopy.get(i)).append(" ".repeat(85 - mex.length())).append("\u2502\n");
             } else {
@@ -41,6 +40,7 @@ public class CliPrinter implements GameClientListener {
     }
 
     public void printGame() {
+        clearConsole();
         game = view.getModel();
         if (game != null) {
 //        System.setOut(new PrintStream(new FileOutputStream(FileDescriptor.out), true, StandardCharsets.UTF_8));
@@ -343,8 +343,9 @@ public class CliPrinter implements GameClientListener {
             String spacing2 = i == 2 ? " " : "  ";
             // if wizard is current player wizard name is going to be highlighted
             boardsCharChatPrint.append(spacing1);
-            if (game.getCurrentPlayer().getWizard() == players.get(i).getWizard())
-                boardsCharChatPrint.append("\u001b[31;1m");
+            if (game.getCurrentPlayer() != null)
+                if (game.getCurrentPlayer().getWizard() == players.get(i).getWizard())
+                    boardsCharChatPrint.append("\u001b[31;1m");
 
             if (game.getMyWizard() == players.get(i).getWizard())
                 boardsCharChatPrint.append("\u001b[47;1m");
@@ -406,63 +407,64 @@ public class CliPrinter implements GameClientListener {
 
     @Override
     public void updateMotherNature(Byte motherNaturePosition) {
-//        printGame();
     }
 
     @Override
     public void update(GameComponentClient gameComponent) {
-//        printGame();
+
     }
 
     @Override
     public void update(IslandClient island) {
-//        printGame();
+
     }
 
     @Override
     public void update(ArrayList<IslandClient> islands) {
-//        printGame();
+
     }
 
     @Override
     public void update(HouseColor houseColor, Byte towerLefts) {
-//        printGame();
+
     }
 
     @Override
     public void update(Color color, Wizard wizard) {
-//        printGame();
+
     }
 
     @Override
     public void update(String currentPlayer, boolean isMyTurn) {
-//        printGame();
+
     }
 
     @Override
     public void updateMembers(int membersLeftToStart, String nickPlayerJoined) {
         if (membersLeftToStart > 0)
             view.addMessage(nickPlayerJoined + " joined. " + membersLeftToStart + " members left before game starts");
+        update();
     }
 
     @Override
     public void updateCardPlayed(Byte playedCard) {
-//        printGame();
+
     }
 
     @Override
     public void updateIgnoredColor(Color color) {
-//        printGame();
+        view.addMessage("During this turn color " + color + " will not add influence");
+        update();
     }
 
     @Override
     public void updateCharacter(List<CharacterCardClient> characters) {
-//        printGame();
+
     }
 
     @Override
     public void updateCoins(Byte coins) {
-//        printGame();
+
     }
 
     @Override
@@ -472,12 +474,12 @@ public class CliPrinter implements GameClientListener {
         else s += "s are ";
         s += winners;
         view.addMessage(s);
+        update();
     }
 
     @Override
     public void update() {
-        clearConsole();
-        printGame();
+        view.setMustReprint();
     }
 
     public void clearConsole() {

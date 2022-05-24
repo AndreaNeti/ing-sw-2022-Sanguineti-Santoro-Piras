@@ -16,8 +16,6 @@ public class App {
         view = new ViewCli(controllerClient);
 
         controllerClient.attachView(view);
-        CliPrinter cliPrinter =new CliPrinter(view);
-        controllerClient.addListener(cliPrinter);
         controllerClient.instantiateAllPhases();
         try {
             view.start();

@@ -10,7 +10,6 @@ import it.polimi.ingsw.Enum.Color;
 import it.polimi.ingsw.Server.controller.MatchType;
 import it.polimi.ingsw.exceptions.PhaseChangedException;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -19,9 +18,13 @@ public class ViewCli extends AbstractView implements ViewForCharacterCli {
     private ClientPhaseView phaseToExecute;
     private volatile boolean isInputReady, phaseChanged, requestInput, forcedScannerSkip;
     private String input;
+    private volatile boolean mustReprint;
+    private final CliPrinter cliPrinter;
 
     public ViewCli(ControllerClient controllerClient) {
         super(controllerClient);
+        cliPrinter = new CliPrinter(this);
+        controllerClient.addListener(cliPrinter);
         Thread scannerThread = new Thread(() -> {
             final Scanner myInput = new Scanner(System.in);
             try {
@@ -56,9 +59,13 @@ public class ViewCli extends AbstractView implements ViewForCharacterCli {
 
     public void start() throws InterruptedException {
         do {
+            //TODO it print everythings two times, fix
+            mustReprint=false;
             synchronized (this) {
                 while (phaseToExecute == null)
                     wait();
+                if(mustReprint)
+                    cliPrinter.printGame();
                 phaseToExecute.playPhase(this);
             }
         } while (!canQuit());
@@ -77,6 +84,10 @@ public class ViewCli extends AbstractView implements ViewForCharacterCli {
         phaseToExecute = null;
     }
 
+    protected synchronized void setMustReprint() {
+        this.mustReprint = true;
+        notifyAll();
+    }
 
     private String listOptions(Object[] options) {
         StringBuilder ret = new StringBuilder();
@@ -237,13 +248,15 @@ public class ViewCli extends AbstractView implements ViewForCharacterCli {
         isInputReady = false;
         phaseChanged = false;
         forcedScannerSkip = false;
+        mustReprint = false;
         this.input = "";
         // wakes up scanner thread
         requestInput = true;
         notify();
         try {
-            // wait for scanner notify or phase changed flag (if it can be stopped) or fored skip (used if someone lost connection)
-            while (!isInputReady && (!phaseChanged || !canBeStopped) && !forcedScannerSkip) {
+            // wait for scanner notify or phase changed flag (if it can be stopped) or forced skip (used if someone lost connection)
+            //or if there has been some changes, and it needs to be reprinted
+            while (!isInputReady && (!phaseChanged || !canBeStopped) && !forcedScannerSkip && !mustReprint) {
                 wait();
             }
         } catch (InterruptedException e) {
@@ -251,13 +264,9 @@ public class ViewCli extends AbstractView implements ViewForCharacterCli {
             return null;
         }
         if (isInputReady) return this.input;
-
+        if (mustReprint)
+            cliPrinter.printGame();
         throw new PhaseChangedException();
-    }
-
-
-    public void printEntranceHall(Integer player) {
-        System.out.println(getModel().getPlayer(player).getEntranceHall());
     }
 
     @Override

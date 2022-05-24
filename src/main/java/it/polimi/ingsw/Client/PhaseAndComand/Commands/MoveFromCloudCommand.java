@@ -3,6 +3,7 @@ package it.polimi.ingsw.Client.PhaseAndComand.Commands;
 import it.polimi.ingsw.Client.View.AbstractView;
 import it.polimi.ingsw.Client.View.Cli.ViewCli;
 import it.polimi.ingsw.exceptions.PhaseChangedException;
+import it.polimi.ingsw.network.toServerMessage.JoinMatchById;
 import it.polimi.ingsw.network.toServerMessage.MoveFromCloud;
 
 import java.awt.event.ActionEvent;
@@ -13,9 +14,18 @@ public class MoveFromCloudCommand extends GameCommand {
     }
 
     @Override
-    public void playCLICommand() throws PhaseChangedException {
+    public void playCLICommand() {
         ViewCli viewCli = (ViewCli) getView();
-        viewCli.sendToServer(new MoveFromCloud(viewCli.getCloudSource(false)));
+        boolean phaseChanged;
+        do {
+            phaseChanged = false;
+            try {
+                viewCli.sendToServer(new MoveFromCloud(viewCli.getCloudSource(false)));
+            } catch (PhaseChangedException e) {
+                phaseChanged = true;
+            }
+        } while (phaseChanged);
+
     }
 
     @Override

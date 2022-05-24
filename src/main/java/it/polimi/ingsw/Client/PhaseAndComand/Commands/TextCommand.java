@@ -13,11 +13,20 @@ public class TextCommand extends GameCommand {
     }
 
     @Override
-    public void playCLICommand() throws PhaseChangedException {
+    public void playCLICommand() {
         ViewCli viewCli = (ViewCli) getView();
-        String comment = viewCli.getStringInput("Comment", 50, false);
+        String comment = null;
+        boolean phaseChanged;
+        do {
+            phaseChanged=false;
+            try {
+                comment = viewCli.getStringInput("Comment", 50, false);
+            } catch (PhaseChangedException e) {
+                phaseChanged = true;
+            }
+        } while (phaseChanged);
         viewCli.sendToServer(new TextMessageCS(comment));
-        viewCli.goToOldPhase(false);
+
     }
 
     @Override

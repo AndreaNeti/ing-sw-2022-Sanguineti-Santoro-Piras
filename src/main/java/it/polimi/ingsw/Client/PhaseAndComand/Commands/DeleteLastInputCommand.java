@@ -12,10 +12,8 @@ public class DeleteLastInputCommand extends GameCommand {
     }
 
     @Override
-    public void playCLICommand() throws PhaseChangedException {
-        //TODO
-        System.out.println("Not yet implemented");
-        getView().setPhaseInView(GamePhase.PLAY_CH_CARD_PHASE, false, false);
+    public void playCLICommand()  {
+        getView().repeatPhase(false);
     }
 
     @Override

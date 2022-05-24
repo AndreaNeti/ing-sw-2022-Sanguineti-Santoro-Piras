@@ -14,17 +14,25 @@ public class SetCharacterInputCommand extends GameCommand {
     }
 
     @Override
-    public void playCLICommand() throws PhaseChangedException {
+    public void playCLICommand() {
         ViewCli viewCli = (ViewCli) getView();
         CharacterCardClient current = viewCli.getCurrentCharacterCard();
         if (current.canPlay())
             System.out.println("Card can already be played");
         if (current.isFull())
-            System.out.println("Can't add more inputs to this character");
+            viewCli.addMessage("Can't add more inputs to this character");
         else {
-            current.setNextInput(viewCli);
+            boolean phaseChanged;
+            do {
+                phaseChanged = false;
+                try {
+                    current.setNextInput(viewCli);
+                } catch (PhaseChangedException e) {
+                    phaseChanged = true;
+                }
+            } while (phaseChanged);
         }
-        viewCli.setPhaseInView(GamePhase.PLAY_CH_CARD_PHASE, false, false);
+        viewCli.repeatPhase(false);
     }
 
     @Override

@@ -3,6 +3,7 @@ package it.polimi.ingsw.Client.PhaseAndComand.Commands;
 import it.polimi.ingsw.Client.View.AbstractView;
 import it.polimi.ingsw.Client.View.Cli.ViewCli;
 import it.polimi.ingsw.exceptions.PhaseChangedException;
+import it.polimi.ingsw.network.toServerMessage.CreateMatch;
 import it.polimi.ingsw.network.toServerMessage.JoinMatchById;
 
 import java.awt.event.ActionEvent;
@@ -19,10 +20,18 @@ public class JoinMatchByIdCommand extends GameCommand {
     }
 
     @Override
-    public void playCLICommand() throws PhaseChangedException {
+    public void playCLICommand() {
         ViewCli viewCli = (ViewCli) getView();
-        Long ID = viewCli.getLongInput("Write game ID", false);
-        viewCli.sendToServer(new JoinMatchById(ID));
+        boolean phaseChanged;
+        do {
+            phaseChanged = false;
+            try {
+                Long ID = viewCli.getLongInput("Write game ID", false);
+                viewCli.sendToServer(new JoinMatchById(ID));
+            } catch (PhaseChangedException e) {
+                phaseChanged = true;
+            }
+        } while (phaseChanged);
     }
 
     @Override

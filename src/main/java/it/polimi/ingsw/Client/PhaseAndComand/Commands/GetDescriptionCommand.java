@@ -13,10 +13,10 @@ public class GetDescriptionCommand extends GameCommand {
     }
 
     @Override
-    public void playCLICommand() throws PhaseChangedException {
+    public void playCLICommand()  {
         ViewCli viewCli = (ViewCli) getView();
         System.out.println(viewCli.getCurrentCharacterCard().getDescription());
-        viewCli.setPhaseInView(GamePhase.PLAY_CH_CARD_PHASE, false, false);
+        viewCli.repeatPhase(false);
     }
 
     @Override

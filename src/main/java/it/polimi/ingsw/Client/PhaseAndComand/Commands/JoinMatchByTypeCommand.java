@@ -20,10 +20,19 @@ public class JoinMatchByTypeCommand extends GameCommand {
     }
 
     @Override
-    public void playCLICommand() throws PhaseChangedException {
+    public void playCLICommand() {
         ViewCli viewCli = (ViewCli) getView();
-        MatchType matchType = viewCli.getMatchTypeInput(false);
-        viewCli.sendToServer(new JoinMatchByType(matchType));
+        boolean phaseChanged;
+        do {
+            phaseChanged = false;
+            try {
+                MatchType matchType = viewCli.getMatchTypeInput(false);
+                viewCli.sendToServer(new JoinMatchByType(matchType));
+            } catch (PhaseChangedException e) {
+                phaseChanged = true;
+            }
+        } while (phaseChanged);
+
     }
 
     @Override
