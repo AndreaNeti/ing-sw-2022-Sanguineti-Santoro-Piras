@@ -11,9 +11,9 @@ public class LimitedChat<String> extends LinkedList<String> {
 
     @Override
     public boolean add(String o) {
-        super.add(o);
+        super.addFirst(o);
         if (size() > size) {
-            super.remove();
+            super.removeLast();
         }
         return true;
     }

@@ -128,10 +128,13 @@ public class CliPrinter implements GameClientListener {
         // second team members when playing with 4 players
         StringBuilder secondRow = new StringBuilder();
         // print team members
+        cloudsTeamsPrint.append("\t\t");
         for (TeamClient t : teams) {
-            cloudsTeamsPrint.append("\t\t\t").append(t.getPlayers().get(0).getWizard()).append(": ").append(t.getPlayers().get(0));
+            String player = t.getPlayers().get(0).getWizard() + ": " + t.getPlayers().get(0);
+            cloudsTeamsPrint.append(player).append(" ".repeat(32 - player.length()));
             if (game.getMatchType().nPlayers() >= 4) {
-                secondRow.append("\t\t\t").append(t.getPlayers().get(1).getWizard()).append(": ").append(t.getPlayers().get(1));
+                player = t.getPlayers().get(1).getWizard() + ": " + t.getPlayers().get(1);
+                secondRow.append(player).append(" ".repeat(32 - player.length()));
             }
         }
         cloudsTeamsPrint.append("\n");
@@ -143,7 +146,7 @@ public class CliPrinter implements GameClientListener {
             cloudsTeamsPrint.append(" \u2502\u001b[42;1m ").append(green).append(" \u001b[0m \u001b[45;1m ").append(pink).append(" \u001b[0m\u2502  ");
         }
         // print second team members, if present
-        cloudsTeamsPrint.append(secondRow).append("\n");
+        cloudsTeamsPrint.append("\t\t").append(secondRow).append("\n");
         // print bottom line of clouds
         cloudsTeamsPrint.append(" \u2570\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256f  ".repeat(clouds.size()));
         cloudsTeamsPrint.append("\n");
@@ -255,8 +258,8 @@ public class CliPrinter implements GameClientListener {
                 // print messages of chat
                 default -> {
                     String mex = "";
-                    if (chat.size() >= (7 - i))
-                        mex = chat.get(6 - i);
+                    if (chat.size() >= (3 + i))
+                        mex = chat.get(2 + i);
                     boardsCharChatPrint.append("\t\u2502 ").append(mex).append(" ".repeat((78 - mex.length() + 7))).append("\u2502\n");
                 }
             }
@@ -265,8 +268,8 @@ public class CliPrinter implements GameClientListener {
         boardsCharChatPrint.append(" \u255f\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2562 ".repeat(numOfPlayers));
         // messages
         String mex = "";
-        if (chat.size() >= 7)
-            mex = chat.get(6);
+        if (chat.size() >= 3)
+            mex = chat.get(2);
 //        "\t\u2502\u001b[1m Paolino: \u001b[0mCome va?";
         boardsCharChatPrint.append("\t\u2502 ").append(mex).append(" ".repeat((78 - mex.length() + 7))).append("\u2502\n");
         // calculate entrance hall students (its color) of each player
@@ -292,8 +295,8 @@ public class CliPrinter implements GameClientListener {
         }
         // message
         mex = "";
-        if (chat.size() >= 8)
-            mex = chat.get(7);
+        if (chat.size() >= 2)
+            mex = chat.get(1);
         boardsCharChatPrint.append("\t\u2502 ").append(mex).append(" ".repeat((78 - mex.length() + 7))).append("\u2502\n");
 
         // print second row of entrance hall students
@@ -309,8 +312,8 @@ public class CliPrinter implements GameClientListener {
         }
         // message
         mex = "";
-        if (chat.size() >= 9)
-            mex = chat.get(8);
+        if (chat.size() >= 1)
+            mex = chat.get(0);
         boardsCharChatPrint.append("\t\u2502 ").append(mex).append(" ".repeat((78 - mex.length() + 7))).append("\u2502\n");
 
         // bottom line of boards and chat
