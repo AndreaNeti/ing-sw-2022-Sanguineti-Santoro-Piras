@@ -11,12 +11,11 @@ import it.polimi.ingsw.exceptions.PhaseChangedException;
 
 import java.io.IOException;
 import java.util.*;
-import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class ViewCli extends AbstractView implements ViewForCharacterCli {
 
     private final static String operatingSystem = System.getProperty("os.name");
-    private final Queue<ClientPhaseView> phasesToExecute;
+    private ClientPhaseView phaseToExecute;
     private volatile boolean isInputReady, phaseChanged, requestInput, forcedScannerSkip;
     private String input;
 
@@ -24,7 +23,6 @@ public class ViewCli extends AbstractView implements ViewForCharacterCli {
 
     public ViewCli(ControllerClient controllerClient) {
         super(controllerClient);
-        phasesToExecute = new ConcurrentLinkedQueue<>();
         Thread scannerThread = new Thread(() -> {
             final Scanner myInput = new Scanner(System.in);
             try {
@@ -50,6 +48,7 @@ public class ViewCli extends AbstractView implements ViewForCharacterCli {
         });
         scannerThread.start();
         System.out.println("You've chosen to play with client line interface");
+        phaseToExecute = null;
         isInputReady = false;
         phaseChanged = false;
         forcedScannerSkip = false;
@@ -59,22 +58,25 @@ public class ViewCli extends AbstractView implements ViewForCharacterCli {
     public void start() throws InterruptedException {
         do {
             synchronized (this) {
-                while (phasesToExecute.isEmpty())
+                while (phaseToExecute == null)
                     wait();
-                phasesToExecute.poll().playPhase(this);
+                phaseToExecute.playPhase(this);
             }
         } while (!canQuit());
     }
 
     @Override
     public synchronized void setPhaseInView(ClientPhaseView clientPhaseView, boolean forceScannerSkip) {
-        phasesToExecute.offer(clientPhaseView);
+        phaseToExecute = clientPhaseView;
         phaseChanged = true;
         if (forceScannerSkip)
             forcedScannerSkip = true;
         notifyAll();
     }
 
+    public void unsetPhase() {
+        phaseToExecute = null;
+    }
 
     public void clearConsole() {
         try {

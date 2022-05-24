@@ -25,6 +25,7 @@ public abstract class ClientPhase implements ClientPhaseView, ClientPhaseControl
         System.out.println("You are in " + this);
         int index;
         try {
+            viewCli.unsetPhase();
             index = viewCli.getIntInput(gameCommands.toArray(), "Select the command to play", true);
             gameCommands.get(index).playCLICommand();
         } catch (PhaseChangedException ignored) {
