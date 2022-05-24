@@ -1,10 +1,8 @@
 package it.polimi.ingsw.Client.model;
 
-import it.polimi.ingsw.Server.controller.MatchType;
-import it.polimi.ingsw.network.toClientMessage.MatchInfo;
-
 import it.polimi.ingsw.Enum.Wizard;
 import it.polimi.ingsw.Server.controller.MatchConstants;
+import it.polimi.ingsw.Server.controller.MatchType;
 
 import java.util.ArrayList;
 import java.util.List;

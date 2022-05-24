@@ -6,7 +6,6 @@ import it.polimi.ingsw.network.toClientMessage.ToClientMessage;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.net.Socket;
-import java.net.SocketException;
 
 public class ServerListener implements Runnable {
     private final ControllerClient controllerClient;

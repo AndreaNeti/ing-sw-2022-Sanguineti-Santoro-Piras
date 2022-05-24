@@ -31,7 +31,7 @@ public class Controller {
     private Byte currentPlayerIndex;
     private boolean lastRound, characterCardPlayed;
 
-    private ArrayList<Team> winners;
+    private ArrayList<HouseColor> winners;
     private boolean gameFinished;
 
     private final Long matchId;
@@ -340,7 +340,7 @@ public class Controller {
         else lastRound = true;
     }
 
-    protected ArrayList<Team> getWinners() {
+    protected ArrayList<HouseColor> getWinners() {
         return winners;
     }
 

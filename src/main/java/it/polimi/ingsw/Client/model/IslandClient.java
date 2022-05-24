@@ -1,7 +1,7 @@
 package it.polimi.ingsw.Client.model;
 
-import it.polimi.ingsw.Server.model.GameComponent;
 import it.polimi.ingsw.Enum.HouseColor;
+import it.polimi.ingsw.Server.model.GameComponent;
 import it.polimi.ingsw.Server.model.Island;
 
 public class IslandClient extends GameComponentClient {

@@ -5,9 +5,14 @@ import it.polimi.ingsw.Enum.HouseColor;
 import it.polimi.ingsw.Server.controller.ExpertGameDelta;
 import it.polimi.ingsw.Server.controller.GameDelta;
 import it.polimi.ingsw.Server.controller.MatchConstants;
-import it.polimi.ingsw.exceptions.*;
+import it.polimi.ingsw.exceptions.EndGameException;
+import it.polimi.ingsw.exceptions.GameException;
+import it.polimi.ingsw.exceptions.NotAllowedException;
+import it.polimi.ingsw.exceptions.NotEnoughCoinsException;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Random;
 
 public class ExpertGame extends NormalGame implements CharacterCardGame {
     private final byte[] coinsPlayer;

@@ -5,7 +5,6 @@ import it.polimi.ingsw.Client.LimitedChat;
 import it.polimi.ingsw.Client.model.CharacterCardClient;
 import it.polimi.ingsw.Client.model.GameClientView;
 import it.polimi.ingsw.Enum.GamePhase;
-import it.polimi.ingsw.network.toServerMessage.Quit;
 import it.polimi.ingsw.network.toServerMessage.ToServerMessage;
 
 import java.util.ArrayList;

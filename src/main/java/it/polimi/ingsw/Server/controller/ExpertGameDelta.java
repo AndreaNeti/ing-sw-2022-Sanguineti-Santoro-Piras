@@ -28,7 +28,6 @@ public class ExpertGameDelta extends GameDelta {
 
     @Override
     public void addCharacterCard(byte index, byte id) {
-        System.out.println("added a char");
         if (characters == null)
             characters = new ArrayList<>();
         characters.add(index,id);

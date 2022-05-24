@@ -16,7 +16,6 @@ public class SetCharacterInputCommand extends GameCommand {
     @Override
     public void playCLICommand() throws PhaseChangedException {
         ViewCli viewCli = (ViewCli) getView();
-        Integer input;
         CharacterCardClient current = viewCli.getCurrentCharacterCard();
         if (current.canPlay())
             System.out.println("Card can already be played");

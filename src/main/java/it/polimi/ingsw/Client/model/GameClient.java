@@ -8,7 +8,7 @@ import it.polimi.ingsw.Enum.Wizard;
 import it.polimi.ingsw.Server.controller.MatchConstants;
 import it.polimi.ingsw.Server.controller.MatchType;
 import it.polimi.ingsw.Server.controller.Server;
-import it.polimi.ingsw.Server.model.*;
+import it.polimi.ingsw.Server.model.GameComponent;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -31,7 +31,7 @@ public class GameClient extends GameClientListened implements GameClientView {
     private final List<CharacterCardClientWithStudents> charactersWithStudents;
     private CharacterCardClient currentCharacterCard;
     // player id, new playerCoinsLeft
-    private Map<Byte, Byte> updatedCoinPlayer;
+    private final Map<Byte, Byte> updatedCoinPlayer;
     private Byte newCoinsLeft, newProhibitionsLeft;
     private Color ignoredColorInfluence;
 

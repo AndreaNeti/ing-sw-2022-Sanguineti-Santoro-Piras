@@ -35,8 +35,12 @@ public interface GameClientListener {
     void updateCardPlayed(Byte playedCard);
 
     void updateIgnoredColor(Color color);
+
     void updateCharacter(List<CharacterCardClient> characters);
+
     void updateCoins(Byte coins);
+
+    void setWinners(List<HouseColor> winners);
 
     void update();
     //void setModel(GameClientView model);

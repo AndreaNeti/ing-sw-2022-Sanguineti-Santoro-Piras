@@ -1,6 +1,7 @@
 package it.polimi.ingsw.Server.model;
 
 import it.polimi.ingsw.Enum.Color;
+import it.polimi.ingsw.Enum.HouseColor;
 import it.polimi.ingsw.Server.controller.GameDelta;
 import it.polimi.ingsw.exceptions.EndGameException;
 import it.polimi.ingsw.exceptions.GameException;
@@ -19,7 +20,7 @@ public interface Game extends Serializable {
 
     void moveMotherNature(int moves) throws NotAllowedException, EndGameException;
 
-    ArrayList<Team> calculateWinner();
+    ArrayList<HouseColor> calculateWinner();
 
     void refillClouds() throws EndGameException;
 

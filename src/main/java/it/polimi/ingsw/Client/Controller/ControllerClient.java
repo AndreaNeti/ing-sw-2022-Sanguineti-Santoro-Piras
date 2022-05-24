@@ -22,13 +22,16 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.Socket;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 
 import static java.util.Map.entry;
 
 public class ControllerClient extends GameClientListened {
     private ServerSender serverSender;
-    private GameClient gameClient;
+    private GameClient model;
     private MatchType matchType;
     private MatchConstants matchConstants;
     private ArrayList<TeamClient> teamsClient;
@@ -103,7 +106,7 @@ public class ControllerClient extends GameClientListened {
     }
 
     public void addMessage(String message) {
-        if (gameClient != null)
+        if (model != null)
             abstractView.addMessage(message);
         notifyView();
 //        repeatPhase(false);
@@ -127,8 +130,8 @@ public class ControllerClient extends GameClientListened {
         // currentPlayer!=se stesso-> wait Phase
         // this.gamePhase = gamePhase;
         if (currentPlayer == null) return;
-        gameClient.setCurrentPlayer(currentPlayer);
-        if (gameClient.getCurrentPlayer().getWizard() != myWizard) {
+        model.setCurrentPlayer(currentPlayer);
+        if (model.getCurrentPlayer().getWizard() != myWizard) {
             changePhase(GamePhase.WAIT_PHASE, true, forceScannerSkip);
         } else {
             changePhase(gamePhase, true, forceScannerSkip);
@@ -157,31 +160,31 @@ public class ControllerClient extends GameClientListened {
 
     public void changeGame(GameDelta gameDelta) {
         if (matchType.isExpert()) {
-            if (gameDelta.getCharacters().size() != 0) gameClient.setCharacters(gameDelta.getCharacters());
-            gameDelta.getNewCoinsLeft().ifPresent(newCoinsLeft -> gameClient.setNewCoinsLeft(newCoinsLeft));
-            gameDelta.getNewProhibitionsLeft().ifPresent(newProhibitionsLeft -> gameClient.setNewProhibitionsLeft(newProhibitionsLeft));
+            if (gameDelta.getCharacters().size() != 0) model.setCharacters(gameDelta.getCharacters());
+            gameDelta.getNewCoinsLeft().ifPresent(newCoinsLeft -> model.setNewCoinsLeft(newCoinsLeft));
+            gameDelta.getNewProhibitionsLeft().ifPresent(newProhibitionsLeft -> model.setNewProhibitionsLeft(newProhibitionsLeft));
             for (Map.Entry<Byte, Byte> newEntry : gameDelta.getUpdatedCoinPlayer().entrySet())
-                gameClient.setUpdatedCoinPlayer(newEntry.getKey(), newEntry.getValue());
+                model.setUpdatedCoinPlayer(newEntry.getKey(), newEntry.getValue());
         }
 
         for (Map.Entry<Byte, GameComponent> entry : gameDelta.getUpdatedGC().entrySet()) {
-            gameClient.setGameComponent(entry.getKey(), entry.getValue());
+            model.setGameComponent(entry.getKey(), entry.getValue());
         }
 
         for (Map.Entry<Color, Wizard> entry : gameDelta.getUpdatedProfessors().entrySet()) {
-            if (entry.getValue() != null) gameClient.setProfessors(entry.getKey(), entry.getValue());
+            if (entry.getValue() != null) model.setProfessors(entry.getKey(), entry.getValue());
         }
 
         for (Byte b : gameDelta.getDeletedIslands()) {
-            gameClient.removeIsland(b);
+            model.removeIsland(b);
         }
 
-        gameDelta.getNewMotherNaturePosition().ifPresent(mnPosition -> gameClient.setMotherNaturePosition(mnPosition));
+        gameDelta.getNewMotherNaturePosition().ifPresent(mnPosition -> model.setMotherNaturePosition(mnPosition));
 
-        gameDelta.getPlayedCard().ifPresent(playedCard -> gameClient.playCard(playedCard));
+        gameDelta.getPlayedCard().ifPresent(playedCard -> model.playCard(playedCard));
 
         for (Map.Entry<HouseColor, Byte> entry : gameDelta.getNewTeamTowersLeft().entrySet()) {
-            gameClient.setTowerLeft(entry.getKey(), entry.getValue());
+            model.setTowerLeft(entry.getKey(), entry.getValue());
         }
     }
 
@@ -198,13 +201,13 @@ public class ControllerClient extends GameClientListened {
 
     private void startGame() {
         //create a game
-        gameClient = new GameClient(teamsClient, myWizard, matchType);
+        model = new GameClient(teamsClient, myWizard, matchType);
         // decorate phases
         if (matchType.isExpert()) {
             attachExpertCommand();
         }
-        gameClient.addListener(this);
-        abstractView.setModel(gameClient);
+        model.addListener(this);
+        abstractView.setModel(model);
     }
 
     // returns true if the client process has to quit
@@ -213,7 +216,7 @@ public class ControllerClient extends GameClientListened {
             sendMessage(new Quit());
             changePhase(GamePhase.SELECT_MATCH_PHASE, true, forceScannerSkip);
             isInMatch = false;
-            gameClient = null;
+            model = null;
             abstractView.setModel(null);
             return false;
         } else if (oldPhase != GamePhase.INIT_PHASE) {
@@ -235,7 +238,7 @@ public class ControllerClient extends GameClientListened {
     }
 
     public void setCurrentCharacterCard(int currentCharacterCardIndex) {
-        gameClient.setCurrentCharacterCard(currentCharacterCardIndex);
+        model.setCurrentCharacterCard(currentCharacterCardIndex);
     }
 
     private int playersInMatch() {
@@ -246,6 +249,6 @@ public class ControllerClient extends GameClientListened {
     }
 
     public void unsetCurrentCharacterCard() {
-        gameClient.unsetCurrentCharacterCard();
+        model.unsetCurrentCharacterCard();
     }
 }

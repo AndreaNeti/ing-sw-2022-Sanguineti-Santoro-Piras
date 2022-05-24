@@ -303,14 +303,15 @@ public class NormalGame implements Game {
     // if two teams have the same number of towers left the team with more professors controlled becomes the winner
 
     @Override
-    public ArrayList<Team> calculateWinner() {
-        ArrayList<Team> winners = new ArrayList<>();
+    public ArrayList<HouseColor> calculateWinner() {
+        ArrayList<HouseColor> winners = new ArrayList<>();
         byte minTowers = 8;
         byte maxProfessors = 0;
         for (Team t : teams) {
+            HouseColor hc = t.getHouseColor();
             if (t.getTowersLeft() < minTowers) {
                 winners.clear();
-                winners.add(t);
+                winners.add(hc);
                 byte numberOfProfessors = 0;
                 minTowers = t.getTowersLeft();
                 for (Color c : Color.values()) {
@@ -328,10 +329,10 @@ public class NormalGame implements Game {
                 }
                 if (numberOfProfessors > maxProfessors) {
                     winners.clear();
-                    winners.add(t);
+                    winners.add(hc);
                     maxProfessors = numberOfProfessors;
                 } else if (numberOfProfessors == maxProfessors) {
-                    winners.add(t);
+                    winners.add(hc);
                 }
             }
         }

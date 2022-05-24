@@ -9,7 +9,10 @@ import it.polimi.ingsw.Enum.Wizard;
 import org.fusesource.jansi.AnsiConsole;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
 
 public class CliPrinter implements GameClientListener {
 
@@ -456,6 +459,15 @@ public class CliPrinter implements GameClientListener {
     @Override
     public void updateCoins(Byte coins) {
 //        printGame();
+    }
+
+    @Override
+    public void setWinners(List<HouseColor> winners) {
+        String s = "Winner";
+        if (winners.size() == 1) s += " is ";
+        else s += "s are ";
+        s += winners;
+        view.addMessage(s);
     }
 
     @Override

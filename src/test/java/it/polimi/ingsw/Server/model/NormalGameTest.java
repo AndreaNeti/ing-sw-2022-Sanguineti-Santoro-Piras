@@ -71,7 +71,7 @@ public class NormalGameTest {
         players4.add(p2_4);
         players4.add(p3_4);
         players4.add(p4_4);
-        gameWith4 = new NormalGame(teamList4,  matchConstants);
+        gameWith4 = new NormalGame(teamList4, matchConstants);
         gameWith4.setCurrentPlayer(p1_4);
 
         //create a game with 3 people
@@ -98,7 +98,7 @@ public class NormalGameTest {
         players3.add(p2_3);
         players3.add(p3_3);
 
-        gameWith3 = new NormalGame(teamList3,  matchConstants);
+        gameWith3 = new NormalGame(teamList3, matchConstants);
         gameWith3.setCurrentPlayer(p1_3);
     }
 
@@ -222,7 +222,7 @@ public class NormalGameTest {
 
     @Test
     void calculateProfessorTest() {
-        Bag test=new Bag((byte) 100);
+        Bag test = new Bag((byte) 100);
         //at the beginning after the calculation no one should have professor
         gameWith2.calculateProfessor();
         for (Wizard w : gameWith2.getProfessor()) {
@@ -277,7 +277,7 @@ public class NormalGameTest {
         //move from entrance to island with index 2
         for (Color c : Color.values()) {
             if (gameWith2.getCurrentPlayer().getEntranceHall().howManyStudents(c) > 0) {
-               byte studentsBefore=0;
+                byte studentsBefore = 0;
                 try {
                     studentsBefore = gameWith2.getComponentById(5).howManyStudents(c);
                     gameWith2.move(c, 0, 5);
@@ -423,9 +423,9 @@ public class NormalGameTest {
         } catch (GameException | EndGameException e) {
             fail();
         }
-        ArrayList<Team> winner1 = gameWith2.calculateWinner();
+        ArrayList<HouseColor> winner1 = gameWith2.calculateWinner();
         assertEquals(winner1.size(), 1);
-        assertEquals(winner1.get(0).getHouseColor(), gameWith2.getTeams().get(0).getHouseColor());
+        assertEquals(winner1.get(0), gameWith2.getTeams().get(0).getHouseColor());
 
         // check winner with 3 winners
         try {
@@ -442,11 +442,11 @@ public class NormalGameTest {
         } catch (GameException | EndGameException e) {
             fail();
         }
-        ArrayList<Team> winner3 = gameWith3.calculateWinner();
+        ArrayList<HouseColor> winner3 = gameWith3.calculateWinner();
         assertEquals(winner3.size(), 3);
-        assertEquals(winner3.get(0).getHouseColor(), gameWith3.getTeams().get(0).getHouseColor());
-        assertEquals(winner3.get(1).getHouseColor(), gameWith3.getTeams().get(1).getHouseColor());
-        assertEquals(winner3.get(2).getHouseColor(), gameWith3.getTeams().get(2).getHouseColor());
+        assertEquals(winner3.get(0), gameWith3.getTeams().get(0).getHouseColor());
+        assertEquals(winner3.get(1), gameWith3.getTeams().get(1).getHouseColor());
+        assertEquals(winner3.get(2), gameWith3.getTeams().get(2).getHouseColor());
 
         // check winner with 2 winners and also with teams of 2 players
         try {
@@ -463,10 +463,10 @@ public class NormalGameTest {
         } catch (GameException | EndGameException e) {
             fail();
         }
-        ArrayList<Team> winner4 = gameWith4.calculateWinner();
+        ArrayList<HouseColor> winner4 = gameWith4.calculateWinner();
         assertEquals(winner4.size(), 2);
-        assertEquals(winner4.get(0).getHouseColor(), gameWith4.getTeams().get(0).getHouseColor());
-        assertEquals(winner4.get(1).getHouseColor(), gameWith4.getTeams().get(1).getHouseColor());
+        assertEquals(winner4.get(1), gameWith4.getTeams().get(1).getHouseColor());
+        assertEquals(winner4.get(0), gameWith4.getTeams().get(0).getHouseColor());
     }
 
     @Test

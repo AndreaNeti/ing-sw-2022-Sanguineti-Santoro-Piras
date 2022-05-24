@@ -1,7 +1,6 @@
 package it.polimi.ingsw.Client.PhaseAndComand.Commands;
 
 import it.polimi.ingsw.Client.Controller.ClientPhaseController;
-import it.polimi.ingsw.Client.PhaseAndComand.Phases.ClientPhase;
 import it.polimi.ingsw.Client.View.AbstractView;
 import it.polimi.ingsw.exceptions.PhaseChangedException;
 

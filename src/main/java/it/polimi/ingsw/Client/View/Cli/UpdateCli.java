@@ -100,6 +100,11 @@ public record UpdateCli(ViewCli viewCli) implements GameClientListener {
     }
 
     @Override
+    public void setWinners(List<HouseColor> winners) {
+
+    }
+
+    @Override
     public void update() {
 
     }

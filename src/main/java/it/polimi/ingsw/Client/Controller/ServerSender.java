@@ -1,14 +1,8 @@
 package it.polimi.ingsw.Client.Controller;
 
-import it.polimi.ingsw.Server.controller.Controller;
-import it.polimi.ingsw.Server.controller.Server;
-import it.polimi.ingsw.exceptions.GameException;
-import it.polimi.ingsw.network.toClientMessage.ErrorException;
-import it.polimi.ingsw.network.toClientMessage.OK;
 import it.polimi.ingsw.network.toServerMessage.ToServerMessage;
 
 import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 

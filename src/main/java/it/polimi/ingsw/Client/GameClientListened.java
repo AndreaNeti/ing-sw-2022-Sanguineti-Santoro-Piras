@@ -84,6 +84,12 @@ public abstract class GameClientListened {
         }
     }
 
+    public void notifyWinners(List<HouseColor> winners){
+        for (GameClientListener listener : listeners) {
+            listener.setWinners(winners);
+        }
+    }
+
     public void addListener(GameClientListener listener) {
         if (listeners == null) listeners = new ArrayList<>();
         listeners.add(listener);
