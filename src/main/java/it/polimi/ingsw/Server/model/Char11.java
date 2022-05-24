@@ -10,7 +10,8 @@ public class Char11 implements CharacterCard {
     @Override
     public void play(CharacterCardGame game) throws GameException {
         int color = game.getCharacterInputs().get(0);
-        if (color < 0 || color >= Color.values().length) throw new NotAllowedException("Set wrong inputs");
+        if (color < 0 || color >= Color.values().length)
+            throw new NotAllowedException("Set wrong input for color");
         for (byte i = 0; i < game.getPlayerSize(); i++) {
             // getComponentById(2*i+1) returns the lunch hall of the player i
             byte s = (byte) Math.min(3, game.getComponentById(2 * i + 1).howManyStudents(Color.values()[color]));

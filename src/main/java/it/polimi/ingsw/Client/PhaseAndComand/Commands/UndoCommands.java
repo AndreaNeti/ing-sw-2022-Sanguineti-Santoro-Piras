@@ -13,6 +13,8 @@ public class UndoCommands extends GameCommand {
     @Override
     public void playCLICommand() throws PhaseChangedException {
         System.out.println("Reset all input");
+        getView().getCurrentCharacterCard().resetInput();
+        getView().unsetCurrentCharacterCard();
         getView().goToOldPhase(true);
     }
 

@@ -20,8 +20,11 @@ public class Char6 extends GameComponent implements CharacterCard {
         for (int i = 0; i < inputs.size(); i += 2) {
             characterColor = inputs.get(i);
             entranceHallColor = inputs.get(i + 1);
-            if (characterColor < 0 || characterColor >= Color.values().length || entranceHallColor < 0 || entranceHallColor > Color.values().length) {
-                throw new NotAllowedException("Set wrong inputs");
+            if (characterColor < 0 || characterColor >= Color.values().length) {
+                throw new NotAllowedException("Set wrong input "+i+" for characterColor");
+            }
+            if(entranceHallColor < 0 || entranceHallColor > Color.values().length){
+                throw new NotAllowedException("Set wrong input " +i+" for entranceHallColor");
             }
 
             if (game.getCurrentPlayer().getEntranceHall().howManyStudents(Color.values()[entranceHallColor]) == 0 ||

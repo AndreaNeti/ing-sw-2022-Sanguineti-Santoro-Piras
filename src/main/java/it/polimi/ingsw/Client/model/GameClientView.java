@@ -21,8 +21,6 @@ public interface GameClientView {
 
     boolean isExpert();
 
-    ArrayList<String> getChat();
-
     Wizard[] getProfessors();
 
     Byte getNewProhibitionsLeft();

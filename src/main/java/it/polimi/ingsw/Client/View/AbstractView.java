@@ -1,19 +1,25 @@
 package it.polimi.ingsw.Client.View;
 
 import it.polimi.ingsw.Client.Controller.ControllerClient;
+import it.polimi.ingsw.Client.LimitedChat;
 import it.polimi.ingsw.Client.model.CharacterCardClient;
 import it.polimi.ingsw.Client.model.GameClientView;
 import it.polimi.ingsw.Enum.GamePhase;
 import it.polimi.ingsw.network.toServerMessage.Quit;
 import it.polimi.ingsw.network.toServerMessage.ToServerMessage;
 
+import java.util.ArrayList;
+
 public abstract class AbstractView {
     private final ControllerClient controllerClient;
     private GameClientView model;
     private volatile boolean quit;
+    private final LimitedChat<String> chat;
 
     public AbstractView(ControllerClient controllerClient) {
         this.controllerClient = controllerClient;
+
+        this.chat = new LimitedChat<>(9);
         quit = false;
     }
 
@@ -57,8 +63,19 @@ public abstract class AbstractView {
     public void setCurrentCharacterCard(int currentCharacterCardIndex) {
         controllerClient.setCurrentCharacterCard(currentCharacterCardIndex);
     }
+    public void unsetCurrentCharacterCard(){
+        controllerClient.unsetCurrentCharacterCard();
+    }
 
     public CharacterCardClient getCurrentCharacterCard() {
         return getModel().getCurrentCharacterCard();
+    }
+
+    public void addMessage(String message) {
+        chat.add(message);
+    }
+
+    public ArrayList<String> getChat() {
+        return new ArrayList<>(chat);
     }
 }

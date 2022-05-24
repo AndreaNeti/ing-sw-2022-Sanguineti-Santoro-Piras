@@ -19,10 +19,12 @@ public class Char9 implements CharacterCard {
         for (int i = 0; i < inputs.size(); i += 2) {
             lunchHallColor = inputs.get(i);
             entranceHallColor = inputs.get(i + 1);
-            if (lunchHallColor < 0 || lunchHallColor >= Color.values().length || entranceHallColor < 0 || entranceHallColor > Color.values().length) {
-                throw new NotAllowedException("Set wrong inputs");
+            if (lunchHallColor < 0 || lunchHallColor >= Color.values().length) {
+                throw new NotAllowedException("Set wrong input " + i + " for lunchHallColor");
             }
-
+            if (entranceHallColor < 0 || entranceHallColor > Color.values().length) {
+                throw new NotAllowedException("Set wrong input " + i + " for entranceHallColor");
+            }
             if (game.getCurrentPlayer().getEntranceHall().howManyStudents(Color.values()[entranceHallColor]) == 0 ||
                     game.getCurrentPlayer().getLunchHall().howManyStudents(Color.values()[lunchHallColor]) == 0) {
                 throw new NotEnoughStudentsException();

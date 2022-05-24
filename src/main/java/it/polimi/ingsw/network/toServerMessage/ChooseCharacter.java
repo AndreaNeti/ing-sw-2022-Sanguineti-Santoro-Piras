@@ -15,7 +15,7 @@ public class ChooseCharacter implements ToServerMessage {
     @Override
     public void execute(ClientHandler clientHandler) throws GameException {
         Controller c = clientHandler.getController();
-        if(c.isGameFinished()){
+        if (c.isGameFinished()) {
             throw new NotAllowedException("Game is already finished");
         }
         if (c.isMyTurn(clientHandler))

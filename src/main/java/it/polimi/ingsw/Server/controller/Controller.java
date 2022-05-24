@@ -82,6 +82,7 @@ public class Controller {
             } else {
                 setPhase(GamePhase.MOVE_ST_PHASE);
             }
+            broadcastMessage(new TextMessageSC("Server: " + Wizard.values()[getCurrentPlayerIndex()] + " moved a " + color + " student"));
         } else {
             throw new NotAllowedException("Wrong Phase");
         }
@@ -94,6 +95,7 @@ public class Controller {
                 throw new NotAllowedException("Component is not a cloud");
             game.moveFromCloud(idGameComponent);
             nextPhase();
+            broadcastMessage(new TextMessageSC("Server: " + Wizard.values()[getCurrentPlayerIndex()] + " take student from a cloud"));
         } else
             throw new NotAllowedException("Wrong Phase");
 
@@ -118,20 +120,22 @@ public class Controller {
                 handleError(e);
             }
             nextPhase();
+
+            broadcastMessage(new TextMessageSC("Server: " + Wizard.values()[getCurrentPlayerIndex()] + " played card n° " + value));
         } else {
             throw new NotAllowedException("Cannot play this card");
         }
     }
 
-    public synchronized void moveMotherNature(int i) throws GameException, NullPointerException {
+    public synchronized void moveMotherNature(int moves) throws GameException, NullPointerException {
         if (gamePhase == GamePhase.MOVE_MN_PHASE) {
             try {
-                game.moveMotherNature(i);
+                game.moveMotherNature(moves);
             } catch (EndGameException e) {
                 handleError(e);
             }
             nextPhase();
-
+            broadcastMessage(new TextMessageSC("Server: " + Wizard.values()[getCurrentPlayerIndex()] + " moved MotherNature by " + moves + " moves"));
         } else {
             throw new NotAllowedException("Wrong phase");
         }
@@ -179,6 +183,8 @@ public class Controller {
             throw new NotAllowedException("Not in action phase");
         }
         game.chooseCharacter(charId);
+        broadcastMessage(new TextMessageSC("Server: " + Wizard.values()[getCurrentPlayerIndex()] + " chose character card " + charId));
+
     }
 
     public synchronized void playCharacter() throws GameException, NullPointerException {
@@ -191,6 +197,7 @@ public class Controller {
         try {
             game.playCharacter();
             characterCardPlayed = true;
+            broadcastMessage(new TextMessageSC("Server: " + Wizard.values()[getCurrentPlayerIndex()] + " played character card "));
         } catch (EndGameException e) {
             handleError(e);
         }
@@ -210,6 +217,10 @@ public class Controller {
                 gl.update(m);
             }
         }
+    }
+
+    public void broadcastMessage(TextMessageSC m) {
+        notifyClients(m);
     }
 
     public void removePlayer(GameListener toRemovePlayer) throws NullPointerException {

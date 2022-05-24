@@ -15,11 +15,10 @@ public class MoveMotherNature implements ToServerMessage {
     @Override
     public void execute(ClientHandler clientHandler) throws GameException {
         Controller c = clientHandler.getController();
-        if(c.isGameFinished()){
+        if (c.isGameFinished()) {
             throw new NotAllowedException("Game is already finished");
         }
-        if (c.isMyTurn(clientHandler))
-            c.moveMotherNature(moves);
+        if (c.isMyTurn(clientHandler)) c.moveMotherNature(moves);
         else throw new NotAllowedException("It's not your turn");
     }
 

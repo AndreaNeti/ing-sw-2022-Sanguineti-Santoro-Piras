@@ -15,6 +15,7 @@ import java.util.Random;
 import static org.junit.jupiter.api.Assertions.*;
 
 class CharacterCardTest {
+    //TODO CHange now it receives the id not the index
     Team t1, t2;
     Player p1, p2;
     ArrayList<Team> teamList = new ArrayList<>();

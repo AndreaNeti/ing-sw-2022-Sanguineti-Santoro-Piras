@@ -10,7 +10,7 @@ public class Char2 implements CharacterCard {
     public void play(CharacterCardGame game) throws GameException, EndGameException {
         int idIsland = game.getCharacterInputs().get(0);
         if (idIsland > 2 * game.getPlayerSize() + 12 || idIsland < 2 * game.getPlayerSize())
-            throw new NotAllowedException("Set wrong inputs");
+            throw new NotAllowedException("Set wrong inputs for idIsland");
         game.calculateInfluence((Island) game.getComponentById(idIsland));
     }
 

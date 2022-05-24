@@ -9,7 +9,7 @@ public class Char8 implements CharacterCard {
     public void play(CharacterCardGame game) throws NotAllowedException {
         int color = game.getCharacterInputs().get(0);
         if (color < 0 || color >= Color.values().length)
-            throw new NotAllowedException("Set wrong inputs");
+            throw new NotAllowedException("Set wrong input for color");
         game.setIgnoredColorInfluence(Color.values()[color]);
     }
 

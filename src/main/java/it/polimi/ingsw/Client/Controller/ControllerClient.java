@@ -104,7 +104,7 @@ public class ControllerClient extends GameClientListened {
 
     public void addMessage(String message) {
         if (gameClient != null)
-            gameClient.addMessage(message);
+            abstractView.addMessage(message);
         notifyView();
 //        repeatPhase(false);
     }
@@ -224,8 +224,8 @@ public class ControllerClient extends GameClientListened {
             return false;
         } else return true;
     }
-
     public void notifyClientPhase(ClientPhaseController clientPhaseController, boolean forceScannerSkip) {
+        super.notifyView();
         clientPhaseController.setPhaseInView(abstractView, forceScannerSkip);
     }
 
@@ -243,5 +243,9 @@ public class ControllerClient extends GameClientListened {
         for (TeamClient t : teamsClient)
             sum += t.getPlayers().size();
         return sum;
+    }
+
+    public void unsetCurrentCharacterCard() {
+        gameClient.unsetCurrentCharacterCard();
     }
 }

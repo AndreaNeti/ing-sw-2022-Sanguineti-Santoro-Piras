@@ -8,14 +8,17 @@ import it.polimi.ingsw.Enum.HouseColor;
 import it.polimi.ingsw.Enum.Wizard;
 import org.fusesource.jansi.AnsiConsole;
 
+import java.io.IOException;
 import java.util.*;
 
 public class CliPrinter implements GameClientListener {
 
-    private final GameClientView game;
 
-    public CliPrinter(GameClientView game) {
-        this.game = game;
+    private final static String operatingSystem = System.getProperty("os.name");
+    private final AbstractView view;
+
+    public CliPrinter(AbstractView view) {
+        this.view = view;
     }
 
     public void printLobby() {
@@ -27,20 +30,26 @@ public class CliPrinter implements GameClientListener {
     }
 
     public void printGame() {
+        GameClientView game = view.getModel();
+        if (game != null) {
 //        System.setOut(new PrintStream(new FileOutputStream(FileDescriptor.out), true, StandardCharsets.UTF_8));
-        AnsiConsole.systemInstall();
-        // List<PlayerClient> players = game.getTeams();
-        // TODO implement teams
-        List<PlayerClient> players = game.getPlayers();
-        System.out.println("----------------------ERYANTIS----------------------");
-        System.out.print(printIslands(game.getIslands()));
-        System.out.print(printCloudsAndTeams(game.getClouds(), game.getTeams()));
-        System.out.print(printBoardsChatCharacters(players));
-        System.out.print(printAssistantCards(players));
-        AnsiConsole.systemUninstall();
+            AnsiConsole.systemInstall();
+            // List<PlayerClient> players = game.getTeams();
+            // TODO implement teams
+            List<PlayerClient> players = new ArrayList<>();
+            for (TeamClient t : game.getTeams())
+                players.addAll(t.getPlayers());
+            System.out.println("----------------------ERYANTIS----------------------");
+            System.out.print(printIslands(game.getIslands()));
+            System.out.print(printCloudsAndTeams(game.getClouds(), game.getTeams()));
+            System.out.print(printBoardsChatCharacters(players));
+            System.out.print(printAssistantCards(players));
+            AnsiConsole.systemUninstall();
+        }
     }
 
     private StringBuilder printIslands(ArrayList<IslandClient> islands) {
+        GameClientView game = view.getModel();
         StringBuilder islandPrint = new StringBuilder();
         // print island number and prohibitions
         for (int i = 0; i < islands.size(); i++) {
@@ -97,6 +106,7 @@ public class CliPrinter implements GameClientListener {
     }
 
     private StringBuilder printCloudsAndTeams(ArrayList<GameComponentClient> clouds, List<TeamClient> teams) {
+        GameClientView game = view.getModel();
         StringBuilder cloudsTeamsPrint = new StringBuilder();
         // print cloud number
         for (int i = 0; i < clouds.size(); i++) {
@@ -152,10 +162,11 @@ public class CliPrinter implements GameClientListener {
     }
 
     private StringBuilder printBoardsChatCharacters(List<PlayerClient> players) {
+        GameClientView game = view.getModel();
         StringBuilder boardsCharChatPrint = new StringBuilder();
         byte numOfPlayers = (byte) players.size();
         boolean expert = game.isExpert();
-        ArrayList<String> chat = game.getChat();
+        ArrayList<String> chat = view.getChat();
         // upper line of boards
         boardsCharChatPrint.append(" \u2554\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2557 ".repeat(numOfPlayers));
 
@@ -344,6 +355,7 @@ public class CliPrinter implements GameClientListener {
     }
 
     private StringBuilder printAssistantCards(List<PlayerClient> players) {
+        GameClientView game = view.getModel();
         StringBuilder assistantCardsPrint = new StringBuilder();
         PlayerClient player = players.get(0);
         // find player
@@ -448,6 +460,18 @@ public class CliPrinter implements GameClientListener {
 
     @Override
     public void update() {
-//        printGame();
+        clearConsole();
+        printGame();
+    }
+
+    public void clearConsole() {
+        try {
+            if (operatingSystem.contains("Windows"))
+                new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+            else
+                Runtime.getRuntime().exec("clear");
+        } catch (IOException | InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

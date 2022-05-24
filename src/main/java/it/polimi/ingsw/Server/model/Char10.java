@@ -15,7 +15,7 @@ public class Char10 extends GameComponent implements CharacterCard {
     public void play(CharacterCardGame game) throws GameException, EndGameException {
         int color = game.getCharacterInputs().get(0);
         if (color < 0 || color >= Color.values().length) {
-            throw new NotAllowedException("Set wrong inputs");
+            throw new NotAllowedException("Set wrong input for color");
         }
         this.moveStudents(Color.values()[color], (byte) 1, game.getCurrentPlayer().getLunchHall());
         game.getGameDelta().addUpdatedGC(this);

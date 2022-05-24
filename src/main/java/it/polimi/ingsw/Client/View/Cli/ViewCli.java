@@ -5,6 +5,7 @@ import it.polimi.ingsw.Client.View.AbstractView;
 import it.polimi.ingsw.Client.View.ClientPhaseView;
 import it.polimi.ingsw.Client.model.GameClientView;
 import it.polimi.ingsw.Client.model.GameComponentClient;
+import it.polimi.ingsw.Client.model.IslandClient;
 import it.polimi.ingsw.Enum.*;
 import it.polimi.ingsw.Server.controller.MatchType;
 import it.polimi.ingsw.exceptions.PhaseChangedException;
@@ -13,13 +14,9 @@ import java.io.IOException;
 import java.util.*;
 
 public class ViewCli extends AbstractView implements ViewForCharacterCli {
-
-    private final static String operatingSystem = System.getProperty("os.name");
     private ClientPhaseView phaseToExecute;
     private volatile boolean isInputReady, phaseChanged, requestInput, forcedScannerSkip;
     private String input;
-
-    private CliPrinter printer;
 
     public ViewCli(ControllerClient controllerClient) {
         super(controllerClient);
@@ -78,16 +75,6 @@ public class ViewCli extends AbstractView implements ViewForCharacterCli {
         phaseToExecute = null;
     }
 
-    public void clearConsole() {
-        try {
-            if (operatingSystem.contains("Windows"))
-                new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
-            else
-                Runtime.getRuntime().exec("clear");
-        } catch (IOException | InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-    }
 
     private String listOptions(Object[] options) {
         StringBuilder ret = new StringBuilder();
@@ -186,7 +173,8 @@ public class ViewCli extends AbstractView implements ViewForCharacterCli {
     }
 
     public int getIslandDestination(String message, boolean canBeStopped) throws PhaseChangedException {
-        return getIntInput(getModel().getIslands().toArray(), message, canBeStopped);
+        List<IslandClient> islandClients = getModel().getIslands();
+        return islandClients.get(getIntInput(islandClients.toArray(), message, canBeStopped)).getId();
     }
 
     public byte getMotherNatureMovesInput(boolean canBeStopped) throws PhaseChangedException {
@@ -277,15 +265,8 @@ public class ViewCli extends AbstractView implements ViewForCharacterCli {
         notify();
     }
 
-    public void print() {
-        if (getModel() != null && printer != null) {
-            printer.printGame();
-        }
-    }
-
     @Override
     public void setModel(GameClientView model) {
         super.setModel(model);
-        printer = new CliPrinter(model);
     }
 }

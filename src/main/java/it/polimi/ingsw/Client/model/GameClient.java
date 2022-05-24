@@ -35,7 +35,7 @@ public class GameClient extends GameClientListened implements GameClientView {
     private Byte newCoinsLeft, newProhibitionsLeft;
     private Color ignoredColorInfluence;
 
-    private final LimitedChat<String> chat;
+
 
     public GameClient(ArrayList<TeamClient> teamsClient, Wizard myWizard, MatchType matchType) {
         System.out.println(teamsClient.toString());
@@ -55,20 +55,12 @@ public class GameClient extends GameClientListened implements GameClientView {
         this.teams = teamsClient;
         this.characters = new ArrayList<>();
         this.charactersWithStudents = new ArrayList<>();
-        this.chat = new LimitedChat<>(9);
         this.updatedCoinPlayer = new HashMap<>();
         for (byte i = 0; i < matchType.nPlayers(); i++) {
             updatedCoinPlayer.put(i, (byte) matchConstants.initialPlayerCoins());
         }
     }
 
-    public void addMessage(String message) {
-        chat.add(message);
-    }
-
-    public ArrayList<String> getChat() {
-        return new ArrayList<>(chat);
-    }
 
     @Override
     public MatchConstants getMatchConstants() {
@@ -319,5 +311,9 @@ public class GameClient extends GameClientListened implements GameClientView {
             for (TeamClient t : teams)
                 ret.add(t.getPlayers().get(i));
         return ret;
+    }
+
+    public void unsetCurrentCharacterCard() {
+        this.currentCharacterCard = null;
     }
 }

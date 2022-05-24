@@ -19,8 +19,10 @@ public class Char0 extends GameComponent implements CharacterCard {
         // input 0 is the color chosen, input 1 is the island id chosen
         int color = inputs.get(0), idIsland = inputs.get(1);
         //TODO Check this idIsland
-        if (color < 0 || color >= Color.values().length || idIsland > 2 * game.getPlayerSize() + 12 || idIsland < 2 * game.getPlayerSize())
-            throw new NotAllowedException("Set wrong inputs");
+        if (color < 0 || color >= Color.values().length)
+            throw new NotAllowedException("Set wrong inputs for color");
+        if(idIsland > 2 * game.getPlayerSize() + 12 || idIsland < 2 * game.getPlayerSize())
+            throw new NotAllowedException("Set wrong input for id Island");
         this.moveStudents(Color.values()[color], (byte) 1, game.getComponentById(idIsland));
         game.drawStudents(this, (byte) 1);
         game.getGameDelta().addUpdatedGC(this);
