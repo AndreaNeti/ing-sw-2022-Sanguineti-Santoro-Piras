@@ -3,7 +3,6 @@ package it.polimi.ingsw.Client.PhaseAndComand.Commands;
 import it.polimi.ingsw.Client.View.AbstractView;
 import it.polimi.ingsw.Client.View.Cli.ViewCli;
 import it.polimi.ingsw.Client.model.CharacterCardClient;
-import it.polimi.ingsw.Enum.GamePhase;
 import it.polimi.ingsw.exceptions.PhaseChangedException;
 import it.polimi.ingsw.network.toServerMessage.ChooseCharacter;
 
@@ -23,7 +22,7 @@ public class ChooseCharacterCommand extends GameCommand {
         boolean phaseChanged = false;
         do {
             try {
-                index = viewCli.getIntInput((characters.toArray()), "Select the character you want to play", false);
+                index = viewCli.getCharacterCharToPlayInput();
             } catch (PhaseChangedException e) {
                 phaseChanged=true;
             }

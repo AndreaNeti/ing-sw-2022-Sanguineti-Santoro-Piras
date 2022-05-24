@@ -65,7 +65,7 @@ public class IslandClient extends GameComponentClient {
     }
 
     @Override
-    protected String getNameOfComponent() {
+    public String getNameOfComponent() {
         return "Island";
     }
 }

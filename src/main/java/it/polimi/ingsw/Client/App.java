@@ -2,9 +2,7 @@ package it.polimi.ingsw.Client;
 
 import it.polimi.ingsw.Client.Controller.ControllerClient;
 import it.polimi.ingsw.Client.View.AbstractView;
-import it.polimi.ingsw.Client.View.Cli.CliPrinter;
 import it.polimi.ingsw.Client.View.Cli.ViewCli;
-import it.polimi.ingsw.Client.View.GameClientListener;
 
 public class App {
     static AbstractView view;

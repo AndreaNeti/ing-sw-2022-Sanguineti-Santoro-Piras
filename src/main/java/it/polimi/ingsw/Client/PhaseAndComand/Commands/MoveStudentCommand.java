@@ -4,7 +4,6 @@ import it.polimi.ingsw.Client.View.AbstractView;
 import it.polimi.ingsw.Client.View.Cli.ViewCli;
 import it.polimi.ingsw.Enum.Color;
 import it.polimi.ingsw.exceptions.PhaseChangedException;
-import it.polimi.ingsw.network.toServerMessage.MoveFromCloud;
 import it.polimi.ingsw.network.toServerMessage.MoveStudent;
 
 import java.awt.event.ActionEvent;

@@ -5,8 +5,6 @@ import it.polimi.ingsw.Server.controller.ClientHandler;
 import it.polimi.ingsw.Server.controller.Controller;
 import it.polimi.ingsw.exceptions.GameException;
 import it.polimi.ingsw.exceptions.NotAllowedException;
-import it.polimi.ingsw.Enum.Color;
-import it.polimi.ingsw.network.toClientMessage.TextMessageSC;
 
 public class MoveStudent implements ToServerMessage {
     Color color;

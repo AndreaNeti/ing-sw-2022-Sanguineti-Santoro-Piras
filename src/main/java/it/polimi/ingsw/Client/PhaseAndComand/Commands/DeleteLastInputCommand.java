@@ -1,8 +1,6 @@
 package it.polimi.ingsw.Client.PhaseAndComand.Commands;
 
 import it.polimi.ingsw.Client.View.AbstractView;
-import it.polimi.ingsw.Enum.GamePhase;
-import it.polimi.ingsw.exceptions.PhaseChangedException;
 
 import java.awt.event.ActionEvent;
 

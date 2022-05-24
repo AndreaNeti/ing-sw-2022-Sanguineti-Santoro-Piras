@@ -3,7 +3,6 @@ package it.polimi.ingsw.Client.PhaseAndComand.Commands;
 import it.polimi.ingsw.Client.View.AbstractView;
 import it.polimi.ingsw.Client.View.Cli.ViewCli;
 import it.polimi.ingsw.exceptions.PhaseChangedException;
-import it.polimi.ingsw.network.toServerMessage.MoveFromCloud;
 import it.polimi.ingsw.network.toServerMessage.PlayCard;
 
 import java.awt.event.ActionEvent;

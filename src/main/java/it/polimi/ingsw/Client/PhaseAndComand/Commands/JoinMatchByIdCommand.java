@@ -3,7 +3,6 @@ package it.polimi.ingsw.Client.PhaseAndComand.Commands;
 import it.polimi.ingsw.Client.View.AbstractView;
 import it.polimi.ingsw.Client.View.Cli.ViewCli;
 import it.polimi.ingsw.exceptions.PhaseChangedException;
-import it.polimi.ingsw.network.toServerMessage.CreateMatch;
 import it.polimi.ingsw.network.toServerMessage.JoinMatchById;
 
 import java.awt.event.ActionEvent;
@@ -36,6 +35,6 @@ public class JoinMatchByIdCommand extends GameCommand {
 
     @Override
     public String toString() {
-        return "Join match by id";
+        return "Join match by ID";
     }
 }

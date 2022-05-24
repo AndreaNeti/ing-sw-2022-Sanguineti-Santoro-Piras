@@ -3,6 +3,7 @@ package it.polimi.ingsw.Client.View.Cli;
 import it.polimi.ingsw.Client.Controller.ControllerClient;
 import it.polimi.ingsw.Client.View.AbstractView;
 import it.polimi.ingsw.Client.View.ClientPhaseView;
+import it.polimi.ingsw.Client.model.CharacterCardClient;
 import it.polimi.ingsw.Client.model.GameClientView;
 import it.polimi.ingsw.Client.model.GameComponentClient;
 import it.polimi.ingsw.Client.model.IslandClient;
@@ -10,9 +11,7 @@ import it.polimi.ingsw.Enum.Color;
 import it.polimi.ingsw.Server.controller.MatchType;
 import it.polimi.ingsw.exceptions.PhaseChangedException;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class ViewCli extends AbstractView implements ViewForCharacterCli {
     private ClientPhaseView phaseToExecute;
@@ -71,6 +70,7 @@ public class ViewCli extends AbstractView implements ViewForCharacterCli {
         } while (!canQuit());
     }
 
+    // called by server listener or app thread
     @Override
     public synchronized void setPhaseInView(ClientPhaseView clientPhaseView, boolean forceScannerSkip) {
         phaseToExecute = clientPhaseView;
@@ -88,17 +88,54 @@ public class ViewCli extends AbstractView implements ViewForCharacterCli {
         this.mustReprint = true;
         notifyAll();
     }
+    private String optionString(int value, String option) {
+        return "[" + value + "] " + option;
+    }
 
-    private String listOptions(Object[] options) {
-        StringBuilder ret = new StringBuilder();
-        ret.append("--OPTIONS--\n");
-        for (int i = 0; i < options.length; i++)
-            ret.append("[").append(i).append("] ").append(options[i]).append("\n");
-        return ret.toString();
+    private String optionString(SortedSet<Integer> values, String option) {
+        int start, end, temp;
+        StringBuilder s = new StringBuilder();
+        if (!values.isEmpty()) {
+            start = values.first();
+            end = start;
+            for (Integer integer : values) {
+                temp = integer;
+                // not adjacent
+                if (temp > end + 1) {
+                    // last was an interval
+                    if (end > start) {
+                        s.append("[").append(start).append("-").append(end).append("]");
+                    } else {
+                        s.append("[").append(start).append("]");
+                    }
+                    start = temp;
+                }
+                end = temp;
+            }
+
+            if (end > start) {
+                s.append("[").append(start).append("-").append(end).append("]");
+            } else {
+                s.append("[").append(start).append("]");
+            }
+            s.append(" ").append(option);
+        }
+        return s.toString();
+    }
+
+    private int getIntInput(Set<Integer> optionValues, String message, boolean canBeStopped) throws PhaseChangedException {
+        int option = getIntInput(message, canBeStopped);
+        while (!optionValues.contains(option)) {
+            System.err.println("Not a valid input");
+            option = getIntInput(message, canBeStopped);
+        }
+        return option;
     }
 
     public int getIntInput(Object[] options, String message, boolean canBeStopped) throws PhaseChangedException {
-        System.out.println(listOptions(options));
+        System.out.println("--OPTIONS--");
+        for (byte i = 0; i < options.length; i++)
+            System.out.println(optionString(i, options[i].toString()));
         return getIntInput(0, options.length - 1, message, canBeStopped);
     }
 
@@ -159,35 +196,67 @@ public class ViewCli extends AbstractView implements ViewForCharacterCli {
     }
 
     public int getColorInput(boolean canBeStopped) throws PhaseChangedException {
-        return getIntInput(Color.values(), "Choose a color", canBeStopped);
+        return getIntInput(Color.values(), "Select a color", canBeStopped);
     }
 
     public MatchType getMatchTypeInput(boolean canBeStopped) throws PhaseChangedException {
-        return new MatchType((byte) getIntInput(2, 4, "Choose the number of players", canBeStopped), getBooleanInput("Do you want to play in expert mode?", canBeStopped));
+        return new MatchType((byte) getIntInput(2, 4, "Select the number of players", canBeStopped), getBooleanInput("Do you want to play in expert mode?", canBeStopped));
+    }
+
+    public byte getCharacterCharToPlayInput() throws PhaseChangedException {
+        List<CharacterCardClient> characterCards = getModel().getCharacters();
+        System.out.println("--OPTIONS--");
+        for (int i = 0; i < characterCards.size(); i++)
+            System.out.println(optionString(i, characterCards.get(i) + ": " + characterCards.get(i).getDescription()));
+        return (byte) getIntInput(0, characterCards.size(), "Select the character to play", false);
     }
 
     public byte getAssistantCardToPlayInput(boolean canBeStopped) throws PhaseChangedException {
-        // TODO use getIntInput Options[] and a record for assistant cards
         boolean[] usedCards = getModel().getCurrentPlayer().getUsedCards();
-        byte ret = (byte) getIntInput(1, usedCards.length, "Choose an assistant card to play", canBeStopped);
-        while (usedCards[ret - 1]) {
-            System.err.println("Card already played");
-            ret = (byte) getIntInput(1, usedCards.length, "Choose an assistant card to play", canBeStopped);
+        TreeSet<Integer> choices = new TreeSet<>();
+        for (int i = 1; i <= usedCards.length; i++) {
+            if (!usedCards[i - 1])
+                choices.add(i);
         }
-        return ret;
+        System.out.println("--OPTIONS--");
+        System.out.println(optionString(choices, "Assistant card"));
+
+        return (byte) getIntInput(choices, "Select an assistant card to play", canBeStopped);
     }
 
     public int getMoveStudentDestination(boolean canBeStopped) throws PhaseChangedException {
         List<GameComponentClient> validDestinations = new ArrayList<>();
-        validDestinations.add(getModel().getCurrentPlayer().getLunchHall());
-        validDestinations.addAll(getModel().getIslands());
-        int index = getIntInput(validDestinations.toArray(), "Select a destination", canBeStopped);
+
+        GameComponentClient lunchHall = getModel().getCurrentPlayer().getLunchHall();
+        List<IslandClient> islands = getModel().getIslands();
+
+        TreeSet<Integer> choices = new TreeSet<>();
+        for (IslandClient island : islands)
+            choices.add(islands.indexOf(island) + 1);
+
+        System.out.println("--OPTIONS--");
+        System.out.println("[0] " + lunchHall.getNameOfComponent());
+        System.out.println(optionString(choices, islands.get(0).getNameOfComponent()));
+
+        choices.add(0);
+
+        validDestinations.add(lunchHall);
+        validDestinations.addAll(islands);
+        int input = getIntInput(choices, "Select a destination", canBeStopped);
+        int index = new ArrayList<>(choices).indexOf(input);
         return validDestinations.get(index).getId();
     }
 
     public int getIslandDestination(String message, boolean canBeStopped) throws PhaseChangedException {
         List<IslandClient> islandClients = getModel().getIslands();
-        return islandClients.get(getIntInput(islandClients.toArray(), message, canBeStopped)).getId();
+        System.out.println("--OPTIONS--");
+        SortedSet<Integer> choices = new TreeSet<>();
+        for (IslandClient i : islandClients)
+            choices.add(islandClients.indexOf(i) + 1);
+        System.out.println(optionString(choices, islandClients.get(0).getNameOfComponent()));
+        int input = getIntInput(choices, message, canBeStopped);
+        int index = new ArrayList<>(choices).indexOf(input);
+        return islandClients.get(index).getId();
     }
 
     public byte getMotherNatureMovesInput(boolean canBeStopped) throws PhaseChangedException {
@@ -195,14 +264,22 @@ public class ViewCli extends AbstractView implements ViewForCharacterCli {
     }
 
     public int getCloudSource(boolean canBeStopped) throws PhaseChangedException {
-        ArrayList<GameComponentClient> availableClouds = new ArrayList<>();
+        List<GameComponentClient> clouds = getModel().getClouds();
+        List<GameComponentClient> availableClouds = new ArrayList<>();
+        SortedSet<Integer> choices = new TreeSet<>();
+        System.out.println("--OPTIONS--");
         // Add and prints only the not-empty clouds
-        for (GameComponentClient cloud : getModel().getClouds()) {
-            if (cloud.howManyStudents() > 0)
+        for (GameComponentClient cloud : clouds) {
+            if (cloud.howManyStudents() > 0) {
+                int cloudIndex = clouds.indexOf(cloud) + 1;
                 availableClouds.add(cloud);
+                choices.add(cloudIndex);
+            }
         }
-        int cloudIndex = getIntInput(availableClouds.toArray(), "Choose a cloud source", canBeStopped);
-        return availableClouds.get(cloudIndex).getId();
+        System.out.println(optionString(choices, clouds.get(0).getNameOfComponent()));
+        int input = getIntInput(choices, "Select a cloud source", canBeStopped);
+        int index = new ArrayList<>(choices).indexOf(input);
+        return availableClouds.get(index).getId();
     }
 
     public boolean getBooleanInput(String message, boolean canBeStopped) throws PhaseChangedException {
@@ -263,6 +340,7 @@ public class ViewCli extends AbstractView implements ViewForCharacterCli {
             e.printStackTrace();
             return null;
         }
+
         if (isInputReady) return this.input;
         if (mustReprint)
             cliPrinter.printGame();

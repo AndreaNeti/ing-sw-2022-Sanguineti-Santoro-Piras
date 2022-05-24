@@ -56,7 +56,7 @@ public class GameComponentClient {
         this.id = gameComponent.getId();
     }
 
-    protected String getNameOfComponent() {
+    public String getNameOfComponent() {
         if (id < -10) {
             return "Character card";
         } else if (id < 0)
