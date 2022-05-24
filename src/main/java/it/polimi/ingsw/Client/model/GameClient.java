@@ -57,7 +57,7 @@ public class GameClient extends GameClientListened implements GameClientView {
         this.charactersWithStudents = new ArrayList<>();
         this.chat = new LimitedChat<>(9);
         this.updatedCoinPlayer = new HashMap<>();
-        for(byte i = 0; i < matchType.nPlayers(); i++) {
+        for (byte i = 0; i < matchType.nPlayers(); i++) {
             updatedCoinPlayer.put(i, (byte) matchConstants.initialPlayerCoins());
         }
     }
@@ -310,5 +310,14 @@ public class GameClient extends GameClientListened implements GameClientView {
         // teams index = b % team size (in 4 players game, players are inserted in team 0, indexOf1, 0, 1)
         // player index (in team members) = b / team size (2 or 3 players -> = 0 (team contains only 1 member), 4 players -> first 2 = 0, last 2 = 1 (3rd player is in team 0 and is member[1]))
         return teams.get(n % teams.size()).getPlayers().get(n / teams.size());
+    }
+
+    @Override
+    public List<PlayerClient> getPlayers() {
+        ArrayList<PlayerClient> ret = new ArrayList<>(matchType.nPlayers());
+        for (byte i = 0; i < matchType.nPlayers() / teams.size(); i++)
+            for (TeamClient t : teams)
+                ret.add(t.getPlayers().get(i));
+        return ret;
     }
 }

@@ -31,9 +31,7 @@ public class CliPrinter implements GameClientListener {
         AnsiConsole.systemInstall();
         // List<PlayerClient> players = game.getTeams();
         // TODO implement teams
-        List<PlayerClient> players = new ArrayList<>();
-        for (TeamClient t : game.getTeams())
-            players.addAll(t.getPlayers());
+        List<PlayerClient> players = game.getPlayers();
         System.out.println("----------------------ERYANTIS----------------------");
         System.out.print(printIslands(game.getIslands()));
         System.out.print(printCloudsAndTeams(game.getClouds(), game.getTeams()));

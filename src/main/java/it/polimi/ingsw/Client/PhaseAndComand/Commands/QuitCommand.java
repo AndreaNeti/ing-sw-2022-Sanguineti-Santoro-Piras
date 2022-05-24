@@ -19,7 +19,6 @@ public class QuitCommand extends GameCommand {
         boolean quit = viewCli.getBooleanInput("Quit?", false);
         if (quit) {
             viewCli.setQuit(false);
-            viewCli.sendToServer(new Quit());
         } else
             viewCli.goToOldPhase(false);
     }

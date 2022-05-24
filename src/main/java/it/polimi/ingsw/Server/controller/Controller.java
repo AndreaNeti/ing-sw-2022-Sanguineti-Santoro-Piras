@@ -198,6 +198,8 @@ public class Controller {
 
     public void disconnectPlayerQuit(GameListener playerAlreadyDisconnected) {
         removePlayer(playerAlreadyDisconnected);
+        if (gameFinished) return;
+        gameFinished = true;
         Server.removeMatch(matchId);
         notifyClients(new EndGame(null));
     }

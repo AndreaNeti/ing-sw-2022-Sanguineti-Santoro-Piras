@@ -33,6 +33,6 @@ public interface GameClientView {
 
     byte getCoinsPlayer(byte i);
     MatchType getMatchType();
-
     PlayerClient getPlayer(int index);
+    List<PlayerClient> getPlayers();
 }
