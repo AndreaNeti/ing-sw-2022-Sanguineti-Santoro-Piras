@@ -331,7 +331,7 @@ public class CliPrinter implements GameClientListener {
             if (game.getMyWizard() == players.get(i).getWizard())
                 boardsCharChatPrint.append("\u001b[47;1m");
 
-            boardsCharChatPrint.append(Wizard.values()[i]).append("\u001b[0m");
+            boardsCharChatPrint.append(players.get(i).getWizard()).append("\u001b[0m");
             if (expert) {
                 byte c = game.getCoinsPlayer((byte) i);
                 String coins = c < 10 ? "0" + c : String.valueOf(c);
