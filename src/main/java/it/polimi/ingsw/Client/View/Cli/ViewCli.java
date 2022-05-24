@@ -15,9 +15,8 @@ import java.util.*;
 
 public class ViewCli extends AbstractView implements ViewForCharacterCli {
     private ClientPhaseView phaseToExecute;
-    private volatile boolean isInputReady, phaseChanged, requestInput, forcedScannerSkip;
+    private volatile boolean isInputReady, phaseChanged, requestInput, forcedScannerSkip, mustReprint;
     private String input;
-    private volatile boolean mustReprint;
     private final CliPrinter cliPrinter;
 
     public ViewCli(ControllerClient controllerClient) {
@@ -59,11 +58,11 @@ public class ViewCli extends AbstractView implements ViewForCharacterCli {
     public void start() throws InterruptedException {
         do {
             //TODO it print everythings two times, fix
-            mustReprint=false;
+            mustReprint = false;
             synchronized (this) {
                 while (phaseToExecute == null)
                     wait();
-                if(mustReprint)
+                if (mustReprint)
                     cliPrinter.printGame();
                 phaseToExecute.playPhase(this);
             }
@@ -88,6 +87,7 @@ public class ViewCli extends AbstractView implements ViewForCharacterCli {
         this.mustReprint = true;
         notifyAll();
     }
+
     private String optionString(int value, String option) {
         return "[" + value + "] " + option;
     }
@@ -333,7 +333,7 @@ public class ViewCli extends AbstractView implements ViewForCharacterCli {
         try {
             // wait for scanner notify or phase changed flag (if it can be stopped) or forced skip (used if someone lost connection)
             //or if there has been some changes, and it needs to be reprinted
-            while (!isInputReady && (!phaseChanged || !canBeStopped) && !forcedScannerSkip && !mustReprint) {
+            while (!isInputReady && ((!mustReprint && !phaseChanged) || !canBeStopped) && !forcedScannerSkip) {
                 wait();
             }
         } catch (InterruptedException e) {

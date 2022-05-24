@@ -90,29 +90,31 @@ public class NormalGame implements Game {
         if (islandBefore.getTeamColor() != null && islandBefore.getTeamColor().equals(island.getTeamColor())) {
 
             island.merge(islandBefore);
-            islands.remove(islandBeforeIndex);
+            islands.remove(islandBefore);
 
-            if (islandBeforeIndex < motherNaturePosition) motherNaturePosition--;
+            if (islandBeforeIndex < motherNaturePosition) {
+                motherNaturePosition--;
+                islandAfterIndex--;
+            }
 
             // add to game delta
             gameDelta.setNewMotherNaturePosition(motherNaturePosition);
             gameDelta.addUpdatedGC(island);
             gameDelta.addDeletedIslands(islandBefore);
 
-            islandAfterIndex--;
         }
         if (islandAfter.getTeamColor() != null && islandAfter.getTeamColor().equals(island.getTeamColor())) {
             island.merge(islandAfter);
-            islands.remove(islandAfterIndex);
+            islands.remove(islandAfter);
+
+            if (islandAfterIndex < motherNaturePosition) motherNaturePosition--;
 
             // add to game delta
             gameDelta.setNewMotherNaturePosition(motherNaturePosition);
             gameDelta.addUpdatedGC(island);
             gameDelta.addDeletedIslands(islandAfter);
 
-            if (islandAfterIndex <= motherNaturePosition) motherNaturePosition--;
         }
-        if (motherNaturePosition < 0) motherNaturePosition = 0;
 
         if (islands.size() <= matchConstants.minIslands()) throw new EndGameException(true);
 

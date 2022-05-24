@@ -69,20 +69,20 @@ public class ClientHandler implements Runnable, GameListener {
             try {
                 objIn.close();
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                System.err.println("Couldn't close Object Input Stream");
             }
         }
         if (objOut != null) {
             try {
                 objOut.close();
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                System.err.println("Couldn't close Object Output Stream");
             }
         }
         try {
             socket.close();
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            System.err.println("Couldn't close Socket");
         }
     }
 
@@ -116,8 +116,7 @@ public class ClientHandler implements Runnable, GameListener {
             objOut.writeObject(m);
             objOut.flush();
         } catch (IOException e) {
-            e.printStackTrace();
-            System.err.println("can't send to the client");
+            System.err.println("Can't send to the client");
         }
 
     }

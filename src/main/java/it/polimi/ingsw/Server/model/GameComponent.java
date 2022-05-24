@@ -128,7 +128,7 @@ public abstract class GameComponent implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         GameComponent that = (GameComponent) o;
-        return maxStudents == that.maxStudents && Arrays.equals(students, that.students);
+        return idGameComponent == that.idGameComponent;
     }
 
     public byte getId() {

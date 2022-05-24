@@ -76,13 +76,13 @@ public class Controller {
             //currentPlayerIndex*2 is the id of the entranceHall
             game.move(color, (currentPlayerIndex * 2), idGameComponent);
             movesCounter++;
+            broadcastMessage(new TextMessageSC("Server: " + Wizard.values()[getCurrentPlayerIndex()] + " moved a " + color + " student"));
             if (movesCounter == matchConstants.studentsToMove()) {
                 movesCounter = 0;
                 nextPhase();
             } else {
                 setPhase(GamePhase.MOVE_ST_PHASE);
             }
-            broadcastMessage(new TextMessageSC("Server: " + Wizard.values()[getCurrentPlayerIndex()] + " moved a " + color + " student"));
         } else {
             throw new NotAllowedException("Wrong Phase");
         }
@@ -94,8 +94,8 @@ public class Controller {
             if (idGameComponent >= 0 || idGameComponent < -matchType.nPlayers())
                 throw new NotAllowedException("Component is not a cloud");
             game.moveFromCloud(idGameComponent);
-            nextPhase();
             broadcastMessage(new TextMessageSC("Server: " + Wizard.values()[getCurrentPlayerIndex()] + " take student from a cloud"));
+            nextPhase();
         } else
             throw new NotAllowedException("Wrong Phase");
 
@@ -119,9 +119,8 @@ public class Controller {
             } catch (EndGameException e) {
                 handleError(e);
             }
-            nextPhase();
-
             broadcastMessage(new TextMessageSC("Server: " + Wizard.values()[getCurrentPlayerIndex()] + " played card n° " + value));
+            nextPhase();
         } else {
             throw new NotAllowedException("Cannot play this card");
         }
@@ -134,8 +133,8 @@ public class Controller {
             } catch (EndGameException e) {
                 handleError(e);
             }
-            nextPhase();
             broadcastMessage(new TextMessageSC("Server: " + Wizard.values()[getCurrentPlayerIndex()] + " moved MotherNature by " + moves + " moves"));
+            nextPhase();
         } else {
             throw new NotAllowedException("Wrong phase");
         }
@@ -184,7 +183,6 @@ public class Controller {
         }
         game.chooseCharacter(charId);
         broadcastMessage(new TextMessageSC("Server: " + Wizard.values()[getCurrentPlayerIndex()] + " chose character card " + charId));
-
     }
 
     public synchronized void playCharacter() throws GameException, NullPointerException {
@@ -197,7 +195,7 @@ public class Controller {
         try {
             game.playCharacter();
             characterCardPlayed = true;
-            broadcastMessage(new TextMessageSC("Server: " + Wizard.values()[getCurrentPlayerIndex()] + " played character card "));
+            broadcastMessage(new TextMessageSC("Server: " + Wizard.values()[getCurrentPlayerIndex()] + " played character card"));
         } catch (EndGameException e) {
             handleError(e);
         }
