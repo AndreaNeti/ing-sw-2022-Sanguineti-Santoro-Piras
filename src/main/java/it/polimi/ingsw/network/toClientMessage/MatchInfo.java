@@ -24,7 +24,6 @@ public class MatchInfo implements ToClientMessage {
     @Override
     public void execute(ControllerClient controllerClient) {
         controllerClient.setMatchInfo(matchType, teams, yourWizard);
-        System.out.println("Match info: " + matchType + ", ID: " + matchId);
-        System.out.println("Your wizard is: " + yourWizard);
+        controllerClient.addMessage("Match info: " + matchType + ", ID: " + matchId + ". Your wizard is: " + yourWizard);
     }
 }

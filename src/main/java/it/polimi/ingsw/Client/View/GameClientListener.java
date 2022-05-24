@@ -29,7 +29,7 @@ public interface GameClientListener {
 
     void update(String currentPlayer, boolean isMyTurn);
 
-    void updateMembers(int membersLeftToStart);
+    void updateMembers(int membersLeftToStart, String nickPlayerJoined);
 
     //TODO update withcoins, character
     void updateCardPlayed(Byte playedCard);

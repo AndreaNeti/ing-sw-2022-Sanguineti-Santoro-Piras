@@ -9,50 +9,56 @@ import it.polimi.ingsw.Enum.Wizard;
 import org.fusesource.jansi.AnsiConsole;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 public class CliPrinter implements GameClientListener {
 
 
     private final static String operatingSystem = System.getProperty("os.name");
     private final AbstractView view;
+    private GameClientView game;
 
     public CliPrinter(AbstractView view) {
         this.view = view;
     }
 
     public void printLobby() {
-//        System.out.println("----------------------ERYANTIS----------------------");
-//        for (String m : game.getChat()) {
-//            System.out.println(m);
-//        }
-
+        ArrayList<String> chatCopy = view.getChat();
+//        Collections.reverse(chatCopy);
+        StringBuilder chat = new StringBuilder();
+        chat.append(" \u250c").append("\u2500".repeat(39)).append("\u2524\u001b[4m CHAT \u001b[0m\u251c").append("\u2500".repeat(39)).append("\u2510\n");
+        String mex;
+        for(int i = 14; i >= 0; i--) {
+            if(chatCopy.size() >= i+1) {
+                mex = chatCopy.get(i);
+                chat.append(" \u2502 ").append(chatCopy.get(i)).append(" ".repeat(85 - mex.length())).append("\u2502\n");
+            } else {
+                chat.append(" \u2502 ").append(" ".repeat(85)).append("\u2502\n");
+            }
+        }
+        chat.append(" \u2514").append("\u2500".repeat(86)).append("\u2518\n\n");
+        System.out.print(chat);
     }
 
     public void printGame() {
-        GameClientView game = view.getModel();
+        game = view.getModel();
         if (game != null) {
 //        System.setOut(new PrintStream(new FileOutputStream(FileDescriptor.out), true, StandardCharsets.UTF_8));
             AnsiConsole.systemInstall();
-            // List<PlayerClient> players = game.getTeams();
-            // TODO implement teams
-            List<PlayerClient> players = new ArrayList<>();
-            for (TeamClient t : game.getTeams())
-                players.addAll(t.getPlayers());
+            List<PlayerClient> players = game.getPlayers();
+
             System.out.println("----------------------ERYANTIS----------------------");
             System.out.print(printIslands(game.getIslands()));
             System.out.print(printCloudsAndTeams(game.getClouds(), game.getTeams()));
             System.out.print(printBoardsChatCharacters(players));
             System.out.print(printAssistantCards(players));
             AnsiConsole.systemUninstall();
+        } else {
+            printLobby();
         }
     }
 
     private StringBuilder printIslands(ArrayList<IslandClient> islands) {
-        GameClientView game = view.getModel();
         StringBuilder islandPrint = new StringBuilder();
         // print island number and prohibitions
         for (int i = 0; i < islands.size(); i++) {
@@ -109,7 +115,6 @@ public class CliPrinter implements GameClientListener {
     }
 
     private StringBuilder printCloudsAndTeams(ArrayList<GameComponentClient> clouds, List<TeamClient> teams) {
-        GameClientView game = view.getModel();
         StringBuilder cloudsTeamsPrint = new StringBuilder();
         // print cloud number
         for (int i = 0; i < clouds.size(); i++) {
@@ -165,7 +170,6 @@ public class CliPrinter implements GameClientListener {
     }
 
     private StringBuilder printBoardsChatCharacters(List<PlayerClient> players) {
-        GameClientView game = view.getModel();
         StringBuilder boardsCharChatPrint = new StringBuilder();
         byte numOfPlayers = (byte) players.size();
         boolean expert = game.isExpert();
@@ -291,7 +295,7 @@ public class CliPrinter implements GameClientListener {
             for (Color c : Color.values())
                 for (int j = 0; j < p.getEntranceHall().howManyStudents(c); j++)
                     studs.add(colors[c.ordinal()]);
-            Collections.shuffle(studs);
+            Collections.shuffle(studs, new Random(0));
             entranceStud.put(p, studs);
         }
         // print first row of entrance hall students
@@ -358,7 +362,6 @@ public class CliPrinter implements GameClientListener {
     }
 
     private StringBuilder printAssistantCards(List<PlayerClient> players) {
-        GameClientView game = view.getModel();
         StringBuilder assistantCardsPrint = new StringBuilder();
         PlayerClient player = players.get(0);
         // find player
@@ -437,8 +440,9 @@ public class CliPrinter implements GameClientListener {
     }
 
     @Override
-    public void updateMembers(int membersLeftToStart) {
-//        printGame();
+    public void updateMembers(int membersLeftToStart, String nickPlayerJoined) {
+        if (membersLeftToStart > 0)
+            view.addMessage(nickPlayerJoined + " joined. " + membersLeftToStart + " members left before game starts");
     }
 
     @Override

@@ -68,7 +68,7 @@ public record UpdateCli(ViewCli viewCli) implements GameClientListener {
     }
 
     @Override
-    public void updateMembers(int membersLeftToStart) {
+    public void updateMembers(int membersLeftToStart, String nickPlayerJoined) {
         if (membersLeftToStart > 0)
             System.out.println(membersLeftToStart + " members left before game starts");
         else System.out.println("Game is about to start");

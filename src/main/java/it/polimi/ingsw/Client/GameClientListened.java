@@ -1,6 +1,5 @@
 package it.polimi.ingsw.Client;
 
-import it.polimi.ingsw.Client.Controller.ClientPhaseController;
 import it.polimi.ingsw.Client.View.GameClientListener;
 import it.polimi.ingsw.Client.model.CharacterCardClient;
 import it.polimi.ingsw.Client.model.GameComponentClient;
@@ -78,9 +77,9 @@ public abstract class GameClientListened {
             listener.updateCharacter(characters);
         }
     }
-    public void notifyMembers(int membersLeftToStart) {
+    public void notifyMembers(int membersLeftToStart, String nickPlayerJoined) {
         for (GameClientListener listener : listeners) {
-            listener.updateMembers(membersLeftToStart);
+            listener.updateMembers(membersLeftToStart, nickPlayerJoined);
         }
     }
 

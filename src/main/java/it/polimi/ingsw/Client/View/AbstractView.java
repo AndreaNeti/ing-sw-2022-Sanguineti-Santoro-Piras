@@ -18,7 +18,7 @@ public abstract class AbstractView {
     public AbstractView(ControllerClient controllerClient) {
         this.controllerClient = controllerClient;
 
-        this.chat = new LimitedChat<>(9);
+        this.chat = new LimitedChat<>(15);
         quit = false;
     }
 
@@ -51,6 +51,7 @@ public abstract class AbstractView {
     public abstract void start() throws InterruptedException;
 
     public void setQuit(boolean forceScannerSkip) {
+        chat.clear();
         // true quits all, only if called during init phase
         quit = controllerClient.setQuit(forceScannerSkip);
     }
@@ -72,9 +73,14 @@ public abstract class AbstractView {
 
     public void addMessage(String message) {
         chat.add(message);
+        //controllerClient.repeatPhase(false);
     }
 
     public ArrayList<String> getChat() {
         return new ArrayList<>(chat);
+    }
+
+    public void clearChat() {
+        chat.clear();
     }
 }

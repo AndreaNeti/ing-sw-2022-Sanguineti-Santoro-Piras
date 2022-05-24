@@ -37,7 +37,7 @@ public class ControllerClient extends GameClientListened {
     private ArrayList<TeamClient> teamsClient;
     private Map<CLICommands, GameCommand> commands;
     private Map<GamePhase, ClientPhaseController> phases;
-    private GamePhase oldPhase;
+    private GamePhase oldPhase; //TODO Add currentphase too
     private Wizard myWizard;
     private ServerListener serverListener;
     private AbstractView abstractView;
@@ -106,10 +106,9 @@ public class ControllerClient extends GameClientListened {
     }
 
     public void addMessage(String message) {
-        if (model != null)
+//        if (model != null)
             abstractView.addMessage(message);
-        notifyView();
-//        repeatPhase(false);
+        //notifyView();
     }
 
     public void repeatPhase(boolean forceScannerSkip) {
@@ -140,16 +139,16 @@ public class ControllerClient extends GameClientListened {
 
     public void addMember(Player playerJoined, HouseColor teamColor) {
         teamsClient.get(teamColor.ordinal()).addPlayer(new PlayerClient(playerJoined, matchConstants));
-        super.notifyMembers(matchType.nPlayers() - playersInMatch());
+        super.notifyMembers(matchType.nPlayers() - playersInMatch(), playerJoined.toString());
         if (playersInMatch() == matchType.nPlayers()) startGame();
     }
 
     public void sendMessage(ToServerMessage command) {
-        if (serverSender == null) error("Must connect to a Server Before", false);
+        if (serverSender == null) error(false);
         else serverSender.sendServerMessage(command);
     }
 
-    public void error(String e, boolean forceScannerSkip) {
+    public void error(boolean forceScannerSkip) {
         repeatPhase(forceScannerSkip);
 //        notifyError(e);
     }
@@ -196,6 +195,7 @@ public class ControllerClient extends GameClientListened {
         teamsClient = new ArrayList<>();
         for (Team t : teams)
             teamsClient.add(new TeamClient(t.getHouseColor(), t.getPlayers(), matchConstants));
+        notifyMembers(matchType.nPlayers() - playersInMatch(), "You");
         if (playersInMatch() == matchType.nPlayers()) startGame();
     }
 
@@ -207,6 +207,7 @@ public class ControllerClient extends GameClientListened {
             attachExpertCommand();
         }
         model.addListener(this);
+//        abstractView.clearChat();
         abstractView.setModel(model);
     }
 
@@ -227,6 +228,7 @@ public class ControllerClient extends GameClientListened {
             return false;
         } else return true;
     }
+
     public void notifyClientPhase(ClientPhaseController clientPhaseController, boolean forceScannerSkip) {
         super.notifyView();
         clientPhaseController.setPhaseInView(abstractView, forceScannerSkip);
