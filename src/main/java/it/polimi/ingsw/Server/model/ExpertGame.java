@@ -5,10 +5,10 @@ import it.polimi.ingsw.Enum.HouseColor;
 import it.polimi.ingsw.Server.controller.ExpertGameDelta;
 import it.polimi.ingsw.Server.controller.GameDelta;
 import it.polimi.ingsw.Server.controller.MatchConstants;
-import it.polimi.ingsw.exceptions.EndGameException;
-import it.polimi.ingsw.exceptions.GameException;
-import it.polimi.ingsw.exceptions.NotAllowedException;
-import it.polimi.ingsw.exceptions.NotEnoughCoinsException;
+import it.polimi.ingsw.exceptions.serverExceptions.EndGameException;
+import it.polimi.ingsw.exceptions.serverExceptions.GameException;
+import it.polimi.ingsw.exceptions.serverExceptions.NotAllowedException;
+import it.polimi.ingsw.exceptions.serverExceptions.NotEnoughCoinsException;
 
 import java.util.ArrayList;
 import java.util.Arrays;

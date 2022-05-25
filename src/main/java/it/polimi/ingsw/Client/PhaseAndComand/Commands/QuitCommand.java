@@ -2,7 +2,8 @@ package it.polimi.ingsw.Client.PhaseAndComand.Commands;
 
 import it.polimi.ingsw.Client.View.AbstractView;
 import it.polimi.ingsw.Client.View.Cli.ViewCli;
-import it.polimi.ingsw.exceptions.PhaseChangedException;
+import it.polimi.ingsw.exceptions.clientExceptions.RepeatCommandException;
+import it.polimi.ingsw.exceptions.clientExceptions.ScannerException;
 
 import java.awt.event.ActionEvent;
 
@@ -13,7 +14,7 @@ public class QuitCommand extends GameCommand {
     }
 
     @Override
-    public void playCLICommand() {
+    public void playCLICommand() throws ScannerException {
         ViewCli viewCli = (ViewCli) getView();
         boolean quit = false;
         boolean phaseChanged;
@@ -22,7 +23,7 @@ public class QuitCommand extends GameCommand {
             try {
                 quit = viewCli.getBooleanInput("Quit?", false);
 
-            } catch (PhaseChangedException e) {
+            } catch (RepeatCommandException e) {
                 phaseChanged = true;
             }
         } while (phaseChanged);

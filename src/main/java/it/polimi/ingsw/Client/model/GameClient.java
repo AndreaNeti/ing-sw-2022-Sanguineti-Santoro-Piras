@@ -34,9 +34,7 @@ public class GameClient extends GameClientListened implements GameClientView {
     private Color ignoredColorInfluence;
 
 
-
     public GameClient(ArrayList<TeamClient> teamsClient, Wizard myWizard, MatchType matchType) {
-        System.out.println(teamsClient.toString());
         this.myWizard = myWizard;
         this.professors = new Wizard[Color.values().length];
         Arrays.fill(professors, null);
@@ -72,7 +70,9 @@ public class GameClient extends GameClientListened implements GameClientView {
 
     @Override
     public PlayerClient getCurrentPlayer() {
-        return getPlayer(currentPlayer);
+        if (currentPlayer != null)
+            return getPlayer(currentPlayer);
+        return null;
     }
 
     public void setCurrentPlayer(Byte currentPlayer) {

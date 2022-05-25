@@ -11,6 +11,6 @@ public class TextMessageCS implements ToServerMessage {
 
     @Override
     public void execute(ClientHandler clientHandler) {
-        clientHandler.getController().sendMessage(clientHandler.getNickName(), message);
+        clientHandler.getController().sendMessage(clientHandler, message);
     }
 }

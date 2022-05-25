@@ -9,7 +9,9 @@ import it.polimi.ingsw.Client.model.GameComponentClient;
 import it.polimi.ingsw.Client.model.IslandClient;
 import it.polimi.ingsw.Enum.Color;
 import it.polimi.ingsw.Server.controller.MatchType;
-import it.polimi.ingsw.exceptions.PhaseChangedException;
+import it.polimi.ingsw.exceptions.clientExceptions.ScannerException;
+import it.polimi.ingsw.exceptions.clientExceptions.SkipCommandException;
+import it.polimi.ingsw.exceptions.clientExceptions.RepeatCommandException;
 
 import java.util.*;
 
@@ -26,10 +28,6 @@ public class ViewCli extends AbstractView implements ViewForCharacterCli {
         Thread scannerThread = new Thread(() -> {
             final Scanner myInput = new Scanner(System.in);
             try {
-                synchronized (this) {
-                    while (!requestInput)
-                        wait();
-                }
                 while (!canQuit()) {
                     do {
                         input = myInput.nextLine();
@@ -37,7 +35,7 @@ public class ViewCli extends AbstractView implements ViewForCharacterCli {
                     synchronized (this) {
                         isInputReady = true;
                         requestInput = false;
-                        notify();
+                        notifyAll();
                         while (!requestInput && !canQuit())
                             wait();
                     }
@@ -46,19 +44,16 @@ public class ViewCli extends AbstractView implements ViewForCharacterCli {
                 throw new RuntimeException(e);
             }
         });
-        scannerThread.start();
-        System.out.println("You've chosen to play with client line interface");
         phaseToExecute = null;
         isInputReady = false;
         phaseChanged = false;
         forcedScannerSkip = false;
         requestInput = false;
+        scannerThread.start();
     }
 
     public void start() throws InterruptedException {
         do {
-            //TODO it print everythings two times, fix
-            mustReprint = false;
             synchronized (this) {
                 while (phaseToExecute == null)
                     wait();
@@ -83,9 +78,10 @@ public class ViewCli extends AbstractView implements ViewForCharacterCli {
         phaseToExecute = null;
     }
 
-    protected synchronized void setMustReprint() {
-        this.mustReprint = true;
-        notifyAll();
+    protected synchronized void setMustReprint(boolean reprint) {
+        this.mustReprint = reprint;
+        if (reprint)
+            notifyAll();
     }
 
     private String optionString(int value, String option) {
@@ -123,7 +119,7 @@ public class ViewCli extends AbstractView implements ViewForCharacterCli {
         return s.toString();
     }
 
-    private int getIntInput(Set<Integer> optionValues, String message, boolean canBeStopped) throws PhaseChangedException {
+    private int getIntInput(Set<Integer> optionValues, String message, boolean canBeStopped) throws ScannerException {
         int option = getIntInput(message, canBeStopped);
         while (!optionValues.contains(option)) {
             System.err.println("Not a valid input");
@@ -132,14 +128,14 @@ public class ViewCli extends AbstractView implements ViewForCharacterCli {
         return option;
     }
 
-    public int getIntInput(Object[] options, String message, boolean canBeStopped) throws PhaseChangedException {
+    public int getIntInput(Object[] options, String message, boolean canBeStopped) throws ScannerException {
         System.out.println("--OPTIONS--");
         for (byte i = 0; i < options.length; i++)
             System.out.println(optionString(i, options[i].toString()));
         return getIntInput(0, options.length - 1, message, canBeStopped);
     }
 
-    public int getIntInput(int min, int max, String message, boolean canBeStopped) throws PhaseChangedException {
+    public int getIntInput(int min, int max, String message, boolean canBeStopped) throws ScannerException {
         int ret = getIntInput(message + " (from " + min + " to " + max + ")", canBeStopped);
         while (ret < min || ret > max) {
             System.err.println("Not a valid input (from " + min + " to " + max + ")");
@@ -149,7 +145,7 @@ public class ViewCli extends AbstractView implements ViewForCharacterCli {
     }
 
     //     Message is the string printed before asking the input
-    public int getIntInput(String message, boolean canBeStopped) throws PhaseChangedException {
+    public int getIntInput(String message, boolean canBeStopped) throws ScannerException {
         int ret = 0;
         boolean err;
         do {
@@ -165,7 +161,7 @@ public class ViewCli extends AbstractView implements ViewForCharacterCli {
         return ret;
     }
 
-    public byte[] getIpAddressInput(boolean canBeStopped) throws PhaseChangedException {
+    public byte[] getIpAddressInput(boolean canBeStopped) throws ScannerException {
         String input = getStringInput("Select server IP", 15, canBeStopped);
         byte[] ret = getIpFromString(input);
         while (ret == null) {
@@ -195,15 +191,15 @@ public class ViewCli extends AbstractView implements ViewForCharacterCli {
         return ret;
     }
 
-    public int getColorInput(boolean canBeStopped) throws PhaseChangedException {
+    public int getColorInput(boolean canBeStopped) throws ScannerException {
         return getIntInput(Color.values(), "Select a color", canBeStopped);
     }
 
-    public MatchType getMatchTypeInput(boolean canBeStopped) throws PhaseChangedException {
+    public MatchType getMatchTypeInput(boolean canBeStopped) throws ScannerException {
         return new MatchType((byte) getIntInput(2, 4, "Select the number of players", canBeStopped), getBooleanInput("Do you want to play in expert mode?", canBeStopped));
     }
 
-    public byte getCharacterCharToPlayInput() throws PhaseChangedException {
+    public byte getCharacterCharToPlayInput() throws ScannerException {
         List<CharacterCardClient> characterCards = getModel().getCharacters();
         System.out.println("--OPTIONS--");
         for (int i = 0; i < characterCards.size(); i++)
@@ -211,7 +207,7 @@ public class ViewCli extends AbstractView implements ViewForCharacterCli {
         return (byte) getIntInput(0, characterCards.size(), "Select the character to play", false);
     }
 
-    public byte getAssistantCardToPlayInput(boolean canBeStopped) throws PhaseChangedException {
+    public byte getAssistantCardToPlayInput(boolean canBeStopped) throws ScannerException {
         boolean[] usedCards = getModel().getCurrentPlayer().getUsedCards();
         TreeSet<Integer> choices = new TreeSet<>();
         for (int i = 1; i <= usedCards.length; i++) {
@@ -224,7 +220,7 @@ public class ViewCli extends AbstractView implements ViewForCharacterCli {
         return (byte) getIntInput(choices, "Select an assistant card to play", canBeStopped);
     }
 
-    public int getMoveStudentDestination(boolean canBeStopped) throws PhaseChangedException {
+    public int getMoveStudentDestination(boolean canBeStopped) throws ScannerException {
         List<GameComponentClient> validDestinations = new ArrayList<>();
 
         GameComponentClient lunchHall = getModel().getCurrentPlayer().getLunchHall();
@@ -247,7 +243,7 @@ public class ViewCli extends AbstractView implements ViewForCharacterCli {
         return validDestinations.get(index).getId();
     }
 
-    public int getIslandDestination(String message, boolean canBeStopped) throws PhaseChangedException {
+    public int getIslandDestination(String message, boolean canBeStopped) throws ScannerException {
         List<IslandClient> islandClients = getModel().getIslands();
         System.out.println("--OPTIONS--");
         SortedSet<Integer> choices = new TreeSet<>();
@@ -259,11 +255,11 @@ public class ViewCli extends AbstractView implements ViewForCharacterCli {
         return islandClients.get(index).getId();
     }
 
-    public byte getMotherNatureMovesInput(boolean canBeStopped) throws PhaseChangedException {
+    public byte getMotherNatureMovesInput(boolean canBeStopped) throws ScannerException {
         return (byte) getIntInput(1, getModel().getCurrentPlayer().getPlayedCardMoves(), "How many steps do you want mother nature to move?", canBeStopped);
     }
 
-    public int getCloudSource(boolean canBeStopped) throws PhaseChangedException {
+    public int getCloudSource(boolean canBeStopped) throws ScannerException {
         List<GameComponentClient> clouds = getModel().getClouds();
         List<GameComponentClient> availableClouds = new ArrayList<>();
         SortedSet<Integer> choices = new TreeSet<>();
@@ -282,7 +278,7 @@ public class ViewCli extends AbstractView implements ViewForCharacterCli {
         return availableClouds.get(index).getId();
     }
 
-    public boolean getBooleanInput(String message, boolean canBeStopped) throws PhaseChangedException {
+    public boolean getBooleanInput(String message, boolean canBeStopped) throws ScannerException {
         System.out.println(message + " (Y/N):");
         String s = getInput(canBeStopped).toLowerCase();
         while (!s.equals("y") && !s.equals("n")) {
@@ -294,7 +290,7 @@ public class ViewCli extends AbstractView implements ViewForCharacterCli {
     }
 
 
-    public String getStringInput(String message, int maxLength, boolean canBeStopped) throws PhaseChangedException {
+    public String getStringInput(String message, int maxLength, boolean canBeStopped) throws ScannerException {
         System.out.println(message + ": ");
         String s = getInput(canBeStopped);
         while (s.length() > maxLength) {
@@ -305,7 +301,7 @@ public class ViewCli extends AbstractView implements ViewForCharacterCli {
         return s;
     }
 
-    public long getLongInput(String message, boolean canBeStopped) throws PhaseChangedException {
+    public long getLongInput(String message, boolean canBeStopped) throws ScannerException {
         long ret = 0;
         boolean err;
         do {
@@ -321,37 +317,42 @@ public class ViewCli extends AbstractView implements ViewForCharacterCli {
         return ret;
     }
 
-    public synchronized String getInput(boolean canBeStopped) throws PhaseChangedException {
+    public synchronized String getInput(boolean canBeStopped) throws ScannerException {
         isInputReady = false;
         phaseChanged = false;
         forcedScannerSkip = false;
-        mustReprint = false;
         this.input = "";
         // wakes up scanner thread
         requestInput = true;
-        notify();
+        notifyAll();
         try {
             // wait for scanner notify or phase changed flag (if it can be stopped) or forced skip (used if someone lost connection)
-            //or if there has been some changes, and it needs to be reprinted
+            // or if there has been some changes, and it needs to be reprinted
             while (!isInputReady && ((!mustReprint && !phaseChanged) || !canBeStopped) && !forcedScannerSkip) {
                 wait();
             }
         } catch (InterruptedException e) {
-            e.printStackTrace();
-            return null;
+            System.err.println("Thread interrupted");
+            throw new SkipCommandException();
         }
-
-        if (isInputReady) return this.input;
-        if (mustReprint)
+        if (mustReprint) {
+            // reprint game
             cliPrinter.printGame();
-        throw new PhaseChangedException();
+            // if one of these conditions is true it should not repeat the command, skip instead to the new one
+            if (!phaseChanged && !isInputReady && !forcedScannerSkip)
+                throw new RepeatCommandException();
+        }
+        // if input is ready, return it
+        if (isInputReady) return this.input;
+        // input not ready and all others conditions are not verified, skip to new command
+        throw new SkipCommandException();
     }
 
     @Override
     public void setQuit(boolean forceScannerSkip) {
         super.setQuit(forceScannerSkip);
         // notifies scanner to wakeup and terminate
-        notify();
+        notifyAll();
     }
 
     @Override

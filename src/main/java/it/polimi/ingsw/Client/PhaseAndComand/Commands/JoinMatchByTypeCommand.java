@@ -3,7 +3,8 @@ package it.polimi.ingsw.Client.PhaseAndComand.Commands;
 import it.polimi.ingsw.Client.View.AbstractView;
 import it.polimi.ingsw.Client.View.Cli.ViewCli;
 import it.polimi.ingsw.Server.controller.MatchType;
-import it.polimi.ingsw.exceptions.PhaseChangedException;
+import it.polimi.ingsw.exceptions.clientExceptions.RepeatCommandException;
+import it.polimi.ingsw.exceptions.clientExceptions.ScannerException;
 import it.polimi.ingsw.network.toServerMessage.JoinMatchByType;
 
 import java.awt.event.ActionEvent;
@@ -20,7 +21,7 @@ public class JoinMatchByTypeCommand extends GameCommand {
     }
 
     @Override
-    public void playCLICommand() {
+    public void playCLICommand() throws ScannerException {
         ViewCli viewCli = (ViewCli) getView();
         boolean phaseChanged;
         do {
@@ -28,7 +29,7 @@ public class JoinMatchByTypeCommand extends GameCommand {
             try {
                 MatchType matchType = viewCli.getMatchTypeInput(false);
                 viewCli.sendToServer(new JoinMatchByType(matchType));
-            } catch (PhaseChangedException e) {
+            } catch (RepeatCommandException e) {
                 phaseChanged = true;
             }
         } while (phaseChanged);

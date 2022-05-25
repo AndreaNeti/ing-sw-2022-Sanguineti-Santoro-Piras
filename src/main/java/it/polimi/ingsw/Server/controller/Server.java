@@ -1,6 +1,6 @@
 package it.polimi.ingsw.Server.controller;
 
-import it.polimi.ingsw.exceptions.NotAllowedException;
+import it.polimi.ingsw.exceptions.serverExceptions.NotAllowedException;
 
 import java.io.IOException;
 import java.net.InetAddress;

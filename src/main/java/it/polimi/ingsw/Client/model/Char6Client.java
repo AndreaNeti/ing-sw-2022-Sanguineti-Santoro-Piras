@@ -1,7 +1,8 @@
 package it.polimi.ingsw.Client.model;
 
 import it.polimi.ingsw.Client.View.Cli.ViewForCharacterCli;
-import it.polimi.ingsw.exceptions.PhaseChangedException;
+import it.polimi.ingsw.exceptions.clientExceptions.RepeatCommandException;
+import it.polimi.ingsw.exceptions.clientExceptions.ScannerException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +21,7 @@ public class Char6Client extends CharacterCardClientWithStudents {
     }
 
     @Override
-    public void setNextInput(ViewForCharacterCli view) throws PhaseChangedException {
+    public void setNextInput(ViewForCharacterCli view) throws ScannerException {
         if (inputs.size() % 2 == 0)
             System.out.println("Select the color of the student from this card " + super.toString());
         else

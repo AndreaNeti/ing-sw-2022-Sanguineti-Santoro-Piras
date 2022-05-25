@@ -1,10 +1,10 @@
 package it.polimi.ingsw.Server.model;
 
 import it.polimi.ingsw.Enum.Color;
-import it.polimi.ingsw.exceptions.EndGameException;
-import it.polimi.ingsw.exceptions.GameException;
-import it.polimi.ingsw.exceptions.NotAllowedException;
-import it.polimi.ingsw.exceptions.NotEnoughStudentsException;
+import it.polimi.ingsw.exceptions.serverExceptions.EndGameException;
+import it.polimi.ingsw.exceptions.serverExceptions.GameException;
+import it.polimi.ingsw.exceptions.serverExceptions.NotAllowedException;
+import it.polimi.ingsw.exceptions.serverExceptions.NotEnoughStudentsException;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

@@ -2,8 +2,8 @@ package it.polimi.ingsw.network.toServerMessage;
 
 import it.polimi.ingsw.Server.controller.ClientHandler;
 import it.polimi.ingsw.Server.controller.Controller;
-import it.polimi.ingsw.exceptions.GameException;
-import it.polimi.ingsw.exceptions.NotAllowedException;
+import it.polimi.ingsw.exceptions.serverExceptions.GameException;
+import it.polimi.ingsw.exceptions.serverExceptions.NotAllowedException;
 
 public class ChooseCharacter implements ToServerMessage {
     byte charId;

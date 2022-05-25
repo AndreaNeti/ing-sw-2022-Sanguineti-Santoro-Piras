@@ -1,7 +1,7 @@
 package it.polimi.ingsw.Server.model;
 
 import it.polimi.ingsw.Enum.Color;
-import it.polimi.ingsw.exceptions.NotAllowedException;
+import it.polimi.ingsw.exceptions.serverExceptions.NotAllowedException;
 
 public class Char8 implements CharacterCard {
 

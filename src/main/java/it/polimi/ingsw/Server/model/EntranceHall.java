@@ -1,7 +1,7 @@
 package it.polimi.ingsw.Server.model;
 
 
-import it.polimi.ingsw.exceptions.NotAllowedException;
+import it.polimi.ingsw.exceptions.serverExceptions.NotAllowedException;
 
 public class EntranceHall extends GameComponent {
     public EntranceHall(int entranceHallSize, byte idGameComponent) {

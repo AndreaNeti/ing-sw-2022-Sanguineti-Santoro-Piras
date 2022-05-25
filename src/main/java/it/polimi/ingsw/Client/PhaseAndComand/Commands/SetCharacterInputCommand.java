@@ -3,7 +3,8 @@ package it.polimi.ingsw.Client.PhaseAndComand.Commands;
 import it.polimi.ingsw.Client.View.AbstractView;
 import it.polimi.ingsw.Client.View.Cli.ViewCli;
 import it.polimi.ingsw.Client.model.CharacterCardClient;
-import it.polimi.ingsw.exceptions.PhaseChangedException;
+import it.polimi.ingsw.exceptions.clientExceptions.RepeatCommandException;
+import it.polimi.ingsw.exceptions.clientExceptions.ScannerException;
 
 import java.awt.event.ActionEvent;
 
@@ -13,7 +14,7 @@ public class SetCharacterInputCommand extends GameCommand {
     }
 
     @Override
-    public void playCLICommand() {
+    public void playCLICommand() throws ScannerException {
         ViewCli viewCli = (ViewCli) getView();
         CharacterCardClient current = viewCli.getCurrentCharacterCard();
         if (current.canPlay())
@@ -26,7 +27,7 @@ public class SetCharacterInputCommand extends GameCommand {
                 phaseChanged = false;
                 try {
                     current.setNextInput(viewCli);
-                } catch (PhaseChangedException e) {
+                } catch (RepeatCommandException e) {
                     phaseChanged = true;
                 }
             } while (phaseChanged);

@@ -1,7 +1,7 @@
 package it.polimi.ingsw.network.toServerMessage;
 
 import it.polimi.ingsw.Server.controller.ClientHandler;
-import it.polimi.ingsw.exceptions.GameException;
+import it.polimi.ingsw.exceptions.serverExceptions.GameException;
 
 public class NickName implements ToServerMessage{
     String nickName;

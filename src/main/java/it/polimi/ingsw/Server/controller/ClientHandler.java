@@ -1,7 +1,7 @@
 package it.polimi.ingsw.Server.controller;
 
-import it.polimi.ingsw.exceptions.GameException;
-import it.polimi.ingsw.exceptions.NotAllowedException;
+import it.polimi.ingsw.exceptions.serverExceptions.GameException;
+import it.polimi.ingsw.exceptions.serverExceptions.NotAllowedException;
 import it.polimi.ingsw.network.toClientMessage.ErrorException;
 import it.polimi.ingsw.network.toClientMessage.OK;
 import it.polimi.ingsw.network.toClientMessage.ToClientMessage;
@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.Objects;
 
 public class ClientHandler implements Runnable, GameListener {
     // TODO: Maybe move here check for turn, nickname and match joined
@@ -144,5 +145,17 @@ public class ClientHandler implements Runnable, GameListener {
     private void joinMatch(Controller match) throws GameException {
         controller = match;
         controller.addPlayer(this, nickName);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof ClientHandler that)) return false;
+        return Objects.equals(socket, that.socket);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(socket);
     }
 }

@@ -2,7 +2,9 @@ package it.polimi.ingsw.Client.PhaseAndComand.Commands;
 
 import it.polimi.ingsw.Client.Controller.ClientPhaseController;
 import it.polimi.ingsw.Client.View.AbstractView;
-import it.polimi.ingsw.exceptions.PhaseChangedException;
+import it.polimi.ingsw.exceptions.clientExceptions.RepeatCommandException;
+import it.polimi.ingsw.exceptions.clientExceptions.ScannerException;
+import it.polimi.ingsw.exceptions.clientExceptions.SkipCommandException;
 
 import java.awt.event.ActionListener;
 import java.util.List;
@@ -14,7 +16,7 @@ public abstract class GameCommand implements ActionListener {
         this.view = view;
     }
 
-    public abstract void playCLICommand() throws PhaseChangedException;
+    public abstract void playCLICommand() throws ScannerException;
 
     protected AbstractView getView() {
         return view;

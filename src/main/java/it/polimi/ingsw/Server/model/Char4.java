@@ -1,7 +1,7 @@
 package it.polimi.ingsw.Server.model;
 
-import it.polimi.ingsw.exceptions.GameException;
-import it.polimi.ingsw.exceptions.NotAllowedException;
+import it.polimi.ingsw.exceptions.serverExceptions.GameException;
+import it.polimi.ingsw.exceptions.serverExceptions.NotAllowedException;
 
 public class Char4 implements CharacterCard {
 

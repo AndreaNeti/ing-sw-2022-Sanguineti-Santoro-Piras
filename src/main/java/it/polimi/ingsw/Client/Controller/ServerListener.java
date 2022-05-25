@@ -37,10 +37,10 @@ public class ServerListener implements Runnable {
                 synchronized (this) {
                     if (!quit) {
                         // server disconnection not caused by quit command
-                        System.err.println("Server connection lost");
+                        controllerClient.addMessage("Server connection lost");
                         quit = true;
                     } else
-                        System.out.println("Disconnected from server");
+                        controllerClient.addMessage("Disconnected from server");
                 }
                 controllerClient.changePhase(GamePhase.INIT_PHASE, true, true);
             }

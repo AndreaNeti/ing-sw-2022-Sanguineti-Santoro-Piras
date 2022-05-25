@@ -1,18 +1,14 @@
 package it.polimi.ingsw.Server.controller;
 
-import it.polimi.ingsw.exceptions.GameException;
-import it.polimi.ingsw.exceptions.NotAllowedException;
+import it.polimi.ingsw.exceptions.serverExceptions.GameException;
+import it.polimi.ingsw.exceptions.serverExceptions.NotAllowedException;
 import it.polimi.ingsw.network.toClientMessage.OK;
 import it.polimi.ingsw.network.toClientMessage.ToClientMessage;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.invocation.InvocationOnMock;
-import org.mockito.stubbing.Answer;
 
 import java.io.*;
-import java.net.ServerSocket;
 import java.net.Socket;
 
 import static org.junit.jupiter.api.Assertions.*;

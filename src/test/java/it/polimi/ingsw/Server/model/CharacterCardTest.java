@@ -6,7 +6,10 @@ import it.polimi.ingsw.Enum.Wizard;
 import it.polimi.ingsw.Server.controller.MatchConstants;
 import it.polimi.ingsw.Server.controller.MatchType;
 import it.polimi.ingsw.Server.controller.Server;
-import it.polimi.ingsw.exceptions.*;
+import it.polimi.ingsw.exceptions.serverExceptions.EndGameException;
+import it.polimi.ingsw.exceptions.serverExceptions.GameException;
+import it.polimi.ingsw.exceptions.serverExceptions.NotAllowedException;
+import it.polimi.ingsw.exceptions.serverExceptions.NotEnoughStudentsException;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;

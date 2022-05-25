@@ -1,4 +1,4 @@
-package it.polimi.ingsw.exceptions;
+package it.polimi.ingsw.exceptions.serverExceptions;
 
 public class UnexpectedValueException extends GameException {
     @Override

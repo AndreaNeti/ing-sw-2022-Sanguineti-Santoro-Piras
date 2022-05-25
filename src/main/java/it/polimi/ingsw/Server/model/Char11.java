@@ -1,9 +1,9 @@
 package it.polimi.ingsw.Server.model;
 
 import it.polimi.ingsw.Enum.Color;
-import it.polimi.ingsw.exceptions.GameException;
-import it.polimi.ingsw.exceptions.NotAllowedException;
-import it.polimi.ingsw.exceptions.NotEnoughStudentsException;
+import it.polimi.ingsw.exceptions.serverExceptions.GameException;
+import it.polimi.ingsw.exceptions.serverExceptions.NotAllowedException;
+import it.polimi.ingsw.exceptions.serverExceptions.NotEnoughStudentsException;
 
 public class Char11 implements CharacterCard {
 

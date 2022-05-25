@@ -5,7 +5,8 @@ import it.polimi.ingsw.Client.PhaseAndComand.Commands.GameCommand;
 import it.polimi.ingsw.Client.View.AbstractView;
 import it.polimi.ingsw.Client.View.Cli.ViewCli;
 import it.polimi.ingsw.Client.View.ClientPhaseView;
-import it.polimi.ingsw.exceptions.PhaseChangedException;
+import it.polimi.ingsw.exceptions.clientExceptions.RepeatCommandException;
+import it.polimi.ingsw.exceptions.clientExceptions.ScannerException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,14 +21,21 @@ public abstract class ClientPhase implements ClientPhaseView, ClientPhaseControl
 
     @Override
     public void playPhase(ViewCli viewCli) {
-        System.out.println("You are in " + this);
-        int index;
+        Integer index = null;
         try {
             viewCli.unsetPhase();
-            index = viewCli.getIntInput(gameCommands.toArray(), "Select the command to play", true);
+            boolean phaseChanged;
+            do {
+                phaseChanged = false;
+                try {
+                    System.out.println("You are in " + this);
+                    index = viewCli.getIntInput(gameCommands.toArray(), "Select the command to play", true);
+                } catch (RepeatCommandException e) {
+                    phaseChanged = true;
+                }
+            } while (phaseChanged);
             gameCommands.get(index).playCLICommand();
-        } catch (PhaseChangedException ignored) {
-            viewCli.repeatPhase(false);
+        } catch (ScannerException ignored) {
         }
     }
 

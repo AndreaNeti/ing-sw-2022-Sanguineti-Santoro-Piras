@@ -1,7 +1,7 @@
 package it.polimi.ingsw.Client.model;
 
 import it.polimi.ingsw.Client.View.Cli.ViewForCharacterCli;
-import it.polimi.ingsw.exceptions.PhaseChangedException;
+import it.polimi.ingsw.exceptions.clientExceptions.RepeatCommandException;
 
 import java.util.List;
 
@@ -13,7 +13,7 @@ public class Char3Client implements CharacterCardClient{
     }
 
     @Override
-    public void setNextInput(ViewForCharacterCli view) throws PhaseChangedException {
+    public void setNextInput(ViewForCharacterCli view) throws RepeatCommandException {
     }
 
     @Override

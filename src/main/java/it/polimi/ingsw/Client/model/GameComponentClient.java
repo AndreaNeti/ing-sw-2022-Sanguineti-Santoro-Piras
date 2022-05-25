@@ -3,6 +3,8 @@ package it.polimi.ingsw.Client.model;
 import it.polimi.ingsw.Enum.Color;
 import it.polimi.ingsw.Server.model.GameComponent;
 
+import java.util.Arrays;
+
 
 public class GameComponentClient {
     private final byte[] students;
@@ -15,9 +17,7 @@ public class GameComponentClient {
     }
 
     public byte[] getStudents() {
-        byte[] clonedStudents = new byte[5];
-        System.arraycopy(students, 0, clonedStudents, 0, 5);
-        return clonedStudents;
+        return Arrays.copyOf(students, students.length);
     }
 
     @Override

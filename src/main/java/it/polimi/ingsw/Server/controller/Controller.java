@@ -5,9 +5,9 @@ import it.polimi.ingsw.Enum.GamePhase;
 import it.polimi.ingsw.Enum.HouseColor;
 import it.polimi.ingsw.Enum.Wizard;
 import it.polimi.ingsw.Server.model.*;
-import it.polimi.ingsw.exceptions.EndGameException;
-import it.polimi.ingsw.exceptions.GameException;
-import it.polimi.ingsw.exceptions.NotAllowedException;
+import it.polimi.ingsw.exceptions.serverExceptions.EndGameException;
+import it.polimi.ingsw.exceptions.serverExceptions.GameException;
+import it.polimi.ingsw.exceptions.serverExceptions.NotAllowedException;
 import it.polimi.ingsw.network.toClientMessage.*;
 
 import java.util.ArrayList;
@@ -165,9 +165,9 @@ public class Controller {
         }
     }
 
-    public void sendMessage(String me, String message) throws NullPointerException {
+    public void sendMessage(ClientHandler me, String message) throws NullPointerException {
         if (me == null) throw new NullPointerException();
-        notifyClients(new TextMessageSC("[" + me + "]: " + message));
+        notifyClients(new TextMessageSC("[" + me.getNickName() + "]: " + message), me);
     }
 
     public synchronized void setCharacterInput(int input) throws GameException, NullPointerException {
@@ -209,12 +209,17 @@ public class Controller {
         notifyClients(new EndGame(null));
     }
 
-    private void notifyClients(ToClientMessage m) {
+    private void notifyClients(ToClientMessage m, GameListener excludeMe) {
         synchronized (playerHandlers) {
             for (GameListener gl : playerHandlers) {
-                gl.update(m);
+                if (!gl.equals(excludeMe))
+                    gl.update(m);
             }
         }
+    }
+
+    private void notifyClients(ToClientMessage m) {
+        notifyClients(m, null);
     }
 
     public void broadcastMessage(TextMessageSC m) {

@@ -56,6 +56,7 @@ public class CliPrinter implements GameClientListener {
         } else {
             printLobby();
         }
+        view.setMustReprint(false);
     }
 
     private StringBuilder printIslands(ArrayList<IslandClient> islands) {
@@ -441,9 +442,10 @@ public class CliPrinter implements GameClientListener {
 
     @Override
     public void updateMembers(int membersLeftToStart, String nickPlayerJoined) {
-        if (membersLeftToStart > 0)
+        if (membersLeftToStart > 0) {
             view.addMessage(nickPlayerJoined + " joined. " + membersLeftToStart + " members left before game starts");
-        update();
+            update();
+        }
     }
 
     @Override
@@ -479,7 +481,7 @@ public class CliPrinter implements GameClientListener {
 
     @Override
     public void update() {
-        view.setMustReprint();
+        view.setMustReprint(true);
     }
 
     public void clearConsole() {

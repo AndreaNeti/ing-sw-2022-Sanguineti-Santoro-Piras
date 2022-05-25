@@ -1,7 +1,8 @@
 package it.polimi.ingsw.Client.model;
 
 import it.polimi.ingsw.Client.View.Cli.ViewForCharacterCli;
-import it.polimi.ingsw.exceptions.PhaseChangedException;
+import it.polimi.ingsw.exceptions.clientExceptions.RepeatCommandException;
+import it.polimi.ingsw.exceptions.clientExceptions.ScannerException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +20,7 @@ public class Char8Client implements CharacterCardClient {
     }
 
     @Override
-    public void setNextInput(ViewForCharacterCli view) throws PhaseChangedException {
+    public void setNextInput(ViewForCharacterCli view) throws ScannerException {
         System.out.println("Select the color you want to ignore while calculating the influence");
         inputs.add(view.getColorInput(false));
     }

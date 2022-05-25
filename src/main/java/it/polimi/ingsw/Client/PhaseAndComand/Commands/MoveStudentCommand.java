@@ -3,7 +3,8 @@ package it.polimi.ingsw.Client.PhaseAndComand.Commands;
 import it.polimi.ingsw.Client.View.AbstractView;
 import it.polimi.ingsw.Client.View.Cli.ViewCli;
 import it.polimi.ingsw.Enum.Color;
-import it.polimi.ingsw.exceptions.PhaseChangedException;
+import it.polimi.ingsw.exceptions.clientExceptions.RepeatCommandException;
+import it.polimi.ingsw.exceptions.clientExceptions.ScannerException;
 import it.polimi.ingsw.network.toServerMessage.MoveStudent;
 
 import java.awt.event.ActionEvent;
@@ -14,18 +15,30 @@ public class MoveStudentCommand extends GameCommand {
     }
 
     @Override
-    public void playCLICommand() {
+    public void playCLICommand() throws ScannerException {
         ViewCli viewCli = (ViewCli) getView();
+        Color color = null;
+        Integer destination = null;
         boolean phaseChanged;
+        // request the student color
         do {
             phaseChanged = false;
             try {
-                Color color = Color.values()[viewCli.getColorInput(false)];
-                viewCli.sendToServer(new MoveStudent(color, viewCli.getMoveStudentDestination(false)));
-            } catch (PhaseChangedException e) {
+                color = Color.values()[viewCli.getColorInput(false)];
+            } catch (RepeatCommandException e) {
                 phaseChanged = true;
             }
         } while (phaseChanged);
+        // request the destination where you want the student to move
+        do {
+            phaseChanged = false;
+            try {
+                destination = viewCli.getMoveStudentDestination(false);
+            } catch (RepeatCommandException e) {
+                phaseChanged = true;
+            }
+        } while (phaseChanged);
+        viewCli.sendToServer(new MoveStudent(color, destination));
     }
 
     @Override

@@ -1,6 +1,7 @@
 package it.polimi.ingsw.Client.PhaseAndComand.Commands;
 
 import it.polimi.ingsw.Client.View.AbstractView;
+import it.polimi.ingsw.exceptions.clientExceptions.ScannerException;
 
 import java.awt.event.ActionEvent;
 
@@ -10,7 +11,7 @@ public class UndoCommands extends GameCommand {
     }
 
     @Override
-    public void playCLICommand() {
+    public void playCLICommand() throws ScannerException {
         getView().addMessage("Reset all input");
         getView().getCurrentCharacterCard().resetInput();
         getView().unsetCurrentCharacterCard();

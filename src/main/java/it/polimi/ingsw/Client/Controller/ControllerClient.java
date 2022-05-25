@@ -58,7 +58,7 @@ public class ControllerClient extends GameClientListened {
     }
 
     private void instantiateCommands() {
-        commands = Map.ofEntries(entry(CLICommands.CONNECT_SERVER, new ConnectServerCommand(abstractView)), entry(CLICommands.SET_NICKNAME, new SetNicknameCommand(abstractView)), entry(CLICommands.CREATE_MATCH, new CreateMatchCommand(abstractView)), entry(CLICommands.JOIN_MATCH_BY_TYPE, new JoinMatchByTypeCommand(abstractView)), entry(CLICommands.JOIN_MATCH_BY_ID, new JoinMatchByIdCommand(abstractView)), entry(CLICommands.PLAY_CARD, new PlayCardCommand(abstractView)), entry(CLICommands.MOVE_STUDENT, new MoveStudentCommand(abstractView)), entry(CLICommands.MOVE_MOTHER_NATURE, new MoveMotherNatureCommand(abstractView)), entry(CLICommands.MOVE_FROM_CLOUD, new MoveFromCloudCommand(abstractView)), entry(CLICommands.TEXT_MESSAGE, new TextCommand(abstractView)), entry(CLICommands.QUIT, new QuitCommand(abstractView)), entry(CLICommands.CHOOSE_CHARACTER, new ChooseCharacterCommand(abstractView)), entry(CLICommands.SET_CHARACTER_INPUT, new SetCharacterInputCommand(abstractView)), entry(CLICommands.PLAY_CHARACTER, new PlayCharacterCommand(abstractView)), entry(CLICommands.DELETE_LAST_INPUT, new DeleteLastInputCommand(abstractView)), entry(CLICommands.GET_DESCRIPTION, new GetDescriptionCommand(abstractView)), entry(CLICommands.UNDO, new UndoCommands(abstractView)));
+        commands = Map.ofEntries(entry(CLICommands.CONNECT_SERVER, new ConnectServerCommand(abstractView)), entry(CLICommands.SET_NICKNAME, new SetNicknameCommand(abstractView)), entry(CLICommands.CREATE_MATCH, new CreateMatchCommand(abstractView)), entry(CLICommands.JOIN_MATCH_BY_TYPE, new JoinMatchByTypeCommand(abstractView)), entry(CLICommands.JOIN_MATCH_BY_ID, new JoinMatchByIdCommand(abstractView)), entry(CLICommands.PLAY_CARD, new PlayCardCommand(abstractView)), entry(CLICommands.MOVE_STUDENT, new MoveStudentCommand(abstractView)), entry(CLICommands.MOVE_MOTHER_NATURE, new MoveMotherNatureCommand(abstractView)), entry(CLICommands.MOVE_FROM_CLOUD, new MoveFromCloudCommand(abstractView)), entry(CLICommands.TEXT_MESSAGE, new TextCommand(abstractView)), entry(CLICommands.CHOOSE_CHARACTER, new ChooseCharacterCommand(abstractView)), entry(CLICommands.SET_CHARACTER_INPUT, new SetCharacterInputCommand(abstractView)), entry(CLICommands.PLAY_CHARACTER, new PlayCharacterCommand(abstractView)), entry(CLICommands.DELETE_LAST_INPUT, new DeleteLastInputCommand(abstractView)), entry(CLICommands.UNDO, new UndoCommands(abstractView)), entry(CLICommands.QUIT, new QuitCommand(abstractView)));
     }
 
     private void attachCommandToPhase() {
@@ -82,7 +82,6 @@ public class ControllerClient extends GameClientListened {
             commands.get(CLICommands.SET_CHARACTER_INPUT).attachToAPhase(List.of(phases.get(GamePhase.PLAY_CH_CARD_PHASE)));
             commands.get(CLICommands.PLAY_CHARACTER).attachToAPhase(List.of(phases.get(GamePhase.PLAY_CH_CARD_PHASE)));
             commands.get(CLICommands.UNDO).attachToAPhase(List.of(phases.get(GamePhase.PLAY_CH_CARD_PHASE)));
-            commands.get(CLICommands.GET_DESCRIPTION).attachToAPhase(List.of(phases.get(GamePhase.PLAY_CH_CARD_PHASE)));
             alreadyAttachedExpert = true;
         }
     }
@@ -92,7 +91,7 @@ public class ControllerClient extends GameClientListened {
         Socket socket;
         try {
             socket = new Socket();
-            socket.connect(new InetSocketAddress(InetAddress.getByAddress(ipAddress), Server.serverPort));
+            socket.connect(new InetSocketAddress(InetAddress.getByAddress(ipAddress), Server.serverPort), 5000);
         } catch (IOException | NumberFormatException e) {
             return false;
         }
