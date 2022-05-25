@@ -213,6 +213,7 @@ public class ExpertGame extends NormalGame implements CharacterCardGame {
     }
 
     protected void calculateProfessor() {
+        getGameDelta().setAutomaticSending(false);
         byte max;
         Player currentOwner;
         // player with the maximum number of students for the current color
@@ -243,10 +244,13 @@ public class ExpertGame extends NormalGame implements CharacterCardGame {
                 // add to game delta
                 getGameDelta().addUpdatedProfessors(c, newOwner.getWizard());
             }
+            getGameDelta().send();
         }
+
     }
 
     private void addCoinToCurrentPlayer() throws NotEnoughCoinsException {
+        getGameDelta().setAutomaticSending(false);
         if (coinsLeft == 0) throw new NotEnoughCoinsException();
         byte playerIndex = getCurrentPlayerIndex();
         coinsPlayer[playerIndex]++;
@@ -255,10 +259,12 @@ public class ExpertGame extends NormalGame implements CharacterCardGame {
         // add to game delta
         getGameDelta().setUpdatedCoinPlayer(playerIndex, getCoinsPlayer(playerIndex));
         getGameDelta().setNewCoinsLeft(coinsLeft);
+        getGameDelta().send();
 
     }
 
     private void removeCoinsToCurrentPlayer(byte coins) throws GameException {
+        getGameDelta().setAutomaticSending(false);
         if (coins < 0)
             throw new IllegalArgumentException("Cannot remove negative amount of coins to the current player");
         // player's wizard is its index inside the list
@@ -271,15 +277,16 @@ public class ExpertGame extends NormalGame implements CharacterCardGame {
             // add to game delta
             getGameDelta().setUpdatedCoinPlayer(playerIndex, getCoinsPlayer(playerIndex));
             getGameDelta().setNewCoinsLeft(coinsLeft);
+            getGameDelta().send();
         } else throw new NotEnoughCoinsException();
     }
 
     @Override
     public void playCharacter() throws GameException, EndGameException {
+        getGameDelta().setAutomaticSending(false);
         if (chosenCharacter == -1) throw new NotAllowedException("No character card selected");
         if (getChosenCharacter().canPlay(inputsCharacter.size())) {
             try {
-                // TODO pass something else instead of ExpertGame
                 getChosenCharacter().play(this);
             } catch (GameException e) {
                 // something gone wrong while playing the card, reset inputs
@@ -291,14 +298,16 @@ public class ExpertGame extends NormalGame implements CharacterCardGame {
             if (playedCharacters[characters.indexOf(getChosenCharacter())]) charCost++;
             else {
                 playedCharacters[characters.indexOf(getChosenCharacter())] = true;
+                getGameDelta().setUsedCharacter(getChosenCharacter().getCharId(),true);
                 // a coin is left on the character card to remember it has been used
                 coinsLeft--;
             }
             // remove coins to player
             removeCoinsToCurrentPlayer(charCost);
-
+            coinsLeft+= charCost;
             chosenCharacter = -1;
             inputsCharacter.clear();
+            getGameDelta().send();
         } else {
             inputsCharacter.clear();
             throw new NotAllowedException("You didn't set all the parameters needed to play this card"); // canPlay returned false, needs a different amount of inputs
@@ -322,7 +331,6 @@ public class ExpertGame extends NormalGame implements CharacterCardGame {
         if (playedCharacters[indexCharacter]) charCost++;
         if (charCost > coinsPlayer[getCurrentPlayer().getWizard().ordinal()])
             throw new NotAllowedException("You have not enough coins to play this card");
-
         chosenCharacter = indexCharacter;
     }
 

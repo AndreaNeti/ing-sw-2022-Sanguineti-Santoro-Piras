@@ -1,19 +1,24 @@
 package it.polimi.ingsw.Client.model;
 
 import it.polimi.ingsw.Client.View.Cli.ViewForCharacterCli;
-import it.polimi.ingsw.exceptions.clientExceptions.RepeatCommandException;
 import it.polimi.ingsw.exceptions.clientExceptions.ScannerException;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Char4Client implements CharacterCardClient {
+    private boolean used;
+
     private final List<Integer> inputs;
 
     public Char4Client() {
         inputs = new ArrayList<>();
     }
 
+    @Override
+    public void setUsed() {
+        this.used = true;
+    }
 
     @Override
     public String getDescription() {
@@ -32,7 +37,7 @@ public class Char4Client implements CharacterCardClient {
 
     @Override
     public byte getCost() {
-        return 2;
+        return (byte) (used ? 3 : 2);
     }
 
     @Override

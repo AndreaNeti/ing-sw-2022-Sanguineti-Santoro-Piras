@@ -119,6 +119,9 @@ public class GameDelta implements Serializable {
     public void setIgnoredColorInfluence(Color ignoredColorInfluence) {
     }
 
+    public void setUsedCharacter(byte charId, boolean used) {
+    }
+
     public List<Byte> getCharacters() {
         return new ArrayList<>();
     }
@@ -137,6 +140,10 @@ public class GameDelta implements Serializable {
 
     public Optional<Color> getIgnoredColorInfluence() {
         return Optional.empty();
+    }
+
+    public Map<Byte, Boolean> getUpdatedCharacter() {
+        return Collections.emptyMap();
     }
 
     public Map<Byte, GameComponent> getUpdatedGC() {

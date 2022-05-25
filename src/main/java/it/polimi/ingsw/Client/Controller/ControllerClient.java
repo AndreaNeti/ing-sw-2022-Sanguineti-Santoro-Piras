@@ -168,6 +168,9 @@ public class ControllerClient extends GameClientListened {
             gameDelta.getIgnoredColorInfluence().ifPresent((ignoredColorInfluence) -> model.setIgnoredColorInfluence(ignoredColorInfluence));
             for (Map.Entry<Byte, Byte> newEntry : gameDelta.getUpdatedCoinPlayer().entrySet())
                 model.setUpdatedCoinPlayer(newEntry.getKey(), newEntry.getValue());
+            for(Map.Entry<Byte,Boolean> entry:gameDelta.getUpdatedCharacter().entrySet()){
+                model.setUpdatedCharacter(entry.getKey(),entry.getValue());
+            }
         }
 
         for (Map.Entry<Byte, GameComponent> entry : gameDelta.getUpdatedGC().entrySet()) {
@@ -247,7 +250,6 @@ public class ControllerClient extends GameClientListened {
     public void attachView(AbstractView view) {
         this.abstractView = view;
         instantiateCommands();
-        notifyView();
     }
 
     public void setCurrentCharacterCard(int currentCharacterCardIndex) {

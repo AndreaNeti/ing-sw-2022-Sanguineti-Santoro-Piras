@@ -1,8 +1,8 @@
 package it.polimi.ingsw.Client;
 
-import java.util.LinkedList;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
-public class LimitedChat<String> extends LinkedList<String> {
+public class LimitedChat<String> extends ConcurrentLinkedQueue<String> {
     private final int size;
 
     public LimitedChat(int size) {
@@ -11,9 +11,9 @@ public class LimitedChat<String> extends LinkedList<String> {
 
     @Override
     public boolean add(String o) {
-        super.addFirst(o);
+        super.offer(o);
         if (size() > size) {
-            super.removeLast();
+            super.poll();
         }
         return true;
     }

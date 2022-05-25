@@ -10,6 +10,8 @@ import it.polimi.ingsw.Server.controller.Server;
 import it.polimi.ingsw.Server.model.GameComponent;
 
 import java.util.*;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -25,6 +27,8 @@ public class GameClient extends GameClientListened implements GameClientView {
     private final MatchType matchType;
     //players are in the same order of wizard.ordinal
     private final List<TeamClient> teams;
+    private Lock lockForCharacter;
+    private boolean[] usedCharacter;
     private final List<CharacterCardClient> characters;
     private final List<CharacterCardClientWithStudents> charactersWithStudents;
     private CharacterCardClient currentCharacterCard;
@@ -32,6 +36,7 @@ public class GameClient extends GameClientListened implements GameClientView {
     private final Map<Byte, Byte> updatedCoinPlayer;
     private Byte newCoinsLeft, newProhibitionsLeft;
     private Color ignoredColorInfluence;
+
 
 
     public GameClient(ArrayList<TeamClient> teamsClient, Wizard myWizard, MatchType matchType) {
@@ -83,7 +88,9 @@ public class GameClient extends GameClientListened implements GameClientView {
 
     @Override
     public Wizard[] getProfessors() {
-        return Arrays.copyOf(professors, professors.length);
+        synchronized (professors) {
+            return Arrays.copyOf(professors, professors.length);
+        }
     }
 
     public void setProfessors(Color color, Wizard owner) {
@@ -188,11 +195,14 @@ public class GameClient extends GameClientListened implements GameClientView {
     @Override
     public ArrayList<IslandClient> getIslands() {
         return islands;
+
     }
 
     @Override
     public List<TeamClient> getTeams() {
-        return teams;
+        synchronized (teams) {
+            return new ArrayList<>(teams);
+        }
     }
 
     public Byte getNewCoinsLeft() {
@@ -234,19 +244,28 @@ public class GameClient extends GameClientListened implements GameClientView {
 
     @Override
     public List<CharacterCardClient> getCharacters() {
-        return Stream.concat(characters.stream(), charactersWithStudents.stream()).collect(Collectors.toList());
+        lockForCharacter.lock();
+        List<CharacterCardClient> characterCardClients = Stream.concat(characters.stream(), charactersWithStudents.stream()).collect(Collectors.toList());
+        lockForCharacter.unlock();
+        return characterCardClients;
     }
 
     public void setCharacters(List<Byte> charactersReceived) {
-
-        for (Byte character : charactersReceived) {
-            if (character == 0 || character == 6 || character == 10) {
-                charactersWithStudents.add((CharacterCardClientWithStudents) factoryCharacter(character));
-            } else {
-                this.characters.add(factoryCharacter(character));
+        if (lockForCharacter == null)
+            lockForCharacter = new ReentrantLock();
+        if (lockForCharacter.tryLock())
+            try {
+                for (Byte character : charactersReceived) {
+                    if (character == 0 || character == 6 || character == 10) {
+                        charactersWithStudents.add((CharacterCardClientWithStudents) factoryCharacter(character));
+                    } else {
+                        this.characters.add(factoryCharacter(character));
+                    }
+                }
+                notifyCharacter(getCharacters());
+            } finally {
+                lockForCharacter.unlock();
             }
-        }
-        notifyCharacter(getCharacters());
     }
 
     private CharacterCardClient factoryCharacter(byte i) {
@@ -313,5 +332,15 @@ public class GameClient extends GameClientListened implements GameClientView {
 
     public void unsetCurrentCharacterCard() {
         this.currentCharacterCard = null;
+    }
+
+    public void setUpdatedCharacter(Byte charId, Boolean value) {
+        for (CharacterCardClient c : characters) {
+            if (c.getCharId() == charId)
+                c.setUsed();
+        }
+        for (CharacterCardClientWithStudents c : charactersWithStudents)
+            if (c.getCharId() == charId)
+                c.setUsed();
     }
 }

@@ -80,6 +80,7 @@ public class NormalGame implements Game {
 
     // checks if the islands before and after the selected island have the same team and in case merges them
     protected void checkMerge(Island island) throws EndGameException {
+        gameDelta.setAutomaticSending(false);
         if (island == null) throw new IllegalArgumentException("Passing null island");
         int islandBeforeIndex = Math.floorMod(islands.indexOf(island) - 1, islands.size());
         int islandAfterIndex = (islands.indexOf(island) + 1) % islands.size();
@@ -101,7 +102,6 @@ public class NormalGame implements Game {
             gameDelta.setNewMotherNaturePosition(motherNaturePosition);
             gameDelta.addUpdatedGC(island);
             gameDelta.addDeletedIslands(islandBefore);
-
         }
         if (islandAfter.getTeamColor() != null && islandAfter.getTeamColor().equals(island.getTeamColor())) {
             island.merge(islandAfter);
@@ -115,9 +115,8 @@ public class NormalGame implements Game {
             gameDelta.addDeletedIslands(islandAfter);
 
         }
-
         if (islands.size() <= matchConstants.minIslands()) throw new EndGameException(true);
-
+        gameDelta.send();
     }
 
     protected void drawStudents(GameComponent gameComponent, byte students) throws EndGameException {
@@ -190,7 +189,9 @@ public class NormalGame implements Game {
 
     @Override
     public void move(Color color, int idGameComponentSource, int idGameComponentDestination) throws GameException {
+
         if (color == null) throw new IllegalArgumentException("Null color");
+        getGameDelta().setAutomaticSending(false);
         GameComponent source = getComponentById(idGameComponentSource), destination = getComponentById(idGameComponentDestination);
         source.moveStudents(color, (byte) 1, destination);
 
@@ -200,11 +201,13 @@ public class NormalGame implements Game {
 
         if (idGameComponentDestination < 2 * getPlayerSize() && idGameComponentDestination % 2 == 1)
             calculateProfessor();
+        getGameDelta().send();
     }
 
     // compares for each color the lunchHall of each player and then puts the player with the most students
     // in the professor array slot of the current color
     protected void calculateProfessor() {
+        gameDelta.setAutomaticSending(false);
         byte max;
         Player currentOwner;
         // player with the maximum number of students for the current color
@@ -232,6 +235,7 @@ public class NormalGame implements Game {
                 gameDelta.addUpdatedProfessors(c, newOwner.getWizard());
             }
         }
+        gameDelta.send();
     }
 
     protected boolean checkMoveMotherNature(int moves) {
@@ -240,6 +244,7 @@ public class NormalGame implements Game {
 
     @Override
     public void moveMotherNature(int moves) throws NotAllowedException, EndGameException {
+        gameDelta.setAutomaticSending(false);
         if (moves < 0) throw new IllegalArgumentException("Cannot move backwards");
         if (!checkMoveMotherNature(moves))
             throw new NotAllowedException("Moves can't be higher than the value of the card");
@@ -250,6 +255,7 @@ public class NormalGame implements Game {
         gameDelta.setNewMotherNaturePosition(motherNaturePosition);
 
         calculateInfluence(islands.get(motherNaturePosition));
+        gameDelta.send();
     }
 
     private void calculateInfluence(Island island) throws EndGameException {
@@ -358,6 +364,7 @@ public class NormalGame implements Game {
 
     @Override
     public void moveFromCloud(int cloudId) throws GameException {
+        gameDelta.setAutomaticSending(false);
         GameComponent cloudSource = getComponentById(cloudId);
 
         if (cloudSource.howManyStudents() == 0)
@@ -368,6 +375,7 @@ public class NormalGame implements Game {
         // add to game delta
         gameDelta.addUpdatedGC(cloudSource);
         gameDelta.addUpdatedGC(getCurrentPlayer().getEntranceHall());
+        gameDelta.send();
     }
 
     protected ArrayList<Cloud> getClouds() {

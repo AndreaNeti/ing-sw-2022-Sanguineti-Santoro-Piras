@@ -6,6 +6,8 @@ import it.polimi.ingsw.exceptions.clientExceptions.RepeatCommandException;
 import java.util.List;
 
 public class Char1Client implements CharacterCardClient {
+    private boolean used;
+
     @Override
     public String getDescription() {
         return "During this turn, you take control of any number of Professors even if you have the same number of Students as the player who currently controls them.";
@@ -23,7 +25,7 @@ public class Char1Client implements CharacterCardClient {
 
     @Override
     public byte getCost() {
-        return 2;
+        return (byte) (used ? 3 : 2);
     }
 
     @Override
@@ -43,6 +45,11 @@ public class Char1Client implements CharacterCardClient {
     @Override
     public int getCharId() {
         return 1;
+    }
+
+    @Override
+    public void setUsed() {
+        used = true;
     }
 
     @Override

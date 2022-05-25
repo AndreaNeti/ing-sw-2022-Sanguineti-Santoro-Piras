@@ -1,7 +1,6 @@
 package it.polimi.ingsw.Client.model;
 
 import it.polimi.ingsw.Client.View.Cli.ViewForCharacterCli;
-import it.polimi.ingsw.exceptions.clientExceptions.RepeatCommandException;
 import it.polimi.ingsw.exceptions.clientExceptions.ScannerException;
 
 import java.util.ArrayList;
@@ -10,8 +9,15 @@ import java.util.List;
 public class Char9Client implements CharacterCardClient {
     private final List<Integer> inputs;
 
+    private boolean used;
+
     public Char9Client() {
         inputs = new ArrayList<>();
+    }
+
+    @Override
+    public void setUsed() {
+        this.used = true;
     }
 
     @Override
@@ -21,7 +27,7 @@ public class Char9Client implements CharacterCardClient {
 
     @Override
     public void setNextInput(ViewForCharacterCli view) throws ScannerException {
-        if(inputs.size()%2==0)
+        if (inputs.size() % 2 == 0)
             System.out.println("Select the color of the student from lunch hall");
         else
             System.out.println("Select the color of the student from your entrance ");
@@ -31,17 +37,17 @@ public class Char9Client implements CharacterCardClient {
 
     @Override
     public boolean canPlay() {
-        return inputs.size()==2;
+        return inputs.size() == 2;
     }
 
     @Override
     public byte getCost() {
-        return 1;
+        return (byte) (used ? 2 : 1);
     }
 
     @Override
     public boolean isFull() {
-        return inputs.size()==2;
+        return inputs.size() == 2;
     }
 
     @Override

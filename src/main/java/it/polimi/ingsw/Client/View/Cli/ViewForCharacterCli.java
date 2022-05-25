@@ -1,6 +1,5 @@
 package it.polimi.ingsw.Client.View.Cli;
 
-import it.polimi.ingsw.exceptions.clientExceptions.RepeatCommandException;
 import it.polimi.ingsw.exceptions.clientExceptions.ScannerException;
 
 public interface ViewForCharacterCli {

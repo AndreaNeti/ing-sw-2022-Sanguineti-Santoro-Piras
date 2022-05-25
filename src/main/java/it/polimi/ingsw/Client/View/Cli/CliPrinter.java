@@ -22,21 +22,23 @@ public class CliPrinter implements GameClientListener {
     }
 
     private void printLobby() {
-        ArrayList<String> chatCopy = view.getChat();
+        synchronized (view.getChat()) {
+            ArrayList<String> chatCopy = view.getChat();
 //        Collections.reverse(chatCopy);
-        StringBuilder chat = new StringBuilder();
-        chat.append(" \u250c").append("\u2500".repeat(39)).append("\u2524\u001b[4m CHAT \u001b[0m\u251c").append("\u2500".repeat(39)).append("\u2510\n");
-        String mex;
-        for (int i = 14; i >= 0; i--) {
-            if (chatCopy.size() >= i + 1) {
-                mex = chatCopy.get(i);
-                chat.append(" \u2502 ").append(chatCopy.get(i)).append(" ".repeat(85 - mex.length())).append("\u2502\n");
-            } else {
-                chat.append(" \u2502 ").append(" ".repeat(85)).append("\u2502\n");
+            StringBuilder chat = new StringBuilder();
+            chat.append(" \u250c").append("\u2500".repeat(39)).append("\u2524\u001b[4m CHAT \u001b[0m\u251c").append("\u2500".repeat(39)).append("\u2510\n");
+            String mex;
+            for (int i = chatCopy.size() - 15; i < chatCopy.size(); i++) {
+                if (i >= 0) {
+                    mex = chatCopy.get(i);
+                    chat.append(" \u2502 ").append(mex).append(" ".repeat(85 - mex.length())).append("\u2502\n");
+                } else {
+                    chat.append(" \u2502 ").append(" ".repeat(85)).append("\u2502\n");
+                }
             }
+            chat.append(" \u2514").append("\u2500".repeat(86)).append("\u2518\n\n");
+            System.out.print(chat);
         }
-        chat.append(" \u2514").append("\u2500".repeat(86)).append("\u2518\n\n");
-        System.out.print(chat);
     }
 
     public void printGame() {
@@ -46,7 +48,6 @@ public class CliPrinter implements GameClientListener {
 //        System.setOut(new PrintStream(new FileOutputStream(FileDescriptor.out), true, StandardCharsets.UTF_8));
             AnsiConsole.systemInstall();
             List<PlayerClient> players = game.getPlayers();
-
             System.out.println("----------------------ERYANTIS----------------------");
             System.out.print(printIslands(game.getIslands()));
             System.out.print(printCloudsAndTeams(game.getClouds(), game.getTeams()));
@@ -174,7 +175,10 @@ public class CliPrinter implements GameClientListener {
         StringBuilder boardsCharChatPrint = new StringBuilder();
         byte numOfPlayers = (byte) players.size();
         boolean expert = game.isExpert();
-        ArrayList<String> chat = view.getChat();
+
+        List<String> chat = view.getChat();
+        if (chat.size() > 9)
+            chat.subList(chat.size() - 9, chat.size());
         // upper line of boards
         boardsCharChatPrint.append(" \u2554\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2557 ".repeat(numOfPlayers));
 
@@ -276,7 +280,7 @@ public class CliPrinter implements GameClientListener {
                 default -> {
                     String mex = "";
                     if (chat.size() >= (3 + i))
-                        mex = chat.get(2 + i);
+                        mex = chat.get(chat.size() - 2 - i);
                     boardsCharChatPrint.append("\t\u2502 ").append(mex).append(" ".repeat((78 - mex.length() + 7))).append("\u2502\n");
                 }
             }
@@ -286,7 +290,7 @@ public class CliPrinter implements GameClientListener {
         // messages
         String mex = "";
         if (chat.size() >= 3)
-            mex = chat.get(2);
+            mex = chat.get(chat.size() - 3);
 //        "\t\u2502\u001b[1m Paolino: \u001b[0mCome va?";
         boardsCharChatPrint.append("\t\u2502 ").append(mex).append(" ".repeat((78 - mex.length() + 7))).append("\u2502\n");
         // calculate entrance hall students (its color) of each player
@@ -313,7 +317,7 @@ public class CliPrinter implements GameClientListener {
         // message
         mex = "";
         if (chat.size() >= 2)
-            mex = chat.get(1);
+            mex = chat.get(chat.size() - 2);
         boardsCharChatPrint.append("\t\u2502 ").append(mex).append(" ".repeat((78 - mex.length() + 7))).append("\u2502\n");
 
         // print second row of entrance hall students
@@ -330,7 +334,7 @@ public class CliPrinter implements GameClientListener {
         // message
         mex = "";
         if (chat.size() >= 1)
-            mex = chat.get(0);
+            mex = chat.get(chat.size() - 1);
         boardsCharChatPrint.append("\t\u2502 ").append(mex).append(" ".repeat((78 - mex.length() + 7))).append("\u2502\n");
 
         // bottom line of boards and chat

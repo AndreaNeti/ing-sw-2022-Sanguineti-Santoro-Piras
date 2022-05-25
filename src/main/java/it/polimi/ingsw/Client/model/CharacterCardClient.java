@@ -1,7 +1,6 @@
 package it.polimi.ingsw.Client.model;
 
 import it.polimi.ingsw.Client.View.Cli.ViewForCharacterCli;
-import it.polimi.ingsw.exceptions.clientExceptions.RepeatCommandException;
 import it.polimi.ingsw.exceptions.clientExceptions.ScannerException;
 
 import java.util.List;
@@ -18,5 +17,6 @@ public interface CharacterCardClient {
     void resetInput();
     List<Integer> getInputs();
     int getCharId();
+    void setUsed();
 
 }

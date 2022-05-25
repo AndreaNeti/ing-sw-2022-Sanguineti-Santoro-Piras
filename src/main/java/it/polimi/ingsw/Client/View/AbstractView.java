@@ -19,7 +19,11 @@ public abstract class AbstractView {
     }
 
     public GameClientView getModel() {
-        return model;
+        if (model == null)
+            return null;
+        synchronized (model) {
+            return model;
+        }
     }
 
     public void setModel(GameClientView model) {
@@ -35,9 +39,11 @@ public abstract class AbstractView {
     public void setPhaseInView(GamePhase gamePhase, boolean setOldPhase, boolean forceScannerSkip) {
         controllerClient.changePhase(gamePhase, setOldPhase, forceScannerSkip);
     }
-    public void repeatPhase(boolean forceScannerSkip){
+
+    public void repeatPhase(boolean forceScannerSkip) {
         controllerClient.repeatPhase(forceScannerSkip);
     }
+
     public void goToOldPhase() {
         controllerClient.goToOldPhase();
     }
@@ -60,7 +66,8 @@ public abstract class AbstractView {
     public void setCurrentCharacterCard(int currentCharacterCardIndex) {
         controllerClient.setCurrentCharacterCard(currentCharacterCardIndex);
     }
-    public void unsetCurrentCharacterCard(){
+
+    public void unsetCurrentCharacterCard() {
         controllerClient.unsetCurrentCharacterCard();
     }
 

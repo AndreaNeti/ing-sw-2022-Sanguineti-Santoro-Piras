@@ -11,6 +11,8 @@ public class ExpertGameDelta extends GameDelta {
     private Map<Byte, Byte> updatedCoinPlayer;
     private Byte newCoinsLeft, newProhibitionsLeft;
     private Color ignoredColorInfluence;
+    //charId, used
+    private Map<Byte, Boolean> usedCharacter;
 
     public ExpertGameDelta() {
         super();
@@ -24,13 +26,14 @@ public class ExpertGameDelta extends GameDelta {
         newCoinsLeft = null;
         newProhibitionsLeft = null;
         ignoredColorInfluence = null;
+        usedCharacter = null;
     }
 
     @Override
     public void addCharacterCard(byte index, byte id) {
         if (characters == null)
             characters = new ArrayList<>();
-        characters.add(index,id);
+        characters.add(index, id);
         if (super.isAutomaticSending()) {
             super.send();
         }
@@ -41,6 +44,15 @@ public class ExpertGameDelta extends GameDelta {
         if (updatedCoinPlayer == null)
             updatedCoinPlayer = new HashMap<>();
         updatedCoinPlayer.put(playerId, newCoinsLeft);
+        if (super.isAutomaticSending()) {
+            super.send();
+        }
+    }
+
+    public void setUsedCharacter(byte charId, boolean used) {
+        if (usedCharacter == null)
+            usedCharacter = new HashMap<>();
+        usedCharacter.put(charId, used);
         if (super.isAutomaticSending()) {
             super.send();
         }
@@ -80,6 +92,11 @@ public class ExpertGameDelta extends GameDelta {
     public Map<Byte, Byte> getUpdatedCoinPlayer() {
         if (updatedCoinPlayer == null) return Collections.emptyMap();
         return updatedCoinPlayer;
+    }
+
+    public Map<Byte, Boolean> getUsedCharacter() {
+        if (usedCharacter == null) return Collections.emptyMap();
+        return usedCharacter;
     }
 
     @Override

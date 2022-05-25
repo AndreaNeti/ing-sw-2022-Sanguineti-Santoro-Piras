@@ -5,7 +5,13 @@ import it.polimi.ingsw.exceptions.clientExceptions.RepeatCommandException;
 
 import java.util.List;
 
-public class Char3Client implements CharacterCardClient{
+public class Char3Client implements CharacterCardClient {
+    private boolean used;
+
+    @Override
+    public void setUsed() {
+        this.used = true;
+    }
 
     @Override
     public String getDescription() {
@@ -23,7 +29,7 @@ public class Char3Client implements CharacterCardClient{
 
     @Override
     public byte getCost() {
-        return 1;
+        return (byte) (used ? 2 : 1);
     }
 
     @Override
