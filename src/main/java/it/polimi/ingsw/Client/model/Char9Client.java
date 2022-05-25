@@ -22,7 +22,7 @@ public class Char9Client implements CharacterCardClient {
 
     @Override
     public String getDescription() {
-        return "You may exchange up to 2 Students between your Entrance and your Dining Room,";
+        return "You may exchange up to 2 Students between your Entrance and your Dining Room.";
     }
 
     @Override
