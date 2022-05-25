@@ -31,7 +31,7 @@ public class ChooseCharacterCommand extends GameCommand {
         } while (phaseChanged);
         viewCli.setCurrentCharacterCard(index);
         viewCli.sendToServer(new ChooseCharacter((byte) characters.get(index).getCharId()));
-        viewCli.setPhaseInView(GamePhase.PLAY_CH_CARD_PHASE, true, false);
+        viewCli.setPhaseInView(GamePhase.PLAY_CH_CARD_PHASE, false, false);
     }
 
     @Override

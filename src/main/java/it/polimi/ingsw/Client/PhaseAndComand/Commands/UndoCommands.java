@@ -11,7 +11,7 @@ public class UndoCommands extends GameCommand {
     }
 
     @Override
-    public void playCLICommand() throws ScannerException {
+    public void playCLICommand() {
         getView().addMessage("Reset all input");
         getView().getCurrentCharacterCard().resetInput();
         getView().unsetCurrentCharacterCard();
