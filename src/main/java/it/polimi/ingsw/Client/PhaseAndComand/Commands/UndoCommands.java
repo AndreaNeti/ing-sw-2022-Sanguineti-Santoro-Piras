@@ -15,7 +15,7 @@ public class UndoCommands extends GameCommand {
         getView().addMessage("Reset all input");
         getView().getCurrentCharacterCard().resetInput();
         getView().unsetCurrentCharacterCard();
-        getView().repeatPhase(false);
+        getView().goToOldPhase();
     }
 
     @Override
