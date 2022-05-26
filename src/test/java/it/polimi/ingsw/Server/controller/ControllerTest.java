@@ -1,12 +1,11 @@
 package it.polimi.ingsw.Server.controller;
 
+import it.polimi.ingsw.Enum.Color;
 import it.polimi.ingsw.exceptions.serverExceptions.EndGameException;
 import it.polimi.ingsw.exceptions.serverExceptions.GameException;
-import it.polimi.ingsw.Enum.Color;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
-import java.net.Socket;
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;

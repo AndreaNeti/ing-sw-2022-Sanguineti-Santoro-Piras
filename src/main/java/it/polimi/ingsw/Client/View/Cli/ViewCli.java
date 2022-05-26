@@ -123,6 +123,7 @@ public class ViewCli extends AbstractView implements ViewForCharacterCli {
     }
 
     private int getIntInput(Set<Integer> optionValues, String message, boolean canBeStopped) throws ScannerException {
+        if (optionValues.isEmpty()) throw new SkipCommandException();
         int option = getIntInput(message, canBeStopped);
         while (!optionValues.contains(option)) {
             System.err.println("Not a valid input");

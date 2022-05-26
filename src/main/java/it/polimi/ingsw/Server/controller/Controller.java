@@ -321,7 +321,10 @@ public class Controller {
 
     protected void handleError(EndGameException e) {
         if (e.isEndInstantly()) endGame();
-        else lastRound = true;
+        else {
+            lastRound = true;
+            broadcastMessage(new TextMessageSC("Server: This is the last round"));
+        }
     }
 
     protected ArrayList<HouseColor> getWinners() {
