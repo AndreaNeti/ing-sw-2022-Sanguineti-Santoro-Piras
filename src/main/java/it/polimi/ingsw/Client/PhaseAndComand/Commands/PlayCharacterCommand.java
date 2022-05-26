@@ -42,6 +42,7 @@ public class PlayCharacterCommand extends GameCommand {
         } else {
             viewCli.addMessage("Card cannot be played because it needs more input");
         }
+        viewCli.unsetCurrentCharacterCard();
         viewCli.goToOldPhase();
     }
 

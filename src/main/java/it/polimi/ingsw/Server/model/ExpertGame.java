@@ -212,7 +212,7 @@ public class ExpertGame extends NormalGame implements CharacterCardGame {
         return moves <= getCurrentPlayer().getPlayedCardMoves() + 2;
     }
 
-    protected void calculateProfessor() {
+    public void calculateProfessor() {
         getGameDelta().setAutomaticSending(false);
         byte max;
         Player currentOwner;
@@ -298,13 +298,13 @@ public class ExpertGame extends NormalGame implements CharacterCardGame {
             if (playedCharacters[characters.indexOf(getChosenCharacter())]) charCost++;
             else {
                 playedCharacters[characters.indexOf(getChosenCharacter())] = true;
-                getGameDelta().setUsedCharacter(getChosenCharacter().getCharId(),true);
+                getGameDelta().setUsedCharacter(getChosenCharacter().getCharId(), true);
                 // a coin is left on the character card to remember it has been used
                 coinsLeft--;
             }
             // remove coins to player
             removeCoinsToCurrentPlayer(charCost);
-            coinsLeft+= charCost;
+            coinsLeft += charCost;
             chosenCharacter = -1;
             inputsCharacter.clear();
             getGameDelta().send();

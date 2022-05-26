@@ -34,4 +34,5 @@ public interface CharacterCardGame {
     byte getPlayerSize();
 
     Player getCurrentPlayer();
+    void calculateProfessor();
 }
