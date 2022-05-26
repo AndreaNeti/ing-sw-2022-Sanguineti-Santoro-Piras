@@ -12,7 +12,8 @@ import java.io.*;
 import java.net.Socket;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 class ClientHandlerTest {
     ClientHandler p1, p2, p3, p4;

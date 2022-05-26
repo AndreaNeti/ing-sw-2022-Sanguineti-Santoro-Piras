@@ -8,9 +8,7 @@ import it.polimi.ingsw.Enum.Wizard;
 import org.fusesource.jansi.AnsiConsole;
 
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.PrintStream;
-import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 

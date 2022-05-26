@@ -1,6 +1,5 @@
 package it.polimi.ingsw.Server.model;
 
-import it.polimi.ingsw.Server.model.Cloud;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

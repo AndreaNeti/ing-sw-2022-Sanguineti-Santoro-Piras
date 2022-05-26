@@ -123,6 +123,7 @@ public class ViewCli extends AbstractView implements ViewForCharacterCli {
     }
 
     private int getIntInput(Set<Integer> optionValues, String message, boolean canBeStopped) throws ScannerException {
+        if (optionValues.isEmpty()) throw new SkipCommandException();
         int option = getIntInput(message, canBeStopped);
         while (!optionValues.contains(option)) {
             System.err.println("Not a valid input");
@@ -207,7 +208,7 @@ public class ViewCli extends AbstractView implements ViewForCharacterCli {
         System.out.println("--OPTIONS--");
         for (int i = 0; i < characterCards.size(); i++)
             System.out.println(optionString(i, characterCards.get(i) + ": " + characterCards.get(i).getDescription()));
-        return (byte) getIntInput(0, characterCards.size(), "Select the character to play", false);
+        return (byte) getIntInput(0, characterCards.size() - 1, "Select the character to play", false);
     }
 
     public byte getAssistantCardToPlayInput(boolean canBeStopped) throws ScannerException {
