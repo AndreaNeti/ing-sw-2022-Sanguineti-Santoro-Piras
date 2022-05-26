@@ -66,7 +66,7 @@ public class Controller {
         }
     }
 
-    public synchronized void move(Color color, int idGameComponent) throws GameException, NullPointerException {
+    public synchronized void move(Color color, int idGameComponent) throws GameException, NullPointerException, EndGameException {
         if (gamePhase == GamePhase.MOVE_ST_PHASE) {
             if (idGameComponent <= 0 || idGameComponent >= 2 * matchType.nPlayers() + 12)
                 throw new NotAllowedException("Can't move to the selected GameComponent");
@@ -89,7 +89,7 @@ public class Controller {
 
     }
 
-    public synchronized void moveFromCloud(int idGameComponent) throws GameException, NullPointerException {
+    public synchronized void moveFromCloud(int idGameComponent) throws GameException, NullPointerException, EndGameException {
         if (gamePhase == GamePhase.MOVE_CL_PHASE) { // move students from cloud, destination is player entrance hall
             if (idGameComponent >= 0 || idGameComponent < -matchType.nPlayers())
                 throw new NotAllowedException("Component is not a cloud");
@@ -102,7 +102,7 @@ public class Controller {
     }
 
     //the value here need to go from 1 to 10
-    public synchronized void playCard(byte value) throws GameException, NullPointerException {
+    public synchronized void playCard(byte value) throws GameException, NullPointerException, EndGameException {
         if (gamePhase != GamePhase.PLANIFICATION_PHASE) {
             throw new NotAllowedException("Not in action phase");
         }
@@ -114,11 +114,7 @@ public class Controller {
         }
 
         if (playersList.get(currentPlayerIndex).canPlayCard(playedCards, value)) {
-            try {
-                game.playCard(value);
-            } catch (EndGameException e) {
-                handleError(e);
-            }
+            game.playCard(value);
             broadcastMessage(new TextMessageSC("Server: " + Wizard.values()[getCurrentPlayerIndex()] + " played card n° " + value));
             nextPhase();
         } else {
@@ -126,13 +122,9 @@ public class Controller {
         }
     }
 
-    public synchronized void moveMotherNature(int moves) throws GameException, NullPointerException {
+    public synchronized void moveMotherNature(int moves) throws GameException, NullPointerException, EndGameException {
         if (gamePhase == GamePhase.MOVE_MN_PHASE) {
-            try {
-                game.moveMotherNature(moves);
-            } catch (EndGameException e) {
-                handleError(e);
-            }
+            game.moveMotherNature(moves);
             broadcastMessage(new TextMessageSC("Server: " + Wizard.values()[getCurrentPlayerIndex()] + " moved MotherNature by " + moves + " moves"));
             nextPhase();
         } else {
@@ -185,20 +177,16 @@ public class Controller {
         broadcastMessage(new TextMessageSC("Server: " + Wizard.values()[getCurrentPlayerIndex()] + " chose character card " + charId));
     }
 
-    public synchronized void playCharacter() throws GameException, NullPointerException {
+    public synchronized void playCharacter() throws GameException, NullPointerException, EndGameException {
         if (gamePhase == GamePhase.PLANIFICATION_PHASE) {
             throw new NotAllowedException("Not in action phase");
         }
         if (characterCardPlayed) {
             throw new NotAllowedException("A card has already been played this turn");
         }
-        try {
-            game.playCharacter();
-            characterCardPlayed = true;
-            broadcastMessage(new TextMessageSC("Server: " + Wizard.values()[getCurrentPlayerIndex()] + " played character card"));
-        } catch (EndGameException e) {
-            handleError(e);
-        }
+        game.playCharacter();
+        characterCardPlayed = true;
+        broadcastMessage(new TextMessageSC("Server: " + Wizard.values()[getCurrentPlayerIndex()] + " played character card"));
     }
 
     public void disconnectPlayerQuit(GameListener playerAlreadyDisconnected) {
@@ -282,7 +270,7 @@ public class Controller {
         }
     }
 
-    private void nextPhase() {
+    private void nextPhase() throws EndGameException {
         //sort the array if the nextPhase is the action phase
         if (gamePhase == GamePhase.PLANIFICATION_PHASE) {
             nextPlayer();
@@ -307,22 +295,15 @@ public class Controller {
                     } else {
                         //there is a new turn completely
                         setPhase(GamePhase.PLANIFICATION_PHASE);
-                        try {
-                            game.refillClouds();
-                        } catch (EndGameException e) {
-                            handleError(e);
-                        }
+                        game.refillClouds();
                     }
                 }
-
 
             } else {
                 //set the phase to the next action phase
                 setPhase(GamePhase.values()[gamePhase.ordinal() + 1]);
             }
-
         }
-
     }
 
     private void setPhase(GamePhase gamePhase) {
@@ -338,7 +319,7 @@ public class Controller {
     }
 
 
-    private void handleError(EndGameException e) {
+    protected void handleError(EndGameException e) {
         if (e.isEndInstantly()) endGame();
         else lastRound = true;
     }

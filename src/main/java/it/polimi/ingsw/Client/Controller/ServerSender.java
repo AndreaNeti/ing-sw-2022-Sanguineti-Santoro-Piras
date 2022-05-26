@@ -9,7 +9,6 @@ import java.net.Socket;
 public class ServerSender {
     private final ObjectOutputStream objOut;
 
-
     public ServerSender(Socket socket){
         try {
             objOut = new ObjectOutputStream(socket.getOutputStream());

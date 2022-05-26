@@ -1,5 +1,6 @@
 package it.polimi.ingsw.Server.controller;
 
+import it.polimi.ingsw.exceptions.serverExceptions.EndGameException;
 import it.polimi.ingsw.exceptions.serverExceptions.GameException;
 import it.polimi.ingsw.Enum.Color;
 import org.junit.jupiter.api.Test;
@@ -61,7 +62,7 @@ class ControllerTest {
     void playCardTest() {
         try {
             controllerExpert.playCard((byte) 1);
-        } catch (GameException | NullPointerException e) {
+        } catch (GameException | EndGameException | NullPointerException e) {
             fail();
         }
         assertThrows(GameException.class, () -> controllerExpert.playCard((byte) 1), "Cannot play this card");
@@ -69,7 +70,7 @@ class ControllerTest {
         try {
             for (int i = 3; i < 5; i++)
                 controllerExpert.playCard((byte) i);
-        } catch (GameException | NullPointerException e) {
+        } catch (GameException | EndGameException | NullPointerException e) {
             fail();
         }
         assertThrows(GameException.class, () -> controllerExpert.playCard((byte) 6), "Not in planification phase");
@@ -81,7 +82,7 @@ class ControllerTest {
         try {
             for (int i = 3; i < 7; i++)
                 controllerExpert.playCard((byte) i);
-        } catch (GameException | NullPointerException e) {
+        } catch (GameException | EndGameException | NullPointerException e) {
             fail();
         }
         assertThrows(GameException.class, () -> controllerExpert.move(Color.RED, 0), "Can't move to the selected GameComponent");
@@ -92,7 +93,7 @@ class ControllerTest {
                 try {
                     controllerExpert.move(c, 1);
                     moved++;
-                } catch (GameException ignored) {
+                } catch (GameException | EndGameException ignored) {
                 }
             }
         }
@@ -106,7 +107,7 @@ class ControllerTest {
         try {
             for (int i = 3; i < 7; i++)
                 controllerExpert.playCard((byte) i);
-        } catch (GameException | NullPointerException e) {
+        } catch (GameException | EndGameException | NullPointerException e) {
             fail();
         }
         assertThrows(GameException.class, () -> controllerExpert.moveMotherNature(1), "Wrong phase");
@@ -116,7 +117,7 @@ class ControllerTest {
                 try {
                     controllerExpert.move(c, 1);
                     moved++;
-                } catch (GameException ignored) {
+                } catch (GameException | EndGameException ignored) {
                 }
             }
         }
@@ -131,7 +132,7 @@ class ControllerTest {
         try {
             for (int i = 3; i < 7; i++)
                 controllerExpert.playCard((byte) i);
-        } catch (GameException | NullPointerException e) {
+        } catch (GameException | EndGameException | NullPointerException e) {
             fail();
         }
         assertThrows(GameException.class, () -> controllerExpert.moveFromCloud(0), "Wrong phase");
@@ -141,7 +142,7 @@ class ControllerTest {
                 try {
                     controllerExpert.move(c, 1);
                     moved++;
-                } catch (GameException ignored) {
+                } catch (GameException | EndGameException ignored) {
                 }
             }
         }
@@ -149,7 +150,7 @@ class ControllerTest {
         assertThrows(GameException.class, () -> controllerExpert.moveFromCloud(0), "Wrong phase");
         try {
             controllerExpert.moveMotherNature(1);
-        } catch (GameException e) {
+        } catch (GameException | EndGameException e) {
             fail();
         }
         assertThrows(GameException.class, () -> controllerExpert.moveFromCloud(1), "Component is not a cloud");
@@ -172,7 +173,7 @@ class ControllerTest {
             for (int j = i + 1; j < i + 3; j++) {
                 try {
                     controllerExpert2.playCard((byte) j);
-                } catch (GameException e) {
+                } catch (GameException | EndGameException e) {
                     fail(e.getMessage());
                 }
             }
@@ -184,7 +185,7 @@ class ControllerTest {
                             //2k+1 is the lunch hall
                             controllerExpert2.move(c, 2 * k + 1);
                             moved++;
-                        } catch (GameException ignored) {
+                        } catch (GameException | EndGameException ignored) {
                         }
                     }
                 }
@@ -194,7 +195,7 @@ class ControllerTest {
                             try {
                                 controllerExpert2.move(c, 6);
                                 moved++;
-                            } catch (GameException ignored) {
+                            } catch (GameException | EndGameException ignored) {
                             }
                         }
                     }
@@ -203,12 +204,12 @@ class ControllerTest {
 
                 try {
                     controllerExpert2.moveMotherNature((i + 1) / 2);
-                } catch (GameException e) {
+                } catch (GameException | EndGameException e) {
                     fail(e.getMessage());
                 }
                 try {
                     controllerExpert2.moveFromCloud(-1 - k % 2);
-                } catch (GameException e) {
+                } catch (GameException | EndGameException e) {
                     fail(e.getMessage());
                 }
             }
@@ -216,7 +217,7 @@ class ControllerTest {
         try {
             controllerExpert2.playCard((byte) 9);
             controllerExpert2.playCard((byte) 10);
-        } catch (GameException e) {
+        } catch (GameException | EndGameException e) {
             fail(e.getMessage());
         }
         assertDoesNotThrow(() -> controllerExpert2.chooseCharacter((byte) 0));
@@ -237,7 +238,7 @@ class ControllerTest {
         chooseCharacterTest();
         try {
             controllerExpert2.playCharacter();
-        } catch (GameException e) {
+        } catch (GameException | EndGameException e) {
             // additional check if card selected is c0, c6 or c10 and it does not contain the selected color
             boolean worked = false;
             for (int i = 0; i < 5 && !worked; i++) {
@@ -246,14 +247,14 @@ class ControllerTest {
                         controllerExpert2.setCharacterInput(i);
                         controllerExpert2.playCharacter();
                         worked = true;
-                    } catch (GameException e1) {
+                    } catch (GameException | EndGameException e1) {
                         System.out.println(e1.getMessage());
                         try {
                             controllerExpert2.setCharacterInput(i);
                             controllerExpert2.setCharacterInput(j);
                             controllerExpert2.playCharacter();
                             worked = true;
-                        } catch (GameException e2) {
+                        } catch (GameException | EndGameException e2) {
                             System.out.println(e2.getMessage());
                         }
                     }
@@ -282,7 +283,7 @@ class ControllerTest {
             for (int j = i; j < i + 2; j++) {
                 try {
                     controllerExpert2.playCard((byte) (j % 10 + 1));
-                } catch (GameException e) {
+                } catch (GameException | EndGameException e) {
                     fail(e.getMessage());
                 }
             }
@@ -294,7 +295,7 @@ class ControllerTest {
                         try {
                             controllerExpert2.move(c, 10);
                             moved++;
-                        } catch (GameException ignored) {
+                        } catch (GameException | EndGameException ignored) {
                         }
                     }
                 }
@@ -302,13 +303,13 @@ class ControllerTest {
                 if (moved != 3) fail();
                 try {
                     controllerExpert2.moveMotherNature(1);
-                } catch (GameException e) {
+                } catch (GameException | EndGameException e) {
                     fail(e.getMessage());
                 }
                 assertFalse(controllerExpert2.isGameFinished());
                 try {
                     controllerExpert2.moveFromCloud(-1 - k % 2);
-                } catch (GameException e) {
+                } catch (GameException | EndGameException e) {
                     fail(e.getMessage());
                 }
             }
@@ -332,7 +333,7 @@ class ControllerTest {
             }
             try {
                 controllerExpert.playCard((byte) (i + 1));
-            } catch (GameException e) {
+            } catch (GameException | EndGameException e) {
                 fail();
             }
         }

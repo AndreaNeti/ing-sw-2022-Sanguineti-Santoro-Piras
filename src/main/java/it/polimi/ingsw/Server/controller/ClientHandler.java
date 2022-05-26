@@ -1,5 +1,6 @@
 package it.polimi.ingsw.Server.controller;
 
+import it.polimi.ingsw.exceptions.serverExceptions.EndGameException;
 import it.polimi.ingsw.exceptions.serverExceptions.GameException;
 import it.polimi.ingsw.exceptions.serverExceptions.NotAllowedException;
 import it.polimi.ingsw.network.toClientMessage.ErrorException;
@@ -47,7 +48,8 @@ public class ClientHandler implements Runnable, GameListener {
                 command = (ToServerMessage) objIn.readObject();
                 System.out.println(command);
                 command.execute(this);
-
+            } catch (EndGameException e) {
+                controller.handleError(e);
             } catch (GameException e1) {
                 update(new ErrorException(e1.getMessage()));
             } catch (NullPointerException ex) {

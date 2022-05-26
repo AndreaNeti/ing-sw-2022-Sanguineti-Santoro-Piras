@@ -3,6 +3,7 @@ package it.polimi.ingsw.network.toServerMessage;
 import it.polimi.ingsw.Enum.Color;
 import it.polimi.ingsw.Server.controller.ClientHandler;
 import it.polimi.ingsw.Server.controller.Controller;
+import it.polimi.ingsw.exceptions.serverExceptions.EndGameException;
 import it.polimi.ingsw.exceptions.serverExceptions.GameException;
 import it.polimi.ingsw.exceptions.serverExceptions.NotAllowedException;
 
@@ -16,7 +17,7 @@ public class MoveStudent implements ToServerMessage {
     }
 
     @Override
-    public void execute(ClientHandler clientHandler) throws GameException {
+    public void execute(ClientHandler clientHandler) throws GameException, EndGameException {
         Controller c = clientHandler.getController();
         if(c.isGameFinished()){
             throw new NotAllowedException("Game is already finished");

@@ -8,6 +8,10 @@ import it.polimi.ingsw.Enum.Wizard;
 import org.fusesource.jansi.AnsiConsole;
 
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintStream;
+import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 public class CliPrinter implements GameClientListener {
@@ -16,9 +20,19 @@ public class CliPrinter implements GameClientListener {
     private final static String operatingSystem = System.getProperty("os.name");
     private final ViewCli view;
     private GameClientView game;
+    private final PrintStream out;
 
     public CliPrinter(ViewCli view) {
         this.view = view;
+        if (operatingSystem.contains("Windows")) {
+            try {
+                // set terminal to utf8
+                new ProcessBuilder("cmd", "/c", "chcp 65001").inheritIO().start().waitFor();
+            } catch (InterruptedException | IOException e) {
+                System.err.println(e.getMessage());
+            }
+        }
+        out = new PrintStream(System.out, true, StandardCharsets.UTF_8);
     }
 
     private void printLobby() {
@@ -37,7 +51,7 @@ public class CliPrinter implements GameClientListener {
                 }
             }
             chat.append(" \u2514").append("\u2500".repeat(86)).append("\u2518\n\n");
-            System.out.print(chat);
+            out.print(chat);
         }
     }
 
@@ -48,11 +62,11 @@ public class CliPrinter implements GameClientListener {
 //        System.setOut(new PrintStream(new FileOutputStream(FileDescriptor.out), true, StandardCharsets.UTF_8));
             AnsiConsole.systemInstall();
             List<PlayerClient> players = game.getPlayers();
-            System.out.println("----------------------ERYANTIS----------------------");
-            System.out.print(printIslands(game.getIslands()));
-            System.out.print(printCloudsAndTeams(game.getClouds(), game.getTeams()));
-            System.out.print(printBoardsChatCharacters(players));
-            System.out.print(printAssistantCards(players));
+            out.println("----------------------ERYANTIS----------------------");
+            out.print(printIslands(game.getIslands()));
+            out.print(printCloudsAndTeams(game.getClouds(), game.getTeams()));
+            out.print(printBoardsChatCharacters(players));
+            out.print(printAssistantCards(players));
             AnsiConsole.systemUninstall();
         } else {
             printLobby();
@@ -280,7 +294,7 @@ public class CliPrinter implements GameClientListener {
                 default -> {
                     String mex = "";
                     if (chat.size() >= (3 + i))
-                        mex = chat.get(chat.size() - 2 - i);
+                        mex = chat.get(chat.size() - 3 - i);
                     boardsCharChatPrint.append("\t\u2502 ").append(mex).append(" ".repeat((78 - mex.length() + 7))).append("\u2502\n");
                 }
             }

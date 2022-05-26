@@ -8,7 +8,6 @@ public class App {
     static AbstractView view;
 
     public static void main(String[] args) {
-
         ControllerClient controllerClient = new ControllerClient();
 
         view = new ViewCli(controllerClient);

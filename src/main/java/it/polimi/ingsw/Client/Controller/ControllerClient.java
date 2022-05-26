@@ -23,6 +23,7 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.Socket;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -110,7 +111,7 @@ public class ControllerClient extends GameClientListened {
     }
 
     public void addMessage(String message) {
-        chat.add(message);
+        chat.add(new String(message.getBytes(StandardCharsets.UTF_8), StandardCharsets.UTF_8));
         notifyView();
     }
 
@@ -168,8 +169,8 @@ public class ControllerClient extends GameClientListened {
             gameDelta.getIgnoredColorInfluence().ifPresent((ignoredColorInfluence) -> model.setIgnoredColorInfluence(ignoredColorInfluence));
             for (Map.Entry<Byte, Byte> newEntry : gameDelta.getUpdatedCoinPlayer().entrySet())
                 model.setUpdatedCoinPlayer(newEntry.getKey(), newEntry.getValue());
-            for(Map.Entry<Byte,Boolean> entry:gameDelta.getUpdatedCharacter().entrySet()){
-                model.setUpdatedCharacter(entry.getKey(),entry.getValue());
+            for (Map.Entry<Byte, Boolean> entry : gameDelta.getUpdatedCharacter().entrySet()) {
+                model.setUpdatedCharacter(entry.getKey(), entry.getValue());
             }
         }
 
@@ -218,28 +219,35 @@ public class ControllerClient extends GameClientListened {
             attachExpertCommand();
         }
         model.addListener(this);
-//        abstractView.clearChat();
         abstractView.setModel(model);
     }
 
     // returns true if the client process has to quit
     public synchronized boolean setQuit(boolean forceScannerSkip) {
-        chat.clear();
         if (isInMatch) {
             sendMessage(new Quit());
+            unsetModel();
             changePhase(GamePhase.SELECT_MATCH_PHASE, true, forceScannerSkip);
-            isInMatch = false;
-            model = null;
-            abstractView.setModel(null);
             return false;
         } else if (currentPhase != GamePhase.INIT_PHASE) {
+            chat.clear();
             sendMessage(new Quit());
-            // quit connection to server
-            serverListener.quit();
-            serverSender.closeStream();
+            closeConnection();
             return false;
         } else return true;
+    }
 
+    protected void closeConnection() {
+        // quit connection to server
+        serverListener.quit();
+        serverSender.closeStream();
+    }
+
+    protected void unsetModel() {
+        chat.clear();
+        isInMatch = false;
+        model = null;
+        abstractView.setModel(null);
     }
 
     public void notifyClientPhase(ClientPhaseController clientPhaseController, boolean forceScannerSkip) {

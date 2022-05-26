@@ -42,6 +42,8 @@ public class ServerListener implements Runnable {
                     } else
                         controllerClient.addMessage("Disconnected from server");
                 }
+                controllerClient.unsetModel();
+                controllerClient.closeConnection();
                 controllerClient.changePhase(GamePhase.INIT_PHASE, true, true);
             }
 

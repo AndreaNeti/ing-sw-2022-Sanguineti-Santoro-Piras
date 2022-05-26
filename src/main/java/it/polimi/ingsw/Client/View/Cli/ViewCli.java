@@ -13,6 +13,7 @@ import it.polimi.ingsw.exceptions.clientExceptions.RepeatCommandException;
 import it.polimi.ingsw.exceptions.clientExceptions.ScannerException;
 import it.polimi.ingsw.exceptions.clientExceptions.SkipCommandException;
 
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 public class ViewCli extends AbstractView implements ViewForCharacterCli {
@@ -26,7 +27,7 @@ public class ViewCli extends AbstractView implements ViewForCharacterCli {
         cliPrinter = new CliPrinter(this);
         controllerClient.addListener(cliPrinter);
         Thread scannerThread = new Thread(() -> {
-            final Scanner myInput = new Scanner(System.in);
+            final Scanner myInput = new Scanner(System.in, StandardCharsets.UTF_8);
             try {
                 while (!canQuit()) {
                     do {
@@ -40,8 +41,9 @@ public class ViewCli extends AbstractView implements ViewForCharacterCli {
                             wait();
                     }
                 }
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
+            } catch (Exception ignored) {
+            } finally {
+                System.err.println("Closing...");
             }
         });
         phaseToExecute = null;
@@ -49,6 +51,7 @@ public class ViewCli extends AbstractView implements ViewForCharacterCli {
         phaseChanged = false;
         forcedScannerSkip = false;
         requestInput = false;
+        scannerThread.setName("Scanner Thread");
         scannerThread.start();
     }
 
@@ -288,7 +291,6 @@ public class ViewCli extends AbstractView implements ViewForCharacterCli {
         }
         return s.equals("y");
     }
-
 
     public String getStringInput(String message, int maxLength, boolean canBeStopped) throws ScannerException {
         System.out.println(message + ": ");
