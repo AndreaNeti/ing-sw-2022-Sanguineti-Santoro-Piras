@@ -29,7 +29,7 @@ public class Controller {
     private byte movesCounter;
     // Byte so it's immutable
     private Byte currentPlayerIndex;
-    private boolean lastRound, characterCardPlayed;
+    private boolean lastRound, characterCardPlayed, skipCloudPhase;
 
     private ArrayList<HouseColor> winners;
     private boolean gameFinished;
@@ -57,7 +57,7 @@ public class Controller {
         this.winners = null;
         this.gameFinished = false;
         this.matchId = id;
-
+        this.skipCloudPhase = false;
     }
 
     public boolean isMyTurn(ClientHandler caller) {
@@ -75,7 +75,9 @@ public class Controller {
                 throw new NotAllowedException("Can't move to the selected GameComponent");
             //currentPlayerIndex*2 is the id of the entranceHall
             game.move(color, (currentPlayerIndex * 2), idGameComponent);
+            // do not increment counter if exception thrown
             movesCounter++;
+
             broadcastMessage(new TextMessageSC("Server: " + Wizard.values()[getCurrentPlayerIndex()] + " moved a " + color + " student"));
             if (movesCounter == matchConstants.studentsToMove()) {
                 movesCounter = 0;
@@ -296,30 +298,32 @@ public class Controller {
             }
         } else {
             //check if it's the last action phase and if it's the last player playing in that turn
-            if (gamePhase == GamePhase.MOVE_CL_PHASE) {
+            if (gamePhase == GamePhase.MOVE_CL_PHASE || (gamePhase == GamePhase.MOVE_MN_PHASE && skipCloudPhase)) {
                 //set the next player, if it's the last player of the round, round index will be 0
                 nextPlayer();
-
+                // it's not last action phase round
                 if (roundIndex != 0) {
                     setPhase(GamePhase.MOVE_ST_PHASE);
+                } else if (lastRound) {
+                    // it's last player in action phase, and it's last round, end game
+                    endGame();
                 } else {
+                    // it's last player in action phase, pass to new planification phase
                     try {
                         game.refillClouds();
                     } catch (EndGameException e) {
+                        // couldn't refill all clouds, skip cloud phase next times
+                        skipCloudPhase = true;
                         handleError(e);
                     }
                     //there is a new turn completely
                     setPhase(GamePhase.PLANIFICATION_PHASE);
                 }
+
             } else {
-                // last round and last player moving from mother nature phase
-                if (lastRound && gamePhase == GamePhase.MOVE_MN_PHASE && roundIndex == playersList.size() - 1) {
-                    // cloud phase has no sense if it's last round, skip it and end game
-                    endGame();
-                } else {
-                    //set the phase to the next action phase
-                    setPhase(GamePhase.values()[gamePhase.ordinal() + 1]);
-                }
+                //it's not last action phase
+                //set the phase to the next action phase
+                setPhase(GamePhase.values()[gamePhase.ordinal() + 1]);
             }
         }
     }

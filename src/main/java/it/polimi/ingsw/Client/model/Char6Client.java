@@ -29,16 +29,16 @@ public class Char6Client extends CharacterCardClientWithStudents {
     @Override
     public void setNextInput(ViewForCharacterCli view) throws ScannerException {
         if (inputs.size() % 2 == 0)
-            System.out.println("Select the color of the student from this card " + super.toString());
+            System.out.println("Select the color of the student from this card");
         else
-            System.out.println("Select the color of the student from your entrance ");
+            System.out.println("Select the color of the student from your entrance");
 
         inputs.add(view.getColorInput(false));
     }
 
     @Override
     public boolean canPlay() {
-        return inputs.size() == 2;
+        return inputs.size() % 2 == 0 && inputs.size() > 0 && inputs.size() <= 6;
     }
 
     @Override

@@ -28,7 +28,7 @@ public class Char10Client extends CharacterCardClientWithStudents {
 
     @Override
     public void setNextInput(ViewForCharacterCli view) throws ScannerException {
-        System.out.println("Select the color of the student from this card " + super.toString());
+        System.out.println("Select the color of the student from this card");
         inputs.add(view.getColorInput(false));
     }
 

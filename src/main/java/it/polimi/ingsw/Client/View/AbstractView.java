@@ -72,6 +72,7 @@ public abstract class AbstractView {
     }
 
     public CharacterCardClient getCurrentCharacterCard() {
+        if (getModel() == null) return null;
         return getModel().getCurrentCharacterCard();
     }
 

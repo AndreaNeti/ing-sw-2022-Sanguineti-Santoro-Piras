@@ -270,7 +270,7 @@ public class NormalGame implements Game {
         }
     }
 
-    private void calculateInfluence(Island island) throws EndGameException {
+    protected void calculateInfluence(Island island) throws EndGameException {
         if (island == null) throw new IllegalArgumentException("Calculating influence on null island");
         HouseColor oldController = island.getTeamColor();
         int maxInfluence = 0;
@@ -282,7 +282,7 @@ public class NormalGame implements Game {
                     if (p.getWizard().equals(professors[c.ordinal()])) influence += island.howManyStudents(c);
                 }
             }
-            if (island.getTeamColor() != null && t.getHouseColor() == island.getTeamColor())
+            if (oldController != null && t.getHouseColor() == oldController)
                 influence += island.getNumber();
 
             if (influence > maxInfluence) {
@@ -293,31 +293,32 @@ public class NormalGame implements Game {
             }
 
         }
+        setIslandController(island, winnerColor, oldController);
+    }
 
-        HouseColor oldTeamColor = island.getTeamColor();
-        if (winnerColor != null && !winnerColor.equals(oldTeamColor)) {
-            island.setTeamColor(winnerColor);
+    protected void setIslandController(Island island, HouseColor newController, HouseColor oldController) throws EndGameException {
+        if (newController != null && !newController.equals(oldController)) {
+            island.setTeamColor(newController);
 
             // add to game delta
             gameDelta.addUpdatedGC(island);
 
-            if (oldTeamColor != null) {
-                Team oldTeam = getTeams().get(oldTeamColor.ordinal());
+            if (oldController != null) {
+                Team oldTeam = getTeams().get(oldController.ordinal());
                 oldTeam.addTowers(island.getNumber());
 
                 // add to game delta
-                gameDelta.updateTeamTowersLeft(oldTeamColor, oldTeam.getTowersLeft());
+                gameDelta.updateTeamTowersLeft(oldController, oldTeam.getTowersLeft());
             }
-            Team winnerTeam = getTeams().get(winnerColor.ordinal());
+            Team winnerTeam = getTeams().get(newController.ordinal());
             winnerTeam.removeTowers(island.getNumber());
 
             // add to game delta
-            gameDelta.updateTeamTowersLeft(winnerColor, winnerTeam.getTowersLeft());
+            gameDelta.updateTeamTowersLeft(newController, winnerTeam.getTowersLeft());
 
             checkMerge(island);
         }
     }
-
 
     // checks the team with fewer towers left and calculates its number of controlled professors.
     // if two teams have the same number of towers left the team with more professors controlled becomes the winner

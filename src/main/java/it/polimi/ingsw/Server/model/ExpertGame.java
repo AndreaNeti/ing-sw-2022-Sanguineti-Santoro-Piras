@@ -137,6 +137,7 @@ public class ExpertGame extends NormalGame implements CharacterCardGame {
         if (island.getProhibitions() > 0) {
             island.removeProhibition();
             restoreProhibition();
+            getGameDelta().addUpdatedGC(island);
         } else {
             HouseColor oldController = island.getTeamColor();
             int maxInfluence = 0;
@@ -151,7 +152,7 @@ public class ExpertGame extends NormalGame implements CharacterCardGame {
                         }
                     }
                 }
-                if (island.getTeamColor() != null && towerInfluence && t.getHouseColor() == island.getTeamColor())
+                if (oldController != null && towerInfluence && t.getHouseColor() == oldController)
                     influence += island.getNumber();
 
                 if (extraInfluence && t.getPlayers().contains(getCurrentPlayer())) {
@@ -165,15 +166,7 @@ public class ExpertGame extends NormalGame implements CharacterCardGame {
                     winnerColor = oldController;
                 }
             }
-            HouseColor oldTeamColor = island.getTeamColor();
-            if (winnerColor != null && !winnerColor.equals(oldTeamColor)) {
-                island.setTeamColor(winnerColor);
-                if (oldTeamColor != null) {
-                    getTeams().get(oldTeamColor.ordinal()).addTowers(island.getNumber());
-                }
-                getTeams().get(winnerColor.ordinal()).removeTowers(island.getNumber());
-                checkMerge(island);
-            }
+            setIslandController(island, winnerColor, oldController);
         }
     }
 
