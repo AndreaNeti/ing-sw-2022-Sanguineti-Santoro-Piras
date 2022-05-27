@@ -29,12 +29,11 @@ public class ClientHandler implements Runnable, GameListener {
         try {
             objOut = new ObjectOutputStream(socket.getOutputStream());
             objIn = new ObjectInputStream(socket.getInputStream());
-
+            System.out.println("Connected with client " + socket.getPort());
         } catch (IOException e) {
             e.printStackTrace();
             throw new RuntimeException(e);
         }
-        System.out.println("Connected with client " + socket.getPort());
     }
 
     @Override
@@ -46,10 +45,11 @@ public class ClientHandler implements Runnable, GameListener {
         do {
             try {
                 command = (ToServerMessage) objIn.readObject();
-                System.out.println(command);
+                System.out.println(command.getClass().getName());
                 command.execute(this);
             } catch (EndGameException e) {
-                controller.handleError(e);
+                // if the exception arrives here it means it was an end instantly exception
+                controller.endGame();
             } catch (GameException e1) {
                 update(new ErrorException(e1.getMessage()));
             } catch (NullPointerException ex) {

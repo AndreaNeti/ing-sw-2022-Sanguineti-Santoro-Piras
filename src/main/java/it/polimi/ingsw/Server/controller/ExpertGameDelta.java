@@ -34,9 +34,6 @@ public class ExpertGameDelta extends GameDelta {
         if (characters == null)
             characters = new ArrayList<>();
         characters.add(index, id);
-        if (super.isAutomaticSending()) {
-            super.send();
-        }
     }
 
     @Override
@@ -44,42 +41,27 @@ public class ExpertGameDelta extends GameDelta {
         if (updatedCoinPlayer == null)
             updatedCoinPlayer = new HashMap<>();
         updatedCoinPlayer.put(playerId, newCoinsLeft);
-        if (super.isAutomaticSending()) {
-            super.send();
-        }
     }
 
     public void setUsedCharacter(byte charId, boolean used) {
         if (usedCharacter == null)
             usedCharacter = new HashMap<>();
         usedCharacter.put(charId, used);
-        if (super.isAutomaticSending()) {
-            super.send();
-        }
     }
 
     @Override
     public void setNewCoinsLeft(byte newCoinsLeft) {
         this.newCoinsLeft = newCoinsLeft;
-        if (super.isAutomaticSending()) {
-            super.send();
-        }
     }
 
     @Override
     public void setNewProhibitionsLeft(byte newProhibitionsLeft) {
         this.newProhibitionsLeft = newProhibitionsLeft;
-        if (super.isAutomaticSending()) {
-            super.send();
-        }
     }
 
     @Override
     public void setIgnoredColorInfluence(Color ignoredColorInfluence) {
         this.ignoredColorInfluence = ignoredColorInfluence;
-        if (super.isAutomaticSending()) {
-            super.send();
-        }
     }
 
     @Override
@@ -94,6 +76,7 @@ public class ExpertGameDelta extends GameDelta {
         return updatedCoinPlayer;
     }
 
+    @Override
     public Map<Byte, Boolean> getUsedCharacter() {
         if (usedCharacter == null) return Collections.emptyMap();
         return usedCharacter;

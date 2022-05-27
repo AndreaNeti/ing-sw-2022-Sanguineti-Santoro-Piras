@@ -77,7 +77,7 @@ class CharacterCardTest {
         c0 = new Char0((byte) -10);
         try {
             game.drawStudents((GameComponent) c0, (byte) ((GameComponent) c0).getMaxStudents());
-        } catch (EndGameException e) {
+        } catch (EndGameException | GameException e) {
             fail();
         }
         c1 = new Char1();
@@ -88,7 +88,7 @@ class CharacterCardTest {
         c6 = new Char6((byte) -11);
         try {
             game.drawStudents((GameComponent) c6, (byte) ((GameComponent) c6).getMaxStudents());
-        } catch (EndGameException e) {
+        } catch (EndGameException | GameException e) {
             fail();
         }
         c7 = new Char7();
@@ -97,7 +97,7 @@ class CharacterCardTest {
         c10 = new Char10((byte) -12);
         try {
             game.drawStudents((GameComponent) c10, (byte) ((GameComponent) c10).getMaxStudents());
-        } catch (EndGameException e) {
+        } catch (EndGameException | GameException e) {
             fail();
         }
         c11 = new Char11();

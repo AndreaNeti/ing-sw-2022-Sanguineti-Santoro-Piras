@@ -331,7 +331,7 @@ public class ViewCli extends AbstractView implements ViewForCharacterCli {
         try {
             // wait for scanner notify or phase changed flag (if it can be stopped) or forced skip (used if someone lost connection)
             // or if there has been some changes, and it needs to be reprinted
-            while (!isInputReady && ((!mustReprint && !phaseChanged) || !canBeStopped) && !forcedScannerSkip) {
+            while (!(isInputReady || forcedScannerSkip || (canBeStopped && (mustReprint || phaseChanged)))) {
                 wait();
             }
         } catch (InterruptedException e) {
@@ -342,7 +342,7 @@ public class ViewCli extends AbstractView implements ViewForCharacterCli {
             // reprint game
             cliPrinter.printGame();
             // if one of these conditions is true it should not repeat the command, skip instead to the new one
-            if (!phaseChanged && !isInputReady && !forcedScannerSkip)
+            if (!(phaseChanged || isInputReady || forcedScannerSkip))
                 throw new RepeatCommandException();
         }
         // if input is ready, return it

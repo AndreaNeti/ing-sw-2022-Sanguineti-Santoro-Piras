@@ -23,12 +23,10 @@ public class GameDelta implements Serializable {
     // towers left
     private Map<HouseColor, Byte> newTeamTowersLeft;
     private Byte newMotherNaturePosition, playedCard;
-    private transient boolean automaticSending;
 
     public GameDelta() {
         listeners = new ArrayList<>();
         clear();
-        automaticSending = false;
     }
 
     public void clear() {
@@ -44,48 +42,32 @@ public class GameDelta implements Serializable {
         if (updatedGC == null)
             updatedGC = new HashMap<>();
         updatedGC.put(gcUpdated.getId(), gcUpdated);
-        if (automaticSending)
-            send();
     }
 
     public void addDeletedIslands(Island deletedIsland) {
         if (deletedIslands == null)
             deletedIslands = new HashSet<>();
         deletedIslands.add(deletedIsland.getId());
-        if (automaticSending)
-            send();
     }
 
     public void updateTeamTowersLeft(HouseColor teamColor, byte newTowersLeft) {
         if (newTeamTowersLeft == null)
             newTeamTowersLeft = new HashMap<>();
         newTeamTowersLeft.put(teamColor, newTowersLeft);
-        if (automaticSending)
-            send();
     }
 
     public void addUpdatedProfessors(Color professorColor, Wizard newController) {
         if (updatedProfessors == null)
             updatedProfessors = new HashMap<>();
         updatedProfessors.put(professorColor, newController);
-        if (automaticSending)
-            send();
     }
 
     public void setNewMotherNaturePosition(byte newMotherNaturePosition) {
         this.newMotherNaturePosition = newMotherNaturePosition;
-        if (automaticSending)
-            send();
     }
 
     public void setPlayedCard(byte playedCard) {
         this.playedCard = playedCard;
-        if (automaticSending)
-            send();
-    }
-
-    public void setAutomaticSending(boolean automaticSending) {
-        this.automaticSending = automaticSending;
     }
 
     public void addListener(GameListener gameListener) {
@@ -97,11 +79,6 @@ public class GameDelta implements Serializable {
         for (GameListener listener : listeners)
             listener.update(m);
         clear();
-        automaticSending = true;
-    }
-
-    public boolean isAutomaticSending() {
-        return automaticSending;
     }
 
     public void addCharacterCard(byte index, byte id) {
@@ -142,7 +119,7 @@ public class GameDelta implements Serializable {
         return Optional.empty();
     }
 
-    public Map<Byte, Boolean> getUpdatedCharacter() {
+    public Map<Byte, Boolean> getUsedCharacter() {
         return Collections.emptyMap();
     }
 
@@ -184,7 +161,6 @@ public class GameDelta implements Serializable {
                 ", newTeamTowersLeft=" + newTeamTowersLeft +
                 ", newMotherNaturePosition=" + newMotherNaturePosition +
                 ", playedCard=" + playedCard +
-                ", automaticSending=" + automaticSending +
                 '}';
     }
 }

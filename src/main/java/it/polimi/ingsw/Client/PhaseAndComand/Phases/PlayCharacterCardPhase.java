@@ -2,6 +2,7 @@ package it.polimi.ingsw.Client.PhaseAndComand.Phases;
 
 import it.polimi.ingsw.Client.View.Cli.ViewCli;
 import it.polimi.ingsw.Client.View.Gui.ViewGUI;
+import it.polimi.ingsw.Client.model.CharacterCardClient;
 
 public class PlayCharacterCardPhase extends ClientPhase {
     public PlayCharacterCardPhase() {
@@ -10,7 +11,9 @@ public class PlayCharacterCardPhase extends ClientPhase {
 
     @Override
     public void playPhase(ViewCli viewCli) {
-        System.out.println("This is the selected character: " + viewCli.getCurrentCharacterCard().toString());
+        CharacterCardClient selectedCharacter = viewCli.getCurrentCharacterCard();
+        if (selectedCharacter == null) return;
+        System.out.println("This is the selected character: " + selectedCharacter);
         super.playPhase(viewCli);
     }
 

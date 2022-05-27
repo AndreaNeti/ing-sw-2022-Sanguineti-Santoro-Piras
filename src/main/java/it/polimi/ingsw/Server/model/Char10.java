@@ -18,9 +18,11 @@ public class Char10 extends GameComponent implements CharacterCard {
             throw new NotAllowedException("Set wrong input for color");
         }
         this.moveStudents(Color.values()[color], (byte) 1, game.getCurrentPlayer().getLunchHall());
+        game.drawStudents(this, (byte) 1);
+        game.calculateProfessor();
+
         game.getGameDelta().addUpdatedGC(this);
         game.getGameDelta().addUpdatedGC(game.getCurrentPlayer().getLunchHall());
-        game.drawStudents(this, (byte) 1);
     }
 
     @Override

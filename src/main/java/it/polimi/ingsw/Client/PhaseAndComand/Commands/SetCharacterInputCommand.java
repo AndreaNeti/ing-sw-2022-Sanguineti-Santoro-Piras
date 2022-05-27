@@ -17,8 +17,6 @@ public class SetCharacterInputCommand extends GameCommand {
     public void playCLICommand() throws ScannerException {
         ViewCli viewCli = (ViewCli) getView();
         CharacterCardClient current = viewCli.getCurrentCharacterCard();
-        if (current.canPlay())
-            System.out.println("Card can already be played");
         if (current.isFull())
             viewCli.addMessage("Can't add more inputs to this character");
         else {
@@ -32,6 +30,8 @@ public class SetCharacterInputCommand extends GameCommand {
                 }
             } while (phaseChanged);
         }
+        if (current.canPlay())
+            viewCli.addMessage("Card can already be played");
         viewCli.repeatPhase(false);
     }
 

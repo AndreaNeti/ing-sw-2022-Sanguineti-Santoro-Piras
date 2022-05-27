@@ -27,7 +27,7 @@ public interface CharacterCardGame {
 
     GameComponent getComponentById(int id) throws GameException;
 
-    void drawStudents(GameComponent gc, byte n) throws EndGameException;
+    void drawStudents(GameComponent gc, byte n) throws EndGameException, GameException;
 
     void calculateInfluence(Island i) throws EndGameException;
 

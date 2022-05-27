@@ -381,10 +381,7 @@ public class CliPrinter implements GameClientListener {
 
     private StringBuilder printAssistantCards(List<PlayerClient> players) {
         StringBuilder assistantCardsPrint = new StringBuilder();
-        PlayerClient player = players.get(0);
-        // find player
-        for (PlayerClient p : players)
-            if (p.getWizard() == game.getMyWizard()) player = p;
+        PlayerClient player = players.get(game.getMyWizard().ordinal());
 
         boolean[] cards = player.getUsedCards();
 
@@ -501,13 +498,7 @@ public class CliPrinter implements GameClientListener {
     }
 
     public void clearConsole() {
-        try {
-            if (operatingSystem.contains("Windows"))
-                new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
-            else
-                Runtime.getRuntime().exec("clear");
-        } catch (IOException | InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+        System.out.print("\033[H\033[2J");
+        System.out.flush();
     }
 }

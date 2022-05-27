@@ -37,7 +37,7 @@ public class Char9Client implements CharacterCardClient {
 
     @Override
     public boolean canPlay() {
-        return inputs.size() == 2;
+        return (inputs.size() == 2 || inputs.size() == 4);
     }
 
     @Override
@@ -47,7 +47,7 @@ public class Char9Client implements CharacterCardClient {
 
     @Override
     public boolean isFull() {
-        return inputs.size() == 2;
+        return inputs.size() == 4;
     }
 
     @Override

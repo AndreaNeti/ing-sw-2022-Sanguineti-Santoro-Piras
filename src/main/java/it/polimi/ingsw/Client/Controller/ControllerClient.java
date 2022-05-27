@@ -169,7 +169,7 @@ public class ControllerClient extends GameClientListened {
             gameDelta.getIgnoredColorInfluence().ifPresent((ignoredColorInfluence) -> model.setIgnoredColorInfluence(ignoredColorInfluence));
             for (Map.Entry<Byte, Byte> newEntry : gameDelta.getUpdatedCoinPlayer().entrySet())
                 model.setUpdatedCoinPlayer(newEntry.getKey(), newEntry.getValue());
-            for (Map.Entry<Byte, Boolean> entry : gameDelta.getUpdatedCharacter().entrySet()) {
+            for (Map.Entry<Byte, Boolean> entry : gameDelta.getUsedCharacter().entrySet()) {
                 model.setUpdatedCharacter(entry.getKey(), entry.getValue());
             }
         }

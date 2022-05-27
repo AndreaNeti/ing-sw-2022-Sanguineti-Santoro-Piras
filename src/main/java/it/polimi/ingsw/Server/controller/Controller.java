@@ -114,8 +114,13 @@ public class Controller {
         }
 
         if (playersList.get(currentPlayerIndex).canPlayCard(playedCards, value)) {
-            game.playCard(value);
-            broadcastMessage(new TextMessageSC("Server: " + Wizard.values()[getCurrentPlayerIndex()] + " played card n° " + value));
+            try {
+                game.playCard(value);
+            } catch (EndGameException e) {
+                handleError(e);
+            } finally {
+                broadcastMessage(new TextMessageSC("Server: " + Wizard.values()[getCurrentPlayerIndex()] + " played card n° " + value));
+            }
             nextPhase();
         } else {
             throw new NotAllowedException("Cannot play this card");
@@ -124,8 +129,13 @@ public class Controller {
 
     public synchronized void moveMotherNature(int moves) throws GameException, NullPointerException, EndGameException {
         if (gamePhase == GamePhase.MOVE_MN_PHASE) {
-            game.moveMotherNature(moves);
-            broadcastMessage(new TextMessageSC("Server: " + Wizard.values()[getCurrentPlayerIndex()] + " moved MotherNature by " + moves + " moves"));
+            try {
+                game.moveMotherNature(moves);
+            } catch (EndGameException e) {
+                handleError(e);
+            } finally {
+                broadcastMessage(new TextMessageSC("Server: " + Wizard.values()[getCurrentPlayerIndex()] + " moved MotherNature by " + moves + " moves"));
+            }
             nextPhase();
         } else {
             throw new NotAllowedException("Wrong phase");
@@ -184,9 +194,14 @@ public class Controller {
         if (characterCardPlayed) {
             throw new NotAllowedException("A card has already been played this turn");
         }
-        game.playCharacter();
+        try {
+            game.playCharacter();
+        } catch (EndGameException e) {
+            handleError(e);
+        } finally {
+            broadcastMessage(new TextMessageSC("Server: " + Wizard.values()[getCurrentPlayerIndex()] + " played character card"));
+        }
         characterCardPlayed = true;
-        broadcastMessage(new TextMessageSC("Server: " + Wizard.values()[getCurrentPlayerIndex()] + " played character card"));
     }
 
     public void disconnectPlayerQuit(GameListener playerAlreadyDisconnected) {
@@ -280,7 +295,6 @@ public class Controller {
                 setPhase(GamePhase.PLANIFICATION_PHASE);
             }
         } else {
-
             //check if it's the last action phase and if it's the last player playing in that turn
             if (gamePhase == GamePhase.MOVE_CL_PHASE) {
                 //set the next player, if it's the last player of the round, round index will be 0
@@ -289,19 +303,23 @@ public class Controller {
                 if (roundIndex != 0) {
                     setPhase(GamePhase.MOVE_ST_PHASE);
                 } else {
-                    if (lastRound) {
-                        // should go in new preparation phase but is last round
-                        endGame();
-                    } else {
-                        //there is a new turn completely
-                        setPhase(GamePhase.PLANIFICATION_PHASE);
+                    try {
                         game.refillClouds();
+                    } catch (EndGameException e) {
+                        handleError(e);
                     }
+                    //there is a new turn completely
+                    setPhase(GamePhase.PLANIFICATION_PHASE);
                 }
-
             } else {
-                //set the phase to the next action phase
-                setPhase(GamePhase.values()[gamePhase.ordinal() + 1]);
+                // last round and last player moving from mother nature phase
+                if (lastRound && gamePhase == GamePhase.MOVE_MN_PHASE && roundIndex == playersList.size() - 1) {
+                    // cloud phase has no sense if it's last round, skip it and end game
+                    endGame();
+                } else {
+                    //set the phase to the next action phase
+                    setPhase(GamePhase.values()[gamePhase.ordinal() + 1]);
+                }
             }
         }
     }
@@ -311,17 +329,19 @@ public class Controller {
         notifyClients(new Phase(gamePhase, currentPlayerIndex));
     }
 
-    private void endGame() {
+    protected void endGame() {
         winners = game.calculateWinner();
         gameFinished = true;
+        game.getGameDelta().send();
         notifyClients(new EndGame(winners));
         if (winners.size() == 3) System.out.println("Paolino tvb <3");
     }
 
 
-    protected void handleError(EndGameException e) {
-        if (e.isEndInstantly()) endGame();
-        else {
+    protected void handleError(EndGameException e) throws EndGameException {
+        // throws to client handler, in this way should also stop the controller function caller
+        if (e.isEndInstantly()) throw e;
+        else { // then continues to the controller function caller
             lastRound = true;
             broadcastMessage(new TextMessageSC("Server: This is the last round"));
         }

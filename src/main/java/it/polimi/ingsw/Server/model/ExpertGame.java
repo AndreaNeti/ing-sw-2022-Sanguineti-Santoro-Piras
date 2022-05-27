@@ -75,7 +75,7 @@ public class ExpertGame extends NormalGame implements CharacterCardGame {
                 Char0 c0 = new Char0((byte) -10);
                 try {
                     drawStudents(c0, (byte) c0.getMaxStudents());
-                } catch (EndGameException e) {
+                } catch (EndGameException | GameException e) {
                     e.printStackTrace();
                 }
                 return c0;
@@ -93,7 +93,7 @@ public class ExpertGame extends NormalGame implements CharacterCardGame {
                 Char6 c6 = new Char6((byte) -11);
                 try {
                     drawStudents(c6, (byte) c6.getMaxStudents());
-                } catch (EndGameException e) {
+                } catch (EndGameException | GameException e) {
                     e.printStackTrace();
                 }
                 return c6;
@@ -107,7 +107,7 @@ public class ExpertGame extends NormalGame implements CharacterCardGame {
                 Char10 c10 = new Char10((byte) -12);
                 try {
                     drawStudents(c10, (byte) c10.getMaxStudents());
-                } catch (EndGameException e) {
+                } catch (EndGameException | GameException e) {
                     e.printStackTrace();
                 }
                 return c10;
@@ -119,14 +119,18 @@ public class ExpertGame extends NormalGame implements CharacterCardGame {
 
     @Override
     public void move(Color color, int gameComponentSource, int gameComponentDestination) throws GameException {
-        super.move(color, gameComponentSource, gameComponentDestination);
-        if ((gameComponentDestination < 2 * getPlayerSize() && gameComponentDestination % 2 == 1) && getCurrentPlayer().getLunchHall().howManyStudents(color) % 3 == 0) {
-            addCoinToCurrentPlayer();
+        try {
+            super.move(color, gameComponentSource, gameComponentDestination);
+            if ((gameComponentDestination < 2 * getPlayerSize() && gameComponentDestination % 2 == 1) && getCurrentPlayer().getLunchHall().howManyStudents(color) % 3 == 0) {
+                addCoinToCurrentPlayer();
+            }
+        } finally {
+            getGameDelta().send();
         }
     }
 
     //calculate expertInfluence(it checks all the boolean) and then calls checkMerge
-
+    @Override
     public void calculateInfluence(Island island) throws EndGameException {
         if (island == null) throw new IllegalArgumentException("Cannot calculate influence on null island");
         //prohibition is handled by prohibitionsLeft
@@ -194,7 +198,6 @@ public class ExpertGame extends NormalGame implements CharacterCardGame {
     @Override
     public GameDelta transformAllGameInDelta() {
         ExpertGameDelta g = (ExpertGameDelta) super.transformAllGameInDelta();
-        g.setAutomaticSending(false);
         g.setNewCoinsLeft(coinsLeft);
         g.setNewProhibitionsLeft(prohibitionLeft);
         for (byte i = 0; i < characters.size(); i++) {
@@ -212,8 +215,8 @@ public class ExpertGame extends NormalGame implements CharacterCardGame {
         return moves <= getCurrentPlayer().getPlayedCardMoves() + 2;
     }
 
+    @Override
     public void calculateProfessor() {
-        getGameDelta().setAutomaticSending(false);
         byte max;
         Player currentOwner;
         // player with the maximum number of students for the current color
@@ -244,13 +247,10 @@ public class ExpertGame extends NormalGame implements CharacterCardGame {
                 // add to game delta
                 getGameDelta().addUpdatedProfessors(c, newOwner.getWizard());
             }
-            getGameDelta().send();
         }
-
     }
 
     private void addCoinToCurrentPlayer() throws NotEnoughCoinsException {
-        getGameDelta().setAutomaticSending(false);
         if (coinsLeft == 0) throw new NotEnoughCoinsException();
         byte playerIndex = getCurrentPlayerIndex();
         coinsPlayer[playerIndex]++;
@@ -259,12 +259,9 @@ public class ExpertGame extends NormalGame implements CharacterCardGame {
         // add to game delta
         getGameDelta().setUpdatedCoinPlayer(playerIndex, getCoinsPlayer(playerIndex));
         getGameDelta().setNewCoinsLeft(coinsLeft);
-        getGameDelta().send();
-
     }
 
     private void removeCoinsToCurrentPlayer(byte coins) throws GameException {
-        getGameDelta().setAutomaticSending(false);
         if (coins < 0)
             throw new IllegalArgumentException("Cannot remove negative amount of coins to the current player");
         // player's wizard is its index inside the list
@@ -277,37 +274,38 @@ public class ExpertGame extends NormalGame implements CharacterCardGame {
             // add to game delta
             getGameDelta().setUpdatedCoinPlayer(playerIndex, getCoinsPlayer(playerIndex));
             getGameDelta().setNewCoinsLeft(coinsLeft);
-            getGameDelta().send();
         } else throw new NotEnoughCoinsException();
     }
 
     @Override
     public void playCharacter() throws GameException, EndGameException {
-        getGameDelta().setAutomaticSending(false);
         if (chosenCharacter == -1) throw new NotAllowedException("No character card selected");
         if (getChosenCharacter().canPlay(inputsCharacter.size())) {
             try {
-                getChosenCharacter().play(this);
-            } catch (GameException e) {
-                // something gone wrong while playing the card, reset inputs
+                try {
+                    getChosenCharacter().play(this);
+                } catch (GameException e) {
+                    // something gone wrong while playing the card, reset inputs
+                    inputsCharacter.clear();
+                    throw e;
+                }
+                byte charCost = getChosenCharacter().getCost();
+                // this character card has already been used, increase its cost
+                if (playedCharacters[characters.indexOf(getChosenCharacter())]) charCost++;
+                else {
+                    playedCharacters[characters.indexOf(getChosenCharacter())] = true;
+                    getGameDelta().setUsedCharacter(getChosenCharacter().getCharId(), true);
+                    // a coin is left on the character card to remember it has been used
+                    coinsLeft--;
+                }
+                // remove coins to player
+                removeCoinsToCurrentPlayer(charCost);
+                coinsLeft += charCost;
+                chosenCharacter = -1;
                 inputsCharacter.clear();
-                throw e;
+            } finally {
+                getGameDelta().send();
             }
-            byte charCost = getChosenCharacter().getCost();
-            // this character card has already been used, increase its cost
-            if (playedCharacters[characters.indexOf(getChosenCharacter())]) charCost++;
-            else {
-                playedCharacters[characters.indexOf(getChosenCharacter())] = true;
-                getGameDelta().setUsedCharacter(getChosenCharacter().getCharId(), true);
-                // a coin is left on the character card to remember it has been used
-                coinsLeft--;
-            }
-            // remove coins to player
-            removeCoinsToCurrentPlayer(charCost);
-            coinsLeft += charCost;
-            chosenCharacter = -1;
-            inputsCharacter.clear();
-            getGameDelta().send();
         } else {
             inputsCharacter.clear();
             throw new NotAllowedException("You didn't set all the parameters needed to play this card"); // canPlay returned false, needs a different amount of inputs
@@ -370,7 +368,6 @@ public class ExpertGame extends NormalGame implements CharacterCardGame {
         if (ignoredColorInfluence == null) throw new IllegalArgumentException("Null color");
         if (this.ignoredColorInfluence != ignoredColorInfluence) {
             this.ignoredColorInfluence = ignoredColorInfluence;
-
             // add to game delta
             getGameDelta().setIgnoredColorInfluence(ignoredColorInfluence);
         }
@@ -419,7 +416,7 @@ public class ExpertGame extends NormalGame implements CharacterCardGame {
     }
 
     @Override
-    public void drawStudents(GameComponent gc, byte n) throws EndGameException {
+    public void drawStudents(GameComponent gc, byte n) throws EndGameException, GameException {
         super.drawStudents(gc, n);
     }
 
