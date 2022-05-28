@@ -5,6 +5,7 @@ import it.polimi.ingsw.Client.model.*;
 import it.polimi.ingsw.Enum.Color;
 import it.polimi.ingsw.Enum.HouseColor;
 import it.polimi.ingsw.Enum.Wizard;
+import it.polimi.ingsw.Server.model.AssistantCard;
 import org.fusesource.jansi.AnsiConsole;
 
 import java.io.IOException;
@@ -382,38 +383,28 @@ public class CliPrinter implements GameClientListener {
     private StringBuilder printAssistantCards(List<PlayerClient> players) {
         StringBuilder assistantCardsPrint = new StringBuilder();
         PlayerClient player = players.get(game.getMyWizard().ordinal());
-
-        boolean[] cards = player.getUsedCards();
-
+        List<AssistantCard> assistantCards = player.getAssistantCards();
         // print available cards numbers
-        for (int i = 0; i < cards.length; i++) {
-            if (!cards[i]) {
-                String space = i == 9 ? "\u256d\u2500\u2524" : "\u256d\u2500\u2500\u2524";
-                assistantCardsPrint.append(space).append(i + 1).append("\u251c\u2500\u2500\u256e   ");
-            }
+        for (AssistantCard card : assistantCards) {
+            String space = card.value() == 10 ? "\u256d\u2500\u2524" : "\u256d\u2500\u2500\u2524";
+            assistantCardsPrint.append(space).append(card.value()).append("\u251c\u2500\u2500\u256e   ");
         }
         assistantCardsPrint.append("\n");
 
         // print "moves"
-        for (boolean card : cards) {
-            if (!card) {
-                assistantCardsPrint.append("\u2502 Moves ").append("\u2502   ");
-            }
+        for (AssistantCard ignored : assistantCards) {
+            assistantCardsPrint.append("\u2502 Moves ").append("\u2502   ");
         }
         assistantCardsPrint.append("\n");
 
         // print number of moves
-        for (int i = 0; i < cards.length; i++) {
-            if (!cards[i]) {
-                assistantCardsPrint.append("\u2502   ").append((i / 2) + 1).append("   \u2502   ");
-            }
+        for (AssistantCard card : assistantCards) {
+            assistantCardsPrint.append("\u2502   ").append(card.moves()).append("   \u2502   ");
         }
         assistantCardsPrint.append("\n");
         // print bottom line of cards
-        for (boolean card : cards) {
-            if (!card) {
-                assistantCardsPrint.append("\u2570").append("\u2500".repeat(7)).append("\u256f   ");
-            }
+        for (AssistantCard card : assistantCards) {
+            assistantCardsPrint.append("\u2570").append("\u2500".repeat(7)).append("\u256f   ");
         }
         assistantCardsPrint.append("\n");
         return assistantCardsPrint;
@@ -462,7 +453,7 @@ public class CliPrinter implements GameClientListener {
     }
 
     @Override
-    public void updateCardPlayed(Byte playedCard) {
+    public void updateCardPlayed(AssistantCard playedCard) {
 
     }
 

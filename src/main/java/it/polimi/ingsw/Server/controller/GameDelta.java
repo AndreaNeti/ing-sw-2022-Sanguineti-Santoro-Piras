@@ -3,6 +3,7 @@ package it.polimi.ingsw.Server.controller;
 import it.polimi.ingsw.Enum.Color;
 import it.polimi.ingsw.Enum.HouseColor;
 import it.polimi.ingsw.Enum.Wizard;
+import it.polimi.ingsw.Server.model.AssistantCard;
 import it.polimi.ingsw.Server.model.GameComponent;
 import it.polimi.ingsw.Server.model.Island;
 import it.polimi.ingsw.network.toClientMessage.DeltaUpdate;
@@ -22,7 +23,8 @@ public class GameDelta implements Serializable {
     private Map<Color, Wizard> updatedProfessors;
     // towers left
     private Map<HouseColor, Byte> newTeamTowersLeft;
-    private Byte newMotherNaturePosition, playedCard;
+    private Byte newMotherNaturePosition;
+    private AssistantCard playedCard;
 
     public GameDelta() {
         listeners = new ArrayList<>();
@@ -66,7 +68,7 @@ public class GameDelta implements Serializable {
         this.newMotherNaturePosition = newMotherNaturePosition;
     }
 
-    public void setPlayedCard(byte playedCard) {
+    public void setPlayedCard(AssistantCard playedCard) {
         this.playedCard = playedCard;
     }
 
@@ -137,7 +139,7 @@ public class GameDelta implements Serializable {
         return updatedProfessors;
     }
 
-    public Optional<Byte> getPlayedCard() {
+    public Optional<AssistantCard> getPlayedCard() {
         return Optional.ofNullable(playedCard);
     }
 

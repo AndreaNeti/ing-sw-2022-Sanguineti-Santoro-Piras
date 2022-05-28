@@ -8,10 +8,11 @@ import it.polimi.ingsw.Server.controller.Server;
 import it.polimi.ingsw.exceptions.serverExceptions.EndGameException;
 import it.polimi.ingsw.exceptions.serverExceptions.GameException;
 import it.polimi.ingsw.exceptions.serverExceptions.NotAllowedException;
-import it.polimi.ingsw.exceptions.serverExceptions.UsedCardException;
 import org.junit.jupiter.api.Test;
+import org.mockito.internal.matchers.Not;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -20,14 +21,19 @@ class PlayerTest {
     Team t = new Team(HouseColor.WHITE, (byte) 2, (byte) 2);
     Team t1 = new Team(HouseColor.BLACK, (byte) 1, (byte) 2);
     Player p, p1;
+    List<AssistantCard> assistantCardList = new ArrayList<>(11);
 
-    {
+    public PlayerTest() {
         try {
             p = new Player("Franco", t, Wizard.AIRMAGE, matchConstants);
             p1 = new Player("Gigi", t1, Wizard.WOODMAGE, matchConstants);
         } catch (GameException e) {
             fail();
         }
+        // just to make indexes equal to card value
+        assistantCardList.add(new AssistantCard((byte) -1, (byte) 0));
+        for (byte i = 1; i <= 10; i++)
+            assistantCardList.add(new AssistantCard(i, (byte) ((i + 1) / 2)));
     }
 
     @Test
@@ -50,50 +56,48 @@ class PlayerTest {
     @Test
     void cardTest() {
         try {
-            p.useCard((byte) 4);
-            p1.useCard((byte) 3);
-        } catch (UsedCardException | NotAllowedException | EndGameException ex) {
+            p.useCard(assistantCardList.get(4));
+            p1.useCard(assistantCardList.get(3));
+        } catch (NotAllowedException | EndGameException ex) {
             fail();
         }
-        assertEquals(p.getPlayedCard().getValue(), 4);
-        assertEquals(p.getPlayedCard().getMoves(), 2);
+        assertEquals(p.getPlayedCard().value(), 4);
+        assertEquals(p.getPlayedCard().moves(), 2);
 
 
-        assertThrows(IllegalArgumentException.class, () -> p.useCard((byte) -5), "negative value");
-        assertThrows(UsedCardException.class, () -> p.useCard((byte) 4), "negative value");
+        assertThrows(NotAllowedException.class, () -> p.useCard(assistantCardList.get(0)), "negative value");
         try {
-            p.useCard((byte) 1);
-            assertEquals(p.getPlayedCard().getMoves(), 1);
-            assertEquals(p.getPlayedCard().getValue(), 1);
-            p.useCard((byte) 2);
-            assertEquals(p.getPlayedCard().getValue(), 2);
-            assertEquals(p.getPlayedCard().getMoves(), 1);
-            p.useCard((byte) 3);
-            assertEquals(p.getPlayedCard().getValue(), 3);
-            assertEquals(p.getPlayedCard().getMoves(), 2);
+            p.useCard(assistantCardList.get(1));
+            assertEquals(p.getPlayedCard().moves(), 1);
+            assertEquals(p.getPlayedCard().value(), 1);
+            p.useCard(assistantCardList.get(2));
+            assertEquals(p.getPlayedCard().value(), 2);
+            assertEquals(p.getPlayedCard().moves(), 1);
+            p.useCard(assistantCardList.get(3));
+            assertEquals(p.getPlayedCard().value(), 3);
+            assertEquals(p.getPlayedCard().moves(), 2);
 
-            p.useCard((byte) 5);
-            assertEquals(p.getPlayedCard().getValue(), 5);
-            assertEquals(p.getPlayedCard().getMoves(), 3);
-            p.useCard((byte) 6);
-            assertEquals(p.getPlayedCard().getMoves(), 3);
-            assertEquals(p.getPlayedCard().getValue(), 6);
-            p.useCard((byte) 7);
-            assertEquals(p.getPlayedCard().getValue(), 7);
-            assertEquals(p.getPlayedCard().getMoves(), 4);
-            p.useCard((byte) 8);
-            assertEquals(p.getPlayedCard().getValue(), 8);
-            assertEquals(p.getPlayedCard().getMoves(), 4);
-            p.useCard((byte) 9);
-            assertEquals(p.getPlayedCard().getValue(), 9);
-            assertEquals(p.getPlayedCard().getMoves(), 5);
-        } catch (UsedCardException | NotAllowedException | EndGameException ex) {
+            p.useCard(assistantCardList.get(5));
+            assertEquals(p.getPlayedCard().value(), 5);
+            assertEquals(p.getPlayedCard().moves(), 3);
+            p.useCard(assistantCardList.get(6));
+            assertEquals(p.getPlayedCard().moves(), 3);
+            assertEquals(p.getPlayedCard().value(), 6);
+            p.useCard(assistantCardList.get(7));
+            assertEquals(p.getPlayedCard().value(), 7);
+            assertEquals(p.getPlayedCard().moves(), 4);
+            p.useCard(assistantCardList.get(8));
+            assertEquals(p.getPlayedCard().value(), 8);
+            assertEquals(p.getPlayedCard().moves(), 4);
+            p.useCard(assistantCardList.get(9));
+            assertEquals(p.getPlayedCard().value(), 9);
+            assertEquals(p.getPlayedCard().moves(), 5);
+        } catch (NotAllowedException | EndGameException ex) {
             fail();
         }
-        assertThrows(UsedCardException.class, () -> p.useCard((byte) 4), "negative value");
-        assertThrows(IllegalArgumentException.class, () -> p.useCard((byte) -1), "not a valid input");
-        assertThrows(EndGameException.class, () -> p.useCard((byte) 10), "used last card");
-        assertThrows(NotAllowedException.class, () -> p.useCard((byte) 3), "no cards to use");
+        assertThrows(NotAllowedException.class, () -> p.useCard(assistantCardList.get(0)), "not a valid input");
+        assertThrows(EndGameException.class, () -> p.useCard(assistantCardList.get(10)), "used last card");
+        assertThrows(NotAllowedException.class, () -> p.useCard(assistantCardList.get(3)), "no cards to use");
     }
 
 
@@ -104,32 +108,32 @@ class PlayerTest {
 
     @Test
     void canPlayCardTest() {
-        ArrayList<Byte> playedCards = new ArrayList<>();
-        assertTrue(p.canPlayCard(playedCards, (byte) 5));
-        playedCards.add((byte) 4);
-        assertTrue(p.canPlayCard(playedCards, (byte) 5));
+        ArrayList<AssistantCard> playedCards = new ArrayList<>();
+        assertTrue(p.canPlayCard(playedCards, assistantCardList.get(5)));
+        playedCards.add(assistantCardList.get(4));
+        assertTrue(p.canPlayCard(playedCards, assistantCardList.get(5)));
         playedCards.remove(0);
 
-        playedCards.add((byte) 5);
-        assertFalse(p.canPlayCard(playedCards, (byte) 5));
+        playedCards.add(assistantCardList.get(5));
+        assertFalse(p.canPlayCard(playedCards, assistantCardList.get(5)));
 
 
         try {
-            p.useCard((byte) 1);
-            p.useCard((byte) 2);
-            p.useCard((byte) 6);
-            p.useCard((byte) 7);
-            p.useCard((byte) 8);
-            p.useCard((byte) 9);
-            p.useCard((byte) 10);
-        } catch (UsedCardException | NotAllowedException | EndGameException e) {
+            p.useCard(assistantCardList.get(1));
+            p.useCard(assistantCardList.get(2));
+            p.useCard(assistantCardList.get(6));
+            p.useCard(assistantCardList.get(7));
+            p.useCard(assistantCardList.get(8));
+            p.useCard(assistantCardList.get(9));
+            p.useCard(assistantCardList.get(10));
+        } catch (NotAllowedException | EndGameException e) {
             fail();
         }
 
-        playedCards.add((byte) 3);
-        playedCards.add((byte) 4);
-        playedCards.add((byte) 5);
-        assertTrue(p.canPlayCard(playedCards, (byte) 5));
+        playedCards.add(assistantCardList.get(3));
+        playedCards.add(assistantCardList.get(4));
+        playedCards.add(assistantCardList.get(5));
+        assertTrue(p.canPlayCard(playedCards, assistantCardList.get(5)));
 
 
     }

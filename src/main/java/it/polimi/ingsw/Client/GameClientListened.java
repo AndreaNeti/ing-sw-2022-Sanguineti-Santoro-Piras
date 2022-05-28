@@ -7,6 +7,7 @@ import it.polimi.ingsw.Client.model.IslandClient;
 import it.polimi.ingsw.Enum.Color;
 import it.polimi.ingsw.Enum.HouseColor;
 import it.polimi.ingsw.Enum.Wizard;
+import it.polimi.ingsw.Server.model.AssistantCard;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,7 +57,7 @@ public abstract class GameClientListened {
         }
     }
 
-    public void notifyCardPlayed(Byte playedCard) {
+    public void notifyCardPlayed(AssistantCard playedCard) {
         for (GameClientListener listener : listeners) {
             listener.updateCardPlayed(playedCard);
         }

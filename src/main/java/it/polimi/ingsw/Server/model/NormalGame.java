@@ -147,8 +147,8 @@ public class NormalGame implements Game {
     }
 
     @Override
-    public void playCard(byte card) throws GameException, EndGameException {
-        if (card < 1 || card > matchConstants.numOfCards())
+    public void playCard(AssistantCard card) throws GameException, EndGameException {
+        if (card.value() < 1 || card.value() > matchConstants.numOfCards())
             throw new IllegalArgumentException("Not a valid card to play");
         try {
             getCurrentPlayer().useCard(card);
@@ -249,7 +249,7 @@ public class NormalGame implements Game {
     }
 
     protected boolean checkMoveMotherNature(int moves) {
-        return moves <= getCurrentPlayer().getPlayedCard().getMoves();
+        return moves <= getCurrentPlayer().getPlayedCard().moves();
     }
 
     @Override

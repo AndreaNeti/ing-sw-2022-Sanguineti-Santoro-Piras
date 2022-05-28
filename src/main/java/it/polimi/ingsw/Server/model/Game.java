@@ -13,7 +13,7 @@ import java.util.ArrayList;
 public interface Game extends Serializable {
     void move(Color color, int idGameComponentSource, int idGameComponentDestination) throws GameException;
 
-    void playCard(byte card) throws GameException, EndGameException;
+    void playCard(AssistantCard card) throws GameException, EndGameException;
 
     void setCurrentPlayer(Player p);
     void setCurrentPlayer(byte currentPlayerIndex);

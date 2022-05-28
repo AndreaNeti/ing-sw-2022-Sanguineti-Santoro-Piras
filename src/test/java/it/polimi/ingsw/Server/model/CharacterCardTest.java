@@ -219,7 +219,7 @@ class CharacterCardTest {
     void playChar3() {
         game.setCurrentPlayer(p1);
         try {
-            game.playCard((byte) 3);
+            game.playCard(new AssistantCard((byte) 3, (byte) 2));
             game.chooseCharacter(charToSelect);
         } catch (GameException | EndGameException e) {
             fail();

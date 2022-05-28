@@ -9,6 +9,7 @@ import it.polimi.ingsw.Client.model.GameComponentClient;
 import it.polimi.ingsw.Client.model.IslandClient;
 import it.polimi.ingsw.Enum.Color;
 import it.polimi.ingsw.Server.controller.MatchType;
+import it.polimi.ingsw.Server.model.AssistantCard;
 import it.polimi.ingsw.exceptions.clientExceptions.RepeatCommandException;
 import it.polimi.ingsw.exceptions.clientExceptions.ScannerException;
 import it.polimi.ingsw.exceptions.clientExceptions.SkipCommandException;
@@ -211,17 +212,16 @@ public class ViewCli extends AbstractView implements ViewForCharacterCli {
         return (byte) getIntInput(0, characterCards.size() - 1, "Select the character to play", false);
     }
 
-    public byte getAssistantCardToPlayInput(boolean canBeStopped) throws ScannerException {
-        boolean[] usedCards = getModel().getCurrentPlayer().getUsedCards();
+    public AssistantCard getAssistantCardToPlayInput(boolean canBeStopped) throws ScannerException {
         TreeSet<Integer> choices = new TreeSet<>();
-        for (int i = 1; i <= usedCards.length; i++) {
-            if (!usedCards[i - 1])
-                choices.add(i);
-        }
+        List<AssistantCard> assistantCards = getModel().getCurrentPlayer().getAssistantCards();
+        for (AssistantCard card : assistantCards)
+            choices.add((int) card.value());
         System.out.println("--OPTIONS--");
         System.out.println(optionString(choices, "Assistant card"));
 
-        return (byte) getIntInput(choices, "Select an assistant card to play", canBeStopped);
+        byte chosenCardValue = (byte) getIntInput(choices, "Select an assistant card to play", canBeStopped);
+        return assistantCards.stream().filter(assistantCard -> assistantCard.value() == chosenCardValue).findFirst().orElseThrow(RepeatCommandException::new);
     }
 
     public int getMoveStudentDestination(boolean canBeStopped) throws ScannerException {
@@ -260,7 +260,7 @@ public class ViewCli extends AbstractView implements ViewForCharacterCli {
     }
 
     public byte getMotherNatureMovesInput(boolean canBeStopped) throws ScannerException {
-        return (byte) getIntInput(1, getModel().getCurrentPlayer().getPlayedCardMoves(), "How many steps do you want mother nature to move?", canBeStopped);
+        return (byte) getIntInput(1, getModel().getCurrentPlayer().getPlayedCard().moves(), "How many steps do you want mother nature to move?", canBeStopped);
     }
 
     public int getCloudSource(boolean canBeStopped) throws ScannerException {

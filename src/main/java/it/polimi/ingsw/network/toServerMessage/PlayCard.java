@@ -2,14 +2,15 @@ package it.polimi.ingsw.network.toServerMessage;
 
 import it.polimi.ingsw.Server.controller.ClientHandler;
 import it.polimi.ingsw.Server.controller.Controller;
+import it.polimi.ingsw.Server.model.AssistantCard;
 import it.polimi.ingsw.exceptions.serverExceptions.EndGameException;
 import it.polimi.ingsw.exceptions.serverExceptions.GameException;
 import it.polimi.ingsw.exceptions.serverExceptions.NotAllowedException;
 
 public class PlayCard implements ToServerMessage {
-    byte playedCard;
+    AssistantCard playedCard;
 
-    public PlayCard(byte playedCard) {
+    public PlayCard(AssistantCard playedCard) {
         this.playedCard = playedCard;
     }
 

@@ -316,7 +316,7 @@ public class ExpertGameTest {
     void checkMotherNatureTest() {
         gameWith2.setCurrentPlayer(p1_2);
         try {
-            gameWith2.playCard((byte) 1);
+            gameWith2.playCard(new AssistantCard((byte) 1, (byte) 1));
         } catch (GameException | EndGameException e) {
             fail();
         }

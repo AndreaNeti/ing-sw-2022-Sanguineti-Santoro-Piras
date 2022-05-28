@@ -7,6 +7,7 @@ import it.polimi.ingsw.Enum.Wizard;
 import it.polimi.ingsw.Server.controller.MatchConstants;
 import it.polimi.ingsw.Server.controller.MatchType;
 import it.polimi.ingsw.Server.controller.Server;
+import it.polimi.ingsw.Server.model.AssistantCard;
 import it.polimi.ingsw.Server.model.GameComponent;
 
 import java.util.*;
@@ -171,9 +172,9 @@ public class GameClient extends GameClientListened implements GameClientView {
         return motherNaturePosition;
     }
 
-    public void playCard(byte value) {
-        getCurrentPlayer().playCard(value);
-        notifyCardPlayed(value);
+    public void playCard(AssistantCard playedCard) {
+        getCurrentPlayer().playCard(playedCard);
+        notifyCardPlayed(playedCard);
     }
 
     public void setTowerLeft(HouseColor houseColor, Byte towerLeft) {

@@ -7,25 +7,24 @@ import it.polimi.ingsw.Server.controller.MatchConstants;
 import it.polimi.ingsw.exceptions.serverExceptions.EndGameException;
 import it.polimi.ingsw.exceptions.serverExceptions.GameException;
 import it.polimi.ingsw.exceptions.serverExceptions.NotAllowedException;
-import it.polimi.ingsw.exceptions.serverExceptions.UsedCardException;
 
 import java.io.Serializable;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 public class Player implements Serializable {
     private final String nickName;
     private final Wizard wizard;
     private final List<AssistantCard> assistantCards;
-    private AssistantCard playedCard;
+    private transient AssistantCard playedCard;
     private transient final EntranceHall entranceHall;
     private transient final LunchHall lunchHall;
     private transient byte cardsLeft;
-    private transient final MatchConstants matchConstants;
 
     public Player(String nickName, Team team, Wizard wizard, MatchConstants matchConstants) throws GameException {
         if (nickName == null || team == null || matchConstants == null)
             throw new IllegalArgumentException("Cannot pass null argument");
-        this.matchConstants = matchConstants;
         this.nickName = nickName;
         team.addPlayer(this);
         this.wizard = wizard;
@@ -41,15 +40,14 @@ public class Player implements Serializable {
         this.lunchHall = new LunchHall(Color.values().length * matchConstants.maxLunchHallStudents(), (byte) (wizard.ordinal() * 2 + 1));
     }
 
-    public void useCard(byte value) throws UsedCardException, NotAllowedException, EndGameException {
+    public void useCard(AssistantCard card) throws NotAllowedException, EndGameException {
 
         if (cardsLeft < 1) throw new NotAllowedException("No more cards");
-        AssistantCard chosenCard = getCard(value);
-        if (chosenCard == null) throw new IllegalArgumentException("Not a valid card to play");
+        if (card == null || !assistantCards.contains(card))
+            throw new NotAllowedException("Not a valid card to play");
 
-        if (chosenCard.isUsed()) throw new UsedCardException();
-        playedCard = chosenCard;
-        chosenCard.setUsed();
+        playedCard = card;
+        assistantCards.remove(card);
         cardsLeft--;
         if (cardsLeft == 0) throw new EndGameException(false);
     }
@@ -59,24 +57,22 @@ public class Player implements Serializable {
     }
 
     // checks if a card can be played in function of the cards chosen by other players
-    public boolean canPlayCard(ArrayList<Byte> playedCardsValues, byte value) {
-        if (playedCardsValues == null) throw new IllegalArgumentException("Passing null played cards list");
-        // the value goes from 1 to 10
-        if (value < 1 || value > matchConstants.numOfCards())
-            throw new IllegalArgumentException("Not a valid card to play");
-        // you have already used that card
-        if (getCard(value).isUsed()) return false;
+    public boolean canPlayCard(ArrayList<AssistantCard> playedCardsInRound, AssistantCard card) {
+        if (playedCardsInRound == null || card == null)
+            throw new IllegalArgumentException("Passing null played cards list");
+
+        // you have already used that card or is a not existing one
+        if (!assistantCards.contains(card)) return false;
+
         // no one has already played a card, you can play it
-        if (playedCardsValues.size() == 0) return true;
+        if (playedCardsInRound.size() == 0) return true;
+
         // if the card you chose is already chosen by someone else, check if you hadn't other choices
-        if (playedCardsValues.contains(value)) {
-            for (byte val = 1; val <= matchConstants.numOfCards(); val++) {
-                AssistantCard c = getCard(val);
-                // there is a card not played by other player that you still didn't choose, you should play that one instead
-                if (c != null && !c.isUsed() && !playedCardsValues.contains(val)) {
-                    return false;
-                }
-            }
+        if (playedCardsInRound.contains(card)) {
+            ArrayList<AssistantCard> differentCards = new ArrayList<>(assistantCards);
+            differentCards.removeAll(playedCardsInRound);
+            // there is a card not played by other player that you still didn't choose, you should play that one instead
+            return differentCards.isEmpty();
         }
         // even if the card you chose is also played by someone else you hadn't other choices
         return true;
@@ -94,10 +90,9 @@ public class Player implements Serializable {
         return wizard;
     }
 
-    private AssistantCard getCard(byte value) {
-        if (value < 1 || value > matchConstants.numOfCards()) return null;
-        // card 1 is in position 0, card 10 in 9
-        return assistantCards.get(value - 1);
+    public List<AssistantCard> getAssistantCards() {
+        // AssistantCard is immutable
+        return assistantCards;
     }
 
     @Override

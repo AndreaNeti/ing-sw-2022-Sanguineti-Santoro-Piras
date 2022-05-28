@@ -32,7 +32,7 @@ public class Controller {
     private boolean lastRound, characterCardPlayed, skipCloudPhase;
 
     private ArrayList<HouseColor> winners;
-    private final ArrayList<Byte> playedCards;
+    private final ArrayList<AssistantCard> playedCards;
     private boolean gameFinished;
     private final Long matchId;
 
@@ -104,19 +104,19 @@ public class Controller {
     }
 
     //the value here need to go from 1 to 10
-    public synchronized void playCard(byte value) throws GameException, NullPointerException, EndGameException {
+    public synchronized void playCard(AssistantCard card) throws GameException, NullPointerException, EndGameException {
         if (gamePhase != GamePhase.PLANIFICATION_PHASE) {
             throw new NotAllowedException("Not in action phase");
         }
 
-        if (playersList.get(currentPlayerIndex).canPlayCard(playedCards, value)) {
+        if (playersList.get(currentPlayerIndex).canPlayCard(playedCards, card)) {
             try {
-                game.playCard(value);
-                playedCards.add(value);
+                game.playCard(card);
+                playedCards.add(card);
             } catch (EndGameException e) {
                 handleError(e);
             } finally {
-                broadcastMessage(new TextMessageSC("Server: " + Wizard.values()[getCurrentPlayerIndex()] + " played card n° " + value));
+                broadcastMessage(new TextMessageSC("Server: " + Wizard.values()[getCurrentPlayerIndex()] + " played card n° " + card.value()));
             }
             nextPhase();
         } else {
@@ -256,7 +256,7 @@ public class Controller {
                 //it's a new turn because it passed from planification to actionPhase
                 //changed the order of player, need to sort based on the playedCard
                 playerOrder.sort((b1, b2) -> {
-                    int ret = playersList.get(b1).getPlayedCard().getValue() - playersList.get(b2).getPlayedCard().getValue();
+                    int ret = playersList.get(b1).getPlayedCard().value() - playersList.get(b2).getPlayedCard().value();
                     // players have used the same card, compare in function of who played first
                     // [3,1,2,4] : player 3 is the first playing in planification phase then clockwise order (3,4,1,2), doing bx -= 3 (mod 4) obtains -> [0,2,3,1] and that's the planification phase order from 0 to 3
                     if (ret == 0)

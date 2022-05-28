@@ -13,6 +13,7 @@ import it.polimi.ingsw.exceptions.serverExceptions.NotExpertGameException;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -22,6 +23,7 @@ public class NormalGameTest {
     Player p1_2, p2_2, p1_3, p2_3, p3_3, p1_4, p2_4, p3_4, p4_4;
     ArrayList<Player> players2, players3, players4;
     NormalGame gameWith2, gameWith3, gameWith4;
+    List<AssistantCard> assistantCardList = new ArrayList<>(11);
 
     //constructor of game
     public NormalGameTest() {
@@ -100,6 +102,10 @@ public class NormalGameTest {
 
         gameWith3 = new NormalGame(teamList3, matchConstants);
         gameWith3.setCurrentPlayer(p1_3);
+        // just to make indexes equal to card value
+        assistantCardList.add(new AssistantCard((byte) 0, (byte) 0));
+        for (byte i = 1; i <= 10; i++)
+            assistantCardList.add(new AssistantCard(i, (byte) ((i + 1) / 2)));
     }
 
     @Test
@@ -204,20 +210,20 @@ public class NormalGameTest {
     void playCardTest() {
         assertEquals(gameWith2.getCurrentPlayer(), p1_2);
         try {
-            gameWith2.playCard((byte) 5);
+            gameWith2.playCard(assistantCardList.get(5));
         } catch (GameException | EndGameException e) {
             fail();
         }
-        assertEquals(5, p1_2.getPlayedCard().getValue());
-        assertEquals(3, p1_2.getPlayedCard().getMoves());
+        assertEquals(5, p1_2.getPlayedCard().value());
+        assertEquals(3, p1_2.getPlayedCard().moves());
         gameWith2.setCurrentPlayer(p2_2);
         try {
-            gameWith2.playCard((byte) 6);
+            gameWith2.playCard(assistantCardList.get(6));
         } catch (GameException | EndGameException e) {
             fail();
         }
-        assertEquals(6, p2_2.getPlayedCard().getValue());
-        assertEquals(3, p2_2.getPlayedCard().getMoves());
+        assertEquals(6, p2_2.getPlayedCard().value());
+        assertEquals(3, p2_2.getPlayedCard().moves());
     }
 
     @Test
@@ -312,17 +318,17 @@ public class NormalGameTest {
         gameWith4.setCurrentPlayer(p1_3);
         try {
             gameWith4.setCurrentPlayer(p1_4);
-            gameWith4.playCard((byte) 8);
+            gameWith4.playCard(assistantCardList.get(8));
             assertThrows(NotAllowedException.class, () -> gameWith4.moveMotherNature((byte) 10), "");
             gameWith4.moveMotherNature(4);
             gameWith4.setCurrentPlayer(p2_4);
-            gameWith4.playCard((byte) 8);
+            gameWith4.playCard(assistantCardList.get(8));
             gameWith4.moveMotherNature(1);
             gameWith4.setCurrentPlayer(p3_4);
-            gameWith4.playCard((byte) 6);
+            gameWith4.playCard(assistantCardList.get(6));
             gameWith4.moveMotherNature(3);
             gameWith4.setCurrentPlayer(p4_4);
-            gameWith4.playCard((byte) 8);
+            gameWith4.playCard(assistantCardList.get(8));
             gameWith4.moveMotherNature(4);
         } catch (GameException | EndGameException e) {
             fail();
@@ -344,7 +350,7 @@ public class NormalGameTest {
         assertEquals(gameWith4.getMotherNaturePosition(), 0);
 
         try {
-            gameWith4.playCard((byte) 7);
+            gameWith4.playCard(assistantCardList.get(7));
             gameWith4.moveMotherNature(1);
         } catch (GameException | EndGameException e) {
             fail();
@@ -360,7 +366,7 @@ public class NormalGameTest {
             bagTest.moveStudents(Color.BLUE, (byte) 2, p3_4.getLunchHall());
             gameWith4.calculateProfessor();
             bagTest.moveStudents(Color.BLUE, (byte) (2), gameWith4.getIslands().get(2));
-            gameWith4.playCard((byte) 1);
+            gameWith4.playCard(assistantCardList.get(1));
             gameWith4.moveMotherNature(1);
         } catch (GameException | EndGameException e) {
             fail();
@@ -389,7 +395,7 @@ public class NormalGameTest {
         //return to the island 1 and let black Team win
         try {
             gameWith4.setCurrentPlayer(p1_4);
-            gameWith4.playCard((byte) 10);
+            gameWith4.playCard(assistantCardList.get(10));
 
 
             gameWith4.moveMotherNature(5);
@@ -414,7 +420,7 @@ public class NormalGameTest {
         // check winner with one winner
         try {
             gameWith2.setCurrentPlayer(p1_2);
-            gameWith2.playCard((byte) 1);
+            gameWith2.playCard(assistantCardList.get(1));
             gameWith2.getBag().moveStudents(Color.RED, (byte) 2, p1_2.getLunchHall());
             gameWith2.calculateProfessor();
             gameWith2.getIslands().get(1).moveAll(gameWith2.getBag());
@@ -430,7 +436,7 @@ public class NormalGameTest {
         // check winner with 3 winners
         try {
             gameWith3.setCurrentPlayer(p1_3);
-            gameWith3.playCard((byte) 1);
+            gameWith3.playCard(assistantCardList.get(1));
             for (Player p : players3) {
                 int index = players3.indexOf(p);
                 gameWith3.getBag().moveStudents(Color.values()[index], (byte) 2, p.getLunchHall());
@@ -451,7 +457,7 @@ public class NormalGameTest {
         // check winner with 2 winners and also with teams of 2 players
         try {
             gameWith4.setCurrentPlayer(p1_4);
-            gameWith4.playCard((byte) 1);
+            gameWith4.playCard(assistantCardList.get(1));
             for (Player p : players4) {
                 int index = players4.indexOf(p);
                 gameWith4.getBag().moveStudents(Color.values()[index], (byte) 2, p.getLunchHall());

@@ -6,6 +6,7 @@ import it.polimi.ingsw.Client.model.IslandClient;
 import it.polimi.ingsw.Enum.Color;
 import it.polimi.ingsw.Enum.HouseColor;
 import it.polimi.ingsw.Enum.Wizard;
+import it.polimi.ingsw.Server.model.AssistantCard;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +33,7 @@ public interface GameClientListener {
     void updateMembers(int membersLeftToStart, String nickPlayerJoined);
 
     //TODO update withcoins, character
-    void updateCardPlayed(Byte playedCard);
+    void updateCardPlayed(AssistantCard playedCard);
 
     void updateIgnoredColor(Color color);
 

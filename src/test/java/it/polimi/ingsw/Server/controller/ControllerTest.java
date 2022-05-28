@@ -1,12 +1,14 @@
 package it.polimi.ingsw.Server.controller;
 
 import it.polimi.ingsw.Enum.Color;
+import it.polimi.ingsw.Server.model.AssistantCard;
 import it.polimi.ingsw.exceptions.serverExceptions.EndGameException;
 import it.polimi.ingsw.exceptions.serverExceptions.GameException;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -14,6 +16,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class ControllerTest {
     Controller controllerExpert, controllerExpert2, controllerNormal;
     ClientHandler p1, p2, p3, p4;
+    List<AssistantCard> assistantCardList = new ArrayList<>(11);
 
     public ControllerTest() {
         controllerExpert = new Controller(new MatchType((byte) 4, true), 69L);
@@ -48,6 +51,10 @@ class ControllerTest {
         } catch (GameException e) {
             fail();
         }
+        // just to make indexes equal to card value
+        assistantCardList.add(new AssistantCard((byte) 0, (byte) 0));
+        for (byte i = 1; i <= 10; i++)
+            assistantCardList.add(new AssistantCard(i, (byte) ((i + 1) / 2)));
     }
 
     @Test
@@ -60,19 +67,19 @@ class ControllerTest {
     @Test
     void playCardTest() {
         try {
-            controllerExpert.playCard((byte) 1);
+            controllerExpert.playCard(assistantCardList.get(1));
         } catch (GameException | EndGameException | NullPointerException e) {
             fail();
         }
-        assertThrows(GameException.class, () -> controllerExpert.playCard((byte) 1), "Cannot play this card");
-        assertDoesNotThrow(() -> controllerExpert.playCard((byte) 2));
+        assertThrows(GameException.class, () -> controllerExpert.playCard(assistantCardList.get(1)), "Cannot play this card");
+        assertDoesNotThrow(() -> controllerExpert.playCard(assistantCardList.get(2)));
         try {
             for (int i = 3; i < 5; i++)
-                controllerExpert.playCard((byte) i);
+                controllerExpert.playCard(assistantCardList.get(i));
         } catch (GameException | EndGameException | NullPointerException e) {
             fail();
         }
-        assertThrows(GameException.class, () -> controllerExpert.playCard((byte) 6), "Not in planification phase");
+        assertThrows(GameException.class, () -> controllerExpert.playCard(assistantCardList.get(6)), "Not in planification phase");
     }
 
     @Test
@@ -80,7 +87,7 @@ class ControllerTest {
         assertThrows(GameException.class, () -> controllerExpert.move(Color.RED, 0), "Not in action phase");
         try {
             for (int i = 3; i < 7; i++)
-                controllerExpert.playCard((byte) i);
+                controllerExpert.playCard(assistantCardList.get(i));
         } catch (GameException | EndGameException | NullPointerException e) {
             fail();
         }
@@ -105,7 +112,7 @@ class ControllerTest {
         assertThrows(GameException.class, () -> controllerExpert.moveMotherNature(1), "Not in action phase");
         try {
             for (int i = 3; i < 7; i++)
-                controllerExpert.playCard((byte) i);
+                controllerExpert.playCard(assistantCardList.get(i));
         } catch (GameException | EndGameException | NullPointerException e) {
             fail();
         }
@@ -130,7 +137,7 @@ class ControllerTest {
         assertThrows(GameException.class, () -> controllerExpert.moveFromCloud(0), "Not in action phase");
         try {
             for (int i = 3; i < 7; i++)
-                controllerExpert.playCard((byte) i);
+                controllerExpert.playCard(assistantCardList.get(i));
         } catch (GameException | EndGameException | NullPointerException e) {
             fail();
         }
@@ -171,7 +178,7 @@ class ControllerTest {
         for (int i = 0; i < 8; i++) {
             for (int j = i + 1; j < i + 3; j++) {
                 try {
-                    controllerExpert2.playCard((byte) j);
+                    controllerExpert2.playCard(assistantCardList.get(j));
                 } catch (GameException | EndGameException e) {
                     fail(e.getMessage());
                 }
@@ -214,8 +221,8 @@ class ControllerTest {
             }
         }
         try {
-            controllerExpert2.playCard((byte) 9);
-            controllerExpert2.playCard((byte) 10);
+            controllerExpert2.playCard(assistantCardList.get(9));
+            controllerExpert2.playCard(assistantCardList.get(10));
         } catch (GameException | EndGameException e) {
             fail(e.getMessage());
         }
@@ -288,7 +295,7 @@ class ControllerTest {
         for (int i = 0; i < 10; i++) {
             for (int j = i; j < i + 2; j++) {
                 try {
-                    controllerExpert2.playCard((byte) (j % 10 + 1));
+                    controllerExpert2.playCard(assistantCardList.get(j % 10 + 1));
                 } catch (GameException | EndGameException e) {
                     fail(e.getMessage());
                 }
@@ -338,7 +345,7 @@ class ControllerTest {
                     assertFalse(controllerExpert.isMyTurn(p));
             }
             try {
-                controllerExpert.playCard((byte) (i + 1));
+                controllerExpert.playCard(assistantCardList.get(i + 1));
             } catch (GameException | EndGameException e) {
                 fail();
             }

@@ -196,7 +196,7 @@ public class ControllerClient extends GameClientListened {
     }
 
     public void addMember(Player playerJoined, HouseColor teamColor) {
-        teamsClient.get(teamColor.ordinal()).addPlayer(new PlayerClient(playerJoined, matchConstants));
+        teamsClient.get(teamColor.ordinal()).addPlayer(new PlayerClient(playerJoined));
         super.notifyMembers(matchType.nPlayers() - playersInMatch(), playerJoined.toString());
         if (playersInMatch() == matchType.nPlayers()) startGame();
     }

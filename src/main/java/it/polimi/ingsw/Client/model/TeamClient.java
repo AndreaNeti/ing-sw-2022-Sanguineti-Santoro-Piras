@@ -19,7 +19,7 @@ public class TeamClient {
         this.towersLeft = (byte) matchConstants.towersForTeam();
         membersClient = new ArrayList<>();
         for (Player p : members)
-            membersClient.add(new PlayerClient(p, matchConstants));
+            membersClient.add(new PlayerClient(p));
     }
 
     public ArrayList<PlayerClient> getPlayers() {
