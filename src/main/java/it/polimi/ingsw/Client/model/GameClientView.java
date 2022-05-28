@@ -9,12 +9,17 @@ import java.util.List;
 
 public interface GameClientView {
     PlayerClient getCurrentPlayer();
+
     List<CharacterCardClient> getCharacters();
+
     ArrayList<GameComponentClient> getClouds();
 
     ArrayList<IslandClient> getIslands();
+
     List<TeamClient> getTeams();
+
     CharacterCardClient getCurrentCharacterCard();
+
     byte getMotherNaturePosition();
 
     boolean isExpert();
@@ -28,7 +33,13 @@ public interface GameClientView {
     Wizard getMyWizard();
 
     byte getCoinsPlayer(byte i);
+
     MatchType getMatchType();
+
     PlayerClient getPlayer(int index);
+
     List<PlayerClient> getPlayers();
+
+    boolean isExtraSteps();
+    Byte getNewCoinsLeft();
 }

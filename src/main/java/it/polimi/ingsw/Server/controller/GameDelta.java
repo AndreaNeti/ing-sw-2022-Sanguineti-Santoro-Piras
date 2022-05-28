@@ -95,7 +95,7 @@ public class GameDelta implements Serializable {
     public void setNewProhibitionsLeft(byte newProhibitionsLeft) {
     }
 
-    public void setIgnoredColorInfluence(Color ignoredColorInfluence) {
+    public void setExtraSteps(Boolean extraSteps) {
     }
 
     public void setUsedCharacter(byte charId, boolean used) {
@@ -117,7 +117,7 @@ public class GameDelta implements Serializable {
         return Optional.empty();
     }
 
-    public Optional<Color> getIgnoredColorInfluence() {
+    public Optional<Boolean> isExtraSteps() {
         return Optional.empty();
     }
 

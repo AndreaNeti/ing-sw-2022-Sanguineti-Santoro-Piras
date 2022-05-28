@@ -68,9 +68,9 @@ public abstract class GameClientListened {
 //            listener.ok();
 //        }
 //    }
-    public void notifyIgnoredColor(Color color){
+    public void notifyExtaSteps(boolean extraSteps){
         for (GameClientListener listener : listeners) {
-            listener.updateIgnoredColor(color);
+            listener.updateExtraSteps(extraSteps);
         }
     }
     public void notifyCharacter(List<CharacterCardClient> characters){

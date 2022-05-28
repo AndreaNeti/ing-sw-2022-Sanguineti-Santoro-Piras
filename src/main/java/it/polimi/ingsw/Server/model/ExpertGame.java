@@ -16,17 +16,17 @@ import java.util.Random;
 
 public class ExpertGame extends NormalGame implements CharacterCardGame {
     private final byte[] coinsPlayer;
-    private transient final ArrayList<CharacterCard> characters;
-    private transient final ArrayList<Integer> inputsCharacter;
+    private final ArrayList<CharacterCard> characters;
+    private final ArrayList<Integer> inputsCharacter;
     private final boolean[] playedCharacters;
     private byte coinsLeft;
-    private transient boolean extraInfluence; //default false
-    private transient boolean towerInfluence;// default true
-    private transient boolean extraSteps; //default false
-    private transient boolean equalProfessorCalculation; //default false
+    private boolean extraInfluence; //default false
+    private boolean towerInfluence;// default true
+    private boolean extraSteps; //default false
+    private boolean equalProfessorCalculation; //default false
     private Color ignoredColorInfluence;
     private byte prohibitionLeft;
-    private transient byte chosenCharacter;
+    private byte chosenCharacter;
 
 
     public ExpertGame(ArrayList<Team> teamList, MatchConstants matchConstants) {
@@ -186,6 +186,7 @@ public class ExpertGame extends NormalGame implements CharacterCardGame {
         this.ignoredColorInfluence = null;
         this.chosenCharacter = -1;
         this.inputsCharacter.clear();
+        getGameDelta().setExtraSteps(extraSteps);
     }
 
     @Override
@@ -196,6 +197,7 @@ public class ExpertGame extends NormalGame implements CharacterCardGame {
         for (byte i = 0; i < characters.size(); i++) {
             g.addCharacterCard(i, characters.get(i).getCharId());
         }
+        getGameDelta().setExtraSteps(extraSteps);
         return g;
 
     }
@@ -354,6 +356,7 @@ public class ExpertGame extends NormalGame implements CharacterCardGame {
     @Override
     public void setExtraSteps() {
         this.extraSteps = true;
+        getGameDelta().setExtraSteps(extraSteps);
     }
 
     @Override
@@ -361,8 +364,6 @@ public class ExpertGame extends NormalGame implements CharacterCardGame {
         if (ignoredColorInfluence == null) throw new IllegalArgumentException("Null color");
         if (this.ignoredColorInfluence != ignoredColorInfluence) {
             this.ignoredColorInfluence = ignoredColorInfluence;
-            // add to game delta
-            getGameDelta().setIgnoredColorInfluence(ignoredColorInfluence);
         }
     }
 

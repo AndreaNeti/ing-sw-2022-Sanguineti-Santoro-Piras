@@ -10,12 +10,13 @@ import it.polimi.ingsw.exceptions.serverExceptions.NotAllowedException;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public interface Game extends Serializable {
+public interface Game {
     void move(Color color, int idGameComponentSource, int idGameComponentDestination) throws GameException;
 
     void playCard(AssistantCard card) throws GameException, EndGameException;
 
     void setCurrentPlayer(Player p);
+
     void setCurrentPlayer(byte currentPlayerIndex);
 
     void moveMotherNature(int moves) throws NotAllowedException, EndGameException;
@@ -31,6 +32,8 @@ public interface Game extends Serializable {
     void playCharacter() throws GameException, EndGameException;
 
     void moveFromCloud(int cloudId) throws GameException;
+
     GameDelta getGameDelta();
+
     GameDelta transformAllGameInDelta();
 }

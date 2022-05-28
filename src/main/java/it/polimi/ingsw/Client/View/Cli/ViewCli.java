@@ -260,7 +260,9 @@ public class ViewCli extends AbstractView implements ViewForCharacterCli {
     }
 
     public byte getMotherNatureMovesInput(boolean canBeStopped) throws ScannerException {
-        return (byte) getIntInput(1, getModel().getCurrentPlayer().getPlayedCard().moves(), "How many steps do you want mother nature to move?", canBeStopped);
+        byte maxMoves = getModel().getCurrentPlayer().getPlayedCard().moves();
+        if (getModel().isExtraSteps()) maxMoves += 2;
+        return (byte) getIntInput(1, maxMoves, "How many steps do you want mother nature to move?", canBeStopped);
     }
 
     public int getCloudSource(boolean canBeStopped) throws ScannerException {

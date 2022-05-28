@@ -1,7 +1,5 @@
 package it.polimi.ingsw.Server.controller;
 
-import it.polimi.ingsw.Enum.Color;
-
 import java.util.*;
 
 public class ExpertGameDelta extends GameDelta {
@@ -10,9 +8,10 @@ public class ExpertGameDelta extends GameDelta {
     // player id, new playerCoinsLeft
     private Map<Byte, Byte> updatedCoinPlayer;
     private Byte newCoinsLeft, newProhibitionsLeft;
-    private Color ignoredColorInfluence;
+    private Boolean extraSteps;
     //charId, used
     private Map<Byte, Boolean> usedCharacter;
+
 
     public ExpertGameDelta() {
         super();
@@ -25,7 +24,7 @@ public class ExpertGameDelta extends GameDelta {
         updatedCoinPlayer = null;
         newCoinsLeft = null;
         newProhibitionsLeft = null;
-        ignoredColorInfluence = null;
+        extraSteps = null;
         usedCharacter = null;
     }
 
@@ -60,8 +59,8 @@ public class ExpertGameDelta extends GameDelta {
     }
 
     @Override
-    public void setIgnoredColorInfluence(Color ignoredColorInfluence) {
-        this.ignoredColorInfluence = ignoredColorInfluence;
+    public void setExtraSteps(Boolean extraSteps) {
+        this.extraSteps = extraSteps;
     }
 
     @Override
@@ -93,7 +92,7 @@ public class ExpertGameDelta extends GameDelta {
     }
 
     @Override
-    public Optional<Color> getIgnoredColorInfluence() {
-        return Optional.ofNullable(ignoredColorInfluence);
+    public Optional<Boolean> isExtraSteps() {
+        return Optional.ofNullable(extraSteps);
     }
 }

@@ -458,8 +458,8 @@ public class CliPrinter implements GameClientListener {
     }
 
     @Override
-    public void updateIgnoredColor(Color color) {
-        view.addMessage("During this turn color " + color + " will not add influence");
+    public void updateExtraSteps(boolean extraSteps) {
+        view.addMessage("During this turn color " + extraSteps + " will not add influence");
         update();
     }
 

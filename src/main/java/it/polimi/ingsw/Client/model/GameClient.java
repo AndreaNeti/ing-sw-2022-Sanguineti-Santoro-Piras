@@ -29,15 +29,13 @@ public class GameClient extends GameClientListened implements GameClientView {
     //players are in the same order of wizard.ordinal
     private final List<TeamClient> teams;
     private Lock lockForCharacter;
-    private boolean[] usedCharacter;
     private final List<CharacterCardClient> characters;
     private final List<CharacterCardClientWithStudents> charactersWithStudents;
     private CharacterCardClient currentCharacterCard;
     // player id, new playerCoinsLeft
     private final Map<Byte, Byte> updatedCoinPlayer;
-    private Byte newCoinsLeft, newProhibitionsLeft;
-    private Color ignoredColorInfluence;
-
+    private byte newCoinsLeft, newProhibitionsLeft;
+    private boolean extraSteps;
 
 
     public GameClient(ArrayList<TeamClient> teamsClient, Wizard myWizard, MatchType matchType) {
@@ -111,12 +109,12 @@ public class GameClient extends GameClientListened implements GameClientView {
         if (idGameComponent >= 0 && idGameComponent < 2 * matchType.nPlayers()) {
             int playerIndex = idGameComponent / 2;
             if (idGameComponent % 2 == 0) {
-                GameComponentClient entranceHall = getPlayer(idGameComponent / 2).getEntranceHall();
+                GameComponentClient entranceHall = getPlayer(playerIndex).getEntranceHall();
                 entranceHall.modifyGameComponent(gameComponent);
                 notify(entranceHall);
 
             } else {
-                GameComponentClient lunchHall = getPlayer(idGameComponent / 2).getLunchHall();
+                GameComponentClient lunchHall = getPlayer(playerIndex).getLunchHall();
                 lunchHall.modifyGameComponent(gameComponent);
                 notify(lunchHall);
             }
@@ -206,6 +204,7 @@ public class GameClient extends GameClientListened implements GameClientView {
         }
     }
 
+    @Override
     public Byte getNewCoinsLeft() {
         return newCoinsLeft;
     }
@@ -225,13 +224,14 @@ public class GameClient extends GameClientListened implements GameClientView {
         //TODO add update
     }
 
-    public Color getIgnoredColorInfluence() {
-        return ignoredColorInfluence;
+    @Override
+    public boolean isExtraSteps() {
+        return extraSteps;
     }
 
-    public void setIgnoredColorInfluence(Color ignoredColorInfluence) {
-        this.ignoredColorInfluence = ignoredColorInfluence;
-        notifyIgnoredColor(ignoredColorInfluence);
+    public void setExtraSteps(boolean extraSteps) {
+        this.extraSteps = extraSteps;
+        notifyExtaSteps(extraSteps);
     }
 
     public void setUpdatedCoinPlayer(byte playerIndex, byte newCoins) {
