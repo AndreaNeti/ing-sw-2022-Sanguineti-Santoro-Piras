@@ -338,7 +338,7 @@ public class Controller {
     protected void handleError(EndGameException e) throws EndGameException {
         // throws to client handler, in this way should also stop the controller function caller
         if (e.isEndInstantly()) throw e;
-        else { // then continues to the controller function caller
+        else if (!lastRound) { // then continues to the controller function caller
             lastRound = true;
             broadcastMessage(new TextMessageSC("Server: This is the last round"));
         }

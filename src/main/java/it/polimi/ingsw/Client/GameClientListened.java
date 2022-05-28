@@ -63,28 +63,36 @@ public abstract class GameClientListened {
         }
     }
 
-//    public void notifyOk() {
+    //    public void notifyOk() {
 //        for (GameClientListener listener : listeners) {
 //            listener.ok();
 //        }
 //    }
-    public void notifyExtaSteps(boolean extraSteps){
+    public void notifyIgnoredColor(Color color) {
+        for (GameClientListener listener : listeners) {
+            listener.updateIgnoredColor(color);
+        }
+    }
+
+    public void notifyExtaSteps(boolean extraSteps) {
         for (GameClientListener listener : listeners) {
             listener.updateExtraSteps(extraSteps);
         }
     }
-    public void notifyCharacter(List<CharacterCardClient> characters){
+
+    public void notifyCharacter(List<CharacterCardClient> characters) {
         for (GameClientListener listener : listeners) {
             listener.updateCharacter(characters);
         }
     }
+
     public void notifyMembers(int membersLeftToStart, String nickPlayerJoined) {
         for (GameClientListener listener : listeners) {
             listener.updateMembers(membersLeftToStart, nickPlayerJoined);
         }
     }
 
-    public void notifyWinners(List<HouseColor> winners){
+    public void notifyWinners(List<HouseColor> winners) {
         for (GameClientListener listener : listeners) {
             listener.setWinners(winners);
         }

@@ -36,6 +36,7 @@ public class GameClient extends GameClientListened implements GameClientView {
     private final Map<Byte, Byte> updatedCoinPlayer;
     private byte newCoinsLeft, newProhibitionsLeft;
     private boolean extraSteps;
+    private Color ignoredColorInfluence;
 
 
     public GameClient(ArrayList<TeamClient> teamsClient, Wizard myWizard, MatchType matchType) {
@@ -232,6 +233,16 @@ public class GameClient extends GameClientListened implements GameClientView {
     public void setExtraSteps(boolean extraSteps) {
         this.extraSteps = extraSteps;
         notifyExtaSteps(extraSteps);
+    }
+
+    @Override
+    public Color getIgnoredColorInfluence() {
+        return ignoredColorInfluence;
+    }
+
+    public void setIgnoredColorInfluence(Color ignoredColorInfluence) {
+        this.ignoredColorInfluence = ignoredColorInfluence;
+        notifyIgnoredColor(ignoredColorInfluence);
     }
 
     public void setUpdatedCoinPlayer(byte playerIndex, byte newCoins) {

@@ -1,5 +1,6 @@
 package it.polimi.ingsw.Client.model;
 
+import it.polimi.ingsw.Enum.Color;
 import it.polimi.ingsw.Enum.Wizard;
 import it.polimi.ingsw.Server.controller.MatchConstants;
 import it.polimi.ingsw.Server.controller.MatchType;
@@ -40,6 +41,9 @@ public interface GameClientView {
 
     List<PlayerClient> getPlayers();
 
+    Color getIgnoredColorInfluence();
+
     boolean isExtraSteps();
+
     Byte getNewCoinsLeft();
 }

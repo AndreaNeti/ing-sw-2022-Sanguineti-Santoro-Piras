@@ -117,7 +117,10 @@ public class NormalGame implements Game {
             gameDelta.addDeletedIslands(islandAfter);
 
         }
-        if (islands.size() <= matchConstants.minIslands()) throw new EndGameException(true);
+        if (islands.size() <= matchConstants.minIslands()) {
+            gameDelta.send();
+            throw new EndGameException(true);
+        }
     }
 
     protected void drawStudents(GameComponent gameComponent, byte students) throws EndGameException, GameException {
@@ -311,12 +314,15 @@ public class NormalGame implements Game {
                 gameDelta.updateTeamTowersLeft(oldController, oldTeam.getTowersLeft());
             }
             Team winnerTeam = getTeams().get(newController.ordinal());
-            winnerTeam.removeTowers(island.getNumber());
+            try {
+                winnerTeam.removeTowers(island.getNumber());
 
-            // add to game delta
-            gameDelta.updateTeamTowersLeft(newController, winnerTeam.getTowersLeft());
-
-            checkMerge(island);
+                // add to game delta
+                gameDelta.updateTeamTowersLeft(newController, winnerTeam.getTowersLeft());
+            } finally {
+                // even if last tower removed and endGameException, check merge so the update can be sent
+                checkMerge(island);
+            }
         }
     }
 

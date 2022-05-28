@@ -34,7 +34,7 @@ public interface GameClientListener {
 
     //TODO update with coins, character
     void updateCardPlayed(AssistantCard playedCard);
-
+    void updateIgnoredColor(Color color);
     void updateExtraSteps(boolean extraSteps);
 
     void updateCharacter(List<CharacterCardClient> characters);

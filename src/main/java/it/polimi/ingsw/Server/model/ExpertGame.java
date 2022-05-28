@@ -364,6 +364,8 @@ public class ExpertGame extends NormalGame implements CharacterCardGame {
         if (ignoredColorInfluence == null) throw new IllegalArgumentException("Null color");
         if (this.ignoredColorInfluence != ignoredColorInfluence) {
             this.ignoredColorInfluence = ignoredColorInfluence;
+            // add to game delta
+            getGameDelta().setIgnoredColorInfluence(ignoredColorInfluence);
         }
     }
 

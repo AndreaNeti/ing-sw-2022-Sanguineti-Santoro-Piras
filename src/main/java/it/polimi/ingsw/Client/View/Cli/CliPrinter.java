@@ -456,10 +456,15 @@ public class CliPrinter implements GameClientListener {
     public void updateCardPlayed(AssistantCard playedCard) {
 
     }
-
+    @Override
+    public void updateIgnoredColor(Color color) {
+        view.addMessage("During this turn color " + color + " will not add influence");
+        update();
+    }
     @Override
     public void updateExtraSteps(boolean extraSteps) {
-        view.addMessage("During this turn color " + extraSteps + " will not add influence");
+        if(extraSteps)
+            view.addMessage("During this turn you have 2 more extra steps");
         update();
     }
 

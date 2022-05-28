@@ -36,6 +36,7 @@ public abstract class ClientPhase implements ClientPhaseView, ClientPhaseControl
             } while (phaseChanged);
             gameCommands.get(index).playCLICommand();
         } catch (ScannerException ignored) {
+            // skipped input
         }
     }
 

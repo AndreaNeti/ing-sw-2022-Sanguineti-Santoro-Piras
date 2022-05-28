@@ -98,6 +98,9 @@ public class GameDelta implements Serializable {
     public void setExtraSteps(Boolean extraSteps) {
     }
 
+    public void setIgnoredColorInfluence(Color ignoredColorInfluence) {
+    }
+
     public void setUsedCharacter(byte charId, boolean used) {
     }
 
@@ -118,6 +121,10 @@ public class GameDelta implements Serializable {
     }
 
     public Optional<Boolean> isExtraSteps() {
+        return Optional.empty();
+    }
+
+    public Optional<Color> getIgnoredColorInfluence() {
         return Optional.empty();
     }
 
