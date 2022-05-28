@@ -10,66 +10,75 @@ import it.polimi.ingsw.exceptions.serverExceptions.NotAllowedException;
 import it.polimi.ingsw.exceptions.serverExceptions.UsedCardException;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Objects;
+import java.util.*;
 
 public class Player implements Serializable {
     private final String nickName;
     private final Wizard wizard;
-    private transient final boolean[] cardsAvailable;
+    private final List<AssistantCard> assistantCards;
+    private AssistantCard playedCard;
     private transient final EntranceHall entranceHall;
     private transient final LunchHall lunchHall;
-    private transient byte playedCard;
     private transient byte cardsLeft;
+    private transient final MatchConstants matchConstants;
 
     public Player(String nickName, Team team, Wizard wizard, MatchConstants matchConstants) throws GameException {
         if (nickName == null || team == null || matchConstants == null)
             throw new IllegalArgumentException("Cannot pass null argument");
+        this.matchConstants = matchConstants;
         this.nickName = nickName;
         team.addPlayer(this);
         this.wizard = wizard;
-        this.cardsAvailable = new boolean[matchConstants.numOfCards()];
-        Arrays.fill(this.cardsAvailable, true);
+
         this.cardsLeft = (byte) matchConstants.numOfCards();
-        this.playedCard = 0; // 0 = no card, else 1 to 10
+        this.assistantCards = new ArrayList<>(this.cardsLeft);
+
+        for (byte i = 1; i <= this.cardsLeft; i++)
+            assistantCards.add(new AssistantCard(i, (byte) ((i + 1) / 2)));
+
+        this.playedCard = null; // 0 = no card, else 1 to 10
         this.entranceHall = new EntranceHall(matchConstants.entranceHallStudents(), (byte) (wizard.ordinal() * 2));
         this.lunchHall = new LunchHall(Color.values().length * matchConstants.maxLunchHallStudents(), (byte) (wizard.ordinal() * 2 + 1));
     }
 
-    public void useCard(byte card) throws UsedCardException, NotAllowedException, EndGameException {
-        if (card < 1 || card > cardsAvailable.length) throw new IllegalArgumentException("Not a valid card");
+    public void useCard(byte value) throws UsedCardException, NotAllowedException, EndGameException {
+
         if (cardsLeft < 1) throw new NotAllowedException("No more cards");
-        if (!cardsAvailable[card - 1]) throw new UsedCardException();
-        playedCard = card;
+        AssistantCard chosenCard = getCard(value);
+        if (chosenCard == null) throw new IllegalArgumentException("Not a valid card to play");
+
+        if (chosenCard.isUsed()) throw new UsedCardException();
+        playedCard = chosenCard;
+        chosenCard.setUsed();
         cardsLeft--;
-        cardsAvailable[card - 1] = false;
         if (cardsLeft == 0) throw new EndGameException(false);
     }
-    // TODO forse a gianpaolino non piace
-    public byte getPlayedCardMoves() {
-        // card max movement is 1 for card 1 and 2, 2 for card 3 and 4, ..., 5 for card 9 and 10
-        return (byte) ((playedCard + 1) / 2);
-    }
 
-    public byte getPlayedCard() {
+    public AssistantCard getPlayedCard() {
         return playedCard;
     }
 
-    public boolean canPlayCard(ArrayList<Byte> playedCards, byte value) {
-        if (playedCards == null) throw new IllegalArgumentException("Passing null played cards list");
-        if (value < 1 || value > cardsAvailable.length) throw new IllegalArgumentException("Not a valid card to play");
-        //the value goes from 1 to 10
-        if (playedCards.size() == 0)
-            return true;
-        if (playedCards.contains(value)) {
-            for (int i = 0; i < cardsAvailable.length; i++) {
-                if (cardsAvailable[i] && !playedCards.contains((byte) (i + 1))) {
-                    // there is a different card -> you should have played that one
+    // checks if a card can be played in function of the cards chosen by other players
+    public boolean canPlayCard(ArrayList<Byte> playedCardsValues, byte value) {
+        if (playedCardsValues == null) throw new IllegalArgumentException("Passing null played cards list");
+        // the value goes from 1 to 10
+        if (value < 1 || value > matchConstants.numOfCards())
+            throw new IllegalArgumentException("Not a valid card to play");
+        // you have already used that card
+        if (getCard(value).isUsed()) return false;
+        // no one has already played a card, you can play it
+        if (playedCardsValues.size() == 0) return true;
+        // if the card you chose is already chosen by someone else, check if you hadn't other choices
+        if (playedCardsValues.contains(value)) {
+            for (byte val = 1; val <= matchConstants.numOfCards(); val++) {
+                AssistantCard c = getCard(val);
+                // there is a card not played by other player that you still didn't choose, you should play that one instead
+                if (c != null && !c.isUsed() && !playedCardsValues.contains(val)) {
                     return false;
                 }
             }
         }
+        // even if the card you chose is also played by someone else you hadn't other choices
         return true;
     }
 
@@ -83,6 +92,12 @@ public class Player implements Serializable {
 
     public Wizard getWizard() {
         return wizard;
+    }
+
+    private AssistantCard getCard(byte value) {
+        if (value < 1 || value > matchConstants.numOfCards()) return null;
+        // card 1 is in position 0, card 10 in 9
+        return assistantCards.get(value - 1);
     }
 
     @Override

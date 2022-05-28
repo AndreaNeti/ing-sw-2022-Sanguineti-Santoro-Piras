@@ -219,9 +219,16 @@ class ControllerTest {
         } catch (GameException | EndGameException e) {
             fail(e.getMessage());
         }
-        assertDoesNotThrow(() -> controllerExpert2.chooseCharacter((byte) 0));
-        assertDoesNotThrow(() -> controllerExpert2.chooseCharacter((byte) 1));
-        assertDoesNotThrow(() -> controllerExpert2.chooseCharacter((byte) 2));
+        // check if 3 different character cards have been selected
+        int nCharacters = 12, selected = 3, counter = 0;
+        for (byte i = 0; i < nCharacters; i++) {
+            try {
+                controllerExpert2.chooseCharacter(i);
+            } catch (GameException ignored) {
+                counter++;
+            }
+        }
+        assertEquals(nCharacters - selected, counter);
     }
 
     @Test

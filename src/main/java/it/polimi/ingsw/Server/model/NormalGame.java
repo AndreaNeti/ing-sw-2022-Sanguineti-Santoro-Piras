@@ -249,7 +249,7 @@ public class NormalGame implements Game {
     }
 
     protected boolean checkMoveMotherNature(int moves) {
-        return moves <= getCurrentPlayer().getPlayedCardMoves();
+        return moves <= getCurrentPlayer().getPlayedCard().getMoves();
     }
 
     @Override

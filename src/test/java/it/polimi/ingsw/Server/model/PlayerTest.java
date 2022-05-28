@@ -40,9 +40,8 @@ class PlayerTest {
             fail();
         }
         assertNotEquals(p, p2);
-        assertEquals(p.getPlayedCard(), 0);
+        assertNull(p.getPlayedCard());
         assertEquals(p.getWizard(), Wizard.AIRMAGE);
-        assertEquals(p.getPlayedCardMoves(), 0);
         assertEquals(p.getLunchHall(), p2.getLunchHall());
         assertEquals(p.getEntranceHall(), p2.getEntranceHall());
         assertNotEquals(p2, p1);
@@ -56,45 +55,45 @@ class PlayerTest {
         } catch (UsedCardException | NotAllowedException | EndGameException ex) {
             fail();
         }
-        assertEquals(p.getPlayedCard(), 4);
-        assertEquals(p.getPlayedCardMoves(), 2);
+        assertEquals(p.getPlayedCard().getValue(), 4);
+        assertEquals(p.getPlayedCard().getMoves(), 2);
 
 
         assertThrows(IllegalArgumentException.class, () -> p.useCard((byte) -5), "negative value");
         assertThrows(UsedCardException.class, () -> p.useCard((byte) 4), "negative value");
         try {
             p.useCard((byte) 1);
-            assertEquals(p.getPlayedCardMoves(), 1);
-            assertEquals(p.getPlayedCard(), 1);
+            assertEquals(p.getPlayedCard().getMoves(), 1);
+            assertEquals(p.getPlayedCard().getValue(), 1);
             p.useCard((byte) 2);
-            assertEquals(p.getPlayedCard(), 2);
-            assertEquals(p.getPlayedCardMoves(), 1);
+            assertEquals(p.getPlayedCard().getValue(), 2);
+            assertEquals(p.getPlayedCard().getMoves(), 1);
             p.useCard((byte) 3);
-            assertEquals(p.getPlayedCard(), 3);
-            assertEquals(p.getPlayedCardMoves(), 2);
+            assertEquals(p.getPlayedCard().getValue(), 3);
+            assertEquals(p.getPlayedCard().getMoves(), 2);
 
             p.useCard((byte) 5);
-            assertEquals(p.getPlayedCard(), 5);
-            assertEquals(p.getPlayedCardMoves(), 3);
+            assertEquals(p.getPlayedCard().getValue(), 5);
+            assertEquals(p.getPlayedCard().getMoves(), 3);
             p.useCard((byte) 6);
-            assertEquals(p.getPlayedCardMoves(), 3);
-            assertEquals(p.getPlayedCard(), 6);
+            assertEquals(p.getPlayedCard().getMoves(), 3);
+            assertEquals(p.getPlayedCard().getValue(), 6);
             p.useCard((byte) 7);
-            assertEquals(p.getPlayedCard(), 7);
-            assertEquals(p.getPlayedCardMoves(), 4);
+            assertEquals(p.getPlayedCard().getValue(), 7);
+            assertEquals(p.getPlayedCard().getMoves(), 4);
             p.useCard((byte) 8);
-            assertEquals(p.getPlayedCard(), 8);
-            assertEquals(p.getPlayedCardMoves(), 4);
+            assertEquals(p.getPlayedCard().getValue(), 8);
+            assertEquals(p.getPlayedCard().getMoves(), 4);
             p.useCard((byte) 9);
-            assertEquals(p.getPlayedCard(), 9);
-            assertEquals(p.getPlayedCardMoves(), 5);
+            assertEquals(p.getPlayedCard().getValue(), 9);
+            assertEquals(p.getPlayedCard().getMoves(), 5);
         } catch (UsedCardException | NotAllowedException | EndGameException ex) {
             fail();
         }
         assertThrows(UsedCardException.class, () -> p.useCard((byte) 4), "negative value");
+        assertThrows(IllegalArgumentException.class, () -> p.useCard((byte) -1), "not a valid input");
         assertThrows(EndGameException.class, () -> p.useCard((byte) 10), "used last card");
         assertThrows(NotAllowedException.class, () -> p.useCard((byte) 3), "no cards to use");
-        assertThrows(IllegalArgumentException.class, () -> p.useCard((byte) -1), "not a valid input");
     }
 
 

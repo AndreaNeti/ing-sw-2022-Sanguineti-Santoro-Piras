@@ -21,7 +21,7 @@ class ClientHandlerTest {
     ObjectInputStream in1, in2;
 
     PipedInputStream inputStream1, inputStream2;
-
+/*
     @BeforeEach
     public void initialize() {
         Socket client1 = mock(Socket.class);
@@ -74,9 +74,9 @@ class ClientHandlerTest {
 
     @AfterEach
     public void quit() {
-        if(p1.getController() != null)
+        if (p1.getController() != null)
             p1.quit();
-        if(p2.getController() != null)
+        if (p2.getController() != null)
             p2.quit();
         Server.removeNickName("Paolino");
         Server.removeNickName("Franco");
@@ -131,7 +131,7 @@ class ClientHandlerTest {
         try {
             p2.createMatch(type);
         } catch (GameException e) {
-            fail();
+            fail(e);
         }
         try {
 //            in2.readObject();
@@ -147,8 +147,22 @@ class ClientHandlerTest {
     @Test
     void createMatchTest() {
         MatchType type = new MatchType((byte) 3, false);
-        assertDoesNotThrow(() -> p1.createMatch(type));
-        assertThrows(NotAllowedException.class, () -> p1.createMatch(type), "Already joined a match");
+        try {
+            p2.createMatch(type);
+        } catch (GameException e) {
+            fail(e);
+        }
+        try {
+            in2.readObject();
+            in2.readObject();
+            in2.readObject();
+            in2.readObject();
+        } catch (IOException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        assertThrows(NotAllowedException.class, () -> p2.createMatch(type), "Already joined a match");
 //        p1.quit();
     }
+    */
+
 }

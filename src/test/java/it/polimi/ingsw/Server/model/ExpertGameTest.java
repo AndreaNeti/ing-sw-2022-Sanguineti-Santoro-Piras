@@ -174,7 +174,7 @@ public class ExpertGameTest {
     @Test
     void chooseCharacterTest() {
         assertThrows(NotAllowedException.class, () -> gameWith2.chooseCharacter((byte) -1));
-        assertThrows(NotAllowedException.class, () -> gameWith2.chooseCharacter((byte) 3));
+        assertThrows(NotAllowedException.class, () -> gameWith2.chooseCharacter((byte) 12));
     }
 
     @Test
@@ -198,7 +198,7 @@ public class ExpertGameTest {
             fail();
         }
         try {
-            gameWith2.chooseCharacter((byte) 0);
+            gameWith2.chooseCharacter(gameWith2.transformAllGameInDelta().getCharacters().get(0));
             for (int i = 0; i < 5; i++) {
                 gameWith2.setCharacterInput(i);
                 inputs.add(i);
@@ -227,7 +227,7 @@ public class ExpertGameTest {
             for (Color color : Color.values()) {
                 gameWith2.getBag().moveStudents(color, (byte) 1, p1_2.getEntranceHall());
             }
-            gameWith2.chooseCharacter((byte) 0);
+            gameWith2.chooseCharacter(gameWith2.transformAllGameInDelta().getCharacters().get(0));
         } catch (GameException e) {
             fail();
         }

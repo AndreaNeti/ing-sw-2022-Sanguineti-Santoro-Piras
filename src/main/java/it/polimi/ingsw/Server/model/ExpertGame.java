@@ -205,7 +205,7 @@ public class ExpertGame extends NormalGame implements CharacterCardGame {
         if (!extraSteps)
             return super.checkMoveMotherNature(moves);
         if (moves < 0) throw new IllegalArgumentException("Cannot move backwards");
-        return moves <= getCurrentPlayer().getPlayedCardMoves() + 2;
+        return moves <= getCurrentPlayer().getPlayedCard().getMoves() + 2;
     }
 
     @Override

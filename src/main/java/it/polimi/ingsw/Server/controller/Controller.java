@@ -32,8 +32,8 @@ public class Controller {
     private boolean lastRound, characterCardPlayed, skipCloudPhase;
 
     private ArrayList<HouseColor> winners;
+    private final ArrayList<Byte> playedCards;
     private boolean gameFinished;
-
     private final Long matchId;
 
     public Controller(MatchType matchType, Long id) {
@@ -58,6 +58,7 @@ public class Controller {
         this.gameFinished = false;
         this.matchId = id;
         this.skipCloudPhase = false;
+        playedCards = new ArrayList<>(matchType.nPlayers());
     }
 
     public boolean isMyTurn(ClientHandler caller) {
@@ -98,8 +99,7 @@ public class Controller {
             game.moveFromCloud(idGameComponent);
             broadcastMessage(new TextMessageSC("Server: " + Wizard.values()[getCurrentPlayerIndex()] + " take student from a cloud"));
             nextPhase();
-        } else
-            throw new NotAllowedException("Wrong Phase");
+        } else throw new NotAllowedException("Wrong Phase");
 
     }
 
@@ -108,16 +108,11 @@ public class Controller {
         if (gamePhase != GamePhase.PLANIFICATION_PHASE) {
             throw new NotAllowedException("Not in action phase");
         }
-        ArrayList<Byte> playedCards = new ArrayList<>();
-        //loop where I put in playedCard the previous card played by other Player.If it's current Player
-        //it breaks the loop 'cause there aren't other previous player
-        for (int i = 0; i < roundIndex; i++) {
-            playedCards.add(playersList.get((playerOrder.get(0) + i) % playersList.size()).getPlayedCard());
-        }
 
         if (playersList.get(currentPlayerIndex).canPlayCard(playedCards, value)) {
             try {
                 game.playCard(value);
+                playedCards.add(value);
             } catch (EndGameException e) {
                 handleError(e);
             } finally {
@@ -217,8 +212,7 @@ public class Controller {
     private void notifyClients(ToClientMessage m, GameListener excludeMe) {
         synchronized (playerHandlers) {
             for (GameListener gl : playerHandlers) {
-                if (!gl.equals(excludeMe))
-                    gl.update(m);
+                if (!gl.equals(excludeMe)) gl.update(m);
             }
         }
     }
@@ -241,10 +235,8 @@ public class Controller {
     }
 
     private void startGame() {
-        if (matchType.isExpert())
-            game = new ExpertGame(teams, matchConstants);
-        else
-            game = new NormalGame(teams, matchConstants);
+        if (matchType.isExpert()) game = new ExpertGame(teams, matchConstants);
+        else game = new NormalGame(teams, matchConstants);
         game.setCurrentPlayer(currentPlayerIndex);
         // TODO find a better way
         GameDelta gameDelta = game.getGameDelta();
@@ -264,7 +256,7 @@ public class Controller {
                 //it's a new turn because it passed from planification to actionPhase
                 //changed the order of player, need to sort based on the playedCard
                 playerOrder.sort((b1, b2) -> {
-                    int ret = playersList.get(b1).getPlayedCard() - playersList.get(b2).getPlayedCard();
+                    int ret = playersList.get(b1).getPlayedCard().getValue() - playersList.get(b2).getPlayedCard().getValue();
                     // players have used the same card, compare in function of who played first
                     // [3,1,2,4] : player 3 is the first playing in planification phase then clockwise order (3,4,1,2), doing bx -= 3 (mod 4) obtains -> [0,2,3,1] and that's the planification phase order from 0 to 3
                     if (ret == 0)
@@ -316,6 +308,7 @@ public class Controller {
                         skipCloudPhase = true;
                         handleError(e);
                     }
+                    playedCards.clear();
                     //there is a new turn completely
                     setPhase(GamePhase.PLANIFICATION_PHASE);
                 }

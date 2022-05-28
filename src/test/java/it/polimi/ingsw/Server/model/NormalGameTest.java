@@ -208,16 +208,16 @@ public class NormalGameTest {
         } catch (GameException | EndGameException e) {
             fail();
         }
-        assertEquals(5, p1_2.getPlayedCard());
-        assertEquals(3, p1_2.getPlayedCardMoves());
+        assertEquals(5, p1_2.getPlayedCard().getValue());
+        assertEquals(3, p1_2.getPlayedCard().getMoves());
         gameWith2.setCurrentPlayer(p2_2);
         try {
             gameWith2.playCard((byte) 6);
         } catch (GameException | EndGameException e) {
             fail();
         }
-        assertEquals(6, p2_2.getPlayedCard());
-        assertEquals(3, p2_2.getPlayedCardMoves());
+        assertEquals(6, p2_2.getPlayedCard().getValue());
+        assertEquals(3, p2_2.getPlayedCard().getMoves());
     }
 
     @Test
