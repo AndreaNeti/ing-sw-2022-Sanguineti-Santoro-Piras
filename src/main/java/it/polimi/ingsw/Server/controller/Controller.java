@@ -156,7 +156,7 @@ public class Controller {
         playerHandlers.add(newPlayerHandler);
 
         if (playersList.size() == matchType.nPlayers()) {
-            System.out.println("game is starting");
+            System.out.println("Game is starting...");
             startGame();
             Server.removeMatch(matchId);
         } else { // sends ok only if need to wait other players, otherwise newPlayer will receive Phase message

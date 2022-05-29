@@ -47,6 +47,7 @@ public class ViewCli extends AbstractView implements ViewForCharacterCli {
                 System.err.println("Closing...");
             }
         });
+        mustReprint = false;
         phaseToExecute = null;
         isInputReady = false;
         phaseChanged = false;
@@ -61,8 +62,7 @@ public class ViewCli extends AbstractView implements ViewForCharacterCli {
             synchronized (this) {
                 while (phaseToExecute == null)
                     wait();
-                if (mustReprint)
-                    cliPrinter.printGame();
+                cliPrinter.printGame();
                 phaseToExecute.playPhase(this);
             }
         } while (!canQuit());
@@ -179,6 +179,7 @@ public class ViewCli extends AbstractView implements ViewForCharacterCli {
 
     // return null if it's not a valid ip, otherwise returns the IP bytes
     private byte[] getIpFromString(String ip) {
+        ip = ip.toLowerCase();
         if (ip.equals("localhost") || ip.equals("l") || ip.equals("paolino")) return new byte[]{127, 0, 0, 1};
         String[] bytes = ip.split("[.]");
         if (bytes.length != 4) return null;

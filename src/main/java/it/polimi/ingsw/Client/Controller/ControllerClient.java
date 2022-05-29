@@ -252,7 +252,7 @@ public class ControllerClient extends GameClientListened {
     }
 
     public void notifyClientPhase(ClientPhaseController clientPhaseController, boolean forceScannerSkip) {
-        notifyView();
+        // notifyView();
         clientPhaseController.setPhaseInView(abstractView, forceScannerSkip);
     }
 

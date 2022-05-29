@@ -61,7 +61,7 @@ public class CliPrinter implements GameClientListener {
 //        System.setOut(new PrintStream(new FileOutputStream(FileDescriptor.out), true, StandardCharsets.UTF_8));
             AnsiConsole.systemInstall();
             List<PlayerClient> players = game.getPlayers();
-            out.println("----------------------ERYANTIS----------------------");
+            out.println("----------------------ERIANTYS----------------------");
             out.print(printIslands(game.getIslands()));
             out.print(printCloudsAndTeams(game.getClouds(), game.getTeams()));
             out.print(printBoardsChatCharacters(players));
@@ -403,7 +403,7 @@ public class CliPrinter implements GameClientListener {
         }
         assistantCardsPrint.append("\n");
         // print bottom line of cards
-        for (AssistantCard card : assistantCards) {
+        for (AssistantCard ignored : assistantCards) {
             assistantCardsPrint.append("\u2570").append("\u2500".repeat(7)).append("\u256f   ");
         }
         assistantCardsPrint.append("\n");
@@ -448,7 +448,6 @@ public class CliPrinter implements GameClientListener {
     public void updateMembers(int membersLeftToStart, String nickPlayerJoined) {
         if (membersLeftToStart > 0) {
             view.addMessage(nickPlayerJoined + " joined. " + membersLeftToStart + " members left before game starts");
-            update();
         }
     }
 
@@ -456,16 +455,17 @@ public class CliPrinter implements GameClientListener {
     public void updateCardPlayed(AssistantCard playedCard) {
 
     }
+
     @Override
     public void updateIgnoredColor(Color color) {
         view.addMessage("During this turn color " + color + " will not add influence");
-        update();
     }
+
     @Override
     public void updateExtraSteps(boolean extraSteps) {
-        if(extraSteps)
+        if (extraSteps) {
             view.addMessage("During this turn you have 2 more extra steps");
-        update();
+        }
     }
 
     @Override
@@ -485,7 +485,6 @@ public class CliPrinter implements GameClientListener {
         else s += "s are ";
         s += winners;
         view.addMessage(s);
-        update();
     }
 
     @Override
