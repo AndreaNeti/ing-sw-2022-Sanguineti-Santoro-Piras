@@ -89,7 +89,7 @@ public class ViewCli extends AbstractView implements ViewForCharacterCli {
     }
 
     private String optionString(int value, String option) {
-        return "[" + value + "] " + option;
+        return "[" + value + "] " + option + " ";
     }
 
     private String optionString(SortedSet<Integer> values, String option) {
@@ -197,8 +197,13 @@ public class ViewCli extends AbstractView implements ViewForCharacterCli {
         return ret;
     }
 
-    public int getColorInput(boolean canBeStopped) throws ScannerException {
-        return getIntInput(Color.values(), "Select a color", canBeStopped);
+    public Color getColorInput(boolean canBeStopped) throws ScannerException {
+        System.out.println("--COLORS--");
+        StringBuilder s = new StringBuilder();
+        for (Color c : Color.values())
+            s.append(optionString(c.ordinal() + 1, c.toString()));
+        System.out.println(s);
+        return Color.values()[getIntInput(1, Color.values().length, "Select a color", canBeStopped) - 1];
     }
 
     public MatchType getMatchTypeInput(boolean canBeStopped) throws ScannerException {
@@ -207,10 +212,10 @@ public class ViewCli extends AbstractView implements ViewForCharacterCli {
 
     public byte getCharacterCharToPlayInput() throws ScannerException {
         List<CharacterCardClient> characterCards = getModel().getCharacters();
-        System.out.println("--OPTIONS--");
+        System.out.println("--CHARACTERS--");
         for (int i = 0; i < characterCards.size(); i++)
-            System.out.println(optionString(i, characterCards.get(i) + ": " + characterCards.get(i).getDescription()));
-        return (byte) getIntInput(0, characterCards.size() - 1, "Select the character to play", false);
+            System.out.println(optionString(i + 1, characterCards.get(i) + ": " + characterCards.get(i).getDescription()));
+        return (byte) (getIntInput(1, characterCards.size(), "Select the character to play", false) - 1);
     }
 
     public AssistantCard getAssistantCardToPlayInput(boolean canBeStopped) throws ScannerException {
@@ -341,11 +346,11 @@ public class ViewCli extends AbstractView implements ViewForCharacterCli {
             System.err.println("Thread interrupted");
             throw new SkipCommandException();
         }
-        if (mustReprint) {
-            // reprint game
+        if (mustReprint && !phaseChanged) {
+            // reprint game, if phase changed will reprint in next phase
             cliPrinter.printGame();
             // if one of these conditions is true it should not repeat the command, skip instead to the new one
-            if (!(phaseChanged || isInputReady || forcedScannerSkip))
+            if (!(isInputReady || forcedScannerSkip))
                 throw new RepeatCommandException();
         }
         // if input is ready, return it

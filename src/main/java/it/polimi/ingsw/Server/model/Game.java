@@ -7,7 +7,6 @@ import it.polimi.ingsw.exceptions.serverExceptions.EndGameException;
 import it.polimi.ingsw.exceptions.serverExceptions.GameException;
 import it.polimi.ingsw.exceptions.serverExceptions.NotAllowedException;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
 public interface Game {

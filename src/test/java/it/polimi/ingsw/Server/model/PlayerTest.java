@@ -9,7 +9,6 @@ import it.polimi.ingsw.exceptions.serverExceptions.EndGameException;
 import it.polimi.ingsw.exceptions.serverExceptions.GameException;
 import it.polimi.ingsw.exceptions.serverExceptions.NotAllowedException;
 import org.junit.jupiter.api.Test;
-import org.mockito.internal.matchers.Not;
 
 import java.util.ArrayList;
 import java.util.List;

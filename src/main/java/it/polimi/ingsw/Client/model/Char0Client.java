@@ -28,11 +28,8 @@ public class Char0Client extends CharacterCardClientWithStudents {
 
     @Override
     public void setNextInput(ViewForCharacterCli view) throws ScannerException {
-        if (inputs.size() == 0) {
-            inputs.add(view.getColorInput(false));
-        } else {
-            inputs.add(view.getIslandDestination("Select the island where you want to put the student", false));
-        }
+        inputs.add(view.getColorInput(false).ordinal());
+        inputs.add(view.getIslandDestination("Select the island where you want to put the student", false));
     }
 
     @Override

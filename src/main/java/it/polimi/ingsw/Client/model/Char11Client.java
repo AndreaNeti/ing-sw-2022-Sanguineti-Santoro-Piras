@@ -28,7 +28,7 @@ public class Char11Client implements CharacterCardClient {
     @Override
     public void setNextInput(ViewForCharacterCli view) throws ScannerException {
         System.out.println("Select the color and everyone will put three students of that color from lunch hall to bag");
-        inputs.add(view.getColorInput(false));
+        inputs.add(view.getColorInput(false).ordinal());
     }
 
     @Override

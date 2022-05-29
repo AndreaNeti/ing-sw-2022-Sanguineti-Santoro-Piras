@@ -24,7 +24,7 @@ public class MoveStudentCommand extends GameCommand {
         do {
             phaseChanged = false;
             try {
-                color = Color.values()[viewCli.getColorInput(false)];
+                color = viewCli.getColorInput(false);
             } catch (RepeatCommandException e) {
                 phaseChanged = true;
             }

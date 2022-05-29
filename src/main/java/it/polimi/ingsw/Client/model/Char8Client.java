@@ -28,7 +28,7 @@ public class Char8Client implements CharacterCardClient {
     @Override
     public void setNextInput(ViewForCharacterCli view) throws ScannerException {
         System.out.println("Select the color you want to ignore while calculating the influence");
-        inputs.add(view.getColorInput(false));
+        inputs.add(view.getColorInput(false).ordinal());
     }
 
     @Override

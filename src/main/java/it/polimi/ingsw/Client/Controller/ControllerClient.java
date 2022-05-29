@@ -149,12 +149,13 @@ public class ControllerClient extends GameClientListened {
 
 
     public void sendMessage(ToServerMessage command) {
-        if (serverSender == null) error(false);
+        if (serverSender == null) error();
         else serverSender.sendServerMessage(command);
     }
 
-    public void error(boolean forceScannerSkip) {
-        repeatPhase(forceScannerSkip);
+    public void error() {
+        unsetCurrentCharacterCard();
+        goToOldPhase();
     }
 
     public void ok() {
@@ -273,6 +274,7 @@ public class ControllerClient extends GameClientListened {
     }
 
     public void unsetCurrentCharacterCard() {
-        model.unsetCurrentCharacterCard();
+        if (model != null)
+            model.unsetCurrentCharacterCard();
     }
 }

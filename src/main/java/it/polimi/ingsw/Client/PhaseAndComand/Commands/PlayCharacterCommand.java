@@ -20,6 +20,11 @@ public class PlayCharacterCommand extends GameCommand {
     public void playCLICommand() throws ScannerException {
         ViewCli viewCli = (ViewCli) super.getView();
         CharacterCardClient current = viewCli.getCurrentCharacterCard();
+        if (current == null) {
+            viewCli.addMessage("No card selected");
+            viewCli.goToOldPhase();
+            return;
+        }
         boolean confirmToPlay = false;
         boolean phaseChanged;
         do {
@@ -38,7 +43,6 @@ public class PlayCharacterCommand extends GameCommand {
                     viewCli.sendToServer(new SetCharacterInput(i));
             current.resetInput();
             viewCli.sendToServer(new PlayCharacter());
-
         } else {
             viewCli.addMessage("Card cannot be played because it needs more input");
         }

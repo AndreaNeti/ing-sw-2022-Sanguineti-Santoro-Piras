@@ -27,12 +27,10 @@ public class Char9Client implements CharacterCardClient {
 
     @Override
     public void setNextInput(ViewForCharacterCli view) throws ScannerException {
-        if (inputs.size() % 2 == 0)
-            System.out.println("Select the color of the student from lunch hall");
-        else
-            System.out.println("Select the color of the student from your entrance ");
-
-        inputs.add(view.getColorInput(false));
+        System.out.println("Select the color of the student from Lunch Hall");
+        inputs.add(view.getColorInput(false).ordinal());
+        System.out.println("Select the color of the student from your Entrance Hall");
+        inputs.add(view.getColorInput(false).ordinal());
     }
 
     @Override

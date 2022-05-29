@@ -29,9 +29,9 @@ public class SetCharacterInputCommand extends GameCommand {
                     phaseChanged = true;
                 }
             } while (phaseChanged);
+            if (current.canPlay())
+                viewCli.addMessage("Card can already be played");
         }
-        if (current.canPlay())
-            viewCli.addMessage("Card can already be played");
         viewCli.repeatPhase(false);
     }
 
