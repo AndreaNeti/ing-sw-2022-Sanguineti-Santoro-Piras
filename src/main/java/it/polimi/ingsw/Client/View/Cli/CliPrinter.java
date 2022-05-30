@@ -9,6 +9,8 @@ import it.polimi.ingsw.Server.model.AssistantCard;
 import org.fusesource.jansi.AnsiConsole;
 
 import java.io.IOException;
+import java.io.PrintStream;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 public class CliPrinter implements GameClientListener {
@@ -17,6 +19,7 @@ public class CliPrinter implements GameClientListener {
     private final static String operatingSystem = System.getProperty("os.name");
     private final ViewCli view;
     private GameClientView game;
+    private final PrintStream out;
 
     public CliPrinter(ViewCli view) {
         this.view = view;
@@ -28,6 +31,7 @@ public class CliPrinter implements GameClientListener {
                 System.err.println(e.getMessage());
             }
         }
+        out = new PrintStream(System.out, true, StandardCharsets.UTF_8);
     }
 
     private void printLobby() {
@@ -46,7 +50,7 @@ public class CliPrinter implements GameClientListener {
                 }
             }
             chat.append(" \u2514").append("\u2500".repeat(86)).append("\u2518\n\n");
-            System.out.print(chat);
+            out.print(chat);
         }
     }
 
@@ -54,13 +58,13 @@ public class CliPrinter implements GameClientListener {
         clearConsole();
         game = view.getModel();
         if (game != null) {
+//        System.setOut(new PrintStream(new FileOutputStream(FileDescriptor.out), true, StandardCharsets.UTF_8));
             AnsiConsole.systemInstall();
             List<PlayerClient> players = game.getPlayers();
-            System.out.println("----------------------ERIANTYS----------------------");
-            System.out.print(printIslands(game.getIslands()));
-            System.out.print(printCloudsAndTeams(game.getClouds(), game.getTeams()));
-            System.out.print(printBoardsChatCharacters(players));
-            System.out.print(printAssistantCards(players));
+            out.print(printIslands(game.getIslands()));
+            out.print(printCloudsAndTeams(game.getClouds(), game.getTeams()));
+            out.print(printBoardsChatCharacters(players));
+            out.print(printAssistantCards(players));
             AnsiConsole.systemUninstall();
         } else {
             printLobby();
@@ -248,7 +252,10 @@ public class CliPrinter implements GameClientListener {
                 for (Color c : Color.values()) {
                     if (p.getLunchHall().howManyStudents(c) >= i)
                         stud.append(" ").append(colors[c.ordinal()]).append("\u25cf ");
-                    else stud.append(colors[c.ordinal()]).append("   ");
+                    else if (i%3 == 0 && expert)
+                        stud.append(" \u25ef ");
+                    else
+                        stud.append(colors[c.ordinal()]).append("   ");
                 }
                 boardsCharChatPrint.append(" \u2551").append(stud).append("\u001b[0m").append("\u2551 ");
             }
@@ -359,9 +366,9 @@ public class CliPrinter implements GameClientListener {
             if (game.getCurrentPlayer() != null)
                 if (game.getCurrentPlayer().getWizard() == players.get(i).getWizard())
                     boardsCharChatPrint.append("\u001b[31;1m");
-
+            // highlight player's wizard
             if (game.getMyWizard() == players.get(i).getWizard())
-                boardsCharChatPrint.append("\u001b[47;1m");
+                boardsCharChatPrint.append("\u001b[7m");
 
             boardsCharChatPrint.append(players.get(i).getWizard()).append("\u001b[0m");
             if (expert) {
