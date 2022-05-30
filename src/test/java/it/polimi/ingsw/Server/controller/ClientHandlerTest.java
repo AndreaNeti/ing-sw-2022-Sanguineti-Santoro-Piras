@@ -1,16 +1,25 @@
 package it.polimi.ingsw.Server.controller;
 
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.PipedInputStream;
+import it.polimi.ingsw.exceptions.serverExceptions.GameException;
+import it.polimi.ingsw.exceptions.serverExceptions.NotAllowedException;
+import it.polimi.ingsw.network.toClientMessage.OK;
+import it.polimi.ingsw.network.toClientMessage.ToClientMessage;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import java.io.*;
+import java.net.Socket;
+
+import static org.mockito.Mockito.mock;
+
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.when;
 
 class ClientHandlerTest {
     ClientHandler p1, p2, p3, p4;
     ObjectOutputStream out1, out2;
-    ObjectInputStream in1, in2;
 
-    PipedInputStream inputStream1, inputStream2;
-/*
     @BeforeEach
     public void initialize() {
         Socket client1 = mock(Socket.class);
@@ -18,16 +27,18 @@ class ClientHandlerTest {
         PipedOutputStream outputStream1 = new PipedOutputStream();
         PipedOutputStream outputStream2 = new PipedOutputStream();
         PipedInputStream a = new PipedInputStream();
-        PipedOutputStream b = new PipedOutputStream();
+        PipedOutputStream b = mock(PipedOutputStream.class);
         PipedInputStream c = new PipedInputStream();
-        PipedOutputStream d = new PipedOutputStream();
+        PipedOutputStream d = mock(PipedOutputStream.class);
+        PipedInputStream inputStream1 = mock(PipedInputStream.class);
+        PipedInputStream inputStream2 = mock(PipedInputStream.class);
 
         try {
             a.connect(outputStream1);
-            inputStream1 = new PipedInputStream(b);
+            inputStream1.connect(b);
             out1 = new ObjectOutputStream(outputStream1);
             c.connect(outputStream2);
-            inputStream2 = new PipedInputStream(d);
+            inputStream2.connect(d);
             out2 = new ObjectOutputStream(outputStream2);
             when(client1.getOutputStream()).thenReturn(b);
             when(client1.getInputStream()).thenReturn(a);
@@ -41,23 +52,10 @@ class ClientHandlerTest {
         p1 = new ClientHandler(client1);
         p2 = new ClientHandler(client2);
         try {
-            in1 = new ObjectInputStream(inputStream1);
-            in2 = new ObjectInputStream(inputStream2);
-        } catch (IOException e) {
-            fail();
-        }
-        try {
             p1.setNickName("Paolino");
             p2.setNickName("Franco");
         } catch (GameException e) {
             fail();
-        }
-
-        try {
-            in2.readObject();
-            in1.readObject();
-        } catch (IOException | ClassNotFoundException e) {
-            throw new RuntimeException(e);
         }
     }
 
@@ -102,14 +100,6 @@ class ClientHandlerTest {
         } catch (GameException e) {
             fail();
         }
-        try {
-//            in1.readObject();
-//            in2.readObject();
-            in2.readObject();
-            in2.readObject();
-        } catch (IOException | ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
         assertDoesNotThrow(() -> p1.joinByMatchId(p2.getController().getMatchId()));
         assertThrows(NotAllowedException.class, () -> p1.joinByMatchId(1L), "Already joined a match");
     }
@@ -122,36 +112,19 @@ class ClientHandlerTest {
         } catch (GameException e) {
             fail(e);
         }
-        try {
-//            in2.readObject();
-            in2.readObject();
-            in2.readObject();
-        } catch (IOException | ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
         assertDoesNotThrow(() -> p1.joinByMatchType(type));
         assertThrows(NotAllowedException.class, () -> p1.joinByMatchType(type), "Already joined a match");
     }
 
     @Test
     void createMatchTest() {
+        System.out.println("Ciao");
         MatchType type = new MatchType((byte) 3, false);
         try {
             p2.createMatch(type);
         } catch (GameException e) {
             fail(e);
         }
-        try {
-            in2.readObject();
-            in2.readObject();
-            in2.readObject();
-            in2.readObject();
-        } catch (IOException | ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
         assertThrows(NotAllowedException.class, () -> p2.createMatch(type), "Already joined a match");
-//        p1.quit();
     }
-    */
-
 }
