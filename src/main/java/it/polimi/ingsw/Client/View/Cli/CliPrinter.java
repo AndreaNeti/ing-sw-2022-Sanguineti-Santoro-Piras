@@ -251,11 +251,11 @@ public class CliPrinter implements GameClientListener {
                 StringBuilder stud = new StringBuilder();
                 for (Color c : Color.values()) {
                     if (p.getLunchHall().howManyStudents(c) >= i)
-                        stud.append(" ").append(colors[c.ordinal()]).append("\u25cf ");
+                        stud.append(" ").append(colors[c.ordinal()]).append("\u25cf\u001b[0m ");
                     else if (i%3 == 0 && expert)
                         stud.append(" \u25ef ");
                     else
-                        stud.append(colors[c.ordinal()]).append("   ");
+                        stud.append("   ");
                 }
                 boardsCharChatPrint.append(" \u2551").append(stud).append("\u001b[0m").append("\u2551 ");
             }
