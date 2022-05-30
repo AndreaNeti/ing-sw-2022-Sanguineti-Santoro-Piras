@@ -179,6 +179,9 @@ public class Controller {
         if (gamePhase == GamePhase.PLANIFICATION_PHASE) {
             throw new NotAllowedException("Not in action phase");
         }
+        if (characterCardPlayed) {
+            throw new NotAllowedException("A card has already been played this turn");
+        }
         game.chooseCharacter(charId);
         broadcastMessage(new TextMessageSC("Server: " + Wizard.values()[getCurrentPlayerIndex()] + " chose character card " + charId));
     }
