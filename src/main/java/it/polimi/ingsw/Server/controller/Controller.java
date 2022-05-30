@@ -115,9 +115,8 @@ public class Controller {
                 playedCards.add(card);
             } catch (EndGameException e) {
                 handleError(e);
-            } finally {
-                broadcastMessage(new TextMessageSC("Server: " + Wizard.values()[getCurrentPlayerIndex()] + " played card n° " + card.value()));
             }
+            broadcastMessage(new TextMessageSC("Server: " + Wizard.values()[getCurrentPlayerIndex()] + " played card n° " + card.value()));
             nextPhase();
         } else {
             throw new NotAllowedException("Cannot play this card");
