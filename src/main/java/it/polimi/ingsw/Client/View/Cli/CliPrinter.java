@@ -35,7 +35,7 @@ public class CliPrinter implements GameClientListener {
             ArrayList<String> chatCopy = view.getChat();
 //        Collections.reverse(chatCopy);
             StringBuilder chat = new StringBuilder();
-            chat.append(" \u250c").append("\u2500".repeat(39)).append("\u2524\u001b[4m CHAT \u001b[0m\u251c").append("\u2500".repeat(39)).append("\u2510\n");
+            chat.append(" \u250c").append("\u2500".repeat(39)).append("\u2524 CHAT \u251c").append("\u2500".repeat(39)).append("\u2510\n");
             String mex;
             for (int i = chatCopy.size() - 15; i < chatCopy.size(); i++) {
                 if (i >= 0) {
@@ -280,10 +280,10 @@ public class CliPrinter implements GameClientListener {
                     boardsCharChatPrint.append("\n");
                 }
                 // line separator between chat and cards
-                case 8 -> boardsCharChatPrint.append("\t").append(" ".repeat(41)).append("_".repeat(6)).append("\n");
+                case 8 -> boardsCharChatPrint.append("\n");
                 // first chat line
                 case 7 ->
-                        boardsCharChatPrint.append("\t\u250c").append("\u2500".repeat(39)).append("\u2524\u001b[4m CHAT \u001b[0m\u251c").append("\u2500".repeat(39)).append("\u2510\n");
+                        boardsCharChatPrint.append("\t\u250c").append("\u2500".repeat(39)).append("\u2524 CHAT \u251c").append("\u2500".repeat(39)).append("\u2510\n");
                 // print messages of chat
                 default -> {
                     String mex = "";
