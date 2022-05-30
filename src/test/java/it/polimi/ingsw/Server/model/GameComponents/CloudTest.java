@@ -1,5 +1,6 @@
-package it.polimi.ingsw.Server.model;
+package it.polimi.ingsw.Server.model.GameComponents;
 
+import it.polimi.ingsw.Server.model.GameComponents.Cloud;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

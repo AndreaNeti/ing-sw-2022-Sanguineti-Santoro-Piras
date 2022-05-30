@@ -6,6 +6,7 @@ import it.polimi.ingsw.Enum.Wizard;
 import it.polimi.ingsw.Server.controller.MatchConstants;
 import it.polimi.ingsw.Server.controller.MatchType;
 import it.polimi.ingsw.Server.controller.Server;
+import it.polimi.ingsw.Server.model.GameComponents.Island;
 import it.polimi.ingsw.exceptions.serverExceptions.EndGameException;
 import it.polimi.ingsw.exceptions.serverExceptions.GameException;
 import it.polimi.ingsw.exceptions.serverExceptions.NotAllowedException;
@@ -134,26 +135,26 @@ public class ExpertGameTest {
         }
         try {
             byte coins = 1;
-            assertEquals(gameWith2.getCoinsPlayer(p1_2), coins);
+            assertEquals(gameWith2.getCoinsPlayer(p1_2.getWizard().ordinal()), coins);
             gameWith2.move(Color.RED, 0, 1);
-            assertEquals(gameWith2.getCoinsPlayer(p1_2), coins);
+            assertEquals(gameWith2.getCoinsPlayer(p1_2.getWizard().ordinal()), coins);
             gameWith2.move(Color.RED, 0, 1);
-            assertEquals(gameWith2.getCoinsPlayer(p1_2), coins);
-            gameWith2.move(Color.RED, 0, 1);
-            coins += 1;
-            assertEquals(gameWith2.getCoinsPlayer(p1_2), coins);
-            gameWith2.move(Color.RED, 0, 1);
-            gameWith2.move(Color.RED, 0, 1);
+            assertEquals(gameWith2.getCoinsPlayer(p1_2.getWizard().ordinal()), coins);
             gameWith2.move(Color.RED, 0, 1);
             coins += 1;
-            assertEquals(gameWith2.getCoinsPlayer(p1_2), coins);
+            assertEquals(gameWith2.getCoinsPlayer(p1_2.getWizard().ordinal()), coins);
+            gameWith2.move(Color.RED, 0, 1);
+            gameWith2.move(Color.RED, 0, 1);
+            gameWith2.move(Color.RED, 0, 1);
+            coins += 1;
+            assertEquals(gameWith2.getCoinsPlayer(p1_2.getWizard().ordinal()), coins);
 
             gameWith2.getBag().moveStudents(Color.RED, (byte) 3, p1_2.getEntranceHall());
             gameWith2.move(Color.RED, 0, 1);
             gameWith2.move(Color.RED, 0, 1);
             gameWith2.move(Color.RED, 0, 1);
             coins += 1;
-            assertEquals(gameWith2.getCoinsPlayer(p1_2), coins);
+            assertEquals(gameWith2.getCoinsPlayer(p1_2.getWizard().ordinal()), coins);
         } catch (GameException e) {
             fail();
         }

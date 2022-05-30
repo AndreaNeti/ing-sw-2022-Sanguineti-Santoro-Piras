@@ -1,6 +1,10 @@
-package it.polimi.ingsw.Server.model;
+package it.polimi.ingsw.Server.model.GameComponents;
 
 import it.polimi.ingsw.Enum.Color;
+import it.polimi.ingsw.Server.model.GameComponents.Bag;
+import it.polimi.ingsw.Server.model.GameComponents.GameComponent;
+import it.polimi.ingsw.Server.model.GameComponents.Island;
+import it.polimi.ingsw.Server.model.GameComponents.LunchHall;
 import it.polimi.ingsw.exceptions.serverExceptions.EndGameException;
 import it.polimi.ingsw.exceptions.serverExceptions.GameException;
 import it.polimi.ingsw.exceptions.serverExceptions.NotAllowedException;

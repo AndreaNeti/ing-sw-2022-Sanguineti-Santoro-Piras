@@ -1,9 +1,7 @@
-package it.polimi.ingsw.Server.model;
+package it.polimi.ingsw.Server.model.GameComponents;
 
 import it.polimi.ingsw.Enum.Color;
-import it.polimi.ingsw.exceptions.serverExceptions.EndGameException;
-import it.polimi.ingsw.exceptions.serverExceptions.GameException;
-import it.polimi.ingsw.exceptions.serverExceptions.NotAllowedException;
+import it.polimi.ingsw.exceptions.serverExceptions.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -33,7 +31,7 @@ public class Bag extends GameComponent {
                 try {
                     moveStudents(color, (byte) 1, gameComponent);
                     i++;
-                } catch (GameException ex) {
+                } catch (NotEnoughStudentsException | NotAllowedException ex) {
                     // for some reason can't more students of this color but for sure there is other free space, not extracting that color anymore
                     availableColors.remove(color);
                 }

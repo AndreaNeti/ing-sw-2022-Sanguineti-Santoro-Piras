@@ -5,6 +5,8 @@ import it.polimi.ingsw.Enum.HouseColor;
 import it.polimi.ingsw.Server.controller.ExpertGameDelta;
 import it.polimi.ingsw.Server.controller.GameDelta;
 import it.polimi.ingsw.Server.controller.MatchConstants;
+import it.polimi.ingsw.Server.model.GameComponents.GameComponent;
+import it.polimi.ingsw.Server.model.GameComponents.Island;
 import it.polimi.ingsw.exceptions.serverExceptions.EndGameException;
 import it.polimi.ingsw.exceptions.serverExceptions.GameException;
 import it.polimi.ingsw.exceptions.serverExceptions.NotAllowedException;
@@ -14,7 +16,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
 
-public class ExpertGame extends NormalGame implements CharacterCardGame {
+public class ExpertGame extends NormalGame implements CharacterCardGame, CoinListener {
     private final byte[] coinsPlayer;
     private final ArrayList<CharacterCard> characters;
     private final ArrayList<Integer> inputsCharacter;
@@ -51,7 +53,10 @@ public class ExpertGame extends NormalGame implements CharacterCardGame {
             selectedCharacters.add(c.getCharId());
             i++;
         }
-
+        // add Coin Listener
+        for (Player p : getPlayers()) {
+            p.getLunchHall().addCoinListener(this);
+        }
         playedCharacters = new boolean[matchConstants.numOfCharacterCards()];
         this.extraInfluence = false;
         this.towerInfluence = true;
@@ -121,9 +126,6 @@ public class ExpertGame extends NormalGame implements CharacterCardGame {
     public void move(Color color, int gameComponentSource, int gameComponentDestination) throws GameException {
         try {
             super.move(color, gameComponentSource, gameComponentDestination);
-            if ((gameComponentDestination < 2 * getPlayerSize() && gameComponentDestination % 2 == 1) && getCurrentPlayer().getLunchHall().howManyStudents(color) % 3 == 0) {
-                addCoinToCurrentPlayer();
-            }
         } finally {
             getGameDelta().send();
         }
@@ -245,11 +247,13 @@ public class ExpertGame extends NormalGame implements CharacterCardGame {
         }
     }
 
-    private void addCoinToCurrentPlayer() throws NotEnoughCoinsException {
+    @Override
+    public void notifyCoins(byte coins) throws NotEnoughCoinsException {
         if (coinsLeft == 0) throw new NotEnoughCoinsException();
+        else if (coinsLeft < coins) coins = coinsLeft;
         byte playerIndex = getCurrentPlayerIndex();
-        coinsPlayer[playerIndex]++;
-        coinsLeft--;
+        coinsPlayer[playerIndex] += coins;
+        coinsLeft -= coins;
 
         // add to game delta
         getGameDelta().setUpdatedCoinPlayer(playerIndex, getCoinsPlayer(playerIndex));
@@ -400,12 +404,7 @@ public class ExpertGame extends NormalGame implements CharacterCardGame {
         }
     }
 
-    protected byte getCoinsPlayer(Player p) {
-        if (p == null) throw new IllegalArgumentException("Cannot get coins of null player");
-        return coinsPlayer[p.getWizard().ordinal()];
-    }
-
-    protected byte getCoinsPlayer(byte playerIndex) {
+    protected byte getCoinsPlayer(int playerIndex) {
         if (playerIndex < 0 || playerIndex >= getPlayerSize())
             throw new IllegalArgumentException("Not a valid player index");
         return coinsPlayer[playerIndex];

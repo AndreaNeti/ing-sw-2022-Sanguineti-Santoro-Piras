@@ -13,7 +13,7 @@ import it.polimi.ingsw.Server.controller.GameDelta;
 import it.polimi.ingsw.Server.controller.MatchConstants;
 import it.polimi.ingsw.Server.controller.MatchType;
 import it.polimi.ingsw.Server.controller.Server;
-import it.polimi.ingsw.Server.model.GameComponent;
+import it.polimi.ingsw.Server.model.GameComponents.GameComponent;
 import it.polimi.ingsw.Server.model.Player;
 import it.polimi.ingsw.Server.model.Team;
 import it.polimi.ingsw.network.toServerMessage.Quit;

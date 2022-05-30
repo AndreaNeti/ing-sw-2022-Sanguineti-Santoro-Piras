@@ -1,8 +1,9 @@
-package it.polimi.ingsw.Server.model;
+package it.polimi.ingsw.Server.model.GameComponents;
 
 import it.polimi.ingsw.Enum.Color;
 import it.polimi.ingsw.exceptions.serverExceptions.GameException;
 import it.polimi.ingsw.exceptions.serverExceptions.NotAllowedException;
+import it.polimi.ingsw.exceptions.serverExceptions.NotEnoughCoinsException;
 import it.polimi.ingsw.exceptions.serverExceptions.NotEnoughStudentsException;
 
 import java.io.Serializable;
@@ -36,13 +37,13 @@ public abstract class GameComponent implements Serializable {
         this(Integer.MAX_VALUE, (byte) 0, idGameComponent);
     }
 
-    private void addStudents(Color color, byte number) {
+    protected void addStudents(Color color, byte number) throws NotEnoughCoinsException {
         if (color == null) throw new IllegalArgumentException("Null color");
         if (number < 0) throw new IllegalArgumentException("Cannot add negative students");
         students[color.ordinal()] += number;
     }
 
-    private void removeStudents(Color color, byte number) throws NotEnoughStudentsException {
+    protected void removeStudents(Color color, byte number) throws NotEnoughStudentsException {
         if (color == null) throw new IllegalArgumentException("Null color");
         if (number < 0) throw new IllegalArgumentException("Cannot add negative students");
         if (students[color.ordinal()] >= number)
@@ -99,7 +100,7 @@ public abstract class GameComponent implements Serializable {
         }
     }
 
-    public boolean canAddStudents(Color c, byte number) {
+    protected boolean canAddStudents(Color c, byte number) {
         return howManyStudents() + number <= maxStudents;
     }
 

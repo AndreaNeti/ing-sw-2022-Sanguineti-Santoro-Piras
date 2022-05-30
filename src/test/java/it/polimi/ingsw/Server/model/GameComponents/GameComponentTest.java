@@ -1,6 +1,7 @@
-package it.polimi.ingsw.Server.model;
+package it.polimi.ingsw.Server.model.GameComponents;
 
 import it.polimi.ingsw.Enum.Color;
+import it.polimi.ingsw.Server.model.GameComponents.*;
 import it.polimi.ingsw.exceptions.serverExceptions.EndGameException;
 import it.polimi.ingsw.exceptions.serverExceptions.GameException;
 import it.polimi.ingsw.exceptions.serverExceptions.NotAllowedException;
@@ -90,14 +91,14 @@ public class GameComponentTest {
         try {
             bag.drawStudent(lh, (byte) 50);
         } catch (EndGameException | GameException e) {
-            fail();
+            fail(e);
         }
         assertThrows(NotAllowedException.class, () -> island1.swapStudents(Color.GREEN, Color.PINK, lh));
         try {
             // should launch exception, but it's the same gameComponent -> doesn't do anything
             island.swapStudents(Color.BLUE, Color.BLUE, island);
         } catch (GameException e) {
-            fail();
+            fail(e);
         }
     }
 

@@ -4,8 +4,8 @@ import it.polimi.ingsw.Enum.Color;
 import it.polimi.ingsw.Enum.HouseColor;
 import it.polimi.ingsw.Enum.Wizard;
 import it.polimi.ingsw.Server.model.AssistantCard;
-import it.polimi.ingsw.Server.model.GameComponent;
-import it.polimi.ingsw.Server.model.Island;
+import it.polimi.ingsw.Server.model.GameComponents.GameComponent;
+import it.polimi.ingsw.Server.model.GameComponents.Island;
 import it.polimi.ingsw.network.toClientMessage.DeltaUpdate;
 import it.polimi.ingsw.network.toClientMessage.ToClientMessage;
 

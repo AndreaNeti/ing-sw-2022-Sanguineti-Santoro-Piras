@@ -6,6 +6,8 @@ import it.polimi.ingsw.Enum.Wizard;
 import it.polimi.ingsw.Server.controller.MatchConstants;
 import it.polimi.ingsw.Server.controller.MatchType;
 import it.polimi.ingsw.Server.controller.Server;
+import it.polimi.ingsw.Server.model.GameComponents.Bag;
+import it.polimi.ingsw.Server.model.GameComponents.GameComponent;
 import it.polimi.ingsw.exceptions.serverExceptions.EndGameException;
 import it.polimi.ingsw.exceptions.serverExceptions.GameException;
 import it.polimi.ingsw.exceptions.serverExceptions.NotAllowedException;
@@ -601,7 +603,7 @@ class CharacterCardTest {
             game.chooseCharacter(charToSelect);
             game.setCharacterInput(color);
         } catch (GameException e) {
-            fail();
+            fail(e);
         }
         ArrayList<Player> players = game.getPlayers();
         byte[] oldValues = new byte[players.size()];

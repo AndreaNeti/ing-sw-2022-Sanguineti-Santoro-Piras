@@ -4,6 +4,8 @@ package it.polimi.ingsw.Server.model;
 import it.polimi.ingsw.Enum.Color;
 import it.polimi.ingsw.Enum.Wizard;
 import it.polimi.ingsw.Server.controller.MatchConstants;
+import it.polimi.ingsw.Server.model.GameComponents.EntranceHall;
+import it.polimi.ingsw.Server.model.GameComponents.LunchHall;
 import it.polimi.ingsw.exceptions.serverExceptions.EndGameException;
 import it.polimi.ingsw.exceptions.serverExceptions.GameException;
 import it.polimi.ingsw.exceptions.serverExceptions.NotAllowedException;
