@@ -8,8 +8,8 @@ import it.polimi.ingsw.exceptions.serverExceptions.GameException;
 import it.polimi.ingsw.exceptions.serverExceptions.NotAllowedException;
 
 public class MoveStudent implements ToServerMessage {
-    Color color;
-    int idGameComponent;
+    private final Color color;
+    private final int idGameComponent;
 
     public MoveStudent(Color color, int idGameComponent) {
         this.color = color;

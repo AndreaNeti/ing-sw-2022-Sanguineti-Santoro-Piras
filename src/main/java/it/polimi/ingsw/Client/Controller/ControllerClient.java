@@ -23,7 +23,6 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.Socket;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -59,7 +58,7 @@ public class ControllerClient extends GameClientListened {
     }
 
     private void instantiateCommands() {
-        commands = Map.ofEntries(entry(CLICommands.CONNECT_SERVER, new ConnectServerCommand(abstractView)), entry(CLICommands.SET_NICKNAME, new SetNicknameCommand(abstractView)), entry(CLICommands.CREATE_MATCH, new CreateMatchCommand(abstractView)), entry(CLICommands.JOIN_MATCH_BY_TYPE, new JoinMatchByTypeCommand(abstractView)), entry(CLICommands.JOIN_MATCH_BY_ID, new JoinMatchByIdCommand(abstractView)), entry(CLICommands.PLAY_CARD, new PlayCardCommand(abstractView)), entry(CLICommands.MOVE_STUDENT, new MoveStudentCommand(abstractView)), entry(CLICommands.MOVE_MOTHER_NATURE, new MoveMotherNatureCommand(abstractView)), entry(CLICommands.MOVE_FROM_CLOUD, new MoveFromCloudCommand(abstractView)), entry(CLICommands.TEXT_MESSAGE, new TextCommand(abstractView)), entry(CLICommands.CHOOSE_CHARACTER, new ChooseCharacterCommand(abstractView)), entry(CLICommands.SET_CHARACTER_INPUT, new SetCharacterInputCommand(abstractView)), entry(CLICommands.PLAY_CHARACTER, new PlayCharacterCommand(abstractView)), entry(CLICommands.DELETE_LAST_INPUT, new DeleteLastInputCommand(abstractView)), entry(CLICommands.UNDO, new UndoCommands(abstractView)), entry(CLICommands.QUIT, new QuitCommand(abstractView)));
+        commands = Map.ofEntries(entry(CLICommands.CONNECT_SERVER, new ConnectServerCommand(abstractView)), entry(CLICommands.SET_NICKNAME, new SetNicknameCommand(abstractView)), entry(CLICommands.CREATE_MATCH, new CreateMatchCommand(abstractView)), entry(CLICommands.JOIN_MATCH_BY_TYPE, new JoinMatchByTypeCommand(abstractView)), entry(CLICommands.JOIN_MATCH_BY_ID, new JoinMatchByIdCommand(abstractView)), entry(CLICommands.PLAY_CARD, new PlayCardCommand(abstractView)), entry(CLICommands.MOVE_STUDENT, new MoveStudentCommand(abstractView)), entry(CLICommands.MOVE_MOTHER_NATURE, new MoveMotherNatureCommand(abstractView)), entry(CLICommands.MOVE_FROM_CLOUD, new MoveFromCloudCommand(abstractView)), entry(CLICommands.TEXT_MESSAGE, new TextCommand(abstractView)), entry(CLICommands.CHOOSE_CHARACTER, new ChooseCharacterCommand(abstractView)), entry(CLICommands.SET_CHARACTER_INPUT, new SetCharacterInputCommand(abstractView)), entry(CLICommands.PLAY_CHARACTER, new PlayCharacterCommand(abstractView)), entry(CLICommands.UNDO, new UndoCommands(abstractView)), entry(CLICommands.QUIT, new QuitCommand(abstractView)));
     }
 
     private void attachCommandToPhase() {
@@ -111,7 +110,7 @@ public class ControllerClient extends GameClientListened {
     }
 
     public void addMessage(String message) {
-        chat.add(new String(message.getBytes(StandardCharsets.UTF_8), StandardCharsets.UTF_8));
+        chat.add(message);
         notifyView();
     }
 

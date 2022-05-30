@@ -23,11 +23,4 @@ public class Char1 implements CharacterCard {
         return nInput == 0;
     }
 
-//    @Override
-//    public boolean equals(Object o) {
-//        if (this == o) return true;
-//        if (!(o instanceof Char1)) return false;
-//        CharacterCard c = (CharacterCard) o;
-//        return getCharId() == c.getCharId();
-//    }
 }

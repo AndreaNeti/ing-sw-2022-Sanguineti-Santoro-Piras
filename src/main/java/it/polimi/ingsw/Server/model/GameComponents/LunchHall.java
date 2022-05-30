@@ -10,7 +10,7 @@ import java.util.List;
 //Lunch hall is that part of the boar that is called Dining Room. There is only one for player and it has a reference to it.
 //It extends GameComponent which is the superclass of all the components that contains students.
 public class LunchHall extends GameComponent {
-    private List<CoinListener> coinListeners;
+    private transient List<CoinListener> coinListeners;
 
     public LunchHall(int lunchHallSize, byte idGameComponent) {
         super(lunchHallSize, idGameComponent);

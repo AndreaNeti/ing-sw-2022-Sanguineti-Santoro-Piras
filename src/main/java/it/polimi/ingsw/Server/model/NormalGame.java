@@ -75,10 +75,7 @@ public class NormalGame implements Game {
             if (!(i == 0 || i == (6) % 12)) {
                 try {
                     drawStudents(islands.get(i), (byte) 1);
-                } catch (EndGameException e) {
-                    System.err.println("Already finished students?");
-                } catch (GameException e1) {
-                    System.err.println("Exceeding island limit?");
+                } catch (GameException | EndGameException ignored) {
                 }
             }
         }
@@ -415,7 +412,6 @@ public class NormalGame implements Game {
         return currentPlayer;
     }
 
-    @Override
     public void setCurrentPlayer(Player p) {
         if (p == null) throw new IllegalArgumentException("Cannot set null current player");
         byte newCurrentPlayer = (byte) p.getWizard().ordinal();

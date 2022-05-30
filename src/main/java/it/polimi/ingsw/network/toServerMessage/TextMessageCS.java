@@ -1,18 +1,16 @@
 package it.polimi.ingsw.network.toServerMessage;
 
 import it.polimi.ingsw.Server.controller.ClientHandler;
-import it.polimi.ingsw.exceptions.serverExceptions.EndGameException;
-import it.polimi.ingsw.exceptions.serverExceptions.GameException;
 
 public class TextMessageCS implements ToServerMessage {
-    String message;
+    private final String message;
 
     public TextMessageCS(String message) {
         this.message = message;
     }
 
     @Override
-    public void execute(ClientHandler clientHandler) throws GameException, EndGameException {
+    public void execute(ClientHandler clientHandler) {
         clientHandler.getController().sendMessage(clientHandler, message);
     }
 }

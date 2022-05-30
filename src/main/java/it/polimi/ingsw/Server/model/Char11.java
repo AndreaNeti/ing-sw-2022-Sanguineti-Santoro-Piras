@@ -41,12 +41,5 @@ public class Char11 implements CharacterCard {
         return nInput == 1;
     }
 
-//    @Override
-//    public boolean equals(Object o) {
-//        if (this == o) return true;
-//        if (!(o instanceof Char11)) return false;
-//        CharacterCard c = (CharacterCard) o;
-//        return getCharId() == c.getCharId();
-//    }
 }
 

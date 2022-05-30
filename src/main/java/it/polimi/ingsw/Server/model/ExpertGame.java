@@ -12,11 +12,12 @@ import it.polimi.ingsw.exceptions.serverExceptions.GameException;
 import it.polimi.ingsw.exceptions.serverExceptions.NotAllowedException;
 import it.polimi.ingsw.exceptions.serverExceptions.NotEnoughCoinsException;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
 
-public class ExpertGame extends NormalGame implements CharacterCardGame, CoinListener {
+public class ExpertGame extends NormalGame implements CharacterCardGame, CoinListener, Serializable {
     private final byte[] coinsPlayer;
     private final ArrayList<CharacterCard> characters;
     private final ArrayList<Integer> inputsCharacter;
@@ -172,7 +173,6 @@ public class ExpertGame extends NormalGame implements CharacterCardGame, CoinLis
         }
     }
 
-    @Override
     public void setCurrentPlayer(Player p) {
         if (p == null) throw new IllegalArgumentException("Cannot set null current player");
         setCurrentPlayer((byte) p.getWizard().ordinal());
@@ -425,8 +425,4 @@ public class ExpertGame extends NormalGame implements CharacterCardGame, CoinLis
         return super.getCurrentPlayer();
     }
 
-    @Override
-    public GameDelta getGameDelta() {
-        return super.getGameDelta();
-    }
 }

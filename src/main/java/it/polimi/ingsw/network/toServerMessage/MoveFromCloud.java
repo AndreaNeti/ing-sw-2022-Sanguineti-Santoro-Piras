@@ -7,7 +7,7 @@ import it.polimi.ingsw.exceptions.serverExceptions.GameException;
 import it.polimi.ingsw.exceptions.serverExceptions.NotAllowedException;
 
 public class MoveFromCloud implements ToServerMessage {
-    int idGameComponent;
+    private final int idGameComponent;
 
     public MoveFromCloud(int idGameComponent) {
         this.idGameComponent = idGameComponent;

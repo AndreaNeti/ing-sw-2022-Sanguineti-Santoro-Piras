@@ -9,8 +9,6 @@ import it.polimi.ingsw.Server.model.AssistantCard;
 import org.fusesource.jansi.AnsiConsole;
 
 import java.io.IOException;
-import java.io.PrintStream;
-import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 public class CliPrinter implements GameClientListener {
@@ -19,7 +17,6 @@ public class CliPrinter implements GameClientListener {
     private final static String operatingSystem = System.getProperty("os.name");
     private final ViewCli view;
     private GameClientView game;
-    private final PrintStream out;
 
     public CliPrinter(ViewCli view) {
         this.view = view;
@@ -31,7 +28,6 @@ public class CliPrinter implements GameClientListener {
                 System.err.println(e.getMessage());
             }
         }
-        out = new PrintStream(System.out, true, StandardCharsets.UTF_8);
     }
 
     private void printLobby() {
@@ -50,7 +46,7 @@ public class CliPrinter implements GameClientListener {
                 }
             }
             chat.append(" \u2514").append("\u2500".repeat(86)).append("\u2518\n\n");
-            out.print(chat);
+            System.out.print(chat);
         }
     }
 
@@ -58,14 +54,13 @@ public class CliPrinter implements GameClientListener {
         clearConsole();
         game = view.getModel();
         if (game != null) {
-//        System.setOut(new PrintStream(new FileOutputStream(FileDescriptor.out), true, StandardCharsets.UTF_8));
             AnsiConsole.systemInstall();
             List<PlayerClient> players = game.getPlayers();
-            out.println("----------------------ERIANTYS----------------------");
-            out.print(printIslands(game.getIslands()));
-            out.print(printCloudsAndTeams(game.getClouds(), game.getTeams()));
-            out.print(printBoardsChatCharacters(players));
-            out.print(printAssistantCards(players));
+            System.out.println("----------------------ERIANTYS----------------------");
+            System.out.print(printIslands(game.getIslands()));
+            System.out.print(printCloudsAndTeams(game.getClouds(), game.getTeams()));
+            System.out.print(printBoardsChatCharacters(players));
+            System.out.print(printAssistantCards(players));
             AnsiConsole.systemUninstall();
         } else {
             printLobby();

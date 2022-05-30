@@ -37,7 +37,7 @@ public class Server {
                 }
             }
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            System.out.println("Closing...");
         }
     }
 

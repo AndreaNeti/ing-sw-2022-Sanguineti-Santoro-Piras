@@ -20,7 +20,6 @@ import java.util.Random;
 import static org.junit.jupiter.api.Assertions.*;
 
 class CharacterCardTest {
-    //TODO CHange now it receives the id not the index
     Team t1, t2;
     Player p1, p2;
     ArrayList<Team> teamList = new ArrayList<>();
@@ -143,13 +142,6 @@ class CharacterCardTest {
 
     @Test
     void playChar1() {
-//        int color = -1;
-//        for (int i = 0; i < 5; i++) {
-//            if (game.getProfessor()[i] != null && p1.getWizard() == game.getProfessor()[i]) {
-//                color = i;
-//                break;
-//            }
-//        }
         try {
             game.setCurrentPlayer(p2);
             for (Color c : Color.values()) {
@@ -384,19 +376,8 @@ class CharacterCardTest {
         try {
             game.getIslands().get(4).moveAll(game.getIslands().get(1));
             Color color;
-//            for (int i = 0; i < 3; i++) {
-//                color = Color.values()[i];
-//                if (p1.getLunchHall().howManyStudents(color) <= p2.getLunchHall().howManyStudents(color)) {
-//                    int sum = p2.getLunchHall().howManyStudents(color) - p1.getLunchHall().howManyStudents(color) + 1;
-//                    game.getBag().moveStudents(color, (byte) sum, p1.getLunchHall());
-//                }
-//            }
             for (int i = 2; i < 5; i++) {
                 color = Color.values()[i];
-//                if (p2.getLunchHall().howManyStudents(color) <= p1.getLunchHall().howManyStudents(color)) {
-//                    int sum = p1.getLunchHall().howManyStudents(color) - p2.getLunchHall().howManyStudents(color) + 1;
-//                    game.getBag().moveStudents(color, (byte) sum, p2.getLunchHall());
-//                }
                 game.getBag().moveStudents(color, (byte) 5, p2.getLunchHall());
             }
             game.calculateProfessor();
@@ -434,19 +415,8 @@ class CharacterCardTest {
         try {
             game.getIslands().get(4).moveAll(game.getBag());
             Color color;
-//            for (int i = 0; i < 3; i++) {
-//                color = Color.values()[i];
-//                if (p1.getLunchHall().howManyStudents(color) <= p2.getLunchHall().howManyStudents(color)) {
-//                    int sum = p2.getLunchHall().howManyStudents(color) - p1.getLunchHall().howManyStudents(color) + 1;
-//                    game.getBag().moveStudents(color, (byte) sum, p1.getLunchHall());
-//                }
-//            }
             for (int i = 3; i < 5; i++) {
                 color = Color.values()[i];
-//                if (p2.getLunchHall().howManyStudents(color) <= p1.getLunchHall().howManyStudents(color)) {
-//                    int sum = p1.getLunchHall().howManyStudents(color) - p2.getLunchHall().howManyStudents(color) + 1;
-//                    game.getBag().moveStudents(color, (byte) sum, p2.getLunchHall());
-//                }
                 test.moveStudents(color, (byte) 4, p2.getLunchHall());
             }
             game.calculateProfessor();

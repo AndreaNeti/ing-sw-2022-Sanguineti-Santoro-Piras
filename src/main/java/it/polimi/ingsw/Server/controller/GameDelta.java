@@ -83,9 +83,6 @@ public class GameDelta implements Serializable {
         clear();
     }
 
-    public void addCharacterCard(byte index, byte id) {
-    }
-
     public void setUpdatedCoinPlayer(byte playerId, byte newCoinsPlayer) {
     }
 

@@ -13,13 +13,6 @@ public class IslandClient extends GameComponentClient {
         super(i);
     }
 
-    public IslandClient(IslandClient islandClient) {
-        super(islandClient.getId());
-        this.team = islandClient.team;
-        this.prohibition = islandClient.prohibition;
-        this.number = islandClient.number;
-    }
-
     public HouseColor getTeam() {
         return team;
     }

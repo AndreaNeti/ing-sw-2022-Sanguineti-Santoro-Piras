@@ -8,7 +8,7 @@ import it.polimi.ingsw.exceptions.serverExceptions.GameException;
 import it.polimi.ingsw.exceptions.serverExceptions.NotAllowedException;
 
 public class PlayCard implements ToServerMessage {
-    AssistantCard playedCard;
+    private final AssistantCard playedCard;
 
     public PlayCard(AssistantCard playedCard) {
         this.playedCard = playedCard;

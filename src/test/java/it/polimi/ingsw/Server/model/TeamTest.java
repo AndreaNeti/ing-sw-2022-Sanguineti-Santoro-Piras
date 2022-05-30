@@ -53,45 +53,6 @@ class TeamTest {
 
     }
 
-    /*
-        @Test
-        void removePlayer() {
-            try {
-                t.removePlayer(null);
-                t.removePlayer(p);
-            } catch (NotAllowedException e) {
-                fail();
-            }
-            assertTrue(t.getPlayers().isEmpty());
-
-            assertThrows(NotAllowedException.class, () -> t.removePlayer(p),
-                    "player not present");
-        }
-    @Test
-    void movePlayer() {
-        Team t1 = new Team(HouseColor.WHITE, (byte) 2, (byte) 6);
-        Player p1 = null;
-        try {
-            p1 = new Player("Gigi", t1, Wizard.ELECTROMAGE, 7);
-        } catch (GameException e) {
-            fail();
-        }
-
-        Player finalP = p1;
-        assertThrows(NotAllowedException.class, () -> t.movePlayer(finalP, t1),
-                "player not present");
-        try {
-            t.movePlayer(null, null);
-            t.movePlayer(p, t1);
-            assertTrue(t1.getPlayers().contains(p));
-            assertTrue(t.getPlayers().isEmpty());
-        } catch (NotAllowedException ex) {
-            fail();
-        }
-
-    }
-
-*/
     @Test
     void removeAndAddTowersTest() {
         try {

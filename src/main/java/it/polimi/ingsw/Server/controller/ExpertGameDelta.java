@@ -32,7 +32,6 @@ public class ExpertGameDelta extends GameDelta {
         usedCharacter = null;
     }
 
-    @Override
     public void addCharacterCard(byte index, byte id) {
         if (characters == null)
             characters = new ArrayList<>();
@@ -46,6 +45,7 @@ public class ExpertGameDelta extends GameDelta {
         updatedCoinPlayer.put(playerId, newCoinsLeft);
     }
 
+    @Override
     public void setUsedCharacter(byte charId, boolean used) {
         if (usedCharacter == null)
             usedCharacter = new HashMap<>();

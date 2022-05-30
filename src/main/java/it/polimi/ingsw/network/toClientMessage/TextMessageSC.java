@@ -3,7 +3,7 @@ package it.polimi.ingsw.network.toClientMessage;
 import it.polimi.ingsw.Client.Controller.ControllerClient;
 
 public class TextMessageSC implements ToClientMessage {
-    String message;
+    private final String message;
 
     public TextMessageSC(String message) {
         this.message = message;

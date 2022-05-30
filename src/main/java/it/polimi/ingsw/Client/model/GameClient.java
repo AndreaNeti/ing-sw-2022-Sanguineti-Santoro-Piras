@@ -17,8 +17,8 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class GameClient extends GameClientListened implements GameClientView {
-    public ArrayList<IslandClient> islands;
-    public ArrayList<GameComponentClient> clouds;
+    public final ArrayList<IslandClient> islands;
+    public final ArrayList<GameComponentClient> clouds;
     private final Wizard[] professors;
     private byte motherNaturePosition;
     private Byte currentPlayer;
@@ -232,7 +232,7 @@ public class GameClient extends GameClientListened implements GameClientView {
 
     public void setExtraSteps(boolean extraSteps) {
         this.extraSteps = extraSteps;
-        notifyExtaSteps(extraSteps);
+        notifyExtraSteps(extraSteps);
     }
 
     @Override

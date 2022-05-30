@@ -252,7 +252,7 @@ class ControllerTest {
         try {
             controllerExpert2.playCharacter();
         } catch (GameException | EndGameException e) {
-            // additional check if card selected is c0, c6 or c10 and it does not contain the selected color
+            // additional check if card selected is c0, c6 or c10, and it does not contain the selected color
             boolean worked = false;
             for (int i = 0; i < 5 && !worked; i++) {
                 for (int j = 0; j < 5 && !worked; j++) {

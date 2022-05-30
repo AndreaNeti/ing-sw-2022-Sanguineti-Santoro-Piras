@@ -32,11 +32,4 @@ public class Char4 implements CharacterCard {
         return nInput == 1;
     }
 
-//    @Override
-//    public boolean equals(Object o) {
-//        if (this == o) return true;
-//        if (!(o instanceof Char4)) return false;
-//        CharacterCard c = (CharacterCard) o;
-//        return getCharId() == c.getCharId();
-//    }
 }

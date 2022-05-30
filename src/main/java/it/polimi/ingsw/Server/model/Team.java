@@ -35,28 +35,10 @@ public class Team implements Serializable {
         members.add(p);
     }
 
-    /*
-        public void removePlayer(Player p) throws NotAllowedException {
-            if (p != null) {
-                if (!members.remove(p)) throw new NotAllowedException("Player not present");
-            } else
-                System.err.println("Player cannot be null");
-
-        }
-    */
     public HouseColor getHouseColor() {
         return houseColor;
     }
 
-    /*
-        public void movePlayer(Player p, Team t) throws NotAllowedException {
-            if (p != null && t != null && !t.isFull()) {
-                removePlayer(p);
-                t.addPlayer(p);
-            } else
-                System.err.println("Player and Team cannot be null");
-        }
-    */
     public boolean isFull() {
         return teamSize == members.size();
     }

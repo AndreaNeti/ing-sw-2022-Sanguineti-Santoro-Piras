@@ -14,7 +14,6 @@ import it.polimi.ingsw.exceptions.clientExceptions.RepeatCommandException;
 import it.polimi.ingsw.exceptions.clientExceptions.ScannerException;
 import it.polimi.ingsw.exceptions.clientExceptions.SkipCommandException;
 
-import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 public class ViewCli extends AbstractView implements ViewForCharacterCli {
@@ -28,7 +27,7 @@ public class ViewCli extends AbstractView implements ViewForCharacterCli {
         cliPrinter = new CliPrinter(this);
         controllerClient.addListener(cliPrinter);
         Thread scannerThread = new Thread(() -> {
-            final Scanner myInput = new Scanner(System.in, StandardCharsets.UTF_8);
+            final Scanner myInput = new Scanner(System.in);
             try {
                 while (!canQuit()) {
                     do {

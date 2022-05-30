@@ -1,7 +1,6 @@
 package it.polimi.ingsw.Client.model;
 
 import it.polimi.ingsw.Client.View.Cli.ViewForCharacterCli;
-import it.polimi.ingsw.exceptions.clientExceptions.RepeatCommandException;
 
 import java.util.List;
 
@@ -14,7 +13,7 @@ public class Char1Client implements CharacterCardClient {
     }
 
     @Override
-    public void setNextInput(ViewForCharacterCli view) throws RepeatCommandException {
+    public void setNextInput(ViewForCharacterCli view) {
 
     }
 

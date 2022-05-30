@@ -74,7 +74,7 @@ public abstract class GameClientListened {
         }
     }
 
-    public void notifyExtaSteps(boolean extraSteps) {
+    public void notifyExtraSteps(boolean extraSteps) {
         for (GameClientListener listener : listeners) {
             listener.updateExtraSteps(extraSteps);
         }

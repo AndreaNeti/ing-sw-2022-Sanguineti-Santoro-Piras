@@ -7,7 +7,7 @@ import it.polimi.ingsw.Enum.HouseColor;
 import java.util.List;
 
 public class EndGame implements ToClientMessage {
-    List<HouseColor> winners;
+    private final List<HouseColor> winners;
 
     public EndGame(List<HouseColor> winners) {
         this.winners = winners;
