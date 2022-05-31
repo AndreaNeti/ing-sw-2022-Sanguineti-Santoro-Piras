@@ -8,14 +8,8 @@ import it.polimi.ingsw.exceptions.clientExceptions.ScannerException;
 import java.awt.event.ActionEvent;
 
 public class QuitCommand extends GameCommand {
-
-    public QuitCommand(AbstractView view) {
-        super(view);
-    }
-
     @Override
-    public void playCLICommand() throws ScannerException {
-        ViewCli viewCli = (ViewCli) getView();
+    public void playCLICommand(ViewCli viewCli) throws ScannerException {
         boolean quit = false;
         boolean phaseChanged;
         do {
@@ -36,10 +30,5 @@ public class QuitCommand extends GameCommand {
     @Override
     public String toString() {
         return "Quit";
-    }
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-
     }
 }

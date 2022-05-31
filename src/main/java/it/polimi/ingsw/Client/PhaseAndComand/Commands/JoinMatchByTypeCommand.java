@@ -11,18 +11,8 @@ import java.awt.event.ActionEvent;
 
 public class JoinMatchByTypeCommand extends GameCommand {
 
-    public JoinMatchByTypeCommand(AbstractView view) {
-        super(view);
-    }
-
     @Override
-    public void actionPerformed(ActionEvent e) {
-
-    }
-
-    @Override
-    public void playCLICommand() throws ScannerException {
-        ViewCli viewCli = (ViewCli) getView();
+    public void playCLICommand(ViewCli viewCli) throws ScannerException {
         boolean phaseChanged;
         do {
             phaseChanged = false;

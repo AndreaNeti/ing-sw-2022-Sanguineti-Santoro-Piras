@@ -12,13 +12,9 @@ import java.awt.event.ActionEvent;
 import java.util.List;
 
 public class PlayCharacterCommand extends GameCommand {
-    public PlayCharacterCommand(AbstractView view) {
-        super(view);
-    }
 
     @Override
-    public void playCLICommand() throws ScannerException {
-        ViewCli viewCli = (ViewCli) super.getView();
+    public void playCLICommand(ViewCli viewCli) throws ScannerException {
         CharacterCardClient current = viewCli.getCurrentCharacterCard();
         if (current == null) {
             viewCli.addMessage("No card selected");
@@ -55,8 +51,4 @@ public class PlayCharacterCommand extends GameCommand {
         return "Play character";
     }
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-
-    }
 }

@@ -1,22 +1,20 @@
 package it.polimi.ingsw.Client.PhaseAndComand.Commands;
 
 import it.polimi.ingsw.Client.View.AbstractView;
+import it.polimi.ingsw.Client.View.Cli.ViewCli;
 
 import java.awt.event.ActionEvent;
 
 public class UndoCommands extends GameCommand {
-    public UndoCommands(AbstractView view) {
-        super(view);
-    }
 
     @Override
-    public void playCLICommand() {
-        if (getView().getCurrentCharacterCard() != null) {
-            getView().addMessage("Reset all input");
-            getView().getCurrentCharacterCard().resetInput();
-            getView().unsetCurrentCharacterCard();
+    public void playCLICommand(ViewCli viewCli) {
+        if (viewCli.getCurrentCharacterCard() != null) {
+            viewCli.addMessage("Reset all input");
+            viewCli.getCurrentCharacterCard().resetInput();
+            viewCli.unsetCurrentCharacterCard();
         }
-        getView().goToOldPhase();
+        viewCli.goToOldPhase();
     }
 
     @Override
@@ -24,8 +22,4 @@ public class UndoCommands extends GameCommand {
         return "Undo";
     }
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-
-    }
 }

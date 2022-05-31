@@ -1,8 +1,8 @@
 package it.polimi.ingsw.Client.View.Cli;
 
 import it.polimi.ingsw.Client.Controller.ControllerClient;
+import it.polimi.ingsw.Client.PhaseAndComand.Phases.ClientPhase;
 import it.polimi.ingsw.Client.View.AbstractView;
-import it.polimi.ingsw.Client.View.ClientPhaseView;
 import it.polimi.ingsw.Client.model.CharacterCardClient;
 import it.polimi.ingsw.Client.model.GameClientView;
 import it.polimi.ingsw.Client.model.GameComponentClient;
@@ -17,7 +17,7 @@ import it.polimi.ingsw.exceptions.clientExceptions.SkipCommandException;
 import java.util.*;
 
 public class ViewCli extends AbstractView implements ViewForCharacterCli {
-    private ClientPhaseView phaseToExecute;
+    private ClientPhase phaseToExecute;
     private volatile boolean isInputReady, phaseChanged, requestInput, forcedScannerSkip, mustReprint;
     private String input;
     private final CliPrinter cliPrinter;
@@ -47,7 +47,6 @@ public class ViewCli extends AbstractView implements ViewForCharacterCli {
             }
         });
         mustReprint = false;
-        phaseToExecute = null;
         isInputReady = false;
         phaseChanged = false;
         forcedScannerSkip = false;
@@ -69,10 +68,10 @@ public class ViewCli extends AbstractView implements ViewForCharacterCli {
 
     // called by server listener or app thread
     @Override
-    public synchronized void setPhaseInView(ClientPhaseView clientPhaseView, boolean forceScannerSkip) {
-        phaseToExecute = clientPhaseView;
+    public synchronized void setPhaseInView(ClientPhase clientPhase, boolean forceImmediateExecution) {
+        phaseToExecute = clientPhase;
         phaseChanged = true;
-        if (forceScannerSkip)
+        if (forceImmediateExecution)
             forcedScannerSkip = true;
         notifyAll();
     }
@@ -359,8 +358,8 @@ public class ViewCli extends AbstractView implements ViewForCharacterCli {
     }
 
     @Override
-    public void setQuit(boolean forceScannerSkip) {
-        super.setQuit(forceScannerSkip);
+    public void setQuit(boolean forceImmediateExecution) {
+        super.setQuit(forceImmediateExecution);
         // notifies scanner to wakeup and terminate
         notifyAll();
     }

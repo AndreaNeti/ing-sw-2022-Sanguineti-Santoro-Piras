@@ -23,6 +23,7 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.Socket;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -36,56 +37,15 @@ public class ControllerClient extends GameClientListened {
     private MatchType matchType;
     private MatchConstants matchConstants;
     private ArrayList<TeamClient> teamsClient;
-    private Map<CLICommands, GameCommand> commands;
-    private Map<GamePhase, ClientPhaseController> phases;
-    private GamePhase oldPhase, currentPhase;
     private Wizard myWizard;
     private ServerListener serverListener;
     private AbstractView abstractView;
     private boolean isInMatch;
-    private boolean alreadyAttachedExpert = false;
     private final LimitedChat<String> chat;
 
     public ControllerClient() {
         this.chat = new LimitedChat<>(15);
     }
-
-    public void instantiateAllPhases() {
-        phases = Map.ofEntries(entry(GamePhase.INIT_PHASE, new InitPhase()), entry(GamePhase.NICK_PHASE, new NicknamePhase()), entry(GamePhase.SELECT_MATCH_PHASE, new SelectMatchPhase()), entry(GamePhase.WAIT_PHASE, new WaitPhase()), entry(GamePhase.PLANIFICATION_PHASE, new PlanificationPhase()), entry(GamePhase.MOVE_ST_PHASE, new MoveStudentsPhase()), entry(GamePhase.MOVE_MN_PHASE, new MoveMotherNaturePhase()), entry(GamePhase.MOVE_CL_PHASE, new MoveCloudPhase()), entry(GamePhase.PLAY_CH_CARD_PHASE, new PlayCharacterCardPhase()));
-        currentPhase = GamePhase.INIT_PHASE;
-        attachCommandToPhase();
-        notifyClientPhase(phases.get(currentPhase), false);
-    }
-
-    private void instantiateCommands() {
-        commands = Map.ofEntries(entry(CLICommands.CONNECT_SERVER, new ConnectServerCommand(abstractView)), entry(CLICommands.SET_NICKNAME, new SetNicknameCommand(abstractView)), entry(CLICommands.CREATE_MATCH, new CreateMatchCommand(abstractView)), entry(CLICommands.JOIN_MATCH_BY_TYPE, new JoinMatchByTypeCommand(abstractView)), entry(CLICommands.JOIN_MATCH_BY_ID, new JoinMatchByIdCommand(abstractView)), entry(CLICommands.PLAY_CARD, new PlayCardCommand(abstractView)), entry(CLICommands.MOVE_STUDENT, new MoveStudentCommand(abstractView)), entry(CLICommands.MOVE_MOTHER_NATURE, new MoveMotherNatureCommand(abstractView)), entry(CLICommands.MOVE_FROM_CLOUD, new MoveFromCloudCommand(abstractView)), entry(CLICommands.TEXT_MESSAGE, new TextCommand(abstractView)), entry(CLICommands.CHOOSE_CHARACTER, new ChooseCharacterCommand(abstractView)), entry(CLICommands.SET_CHARACTER_INPUT, new SetCharacterInputCommand(abstractView)), entry(CLICommands.PLAY_CHARACTER, new PlayCharacterCommand(abstractView)), entry(CLICommands.UNDO, new UndoCommands(abstractView)), entry(CLICommands.QUIT, new QuitCommand(abstractView)));
-    }
-
-    private void attachCommandToPhase() {
-        commands.get(CLICommands.CONNECT_SERVER).attachToAPhase(List.of(phases.get(GamePhase.INIT_PHASE)));
-        commands.get(CLICommands.SET_NICKNAME).attachToAPhase(List.of(phases.get(GamePhase.NICK_PHASE)));
-        commands.get(CLICommands.CREATE_MATCH).attachToAPhase(List.of(phases.get(GamePhase.SELECT_MATCH_PHASE)));
-        commands.get(CLICommands.JOIN_MATCH_BY_TYPE).attachToAPhase(List.of(phases.get(GamePhase.SELECT_MATCH_PHASE)));
-        commands.get(CLICommands.JOIN_MATCH_BY_ID).attachToAPhase(List.of(phases.get(GamePhase.SELECT_MATCH_PHASE)));
-        commands.get(CLICommands.PLAY_CARD).attachToAPhase(List.of(phases.get(GamePhase.PLANIFICATION_PHASE)));
-        commands.get(CLICommands.MOVE_STUDENT).attachToAPhase(List.of(phases.get(GamePhase.MOVE_ST_PHASE)));
-        commands.get(CLICommands.MOVE_MOTHER_NATURE).attachToAPhase(List.of(phases.get(GamePhase.MOVE_MN_PHASE)));
-        commands.get(CLICommands.MOVE_FROM_CLOUD).attachToAPhase(List.of(phases.get(GamePhase.MOVE_CL_PHASE)));
-        commands.get(CLICommands.TEXT_MESSAGE).attachToAPhase(List.of(phases.get(GamePhase.WAIT_PHASE), phases.get(GamePhase.PLANIFICATION_PHASE), phases.get(GamePhase.MOVE_ST_PHASE), phases.get(GamePhase.MOVE_MN_PHASE), phases.get(GamePhase.MOVE_CL_PHASE)));
-        commands.get(CLICommands.QUIT).attachToAPhase(new ArrayList<>(phases.values()));
-    }
-
-    private void attachExpertCommand() {
-        //this is needed, so it doesn't attach commands multiple times
-        if (!alreadyAttachedExpert) {
-            commands.get(CLICommands.CHOOSE_CHARACTER).attachToAPhase(Arrays.asList(phases.get(GamePhase.MOVE_ST_PHASE), phases.get(GamePhase.MOVE_CL_PHASE), phases.get(GamePhase.MOVE_MN_PHASE)));
-            commands.get(CLICommands.SET_CHARACTER_INPUT).attachToAPhase(List.of(phases.get(GamePhase.PLAY_CH_CARD_PHASE)));
-            commands.get(CLICommands.PLAY_CHARACTER).attachToAPhase(List.of(phases.get(GamePhase.PLAY_CH_CARD_PHASE)));
-            commands.get(CLICommands.UNDO).attachToAPhase(List.of(phases.get(GamePhase.PLAY_CH_CARD_PHASE)));
-            alreadyAttachedExpert = true;
-        }
-    }
-
 
     public boolean connect(byte[] ipAddress) {
         Socket socket;
@@ -101,16 +61,8 @@ public class ControllerClient extends GameClientListened {
         return true;
     }
 
-    //this is called when is received an ack, it set the next phase in order
-    public void setNextClientPhase() {
-        GamePhase newPhase = GamePhase.values()[currentPhase.ordinal() + 1];
-        notifyClientPhase(phases.get(newPhase), false);
-        currentPhase = newPhase;
-        oldPhase = currentPhase;
-    }
-
     public void addMessage(String message) {
-        chat.add(message);
+        chat.add(new String(message.getBytes(StandardCharsets.UTF_8), StandardCharsets.UTF_8));
         notifyView();
     }
 
@@ -118,34 +70,27 @@ public class ControllerClient extends GameClientListened {
         return new ArrayList<>(chat);
     }
 
-    public void repeatPhase(boolean forceScannerSkip) {
-        notifyClientPhase(phases.get(currentPhase), forceScannerSkip);
+    //this is called when is received an ack, it set the next phase in order
+    public void setNextClientPhase() {
+        abstractView.setNextClientPhase();
     }
 
-    public synchronized void changePhase(GamePhase newGamePhase, boolean setOldPhase, boolean forceScannerSkip) {
-        currentPhase = newGamePhase;
-        if (setOldPhase)
-            oldPhase = currentPhase;
-        notifyClientPhase(phases.get(currentPhase), forceScannerSkip);
+    public synchronized void changePhase(GamePhase newGamePhase, boolean setOldPhase, boolean forceImmediateExecution) {
+        abstractView.setPhaseInView(newGamePhase, setOldPhase, forceImmediateExecution);
     }
 
-    public synchronized void goToOldPhase() {
-        notifyClientPhase(phases.get(oldPhase), false);
-    }
-
-    public void changePhase(GamePhase gamePhase, Byte currentPlayer, boolean forceScannerSkip) {
+    public void changePhase(GamePhase gamePhase, Byte currentPlayer, boolean forceImmediateExecution) {
         // se arriva il messaggio e se stesso è il current player si imposta fase del messaggio
         // currentPlayer!=se stesso-> wait Phase
         // this.gamePhase = gamePhase;
         if (currentPlayer == null) return;
         model.setCurrentPlayer(currentPlayer);
         if (model.getCurrentPlayer().getWizard() != myWizard) {
-            changePhase(GamePhase.WAIT_PHASE, true, forceScannerSkip);
+            changePhase(GamePhase.WAIT_PHASE, true, forceImmediateExecution);
         } else {
-            changePhase(gamePhase, true, forceScannerSkip);
+            changePhase(gamePhase, true, forceImmediateExecution);
         }
     }
-
 
     public void sendMessage(ToServerMessage command) {
         if (serverSender == null) error();
@@ -154,11 +99,7 @@ public class ControllerClient extends GameClientListened {
 
     public void error() {
         unsetCurrentCharacterCard();
-        goToOldPhase();
-    }
-
-    public void ok() {
-//        notifyOk();
+        abstractView.goToOldPhase();
     }
 
     public void changeGame(GameDelta gameDelta) {
@@ -216,21 +157,18 @@ public class ControllerClient extends GameClientListened {
 
     private void startGame() {
         model = new GameClient(teamsClient, myWizard, matchType);
-        if (matchType.isExpert()) {
-            attachExpertCommand();
-        }
         model.addListener(this);
         abstractView.setModel(model);
     }
 
     // returns true if the client process has to quit
-    public synchronized boolean setQuit(boolean forceScannerSkip) {
+    public synchronized boolean setQuit(boolean forceImmediateExecution) {
         if (isInMatch) {
             sendMessage(new Quit());
             unsetModel();
-            changePhase(GamePhase.SELECT_MATCH_PHASE, true, forceScannerSkip);
+            changePhase(GamePhase.SELECT_MATCH_PHASE, true, forceImmediateExecution);
             return false;
-        } else if (currentPhase != GamePhase.INIT_PHASE) {
+        } else if (abstractView.getCurrentPhase() != GamePhase.INIT_PHASE) {
             chat.clear();
             sendMessage(new Quit());
             closeConnection();
@@ -251,14 +189,9 @@ public class ControllerClient extends GameClientListened {
         abstractView.setModel(null);
     }
 
-    public void notifyClientPhase(ClientPhaseController clientPhaseController, boolean forceScannerSkip) {
-        // notifyView();
-        clientPhaseController.setPhaseInView(abstractView, forceScannerSkip);
-    }
 
     public void attachView(AbstractView view) {
         this.abstractView = view;
-        instantiateCommands();
     }
 
     public void setCurrentCharacterCard(int currentCharacterCardIndex) {

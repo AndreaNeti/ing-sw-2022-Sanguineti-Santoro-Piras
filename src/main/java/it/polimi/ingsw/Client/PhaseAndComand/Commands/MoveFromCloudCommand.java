@@ -9,13 +9,9 @@ import it.polimi.ingsw.network.toServerMessage.MoveFromCloud;
 import java.awt.event.ActionEvent;
 
 public class MoveFromCloudCommand extends GameCommand {
-    public MoveFromCloudCommand(AbstractView view) {
-        super(view);
-    }
 
     @Override
-    public void playCLICommand() throws ScannerException {
-        ViewCli viewCli = (ViewCli) getView();
+    public void playCLICommand(ViewCli viewCli) throws ScannerException {
         boolean phaseChanged;
         do {
             phaseChanged = false;
@@ -33,8 +29,4 @@ public class MoveFromCloudCommand extends GameCommand {
         return "Move from cloud";
     }
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-
-    }
 }

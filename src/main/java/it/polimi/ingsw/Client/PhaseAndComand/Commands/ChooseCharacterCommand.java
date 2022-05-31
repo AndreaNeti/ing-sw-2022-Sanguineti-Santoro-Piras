@@ -12,13 +12,8 @@ import java.awt.event.ActionEvent;
 import java.util.List;
 
 public class ChooseCharacterCommand extends GameCommand {
-    public ChooseCharacterCommand(AbstractView view) {
-        super(view);
-    }
-
     @Override
-    public void playCLICommand() throws ScannerException {
-        ViewCli viewCli = (ViewCli) getView();
+    public void playCLICommand(ViewCli viewCli) throws ScannerException {
         List<CharacterCardClient> characters = viewCli.getModel().getCharacters();
         int index = 0;
         boolean phaseChanged = false;
@@ -26,7 +21,7 @@ public class ChooseCharacterCommand extends GameCommand {
             try {
                 index = viewCli.getCharacterCharToPlayInput();
             } catch (RepeatCommandException e) {
-                phaseChanged=true;
+                phaseChanged = true;
             }
         } while (phaseChanged);
         viewCli.setCurrentCharacterCard(index);
@@ -39,8 +34,4 @@ public class ChooseCharacterCommand extends GameCommand {
         return "Choose a character card";
     }
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-
-    }
 }

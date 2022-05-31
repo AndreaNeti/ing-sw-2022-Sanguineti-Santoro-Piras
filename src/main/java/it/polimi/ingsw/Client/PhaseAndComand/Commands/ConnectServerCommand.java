@@ -9,23 +9,14 @@ import java.awt.event.ActionEvent;
 
 public class ConnectServerCommand extends GameCommand {
 
-    public ConnectServerCommand(AbstractView view) {
-        super(view);
-    }
-
     @Override
-    public void actionPerformed(ActionEvent e) {
+    public void playCLICommand(ViewCli viewCli) throws ScannerException {
 
-    }
-
-    @Override
-    public void playCLICommand() throws ScannerException {
-        ViewCli viewCli = (ViewCli) getView();
         boolean phaseChanged = false;
-        boolean connected=false;
+        boolean connected = false;
         do {
             try {
-                connected=viewCli.connectToServer(viewCli.getIpAddressInput(false));
+                connected = viewCli.connectToServer(viewCli.getIpAddressInput(false));
             } catch (RepeatCommandException e) {
                 phaseChanged = true;
             }

@@ -1,21 +1,100 @@
 package it.polimi.ingsw.Client.View;
 
 import it.polimi.ingsw.Client.Controller.ControllerClient;
+import it.polimi.ingsw.Client.PhaseAndComand.Commands.*;
+import it.polimi.ingsw.Client.PhaseAndComand.Phases.*;
 import it.polimi.ingsw.Client.model.CharacterCardClient;
 import it.polimi.ingsw.Client.model.GameClientView;
+import it.polimi.ingsw.Enum.CLICommands;
 import it.polimi.ingsw.Enum.GamePhase;
 import it.polimi.ingsw.network.toServerMessage.ToServerMessage;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+
+import static java.util.Map.entry;
 
 public abstract class AbstractView {
     private final ControllerClient controllerClient;
     private GameClientView model;
     private volatile boolean quit;
 
+    private boolean alreadyAttachedExpert = false;
+    private Map<GamePhase, ClientPhase> phases;
+    private GamePhase oldPhase, currentPhase;
+    private Map<CLICommands, GameCommand> commands;
+
     public AbstractView(ControllerClient controllerClient) {
+        instantiateAllPhases();
+        instantiateCommands();
+        attachCommandToPhase();
+        setPhaseInView(GamePhase.INIT_PHASE, true, false);
         this.controllerClient = controllerClient;
         quit = false;
+    }
+
+    private void instantiateAllPhases() {
+        phases = Map.ofEntries(entry(GamePhase.INIT_PHASE, new InitPhase()), entry(GamePhase.NICK_PHASE, new NicknamePhase()), entry(GamePhase.SELECT_MATCH_PHASE, new SelectMatchPhase()), entry(GamePhase.WAIT_PHASE, new WaitPhase()), entry(GamePhase.PLANIFICATION_PHASE, new PlanificationPhase()), entry(GamePhase.MOVE_ST_PHASE, new MoveStudentsPhase()), entry(GamePhase.MOVE_MN_PHASE, new MoveMotherNaturePhase()), entry(GamePhase.MOVE_CL_PHASE, new MoveCloudPhase()), entry(GamePhase.PLAY_CH_CARD_PHASE, new PlayCharacterCardPhase()));
+    }
+
+    private void instantiateCommands() {
+        commands = Map.ofEntries(entry(CLICommands.CONNECT_SERVER, new ConnectServerCommand()), entry(CLICommands.SET_NICKNAME, new SetNicknameCommand()), entry(CLICommands.CREATE_MATCH, new CreateMatchCommand()), entry(CLICommands.JOIN_MATCH_BY_TYPE, new JoinMatchByTypeCommand()), entry(CLICommands.JOIN_MATCH_BY_ID, new JoinMatchByIdCommand()), entry(CLICommands.PLAY_CARD, new PlayCardCommand()), entry(CLICommands.MOVE_STUDENT, new MoveStudentCommand()), entry(CLICommands.MOVE_MOTHER_NATURE, new MoveMotherNatureCommand()), entry(CLICommands.MOVE_FROM_CLOUD, new MoveFromCloudCommand()), entry(CLICommands.TEXT_MESSAGE, new TextCommand()), entry(CLICommands.CHOOSE_CHARACTER, new ChooseCharacterCommand()), entry(CLICommands.SET_CHARACTER_INPUT, new SetCharacterInputCommand()), entry(CLICommands.PLAY_CHARACTER, new PlayCharacterCommand()), entry(CLICommands.UNDO, new UndoCommands()), entry(CLICommands.QUIT, new QuitCommand()));
+    }
+
+    private void attachCommandToPhase() {
+        commands.get(CLICommands.CONNECT_SERVER).attachToAPhase(List.of(phases.get(GamePhase.INIT_PHASE)));
+        commands.get(CLICommands.SET_NICKNAME).attachToAPhase(List.of(phases.get(GamePhase.NICK_PHASE)));
+        commands.get(CLICommands.CREATE_MATCH).attachToAPhase(List.of(phases.get(GamePhase.SELECT_MATCH_PHASE)));
+        commands.get(CLICommands.JOIN_MATCH_BY_TYPE).attachToAPhase(List.of(phases.get(GamePhase.SELECT_MATCH_PHASE)));
+        commands.get(CLICommands.JOIN_MATCH_BY_ID).attachToAPhase(List.of(phases.get(GamePhase.SELECT_MATCH_PHASE)));
+        commands.get(CLICommands.PLAY_CARD).attachToAPhase(List.of(phases.get(GamePhase.PLANIFICATION_PHASE)));
+        commands.get(CLICommands.MOVE_STUDENT).attachToAPhase(List.of(phases.get(GamePhase.MOVE_ST_PHASE)));
+        commands.get(CLICommands.MOVE_MOTHER_NATURE).attachToAPhase(List.of(phases.get(GamePhase.MOVE_MN_PHASE)));
+        commands.get(CLICommands.MOVE_FROM_CLOUD).attachToAPhase(List.of(phases.get(GamePhase.MOVE_CL_PHASE)));
+        commands.get(CLICommands.TEXT_MESSAGE).attachToAPhase(List.of(phases.get(GamePhase.WAIT_PHASE), phases.get(GamePhase.PLANIFICATION_PHASE), phases.get(GamePhase.MOVE_ST_PHASE), phases.get(GamePhase.MOVE_MN_PHASE), phases.get(GamePhase.MOVE_CL_PHASE)));
+        commands.get(CLICommands.QUIT).attachToAPhase(new ArrayList<>(phases.values()));
+    }
+
+    private void attachExpertCommand() {
+        //this is needed, so it doesn't attach commands multiple times
+        if (!alreadyAttachedExpert) {
+            commands.get(CLICommands.CHOOSE_CHARACTER).attachToAPhase(Arrays.asList(phases.get(GamePhase.MOVE_ST_PHASE), phases.get(GamePhase.MOVE_CL_PHASE), phases.get(GamePhase.MOVE_MN_PHASE)));
+            commands.get(CLICommands.SET_CHARACTER_INPUT).attachToAPhase(List.of(phases.get(GamePhase.PLAY_CH_CARD_PHASE)));
+            commands.get(CLICommands.PLAY_CHARACTER).attachToAPhase(List.of(phases.get(GamePhase.PLAY_CH_CARD_PHASE)));
+            commands.get(CLICommands.UNDO).attachToAPhase(List.of(phases.get(GamePhase.PLAY_CH_CARD_PHASE)));
+            alreadyAttachedExpert = true;
+        }
+    }
+
+    public void repeatPhase(boolean forceImmediateExecution) {
+        setPhaseInView(phases.get(currentPhase), forceImmediateExecution);
+    }
+
+    public void goToOldPhase() {
+        setPhaseInView(phases.get(oldPhase), false);
+    }
+
+    public GamePhase getCurrentPhase() {
+        return currentPhase;
+    }
+
+    public void setNextClientPhase() {
+        GamePhase newPhase = GamePhase.values()[currentPhase.ordinal() + 1];
+        currentPhase = newPhase;
+        oldPhase = currentPhase;
+        setPhaseInView(phases.get(newPhase), false);
+    }
+
+    public abstract void setPhaseInView(ClientPhase clientPhase, boolean forceImmediateExecution);
+
+    public void setPhaseInView(GamePhase gamePhase, boolean setOldPhase, boolean forceImmediateExecution) {
+        currentPhase = gamePhase;
+        if (setOldPhase)
+            oldPhase = currentPhase;
+        setPhaseInView(phases.get(gamePhase), forceImmediateExecution);
+
     }
 
     public GameClientView getModel() {
@@ -28,24 +107,12 @@ public abstract class AbstractView {
 
     public void setModel(GameClientView model) {
         this.model = model;
+        if (model != null && model.isExpert())
+            attachExpertCommand();
     }
 
     public void sendToServer(ToServerMessage toServerMessage) {
         controllerClient.sendMessage(toServerMessage);
-    }
-
-    public abstract void setPhaseInView(ClientPhaseView clientPhaseView, boolean forceScannerSkip);
-
-    public void setPhaseInView(GamePhase gamePhase, boolean setOldPhase, boolean forceScannerSkip) {
-        controllerClient.changePhase(gamePhase, setOldPhase, forceScannerSkip);
-    }
-
-    public void repeatPhase(boolean forceScannerSkip) {
-        controllerClient.repeatPhase(forceScannerSkip);
-    }
-
-    public void goToOldPhase() {
-        controllerClient.goToOldPhase();
     }
 
     public boolean connectToServer(byte[] ipAddress) {
@@ -54,9 +121,9 @@ public abstract class AbstractView {
 
     public abstract void start() throws InterruptedException;
 
-    public void setQuit(boolean forceScannerSkip) {
+    public void setQuit(boolean forceImmediateExecution) {
         // true quits all, only if called during init phase
-        quit = controllerClient.setQuit(forceScannerSkip);
+        quit = controllerClient.setQuit(forceImmediateExecution);
     }
 
     public boolean canQuit() {

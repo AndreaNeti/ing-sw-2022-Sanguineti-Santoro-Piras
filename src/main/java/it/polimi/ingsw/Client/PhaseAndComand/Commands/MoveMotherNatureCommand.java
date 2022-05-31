@@ -10,13 +10,9 @@ import java.awt.event.ActionEvent;
 
 public class MoveMotherNatureCommand extends GameCommand {
 
-    public MoveMotherNatureCommand(AbstractView view) {
-        super(view);
-    }
 
     @Override
-    public void playCLICommand() throws ScannerException {
-        ViewCli viewCli = (ViewCli) getView();
+    public void playCLICommand(ViewCli viewCli) throws ScannerException {
         boolean phaseChanged;
         do {
             phaseChanged = false;
@@ -34,8 +30,4 @@ public class MoveMotherNatureCommand extends GameCommand {
         return "Move mother nature";
     }
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-
-    }
 }

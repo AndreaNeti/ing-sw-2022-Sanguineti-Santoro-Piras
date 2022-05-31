@@ -9,13 +9,9 @@ import it.polimi.ingsw.exceptions.clientExceptions.ScannerException;
 import java.awt.event.ActionEvent;
 
 public class SetCharacterInputCommand extends GameCommand {
-    public SetCharacterInputCommand(AbstractView view) {
-        super(view);
-    }
 
     @Override
-    public void playCLICommand() throws ScannerException {
-        ViewCli viewCli = (ViewCli) getView();
+    public void playCLICommand(ViewCli viewCli) throws ScannerException {
         CharacterCardClient current = viewCli.getCurrentCharacterCard();
         if (current.isFull())
             viewCli.addMessage("Can't add more inputs to this character");
@@ -40,8 +36,4 @@ public class SetCharacterInputCommand extends GameCommand {
         return "Set the input for the character";
     }
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-
-    }
 }

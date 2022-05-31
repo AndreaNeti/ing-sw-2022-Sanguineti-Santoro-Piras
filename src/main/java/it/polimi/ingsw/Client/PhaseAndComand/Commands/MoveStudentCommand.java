@@ -10,13 +10,8 @@ import it.polimi.ingsw.network.toServerMessage.MoveStudent;
 import java.awt.event.ActionEvent;
 
 public class MoveStudentCommand extends GameCommand {
-    public MoveStudentCommand(AbstractView view) {
-        super(view);
-    }
-
     @Override
-    public void playCLICommand() throws ScannerException {
-        ViewCli viewCli = (ViewCli) getView();
+    public void playCLICommand(ViewCli viewCli) throws ScannerException {
         Color color = null;
         Integer destination = null;
         boolean phaseChanged;
@@ -46,8 +41,4 @@ public class MoveStudentCommand extends GameCommand {
         return "Move student";
     }
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-
-    }
 }

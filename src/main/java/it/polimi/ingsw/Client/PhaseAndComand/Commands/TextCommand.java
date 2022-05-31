@@ -9,13 +9,9 @@ import it.polimi.ingsw.network.toServerMessage.TextMessageCS;
 import java.awt.event.ActionEvent;
 
 public class TextCommand extends GameCommand {
-    public TextCommand(AbstractView view) {
-        super(view);
-    }
 
     @Override
-    public void playCLICommand() throws ScannerException {
-        ViewCli viewCli = (ViewCli) getView();
+    public void playCLICommand(ViewCli viewCli) throws ScannerException {
         String comment = null;
         boolean phaseChanged;
         do {
@@ -36,8 +32,4 @@ public class TextCommand extends GameCommand {
         return "Send message";
     }
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-
-    }
 }

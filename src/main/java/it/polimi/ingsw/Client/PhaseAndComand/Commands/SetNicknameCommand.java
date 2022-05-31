@@ -10,18 +10,8 @@ import java.awt.event.ActionEvent;
 
 public class SetNicknameCommand extends GameCommand {
 
-    public SetNicknameCommand(AbstractView view) {
-        super(view);
-    }
-
     @Override
-    public void actionPerformed(ActionEvent e) {
-
-    }
-
-    @Override
-    public void playCLICommand() throws ScannerException {
-        ViewCli viewCli = (ViewCli) getView();
+    public void playCLICommand(ViewCli viewCli) throws ScannerException {
         String nick = null;
         boolean phaseChanged;
         do {

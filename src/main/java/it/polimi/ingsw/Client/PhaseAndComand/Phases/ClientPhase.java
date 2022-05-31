@@ -1,17 +1,16 @@
 package it.polimi.ingsw.Client.PhaseAndComand.Phases;
 
-import it.polimi.ingsw.Client.Controller.ClientPhaseController;
 import it.polimi.ingsw.Client.PhaseAndComand.Commands.GameCommand;
-import it.polimi.ingsw.Client.View.AbstractView;
 import it.polimi.ingsw.Client.View.Cli.ViewCli;
-import it.polimi.ingsw.Client.View.ClientPhaseView;
+import it.polimi.ingsw.Client.View.Gui.SceneController.SceneController;
+import it.polimi.ingsw.Client.View.Gui.ViewGUI;
 import it.polimi.ingsw.exceptions.clientExceptions.RepeatCommandException;
 import it.polimi.ingsw.exceptions.clientExceptions.ScannerException;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class ClientPhase implements ClientPhaseView, ClientPhaseController {
+public abstract class ClientPhase {
 
     private final List<GameCommand> gameCommands;
 
@@ -19,7 +18,6 @@ public abstract class ClientPhase implements ClientPhaseView, ClientPhaseControl
         this.gameCommands = new ArrayList<>();
     }
 
-    @Override
     public void playPhase(ViewCli viewCli) {
         Integer index = null;
         try {
@@ -34,22 +32,13 @@ public abstract class ClientPhase implements ClientPhaseView, ClientPhaseControl
                     phaseChanged = true;
                 }
             } while (phaseChanged);
-            gameCommands.get(index).playCLICommand();
+            gameCommands.get(index).playCLICommand(viewCli);
         } catch (ScannerException ignored) {
             // skipped input
         }
     }
 
-    @Override
-    public List<GameCommand> getGameCommands() {
-        return gameCommands;
-    }
-
-    @Override
-    public void setPhaseInView(AbstractView view, boolean forceScannerSkip) {
-        view.setPhaseInView(this, forceScannerSkip);
-
-    }
+    public abstract void playPhase(ViewGUI viewGUI, SceneController sceneController);
 
     public void addCommand(GameCommand command) {
         gameCommands.add(command);
