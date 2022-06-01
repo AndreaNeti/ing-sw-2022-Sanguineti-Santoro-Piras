@@ -262,29 +262,26 @@ public class ExpertGameTest {
         try {
             gameWith2.playCharacter();
         } catch (GameException | EndGameException e) {
-            // additional check if card selected is c0, c6 or c10, and it does not contain the selected color
+            // Bruteforces char inputs until it finds something working
             boolean worked = false;
-            for (int i = 0; i < 5 && !worked; i++) {
+            for (int i = 0; i <= 2 * MatchType.MAX_PLAYERS && !worked; i = ((i != Color.values().length) ? i + 1 : 2 * MatchType.MAX_PLAYERS)) {
                 try {
                     gameWith2.setCharacterInputs(List.of(i));
                     gameWith2.playCharacter();
                     worked = true;
                 } catch (GameException | EndGameException e1) {
-                    for (int j = 0; j < 5 && !worked; j++) {
+                    for (int j = 0; j <= 2 * MatchType.MAX_PLAYERS && !worked; j = ((j != Color.values().length) ? j + 1 : 2 * MatchType.MAX_PLAYERS)) {
                         try {
                             gameWith2.setCharacterInputs(Arrays.asList(j, i));
                             gameWith2.playCharacter();
                             worked = true;
                         } catch (GameException | EndGameException ignored) {
                         }
-
                     }
                 }
-
             }
             if (!worked)
-
-                fail();
+                fail(gameWith2.transformAllGameInDelta().getCharacters().toString());
         }
 
         assertThrows(NotAllowedException.class, () -> gameWith2.playCharacter(), "Cannot play character card");

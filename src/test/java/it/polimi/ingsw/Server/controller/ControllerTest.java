@@ -200,7 +200,7 @@ class ControllerTest {
                     for (Color c : Color.values()) {
                         for (int j = 0; j < 3 && moved != 3; j++) {
                             try {
-                                controllerExpert2.move(c, 6);
+                                controllerExpert2.move(c, 2 * MatchType.MAX_PLAYERS);
                                 moved++;
                             } catch (GameException | EndGameException ignored) {
                             }
@@ -211,8 +211,11 @@ class ControllerTest {
 
                 try {
                     controllerExpert2.moveMotherNature((i + 1) / 2);
-                } catch (GameException | EndGameException e) {
+                } catch (GameException e) {
                     fail(e.getMessage());
+                } catch (EndGameException e) {
+                    assertTrue(e.isEndInstantly());
+                    return;
                 }
                 try {
                     controllerExpert2.moveFromCloud(-1 - k % 2);
@@ -253,10 +256,10 @@ class ControllerTest {
         try {
             controllerExpert2.playCharacter();
         } catch (GameException | EndGameException e) {
-            // additional check if card selected is c0, c6 or c10, and it does not contain the selected color
+            // Bruteforces char inputs until it finds something working
             boolean worked = false;
-            for (int i = 0; i < 5 && !worked; i++) {
-                for (int j = 0; j < 5 && !worked; j++) {
+            for (int i = 0; i <= 2 * MatchType.MAX_PLAYERS && !worked; i = ((i != Color.values().length) ? i + 1 : 2 * MatchType.MAX_PLAYERS)) {
+                for (int j = 0; j <= 2 * MatchType.MAX_PLAYERS && !worked; j = ((j != Color.values().length) ? j + 1 : 2 * MatchType.MAX_PLAYERS)) {
                     try {
                         controllerExpert2.setCharacterInputs(List.of(i));
                         controllerExpert2.playCharacter();

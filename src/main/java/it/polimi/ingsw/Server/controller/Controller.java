@@ -70,12 +70,10 @@ public class Controller {
 
     public synchronized void move(Color color, int idGameComponent) throws GameException, NullPointerException, EndGameException {
         if (gamePhase == GamePhase.MOVE_ST_PHASE) {
-            if (idGameComponent <= 0 || idGameComponent >= 2 * matchType.nPlayers() + 12)
+            // not your lunchHall neither an island
+            if (idGameComponent != (currentPlayerIndex * 2 + 1) && (idGameComponent < 2 * MatchType.MAX_PLAYERS || idGameComponent >= 2 * MatchType.MAX_PLAYERS + 12))
                 throw new NotAllowedException("Can't move to the selected GameComponent");
 
-            if (idGameComponent < 2 * matchType.nPlayers() && idGameComponent != (currentPlayerIndex * 2 + 1))
-                throw new NotAllowedException("Can't move to the selected GameComponent");
-            //currentPlayerIndex*2 is the id of the entranceHall
             game.move(color, (currentPlayerIndex * 2), idGameComponent);
             // do not increment counter if exception thrown
             movesCounter++;

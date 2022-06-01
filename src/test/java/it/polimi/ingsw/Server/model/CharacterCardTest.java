@@ -109,7 +109,7 @@ class CharacterCardTest {
     @Test
     void playChar0() {
         int color = 0;
-        int islandId = 4;
+        int islandId = 2 * MatchType.MAX_PLAYERS; // first island id
         try {
             game.chooseCharacter(charToSelect);
             game.setCharacterInputs(Arrays.asList(-5, -1));
@@ -195,7 +195,7 @@ class CharacterCardTest {
         try {
             game.chooseCharacter(charToSelect);
             game.getBag().moveStudents(Color.values()[color], (byte) 5, game.getIslands().get(0));
-            game.setCharacterInputs(List.of(4));
+            game.setCharacterInputs(List.of(2 * MatchType.MAX_PLAYERS));
         } catch (GameException e) {
             fail();
         }
@@ -246,8 +246,8 @@ class CharacterCardTest {
             game.getIslands().get(2).moveAll(game.getBag());
             game.getBag().moveStudents(Color.RED, (byte) 2, game.getIslands().get(2));
             game.chooseCharacter(charToSelect);
-            //id of island 2 is 6
-            game.setCharacterInputs(List.of(6));
+            //id of island 2 is 2*maxPlayers + 2
+            game.setCharacterInputs(List.of(2 * MatchType.MAX_PLAYERS + 2));
         } catch (GameException e) {
             fail();
         }

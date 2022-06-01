@@ -126,7 +126,7 @@ public class NormalGameTest {
         int[] color = {0, 0, 0, 0, 0};
         int j = 0;
         for (Island i : gameWith2.getIslands()) {
-            assertEquals(i.getId(), j + 4);
+            assertEquals(i.getId(), j + (2 * MatchType.MAX_PLAYERS));
             int index = gameWith2.getIslands().indexOf(i);
             if (index == gameWith2.getMotherNaturePosition() || index == (gameWith2.getMotherNaturePosition() + 6) % 12) {
                 assertEquals(i.howManyStudents(), 0);
@@ -285,12 +285,13 @@ public class NormalGameTest {
     void moveTest() {
         assertThrows(NotAllowedException.class, () -> gameWith2.move(Color.RED, -5, -6), "" + "Wrong Index should catch an error");
         //move from entrance to island with index 2
+        int islandId = 2 * MatchType.MAX_PLAYERS + 1;// island with index 2 at the beginning
         for (Color c : Color.values()) {
             if (gameWith2.getCurrentPlayer().getEntranceHall().howManyStudents(c) > 0) {
                 byte studentsBefore = 0;
                 try {
-                    studentsBefore = gameWith2.getComponentById(5).howManyStudents(c);
-                    gameWith2.move(c, 0, 5);
+                    studentsBefore = gameWith2.getComponentById(islandId).howManyStudents(c);
+                    gameWith2.move(c, 0, islandId);
                 } catch (GameException e) {
                     fail();
                 }

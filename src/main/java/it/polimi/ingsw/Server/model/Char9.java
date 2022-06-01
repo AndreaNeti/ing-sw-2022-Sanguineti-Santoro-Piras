@@ -22,7 +22,7 @@ public class Char9 implements CharacterCard {
             if (lunchHallColor < 0 || lunchHallColor >= Color.values().length) {
                 throw new NotAllowedException("Set wrong input " + i + " for lunchHallColor");
             }
-            if (entranceHallColor < 0 || entranceHallColor > Color.values().length) {
+            if (entranceHallColor < 0 || entranceHallColor >= Color.values().length) {
                 throw new NotAllowedException("Set wrong input " + i + " for entranceHallColor");
             }
             if (game.getCurrentPlayer().getEntranceHall().howManyStudents(Color.values()[entranceHallColor]) == 0 ||

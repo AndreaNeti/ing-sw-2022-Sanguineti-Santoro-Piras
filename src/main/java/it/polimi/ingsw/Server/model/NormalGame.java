@@ -5,6 +5,7 @@ import it.polimi.ingsw.Enum.HouseColor;
 import it.polimi.ingsw.Enum.Wizard;
 import it.polimi.ingsw.Server.controller.GameDelta;
 import it.polimi.ingsw.Server.controller.MatchConstants;
+import it.polimi.ingsw.Server.controller.MatchType;
 import it.polimi.ingsw.Server.model.GameComponents.Bag;
 import it.polimi.ingsw.Server.model.GameComponents.Cloud;
 import it.polimi.ingsw.Server.model.GameComponents.GameComponent;
@@ -41,7 +42,7 @@ public class NormalGame implements Game {
         byte numberOfPlayers = this.getPlayerSize();
 
         this.islands = new ArrayList<>(12);
-        for (byte i = (byte) (2 * numberOfPlayers); i < (byte) (2 * numberOfPlayers + 12); i++) {
+        for (byte i = (byte) (2 * MatchType.MAX_PLAYERS); i < (byte) (2 * MatchType.MAX_PLAYERS + 12); i++) {
             islands.add(new Island(i));
         }
 
@@ -174,7 +175,7 @@ public class NormalGame implements Game {
         if (idGameComponent == 69)
             return bag;
 
-        if (idGameComponent < (-clouds.size()) || idGameComponent >= (2 * getPlayerSize() + 12)) {
+        if (idGameComponent < (-clouds.size()) || idGameComponent >= (2 * MatchType.MAX_PLAYERS + 12) || (idGameComponent >= 2 * getPlayerSize() && idGameComponent < 2 * MatchType.MAX_PLAYERS)) {
             throw new NotAllowedException(idGameComponent + " is not a valid gameComponent id");
         }
         if (idGameComponent < 0) {

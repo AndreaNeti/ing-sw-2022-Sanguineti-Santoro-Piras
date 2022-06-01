@@ -120,7 +120,7 @@ public class GameClient extends GameClientListened implements GameClientView {
                 notify(lunchHall);
             }
 
-        } else if (idGameComponent >= 2 * matchType.nPlayers()) {
+        } else if (idGameComponent >= 2 * MatchType.MAX_PLAYERS) {
             IslandClient islandToReturn = getIslandById(idGameComponent);
             if (islandToReturn == null) {
                 throw new RuntimeException("error in passing parameters probably");
@@ -142,14 +142,7 @@ public class GameClient extends GameClientListened implements GameClientView {
     }
 
     private IslandClient getIslandById(byte idIsland) {
-        IslandClient islandToReturn = null;
-        for (IslandClient island : islands) {
-            if (island.getId() == idIsland) {
-                islandToReturn = island;
-                break;
-            }
-        }
-        return islandToReturn;
+        return islands.get(idIsland - 2 * MatchType.MAX_PLAYERS);
     }
 
     public void removeIsland(byte idIsland) {
@@ -257,9 +250,8 @@ public class GameClient extends GameClientListened implements GameClientView {
     @Override
     public List<CharacterCardClient> getCharacters() {
         //lockForCharacter.lock();
-        List<CharacterCardClient> characterCardClients = Stream.concat(characters.stream(), charactersWithStudents.stream()).collect(Collectors.toList());
         //lockForCharacter.unlock();
-        return characterCardClients;
+        return Stream.concat(characters.stream(), charactersWithStudents.stream()).collect(Collectors.toList());
     }
 
     public void setCharacters(List<Byte> charactersReceived) {

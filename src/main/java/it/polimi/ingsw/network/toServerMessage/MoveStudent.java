@@ -26,7 +26,7 @@ public class MoveStudent implements ToServerMessage {
         }
         if (c.isMyTurn(clientHandler)) {
             c.move(color, idGameComponent);
-            c.sendMessage(clientHandler, "move a " + color + " student to " + gameComponentName);
+            c.sendMessage(clientHandler, "moved a " + color + " student to " + gameComponentName);
         } else throw new NotAllowedException("It's not your turn");
     }
 }

@@ -245,14 +245,16 @@ public class ViewCli extends AbstractView implements ViewForCharacterCli {
         List<IslandClient> islands = getModel().getIslands();
 
         TreeSet<Integer> choices = new TreeSet<>();
-        choices.add(0);
+
         for (IslandClient island : islands)
             choices.add(islands.indexOf(island) + 1);
+        String message = "--OPTIONS--\n[0] " + lunchHall.getNameOfComponent() + "\n" + optionString(choices, islands.get(0).getNameOfComponent()) + "\nSelect a destination";
+
+        choices.add(0);
 
         validDestinations.add(lunchHall);
         validDestinations.addAll(islands);
 
-        String message = "--OPTIONS--\n[0] " + lunchHall.getNameOfComponent() + optionString(choices, islands.get(0).getNameOfComponent()) + "\nSelect a destination";
         int input = getIntInput(choices, message, canBeStopped);
         int index = new ArrayList<>(choices).indexOf(input);
         return validDestinations.get(index);
