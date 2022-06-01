@@ -3,6 +3,7 @@ package it.polimi.ingsw.Client.PhaseAndComand.Commands;
 import it.polimi.ingsw.Client.PhaseAndComand.Phases.ClientPhase;
 import it.polimi.ingsw.Client.View.Cli.ViewCli;
 import it.polimi.ingsw.Client.model.CharacterCardClient;
+import it.polimi.ingsw.Client.model.GameComponentClient;
 import it.polimi.ingsw.Enum.Color;
 import it.polimi.ingsw.Enum.GamePhase;
 import it.polimi.ingsw.exceptions.clientExceptions.SkipCommandException;
@@ -89,8 +90,8 @@ public enum GameCommand {
             // request the student color
             Color color = viewCli.getColorInput(false);
             // request the destination where you want the student to move
-            int destination = viewCli.getMoveStudentDestination(false);
-            viewCli.sendToServer(new MoveStudent(color, destination));
+            GameComponentClient destination = viewCli.getMoveStudentDestination(false);
+            viewCli.sendToServer(new MoveStudent(color, destination.getId(), destination.getNameOfComponent()));
         }
 
         @Override
@@ -101,10 +102,10 @@ public enum GameCommand {
     CHOOSE_CHARACTER() {
         @Override
         public void playCLICommand(ViewCli viewCli) throws SkipCommandException {
-            List<CharacterCardClient> characters = viewCli.getModel().getCharacters();
             int index = viewCli.getCharacterCharToPlayInput();
+            CharacterCardClient chosenCharacter = viewCli.getModel().getCharacters().get(index);
             viewCli.setCurrentCharacterCard(index);
-            viewCli.sendToServer(new ChooseCharacter((byte) characters.get(index).getCharId()));
+            viewCli.sendToServer(new ChooseCharacter((byte) chosenCharacter.getCharId(), chosenCharacter.toString()));
             viewCli.setPhaseInView(GamePhase.PLAY_CH_CARD_PHASE, false, false);
         }
 

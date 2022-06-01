@@ -25,10 +25,6 @@ public class IslandClient extends GameComponentClient {
         return prohibition;
     }
 
-    public void setProhibition(byte prohibition) {
-        this.prohibition = prohibition;
-    }
-
     public byte getNumber() {
         return number;
     }

@@ -19,7 +19,9 @@ public class MoveFromCloud implements ToServerMessage {
         if (c.isGameFinished()) {
             throw new NotAllowedException("Game is already finished");
         }
-        if (c.isMyTurn(clientHandler)) c.moveFromCloud(idGameComponent);
-        else throw new NotAllowedException("It's not your turn");
+        if (c.isMyTurn(clientHandler)) {
+            c.moveFromCloud(idGameComponent);
+            c.sendMessage(clientHandler, "took students from Cloud " + -idGameComponent);
+        } else throw new NotAllowedException("It's not your turn");
     }
 }

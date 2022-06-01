@@ -79,8 +79,6 @@ public class Controller {
             game.move(color, (currentPlayerIndex * 2), idGameComponent);
             // do not increment counter if exception thrown
             movesCounter++;
-
-            broadcastMessage(new TextMessageSC("Server: " + Wizard.values()[getCurrentPlayerIndex()] + " moved a " + color + " student"));
             if (movesCounter == matchConstants.studentsToMove()) {
                 movesCounter = 0;
                 nextPhase();
@@ -98,7 +96,6 @@ public class Controller {
             if (idGameComponent >= 0 || idGameComponent < -matchType.nPlayers())
                 throw new NotAllowedException("Component is not a cloud");
             game.moveFromCloud(idGameComponent);
-            broadcastMessage(new TextMessageSC("Server: " + Wizard.values()[getCurrentPlayerIndex()] + " take student from a cloud"));
             nextPhase();
         } else throw new NotAllowedException("Wrong Phase");
 
@@ -117,7 +114,6 @@ public class Controller {
             } catch (EndGameException e) {
                 handleError(e);
             }
-            broadcastMessage(new TextMessageSC("Server: " + Wizard.values()[getCurrentPlayerIndex()] + " played card n° " + card.value()));
             nextPhase();
         } else {
             throw new NotAllowedException("Cannot play this card");
@@ -130,8 +126,6 @@ public class Controller {
                 game.moveMotherNature(moves);
             } catch (EndGameException e) {
                 handleError(e);
-            } finally {
-                broadcastMessage(new TextMessageSC("Server: " + Wizard.values()[getCurrentPlayerIndex()] + " moved MotherNature by " + moves + " moves"));
             }
             nextPhase();
         } else {
@@ -181,10 +175,9 @@ public class Controller {
             throw new NotAllowedException("Not in action phase");
         }
         if (characterCardPlayed) {
-            throw new NotAllowedException("A card has already been played this turn");
+            throw new NotAllowedException("You already played a card in this turn");
         }
         game.chooseCharacter(charId);
-        broadcastMessage(new TextMessageSC("Server: " + Wizard.values()[getCurrentPlayerIndex()] + " chose character card " + charId));
     }
 
     public synchronized void playCharacter() throws GameException, NullPointerException, EndGameException {
@@ -192,14 +185,12 @@ public class Controller {
             throw new NotAllowedException("Not in action phase");
         }
         if (characterCardPlayed) {
-            throw new NotAllowedException("A card has already been played this turn");
+            throw new NotAllowedException("You already played a card in this turn");
         }
         try {
             game.playCharacter();
         } catch (EndGameException e) {
             handleError(e);
-        } finally {
-            broadcastMessage(new TextMessageSC("Server: " + Wizard.values()[getCurrentPlayerIndex()] + " played character card"));
         }
         characterCardPlayed = true;
     }

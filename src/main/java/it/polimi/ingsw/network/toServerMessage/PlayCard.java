@@ -20,8 +20,9 @@ public class PlayCard implements ToServerMessage {
         if (c.isGameFinished()) {
             throw new NotAllowedException("Game is already finished");
         }
-        if (c.isMyTurn(clientHandler))
+        if (c.isMyTurn(clientHandler)) {
             c.playCard(playedCard);
-        else throw new NotAllowedException("It's not your turn");
+            c.sendMessage(clientHandler, "played card n° " + playedCard.value());
+        } else throw new NotAllowedException("It's not your turn");
     }
 }

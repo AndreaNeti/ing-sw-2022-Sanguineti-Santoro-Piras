@@ -10,20 +10,23 @@ import it.polimi.ingsw.exceptions.serverExceptions.NotAllowedException;
 public class MoveStudent implements ToServerMessage {
     private final Color color;
     private final int idGameComponent;
+    private final String gameComponentName;
 
-    public MoveStudent(Color color, int idGameComponent) {
+    public MoveStudent(Color color, int idGameComponent, String gameComponentName) {
         this.color = color;
         this.idGameComponent = idGameComponent;
+        this.gameComponentName = gameComponentName;
     }
 
     @Override
     public void execute(ClientHandler clientHandler) throws GameException, EndGameException {
         Controller c = clientHandler.getController();
-        if(c.isGameFinished()){
+        if (c.isGameFinished()) {
             throw new NotAllowedException("Game is already finished");
         }
-        if (c.isMyTurn(clientHandler))
+        if (c.isMyTurn(clientHandler)) {
             c.move(color, idGameComponent);
-        else throw new NotAllowedException("It's not your turn");
+            c.sendMessage(clientHandler, "move a " + color + " student to " + gameComponentName);
+        } else throw new NotAllowedException("It's not your turn");
     }
 }

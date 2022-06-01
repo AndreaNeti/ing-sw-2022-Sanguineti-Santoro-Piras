@@ -19,8 +19,10 @@ public class MoveMotherNature implements ToServerMessage {
         if (c.isGameFinished()) {
             throw new NotAllowedException("Game is already finished");
         }
-        if (c.isMyTurn(clientHandler)) c.moveMotherNature(moves);
-        else throw new NotAllowedException("It's not your turn");
+        if (c.isMyTurn(clientHandler)) {
+            c.moveMotherNature(moves);
+            c.sendMessage(clientHandler, "moved Mother Nature by " + moves + " moves");
+        } else throw new NotAllowedException("It's not your turn");
     }
 
 }

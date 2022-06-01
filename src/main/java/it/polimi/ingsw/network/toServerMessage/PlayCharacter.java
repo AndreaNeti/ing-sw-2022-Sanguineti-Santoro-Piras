@@ -27,6 +27,7 @@ public class PlayCharacter implements ToServerMessage {
             // TODO unify?
             c.setCharacterInputs(inputs);
             c.playCharacter();
+            c.sendMessage(clientHandler, "played the chosen character card");
         } else throw new NotAllowedException("It's not your turn");
 
     }

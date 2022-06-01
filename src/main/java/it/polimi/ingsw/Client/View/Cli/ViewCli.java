@@ -238,7 +238,7 @@ public class ViewCli extends AbstractView implements ViewForCharacterCli {
         return ret.get();
     }
 
-    public int getMoveStudentDestination(boolean canBeStopped) throws SkipCommandException {
+    public GameComponentClient getMoveStudentDestination(boolean canBeStopped) throws SkipCommandException {
         List<GameComponentClient> validDestinations = new ArrayList<>();
 
         GameComponentClient lunchHall = getModel().getCurrentPlayer().getLunchHall();
@@ -255,7 +255,7 @@ public class ViewCli extends AbstractView implements ViewForCharacterCli {
         String message = "--OPTIONS--\n[0] " + lunchHall.getNameOfComponent() + optionString(choices, islands.get(0).getNameOfComponent()) + "\nSelect a destination";
         int input = getIntInput(choices, message, canBeStopped);
         int index = new ArrayList<>(choices).indexOf(input);
-        return validDestinations.get(index).getId();
+        return validDestinations.get(index);
     }
 
     @Override
