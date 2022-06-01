@@ -27,7 +27,6 @@ public abstract class AbstractView {
     public AbstractView(ControllerClient controllerClient) {
         instantiateAllPhases();
         attachCommandToPhase();
-        setPhaseInView(GamePhase.INIT_PHASE, true, false);
         this.controllerClient = controllerClient;
         quit = false;
     }
@@ -111,8 +110,6 @@ public abstract class AbstractView {
     public boolean connectToServer(byte[] ipAddress) {
         return controllerClient.connect(ipAddress);
     }
-
-    public abstract void start() throws InterruptedException;
 
     public void setQuit(boolean forceImmediateExecution) {
         // true quits all, only if called during init phase

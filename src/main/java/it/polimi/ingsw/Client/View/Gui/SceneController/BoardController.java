@@ -1,7 +1,6 @@
 package it.polimi.ingsw.Client.View.Gui.SceneController;
 
-import it.polimi.ingsw.Client.PhaseAndComand.Phases.ClientPhase;
-import it.polimi.ingsw.Client.View.GameClientListener;
+import it.polimi.ingsw.Client.View.AbstractView;
 import it.polimi.ingsw.Client.model.CharacterCardClient;
 import it.polimi.ingsw.Client.model.GameComponentClient;
 import it.polimi.ingsw.Client.model.IslandClient;
@@ -13,11 +12,8 @@ import it.polimi.ingsw.Server.model.AssistantCard;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BoardController implements SceneController, GameClientListener {
-    @Override
-    public void setPhase(ClientPhase clientPhase) {
-
-    }
+public class BoardController implements SceneController {
+    AbstractView view;
 
     @Override
     public void updateMotherNature(Byte motherNaturePosition) {
@@ -92,5 +88,10 @@ public class BoardController implements SceneController, GameClientListener {
     @Override
     public void update() {
 
+    }
+
+    @Override
+    public void setView(AbstractView abstractView) {
+        view = abstractView;
     }
 }

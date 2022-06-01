@@ -8,6 +8,7 @@ import it.polimi.ingsw.Client.model.GameClientView;
 import it.polimi.ingsw.Client.model.GameComponentClient;
 import it.polimi.ingsw.Client.model.IslandClient;
 import it.polimi.ingsw.Enum.Color;
+import it.polimi.ingsw.Enum.GamePhase;
 import it.polimi.ingsw.Server.controller.MatchType;
 import it.polimi.ingsw.Server.model.AssistantCard;
 import it.polimi.ingsw.exceptions.clientExceptions.SkipCommandException;
@@ -51,6 +52,7 @@ public class ViewCli extends AbstractView implements ViewForCharacterCli {
         requestInput = false;
         scannerThread.setName("Scanner Thread");
         scannerThread.start();
+        setPhaseInView(GamePhase.INIT_PHASE, true, false);
     }
 
     public void start() throws InterruptedException {

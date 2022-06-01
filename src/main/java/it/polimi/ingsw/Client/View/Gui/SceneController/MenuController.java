@@ -1,7 +1,6 @@
 package it.polimi.ingsw.Client.View.Gui.SceneController;
 
-import it.polimi.ingsw.Client.PhaseAndComand.Phases.ClientPhase;
-import it.polimi.ingsw.Client.View.GameClientListener;
+import it.polimi.ingsw.Client.View.AbstractView;
 import it.polimi.ingsw.Client.model.CharacterCardClient;
 import it.polimi.ingsw.Client.model.GameComponentClient;
 import it.polimi.ingsw.Client.model.IslandClient;
@@ -10,43 +9,40 @@ import it.polimi.ingsw.Enum.HouseColor;
 import it.polimi.ingsw.Enum.Wizard;
 import it.polimi.ingsw.Server.model.AssistantCard;
 import javafx.fxml.FXML;
+import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
-import javafx.scene.layout.Pane;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MenuController implements SceneController, GameClientListener {
+public class MenuController implements SceneController {
+    AbstractView view;
     @FXML
-    Button submitButton;
-    @FXML
-    Pane mainPane;
+    Group main;
     @FXML
     ToggleGroup gameType;
     @FXML
-    TextField textBoxInput;
+    Button connectButton;
 
-    /*@FXML
-    Button
-*/
     @FXML
-    public void initialize() {
-        mainPane.setVisible(false);
+    void initialize() {
+        hideEverything();
     }
 
-    @Override
-    public void setPhase(ClientPhase clientPhase) {
+    public void hideEverything() {
+        for (Node child : main.getChildren()) {
+            child.setVisible(false);
+        }
     }
 
-    public TextField getTextBoxInput() {
-        return textBoxInput;
+    public Node getElementById(String id) {
+        return main.lookup(id);
     }
 
     @Override
     public void updateMotherNature(Byte motherNaturePosition) {
-
     }
 
     @Override
@@ -91,12 +87,10 @@ public class MenuController implements SceneController, GameClientListener {
 
     @Override
     public void updateIgnoredColor(Color color) {
-
     }
 
     @Override
     public void updateExtraSteps(boolean extraSteps) {
-
     }
 
     @Override
@@ -116,6 +110,10 @@ public class MenuController implements SceneController, GameClientListener {
 
     @Override
     public void update() {
+    }
 
+    @Override
+    public void setView(AbstractView abstractView) {
+        this.view = abstractView;
     }
 }

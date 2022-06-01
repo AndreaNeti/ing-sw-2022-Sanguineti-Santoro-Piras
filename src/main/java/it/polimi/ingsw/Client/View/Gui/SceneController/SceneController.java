@@ -1,8 +1,9 @@
 package it.polimi.ingsw.Client.View.Gui.SceneController;
 
 
-import it.polimi.ingsw.Client.PhaseAndComand.Phases.ClientPhase;
+import it.polimi.ingsw.Client.View.AbstractView;
+import it.polimi.ingsw.Client.View.GameClientListener;
 
-public interface SceneController {
-    void setPhase(ClientPhase clientPhase);
+public interface SceneController extends GameClientListener {
+    void setView(AbstractView abstractView);
 }
