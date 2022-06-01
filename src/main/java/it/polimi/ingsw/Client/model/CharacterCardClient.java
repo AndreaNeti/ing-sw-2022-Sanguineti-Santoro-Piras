@@ -1,7 +1,7 @@
 package it.polimi.ingsw.Client.model;
 
 import it.polimi.ingsw.Client.View.Cli.ViewForCharacterCli;
-import it.polimi.ingsw.exceptions.clientExceptions.ScannerException;
+import it.polimi.ingsw.exceptions.clientExceptions.SkipCommandException;
 
 import java.util.List;
 
@@ -9,7 +9,7 @@ public interface CharacterCardClient {
     String getDescription();
 
     //return the next input needed for the character card, null if it can be played
-    void setNextInput(ViewForCharacterCli view) throws ScannerException;
+    void setNextInput(ViewForCharacterCli view) throws SkipCommandException;
 
     boolean canPlay();
     byte getCost();

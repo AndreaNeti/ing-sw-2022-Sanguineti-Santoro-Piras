@@ -15,12 +15,13 @@ import it.polimi.ingsw.exceptions.serverExceptions.NotEnoughCoinsException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 
 public class ExpertGame extends NormalGame implements CharacterCardGame, CoinListener, Serializable {
     private final byte[] coinsPlayer;
-    private final ArrayList<CharacterCard> characters;
-    private final ArrayList<Integer> inputsCharacter;
+    private final List<CharacterCard> characters;
+    private final List<Integer> inputsCharacter;
     private final boolean[] playedCharacters;
     private byte coinsLeft;
     private boolean extraInfluence; //default false
@@ -332,9 +333,9 @@ public class ExpertGame extends NormalGame implements CharacterCardGame, CoinLis
     }
 
     @Override
-    public void setCharacterInput(int input) throws GameException {
+    public void setCharacterInputs(List<Integer> inputs) throws GameException {
         if (chosenCharacter != -1)
-            inputsCharacter.add(input);
+            inputsCharacter.addAll(inputs);
         else throw new NotAllowedException("There is no chosen character card");
     }
 

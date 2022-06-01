@@ -11,6 +11,7 @@ import it.polimi.ingsw.exceptions.serverExceptions.NotAllowedException;
 import it.polimi.ingsw.network.toClientMessage.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Controller {
     private final MatchConstants matchConstants;
@@ -168,11 +169,11 @@ public class Controller {
         notifyClients(new TextMessageSC("[" + me.getNickName() + "]: " + message), me);
     }
 
-    public synchronized void setCharacterInput(int input) throws GameException, NullPointerException {
+    public synchronized void setCharacterInputs(List<Integer> inputs) throws GameException, NullPointerException {
         if (gamePhase == GamePhase.PLANIFICATION_PHASE) {
             throw new NotAllowedException("Not in action phase");
         }
-        game.setCharacterInput(input);
+        game.setCharacterInputs(inputs);
     }
 
     public synchronized void chooseCharacter(byte charId) throws GameException, NullPointerException {

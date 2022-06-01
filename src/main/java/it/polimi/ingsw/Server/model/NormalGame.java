@@ -15,6 +15,7 @@ import it.polimi.ingsw.exceptions.serverExceptions.NotAllowedException;
 import it.polimi.ingsw.exceptions.serverExceptions.NotExpertGameException;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class NormalGame implements Game {
     private final GameDelta gameDelta;
@@ -368,7 +369,7 @@ public class NormalGame implements Game {
     }
 
     @Override
-    public void setCharacterInput(int input) throws GameException {
+    public void setCharacterInputs(List<Integer> input) throws GameException {
         throw new NotExpertGameException();
     }
 

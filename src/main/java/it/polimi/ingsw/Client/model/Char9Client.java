@@ -1,7 +1,7 @@
 package it.polimi.ingsw.Client.model;
 
 import it.polimi.ingsw.Client.View.Cli.ViewForCharacterCli;
-import it.polimi.ingsw.exceptions.clientExceptions.ScannerException;
+import it.polimi.ingsw.exceptions.clientExceptions.SkipCommandException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +26,7 @@ public class Char9Client implements CharacterCardClient {
     }
 
     @Override
-    public void setNextInput(ViewForCharacterCli view) throws ScannerException {
+    public void setNextInput(ViewForCharacterCli view) throws SkipCommandException {
         System.out.println("Select the color of the student from Lunch Hall");
         inputs.add(view.getColorInput(false).ordinal());
         System.out.println("Select the color of the student from your Entrance Hall");

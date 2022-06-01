@@ -17,8 +17,18 @@ public class GuiFX extends Application {
     @Override
     public void start(Stage primaryStage) {
         setPrimaryStage(primaryStage);
-        goToMenuScene();
+        primaryStage.setResizable(false);
+        primaryStage.setTitle("Eryantis");
+        FXMLLoader loader = new FXMLLoader(GuiFX.class.getResource("/menu.fxml"));
+        Scene scene = null;
+        try {
+            scene = new Scene(loader.load(), 700, 700);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        primaryStage.setScene(scene);
         primaryStage.show();
+        sceneController = loader.getController();
         ControllerClient controllerClient = new ControllerClient();
         ViewGUI viewGUI = new ViewGUI(controllerClient);
         controllerClient.attachView(viewGUI);
@@ -71,7 +81,7 @@ public class GuiFX extends Application {
         return activeScene;
     }
 
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) {
         launch();
     }
 }

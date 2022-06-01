@@ -5,8 +5,6 @@ import it.polimi.ingsw.Client.View.Gui.SceneController.SceneController;
 import it.polimi.ingsw.Client.View.Gui.ViewGUI;
 import javafx.scene.control.TextField;
 
-import java.awt.*;
-
 public class InitPhase extends ClientPhase {
     public InitPhase() {
         super();

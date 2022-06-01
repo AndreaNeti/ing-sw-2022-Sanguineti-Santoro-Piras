@@ -10,8 +10,6 @@ import it.polimi.ingsw.Client.model.IslandClient;
 import it.polimi.ingsw.Enum.Color;
 import it.polimi.ingsw.Server.controller.MatchType;
 import it.polimi.ingsw.Server.model.AssistantCard;
-import it.polimi.ingsw.exceptions.clientExceptions.RepeatCommandException;
-import it.polimi.ingsw.exceptions.clientExceptions.ScannerException;
 import it.polimi.ingsw.exceptions.clientExceptions.SkipCommandException;
 
 import java.util.*;
@@ -121,42 +119,47 @@ public class ViewCli extends AbstractView implements ViewForCharacterCli {
         return s.toString();
     }
 
-    private int getIntInput(Set<Integer> optionValues, String message, boolean canBeStopped) throws ScannerException {
+    private int getIntInput(Set<Integer> optionValues, String message, boolean canBeStopped) throws SkipCommandException {
         if (optionValues.isEmpty()) throw new SkipCommandException();
         int option = getIntInput(message, canBeStopped);
         while (!optionValues.contains(option)) {
+            cliPrinter.printGame();
             System.err.println("Not a valid input");
             option = getIntInput(message, canBeStopped);
         }
         return option;
     }
 
-    public int getIntInput(Object[] options, String message, boolean canBeStopped) throws ScannerException {
-        System.out.println("--OPTIONS--");
+    public int getIntInput(Object[] options, String message, boolean canBeStopped) throws SkipCommandException {
+        StringBuilder s = new StringBuilder("--OPTIONS--\n");
         for (byte i = 0; i < options.length; i++)
-            System.out.println(optionString(i, options[i].toString()));
-        return getIntInput(0, options.length - 1, message, canBeStopped);
+            s.append(optionString(i, options[i].toString())).append("\n");
+        s.append(message);
+        return getIntInput(0, options.length - 1, s.toString(), canBeStopped);
     }
 
-    public int getIntInput(int min, int max, String message, boolean canBeStopped) throws ScannerException {
-        int ret = getIntInput(message + " (from " + min + " to " + max + ")", canBeStopped);
+    public int getIntInput(int min, int max, String message, boolean canBeStopped) throws SkipCommandException {
+        message += " (from " + min + " to " + max + ")";
+        int ret = getIntInput(message, canBeStopped);
         while (ret < min || ret > max) {
-            System.err.println("Not a valid input (from " + min + " to " + max + ")");
+            cliPrinter.printGame();
+            System.err.println("Not a valid input");
             ret = getIntInput(message, canBeStopped);
         }
         return ret;
     }
 
     //     Message is the string printed before asking the input
-    public int getIntInput(String message, boolean canBeStopped) throws ScannerException {
+    public int getIntInput(String message, boolean canBeStopped) throws SkipCommandException {
+        message += ": ";
         int ret = 0;
         boolean err;
         do {
             err = false;
-            System.out.println(message + ":");
             try {
-                ret = Integer.parseInt(getInput(canBeStopped));
+                ret = Integer.parseInt(getInput(message, canBeStopped));
             } catch (NumberFormatException ex) {
+                cliPrinter.printGame();
                 err = true;
                 System.err.println("Not a valid input");
             }
@@ -164,10 +167,11 @@ public class ViewCli extends AbstractView implements ViewForCharacterCli {
         return ret;
     }
 
-    public byte[] getIpAddressInput(boolean canBeStopped) throws ScannerException {
+    public byte[] getIpAddressInput(boolean canBeStopped) throws SkipCommandException {
         String input = getStringInput("Select server IP", 15, canBeStopped);
         byte[] ret = getIpFromString(input);
         while (ret == null) {
+            cliPrinter.printGame();
             System.err.println("Not a valid IP");
             input = getStringInput("Select server IP", 15, canBeStopped);
             ret = getIpFromString(input);
@@ -176,7 +180,7 @@ public class ViewCli extends AbstractView implements ViewForCharacterCli {
     }
 
     // return null if it's not a valid ip, otherwise returns the IP bytes
-    private byte[] getIpFromString(String ip) {
+    public byte[] getIpFromString(String ip) {
         ip = ip.toLowerCase();
         if (ip.equals("localhost") || ip.equals("l") || ip.equals("paolino")) return new byte[]{127, 0, 0, 1};
         String[] bytes = ip.split("[.]");
@@ -195,85 +199,85 @@ public class ViewCli extends AbstractView implements ViewForCharacterCli {
         return ret;
     }
 
-    public Color getColorInput(boolean canBeStopped) throws ScannerException {
-        System.out.println("--COLORS--");
-        StringBuilder s = new StringBuilder();
+    @Override
+    public Color getColorInput(boolean canBeStopped) throws SkipCommandException {
+        StringBuilder message = new StringBuilder("--COLORS--\n");
         for (Color c : Color.values())
-            s.append(optionString(c.ordinal() + 1, c.toString()));
-        System.out.println(s);
-        return Color.values()[getIntInput(1, Color.values().length, "Select a color", canBeStopped) - 1];
+            message.append(optionString(c.ordinal() + 1, c.toString()));
+        message.append("\nSelect a color");
+        return Color.values()[getIntInput(1, Color.values().length, message.toString(), canBeStopped) - 1];
     }
 
-    public MatchType getMatchTypeInput(boolean canBeStopped) throws ScannerException {
+    public MatchType getMatchTypeInput(boolean canBeStopped) throws SkipCommandException {
         return new MatchType((byte) getIntInput(2, 4, "Select the number of players", canBeStopped), getBooleanInput("Do you want to play in expert mode?", canBeStopped));
     }
 
-    public byte getCharacterCharToPlayInput() throws ScannerException {
+    public byte getCharacterCharToPlayInput() throws SkipCommandException {
         List<CharacterCardClient> characterCards = getModel().getCharacters();
-        System.out.println("--CHARACTERS--");
+        StringBuilder message = new StringBuilder("--CHARACTERS--\n");
         for (int i = 0; i < characterCards.size(); i++)
-            System.out.println(optionString(i + 1, characterCards.get(i) + ": " + characterCards.get(i).getDescription()));
-        return (byte) (getIntInput(1, characterCards.size(), "Select the character to play", false) - 1);
+            message.append(optionString(i + 1, characterCards.get(i) + ": " + characterCards.get(i).getDescription())).append("\n");
+        message.append("Select the character to play");
+        return (byte) (getIntInput(1, characterCards.size(), message.toString(), false) - 1);
     }
 
-    public AssistantCard getAssistantCardToPlayInput(boolean canBeStopped) throws ScannerException {
+    public AssistantCard getAssistantCardToPlayInput(boolean canBeStopped) throws SkipCommandException {
         TreeSet<Integer> choices = new TreeSet<>();
         List<AssistantCard> assistantCards = getModel().getCurrentPlayer().getAssistantCards();
         for (AssistantCard card : assistantCards)
             choices.add((int) card.value());
-        System.out.println("--OPTIONS--");
-        System.out.println(optionString(choices, "Assistant card"));
 
-        byte chosenCardValue = (byte) getIntInput(choices, "Select an assistant card to play", canBeStopped);
-        return assistantCards.stream().filter(assistantCard -> assistantCard.value() == chosenCardValue).findFirst().orElseThrow(RepeatCommandException::new);
+        String message = "--OPTIONS--\n" + optionString(choices, "Assistant card") + "\nSelect an assistant card to play";
+        Optional<AssistantCard> ret;
+        do {
+            byte chosenCardValue = (byte) getIntInput(choices, message, canBeStopped);
+            ret = assistantCards.stream().filter(assistantCard -> assistantCard.value() == chosenCardValue).findFirst();
+        } while (ret.isEmpty());
+        return ret.get();
     }
 
-    public int getMoveStudentDestination(boolean canBeStopped) throws ScannerException {
+    public int getMoveStudentDestination(boolean canBeStopped) throws SkipCommandException {
         List<GameComponentClient> validDestinations = new ArrayList<>();
 
         GameComponentClient lunchHall = getModel().getCurrentPlayer().getLunchHall();
         List<IslandClient> islands = getModel().getIslands();
 
         TreeSet<Integer> choices = new TreeSet<>();
+        choices.add(0);
         for (IslandClient island : islands)
             choices.add(islands.indexOf(island) + 1);
 
-        System.out.println("--OPTIONS--");
-        System.out.println("[0] " + lunchHall.getNameOfComponent());
-        System.out.println(optionString(choices, islands.get(0).getNameOfComponent()));
-
-        choices.add(0);
-
         validDestinations.add(lunchHall);
         validDestinations.addAll(islands);
-        int input = getIntInput(choices, "Select a destination", canBeStopped);
+
+        String message = "--OPTIONS--\n[0] " + lunchHall.getNameOfComponent() + optionString(choices, islands.get(0).getNameOfComponent()) + "\nSelect a destination";
+        int input = getIntInput(choices, message, canBeStopped);
         int index = new ArrayList<>(choices).indexOf(input);
         return validDestinations.get(index).getId();
     }
 
-    public int getIslandDestination(String message, boolean canBeStopped) throws ScannerException {
+    @Override
+    public int getIslandDestination(String message, boolean canBeStopped) throws SkipCommandException {
         List<IslandClient> islandClients = getModel().getIslands();
-        System.out.println("--OPTIONS--");
         SortedSet<Integer> choices = new TreeSet<>();
         for (IslandClient i : islandClients)
             choices.add(islandClients.indexOf(i) + 1);
-        System.out.println(optionString(choices, islandClients.get(0).getNameOfComponent()));
-        int input = getIntInput(choices, message, canBeStopped);
+        String s = "--OPTIONS--\n" + optionString(choices, islandClients.get(0).getNameOfComponent()) + "\n" + message;
+        int input = getIntInput(choices, s, canBeStopped);
         int index = new ArrayList<>(choices).indexOf(input);
         return islandClients.get(index).getId();
     }
 
-    public byte getMotherNatureMovesInput(boolean canBeStopped) throws ScannerException {
+    public byte getMotherNatureMovesInput(boolean canBeStopped) throws SkipCommandException {
         byte maxMoves = getModel().getCurrentPlayer().getPlayedCard().moves();
         if (getModel().isExtraSteps()) maxMoves += 2;
         return (byte) getIntInput(1, maxMoves, "How many steps do you want mother nature to move?", canBeStopped);
     }
 
-    public int getCloudSource(boolean canBeStopped) throws ScannerException {
+    public int getCloudSource(boolean canBeStopped) throws SkipCommandException {
         List<GameComponentClient> clouds = getModel().getClouds();
         List<GameComponentClient> availableClouds = new ArrayList<>();
         SortedSet<Integer> choices = new TreeSet<>();
-        System.out.println("--OPTIONS--");
         // Add and prints only the not-empty clouds
         for (GameComponentClient cloud : clouds) {
             if (cloud.howManyStudents() > 0) {
@@ -282,43 +286,44 @@ public class ViewCli extends AbstractView implements ViewForCharacterCli {
                 choices.add(cloudIndex);
             }
         }
-        System.out.println(optionString(choices, clouds.get(0).getNameOfComponent()));
-        int input = getIntInput(choices, "Select a cloud source", canBeStopped);
+        String message = "--OPTIONS--\n" + optionString(choices, clouds.get(0).getNameOfComponent()) + "\nSelect a cloud source";
+        int input = getIntInput(choices, message, canBeStopped);
         int index = new ArrayList<>(choices).indexOf(input);
         return availableClouds.get(index).getId();
     }
 
-    public boolean getBooleanInput(String message, boolean canBeStopped) throws ScannerException {
-        System.out.println(message + " (Y/N):");
-        String s = getInput(canBeStopped).toLowerCase();
+    public boolean getBooleanInput(String message, boolean canBeStopped) throws SkipCommandException {
+        message += " (Y/N):";
+        String s = getInput(message, canBeStopped).toLowerCase();
         while (!s.equals("y") && !s.equals("n")) {
+            cliPrinter.printGame();
             System.err.println("Not a valid input");
-            System.out.println(message + " (Y/N):");
-            s = getInput(canBeStopped).toLowerCase();
+            s = getInput(message, canBeStopped).toLowerCase();
         }
         return s.equals("y");
     }
 
-    public String getStringInput(String message, int maxLength, boolean canBeStopped) throws ScannerException {
-        System.out.println(message + ": ");
-        String s = getInput(canBeStopped);
+    public String getStringInput(String message, int maxLength, boolean canBeStopped) throws SkipCommandException {
+        message += ": ";
+        String s = getInput(message, canBeStopped);
         while (s.length() > maxLength) {
+            cliPrinter.printGame();
             System.err.println("Max length is " + maxLength);
-            System.out.println(message + ": ");
-            s = getInput(canBeStopped);
+            s = getInput(message, canBeStopped);
         }
         return s;
     }
 
-    public long getLongInput(String message, boolean canBeStopped) throws ScannerException {
+    public long getLongInput(String message, boolean canBeStopped) throws SkipCommandException {
+        message += ": ";
         long ret = 0;
         boolean err;
         do {
             err = false;
-            System.out.println(message + ":");
             try {
-                ret = Long.parseLong(getInput(canBeStopped));
+                ret = Long.parseLong(getInput(message, canBeStopped));
             } catch (NumberFormatException ex) {
+                cliPrinter.printGame();
                 err = true;
                 System.err.println("Not a valid input");
             }
@@ -326,31 +331,36 @@ public class ViewCli extends AbstractView implements ViewForCharacterCli {
         return ret;
     }
 
-    public synchronized String getInput(boolean canBeStopped) throws ScannerException {
-        isInputReady = false;
-        phaseChanged = false;
-        forcedScannerSkip = false;
-        this.input = "";
-        // wakes up scanner thread
-        requestInput = true;
-        notifyAll();
-        try {
-            // wait for scanner notify or phase changed flag (if it can be stopped) or forced skip (used if someone lost connection)
-            // or if there has been some changes, and it needs to be reprinted
-            while (!(isInputReady || forcedScannerSkip || (canBeStopped && (mustReprint || phaseChanged)))) {
-                wait();
+    public synchronized String getInput(String message, boolean canBeStopped) throws SkipCommandException {
+        boolean repeatCommand;
+        do {
+            System.out.println(message);
+            repeatCommand = false;
+            isInputReady = false;
+            phaseChanged = false;
+            forcedScannerSkip = false;
+            this.input = "";
+            // wakes up scanner thread
+            requestInput = true;
+            notifyAll();
+            try {
+                // wait for scanner notify or phase changed flag (if it can be stopped) or forced skip (used if someone lost connection)
+                // or if there has been some changes, and it needs to be reprinted
+                while (!(isInputReady || forcedScannerSkip || (canBeStopped && (mustReprint || phaseChanged)))) {
+                    wait();
+                }
+            } catch (InterruptedException e) {
+                System.err.println("Thread interrupted");
+                throw new SkipCommandException();
             }
-        } catch (InterruptedException e) {
-            System.err.println("Thread interrupted");
-            throw new SkipCommandException();
-        }
-        if (mustReprint && !phaseChanged) {
-            // reprint game, if phase changed will reprint in next phase
-            cliPrinter.printGame();
-            // if one of these conditions is true it should not repeat the command, skip instead to the new one
-            if (!(isInputReady || forcedScannerSkip))
-                throw new RepeatCommandException();
-        }
+            if (mustReprint && !phaseChanged) {
+                // reprint game, if phase changed will reprint in next phase
+                cliPrinter.printGame();
+                // if one of these conditions is true it should not repeat the command, skip instead to the new one
+                if (!(isInputReady || forcedScannerSkip))
+                    repeatCommand = true;
+            }
+        } while (repeatCommand);
         // if input is ready, return it
         if (isInputReady) return this.input;
         // input not ready and all others conditions are not verified, skip to new command

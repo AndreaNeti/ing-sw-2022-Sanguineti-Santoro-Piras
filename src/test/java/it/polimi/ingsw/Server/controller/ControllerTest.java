@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -240,9 +241,9 @@ class ControllerTest {
 
     @Test
     void setCharacterInputTest() {
-        assertThrows(GameException.class, () -> controllerExpert2.setCharacterInput(0), "Not in action phase");
+        assertThrows(GameException.class, () -> controllerExpert2.setCharacterInputs(List.of(0)), "Not in action phase");
         chooseCharacterTest();
-        assertDoesNotThrow(() -> controllerExpert2.setCharacterInput(0));
+        assertDoesNotThrow(() -> controllerExpert2.setCharacterInputs(List.of(0)));
     }
 
     @Test
@@ -257,14 +258,13 @@ class ControllerTest {
             for (int i = 0; i < 5 && !worked; i++) {
                 for (int j = 0; j < 5 && !worked; j++) {
                     try {
-                        controllerExpert2.setCharacterInput(i);
+                        controllerExpert2.setCharacterInputs(List.of(i));
                         controllerExpert2.playCharacter();
                         worked = true;
                     } catch (GameException | EndGameException e1) {
                         System.out.println(e1.getMessage());
                         try {
-                            controllerExpert2.setCharacterInput(i);
-                            controllerExpert2.setCharacterInput(j);
+                            controllerExpert2.setCharacterInputs(Arrays.asList(i, j));
                             controllerExpert2.playCharacter();
                             worked = true;
                         } catch (GameException | EndGameException e2) {

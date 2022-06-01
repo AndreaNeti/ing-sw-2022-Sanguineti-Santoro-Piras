@@ -15,6 +15,8 @@ import it.polimi.ingsw.exceptions.serverExceptions.NotEnoughStudentsException;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -110,8 +112,7 @@ class CharacterCardTest {
         int islandId = 4;
         try {
             game.chooseCharacter(charToSelect);
-            game.setCharacterInput(-5);
-            game.setCharacterInput(-1);
+            game.setCharacterInputs(Arrays.asList(-5, -1));
             assertThrows(NotAllowedException.class, () -> c0.play(game), "not valid inputs");
             // also resets character inputs
             game.setCurrentPlayer(p1);
@@ -120,8 +121,7 @@ class CharacterCardTest {
                 color++;
             }
             game.chooseCharacter(charToSelect);
-            game.setCharacterInput(color);
-            game.setCharacterInput(islandId);
+            game.setCharacterInputs(Arrays.asList(color, islandId));
         } catch (GameException e) {
             fail(e.getMessage());
         }
@@ -176,7 +176,7 @@ class CharacterCardTest {
     void playChar2() {
         try {
             game.chooseCharacter(charToSelect);
-            game.setCharacterInput(-1);
+            game.setCharacterInputs(List.of(-1));
             assertThrows(NotAllowedException.class, () -> c2.play(game), "not valid inputs");
         } catch (GameException e) {
             fail();
@@ -195,7 +195,7 @@ class CharacterCardTest {
         try {
             game.chooseCharacter(charToSelect);
             game.getBag().moveStudents(Color.values()[color], (byte) 5, game.getIslands().get(0));
-            game.setCharacterInput(4);
+            game.setCharacterInputs(List.of(4));
         } catch (GameException e) {
             fail();
         }
@@ -235,7 +235,7 @@ class CharacterCardTest {
     void playChar4() {
         try {
             game.chooseCharacter(charToSelect);
-            game.setCharacterInput(-1);
+            game.setCharacterInputs(List.of(-1));
         } catch (GameException e) {
             fail();
         }
@@ -247,7 +247,7 @@ class CharacterCardTest {
             game.getBag().moveStudents(Color.RED, (byte) 2, game.getIslands().get(2));
             game.chooseCharacter(charToSelect);
             //id of island 2 is 6
-            game.setCharacterInput(6);
+            game.setCharacterInputs(List.of(6));
         } catch (GameException e) {
             fail();
         }
@@ -316,8 +316,7 @@ class CharacterCardTest {
         try {
 
             game.chooseCharacter(charToSelect);
-            game.setCharacterInput(-5);
-            game.setCharacterInput(-1);
+            game.setCharacterInputs(Arrays.asList(-5, -1));
             assertThrows(NotAllowedException.class, () -> c6.play(game), "not valid inputs");
             // also resets character inputs
             game.setCurrentPlayer(p1);
@@ -325,8 +324,7 @@ class CharacterCardTest {
             while (((GameComponent) c6).howManyStudents(Color.values()[color1]) == 0 && color1 < Color.values().length) {
                 game.setCurrentPlayer(p1);
                 game.chooseCharacter(charToSelect);
-                game.setCharacterInput(color1);
-                game.setCharacterInput(color2);
+                game.setCharacterInputs(Arrays.asList(color1, color2));
                 assertThrows(NotEnoughStudentsException.class, () -> c6.play(game), "not enough students");
                 color1++;
             }
@@ -339,15 +337,13 @@ class CharacterCardTest {
             while (game.getCurrentPlayer().getEntranceHall().howManyStudents(Color.values()[color2]) == 0 && color2 > 0) {
                 game.setCurrentPlayer(p1);
                 game.chooseCharacter(charToSelect);
-                game.setCharacterInput(color1);
-                game.setCharacterInput(color2);
+                game.setCharacterInputs(Arrays.asList(color1, color2));
                 assertThrows(NotEnoughStudentsException.class, () -> c6.play(game), "not enough students");
                 color2--;
             }
             game.setCurrentPlayer(p1);
             game.chooseCharacter(charToSelect);
-            game.setCharacterInput(color1);
-            game.setCharacterInput(color2);
+            game.setCharacterInputs(Arrays.asList(color1, color2));
         } catch (GameException e) {
             fail();
         }
@@ -405,7 +401,7 @@ class CharacterCardTest {
         Bag test = new Bag((byte) 50);
         try {
             game.chooseCharacter(charToSelect);
-            game.setCharacterInput(-1);
+            game.setCharacterInputs(List.of(-1));
             assertThrows(NotAllowedException.class, () -> c8.play(game), "not valid inputs");
         } catch (GameException e) {
             e.printStackTrace();
@@ -430,7 +426,7 @@ class CharacterCardTest {
         }
         try {
             game.chooseCharacter(charToSelect);
-            game.setCharacterInput(4);
+            game.setCharacterInputs(List.of(4));
             c8.play(game);
             game.calculateInfluence(game.getIslands().get(4));
         } catch (GameException | EndGameException e) {
@@ -445,8 +441,7 @@ class CharacterCardTest {
     void playChar9() {
         try {
             game.chooseCharacter(charToSelect);
-            game.setCharacterInput(-1);
-            game.setCharacterInput(-1);
+            game.setCharacterInputs(Arrays.asList(-1, -1));
             assertThrows(NotAllowedException.class, () -> c9.play(game), "not valid inputs");
             game.setCurrentPlayer(p1);
         } catch (GameException e) {
@@ -457,8 +452,7 @@ class CharacterCardTest {
             p1.getLunchHall().moveStudents(Color.RED, p1.getLunchHall().howManyStudents(Color.RED), game.getBag());
             game.chooseCharacter(charToSelect);
             // first input is lunch hall color
-            game.setCharacterInput(Color.RED.ordinal());
-            game.setCharacterInput(1);
+            game.setCharacterInputs(Arrays.asList(Color.RED.ordinal(), 1));
             assertThrows(NotEnoughStudentsException.class, () -> c9.play(game), "can't swap this, no red students");
             game.setCurrentPlayer(p1);
         } catch (GameException e) {
@@ -467,8 +461,7 @@ class CharacterCardTest {
         try {
             // entranceHall has no students, should launch exception
             game.chooseCharacter(charToSelect);
-            game.setCharacterInput(1);
-            game.setCharacterInput(3);
+            game.setCharacterInputs(Arrays.asList(1, 3));
             assertThrows(NotEnoughStudentsException.class, () -> c9.play(game), "can't swap this, no red students");
             game.setCurrentPlayer(p1);
         } catch (GameException e) {
@@ -486,8 +479,7 @@ class CharacterCardTest {
         }
         try {
             game.chooseCharacter(charToSelect);
-            game.setCharacterInput(colorLunch);
-            game.setCharacterInput(Color.RED.ordinal());
+            game.setCharacterInputs(Arrays.asList(colorLunch, Color.RED.ordinal()));
         } catch (GameException e) {
             fail();
         }
@@ -531,13 +523,13 @@ class CharacterCardTest {
 
         try {
             game.chooseCharacter(charToSelect);
-            game.setCharacterInput(wrongColor);
+            game.setCharacterInputs(List.of(wrongColor));
 
             assertThrows(NotEnoughStudentsException.class, () -> c10.play(game), "Not enough students");
 
             game.setCurrentPlayer(p1);
             game.chooseCharacter(charToSelect);
-            game.setCharacterInput(color);
+            game.setCharacterInputs(List.of(color));
         } catch (GameException e) {
             fail();
         }
@@ -558,7 +550,7 @@ class CharacterCardTest {
         int color = rand.nextInt(Color.values().length);
         try {
             game.chooseCharacter(charToSelect);
-            game.setCharacterInput(-5);
+            game.setCharacterInputs(List.of(-5));
             assertThrows(NotAllowedException.class, () -> c11.play(game), "not valid inputs");
 
             for (Player p : game.getPlayers()) {
@@ -571,7 +563,7 @@ class CharacterCardTest {
             // also resets character inputs
             game.setCurrentPlayer(p1);
             game.chooseCharacter(charToSelect);
-            game.setCharacterInput(color);
+            game.setCharacterInputs(List.of(color));
         } catch (GameException e) {
             fail(e);
         }

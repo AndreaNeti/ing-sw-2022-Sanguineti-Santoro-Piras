@@ -1,10 +1,10 @@
 package it.polimi.ingsw.Client.View.Cli;
 
 import it.polimi.ingsw.Enum.Color;
-import it.polimi.ingsw.exceptions.clientExceptions.ScannerException;
+import it.polimi.ingsw.exceptions.clientExceptions.SkipCommandException;
 
 public interface ViewForCharacterCli {
-    Color getColorInput(boolean canBeStopped) throws ScannerException;
+    Color getColorInput(boolean canBeStopped) throws SkipCommandException;
 
-    int getIslandDestination(String message, boolean canBeStopped) throws ScannerException;
+    int getIslandDestination(String message, boolean canBeStopped) throws SkipCommandException;
 }

@@ -13,6 +13,8 @@ import it.polimi.ingsw.exceptions.serverExceptions.NotAllowedException;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -180,7 +182,7 @@ public class ExpertGameTest {
 
     @Test
     void characterInputsTest() {
-        assertThrows(NotAllowedException.class, () -> gameWith2.setCharacterInput(0), "There is no played character card");
+        assertThrows(NotAllowedException.class, () -> gameWith2.setCharacterInputs(List.of(0)), "There is no played character card");
         ArrayList<Integer> inputs = new ArrayList<>();
         gameWith2.setCurrentPlayer(p1_2);
         try {
@@ -200,10 +202,9 @@ public class ExpertGameTest {
         }
         try {
             gameWith2.chooseCharacter(gameWith2.transformAllGameInDelta().getCharacters().get(0));
-            for (int i = 0; i < 5; i++) {
-                gameWith2.setCharacterInput(i);
+            for (int i = 0; i < 5; i++)
                 inputs.add(i);
-            }
+            gameWith2.setCharacterInputs(inputs);
         } catch (GameException e) {
             fail();
         }
@@ -232,26 +233,28 @@ public class ExpertGameTest {
         } catch (GameException e) {
             fail();
         }
+        List<Integer> inputs = new ArrayList<>();
         try {
-            for (int i = 0; i < 3; i++) {
-                gameWith2.setCharacterInput(i);
-            }
+            for (int i = 0; i < 3; i++)
+                inputs.add(i);
+            gameWith2.setCharacterInputs(inputs);
+            inputs.clear();
         } catch (GameException e) {
             fail();
         }
         assertThrows(NotAllowedException.class, () -> gameWith2.playCharacter());
         try {
-            for (int i = 0; i < 5; i++) {
-                gameWith2.setCharacterInput(i);
-            }
+            for (int i = 0; i < 5; i++)
+                inputs.add(i);
+            gameWith2.setCharacterInputs(inputs);
         } catch (GameException e) {
             fail();
         }
         assertThrows(NotAllowedException.class, () -> gameWith2.playCharacter());
         try {
-            for (int i = 0; i < 10; i++) {
-                gameWith2.setCharacterInput(i);
-            }
+            for (int i = 0; i < 10; i++)
+                inputs.add(i);
+            gameWith2.setCharacterInputs(inputs);
         } catch (GameException e) {
             fail();
         }
@@ -263,14 +266,13 @@ public class ExpertGameTest {
             boolean worked = false;
             for (int i = 0; i < 5 && !worked; i++) {
                 try {
-                    gameWith2.setCharacterInput(i);
+                    gameWith2.setCharacterInputs(List.of(i));
                     gameWith2.playCharacter();
                     worked = true;
                 } catch (GameException | EndGameException e1) {
                     for (int j = 0; j < 5 && !worked; j++) {
                         try {
-                            gameWith2.setCharacterInput(j);
-                            gameWith2.setCharacterInput(i);
+                            gameWith2.setCharacterInputs(Arrays.asList(j, i));
                             gameWith2.playCharacter();
                             worked = true;
                         } catch (GameException | EndGameException ignored) {

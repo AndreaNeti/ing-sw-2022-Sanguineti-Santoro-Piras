@@ -8,6 +8,7 @@ import it.polimi.ingsw.exceptions.serverExceptions.GameException;
 import it.polimi.ingsw.exceptions.serverExceptions.NotAllowedException;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public interface Game {
     void move(Color color, int idGameComponentSource, int idGameComponentDestination) throws GameException;
@@ -22,7 +23,7 @@ public interface Game {
 
     void refillClouds() throws EndGameException;
 
-    void setCharacterInput(int input) throws GameException;
+    void setCharacterInputs(List<Integer> input) throws GameException;
 
     void chooseCharacter(byte indexCharacter) throws GameException;
 

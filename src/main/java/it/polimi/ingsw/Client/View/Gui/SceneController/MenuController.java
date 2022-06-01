@@ -1,7 +1,6 @@
 package it.polimi.ingsw.Client.View.Gui.SceneController;
 
 import it.polimi.ingsw.Client.PhaseAndComand.Phases.ClientPhase;
-import it.polimi.ingsw.Client.View.AbstractView;
 import it.polimi.ingsw.Client.View.GameClientListener;
 import it.polimi.ingsw.Client.model.CharacterCardClient;
 import it.polimi.ingsw.Client.model.GameComponentClient;
@@ -10,7 +9,6 @@ import it.polimi.ingsw.Enum.Color;
 import it.polimi.ingsw.Enum.HouseColor;
 import it.polimi.ingsw.Enum.Wizard;
 import it.polimi.ingsw.Server.model.AssistantCard;
-import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;

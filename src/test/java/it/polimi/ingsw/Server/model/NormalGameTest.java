@@ -507,7 +507,7 @@ public class NormalGameTest {
 
     @Test
     void setCharacterInput() {
-        assertThrows(NotExpertGameException.class, () -> gameWith2.setCharacterInput(0));
+        assertThrows(NotExpertGameException.class, () -> gameWith2.setCharacterInputs(List.of(0)));
     }
 
     @Test
