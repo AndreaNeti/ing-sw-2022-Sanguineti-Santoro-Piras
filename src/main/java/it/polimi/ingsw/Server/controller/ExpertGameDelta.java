@@ -1,6 +1,6 @@
 package it.polimi.ingsw.Server.controller;
 
-import it.polimi.ingsw.Enum.Color;
+import it.polimi.ingsw.Util.Color;
 
 import java.util.*;
 

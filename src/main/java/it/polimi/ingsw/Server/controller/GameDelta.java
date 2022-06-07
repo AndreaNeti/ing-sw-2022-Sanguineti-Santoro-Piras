@@ -1,9 +1,9 @@
 package it.polimi.ingsw.Server.controller;
 
-import it.polimi.ingsw.Enum.Color;
-import it.polimi.ingsw.Enum.HouseColor;
-import it.polimi.ingsw.Enum.Wizard;
-import it.polimi.ingsw.Server.model.AssistantCard;
+import it.polimi.ingsw.Util.Color;
+import it.polimi.ingsw.Util.HouseColor;
+import it.polimi.ingsw.Util.Wizard;
+import it.polimi.ingsw.Util.AssistantCard;
 import it.polimi.ingsw.Server.model.GameComponents.GameComponent;
 import it.polimi.ingsw.Server.model.GameComponents.Island;
 import it.polimi.ingsw.network.toClientMessage.DeltaUpdate;

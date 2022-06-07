@@ -3,11 +3,9 @@ package it.polimi.ingsw.Client.View.Gui;
 import it.polimi.ingsw.Client.Controller.ControllerClient;
 import it.polimi.ingsw.Client.PhaseAndComand.Phases.ClientPhase;
 import it.polimi.ingsw.Client.View.AbstractView;
-import it.polimi.ingsw.Client.View.Gui.SceneController.SceneController;
 import javafx.application.Platform;
 
 public class ViewGUI extends AbstractView {
-    private SceneController sceneController;
     private ClientPhase phaseToExecute;
 
     public ViewGUI(ControllerClient controllerClient) {
@@ -23,10 +21,7 @@ public class ViewGUI extends AbstractView {
         } else {
             Platform.runLater(GuiFX::goToBoardScene);
         }
-        Platform.runLater(() -> {
-            sceneController = GuiFX.getSceneController();
-            phaseToExecute.playPhase(this, sceneController);
-        });
+        Platform.runLater(() -> phaseToExecute.playPhase(this));
     }
 
 

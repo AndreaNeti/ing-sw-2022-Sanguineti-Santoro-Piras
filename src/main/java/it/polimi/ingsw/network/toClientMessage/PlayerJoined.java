@@ -1,7 +1,7 @@
 package it.polimi.ingsw.network.toClientMessage;
 
 import it.polimi.ingsw.Client.Controller.ControllerClient;
-import it.polimi.ingsw.Enum.HouseColor;
+import it.polimi.ingsw.Util.HouseColor;
 import it.polimi.ingsw.Server.model.Player;
 
 public class PlayerJoined implements ToClientMessage {

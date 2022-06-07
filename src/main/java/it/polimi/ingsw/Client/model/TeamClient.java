@@ -1,6 +1,6 @@
 package it.polimi.ingsw.Client.model;
 
-import it.polimi.ingsw.Enum.HouseColor;
+import it.polimi.ingsw.Util.HouseColor;
 import it.polimi.ingsw.Server.controller.MatchConstants;
 import it.polimi.ingsw.Server.model.Player;
 

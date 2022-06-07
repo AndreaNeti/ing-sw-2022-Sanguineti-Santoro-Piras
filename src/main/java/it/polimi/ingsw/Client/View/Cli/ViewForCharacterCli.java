@@ -1,6 +1,6 @@
 package it.polimi.ingsw.Client.View.Cli;
 
-import it.polimi.ingsw.Enum.Color;
+import it.polimi.ingsw.Util.Color;
 import it.polimi.ingsw.exceptions.clientExceptions.SkipCommandException;
 
 public interface ViewForCharacterCli {

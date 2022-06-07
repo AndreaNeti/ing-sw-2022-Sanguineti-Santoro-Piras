@@ -1,6 +1,6 @@
 package it.polimi.ingsw.Server.model.GameComponents;
 
-import it.polimi.ingsw.Enum.HouseColor;
+import it.polimi.ingsw.Util.HouseColor;
 import it.polimi.ingsw.exceptions.serverExceptions.NotAllowedException;
 
 public class Island extends GameComponent {

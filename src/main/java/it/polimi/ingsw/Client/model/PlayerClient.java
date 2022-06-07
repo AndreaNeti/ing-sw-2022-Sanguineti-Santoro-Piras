@@ -1,7 +1,7 @@
 package it.polimi.ingsw.Client.model;
 
-import it.polimi.ingsw.Enum.Wizard;
-import it.polimi.ingsw.Server.model.AssistantCard;
+import it.polimi.ingsw.Util.Wizard;
+import it.polimi.ingsw.Util.AssistantCard;
 import it.polimi.ingsw.Server.model.Player;
 
 import java.util.List;

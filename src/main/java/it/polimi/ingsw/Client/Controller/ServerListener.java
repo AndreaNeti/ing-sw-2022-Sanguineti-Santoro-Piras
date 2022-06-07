@@ -1,6 +1,6 @@
 package it.polimi.ingsw.Client.Controller;
 
-import it.polimi.ingsw.Enum.GamePhase;
+import it.polimi.ingsw.Util.GamePhase;
 import it.polimi.ingsw.network.toClientMessage.ToClientMessage;
 
 import java.io.IOException;

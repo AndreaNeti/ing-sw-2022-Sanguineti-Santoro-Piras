@@ -1,6 +1,6 @@
 package it.polimi.ingsw.Server.model;
 
-import it.polimi.ingsw.Enum.Color;
+import it.polimi.ingsw.Util.Color;
 import it.polimi.ingsw.Server.model.GameComponents.GameComponent;
 import it.polimi.ingsw.exceptions.serverExceptions.EndGameException;
 import it.polimi.ingsw.exceptions.serverExceptions.GameException;

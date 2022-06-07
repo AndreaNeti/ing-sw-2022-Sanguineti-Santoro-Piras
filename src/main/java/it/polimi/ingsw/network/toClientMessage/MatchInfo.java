@@ -1,7 +1,7 @@
 package it.polimi.ingsw.network.toClientMessage;
 
 import it.polimi.ingsw.Client.Controller.ControllerClient;
-import it.polimi.ingsw.Enum.Wizard;
+import it.polimi.ingsw.Util.Wizard;
 import it.polimi.ingsw.Server.controller.MatchType;
 import it.polimi.ingsw.Server.model.Team;
 

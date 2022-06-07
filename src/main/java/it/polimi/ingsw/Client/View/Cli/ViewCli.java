@@ -7,10 +7,11 @@ import it.polimi.ingsw.Client.model.CharacterCardClient;
 import it.polimi.ingsw.Client.model.GameClientView;
 import it.polimi.ingsw.Client.model.GameComponentClient;
 import it.polimi.ingsw.Client.model.IslandClient;
-import it.polimi.ingsw.Enum.Color;
-import it.polimi.ingsw.Enum.GamePhase;
+import it.polimi.ingsw.Util.Color;
+import it.polimi.ingsw.Util.GamePhase;
 import it.polimi.ingsw.Server.controller.MatchType;
-import it.polimi.ingsw.Server.model.AssistantCard;
+import it.polimi.ingsw.Util.AssistantCard;
+import it.polimi.ingsw.Util.IPAddress;
 import it.polimi.ingsw.exceptions.clientExceptions.SkipCommandException;
 
 import java.util.*;
@@ -36,8 +37,7 @@ public class ViewCli extends AbstractView implements ViewForCharacterCli {
                         isInputReady = true;
                         requestInput = false;
                         notifyAll();
-                        while (!requestInput && !canQuit())
-                            wait();
+                        while (!requestInput && !canQuit()) wait();
                     }
                 }
             } catch (Exception ignored) {
@@ -58,8 +58,7 @@ public class ViewCli extends AbstractView implements ViewForCharacterCli {
     public void start() throws InterruptedException {
         do {
             synchronized (this) {
-                while (phaseToExecute == null)
-                    wait();
+                while (phaseToExecute == null) wait();
                 cliPrinter.printGame();
                 phaseToExecute.playPhase(this);
             }
@@ -71,8 +70,7 @@ public class ViewCli extends AbstractView implements ViewForCharacterCli {
     public synchronized void setPhaseInView(ClientPhase clientPhase, boolean forceImmediateExecution) {
         phaseToExecute = clientPhase;
         phaseChanged = true;
-        if (forceImmediateExecution)
-            forcedScannerSkip = true;
+        if (forceImmediateExecution) forcedScannerSkip = true;
         notifyAll();
     }
 
@@ -82,8 +80,7 @@ public class ViewCli extends AbstractView implements ViewForCharacterCli {
 
     protected synchronized void setMustReprint(boolean reprint) {
         this.mustReprint = reprint;
-        if (reprint)
-            notifyAll();
+        if (reprint) notifyAll();
     }
 
     private String optionString(int value, String option) {
@@ -171,35 +168,16 @@ public class ViewCli extends AbstractView implements ViewForCharacterCli {
 
     public byte[] getIpAddressInput(boolean canBeStopped) throws SkipCommandException {
         String input = getStringInput("Select server IP", 15, canBeStopped);
-        byte[] ret = getIpFromString(input);
+        byte[] ret = IPAddress.getIpFromString(input);
         while (ret == null) {
             cliPrinter.printGame();
             System.err.println("Not a valid IP");
             input = getStringInput("Select server IP", 15, canBeStopped);
-            ret = getIpFromString(input);
+            ret = IPAddress.getIpFromString(input);
         }
         return ret;
     }
 
-    // return null if it's not a valid ip, otherwise returns the IP bytes
-    public byte[] getIpFromString(String ip) {
-        ip = ip.toLowerCase();
-        if (ip.equals("localhost") || ip.equals("l") || ip.equals("paolino")) return new byte[]{127, 0, 0, 1};
-        String[] bytes = ip.split("[.]");
-        if (bytes.length != 4) return null;
-        byte[] ret = new byte[4];
-        for (byte i = 0; i < 4; i++) {
-            int x; // just because java doesn't have unsigned bytes
-            try {
-                x = Integer.parseInt(bytes[i]);
-            } catch (NumberFormatException e) {
-                return null;
-            }
-            if (x < 0 || x > 255) return null;
-            ret[i] = (byte) x;
-        }
-        return ret;
-    }
 
     @Override
     public Color getColorInput(boolean canBeStopped) throws SkipCommandException {
@@ -361,8 +339,7 @@ public class ViewCli extends AbstractView implements ViewForCharacterCli {
                 // reprint game, if phase changed will reprint in next phase
                 cliPrinter.printGame();
                 // if one of these conditions is true it should not repeat the command, skip instead to the new one
-                if (!(isInputReady || forcedScannerSkip))
-                    repeatCommand = true;
+                if (!(isInputReady || forcedScannerSkip)) repeatCommand = true;
             }
         } while (repeatCommand);
         // if input is ready, return it

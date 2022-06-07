@@ -1,6 +1,5 @@
 package it.polimi.ingsw.Client.PhaseAndComand.Phases;
 
-import it.polimi.ingsw.Client.View.Gui.SceneController.SceneController;
 import it.polimi.ingsw.Client.View.Gui.ViewGUI;
 
 public class MoveCloudPhase extends ClientPhase {
@@ -9,7 +8,7 @@ public class MoveCloudPhase extends ClientPhase {
     }
 
     @Override
-    public void playPhase(ViewGUI viewGUI, SceneController sceneController) {
+    public void playPhase(ViewGUI viewGUI) {
 
     }
 

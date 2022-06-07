@@ -2,12 +2,23 @@ package it.polimi.ingsw.Client.PhaseAndComand.Commands;
 
 import it.polimi.ingsw.Client.PhaseAndComand.Phases.ClientPhase;
 import it.polimi.ingsw.Client.View.Cli.ViewCli;
+import it.polimi.ingsw.Client.View.Gui.GuiFX;
+import it.polimi.ingsw.Client.View.Gui.SceneController.SceneController;
+import it.polimi.ingsw.Client.View.Gui.ViewGUI;
 import it.polimi.ingsw.Client.model.CharacterCardClient;
 import it.polimi.ingsw.Client.model.GameComponentClient;
-import it.polimi.ingsw.Enum.Color;
-import it.polimi.ingsw.Enum.GamePhase;
+import it.polimi.ingsw.Server.controller.MatchType;
+import it.polimi.ingsw.Util.Color;
+import it.polimi.ingsw.Util.GamePhase;
+import it.polimi.ingsw.Util.IPAddress;
 import it.polimi.ingsw.exceptions.clientExceptions.SkipCommandException;
 import it.polimi.ingsw.network.toServerMessage.*;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.scene.control.Alert;
+import javafx.scene.control.RadioButton;
+import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleGroup;
 
 import java.util.List;
 
@@ -23,11 +34,29 @@ public enum GameCommand {
         }
 
         @Override
+        public EventHandler<ActionEvent> getGUIHandler(ViewGUI viewGUI) {
+            return actionEvent -> {
+                SceneController sceneController = GuiFX.getSceneController();
+                TextField t = (TextField) sceneController.getElementById("#inputIp");
+                String ipString = t.getText();
+                if (ipString == null) {
+                    showInputError();
+                    return;
+                }
+                byte[] ip = IPAddress.getIpFromString(ipString);
+                if (ip == null) {
+                    t.setText(null);
+                } else {
+                    if (!viewGUI.connectToServer(ip)) viewGUI.addMessage("Server Error: Cannot connect to this server");
+                }
+            };
+        }
+
+        @Override
         public String toString() {
             return "Connect to server";
         }
-    },
-    SET_NICKNAME() {
+    }, SET_NICKNAME() {
         @Override
         public void playCLICommand(ViewCli viewCli) throws SkipCommandException {
             String nick = viewCli.getStringInput("Select nickname", 16, false);
@@ -35,33 +64,74 @@ public enum GameCommand {
         }
 
         @Override
+        public EventHandler<ActionEvent> getGUIHandler(ViewGUI viewGUI) {
+            return actionEvent -> {
+                SceneController sceneController = GuiFX.getSceneController();
+                TextField t = (TextField) sceneController.getElementById("#inputNickName");
+                String nick = t.getText();
+                if (nick == null || nick.isBlank()) {
+                    showInputError();
+                    return;
+                }
+                viewGUI.sendToServer(new NickName(nick));
+            };
+        }
+
+        @Override
         public String toString() {
             return "Set nickname";
         }
-    },
-    CREATE_MATCH() {
+    }, CREATE_MATCH() {
         @Override
         public void playCLICommand(ViewCli viewCli) throws SkipCommandException {
             viewCli.sendToServer(new CreateMatch(viewCli.getMatchTypeInput(false)));
         }
 
         @Override
+        public EventHandler<ActionEvent> getGUIHandler(ViewGUI viewGUI) {
+            return actionEvent -> {
+                try {
+                    RadioButton r = (RadioButton) GuiFX.getSceneController().getElementById("#gameType");
+                    boolean isExpert = r.getText().equals("ExpertGame");
+                    RadioButton r1 = (RadioButton) GuiFX.getSceneController().getElementById("#player");
+                    byte players = Byte.parseByte(r1.getText());
+                    viewGUI.sendToServer(new CreateMatch(new MatchType(players, isExpert)));
+                } catch (IllegalArgumentException | NullPointerException ex) {
+                    showInputError();
+                }
+            };
+        }
+
+        @Override
         public String toString() {
             return "Create match";
         }
-    },
-    JOIN_MATCH_BY_TYPE() {
+    }, JOIN_MATCH_BY_TYPE() {
         @Override
         public void playCLICommand(ViewCli viewCli) throws SkipCommandException {
             viewCli.sendToServer(new JoinMatchByType(viewCli.getMatchTypeInput(false)));
         }
 
         @Override
+        public EventHandler<ActionEvent> getGUIHandler(ViewGUI viewGUI) {
+            return actionEvent -> {
+                try {
+                    RadioButton r = (RadioButton) GuiFX.getSceneController().getElementById("#gameType");
+                    boolean isExpert = r.getText().equals("ExpertGame");
+                    RadioButton r1 = (RadioButton) GuiFX.getSceneController().getElementById("#player");
+                    byte players = Byte.parseByte(r1.getText());
+                    viewGUI.sendToServer(new JoinMatchByType(new MatchType(players, isExpert)));
+                } catch (IllegalArgumentException | NullPointerException ex) {
+                    showInputError();
+                }
+            };
+        }
+
+        @Override
         public String toString() {
             return "Join match by type";
         }
-    },
-    JOIN_MATCH_BY_ID() {
+    }, JOIN_MATCH_BY_ID() {
         @Override
         public void playCLICommand(ViewCli viewCli) throws SkipCommandException {
             long ID = viewCli.getLongInput("Write game ID", false);
@@ -69,11 +139,23 @@ public enum GameCommand {
         }
 
         @Override
+        public EventHandler<ActionEvent> getGUIHandler(ViewGUI viewGUI) {
+            return actionEvent -> {
+                SceneController sceneController = GuiFX.getSceneController();
+                TextField t = (TextField) sceneController.getElementById("#inputIdMatch");
+                try {
+                    viewGUI.sendToServer(new JoinMatchById(Long.parseLong(t.getText())));
+                } catch (IllegalArgumentException ex) {
+                    showInputError();
+                }
+            };
+        }
+
+        @Override
         public String toString() {
             return "Join match by ID";
         }
-    },
-    PLAY_CARD() {
+    }, PLAY_CARD() {
         @Override
         public void playCLICommand(ViewCli viewCli) throws SkipCommandException {
             viewCli.sendToServer(new PlayCard(viewCli.getAssistantCardToPlayInput(false)));
@@ -83,8 +165,7 @@ public enum GameCommand {
         public String toString() {
             return "Play card";
         }
-    },
-    MOVE_STUDENT() {
+    }, MOVE_STUDENT() {
         @Override
         public void playCLICommand(ViewCli viewCli) throws SkipCommandException {
             // request the student color
@@ -98,8 +179,7 @@ public enum GameCommand {
         public String toString() {
             return "Move student";
         }
-    },
-    CHOOSE_CHARACTER() {
+    }, CHOOSE_CHARACTER() {
         @Override
         public void playCLICommand(ViewCli viewCli) throws SkipCommandException {
             int index = viewCli.getCharacterCharToPlayInput();
@@ -113,17 +193,14 @@ public enum GameCommand {
         public String toString() {
             return "Choose a character card";
         }
-    },
-    SET_CHARACTER_INPUT() {
+    }, SET_CHARACTER_INPUT() {
         @Override
         public void playCLICommand(ViewCli viewCli) throws SkipCommandException {
             CharacterCardClient current = viewCli.getCurrentCharacterCard();
-            if (current.isFull())
-                viewCli.addMessage("Can't add more inputs to this character");
+            if (current.isFull()) viewCli.addMessage("Can't add more inputs to this character");
             else {
                 current.setNextInput(viewCli);
-                if (current.canPlay())
-                    viewCli.addMessage("Card can already be played");
+                if (current.canPlay()) viewCli.addMessage("Card can already be played");
             }
             viewCli.repeatPhase(false);
         }
@@ -132,8 +209,7 @@ public enum GameCommand {
         public String toString() {
             return "Set the input for the character";
         }
-    },
-    PLAY_CHARACTER() {
+    }, PLAY_CHARACTER() {
         @Override
         public void playCLICommand(ViewCli viewCli) throws SkipCommandException {
             CharacterCardClient current = viewCli.getCurrentCharacterCard();
@@ -158,8 +234,7 @@ public enum GameCommand {
         public String toString() {
             return "Play character";
         }
-    },
-    MOVE_MOTHER_NATURE() {
+    }, MOVE_MOTHER_NATURE() {
         @Override
         public void playCLICommand(ViewCli viewCli) throws SkipCommandException {
             viewCli.sendToServer(new MoveMotherNature(viewCli.getMotherNatureMovesInput(false)));
@@ -169,8 +244,7 @@ public enum GameCommand {
         public String toString() {
             return "Move mother nature";
         }
-    },
-    MOVE_FROM_CLOUD() {
+    }, MOVE_FROM_CLOUD() {
         @Override
         public void playCLICommand(ViewCli viewCli) throws SkipCommandException {
             viewCli.sendToServer(new MoveFromCloud(viewCli.getCloudSource(false)));
@@ -180,8 +254,7 @@ public enum GameCommand {
         public String toString() {
             return "Move from cloud";
         }
-    },
-    TEXT_MESSAGE() {
+    }, TEXT_MESSAGE() {
         @Override
         public void playCLICommand(ViewCli viewCli) throws SkipCommandException {
             String comment = viewCli.getStringInput("Comment", 50, false);
@@ -194,8 +267,7 @@ public enum GameCommand {
         public String toString() {
             return "Send message";
         }
-    },
-    UNDO() {
+    }, UNDO() {
         @Override
         public void playCLICommand(ViewCli viewCli) {
             if (viewCli.getCurrentCharacterCard() != null) {
@@ -210,14 +282,12 @@ public enum GameCommand {
         public String toString() {
             return "Undo";
         }
-    },
-    QUIT() {
+    }, QUIT() {
         @Override
         public void playCLICommand(ViewCli viewCli) throws SkipCommandException {
             if (viewCli.getBooleanInput("Quit?", false)) {
                 viewCli.setQuit(false);
-            } else
-                viewCli.repeatPhase(false);
+            } else viewCli.repeatPhase(false);
         }
 
         @Override
@@ -226,12 +296,23 @@ public enum GameCommand {
         }
     };
 
-    public void playCLICommand(ViewCli viewCli) throws SkipCommandException {
+    public abstract void playCLICommand(ViewCli viewCli) throws SkipCommandException;
+
+    //TODO set this function abstract
+    public EventHandler<ActionEvent> getGUIHandler(ViewGUI viewGUI) {
+        return null;
     }
 
     public void attachToAPhase(List<ClientPhase> clientPhases) {
         for (ClientPhase clientPhase : clientPhases) {
             clientPhase.addCommand(this);
         }
+    }
+
+    public void showInputError() {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Input fields empty");
+        alert.setContentText("Input not valid");
+        alert.showAndWait();
     }
 }

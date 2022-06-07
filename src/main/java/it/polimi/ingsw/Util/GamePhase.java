@@ -1,4 +1,4 @@
-package it.polimi.ingsw.Enum;
+package it.polimi.ingsw.Util;
 
 public enum GamePhase {
     INIT_PHASE, NICK_PHASE, SELECT_MATCH_PHASE, WAIT_PHASE, PLANIFICATION_PHASE, MOVE_ST_PHASE, MOVE_MN_PHASE, MOVE_CL_PHASE, PLAY_CH_CARD_PHASE,

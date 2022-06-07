@@ -3,10 +3,10 @@ package it.polimi.ingsw.Client.View;
 import it.polimi.ingsw.Client.model.CharacterCardClient;
 import it.polimi.ingsw.Client.model.GameComponentClient;
 import it.polimi.ingsw.Client.model.IslandClient;
-import it.polimi.ingsw.Enum.Color;
-import it.polimi.ingsw.Enum.HouseColor;
-import it.polimi.ingsw.Enum.Wizard;
-import it.polimi.ingsw.Server.model.AssistantCard;
+import it.polimi.ingsw.Util.Color;
+import it.polimi.ingsw.Util.HouseColor;
+import it.polimi.ingsw.Util.Wizard;
+import it.polimi.ingsw.Util.AssistantCard;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +34,9 @@ public interface GameClientListener {
 
     //TODO update with coins, character
     void updateCardPlayed(AssistantCard playedCard);
+
     void updateIgnoredColor(Color color);
+
     void updateExtraSteps(boolean extraSteps);
 
     void updateCharacter(List<CharacterCardClient> characters);
@@ -43,7 +45,7 @@ public interface GameClientListener {
 
     void setWinners(List<HouseColor> winners);
 
-    void update();
-    //void setModel(GameClientView model);
+    void updateMessage(String message);
+
 
 }

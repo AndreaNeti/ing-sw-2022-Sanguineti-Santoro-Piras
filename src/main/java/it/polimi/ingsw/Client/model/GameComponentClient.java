@@ -1,6 +1,6 @@
 package it.polimi.ingsw.Client.model;
 
-import it.polimi.ingsw.Enum.Color;
+import it.polimi.ingsw.Util.Color;
 import it.polimi.ingsw.Server.model.GameComponents.GameComponent;
 
 import java.util.Arrays;

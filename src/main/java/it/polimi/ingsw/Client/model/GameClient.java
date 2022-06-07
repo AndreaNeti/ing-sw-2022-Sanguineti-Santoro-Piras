@@ -1,13 +1,13 @@
 package it.polimi.ingsw.Client.model;
 
 import it.polimi.ingsw.Client.GameClientListened;
-import it.polimi.ingsw.Enum.Color;
-import it.polimi.ingsw.Enum.HouseColor;
-import it.polimi.ingsw.Enum.Wizard;
+import it.polimi.ingsw.Util.Color;
+import it.polimi.ingsw.Util.HouseColor;
+import it.polimi.ingsw.Util.Wizard;
 import it.polimi.ingsw.Server.controller.MatchConstants;
 import it.polimi.ingsw.Server.controller.MatchType;
 import it.polimi.ingsw.Server.controller.Server;
-import it.polimi.ingsw.Server.model.AssistantCard;
+import it.polimi.ingsw.Util.AssistantCard;
 import it.polimi.ingsw.Server.model.GameComponents.GameComponent;
 
 import java.util.*;
@@ -249,9 +249,10 @@ public class GameClient extends GameClientListened implements GameClientView {
 
     @Override
     public List<CharacterCardClient> getCharacters() {
-        //lockForCharacter.lock();
-        //lockForCharacter.unlock();
-        return Stream.concat(characters.stream(), charactersWithStudents.stream()).collect(Collectors.toList());
+        lockForCharacter.lock();
+        List<CharacterCardClient> characterCardClients = Stream.concat(characters.stream(), charactersWithStudents.stream()).collect(Collectors.toList());
+        lockForCharacter.unlock();
+        return characterCardClients;
     }
 
     public void setCharacters(List<Byte> charactersReceived) {

@@ -2,10 +2,10 @@ package it.polimi.ingsw.Client.View.Cli;
 
 import it.polimi.ingsw.Client.View.GameClientListener;
 import it.polimi.ingsw.Client.model.*;
-import it.polimi.ingsw.Enum.Color;
-import it.polimi.ingsw.Enum.HouseColor;
-import it.polimi.ingsw.Enum.Wizard;
-import it.polimi.ingsw.Server.model.AssistantCard;
+import it.polimi.ingsw.Util.Color;
+import it.polimi.ingsw.Util.HouseColor;
+import it.polimi.ingsw.Util.Wizard;
+import it.polimi.ingsw.Util.AssistantCard;
 import org.fusesource.jansi.AnsiConsole;
 
 import java.io.IOException;
@@ -252,7 +252,7 @@ public class CliPrinter implements GameClientListener {
                 for (Color c : Color.values()) {
                     if (p.getLunchHall().howManyStudents(c) >= i)
                         stud.append(" ").append(colors[c.ordinal()]).append("\u25cf\u001b[0m ");
-                    else if (i%3 == 0 && expert)
+                    else if (i % 3 == 0 && expert)
                         stud.append(" \u25ef ");
                     else
                         stud.append("   ");
@@ -490,10 +490,9 @@ public class CliPrinter implements GameClientListener {
     }
 
     @Override
-    public void update() {
+    public void updateMessage(String message) {
         view.setMustReprint(true);
     }
-
     public void clearConsole() {
         System.out.print("\033[H\033[2J");
         System.out.flush();

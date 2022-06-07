@@ -1,6 +1,5 @@
 package it.polimi.ingsw.Client.PhaseAndComand.Phases;
 
-import it.polimi.ingsw.Client.View.Gui.SceneController.SceneController;
 import it.polimi.ingsw.Client.View.Gui.ViewGUI;
 
 public class MoveMotherNaturePhase extends ClientPhase {
@@ -9,7 +8,7 @@ public class MoveMotherNaturePhase extends ClientPhase {
         super();
     }
 
-    public void playPhase(ViewGUI viewGUI, SceneController sceneController) {
+    public void playPhase(ViewGUI viewGUI) {
 
     }
 

@@ -6,10 +6,10 @@ import it.polimi.ingsw.Client.View.AbstractView;
 import it.polimi.ingsw.Client.model.GameClient;
 import it.polimi.ingsw.Client.model.PlayerClient;
 import it.polimi.ingsw.Client.model.TeamClient;
-import it.polimi.ingsw.Enum.Color;
-import it.polimi.ingsw.Enum.GamePhase;
-import it.polimi.ingsw.Enum.HouseColor;
-import it.polimi.ingsw.Enum.Wizard;
+import it.polimi.ingsw.Util.Color;
+import it.polimi.ingsw.Util.GamePhase;
+import it.polimi.ingsw.Util.HouseColor;
+import it.polimi.ingsw.Util.Wizard;
 import it.polimi.ingsw.Server.controller.GameDelta;
 import it.polimi.ingsw.Server.controller.MatchConstants;
 import it.polimi.ingsw.Server.controller.MatchType;
@@ -61,7 +61,7 @@ public class ControllerClient extends GameClientListened {
 
     public void addMessage(String message) {
         chat.add(new String(message.getBytes(StandardCharsets.UTF_8), StandardCharsets.UTF_8));
-        notifyView();
+        notifyMessage(message);
     }
 
     public ArrayList<String> getChat() {

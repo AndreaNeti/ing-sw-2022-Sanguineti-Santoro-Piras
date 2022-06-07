@@ -1,7 +1,7 @@
 package it.polimi.ingsw.Server.model;
 
-import it.polimi.ingsw.Enum.Color;
-import it.polimi.ingsw.Enum.HouseColor;
+import it.polimi.ingsw.Util.Color;
+import it.polimi.ingsw.Util.HouseColor;
 import it.polimi.ingsw.Server.controller.ExpertGameDelta;
 import it.polimi.ingsw.Server.controller.GameDelta;
 import it.polimi.ingsw.Server.controller.MatchConstants;

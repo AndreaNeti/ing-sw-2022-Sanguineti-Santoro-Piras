@@ -2,7 +2,7 @@ package it.polimi.ingsw.Client.View.Gui;
 
 import it.polimi.ingsw.Client.Controller.ControllerClient;
 import it.polimi.ingsw.Client.View.Gui.SceneController.SceneController;
-import it.polimi.ingsw.Enum.GamePhase;
+import it.polimi.ingsw.Util.GamePhase;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -38,7 +38,7 @@ public class GuiFX extends Application {
                 e.printStackTrace();
             }
             sceneController = loader.getController();
-            sceneController.setView(viewGUI);
+            sceneController.setViewGUI(viewGUI);
             controller.addListener(sceneController);
         }
         primaryStage.setScene(boardScene);
@@ -57,7 +57,7 @@ public class GuiFX extends Application {
                 e.printStackTrace();
             }
             sceneController = loader.getController();
-            sceneController.setView(viewGUI);
+            sceneController.setViewGUI(viewGUI);
             controller.addListener(sceneController);
         }
         primaryStage.setScene(menuScene);

@@ -2,7 +2,6 @@ package it.polimi.ingsw.Client.PhaseAndComand.Phases;
 
 import it.polimi.ingsw.Client.PhaseAndComand.Commands.GameCommand;
 import it.polimi.ingsw.Client.View.Cli.ViewCli;
-import it.polimi.ingsw.Client.View.Gui.SceneController.SceneController;
 import it.polimi.ingsw.Client.View.Gui.ViewGUI;
 import it.polimi.ingsw.exceptions.clientExceptions.SkipCommandException;
 
@@ -28,7 +27,7 @@ public abstract class ClientPhase {
         }
     }
 
-    public abstract void playPhase(ViewGUI viewGUI, SceneController sceneController);
+    public abstract void playPhase(ViewGUI viewGUI);
 
     public void addCommand(GameCommand command) {
         gameCommands.add(command);

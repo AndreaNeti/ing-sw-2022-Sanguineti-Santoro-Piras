@@ -1,13 +1,15 @@
 package it.polimi.ingsw.Client.View.Gui.SceneController;
 
 import it.polimi.ingsw.Client.View.AbstractView;
+import it.polimi.ingsw.Client.View.Gui.ViewGUI;
 import it.polimi.ingsw.Client.model.CharacterCardClient;
 import it.polimi.ingsw.Client.model.GameComponentClient;
 import it.polimi.ingsw.Client.model.IslandClient;
-import it.polimi.ingsw.Enum.Color;
-import it.polimi.ingsw.Enum.HouseColor;
-import it.polimi.ingsw.Enum.Wizard;
-import it.polimi.ingsw.Server.model.AssistantCard;
+import it.polimi.ingsw.Util.Color;
+import it.polimi.ingsw.Util.HouseColor;
+import it.polimi.ingsw.Util.Wizard;
+import it.polimi.ingsw.Util.AssistantCard;
+import javafx.scene.Node;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +19,6 @@ public class BoardController implements SceneController {
 
     @Override
     public void updateMotherNature(Byte motherNaturePosition) {
-
     }
 
     @Override
@@ -86,12 +87,21 @@ public class BoardController implements SceneController {
     }
 
     @Override
-    public void update() {
+    public void updateMessage(String message) {
+
+    }
+    @Override
+    public void setViewGUI(ViewGUI viewGUI) {
+        view = viewGUI;
+    }
+
+    @Override
+    public void hideEverything() {
 
     }
 
     @Override
-    public void setView(AbstractView abstractView) {
-        view = abstractView;
+    public Node getElementById(String id) {
+        return null;
     }
 }

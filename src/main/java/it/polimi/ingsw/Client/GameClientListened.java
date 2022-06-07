@@ -4,10 +4,10 @@ import it.polimi.ingsw.Client.View.GameClientListener;
 import it.polimi.ingsw.Client.model.CharacterCardClient;
 import it.polimi.ingsw.Client.model.GameComponentClient;
 import it.polimi.ingsw.Client.model.IslandClient;
-import it.polimi.ingsw.Enum.Color;
-import it.polimi.ingsw.Enum.HouseColor;
-import it.polimi.ingsw.Enum.Wizard;
-import it.polimi.ingsw.Server.model.AssistantCard;
+import it.polimi.ingsw.Util.Color;
+import it.polimi.ingsw.Util.HouseColor;
+import it.polimi.ingsw.Util.Wizard;
+import it.polimi.ingsw.Util.AssistantCard;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -113,9 +113,9 @@ public abstract class GameClientListened {
 //        }
 //    }
 
-    public void notifyView() {
+    public void notifyMessage(String message) {
         for (GameClientListener listener : listeners) {
-            listener.update();
+            listener.updateMessage(message);
         }
     }
 
