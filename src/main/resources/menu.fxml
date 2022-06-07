@@ -7,88 +7,60 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-            prefHeight="700.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/11.0.14-internal"
-            xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="it.polimi.ingsw.Client.View.Gui.SceneController.MenuController">
-    <ImageView fitHeight="700.0" fitWidth="700.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true"
-               AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
-               AnchorPane.topAnchor="0.0">
-        <Image url="@Graphical_Assets/logo.jpg"/>
+<AnchorPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.Client.View.Gui.SceneController.MenuController">
+    <ImageView fitHeight="700.0" fitWidth="700.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <Image url="@Graphical_Assets/logo.jpg" />
     </ImageView>
+    <VBox fx:id="chat" layoutX="-1.0" layoutY="198.0" prefHeight="461.0" prefWidth="202.0">
+        <Pane fx:id="paneForChat" prefHeight="415.0" prefWidth="202.0"/>
+        <HBox prefHeight="70.0" prefWidth="214.0">
+            <TextField fx:id="message" prefHeight="26.0" prefWidth="163.0"/>
+            <Button fx:id="sendButton" mnemonicParsing="false" prefHeight="26.0" prefWidth="62.0" text="Send"/>
+        </HBox>
+    </VBox>
     <Group fx:id="mainGroup">
-        <VBox id="nickName" alignment="CENTER" layoutX="99.0" layoutY="314.0">
-            <TextField id="inputNickName" alignment="CENTER" prefWidth="201.0" promptText="Insert nickName"
-                       text="nickName">
+        <VBox id="nickName" alignment="CENTER" layoutX="99.0" layoutY="314.0" visible="false">
+            <TextField id="inputNickName" alignment="CENTER" prefWidth="201.0" promptText="Insert nickName" text="nickName">
                 <VBox.margin>
-                    <Insets bottom="10.0" left="150.0" right="150.0" top="10.0"/>
+                    <Insets bottom="10.0" left="150.0" right="150.0" top="10.0" />
                 </VBox.margin>
             </TextField>
-            <Button fx:id="nickNameButton" mnemonicParsing="false" prefHeight="26.0" prefWidth="111.0"
-                    text="Enter NickName"/>
+            <Button fx:id="nickNameButton" mnemonicParsing="false" prefHeight="26.0" prefWidth="111.0" text="Enter NickName" />
         </VBox>
-        <AnchorPane id="selectMatch" prefHeight="700.0" prefWidth="700.0">
-            <RadioButton layoutX="432.0" layoutY="337.0" mnemonicParsing="false"
-                         style="-fx-background-color: white;" text="ExpertGame" AnchorPane.bottomAnchor="337.0"
-                         AnchorPane.leftAnchor="432.0" AnchorPane.rightAnchor="132.0"
-                         AnchorPane.topAnchor="337.0">
+        <AnchorPane id="selectMatch" prefHeight="700.0" prefWidth="700.0" visible="false">
+            <RadioButton layoutX="432.0" layoutY="337.0" mnemonicParsing="false" style="-fx-background-color: white;" text="ExpertGame" AnchorPane.bottomAnchor="337.0" AnchorPane.leftAnchor="432.0" AnchorPane.rightAnchor="132.0" AnchorPane.topAnchor="337.0">
                 <toggleGroup>
-                    <ToggleGroup fx:id="gameType"/>
+                    <ToggleGroup fx:id="gameType" />
                 </toggleGroup>
             </RadioButton>
-            <RadioButton layoutX="307.0" layoutY="236.0" mnemonicParsing="false"
-                         style="-fx-background-color: white;" text="3" AnchorPane.bottomAnchor="438.0"
-                         AnchorPane.leftAnchor="307.0" AnchorPane.rightAnchor="307.0"
-                         AnchorPane.topAnchor="236.0">
+            <RadioButton layoutX="307.0" layoutY="236.0" mnemonicParsing="false" style="-fx-background-color: white;" text="3" AnchorPane.bottomAnchor="438.0" AnchorPane.leftAnchor="307.0" AnchorPane.rightAnchor="307.0" AnchorPane.topAnchor="236.0">
                 <toggleGroup>
-                    <ToggleGroup fx:id="player"/>
+                    <ToggleGroup fx:id="player" />
                 </toggleGroup>
             </RadioButton>
-            <RadioButton layoutX="132.0" layoutY="236.0" mnemonicParsing="false"
-                         style="-fx-background-color: white;" text="2" toggleGroup="$player"
-                         AnchorPane.bottomAnchor="438.0" AnchorPane.leftAnchor="132.0"
-                         AnchorPane.rightAnchor="482.0" AnchorPane.topAnchor="236.0"/>
-            <RadioButton layoutX="502.0" layoutY="236.0" mnemonicParsing="false"
-                         style="-fx-background-color: white;" text="4" toggleGroup="$player"
-                         AnchorPane.bottomAnchor="438.0" AnchorPane.leftAnchor="482.0"
-                         AnchorPane.rightAnchor="132.0" AnchorPane.topAnchor="236.0"/>
-            <Button fx:id="createButton" layoutX="432.0" layoutY="450.0" mnemonicParsing="false"
-                    prefHeight="26.0" prefWidth="136.0" text="Create Match" AnchorPane.bottomAnchor="224.0"
-                    AnchorPane.leftAnchor="432.0" AnchorPane.rightAnchor="132.0" AnchorPane.topAnchor="450.0"/>
-            <RadioButton contentDisplay="TOP" layoutX="132.0" layoutY="337.0" mnemonicParsing="false"
-                         style="-fx-background-color: white;" text="NormalGame" textAlignment="CENTER"
-                         textOverrun="CLIP" toggleGroup="$gameType" AnchorPane.bottomAnchor="337.0"
-                         AnchorPane.leftAnchor="132.0" AnchorPane.rightAnchor="432.0"
-                         AnchorPane.topAnchor="337.0">
+            <RadioButton layoutX="132.0" layoutY="236.0" mnemonicParsing="false" style="-fx-background-color: white;" text="2" toggleGroup="$player" AnchorPane.bottomAnchor="438.0" AnchorPane.leftAnchor="132.0" AnchorPane.rightAnchor="482.0" AnchorPane.topAnchor="236.0" />
+            <RadioButton layoutX="502.0" layoutY="236.0" mnemonicParsing="false" style="-fx-background-color: white;" text="4" toggleGroup="$player" AnchorPane.bottomAnchor="438.0" AnchorPane.leftAnchor="482.0" AnchorPane.rightAnchor="132.0" AnchorPane.topAnchor="236.0" />
+            <Button fx:id="createButton" layoutX="432.0" layoutY="450.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="136.0" text="Create Match" AnchorPane.bottomAnchor="224.0" AnchorPane.leftAnchor="432.0" AnchorPane.rightAnchor="132.0" AnchorPane.topAnchor="450.0" />
+            <RadioButton contentDisplay="TOP" layoutX="132.0" layoutY="337.0" mnemonicParsing="false" style="-fx-background-color: white;" text="NormalGame" textAlignment="CENTER" textOverrun="CLIP" toggleGroup="$gameType" AnchorPane.bottomAnchor="337.0" AnchorPane.leftAnchor="132.0" AnchorPane.rightAnchor="432.0" AnchorPane.topAnchor="337.0">
                 <effect>
-                    <Glow/>
+                    <Glow />
                 </effect>
                 <cursor>
-                    <Cursor fx:constant="DEFAULT"/>
+                    <Cursor fx:constant="DEFAULT" />
                 </cursor>
             </RadioButton>
-            <Button fx:id="joinIdButton" layoutX="432.0" layoutY="563.0" mnemonicParsing="false"
-                    prefHeight="26.0" prefWidth="136.0" text="Join Match By Id" AnchorPane.bottomAnchor="111.0"
-                    AnchorPane.leftAnchor="432.0" AnchorPane.rightAnchor="132.0" AnchorPane.topAnchor="563.0"/>
-            <Button fx:id="joinMatchTypeButton" layoutX="132.0" layoutY="450.0" mnemonicParsing="false"
-                    text="Join Match By Type" AnchorPane.bottomAnchor="224.0" AnchorPane.leftAnchor="132.0"
-                    AnchorPane.rightAnchor="432.0" AnchorPane.topAnchor="450.0"/>
-            <TextField id="inputIdMatch" layoutX="132.0" layoutY="563.0" prefHeight="26.0" prefWidth="284.0"
-                       AnchorPane.bottomAnchor="111.0" AnchorPane.leftAnchor="132.0"
-                       AnchorPane.rightAnchor="284.0" AnchorPane.topAnchor="563.0"/>
+            <Button fx:id="joinIdButton" layoutX="432.0" layoutY="563.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="136.0" text="Join Match By Id" AnchorPane.bottomAnchor="111.0" AnchorPane.leftAnchor="432.0" AnchorPane.rightAnchor="132.0" AnchorPane.topAnchor="563.0" />
+            <Button fx:id="joinMatchTypeButton" layoutX="132.0" layoutY="450.0" mnemonicParsing="false" text="Join Match By Type" AnchorPane.bottomAnchor="224.0" AnchorPane.leftAnchor="132.0" AnchorPane.rightAnchor="432.0" AnchorPane.topAnchor="450.0" />
+            <TextField id="inputIdMatch" layoutX="132.0" layoutY="563.0" prefHeight="26.0" prefWidth="284.0" AnchorPane.bottomAnchor="111.0" AnchorPane.leftAnchor="132.0" AnchorPane.rightAnchor="284.0" AnchorPane.topAnchor="563.0" />
         </AnchorPane>
         <VBox id="connect" alignment="CENTER" layoutX="99.0" layoutY="314.0" visible="false">
-            <TextField id="inputIp" alignment="CENTER" prefWidth="201.0" promptText="Insert Ip"
-                       text="localhost">
+            <TextField id="inputIp" alignment="CENTER" prefWidth="201.0" promptText="Insert Ip" text="localhost">
                 <VBox.margin>
-                    <Insets bottom="10.0" left="150.0" right="150.0" top="10.0"/>
+                    <Insets bottom="10.0" left="150.0" right="150.0" top="10.0" />
                 </VBox.margin>
             </TextField>
-            <Button fx:id="connectButton" mnemonicParsing="false" prefHeight="26.0" prefWidth="86.0"
-                    text="Connect"/>
+            <Button fx:id="connectButton" mnemonicParsing="false" prefHeight="26.0" prefWidth="86.0" text="Connect" />
         </VBox>
     </Group>
-    <Button fx:id="chatButton" layoutX="14.0" layoutY="660.0" mnemonicParsing="false" prefHeight="26.0"
-            prefWidth="185.0" text="Show Chat" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="14.0"
-            AnchorPane.rightAnchor="501.0" AnchorPane.topAnchor="660.0"/>
+    <Button fx:id="chatButton" layoutX="14.0" layoutY="660.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="185.0" text="Show Chat" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="501.0" AnchorPane.topAnchor="660.0" />
 </AnchorPane>

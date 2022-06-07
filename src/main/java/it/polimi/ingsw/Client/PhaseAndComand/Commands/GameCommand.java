@@ -264,6 +264,18 @@ public enum GameCommand {
         }
 
         @Override
+        public EventHandler<ActionEvent> getGUIHandler(ViewGUI viewGUI) {
+            return actionEvent -> {
+                SceneController sceneController = GuiFX.getSceneController();
+                TextField t = (TextField) sceneController.getElementById("#message");
+                viewGUI.sendToServer(new TextMessageCS(t.getText()));
+                viewGUI.addMessage("[You]: " + t.getText());
+                t.clear();
+
+            };
+        }
+
+        @Override
         public String toString() {
             return "Send message";
         }
