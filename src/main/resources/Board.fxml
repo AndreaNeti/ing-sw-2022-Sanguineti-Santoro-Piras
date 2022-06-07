@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" style="-fx-background-color: #90c5ec;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.Client.View.Gui.SceneController.BoardController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" style="-fx-background-color: #80b5ff;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.Client.View.Gui.SceneController.BoardController">
     <children>
         <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="865.0" AnchorPane.bottomAnchor="140.0" AnchorPane.leftAnchor="100.0" AnchorPane.topAnchor="140.0">
             <children>
@@ -12,12 +18,202 @@
                         <ImageView fitHeight="200.0" fitWidth="179.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="-3.0">
                             <Image url="@Graphical_Assets/Islands/Island1.png" />
                         </ImageView>
+                  <AnchorPane AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="50.0">
+                     <children>
+                        <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <image>
+                              <Image url="@Graphical_Assets/Students/student_red.png" />
+                           </image>
+                        </ImageView>
+                        <Label style="-fx-background-color: red;" text="0" textFill="WHITE" AnchorPane.bottomAnchor="-15.0" AnchorPane.rightAnchor="-15.0">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                           <padding>
+                              <Insets left="3.0" right="3.0" />
+                           </padding>
+                        </Label>
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane layoutX="10.0" layoutY="10.0" AnchorPane.bottomAnchor="50.0">
+                     <children>
+                        <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <image>
+                              <Image url="@Graphical_Assets/Students/student_blue.png" />
+                           </image>
+                        </ImageView>
+                        <Label style="-fx-background-color: blue;" text="0" textFill="WHITE" AnchorPane.rightAnchor="-20.0" AnchorPane.topAnchor="-10.0">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                           <padding>
+                              <Insets left="3.0" right="3.0" />
+                           </padding>
+                        </Label>
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane layoutX="10.0" layoutY="10.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="70.0">
+                     <children>
+                        <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <image>
+                              <Image url="@Graphical_Assets/Students/student_yellow.png" />
+                           </image>
+                        </ImageView>
+                        <Label style="-fx-background-color: #fb0;" text="0" textFill="WHITE" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="-30.0">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                           <padding>
+                              <Insets left="3.0" right="3.0" />
+                           </padding>
+                        </Label>
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane layoutX="10.0" layoutY="10.0" AnchorPane.bottomAnchor="50.0" AnchorPane.rightAnchor="10.0">
+                     <children>
+                        <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <image>
+                              <Image url="@Graphical_Assets/Students/student_green.png" />
+                           </image>
+                        </ImageView>
+                        <Label style="-fx-background-color: green;" text="0" textFill="WHITE" AnchorPane.leftAnchor="-20.0" AnchorPane.topAnchor="-10.0">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                           <padding>
+                              <Insets left="3.0" right="3.0" />
+                           </padding>
+                        </Label>
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane layoutX="10.0" layoutY="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="50.0">
+                     <children>
+                        <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <image>
+                              <Image url="@Graphical_Assets/Students/student_pink.png" />
+                           </image>
+                        </ImageView>
+                        <Label style="-fx-background-color: #f08;" text="0" textFill="WHITE" AnchorPane.bottomAnchor="-15.0" AnchorPane.leftAnchor="-15.0">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                           <padding>
+                              <Insets left="3.0" right="3.0" />
+                           </padding>
+                        </Label>
+                     </children>
+                  </AnchorPane>
+                  <ImageView fitWidth="50.0" layoutX="60.0" layoutY="75.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="75.0" AnchorPane.leftAnchor="61.5" AnchorPane.topAnchor="75.0">
+                     <image>
+                        <Image url="@Graphical_Assets/MotherNature.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitWidth="50.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="61.5" AnchorPane.topAnchor="20.0">
+                     <image>
+                        <Image url="@Graphical_Assets/Towers/white_tower.png" />
+                     </image>
+                  </ImageView>
                     </children>
                 </AnchorPane>
                 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="173.0" style="-fx-scale-x: 0.8; -fx-scale-y: 0.8;" AnchorPane.leftAnchor="86.5" AnchorPane.topAnchor="150.0">
                     <children>
                         <ImageView fitHeight="200.0" fitWidth="179.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="-3.0">
                             <Image url="@Graphical_Assets/Islands/Island2.png" />
+                        </ImageView>
+                        <AnchorPane AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="50.0">
+                            <children>
+                                <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <image>
+                                        <Image url="@Graphical_Assets/Students/student_red.png" />
+                                    </image>
+                                </ImageView>
+                                <Label style="-fx-background-color: red;" text="0" textFill="WHITE" AnchorPane.bottomAnchor="-15.0" AnchorPane.rightAnchor="-15.0">
+                                    <font>
+                                        <Font name="System Bold" size="12.0" />
+                                    </font>
+                                    <padding>
+                                        <Insets left="3.0" right="3.0" />
+                                    </padding>
+                                </Label>
+                            </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="10.0" layoutY="10.0" AnchorPane.bottomAnchor="50.0">
+                            <children>
+                                <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <image>
+                                        <Image url="@Graphical_Assets/Students/student_blue.png" />
+                                    </image>
+                                </ImageView>
+                                <Label style="-fx-background-color: blue;" text="0" textFill="WHITE" AnchorPane.rightAnchor="-20.0" AnchorPane.topAnchor="-10.0">
+                                    <font>
+                                        <Font name="System Bold" size="12.0" />
+                                    </font>
+                                    <padding>
+                                        <Insets left="3.0" right="3.0" />
+                                    </padding>
+                                </Label>
+                            </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="10.0" layoutY="10.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="70.0">
+                            <children>
+                                <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <image>
+                                        <Image url="@Graphical_Assets/Students/student_yellow.png" />
+                                    </image>
+                                </ImageView>
+                                <Label style="-fx-background-color: #fb0;" text="0" textFill="WHITE" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="-30.0">
+                                    <font>
+                                        <Font name="System Bold" size="12.0" />
+                                    </font>
+                                    <padding>
+                                        <Insets left="3.0" right="3.0" />
+                                    </padding>
+                                </Label>
+                            </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="10.0" layoutY="10.0" AnchorPane.bottomAnchor="50.0" AnchorPane.rightAnchor="10.0">
+                            <children>
+                                <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <image>
+                                        <Image url="@Graphical_Assets/Students/student_green.png" />
+                                    </image>
+                                </ImageView>
+                                <Label style="-fx-background-color: green;" text="0" textFill="WHITE" AnchorPane.leftAnchor="-20.0" AnchorPane.topAnchor="-10.0">
+                                    <font>
+                                        <Font name="System Bold" size="12.0" />
+                                    </font>
+                                    <padding>
+                                        <Insets left="3.0" right="3.0" />
+                                    </padding>
+                                </Label>
+                            </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="10.0" layoutY="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="50.0">
+                            <children>
+                                <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <image>
+                                        <Image url="@Graphical_Assets/Students/student_pink.png" />
+                                    </image>
+                                </ImageView>
+                                <Label style="-fx-background-color: #f08;" text="0" textFill="WHITE" AnchorPane.bottomAnchor="-15.0" AnchorPane.leftAnchor="-15.0">
+                                    <font>
+                                        <Font name="System Bold" size="12.0" />
+                                    </font>
+                                    <padding>
+                                        <Insets left="3.0" right="3.0" />
+                                    </padding>
+                                </Label>
+                            </children>
+                        </AnchorPane>
+                        <ImageView fitWidth="50.0" layoutX="60.0" layoutY="75.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="75.0" AnchorPane.leftAnchor="61.5" AnchorPane.topAnchor="75.0">
+                            <image>
+                                <Image url="@Graphical_Assets/MotherNature.png" />
+                            </image>
+                        </ImageView>
+                        <ImageView fitWidth="50.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="61.5" AnchorPane.topAnchor="20.0">
+                            <image>
+                                <Image url="@Graphical_Assets/Towers/white_tower.png" />
+                            </image>
                         </ImageView>
                     </children>
                 </AnchorPane>
@@ -26,12 +222,202 @@
                         <ImageView fitHeight="200.0" fitWidth="179.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="-3.0">
                             <Image url="@Graphical_Assets/Islands/Island3.png" />
                         </ImageView>
+                        <AnchorPane AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="50.0">
+                            <children>
+                                <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <image>
+                                        <Image url="@Graphical_Assets/Students/student_red.png" />
+                                    </image>
+                                </ImageView>
+                                <Label style="-fx-background-color: red;" text="0" textFill="WHITE" AnchorPane.bottomAnchor="-15.0" AnchorPane.rightAnchor="-15.0">
+                                    <font>
+                                        <Font name="System Bold" size="12.0" />
+                                    </font>
+                                    <padding>
+                                        <Insets left="3.0" right="3.0" />
+                                    </padding>
+                                </Label>
+                            </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="10.0" layoutY="10.0" AnchorPane.bottomAnchor="50.0">
+                            <children>
+                                <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <image>
+                                        <Image url="@Graphical_Assets/Students/student_blue.png" />
+                                    </image>
+                                </ImageView>
+                                <Label style="-fx-background-color: blue;" text="0" textFill="WHITE" AnchorPane.rightAnchor="-20.0" AnchorPane.topAnchor="-10.0">
+                                    <font>
+                                        <Font name="System Bold" size="12.0" />
+                                    </font>
+                                    <padding>
+                                        <Insets left="3.0" right="3.0" />
+                                    </padding>
+                                </Label>
+                            </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="10.0" layoutY="10.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="70.0">
+                            <children>
+                                <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <image>
+                                        <Image url="@Graphical_Assets/Students/student_yellow.png" />
+                                    </image>
+                                </ImageView>
+                                <Label style="-fx-background-color: #fb0;" text="0" textFill="WHITE" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="-30.0">
+                                    <font>
+                                        <Font name="System Bold" size="12.0" />
+                                    </font>
+                                    <padding>
+                                        <Insets left="3.0" right="3.0" />
+                                    </padding>
+                                </Label>
+                            </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="10.0" layoutY="10.0" AnchorPane.bottomAnchor="50.0" AnchorPane.rightAnchor="10.0">
+                            <children>
+                                <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <image>
+                                        <Image url="@Graphical_Assets/Students/student_green.png" />
+                                    </image>
+                                </ImageView>
+                                <Label style="-fx-background-color: green;" text="0" textFill="WHITE" AnchorPane.leftAnchor="-20.0" AnchorPane.topAnchor="-10.0">
+                                    <font>
+                                        <Font name="System Bold" size="12.0" />
+                                    </font>
+                                    <padding>
+                                        <Insets left="3.0" right="3.0" />
+                                    </padding>
+                                </Label>
+                            </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="10.0" layoutY="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="50.0">
+                            <children>
+                                <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <image>
+                                        <Image url="@Graphical_Assets/Students/student_pink.png" />
+                                    </image>
+                                </ImageView>
+                                <Label style="-fx-background-color: #f08;" text="0" textFill="WHITE" AnchorPane.bottomAnchor="-15.0" AnchorPane.leftAnchor="-15.0">
+                                    <font>
+                                        <Font name="System Bold" size="12.0" />
+                                    </font>
+                                    <padding>
+                                        <Insets left="3.0" right="3.0" />
+                                    </padding>
+                                </Label>
+                            </children>
+                        </AnchorPane>
+                        <ImageView fitWidth="50.0" layoutX="60.0" layoutY="75.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="75.0" AnchorPane.leftAnchor="61.5" AnchorPane.topAnchor="75.0">
+                            <image>
+                                <Image url="@Graphical_Assets/MotherNature.png" />
+                            </image>
+                        </ImageView>
+                        <ImageView fitWidth="50.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="61.5" AnchorPane.topAnchor="20.0">
+                            <image>
+                                <Image url="@Graphical_Assets/Towers/white_tower.png" />
+                            </image>
+                        </ImageView>
                     </children>
                 </AnchorPane>
                 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="173.0" style="-fx-scale-x: 0.8; -fx-scale-y: 0.8;" AnchorPane.leftAnchor="346.0">
                     <children>
                         <ImageView fitHeight="200.0" fitWidth="179.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="-3.0">
                             <Image url="@Graphical_Assets/Islands/Island1.png" />
+                        </ImageView>
+                        <AnchorPane AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="50.0">
+                            <children>
+                                <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <image>
+                                        <Image url="@Graphical_Assets/Students/student_red.png" />
+                                    </image>
+                                </ImageView>
+                                <Label style="-fx-background-color: red;" text="0" textFill="WHITE" AnchorPane.bottomAnchor="-15.0" AnchorPane.rightAnchor="-15.0">
+                                    <font>
+                                        <Font name="System Bold" size="12.0" />
+                                    </font>
+                                    <padding>
+                                        <Insets left="3.0" right="3.0" />
+                                    </padding>
+                                </Label>
+                            </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="10.0" layoutY="10.0" AnchorPane.bottomAnchor="50.0">
+                            <children>
+                                <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <image>
+                                        <Image url="@Graphical_Assets/Students/student_blue.png" />
+                                    </image>
+                                </ImageView>
+                                <Label style="-fx-background-color: blue;" text="0" textFill="WHITE" AnchorPane.rightAnchor="-20.0" AnchorPane.topAnchor="-10.0">
+                                    <font>
+                                        <Font name="System Bold" size="12.0" />
+                                    </font>
+                                    <padding>
+                                        <Insets left="3.0" right="3.0" />
+                                    </padding>
+                                </Label>
+                            </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="10.0" layoutY="10.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="70.0">
+                            <children>
+                                <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <image>
+                                        <Image url="@Graphical_Assets/Students/student_yellow.png" />
+                                    </image>
+                                </ImageView>
+                                <Label style="-fx-background-color: #fb0;" text="0" textFill="WHITE" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="-30.0">
+                                    <font>
+                                        <Font name="System Bold" size="12.0" />
+                                    </font>
+                                    <padding>
+                                        <Insets left="3.0" right="3.0" />
+                                    </padding>
+                                </Label>
+                            </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="10.0" layoutY="10.0" AnchorPane.bottomAnchor="50.0" AnchorPane.rightAnchor="10.0">
+                            <children>
+                                <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <image>
+                                        <Image url="@Graphical_Assets/Students/student_green.png" />
+                                    </image>
+                                </ImageView>
+                                <Label style="-fx-background-color: green;" text="0" textFill="WHITE" AnchorPane.leftAnchor="-20.0" AnchorPane.topAnchor="-10.0">
+                                    <font>
+                                        <Font name="System Bold" size="12.0" />
+                                    </font>
+                                    <padding>
+                                        <Insets left="3.0" right="3.0" />
+                                    </padding>
+                                </Label>
+                            </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="10.0" layoutY="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="50.0">
+                            <children>
+                                <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <image>
+                                        <Image url="@Graphical_Assets/Students/student_pink.png" />
+                                    </image>
+                                </ImageView>
+                                <Label style="-fx-background-color: #f08;" text="0" textFill="WHITE" AnchorPane.bottomAnchor="-15.0" AnchorPane.leftAnchor="-15.0">
+                                    <font>
+                                        <Font name="System Bold" size="12.0" />
+                                    </font>
+                                    <padding>
+                                        <Insets left="3.0" right="3.0" />
+                                    </padding>
+                                </Label>
+                            </children>
+                        </AnchorPane>
+                        <ImageView fitWidth="50.0" layoutX="60.0" layoutY="75.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="75.0" AnchorPane.leftAnchor="61.5" AnchorPane.topAnchor="75.0">
+                            <image>
+                                <Image url="@Graphical_Assets/MotherNature.png" />
+                            </image>
+                        </ImageView>
+                        <ImageView fitWidth="50.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="61.5" AnchorPane.topAnchor="20.0">
+                            <image>
+                                <Image url="@Graphical_Assets/Towers/white_tower.png" />
+                            </image>
                         </ImageView>
                     </children>
                 </AnchorPane>
@@ -40,12 +426,202 @@
                         <ImageView fitHeight="200.0" fitWidth="179.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="-3.0">
                             <Image url="@Graphical_Assets/Islands/Island2.png" />
                         </ImageView>
+                        <AnchorPane AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="50.0">
+                            <children>
+                                <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <image>
+                                        <Image url="@Graphical_Assets/Students/student_red.png" />
+                                    </image>
+                                </ImageView>
+                                <Label style="-fx-background-color: red;" text="0" textFill="WHITE" AnchorPane.bottomAnchor="-15.0" AnchorPane.rightAnchor="-15.0">
+                                    <font>
+                                        <Font name="System Bold" size="12.0" />
+                                    </font>
+                                    <padding>
+                                        <Insets left="3.0" right="3.0" />
+                                    </padding>
+                                </Label>
+                            </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="10.0" layoutY="10.0" AnchorPane.bottomAnchor="50.0">
+                            <children>
+                                <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <image>
+                                        <Image url="@Graphical_Assets/Students/student_blue.png" />
+                                    </image>
+                                </ImageView>
+                                <Label style="-fx-background-color: blue;" text="0" textFill="WHITE" AnchorPane.rightAnchor="-20.0" AnchorPane.topAnchor="-10.0">
+                                    <font>
+                                        <Font name="System Bold" size="12.0" />
+                                    </font>
+                                    <padding>
+                                        <Insets left="3.0" right="3.0" />
+                                    </padding>
+                                </Label>
+                            </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="10.0" layoutY="10.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="70.0">
+                            <children>
+                                <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <image>
+                                        <Image url="@Graphical_Assets/Students/student_yellow.png" />
+                                    </image>
+                                </ImageView>
+                                <Label style="-fx-background-color: #fb0;" text="0" textFill="WHITE" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="-30.0">
+                                    <font>
+                                        <Font name="System Bold" size="12.0" />
+                                    </font>
+                                    <padding>
+                                        <Insets left="3.0" right="3.0" />
+                                    </padding>
+                                </Label>
+                            </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="10.0" layoutY="10.0" AnchorPane.bottomAnchor="50.0" AnchorPane.rightAnchor="10.0">
+                            <children>
+                                <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <image>
+                                        <Image url="@Graphical_Assets/Students/student_green.png" />
+                                    </image>
+                                </ImageView>
+                                <Label style="-fx-background-color: green;" text="0" textFill="WHITE" AnchorPane.leftAnchor="-20.0" AnchorPane.topAnchor="-10.0">
+                                    <font>
+                                        <Font name="System Bold" size="12.0" />
+                                    </font>
+                                    <padding>
+                                        <Insets left="3.0" right="3.0" />
+                                    </padding>
+                                </Label>
+                            </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="10.0" layoutY="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="50.0">
+                            <children>
+                                <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <image>
+                                        <Image url="@Graphical_Assets/Students/student_pink.png" />
+                                    </image>
+                                </ImageView>
+                                <Label style="-fx-background-color: #f08;" text="0" textFill="WHITE" AnchorPane.bottomAnchor="-15.0" AnchorPane.leftAnchor="-15.0">
+                                    <font>
+                                        <Font name="System Bold" size="12.0" />
+                                    </font>
+                                    <padding>
+                                        <Insets left="3.0" right="3.0" />
+                                    </padding>
+                                </Label>
+                            </children>
+                        </AnchorPane>
+                        <ImageView fitWidth="50.0" layoutX="60.0" layoutY="75.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="75.0" AnchorPane.leftAnchor="61.5" AnchorPane.topAnchor="75.0">
+                            <image>
+                                <Image url="@Graphical_Assets/MotherNature.png" />
+                            </image>
+                        </ImageView>
+                        <ImageView fitWidth="50.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="61.5" AnchorPane.topAnchor="20.0">
+                            <image>
+                                <Image url="@Graphical_Assets/Towers/white_tower.png" />
+                            </image>
+                        </ImageView>
                     </children>
                 </AnchorPane>
                 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="173.0" style="-fx-scale-x: 0.8; -fx-scale-y: 0.8;" AnchorPane.leftAnchor="605.5" AnchorPane.topAnchor="150.0">
                     <children>
                         <ImageView fitHeight="200.0" fitWidth="179.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="-3.0">
                             <Image url="@Graphical_Assets/Islands/Island3.png" />
+                        </ImageView>
+                        <AnchorPane AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="50.0">
+                            <children>
+                                <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <image>
+                                        <Image url="@Graphical_Assets/Students/student_red.png" />
+                                    </image>
+                                </ImageView>
+                                <Label style="-fx-background-color: red;" text="0" textFill="WHITE" AnchorPane.bottomAnchor="-15.0" AnchorPane.rightAnchor="-15.0">
+                                    <font>
+                                        <Font name="System Bold" size="12.0" />
+                                    </font>
+                                    <padding>
+                                        <Insets left="3.0" right="3.0" />
+                                    </padding>
+                                </Label>
+                            </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="10.0" layoutY="10.0" AnchorPane.bottomAnchor="50.0">
+                            <children>
+                                <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <image>
+                                        <Image url="@Graphical_Assets/Students/student_blue.png" />
+                                    </image>
+                                </ImageView>
+                                <Label style="-fx-background-color: blue;" text="0" textFill="WHITE" AnchorPane.rightAnchor="-20.0" AnchorPane.topAnchor="-10.0">
+                                    <font>
+                                        <Font name="System Bold" size="12.0" />
+                                    </font>
+                                    <padding>
+                                        <Insets left="3.0" right="3.0" />
+                                    </padding>
+                                </Label>
+                            </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="10.0" layoutY="10.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="70.0">
+                            <children>
+                                <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <image>
+                                        <Image url="@Graphical_Assets/Students/student_yellow.png" />
+                                    </image>
+                                </ImageView>
+                                <Label style="-fx-background-color: #fb0;" text="0" textFill="WHITE" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="-30.0">
+                                    <font>
+                                        <Font name="System Bold" size="12.0" />
+                                    </font>
+                                    <padding>
+                                        <Insets left="3.0" right="3.0" />
+                                    </padding>
+                                </Label>
+                            </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="10.0" layoutY="10.0" AnchorPane.bottomAnchor="50.0" AnchorPane.rightAnchor="10.0">
+                            <children>
+                                <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <image>
+                                        <Image url="@Graphical_Assets/Students/student_green.png" />
+                                    </image>
+                                </ImageView>
+                                <Label style="-fx-background-color: green;" text="0" textFill="WHITE" AnchorPane.leftAnchor="-20.0" AnchorPane.topAnchor="-10.0">
+                                    <font>
+                                        <Font name="System Bold" size="12.0" />
+                                    </font>
+                                    <padding>
+                                        <Insets left="3.0" right="3.0" />
+                                    </padding>
+                                </Label>
+                            </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="10.0" layoutY="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="50.0">
+                            <children>
+                                <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <image>
+                                        <Image url="@Graphical_Assets/Students/student_pink.png" />
+                                    </image>
+                                </ImageView>
+                                <Label style="-fx-background-color: #f08;" text="0" textFill="WHITE" AnchorPane.bottomAnchor="-15.0" AnchorPane.leftAnchor="-15.0">
+                                    <font>
+                                        <Font name="System Bold" size="12.0" />
+                                    </font>
+                                    <padding>
+                                        <Insets left="3.0" right="3.0" />
+                                    </padding>
+                                </Label>
+                            </children>
+                        </AnchorPane>
+                        <ImageView fitWidth="50.0" layoutX="60.0" layoutY="75.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="75.0" AnchorPane.leftAnchor="61.5" AnchorPane.topAnchor="75.0">
+                            <image>
+                                <Image url="@Graphical_Assets/MotherNature.png" />
+                            </image>
+                        </ImageView>
+                        <ImageView fitWidth="50.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="61.5" AnchorPane.topAnchor="20.0">
+                            <image>
+                                <Image url="@Graphical_Assets/Towers/white_tower.png" />
+                            </image>
                         </ImageView>
                     </children>
                 </AnchorPane>
@@ -54,12 +630,202 @@
                         <ImageView fitHeight="200.0" fitWidth="179.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="-3.0">
                             <Image url="@Graphical_Assets/Islands/Island1.png" />
                         </ImageView>
+                        <AnchorPane AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="50.0">
+                            <children>
+                                <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <image>
+                                        <Image url="@Graphical_Assets/Students/student_red.png" />
+                                    </image>
+                                </ImageView>
+                                <Label style="-fx-background-color: red;" text="0" textFill="WHITE" AnchorPane.bottomAnchor="-15.0" AnchorPane.rightAnchor="-15.0">
+                                    <font>
+                                        <Font name="System Bold" size="12.0" />
+                                    </font>
+                                    <padding>
+                                        <Insets left="3.0" right="3.0" />
+                                    </padding>
+                                </Label>
+                            </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="10.0" layoutY="10.0" AnchorPane.bottomAnchor="50.0">
+                            <children>
+                                <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <image>
+                                        <Image url="@Graphical_Assets/Students/student_blue.png" />
+                                    </image>
+                                </ImageView>
+                                <Label style="-fx-background-color: blue;" text="0" textFill="WHITE" AnchorPane.rightAnchor="-20.0" AnchorPane.topAnchor="-10.0">
+                                    <font>
+                                        <Font name="System Bold" size="12.0" />
+                                    </font>
+                                    <padding>
+                                        <Insets left="3.0" right="3.0" />
+                                    </padding>
+                                </Label>
+                            </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="10.0" layoutY="10.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="70.0">
+                            <children>
+                                <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <image>
+                                        <Image url="@Graphical_Assets/Students/student_yellow.png" />
+                                    </image>
+                                </ImageView>
+                                <Label style="-fx-background-color: #fb0;" text="0" textFill="WHITE" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="-30.0">
+                                    <font>
+                                        <Font name="System Bold" size="12.0" />
+                                    </font>
+                                    <padding>
+                                        <Insets left="3.0" right="3.0" />
+                                    </padding>
+                                </Label>
+                            </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="10.0" layoutY="10.0" AnchorPane.bottomAnchor="50.0" AnchorPane.rightAnchor="10.0">
+                            <children>
+                                <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <image>
+                                        <Image url="@Graphical_Assets/Students/student_green.png" />
+                                    </image>
+                                </ImageView>
+                                <Label style="-fx-background-color: green;" text="0" textFill="WHITE" AnchorPane.leftAnchor="-20.0" AnchorPane.topAnchor="-10.0">
+                                    <font>
+                                        <Font name="System Bold" size="12.0" />
+                                    </font>
+                                    <padding>
+                                        <Insets left="3.0" right="3.0" />
+                                    </padding>
+                                </Label>
+                            </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="10.0" layoutY="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="50.0">
+                            <children>
+                                <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <image>
+                                        <Image url="@Graphical_Assets/Students/student_pink.png" />
+                                    </image>
+                                </ImageView>
+                                <Label style="-fx-background-color: #f08;" text="0" textFill="WHITE" AnchorPane.bottomAnchor="-15.0" AnchorPane.leftAnchor="-15.0">
+                                    <font>
+                                        <Font name="System Bold" size="12.0" />
+                                    </font>
+                                    <padding>
+                                        <Insets left="3.0" right="3.0" />
+                                    </padding>
+                                </Label>
+                            </children>
+                        </AnchorPane>
+                        <ImageView fitWidth="50.0" layoutX="60.0" layoutY="75.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="75.0" AnchorPane.leftAnchor="61.5" AnchorPane.topAnchor="75.0">
+                            <image>
+                                <Image url="@Graphical_Assets/MotherNature.png" />
+                            </image>
+                        </ImageView>
+                        <ImageView fitWidth="50.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="61.5" AnchorPane.topAnchor="20.0">
+                            <image>
+                                <Image url="@Graphical_Assets/Towers/white_tower.png" />
+                            </image>
+                        </ImageView>
                     </children>
                 </AnchorPane>
                 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="173.0" style="-fx-scale-x: 0.8; -fx-scale-y: 0.8;" AnchorPane.leftAnchor="605.5" AnchorPane.topAnchor="450.0">
                     <children>
                         <ImageView fitHeight="200.0" fitWidth="179.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="-3.0">
                             <Image url="@Graphical_Assets/Islands/Island2.png" />
+                        </ImageView>
+                        <AnchorPane AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="50.0">
+                            <children>
+                                <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <image>
+                                        <Image url="@Graphical_Assets/Students/student_red.png" />
+                                    </image>
+                                </ImageView>
+                                <Label style="-fx-background-color: red;" text="0" textFill="WHITE" AnchorPane.bottomAnchor="-15.0" AnchorPane.rightAnchor="-15.0">
+                                    <font>
+                                        <Font name="System Bold" size="12.0" />
+                                    </font>
+                                    <padding>
+                                        <Insets left="3.0" right="3.0" />
+                                    </padding>
+                                </Label>
+                            </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="10.0" layoutY="10.0" AnchorPane.bottomAnchor="50.0">
+                            <children>
+                                <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <image>
+                                        <Image url="@Graphical_Assets/Students/student_blue.png" />
+                                    </image>
+                                </ImageView>
+                                <Label style="-fx-background-color: blue;" text="0" textFill="WHITE" AnchorPane.rightAnchor="-20.0" AnchorPane.topAnchor="-10.0">
+                                    <font>
+                                        <Font name="System Bold" size="12.0" />
+                                    </font>
+                                    <padding>
+                                        <Insets left="3.0" right="3.0" />
+                                    </padding>
+                                </Label>
+                            </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="10.0" layoutY="10.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="70.0">
+                            <children>
+                                <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <image>
+                                        <Image url="@Graphical_Assets/Students/student_yellow.png" />
+                                    </image>
+                                </ImageView>
+                                <Label style="-fx-background-color: #fb0;" text="0" textFill="WHITE" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="-30.0">
+                                    <font>
+                                        <Font name="System Bold" size="12.0" />
+                                    </font>
+                                    <padding>
+                                        <Insets left="3.0" right="3.0" />
+                                    </padding>
+                                </Label>
+                            </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="10.0" layoutY="10.0" AnchorPane.bottomAnchor="50.0" AnchorPane.rightAnchor="10.0">
+                            <children>
+                                <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <image>
+                                        <Image url="@Graphical_Assets/Students/student_green.png" />
+                                    </image>
+                                </ImageView>
+                                <Label style="-fx-background-color: green;" text="0" textFill="WHITE" AnchorPane.leftAnchor="-20.0" AnchorPane.topAnchor="-10.0">
+                                    <font>
+                                        <Font name="System Bold" size="12.0" />
+                                    </font>
+                                    <padding>
+                                        <Insets left="3.0" right="3.0" />
+                                    </padding>
+                                </Label>
+                            </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="10.0" layoutY="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="50.0">
+                            <children>
+                                <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <image>
+                                        <Image url="@Graphical_Assets/Students/student_pink.png" />
+                                    </image>
+                                </ImageView>
+                                <Label style="-fx-background-color: #f08;" text="0" textFill="WHITE" AnchorPane.bottomAnchor="-15.0" AnchorPane.leftAnchor="-15.0">
+                                    <font>
+                                        <Font name="System Bold" size="12.0" />
+                                    </font>
+                                    <padding>
+                                        <Insets left="3.0" right="3.0" />
+                                    </padding>
+                                </Label>
+                            </children>
+                        </AnchorPane>
+                        <ImageView fitWidth="50.0" layoutX="60.0" layoutY="75.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="75.0" AnchorPane.leftAnchor="61.5" AnchorPane.topAnchor="75.0">
+                            <image>
+                                <Image url="@Graphical_Assets/MotherNature.png" />
+                            </image>
+                        </ImageView>
+                        <ImageView fitWidth="50.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="61.5" AnchorPane.topAnchor="20.0">
+                            <image>
+                                <Image url="@Graphical_Assets/Towers/white_tower.png" />
+                            </image>
                         </ImageView>
                     </children>
                 </AnchorPane>
@@ -68,12 +834,202 @@
                         <ImageView fitHeight="200.0" fitWidth="179.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="-3.0">
                             <Image url="@Graphical_Assets/Islands/Island3.png" />
                         </ImageView>
+                        <AnchorPane AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="50.0">
+                            <children>
+                                <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <image>
+                                        <Image url="@Graphical_Assets/Students/student_red.png" />
+                                    </image>
+                                </ImageView>
+                                <Label style="-fx-background-color: red;" text="0" textFill="WHITE" AnchorPane.bottomAnchor="-15.0" AnchorPane.rightAnchor="-15.0">
+                                    <font>
+                                        <Font name="System Bold" size="12.0" />
+                                    </font>
+                                    <padding>
+                                        <Insets left="3.0" right="3.0" />
+                                    </padding>
+                                </Label>
+                            </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="10.0" layoutY="10.0" AnchorPane.bottomAnchor="50.0">
+                            <children>
+                                <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <image>
+                                        <Image url="@Graphical_Assets/Students/student_blue.png" />
+                                    </image>
+                                </ImageView>
+                                <Label style="-fx-background-color: blue;" text="0" textFill="WHITE" AnchorPane.rightAnchor="-20.0" AnchorPane.topAnchor="-10.0">
+                                    <font>
+                                        <Font name="System Bold" size="12.0" />
+                                    </font>
+                                    <padding>
+                                        <Insets left="3.0" right="3.0" />
+                                    </padding>
+                                </Label>
+                            </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="10.0" layoutY="10.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="70.0">
+                            <children>
+                                <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <image>
+                                        <Image url="@Graphical_Assets/Students/student_yellow.png" />
+                                    </image>
+                                </ImageView>
+                                <Label style="-fx-background-color: #fb0;" text="0" textFill="WHITE" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="-30.0">
+                                    <font>
+                                        <Font name="System Bold" size="12.0" />
+                                    </font>
+                                    <padding>
+                                        <Insets left="3.0" right="3.0" />
+                                    </padding>
+                                </Label>
+                            </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="10.0" layoutY="10.0" AnchorPane.bottomAnchor="50.0" AnchorPane.rightAnchor="10.0">
+                            <children>
+                                <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <image>
+                                        <Image url="@Graphical_Assets/Students/student_green.png" />
+                                    </image>
+                                </ImageView>
+                                <Label style="-fx-background-color: green;" text="0" textFill="WHITE" AnchorPane.leftAnchor="-20.0" AnchorPane.topAnchor="-10.0">
+                                    <font>
+                                        <Font name="System Bold" size="12.0" />
+                                    </font>
+                                    <padding>
+                                        <Insets left="3.0" right="3.0" />
+                                    </padding>
+                                </Label>
+                            </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="10.0" layoutY="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="50.0">
+                            <children>
+                                <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <image>
+                                        <Image url="@Graphical_Assets/Students/student_pink.png" />
+                                    </image>
+                                </ImageView>
+                                <Label style="-fx-background-color: #f08;" text="0" textFill="WHITE" AnchorPane.bottomAnchor="-15.0" AnchorPane.leftAnchor="-15.0">
+                                    <font>
+                                        <Font name="System Bold" size="12.0" />
+                                    </font>
+                                    <padding>
+                                        <Insets left="3.0" right="3.0" />
+                                    </padding>
+                                </Label>
+                            </children>
+                        </AnchorPane>
+                        <ImageView fitWidth="50.0" layoutX="60.0" layoutY="75.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="75.0" AnchorPane.leftAnchor="61.5" AnchorPane.topAnchor="75.0">
+                            <image>
+                                <Image url="@Graphical_Assets/MotherNature.png" />
+                            </image>
+                        </ImageView>
+                        <ImageView fitWidth="50.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="61.5" AnchorPane.topAnchor="20.0">
+                            <image>
+                                <Image url="@Graphical_Assets/Towers/white_tower.png" />
+                            </image>
+                        </ImageView>
                     </children>
                 </AnchorPane>
                 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="173.0" style="-fx-scale-x: 0.8; -fx-scale-y: 0.8;" AnchorPane.leftAnchor="346.0" AnchorPane.topAnchor="600.0">
                     <children>
                         <ImageView fitHeight="200.0" fitWidth="179.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="-3.0">
                             <Image url="@Graphical_Assets/Islands/Island1.png" />
+                        </ImageView>
+                        <AnchorPane AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="50.0">
+                            <children>
+                                <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <image>
+                                        <Image url="@Graphical_Assets/Students/student_red.png" />
+                                    </image>
+                                </ImageView>
+                                <Label style="-fx-background-color: red;" text="0" textFill="WHITE" AnchorPane.bottomAnchor="-15.0" AnchorPane.rightAnchor="-15.0">
+                                    <font>
+                                        <Font name="System Bold" size="12.0" />
+                                    </font>
+                                    <padding>
+                                        <Insets left="3.0" right="3.0" />
+                                    </padding>
+                                </Label>
+                            </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="10.0" layoutY="10.0" AnchorPane.bottomAnchor="50.0">
+                            <children>
+                                <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <image>
+                                        <Image url="@Graphical_Assets/Students/student_blue.png" />
+                                    </image>
+                                </ImageView>
+                                <Label style="-fx-background-color: blue;" text="0" textFill="WHITE" AnchorPane.rightAnchor="-20.0" AnchorPane.topAnchor="-10.0">
+                                    <font>
+                                        <Font name="System Bold" size="12.0" />
+                                    </font>
+                                    <padding>
+                                        <Insets left="3.0" right="3.0" />
+                                    </padding>
+                                </Label>
+                            </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="10.0" layoutY="10.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="70.0">
+                            <children>
+                                <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <image>
+                                        <Image url="@Graphical_Assets/Students/student_yellow.png" />
+                                    </image>
+                                </ImageView>
+                                <Label style="-fx-background-color: #fb0;" text="0" textFill="WHITE" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="-30.0">
+                                    <font>
+                                        <Font name="System Bold" size="12.0" />
+                                    </font>
+                                    <padding>
+                                        <Insets left="3.0" right="3.0" />
+                                    </padding>
+                                </Label>
+                            </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="10.0" layoutY="10.0" AnchorPane.bottomAnchor="50.0" AnchorPane.rightAnchor="10.0">
+                            <children>
+                                <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <image>
+                                        <Image url="@Graphical_Assets/Students/student_green.png" />
+                                    </image>
+                                </ImageView>
+                                <Label style="-fx-background-color: green;" text="0" textFill="WHITE" AnchorPane.leftAnchor="-20.0" AnchorPane.topAnchor="-10.0">
+                                    <font>
+                                        <Font name="System Bold" size="12.0" />
+                                    </font>
+                                    <padding>
+                                        <Insets left="3.0" right="3.0" />
+                                    </padding>
+                                </Label>
+                            </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="10.0" layoutY="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="50.0">
+                            <children>
+                                <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <image>
+                                        <Image url="@Graphical_Assets/Students/student_pink.png" />
+                                    </image>
+                                </ImageView>
+                                <Label style="-fx-background-color: #f08;" text="0" textFill="WHITE" AnchorPane.bottomAnchor="-15.0" AnchorPane.leftAnchor="-15.0">
+                                    <font>
+                                        <Font name="System Bold" size="12.0" />
+                                    </font>
+                                    <padding>
+                                        <Insets left="3.0" right="3.0" />
+                                    </padding>
+                                </Label>
+                            </children>
+                        </AnchorPane>
+                        <ImageView fitWidth="50.0" layoutX="60.0" layoutY="75.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="75.0" AnchorPane.leftAnchor="61.5" AnchorPane.topAnchor="75.0">
+                            <image>
+                                <Image url="@Graphical_Assets/MotherNature.png" />
+                            </image>
+                        </ImageView>
+                        <ImageView fitWidth="50.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="61.5" AnchorPane.topAnchor="20.0">
+                            <image>
+                                <Image url="@Graphical_Assets/Towers/white_tower.png" />
+                            </image>
                         </ImageView>
                     </children>
                 </AnchorPane>
@@ -82,6 +1038,101 @@
                         <ImageView fitHeight="200.0" fitWidth="179.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="-3.0">
                             <Image url="@Graphical_Assets/Islands/Island2.png" />
                         </ImageView>
+                        <AnchorPane AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="50.0">
+                            <children>
+                                <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <image>
+                                        <Image url="@Graphical_Assets/Students/student_red.png" />
+                                    </image>
+                                </ImageView>
+                                <Label style="-fx-background-color: red;" text="0" textFill="WHITE" AnchorPane.bottomAnchor="-15.0" AnchorPane.rightAnchor="-15.0">
+                                    <font>
+                                        <Font name="System Bold" size="12.0" />
+                                    </font>
+                                    <padding>
+                                        <Insets left="3.0" right="3.0" />
+                                    </padding>
+                                </Label>
+                            </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="10.0" layoutY="10.0" AnchorPane.bottomAnchor="50.0">
+                            <children>
+                                <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <image>
+                                        <Image url="@Graphical_Assets/Students/student_blue.png" />
+                                    </image>
+                                </ImageView>
+                                <Label style="-fx-background-color: blue;" text="0" textFill="WHITE" AnchorPane.rightAnchor="-20.0" AnchorPane.topAnchor="-10.0">
+                                    <font>
+                                        <Font name="System Bold" size="12.0" />
+                                    </font>
+                                    <padding>
+                                        <Insets left="3.0" right="3.0" />
+                                    </padding>
+                                </Label>
+                            </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="10.0" layoutY="10.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="70.0">
+                            <children>
+                                <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <image>
+                                        <Image url="@Graphical_Assets/Students/student_yellow.png" />
+                                    </image>
+                                </ImageView>
+                                <Label style="-fx-background-color: #fb0;" text="0" textFill="WHITE" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="-30.0">
+                                    <font>
+                                        <Font name="System Bold" size="12.0" />
+                                    </font>
+                                    <padding>
+                                        <Insets left="3.0" right="3.0" />
+                                    </padding>
+                                </Label>
+                            </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="10.0" layoutY="10.0" AnchorPane.bottomAnchor="50.0" AnchorPane.rightAnchor="10.0">
+                            <children>
+                                <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <image>
+                                        <Image url="@Graphical_Assets/Students/student_green.png" />
+                                    </image>
+                                </ImageView>
+                                <Label style="-fx-background-color: green;" text="0" textFill="WHITE" AnchorPane.leftAnchor="-20.0" AnchorPane.topAnchor="-10.0">
+                                    <font>
+                                        <Font name="System Bold" size="12.0" />
+                                    </font>
+                                    <padding>
+                                        <Insets left="3.0" right="3.0" />
+                                    </padding>
+                                </Label>
+                            </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="10.0" layoutY="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="50.0">
+                            <children>
+                                <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <image>
+                                        <Image url="@Graphical_Assets/Students/student_pink.png" />
+                                    </image>
+                                </ImageView>
+                                <Label style="-fx-background-color: #f08;" text="0" textFill="WHITE" AnchorPane.bottomAnchor="-15.0" AnchorPane.leftAnchor="-15.0">
+                                    <font>
+                                        <Font name="System Bold" size="12.0" />
+                                    </font>
+                                    <padding>
+                                        <Insets left="3.0" right="3.0" />
+                                    </padding>
+                                </Label>
+                            </children>
+                        </AnchorPane>
+                        <ImageView fitWidth="50.0" layoutX="60.0" layoutY="75.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="75.0" AnchorPane.leftAnchor="61.5" AnchorPane.topAnchor="75.0">
+                            <image>
+                                <Image url="@Graphical_Assets/MotherNature.png" />
+                            </image>
+                        </ImageView>
+                        <ImageView fitWidth="50.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="61.5" AnchorPane.topAnchor="20.0">
+                            <image>
+                                <Image url="@Graphical_Assets/Towers/white_tower.png" />
+                            </image>
+                        </ImageView>
                     </children>
                 </AnchorPane>
                 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="173.0" style="-fx-scale-x: 0.8; -fx-scale-y: 0.8;" AnchorPane.leftAnchor="86.5" AnchorPane.topAnchor="450.0">
@@ -89,9 +1140,284 @@
                         <ImageView fitHeight="200.0" fitWidth="179.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="-3.0">
                             <Image url="@Graphical_Assets/Islands/Island3.png" />
                         </ImageView>
+                        <AnchorPane AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="50.0">
+                            <children>
+                                <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <image>
+                                        <Image url="@Graphical_Assets/Students/student_red.png" />
+                                    </image>
+                                </ImageView>
+                                <Label style="-fx-background-color: red;" text="0" textFill="WHITE" AnchorPane.bottomAnchor="-15.0" AnchorPane.rightAnchor="-15.0">
+                                    <font>
+                                        <Font name="System Bold" size="12.0" />
+                                    </font>
+                                    <padding>
+                                        <Insets left="3.0" right="3.0" />
+                                    </padding>
+                                </Label>
+                            </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="10.0" layoutY="10.0" AnchorPane.bottomAnchor="50.0">
+                            <children>
+                                <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <image>
+                                        <Image url="@Graphical_Assets/Students/student_blue.png" />
+                                    </image>
+                                </ImageView>
+                                <Label style="-fx-background-color: blue;" text="0" textFill="WHITE" AnchorPane.rightAnchor="-20.0" AnchorPane.topAnchor="-10.0">
+                                    <font>
+                                        <Font name="System Bold" size="12.0" />
+                                    </font>
+                                    <padding>
+                                        <Insets left="3.0" right="3.0" />
+                                    </padding>
+                                </Label>
+                            </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="10.0" layoutY="10.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="70.0">
+                            <children>
+                                <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <image>
+                                        <Image url="@Graphical_Assets/Students/student_yellow.png" />
+                                    </image>
+                                </ImageView>
+                                <Label style="-fx-background-color: #fb0;" text="0" textFill="WHITE" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="-30.0">
+                                    <font>
+                                        <Font name="System Bold" size="12.0" />
+                                    </font>
+                                    <padding>
+                                        <Insets left="3.0" right="3.0" />
+                                    </padding>
+                                </Label>
+                            </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="10.0" layoutY="10.0" AnchorPane.bottomAnchor="50.0" AnchorPane.rightAnchor="10.0">
+                            <children>
+                                <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <image>
+                                        <Image url="@Graphical_Assets/Students/student_green.png" />
+                                    </image>
+                                </ImageView>
+                                <Label style="-fx-background-color: green;" text="0" textFill="WHITE" AnchorPane.leftAnchor="-20.0" AnchorPane.topAnchor="-10.0">
+                                    <font>
+                                        <Font name="System Bold" size="12.0" />
+                                    </font>
+                                    <padding>
+                                        <Insets left="3.0" right="3.0" />
+                                    </padding>
+                                </Label>
+                            </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="10.0" layoutY="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="50.0">
+                            <children>
+                                <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <image>
+                                        <Image url="@Graphical_Assets/Students/student_pink.png" />
+                                    </image>
+                                </ImageView>
+                                <Label style="-fx-background-color: #f08;" text="0" textFill="WHITE" AnchorPane.bottomAnchor="-15.0" AnchorPane.leftAnchor="-15.0">
+                                    <font>
+                                        <Font name="System Bold" size="12.0" />
+                                    </font>
+                                    <padding>
+                                        <Insets left="3.0" right="3.0" />
+                                    </padding>
+                                </Label>
+                            </children>
+                        </AnchorPane>
+                        <ImageView fitWidth="50.0" layoutX="60.0" layoutY="75.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="75.0" AnchorPane.leftAnchor="61.5" AnchorPane.topAnchor="75.0">
+                            <image>
+                                <Image url="@Graphical_Assets/MotherNature.png" />
+                            </image>
+                        </ImageView>
+                        <ImageView fitWidth="50.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="61.5" AnchorPane.topAnchor="20.0">
+                            <image>
+                                <Image url="@Graphical_Assets/Towers/white_tower.png" />
+                            </image>
+                        </ImageView>
+                        <AnchorPane AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="50.0">
+                            <children>
+                                <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <image>
+                                        <Image url="@Graphical_Assets/Students/student_red.png" />
+                                    </image>
+                                </ImageView>
+                                <Label style="-fx-background-color: red;" text="0" textFill="WHITE" AnchorPane.bottomAnchor="-15.0" AnchorPane.rightAnchor="-15.0">
+                                    <font>
+                                        <Font name="System Bold" size="12.0" />
+                                    </font>
+                                    <padding>
+                                        <Insets left="3.0" right="3.0" />
+                                    </padding>
+                                </Label>
+                            </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="10.0" layoutY="10.0" AnchorPane.bottomAnchor="50.0">
+                            <children>
+                                <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <image>
+                                        <Image url="@Graphical_Assets/Students/student_blue.png" />
+                                    </image>
+                                </ImageView>
+                                <Label style="-fx-background-color: blue;" text="0" textFill="WHITE" AnchorPane.rightAnchor="-20.0" AnchorPane.topAnchor="-10.0">
+                                    <font>
+                                        <Font name="System Bold" size="12.0" />
+                                    </font>
+                                    <padding>
+                                        <Insets left="3.0" right="3.0" />
+                                    </padding>
+                                </Label>
+                            </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="10.0" layoutY="10.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="70.0">
+                            <children>
+                                <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <image>
+                                        <Image url="@Graphical_Assets/Students/student_yellow.png" />
+                                    </image>
+                                </ImageView>
+                                <Label style="-fx-background-color: #fb0;" text="0" textFill="WHITE" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="-30.0">
+                                    <font>
+                                        <Font name="System Bold" size="12.0" />
+                                    </font>
+                                    <padding>
+                                        <Insets left="3.0" right="3.0" />
+                                    </padding>
+                                </Label>
+                            </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="10.0" layoutY="10.0" AnchorPane.bottomAnchor="50.0" AnchorPane.rightAnchor="10.0">
+                            <children>
+                                <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <image>
+                                        <Image url="@Graphical_Assets/Students/student_green.png" />
+                                    </image>
+                                </ImageView>
+                                <Label style="-fx-background-color: green;" text="0" textFill="WHITE" AnchorPane.leftAnchor="-20.0" AnchorPane.topAnchor="-10.0">
+                                    <font>
+                                        <Font name="System Bold" size="12.0" />
+                                    </font>
+                                    <padding>
+                                        <Insets left="3.0" right="3.0" />
+                                    </padding>
+                                </Label>
+                            </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="10.0" layoutY="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="50.0">
+                            <children>
+                                <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <image>
+                                        <Image url="@Graphical_Assets/Students/student_pink.png" />
+                                    </image>
+                                </ImageView>
+                                <Label style="-fx-background-color: #f08;" text="0" textFill="WHITE" AnchorPane.bottomAnchor="-15.0" AnchorPane.leftAnchor="-15.0">
+                                    <font>
+                                        <Font name="System Bold" size="12.0" />
+                                    </font>
+                                    <padding>
+                                        <Insets left="3.0" right="3.0" />
+                                    </padding>
+                                </Label>
+                            </children>
+                        </AnchorPane>
+                        <ImageView fitWidth="50.0" layoutX="60.0" layoutY="75.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="75.0" AnchorPane.leftAnchor="61.5" AnchorPane.topAnchor="75.0">
+                            <image>
+                                <Image url="@Graphical_Assets/MotherNature.png" />
+                            </image>
+                        </ImageView>
+                        <ImageView fitWidth="50.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="61.5" AnchorPane.topAnchor="20.0">
+                            <image>
+                                <Image url="@Graphical_Assets/Towers/white_tower.png" />
+                            </image>
+                        </ImageView>
                     </children>
                 </AnchorPane>
             </children>
         </AnchorPane>
+        <VBox alignment="TOP_RIGHT" prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0">
+            <children>
+                <AnchorPane>
+                    <children>
+                        <ImageView fitWidth="400.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="0.0">
+                            <Image url="@Graphical_Assets/Board/Board.png" />
+                        </ImageView>
+                  <Label style="-fx-background-color: #7B5804; -fx-border-color: #333;" textAlignment="CENTER" textFill="WHITE" AnchorPane.rightAnchor="0.0">
+                     <padding>
+                        <Insets bottom="1.0" left="6.0" right="6.0" top="1.0" />
+                     </padding>
+                     <font>
+                        <Font name="System Bold" size="10.0" />
+                     </font>
+                  </Label>
+                    </children>
+                    <padding>
+                        <Insets bottom="25.0" left="0.0" right="50.0" top="25.0" />
+                    </padding>
+                </AnchorPane>
+                <AnchorPane>
+                    <children>
+                        <ImageView fitWidth="400.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="0.0">
+                            <Image url="@Graphical_Assets/Board/Board.png" />
+                        </ImageView>
+                  <Label style="-fx-background-color: #7B5804; -fx-border-color: #333;" textAlignment="CENTER" textFill="WHITE" AnchorPane.rightAnchor="0.0">
+                     <padding>
+                        <Insets bottom="1.0" left="6.0" right="6.0" top="1.0" />
+                     </padding>
+                     <font>
+                        <Font name="System Bold" size="10.0" />
+                     </font>
+                  </Label>
+                    </children>
+                    <padding>
+                        <Insets bottom="25.0" left="0.0" right="50.0" top="25.0" />
+                    </padding>
+                </AnchorPane>
+                <AnchorPane>
+                    <children>
+                        <ImageView fitWidth="400.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="0.0">
+                            <Image url="@Graphical_Assets/Board/Board.png" />
+                        </ImageView>
+                  <Label style="-fx-background-color: #7B5804; -fx-border-color: #333;" textAlignment="CENTER" textFill="WHITE" AnchorPane.rightAnchor="0.0">
+                     <padding>
+                        <Insets bottom="1.0" left="6.0" right="6.0" top="1.0" />
+                     </padding>
+                     <font>
+                        <Font name="System Bold" size="10.0" />
+                     </font>
+                  </Label>
+                    </children>
+                    <padding>
+                        <Insets bottom="25.0" left="0.0" right="50.0" top="25.0" />
+                    </padding>
+                </AnchorPane>
+                <AnchorPane>
+                    <children>
+                        <ImageView fitWidth="700.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="0.0">
+                            <Image url="@Graphical_Assets/Board/Board.png" />
+                        </ImageView>
+                  <Label style="-fx-background-color: #7B5804; -fx-border-color: #333;" textAlignment="CENTER" textFill="WHITE" AnchorPane.rightAnchor="0.0">
+                     <padding>
+                        <Insets bottom="2.0" left="6.0" right="6.0" top="2.0" />
+                     </padding>
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Label>
+                  <VBox prefHeight="200.0" prefWidth="100.0" AnchorPane.leftAnchor="50.0">
+                     <children>
+                        <HBox prefHeight="100.0" prefWidth="200.0" />
+                        <HBox prefHeight="100.0" prefWidth="200.0" />
+                        <HBox prefHeight="100.0" prefWidth="200.0" />
+                        <HBox prefHeight="100.0" prefWidth="200.0" />
+                        <HBox prefHeight="100.0" prefWidth="200.0" />
+                     </children>
+                  </VBox>
+                    </children>
+                    <padding>
+                        <Insets bottom="25.0" left="0.0" right="50.0" top="25.0" />
+                    </padding>
+                </AnchorPane>
+            </children>
+        </VBox>
     </children>
 </AnchorPane>
