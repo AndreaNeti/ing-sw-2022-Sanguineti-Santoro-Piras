@@ -83,7 +83,6 @@ public class GameClient extends GameClientListened implements GameClientView {
     public void setCurrentPlayer(Byte currentPlayer) {
         this.currentPlayer = currentPlayer;
         boolean isMyTurn = currentPlayer == myWizard.ordinal();
-        notify(getPlayer(currentPlayer).toString(), isMyTurn);
     }
 
     @Override
@@ -95,7 +94,7 @@ public class GameClient extends GameClientListened implements GameClientView {
 
     public void setProfessors(Color color, Wizard owner) {
         this.professors[color.ordinal()] = owner;
-        notify(color, owner);
+        notifyProfessor(color, owner);
     }
 
     //I am trusting server pls
@@ -112,12 +111,12 @@ public class GameClient extends GameClientListened implements GameClientView {
             if (idGameComponent % 2 == 0) {
                 GameComponentClient entranceHall = getPlayer(playerIndex).getEntranceHall();
                 entranceHall.modifyGameComponent(gameComponent);
-                notify(entranceHall);
+                notifyGameComponent(entranceHall);
 
             } else {
                 GameComponentClient lunchHall = getPlayer(playerIndex).getLunchHall();
                 lunchHall.modifyGameComponent(gameComponent);
-                notify(lunchHall);
+                notifyGameComponent(lunchHall);
             }
 
         } else if (idGameComponent >= 2 * MatchType.MAX_PLAYERS) {
@@ -127,7 +126,7 @@ public class GameClient extends GameClientListened implements GameClientView {
             }
             islandToReturn.modifyGameComponent(gameComponent);
 
-            notify(islandToReturn);
+            notifyGameComponent(islandToReturn);
         } else if (idGameComponent <= -10) {
             for (CharacterCardClientWithStudents ch : charactersWithStudents) {
                 if (ch.getId() == idGameComponent) {
@@ -137,7 +136,7 @@ public class GameClient extends GameClientListened implements GameClientView {
         } else {
             GameComponentClient cloud = clouds.get(-idGameComponent - 1);
             cloud.modifyGameComponent(gameComponent);
-            notify(cloud);
+            notifyGameComponent(cloud);
         }
     }
 
@@ -148,10 +147,10 @@ public class GameClient extends GameClientListened implements GameClientView {
     public void removeIsland(byte idIsland) {
         IslandClient islandToRemove = getIslandById(idIsland);
         if (islandToRemove == null) {
-            throw new RuntimeException("error in passing parameters probably");
+            System.err.println("Error in passing parameter, island not found");
         }
         islands.remove(islandToRemove);
-        notify(islands);
+        notifyDeletedIsland(islandToRemove);
     }
 
     public void setMotherNaturePosition(byte motherNaturePosition) {
@@ -171,7 +170,7 @@ public class GameClient extends GameClientListened implements GameClientView {
 
     public void setTowerLeft(HouseColor houseColor, Byte towerLeft) {
         teams.get(houseColor.ordinal()).setTowersLeft(towerLeft);
-        notify(houseColor, towerLeft);
+        notifyTowerLeft(houseColor, towerLeft);
     }
 
     @Override
@@ -205,7 +204,7 @@ public class GameClient extends GameClientListened implements GameClientView {
 
     public void setNewCoinsLeft(Byte newCoinsLeft) {
         this.newCoinsLeft = newCoinsLeft;
-        //TODO add update
+        //TODO add updateGameComponent
     }
 
     @Override
@@ -215,7 +214,7 @@ public class GameClient extends GameClientListened implements GameClientView {
 
     public void setNewProhibitionsLeft(Byte newProhibitionsLeft) {
         this.newProhibitionsLeft = newProhibitionsLeft;
-        //TODO add update
+        //TODO add updateGameComponent
     }
 
     @Override

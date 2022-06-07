@@ -417,35 +417,29 @@ public class CliPrinter implements GameClientListener {
     }
 
     @Override
-    public void update(GameComponentClient gameComponent) {
+    public void updateGameComponent(GameComponentClient gameComponent) {
 
     }
 
     @Override
-    public void update(IslandClient island) {
+    public void updateGameComponent(IslandClient island) {
 
     }
 
     @Override
-    public void update(ArrayList<IslandClient> islands) {
+    public void updateDeletedIsland(IslandClient island) {
 
     }
 
     @Override
-    public void update(HouseColor houseColor, Byte towerLefts) {
+    public void updateTowerLeft(HouseColor houseColor, Byte towerLefts) {
 
     }
 
     @Override
-    public void update(Color color, Wizard wizard) {
+    public void updateProfessor(Color color, Wizard wizard) {
 
     }
-
-    @Override
-    public void update(String currentPlayer, boolean isMyTurn) {
-
-    }
-
     @Override
     public void updateMembers(int membersLeftToStart, String nickPlayerJoined) {
         if (membersLeftToStart > 0) {

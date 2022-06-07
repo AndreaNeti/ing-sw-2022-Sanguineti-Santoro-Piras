@@ -20,7 +20,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class MenuController implements SceneController {
@@ -43,25 +42,30 @@ public class MenuController implements SceneController {
     public VBox chat;
     public Pane paneForChat;
     public Button sendButton;
-    ObservableList<String> observableListChat;
+    private ObservableList<String> observableListChat;
+
 
     private void initialize() {
-        connectButton.setOnAction(GameCommand.CONNECT_SERVER.getGUIHandler(viewGUI));
+
         hideEverything();
-        chatButton.setOnAction(actionEvent -> switchChat());
+        chatButton.setOnAction(actionEvent ->
+
+                switchChat());
+        //create the chat
         observableListChat = FXCollections.observableArrayList();
-        //create the box for chat
         ListView<String> listView = new ListView<>(observableListChat);
         listView.prefWidthProperty().bind(paneForChat.widthProperty());
         listView.prefHeightProperty().bind(paneForChat.heightProperty());
         paneForChat.getChildren().add(listView);
+        chat.toFront();
+        chat.setVisible(false);
+        //add event handler
+        connectButton.setOnAction(GameCommand.CONNECT_SERVER.getGUIHandler(viewGUI));
         nickNameButton.setOnAction(GameCommand.SET_NICKNAME.getGUIHandler(viewGUI));
         createButton.setOnAction(GameCommand.CREATE_MATCH.getGUIHandler(viewGUI));
         joinIdButton.setOnAction(GameCommand.JOIN_MATCH_BY_ID.getGUIHandler(viewGUI));
         joinMatchTypeButton.setOnAction(GameCommand.JOIN_MATCH_BY_TYPE.getGUIHandler(viewGUI));
         sendButton.setOnAction(GameCommand.TEXT_MESSAGE.getGUIHandler(viewGUI));
-        chat.toFront();
-        chat.setVisible(false);
     }
 
     @Override
@@ -109,32 +113,31 @@ public class MenuController implements SceneController {
     }
 
     @Override
-    public void update(GameComponentClient gameComponent) {
+    public void updateGameComponent(GameComponentClient gameComponent) {
 
     }
 
     @Override
-    public void update(IslandClient island) {
+    public void updateGameComponent(IslandClient island) {
 
     }
 
     @Override
-    public void update(ArrayList<IslandClient> islands) {
+    public void updateDeletedIsland(IslandClient island) {
 
     }
 
     @Override
-    public void update(HouseColor houseColor, Byte towerLefts) {
+    public void updateTowerLeft(HouseColor houseColor, Byte towerLefts) {
 
     }
 
     @Override
-    public void update(Color color, Wizard wizard) {
+    public void updateProfessor(Color color, Wizard wizard) {
 
     }
 
-    @Override
-    public void update(String currentPlayer, boolean isMyTurn) {
+    public void updateGameComponent(String currentPlayer, boolean isMyTurn) {
 
     }
 

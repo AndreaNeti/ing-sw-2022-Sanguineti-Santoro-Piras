@@ -38,7 +38,7 @@ public class ClientHandler implements Runnable, GameListener {
 
     @Override
     public void run() {
-        // notify connection ok
+        // notifyGameComponent connection ok
         update(new OK());
         // what the server receives from the player
         ToServerMessage command;

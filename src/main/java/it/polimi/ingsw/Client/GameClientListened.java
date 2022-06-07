@@ -21,53 +21,41 @@ public abstract class GameClientListened {
         }
     }
 
-    public void notify(GameComponentClient gameComponent) {
+    public void notifyGameComponent(GameComponentClient gameComponent) {
         for (GameClientListener listener : listeners) {
-            listener.update(gameComponent);
+            listener.updateGameComponent(gameComponent);
         }
     }
 
-    public void notify(IslandClient island) {
+    public void notifyGameComponent(IslandClient island) {
         for (GameClientListener listener : listeners) {
-            listener.update(island);
+            listener.updateGameComponent(island);
         }
     }
 
-    public void notify(ArrayList<IslandClient> islands) {
+    public void notifyDeletedIsland(IslandClient islands) {
         for (GameClientListener listener : listeners) {
-            listener.update(islands);
+            listener.updateDeletedIsland(islands);
         }
     }
 
-    public void notify(HouseColor houseColor, Byte towerLefts) {
+    public void notifyTowerLeft(HouseColor houseColor, Byte towerLefts) {
         for (GameClientListener listener : listeners) {
-            listener.update(houseColor, towerLefts);
+            listener.updateTowerLeft(houseColor, towerLefts);
         }
     }
 
-    public void notify(Color color, Wizard wizard) {
+    public void notifyProfessor(Color color, Wizard wizard) {
         for (GameClientListener listener : listeners) {
-            listener.update(color, wizard);
+            listener.updateProfessor(color, wizard);
         }
     }
-
-    public void notify(String currentPlayer, boolean isMyTurn) {
-        for (GameClientListener listener : listeners) {
-            listener.update(currentPlayer, isMyTurn);
-        }
-    }
-
     public void notifyCardPlayed(AssistantCard playedCard) {
         for (GameClientListener listener : listeners) {
             listener.updateCardPlayed(playedCard);
         }
     }
 
-    //    public void notifyOk() {
-//        for (GameClientListener listener : listeners) {
-//            listener.ok();
-//        }
-//    }
     public void notifyIgnoredColor(Color color) {
         for (GameClientListener listener : listeners) {
             listener.updateIgnoredColor(color);
@@ -106,13 +94,6 @@ public abstract class GameClientListened {
     public void addListener(GameClientListened gameClientListened) {
         if (listeners == null) listeners = gameClientListened.listeners;
     }
-
-//    public void notifyError(String e) {
-//        for (GameClientListener listener : listeners) {
-//            listener.error(e);
-//        }
-//    }
-
     public void notifyMessage(String message) {
         for (GameClientListener listener : listeners) {
             listener.updateMessage(message);

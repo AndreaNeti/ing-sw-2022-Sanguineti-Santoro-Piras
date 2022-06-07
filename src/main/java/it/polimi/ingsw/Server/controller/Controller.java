@@ -136,9 +136,9 @@ public class Controller {
         Player newPlayer;
         newPlayer = new Player(nickName, teams.get(teamIndex), Wizard.values()[playersList.size()], matchConstants);
 
-        // notify other players in lobby about the new player
+        // notifyGameComponent other players in lobby about the new player
         notifyClients(new PlayerJoined(newPlayer, HouseColor.values()[teamIndex]));
-        // notify the new player about match info and other players in lobby
+        // notifyGameComponent the new player about match info and other players in lobby
         newPlayerHandler.update(new MatchInfo(matchType, matchId, teams, Wizard.values()[playersList.size()]));
 
         playersList.add(newPlayer);

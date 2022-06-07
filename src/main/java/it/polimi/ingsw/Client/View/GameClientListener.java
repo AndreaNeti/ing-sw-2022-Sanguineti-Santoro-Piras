@@ -8,31 +8,24 @@ import it.polimi.ingsw.Util.HouseColor;
 import it.polimi.ingsw.Util.Wizard;
 import it.polimi.ingsw.Util.AssistantCard;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public interface GameClientListener {
     void updateMotherNature(Byte motherNaturePosition);
 
-    void update(GameComponentClient gameComponent);
+    void updateGameComponent(GameComponentClient gameComponent);
 
-    void update(IslandClient island);
+    void updateGameComponent(IslandClient island);
 
-    void update(ArrayList<IslandClient> islands);
+    void updateDeletedIsland(IslandClient island);
 
-    void update(HouseColor houseColor, Byte towerLefts);
+    void updateTowerLeft(HouseColor houseColor, Byte towerLefts);
 
-    void update(Color color, Wizard wizard);
+    void updateProfessor(Color color, Wizard wizard);
 
-//    void error(String e);
-//
-//    void ok();
-
-    void update(String currentPlayer, boolean isMyTurn);
 
     void updateMembers(int membersLeftToStart, String nickPlayerJoined);
 
-    //TODO update with coins, character
     void updateCardPlayed(AssistantCard playedCard);
 
     void updateIgnoredColor(Color color);

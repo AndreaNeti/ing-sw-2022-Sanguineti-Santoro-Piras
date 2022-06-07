@@ -4,7 +4,7 @@ import it.polimi.ingsw.Util.HouseColor;
 import it.polimi.ingsw.Server.model.GameComponents.GameComponent;
 import it.polimi.ingsw.Server.model.GameComponents.Island;
 
-public class IslandClient extends GameComponentClient {
+public class    IslandClient extends GameComponentClient {
     private HouseColor team;
     private byte prohibition;
     private byte number;

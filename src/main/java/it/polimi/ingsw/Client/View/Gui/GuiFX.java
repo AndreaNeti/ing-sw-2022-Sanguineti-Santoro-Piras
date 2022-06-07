@@ -28,15 +28,15 @@ public class GuiFX extends Application {
 
     public static void goToBoardScene() {
         if (boardScene == null) {
-            primaryStage.setFullScreen(true);
-            primaryStage.setResizable(false);
-            primaryStage.setTitle("Eryantis");
             FXMLLoader loader = new FXMLLoader(GuiFX.class.getResource("/board.fxml"));
             try {
                 boardScene = new Scene(loader.load(), 1920, 1080);
             } catch (IOException e) {
                 e.printStackTrace();
             }
+            primaryStage.setFullScreen(false);
+            primaryStage.setResizable(true);
+            primaryStage.setTitle("Eryantis");
             sceneController = loader.getController();
             sceneController.setViewGUI(viewGUI);
             controller.addListener(sceneController);
@@ -44,8 +44,6 @@ public class GuiFX extends Application {
         primaryStage.setScene(boardScene);
         primaryStage.show();
     }
-
-
     public static void goToMenuScene() {
         if (menuScene == null) {
             primaryStage.setResizable(false);
