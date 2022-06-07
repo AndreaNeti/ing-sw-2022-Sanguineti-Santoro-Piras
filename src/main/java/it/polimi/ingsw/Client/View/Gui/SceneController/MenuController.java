@@ -15,11 +15,10 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.Group;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,31 +34,34 @@ public class MenuController implements SceneController {
     ViewGUI viewGUI;
     @FXML
     Group mainGroup;
-
     @FXML
     Button connectButton;
     @FXML
     Button chatButton;
     @FXML
     Button nickNameButton;
-
-
-    private ListView<String> listView;
-    ObservableList<String> chat;
+    public VBox chat;
+    public Pane paneForChat;
+    public Button sendButton;
+    ObservableList<String> observableListChat;
 
     private void initialize() {
         connectButton.setOnAction(GameCommand.CONNECT_SERVER.getGUIHandler(viewGUI));
         hideEverything();
         chatButton.setOnAction(actionEvent -> switchChat());
-        chat = FXCollections.observableArrayList();
+        observableListChat = FXCollections.observableArrayList();
         //create the box for chat
-        listView = new ListView<>(chat);
-        listView.setVisible(false);
-        root.getChildren().add(listView);
+        ListView<String> listView = new ListView<>(observableListChat);
+        listView.prefWidthProperty().bind(paneForChat.widthProperty());
+        listView.prefHeightProperty().bind(paneForChat.heightProperty());
+        paneForChat.getChildren().add(listView);
         nickNameButton.setOnAction(GameCommand.SET_NICKNAME.getGUIHandler(viewGUI));
         createButton.setOnAction(GameCommand.CREATE_MATCH.getGUIHandler(viewGUI));
         joinIdButton.setOnAction(GameCommand.JOIN_MATCH_BY_ID.getGUIHandler(viewGUI));
         joinMatchTypeButton.setOnAction(GameCommand.JOIN_MATCH_BY_TYPE.getGUIHandler(viewGUI));
+        sendButton.setOnAction(GameCommand.TEXT_MESSAGE.getGUIHandler(viewGUI));
+        chat.toFront();
+        chat.setVisible(false);
     }
 
     @Override
@@ -79,20 +81,21 @@ public class MenuController implements SceneController {
         if (id.equals("#player")) {
             return (RadioButton) player.getSelectedToggle();
         }
-        //return the chat
-        if (id.equals("#chat")) {
-            return listView;
-        }
-        return mainGroup.lookup(id);
+        return root.lookup(id);
     }
 
     public void switchChat() {
-        listView.setVisible(!listView.isVisible());
+        chat.setVisible(!chat.isVisible());
     }
 
     @Override
     public void updateMessage(String message) {
-        Platform.runLater(() -> chat.add(message));
+        Platform.runLater(() -> {
+            if (observableListChat.size() > 15) {
+                observableListChat.remove(0);
+            }
+            observableListChat.add(message);
+        });
     }
 
     @Override
