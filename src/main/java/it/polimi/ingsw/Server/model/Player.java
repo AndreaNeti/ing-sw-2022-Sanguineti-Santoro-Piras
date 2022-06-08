@@ -16,6 +16,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * Player class represents the players of "Eriantys". Each player is assigned a wizard and
+ * has their own unique nickname, an entrance hall, a lunch hall and assistant cards.
+ */
 public class Player implements Serializable {
     private final String nickName;
     private final Wizard wizard;
@@ -25,6 +29,16 @@ public class Player implements Serializable {
     private transient final LunchHall lunchHall;
     private transient byte cardsLeft;
 
+    /**
+     * Constructor Player creates a new instance of Player.
+     *
+     * @param nickName of type String - the nickname to give to the player.
+     * @param team of type Team - the team of the player.
+     * @param wizard of type Wizard - the wizard to give to the player.
+     * @param matchConstants of type MatchConstants - constants such as number of assistant cards and students in
+     *                       lunch hall and entrance hall, based on the game type.
+     * @throws GameException if the player cannot be added to the selected team.
+     */
     public Player(String nickName, Team team, Wizard wizard, MatchConstants matchConstants) throws GameException {
         if (nickName == null || team == null || matchConstants == null)
             throw new IllegalArgumentException("Cannot pass null argument");
@@ -43,6 +57,14 @@ public class Player implements Serializable {
         this.lunchHall = new LunchHall(Color.values().length * matchConstants.maxLunchHallStudents(), (byte) (wizard.ordinal() * 2 + 1));
     }
 
+
+    /**
+     * Method useCard is used by the player to play an assistant card during the planification phase.
+     *
+     * @param card of type AssistantCard - the card the player wants to play.
+     * @throws NotAllowedException if there are no more cards left or the chosen card is not valid.
+     * @throws EndGameException if the player uses the last card available.
+     */
     public void useCard(AssistantCard card) throws NotAllowedException, EndGameException {
 
         if (cardsLeft < 1) throw new NotAllowedException("No more cards");
@@ -55,10 +77,24 @@ public class Player implements Serializable {
         if (cardsLeft == 0) throw new EndGameException(false);
     }
 
+    /**
+     * Method getPlayedCard returns the assistant card chosen by the player during the current turn.
+     *
+     * @return AssistantCard - card chosen by the player.
+     */
     public AssistantCard getPlayedCard() {
         return playedCard;
     }
 
+    /**
+     * Method canPlayCard checks if a card can be played based on the cards chosen by other players.
+     * Each player cannot play the same card of a previous player in the same turn, except it's the only card
+     * left available.
+     *
+     * @param playedCardsInRound of type ArrayList<AssistantCard> - list of cards chosen by the players before in this turn.
+     * @param card of type AssistantCard - card that the current player wants to play.
+     * @return boolean true if the card selected can be played, false else.
+     */
     // checks if a card can be played in function of the cards chosen by other players
     public boolean canPlayCard(ArrayList<AssistantCard> playedCardsInRound, AssistantCard card) {
         if (playedCardsInRound == null || card == null)
@@ -81,23 +117,49 @@ public class Player implements Serializable {
         return true;
     }
 
+    /**
+     * Method getLunchHall returns the lunch hall of the player.
+     *
+     * @return LunchHall - instance of the player's lunch hall.
+     */
     public LunchHall getLunchHall() {
         return lunchHall;
     }
 
+    /**
+     * Method getEntranceHall returns the entrance hall of the player.
+     *
+     * @return EntranceHall - instance of the player's entrance hall.
+     */
     public EntranceHall getEntranceHall() {
         return entranceHall;
     }
 
+    /**
+     * Method getWizard returns the wizard assigned to the player.
+     *
+     * @return Wizard - wizard assigned to the player.
+     */
     public Wizard getWizard() {
         return wizard;
     }
 
+    /**
+     * Method getAssistantCards returns the cards playable by the player.
+     *
+     * @return List<AssistantCard> - list of cards available to play.
+     */
     public List<AssistantCard> getAssistantCards() {
         // AssistantCard is immutable
         return assistantCards;
     }
 
+    /**
+     * Method equals is used to compare two Players, based on their unique nickname.
+     *
+     * @param o of type Object - instance of the other Object.
+     * @return boolean - true if the other object is a PLayer and has the same nickname of the player.
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -106,11 +168,21 @@ public class Player implements Serializable {
         return this.toString().equals(player.toString());
     }
 
+    /**
+     * Method toString returns the nickname of the player.
+     *
+     * @return String - the player's nickname.
+     */
     @Override
     public String toString() {
         return nickName;
     }
 
+    /**
+     * Method hasCode returns the hash code obtained by the player's nickname.
+     *
+     * @return int - hash code of the player's nickname.
+     */
     @Override
     public int hashCode() {
         return Objects.hash(nickName);

@@ -291,9 +291,11 @@ public class NormalGame implements Game {
 
     /**
      * Method calculateProfessor compares for each color the number of students in the lunch hall of each player
-     * and then puts the player with the most students in the professors array, in the slot of the color compared.
+     * and then puts the wizard of the player with the most students in the professors array, in the slot of the color compared.
+     * In case of a tie, no wizard will be put in the array.
      */
     protected void calculateProfessor() {
+        //TODO: make this function similar to notifycoins
         byte max;
         Player currentOwner;
         // player with the maximum number of students for the current color
@@ -361,11 +363,11 @@ public class NormalGame implements Game {
     }
 
     /**
-     * Method calculateInfluence sets the player with the highest influence as the controller of the selected island,
+     * Method calculateInfluence sets the team with the highest influence as the controller of the selected island,
      * based on the number of students present for each controlled color and on the number of towers on the island.
      *
      * @param island of type Island - the island of which we want to calculate the new controller.
-     * @throws EndGameException if a player has no tower left in his board.
+     * @throws EndGameException if a team has no towers left in its board.
      */
     protected void calculateInfluence(Island island) throws EndGameException {
         if (island == null) throw new IllegalArgumentException("Calculating influence on null island");
@@ -572,13 +574,13 @@ public class NormalGame implements Game {
     /**
      * Method setCurrentPlayer updates the current player based on his index.
      *
-     * @param currentPlayer byte - the index of the new current player.
+     * @param currentPlayerIndex byte - the index of the new current player.
      */
     @Override
-    public void setCurrentPlayer(byte currentPlayer) {
-        if (currentPlayer < 0 || currentPlayer >= getPlayerSize())
+    public void setCurrentPlayer(byte currentPlayerIndex) {
+        if (currentPlayerIndex < 0 || currentPlayerIndex >= getPlayerSize())
             throw new IllegalArgumentException("Not a valid current player index");
-        this.currentPlayer = currentPlayer;
+        this.currentPlayer = currentPlayerIndex;
     }
 
 
