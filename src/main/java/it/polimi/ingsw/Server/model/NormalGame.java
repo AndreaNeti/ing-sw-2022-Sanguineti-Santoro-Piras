@@ -19,6 +19,14 @@ import it.polimi.ingsw.exceptions.serverExceptions.NotExpertGameException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * NormalGame class contains the main logic of "Eriantys" and correspond to the model in the MVC pattern.
+ * The game is divided into various game components: the islands, the clouds, the bag and
+ * the players' lunch halls and entrance halls. The game also contains the playing teams and their
+ * respective players. Most functions add the updated info of the game to the Game Delta, which is then sent to the
+ * clients to inform them about the changes happening in the game.
+ *
+ */
 public class NormalGame implements Game {
     private final GameDelta gameDelta;
     private final ArrayList<Island> islands;
@@ -34,6 +42,12 @@ public class NormalGame implements Game {
     private byte currentPlayer;
     private final MatchConstants matchConstants;
 
+    /**
+     * Constructor NormalGame creates a new NormalGame instance.
+     *
+     * @param teamList of type ArrayList<Team> - list of the instances of team that are playing in the game.
+     * @param matchConstants of type MatchConstants - match constant of the game, based on its type.
+     */
     public NormalGame(ArrayList<Team> teamList, MatchConstants matchConstants) {
         if (teamList == null || matchConstants == null) throw new IllegalArgumentException("Passing null parameter");
         if (teamList.size() < 2) throw new IllegalArgumentException("Cannot initialize a game with less than 2 teams");
@@ -67,11 +81,21 @@ public class NormalGame implements Game {
         }
     }
 
+
+    /**
+     * Method getNewGameDelta returns a new GameDelta for the game.
+     *
+     * @return GameDelta - new instance of the game's GameDelta.
+     */
     protected GameDelta getNewGameDelta() {
         return new GameDelta();
     }
 
 
+    /**
+     * Method initializeMotherNature sets the position of mother nature to the first island of the list (position 0)
+     * and draws a student on each island the one with mother nature on it and the one opposite to it.
+     */
     private void initializeMotherNature() {
         this.motherNaturePosition = 0;
         for (int i = 0; i < islands.size(); i++) {
@@ -85,7 +109,14 @@ public class NormalGame implements Game {
         this.bag = new Bag((byte) 24);
     }
 
-    // checks if the islands before and after the selected island have the same team and in case merges them
+
+    /**
+     * Method checkMerge checks if the islands before and/or after the selected island are controlled
+     * by the same team and in case merges them together.
+     *
+     * @param island of type Island - the island of which we want to check the neighbouring islands.
+     * @throws EndGameException if the number of islands left after merging is <= 3.
+     */
     protected void checkMerge(Island island) throws EndGameException {
         if (island == null) throw new IllegalArgumentException("Passing null island");
         int islandBeforeIndex = Math.floorMod(islands.indexOf(island) - 1, islands.size());
@@ -127,6 +158,14 @@ public class NormalGame implements Game {
         }
     }
 
+    /**
+     * Method drawStudents draws students from the bag to the selected game component.
+     *
+     * @param gameComponent of type GameComponent - the game component on which we want to put the students.
+     * @param students of type byte - the number of students to draw.
+     * @throws EndGameException if there are no more students available on the bag.
+     * @throws GameException if the game component selected is null.
+     */
     protected void drawStudents(GameComponent gameComponent, byte students) throws EndGameException, GameException {
         if (gameComponent == null) throw new IllegalArgumentException("Drawing students to null gameComponent");
         try {
@@ -137,6 +176,11 @@ public class NormalGame implements Game {
         }
     }
 
+    /**
+     * Method refillClouds draws 3 or 4 students based on the number of players to each cloud.
+     *
+     * @throws EndGameException if there are no more students available on the bag.
+     */
     @Override
     public void refillClouds() throws EndGameException {
         try {
@@ -153,6 +197,13 @@ public class NormalGame implements Game {
         }
     }
 
+    /**
+     * Method playCard is used by each player to play an assistant card during the planification phase.
+     *
+     * @param card of type AssistantCard - the card that the player wants to play.
+     * @throws GameException if the card value is not in the permitted range of values.
+     * @throws EndGameException if after playing the selected card there are no cards available left.
+     */
     @Override
     public void playCard(AssistantCard card) throws GameException, EndGameException {
         if (card.value() < 1 || card.value() > matchConstants.numOfCards())
@@ -166,6 +217,13 @@ public class NormalGame implements Game {
         }
     }
 
+    /**
+     * Method getComponentById gets a game component instance based on his unique ID.
+     *
+     * @param idGameComponent of type int - the id of the game component
+     * @return GameComponent - the instance of the game component
+     * @throws GameException if the id is not a valid one or corresponds to a merged island
+     */
     protected GameComponent getComponentById(int idGameComponent) throws GameException {
         /*here the id is static
         from 0 to 2*numberOfPlayer-1 is entranceHall,LunchHall
@@ -205,6 +263,14 @@ public class NormalGame implements Game {
     }
 
 
+    /**
+     * Method move is used to move a student from a game component to another, using their unique ID.
+     *
+     * @param color of type Color - the color of the student to move.
+     * @param idGameComponentSource of type Int - the ID of the source component.
+     * @param idGameComponentDestination of type Int - the ID of the target component.
+     * @throws GameException if the color is null or if at least on ID is not valid or if it's not possible to move the student.
+     */
     @Override
     public void move(Color color, int idGameComponentSource, int idGameComponentDestination) throws GameException {
         if (color == null) throw new IllegalArgumentException("Null color");
@@ -223,8 +289,10 @@ public class NormalGame implements Game {
         }
     }
 
-    // compares for each color the lunchHall of each player and then puts the player with the most students
-    // in the professor array slot of the current color
+    /**
+     * Method calculateProfessor compares for each color the number of students in the lunch hall of each player
+     * and then puts the player with the most students in the professors array, in the slot of the color compared.
+     */
     protected void calculateProfessor() {
         byte max;
         Player currentOwner;
@@ -255,10 +323,25 @@ public class NormalGame implements Game {
         }
     }
 
+    /**
+     * Method checkMoveMotherNature checks if mother nature can move the requested number of steps, based
+     * on the current player's played card.
+     *
+     * @param moves of type Int - number of steps the player want to move mother nature.
+     * @return boolean - true if moves <= moves allowed by played card, boolean false else.
+     */
     protected boolean checkMoveMotherNature(int moves) {
         return moves <= getCurrentPlayer().getPlayedCard().moves();
     }
 
+    /**
+     * Method moveMotherNature moves mother nature by a number of steps selected by the player and then
+     * recalculates the influence on the new island position of mother nature.
+     *
+     * @param moves of type Int - number of steps the player want to move mother nature.
+     * @throws NotAllowedException if the number of moves is bigger than the value allowed.
+     * @throws EndGameException if the number of islands left is <= 3.
+     */
     @Override
     public void moveMotherNature(int moves) throws NotAllowedException, EndGameException {
         if (moves < 0) throw new IllegalArgumentException("Cannot move backwards");
@@ -277,6 +360,13 @@ public class NormalGame implements Game {
         }
     }
 
+    /**
+     * Method calculateInfluence sets the player with the highest influence as the controller of the selected island,
+     * based on the number of students present for each controlled color and on the number of towers on the island.
+     *
+     * @param island of type Island - the island of which we want to calculate the new controller.
+     * @throws EndGameException if a player has no tower left in his board.
+     */
     protected void calculateInfluence(Island island) throws EndGameException {
         if (island == null) throw new IllegalArgumentException("Calculating influence on null island");
         HouseColor oldController = island.getTeamColor();
@@ -303,6 +393,15 @@ public class NormalGame implements Game {
         setIslandController(island, winnerColor, oldController);
     }
 
+    /**
+     * Method setIslandController updates the controller of the island, adding towers to the old controller and removing
+     * them from the new one.
+     *
+     * @param island of type Island - island of which we want to update the controller.
+     * @param newController of type HouseColor - the new controller of the island.
+     * @param oldController of type HouseColor - the old controller of the island.
+     * @throws EndGameException if after removing towers from the new controller he has no towers left in his board.
+     */
     protected void setIslandController(Island island, HouseColor newController, HouseColor oldController) throws EndGameException {
         if (newController != null && !newController.equals(oldController)) {
             island.setTeamColor(newController);
@@ -330,9 +429,12 @@ public class NormalGame implements Game {
         }
     }
 
-    // checks the team with fewer towers left and calculates its number of controlled professors.
-    // if two teams have the same number of towers left the team with more professors controlled becomes the winner
-
+    /**
+     * Method calculateWinner returns the team with fewer towers left. In case of a tie, the winner is the team with
+     * more professors controlled. In case of another tie, two or more teams are considered winners.
+     *
+     * @return ArrayList<HouseColor> - the list of winning teams.
+     */
     @Override
     public ArrayList<HouseColor> calculateWinner() {
         ArrayList<HouseColor> winners = new ArrayList<>();
@@ -370,21 +472,45 @@ public class NormalGame implements Game {
         return winners;
     }
 
+
+    /**
+     * Method setCharacterInputs not available for normal games.
+     *
+     * @param input of type List<Integer> - list of inputs for character chard.
+     * @throws GameException when this method is played during a normal game.
+     */
     @Override
     public void setCharacterInputs(List<Integer> input) throws GameException {
         throw new NotExpertGameException();
     }
 
+    /**
+     * Method chooseCharacter not available for normal games.
+     *
+     * @param index of type byte - index of the character card chosen.
+     * @throws GameException when this method is played during a normal game.
+     */
     @Override
     public void chooseCharacter(byte index) throws GameException {
         throw new NotExpertGameException();
     }
 
+    /**
+     * Method playCharacter not available for normal games.
+     *
+     * @throws GameException when this method is played during a normal game.
+     */
     @Override
     public void playCharacter() throws GameException, EndGameException {
         throw new NotExpertGameException();
     }
 
+    /**
+     * Method moveFromCloud moves students from the selected cloud to the player's entrance hall.
+     *
+     * @param cloudId of type int - the unique ID of the selected cloud.
+     * @throws GameException if the selected cloud has no students.
+     */
     @Override
     public void moveFromCloud(int cloudId) throws GameException {
 
@@ -403,18 +529,38 @@ public class NormalGame implements Game {
         }
     }
 
+    /**
+     * Method getClouds returns the list of clouds.
+     *
+     * @return ArrayList<Cloud> - clouds in the game.
+     */
     protected ArrayList<Cloud> getClouds() {
         return clouds;
     }
 
+    /**
+     * Method getCurrentPlayer returns the player currently playing.
+     *
+     * @return Player - instance of the current player.
+     */
     protected Player getCurrentPlayer() {
         return getPlayer(currentPlayer);
     }
 
+    /**
+     * Method getCurrentPlayerIndex returns the index of the player currently playing.
+     *
+     * @return byte - index of the current player.
+     */
     protected byte getCurrentPlayerIndex() {
         return currentPlayer;
     }
 
+    /**
+     * Method setCurrentPlayer updates the current player.
+     *
+     * @param p Player - the instance of the new current player.
+     */
     public void setCurrentPlayer(Player p) {
         if (p == null) throw new IllegalArgumentException("Cannot set null current player");
         byte newCurrentPlayer = (byte) p.getWizard().ordinal();
@@ -423,6 +569,11 @@ public class NormalGame implements Game {
         }
     }
 
+    /**
+     * Method setCurrentPlayer updates the current player based on his index.
+     *
+     * @param currentPlayer byte - the index of the new current player.
+     */
     @Override
     public void setCurrentPlayer(byte currentPlayer) {
         if (currentPlayer < 0 || currentPlayer >= getPlayerSize())
@@ -430,6 +581,12 @@ public class NormalGame implements Game {
         this.currentPlayer = currentPlayer;
     }
 
+
+    /**
+     * Method transformAllGameInDelta saves all the game info inside the GameDelta that is sent to the client.
+     *
+     * @return GameDelta - GameDelta with all the info of the game.
+     */
     public GameDelta transformAllGameInDelta() {
         for (Team t : teams) {
             for (Player p : t.getPlayers()) {
@@ -448,14 +605,27 @@ public class NormalGame implements Game {
         return gameDelta;
     }
 
-    protected Player getPlayer(byte b) {
-        if (b < 0 || b >= getPlayerSize())
+
+    /**
+     * Method getPlayer returns the player based on the index provided.
+     *
+     * @param index of type byte - the index of the player.
+     * @return Player - instance of the player with the requested index.
+     */
+    protected Player getPlayer(byte index) {
+        if (index < 0 || index >= getPlayerSize())
             throw new IllegalArgumentException("Not a valid player index");
         // teams index = b % team size (in 4 players game, players are inserted in team 0, indexOf1, 0, 1)
         // player index (in team members) = b / team size (2 or 3 players -> = 0 (team contains only 1 member), 4 players -> first 2 = 0, last 2 = 1 (3rd player is in team 0 and is member[1]))
-        return teams.get(b % teams.size()).getPlayers().get(b / teams.size());
+        return teams.get(index % teams.size()).getPlayers().get(index / teams.size());
     }
 
+
+    /**
+     * Method getPlayers returns all the players in the game.
+     *
+     * @return ArrayList<Player> - list of the instances of all players in game.
+     */
     protected ArrayList<Player> getPlayers() {
         ArrayList<Player> ret = new ArrayList<>(getPlayerSize());
         for (byte i = 0; i < getPlayerSize() / teams.size(); i++)
@@ -464,31 +634,69 @@ public class NormalGame implements Game {
         return ret;
     }
 
+
+    /**
+     * Method getGameDelta is used to obtain the GameDelta of the game.
+     *
+     * @return GameDelta - instance of the game's GameDelta.
+     */
     public GameDelta getGameDelta() {
         return this.gameDelta;
     }
 
+    /**
+     * Method getPlayerSize returns the number of players in the game.
+     *
+     * @return byte - number of players in the game.
+     */
     protected byte getPlayerSize() {
         return (byte) (teams.size() * teams.get(0).getPlayers().size());
     }
 
+    /**
+     * Method getTeams returns the teams playing in the game.
+     *
+     * @return ArrayList<Team> - list of the instances of all teams in game.
+     */
     protected ArrayList<Team> getTeams() {
         return teams;
     }
 
+    /**
+     * Method getIslands returns the islands of the game.
+     *
+     * @return ArrayList<Island> - list of the instances of the game's islands.
+     */
     // used only in tests
     protected ArrayList<Island> getIslands() {
         return islands;
     }
 
+    /**
+     * Method getBag returns the game's bag.
+     *
+     * @return Bag - instance of the game's bag.
+     */
     protected Bag getBag() {
         return this.bag;
     }
+
+    /**
+     * Method getProfessors returns the wizards controlling each professor.
+     *
+     * @return Wizard[] - array of wizards controlling each professor (size = number of colors).
+     */
 
     protected Wizard[] getProfessor() {
         return professors;
     }
 
+
+    /**
+     * Method getMotherNaturePosition returns the current position of mother nature.
+     *
+     * @return byte - current mother nature position.
+     */
     // used only in tests
     protected byte getMotherNaturePosition() {
         return motherNaturePosition;

@@ -2,31 +2,60 @@ package it.polimi.ingsw.Server.model.GameComponents;
 
 import it.polimi.ingsw.Util.Color;
 import it.polimi.ingsw.Server.model.CoinListener;
+import it.polimi.ingsw.exceptions.serverExceptions.NotAllowedException;
 import it.polimi.ingsw.exceptions.serverExceptions.NotEnoughCoinsException;
 
 import java.util.ArrayList;
 import java.util.List;
 
-//Lunch hall is that part of the boar that is called Dining Room. There is only one for player and it has a reference to it.
-//It extends GameComponent which is the superclass of all the components that contains students.
+/**
+ * LunchHall class represents the game's Dining Room. Every player has only one LunchHall, and it has a reference to it.
+ */
 public class LunchHall extends GameComponent {
     private transient List<CoinListener> coinListeners;
 
+    /**
+     * Constructor LunchHall creates a new instance of LunchHall.
+     *
+     * @param lunchHallSize of type int - maximum amount of students per color allowed (usually 10).
+     * @param idGameComponent of type byte - unique ID to assign to the lunch hall.
+     */
     public LunchHall(int lunchHallSize, byte idGameComponent) {
         super(lunchHallSize, idGameComponent);
     }
 
+    /**
+     * Method canAddStudents checks if the lunch hall can receive enough students of a selected color.
+     *
+     * @param color of type Color - color of the students.
+     * @param number of type byte - number of students.
+     * @return boolean - true if the lunch hall can receive the specified number of students for the selected color, boolean false else.
+     */
     @Override
-    protected boolean canAddStudents(Color c, byte number) {
-        if (c == null) throw new IllegalArgumentException("Null color");
-        return howManyStudents(c) + number <= 10 && super.canAddStudents(c, number);
+    protected boolean canAddStudents(Color color, byte number) {
+        if (color == null) throw new IllegalArgumentException("Null color");
+        return howManyStudents(color) + number <= 10 && super.canAddStudents(color, number);
     }
 
+    /**
+     * Method moveAll not available for LunchHall.
+     *
+     * @param destination of type GameComponent - the instance of the target component.
+     * @throws NotAllowedException when this method is called on a LunchHall.
+     */
     @Override
-    public void moveAll(GameComponent destination) {
-        throw new IllegalArgumentException("You can't do moveAll from the lunchHall");
+    public void moveAll(GameComponent destination) throws NotAllowedException {
+        throw new NotAllowedException("You can't moveAll from the entranceHall");
     }
 
+    /**
+     * Method addStudents adds students of a selected color to the lunch hall.
+     *
+     * @param color of type Color - color of the students to add.
+     * @param number of type byte - number of students to add.
+     * @throws NotEnoughCoinsException if there are no more coins in the game
+     * to give to the player after placing 3, 6 or 9 students of the same color on the lunch hall.
+     */
     @Override
     protected void addStudents(Color color, byte number) throws NotEnoughCoinsException {
         if (coinListeners != null) {
@@ -36,14 +65,27 @@ public class LunchHall extends GameComponent {
         super.addStudents(color, number);
     }
 
+    /**
+     * Method notifyCoins is used to notify the listeners when a player receives a coin
+     * after placing 3, 6 or 9 students of the same color on the lunch hall
+     *
+     * @param coins of type byte - number of coins received.
+     * @throws NotEnoughCoinsException if there are no more coins in the game to give to the player.
+     */
     private void notifyCoins(byte coins) throws NotEnoughCoinsException {
         if (coins < 1) return;
         for (CoinListener l : coinListeners)
             l.notifyCoins(coins);
     }
 
-    public void addCoinListener(CoinListener l) {
+    /**
+     * Method addCoinListener adds a listener (should be the instance of Expert Game)
+     * to the lunch hall that will be notified when a player receives one or more coins.
+     *
+     * @param listener of type CoinListener - instance of the listener to add.
+     */
+    public void addCoinListener(CoinListener listener) {
         if (coinListeners == null) coinListeners = new ArrayList<>();
-        coinListeners.add(l);
+        coinListeners.add(listener);
     }
 }

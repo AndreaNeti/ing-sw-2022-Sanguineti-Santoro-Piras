@@ -261,7 +261,7 @@ public class ExpertGame extends NormalGame implements CharacterCardGame, CoinLis
         getGameDelta().setNewCoinsLeft(coinsLeft);
     }
 
-    private void removeCoinsToCurrentPlayer(byte coins) throws GameException {
+    private void removeCoinsFromCurrentPlayer(byte coins) throws GameException {
         if (coins < 0)
             throw new IllegalArgumentException("Cannot remove negative amount of coins to the current player");
         // player's wizard is its index inside the list
@@ -299,7 +299,7 @@ public class ExpertGame extends NormalGame implements CharacterCardGame, CoinLis
                     coinsLeft--;
                 }
                 // remove coins to player
-                removeCoinsToCurrentPlayer(charCost);
+                removeCoinsFromCurrentPlayer(charCost);
                 coinsLeft += charCost;
                 chosenCharacter = -1;
                 inputsCharacter.clear();

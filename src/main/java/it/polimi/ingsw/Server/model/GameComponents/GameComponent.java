@@ -8,11 +8,22 @@ import it.polimi.ingsw.exceptions.serverExceptions.NotEnoughStudentsException;
 
 import java.io.Serializable;
 
+/**
+ * GameComponent class represents a game piece where students can be placed in "Eriantys".
+ * All components that can contain students extend this abstract class.
+ */
 public abstract class GameComponent implements Serializable {
     private final byte[] students;
     private transient final int maxStudents;
     private final byte idGameComponent;
 
+    /**
+     * Private constructor GameComponent used by public constructor to create a new instance of GameComponent.
+     *
+     * @param maxStudents of type int - maximum number of students placeable on this component.
+     * @param studentsPerColor of type byte - number of students per color to add when the component is created.
+     * @param idGameComponent of type byte - unique ID to assign to the component.
+     */
     private GameComponent(int maxStudents, byte studentsPerColor, byte idGameComponent) {
         if (maxStudents < 0 || studentsPerColor < 0)
             throw new IllegalArgumentException("Cannot create a gameComponent that contains negative students");
@@ -24,25 +35,59 @@ public abstract class GameComponent implements Serializable {
         this.idGameComponent = idGameComponent;
     }
 
+    /**
+     * Constructor GameComponent creates a new instance of GameComponent with no students on it.
+     *
+     * @param maxStudents of type int - maximum number of students placeable on this component.
+     * @param idGameComponent of type byte - unique ID to assign to the component.
+     */
     public GameComponent(int maxStudents, byte idGameComponent) {
         this(maxStudents, (byte) 0, idGameComponent);
     }
 
+    /**
+     * Constructor GameComponent creates a new instance of GameComponent with the maximum amount of students
+     * placeable already on the component.
+     *
+     * @param studentsPerColor of type byte - number of students per color to add when the component is created.
+     * @param idGameComponent of type byte - unique ID to assign to the component.
+     */
     public GameComponent(byte studentsPerColor, byte idGameComponent) {
 
         this(Color.values().length * studentsPerColor, studentsPerColor, idGameComponent);
     }
 
+    /**
+     * Constructor GameComponent creates a new instance of GameComponent with no students on it and no upper limit on the
+     * number of students placeable.
+     *
+     * @param idGameComponent of type byte - unique ID to assign to the component.
+     */
     public GameComponent(byte idGameComponent) {
         this(Integer.MAX_VALUE, (byte) 0, idGameComponent);
     }
 
+    /**
+     * Method addStudents adds students of a selected color to the component.
+     *
+     * @param color of type Color - color of the students to add.
+     * @param number of type byte - number of students to add.
+     * @throws NotEnoughCoinsException if the component is a LunchHall and there are no more coins in the game
+     * to give to the player after placing 3, 6 or 9 students of the same color.
+     */
     protected void addStudents(Color color, byte number) throws NotEnoughCoinsException {
         if (color == null) throw new IllegalArgumentException("Null color");
         if (number < 0) throw new IllegalArgumentException("Cannot add negative students");
         students[color.ordinal()] += number;
     }
 
+    /**
+     * Method removeStudents removes students of a selected color from the component.
+     *
+     * @param color of type Color - color of the students to add.
+     * @param number of type byte - number of students to add.
+     * @throws NotEnoughStudentsException if there are not enough students of the selected color to remove from the component.
+     */
     protected void removeStudents(Color color, byte number) throws NotEnoughStudentsException {
         if (color == null) throw new IllegalArgumentException("Null color");
         if (number < 0) throw new IllegalArgumentException("Cannot add negative students");
@@ -52,6 +97,14 @@ public abstract class GameComponent implements Serializable {
             throw new NotEnoughStudentsException();
     }
 
+    /**
+     * Method moveStudents moves students of a selected color from the component to another one.
+     *
+     * @param color of type Color - color of the students to add.
+     * @param number of type byte - number of students to add.
+     * @param destination of type GameComponent - instance of the target GameComponent.
+     * @throws GameException if the target GameComponent cannot receive all the students of the selected color.
+     */
     public void moveStudents(Color color, byte number, GameComponent destination) throws GameException {
         if (color == null) throw new IllegalArgumentException("Null color");
         if (number < 0) throw new IllegalArgumentException("Cannot add negative students");
@@ -62,6 +115,15 @@ public abstract class GameComponent implements Serializable {
 
     }
 
+    /**
+     * Method swapStudents swaps two students between the component and a target one.
+     *
+     * @param toGive of type Color - color of the students to give.
+     * @param toGet of type Color - color of the students to receive.
+     * @param other of type GameComponent - instance of the other GameComponent.
+     * @throws GameException if the swap will fail (one of the two components doesn't have the requested student color to give
+     * or cannot receive any more students of the selected color).
+     */
     public void swapStudents(Color toGive, Color toGet, GameComponent other) throws GameException {
         if (toGive == null || toGet == null || other == null) throw new IllegalArgumentException("Null argument");
         // swapping between same gameComponent or same color
@@ -84,7 +146,12 @@ public abstract class GameComponent implements Serializable {
         }
     }
 
-    //the exception is for the subclasses like bag,entranceHall and lunchHall that can't use this function
+    /**
+     * Method moveAll moves all students present on the component to a target component.
+     *
+     * @param destination of type GameComponent - the instance of the target component.
+     * @throws NotAllowedException if the function is called on a Bag, EntranceHall or LunchHall.
+     */
     public void moveAll(GameComponent destination) throws NotAllowedException {
         if (howManyStudents() > destination.getMaxStudents() - destination.howManyStudents())
             throw new NotAllowedException("Exceeded destination max student limit");
@@ -100,17 +167,34 @@ public abstract class GameComponent implements Serializable {
         }
     }
 
-    protected boolean canAddStudents(Color c, byte number) {
-        return howManyStudents() + number <= maxStudents;
+    /**
+     * Method canAddStudents checks if the component can receive enough students of a selected color.
+     *
+     * @param color of type Color - color of the students.
+     * @param number of type byte - number of students.
+     * @return boolean - true if the component can receive the specified number of students for the selected color, boolean false else.
+     */
+    protected boolean canAddStudents(Color color, byte number) {
+        return howManyStudents(color) + number <= maxStudents;
     }
 
-    // returns the number of students with color c
-    public byte howManyStudents(Color c) {
-        if (c == null) throw new IllegalArgumentException("Null color");
-        return students[c.ordinal()];
+
+    /**
+     * Method howManyStudents returns the number of students of a specific color present in the component.
+     *
+     * @param color of type Color - color of which we want to check the number of students.
+     * @return byte - number of students of the selected color in the component.
+     */
+    public byte howManyStudents(Color color) {
+        if (color == null) throw new IllegalArgumentException("Null color");
+        return students[color.ordinal()];
     }
 
-    // returns the global number of students
+    /**
+     * Method howManyStudents returns the total number of students present in the component.
+     *
+     * @return byte - total number of students in the component.
+     */
     public byte howManyStudents() {
         byte sum = 0;
         for (Color c : Color.values()) {
@@ -119,10 +203,22 @@ public abstract class GameComponent implements Serializable {
         return sum;
     }
 
+
+    /**
+     * Method getMaxStudents returns the maximum amount of students placeable on the component.
+     *
+     * @return int - number of max students.
+     */
     public int getMaxStudents() {
         return maxStudents;
     }
 
+    /**
+     * Method equals is used to compare two GameComponents, based on their unique ID.
+     *
+     * @param o of type Object - instance of the other Object.
+     * @return boolean - true if the other object is a GameComponent and has the same ID of the component.
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -131,6 +227,11 @@ public abstract class GameComponent implements Serializable {
         return idGameComponent == that.idGameComponent;
     }
 
+    /**
+     * Method getId returns the unique ID of the component.
+     *
+     * @return byte - ID of the component.
+     */
     public byte getId() {
         return idGameComponent;
     }
