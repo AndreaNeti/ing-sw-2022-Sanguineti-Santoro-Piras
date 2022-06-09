@@ -49,6 +49,10 @@ public class PlayerClient {
         return wizard;
     }
 
+    public String getNickName() {
+        return nickName;
+    }
+
     @Override
     public String toString() {
         return nickName;

@@ -14,6 +14,11 @@ public class Char5Client implements CharacterCardClient {
     }
 
     @Override
+    public boolean containsStudents() {
+        return false;
+    }
+
+    @Override
     public String getDescription() {
         return "When resolving a Conquering on an Island, Towers do not count towards influence.";
     }

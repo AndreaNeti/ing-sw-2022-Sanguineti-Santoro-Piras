@@ -21,6 +21,11 @@ public class Char11Client implements CharacterCardClient {
     }
 
     @Override
+    public boolean containsStudents() {
+        return false;
+    }
+
+    @Override
     public String getDescription() {
         return "Choose a type of Student every player (including yourself) must return 3 Students of that type from their Dining Room to the bag. If any player has fewer than 3 Students of that type, return as many Students as they have.";
     }

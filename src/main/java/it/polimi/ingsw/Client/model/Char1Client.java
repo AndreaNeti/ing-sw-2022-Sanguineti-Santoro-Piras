@@ -53,6 +53,11 @@ public class Char1Client implements CharacterCardClient {
     }
 
     @Override
+    public boolean containsStudents() {
+        return  false;
+    }
+
+    @Override
     public String toString() {
         return "Farmer";
     }

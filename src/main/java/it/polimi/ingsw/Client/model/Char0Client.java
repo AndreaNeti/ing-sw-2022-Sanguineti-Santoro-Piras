@@ -67,4 +67,8 @@ public class Char0Client extends CharacterCardClientWithStudents {
         return 0;
     }
 
+    @Override
+    public String getNameOfComponent() {
+        return "CharacterCard";
+    }
 }

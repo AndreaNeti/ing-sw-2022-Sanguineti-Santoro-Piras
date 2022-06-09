@@ -1,6 +1,7 @@
 package it.polimi.ingsw.Client.View.Gui.SceneController;
 
 import it.polimi.ingsw.Client.PhaseAndComand.Commands.GameCommand;
+import it.polimi.ingsw.Client.View.Gui.GuiFX;
 import it.polimi.ingsw.Client.View.Gui.ViewGUI;
 import it.polimi.ingsw.Client.model.CharacterCardClient;
 import it.polimi.ingsw.Client.model.GameComponentClient;
@@ -16,6 +17,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -28,6 +30,7 @@ public class MenuController implements SceneController {
     public Button joinMatchTypeButton;
     public ToggleGroup player;
     public ToggleGroup gameType;
+    public Button quitButton;
     @FXML
     AnchorPane root;
     ViewGUI viewGUI;
@@ -66,6 +69,7 @@ public class MenuController implements SceneController {
         joinIdButton.setOnAction(GameCommand.JOIN_MATCH_BY_ID.getGUIHandler(viewGUI));
         joinMatchTypeButton.setOnAction(GameCommand.JOIN_MATCH_BY_TYPE.getGUIHandler(viewGUI));
         sendButton.setOnAction(GameCommand.TEXT_MESSAGE.getGUIHandler(viewGUI));
+        quitButton.setOnAction(GameCommand.QUIT.getGUIHandler(viewGUI));
     }
 
     @Override
@@ -137,13 +141,8 @@ public class MenuController implements SceneController {
 
     }
 
-    public void updateGameComponent(String currentPlayer, boolean isMyTurn) {
-
-    }
-
     @Override
     public void updateMembers(int membersLeftToStart, String nickPlayerJoined) {
-
     }
 
     @Override
@@ -171,6 +170,11 @@ public class MenuController implements SceneController {
 
     @Override
     public void setWinners(List<HouseColor> winners) {
+
+    }
+
+    @Override
+    public void updateModelCreated() {
 
     }
 }

@@ -64,4 +64,9 @@ public class Char2Client implements CharacterCardClient {
     public void setUsed() {
         this.used = true;
     }
+
+    @Override
+    public boolean containsStudents() {
+        return false;
+    }
 }

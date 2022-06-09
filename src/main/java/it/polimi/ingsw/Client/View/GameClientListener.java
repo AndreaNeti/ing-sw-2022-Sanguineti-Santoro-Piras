@@ -40,5 +40,5 @@ public interface GameClientListener {
 
     void updateMessage(String message);
 
-
+    void updateModelCreated();
 }

@@ -157,6 +157,7 @@ public class ControllerClient extends GameClientListened {
         model = new GameClient(teamsClient, myWizard, matchType);
         model.addListener(this);
         abstractView.setModel(model);
+        notifyModelCreated();
     }
 
     // returns true if the client process has to quit

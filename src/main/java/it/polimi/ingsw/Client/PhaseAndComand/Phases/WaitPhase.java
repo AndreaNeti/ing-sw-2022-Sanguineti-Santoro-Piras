@@ -11,7 +11,7 @@ public class WaitPhase extends ClientPhase {
 
     @Override
     public void playPhase(ViewGUI viewGUI) {
-        SceneController sceneController = GuiFX.getSceneController();
+        SceneController sceneController = GuiFX.getActiveSceneController();
         sceneController.hideEverything();
         sceneController.getElementById("#chat").setVisible(true);
     }

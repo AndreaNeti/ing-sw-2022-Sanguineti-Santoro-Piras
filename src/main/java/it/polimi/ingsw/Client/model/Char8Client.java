@@ -21,6 +21,11 @@ public class Char8Client implements CharacterCardClient {
     }
 
     @Override
+    public boolean containsStudents() {
+        return false;
+    }
+
+    @Override
     public String getDescription() {
         return "Choose a color of Student: during the influence calculation this turn, that color adds no influence.";
     }

@@ -23,10 +23,4 @@ public class ViewGUI extends AbstractView {
         }
         Platform.runLater(() -> phaseToExecute.playPhase(this));
     }
-
-
-    @Override
-    public void setQuit(boolean forceImmediateExecution) {
-
-    }
 }

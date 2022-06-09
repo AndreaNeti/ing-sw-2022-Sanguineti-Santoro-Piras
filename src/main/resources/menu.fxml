@@ -14,7 +14,7 @@
     <VBox fx:id="chat" layoutX="-1.0" layoutY="198.0" prefHeight="461.0" prefWidth="202.0">
         <Pane fx:id="paneForChat" prefHeight="415.0" prefWidth="202.0" />
         <HBox prefHeight="70.0" prefWidth="214.0">
-            <TextField fx:id="message" prefHeight="26.0" prefWidth="163.0" />
+            <TextField id="message" prefHeight="26.0" prefWidth="163.0" />
             <Button fx:id="sendButton" mnemonicParsing="false" prefHeight="26.0" prefWidth="62.0" text="Send" />
         </HBox>
     </VBox>
@@ -63,4 +63,5 @@
         </VBox>
     </Group>
     <Button fx:id="chatButton" layoutX="14.0" layoutY="660.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="185.0" text="Show Chat" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="501.0" AnchorPane.topAnchor="660.0" />
+   <Button fx:id="quitButton" layoutX="600.0" layoutY="14.0" mnemonicParsing="false" text="Quit" textFill="RED" AnchorPane.bottomAnchor="661.0" AnchorPane.leftAnchor="600.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="14.0" />
 </AnchorPane>

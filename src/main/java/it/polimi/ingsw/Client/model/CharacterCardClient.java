@@ -18,5 +18,5 @@ public interface CharacterCardClient {
     List<Integer> getInputs();
     int getCharId();
     void setUsed();
-
+    boolean containsStudents();
 }

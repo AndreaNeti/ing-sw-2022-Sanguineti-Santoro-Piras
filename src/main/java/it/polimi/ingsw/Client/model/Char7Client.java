@@ -6,11 +6,17 @@ import it.polimi.ingsw.exceptions.clientExceptions.SkipCommandException;
 import java.util.List;
 
 public class Char7Client implements CharacterCardClient {
+
     private boolean used;
 
     @Override
     public void setUsed() {
         this.used = true;
+    }
+
+    @Override
+    public boolean containsStudents() {
+        return false;
     }
 
     @Override

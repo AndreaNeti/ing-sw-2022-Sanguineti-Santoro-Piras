@@ -15,10 +15,7 @@ import it.polimi.ingsw.exceptions.clientExceptions.SkipCommandException;
 import it.polimi.ingsw.network.toServerMessage.*;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.scene.control.Alert;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.*;
 
 import java.util.List;
 
@@ -36,7 +33,7 @@ public enum GameCommand {
         @Override
         public EventHandler<ActionEvent> getGUIHandler(ViewGUI viewGUI) {
             return actionEvent -> {
-                SceneController sceneController = GuiFX.getSceneController();
+                SceneController sceneController = GuiFX.getActiveSceneController();
                 TextField t = (TextField) sceneController.getElementById("#inputIp");
                 String ipString = t.getText();
                 if (ipString == null) {
@@ -66,7 +63,7 @@ public enum GameCommand {
         @Override
         public EventHandler<ActionEvent> getGUIHandler(ViewGUI viewGUI) {
             return actionEvent -> {
-                SceneController sceneController = GuiFX.getSceneController();
+                SceneController sceneController = GuiFX.getActiveSceneController();
                 TextField t = (TextField) sceneController.getElementById("#inputNickName");
                 String nick = t.getText();
                 if (nick == null || nick.isBlank()) {
@@ -91,9 +88,9 @@ public enum GameCommand {
         public EventHandler<ActionEvent> getGUIHandler(ViewGUI viewGUI) {
             return actionEvent -> {
                 try {
-                    RadioButton r = (RadioButton) GuiFX.getSceneController().getElementById("#gameType");
+                    RadioButton r = (RadioButton) GuiFX.getActiveSceneController().getElementById("#gameType");
                     boolean isExpert = r.getText().equals("ExpertGame");
-                    RadioButton r1 = (RadioButton) GuiFX.getSceneController().getElementById("#player");
+                    RadioButton r1 = (RadioButton) GuiFX.getActiveSceneController().getElementById("#player");
                     byte players = Byte.parseByte(r1.getText());
                     viewGUI.sendToServer(new CreateMatch(new MatchType(players, isExpert)));
                 } catch (IllegalArgumentException | NullPointerException ex) {
@@ -116,9 +113,9 @@ public enum GameCommand {
         public EventHandler<ActionEvent> getGUIHandler(ViewGUI viewGUI) {
             return actionEvent -> {
                 try {
-                    RadioButton r = (RadioButton) GuiFX.getSceneController().getElementById("#gameType");
+                    RadioButton r = (RadioButton) GuiFX.getActiveSceneController().getElementById("#gameType");
                     boolean isExpert = r.getText().equals("ExpertGame");
-                    RadioButton r1 = (RadioButton) GuiFX.getSceneController().getElementById("#player");
+                    RadioButton r1 = (RadioButton) GuiFX.getActiveSceneController().getElementById("#player");
                     byte players = Byte.parseByte(r1.getText());
                     viewGUI.sendToServer(new JoinMatchByType(new MatchType(players, isExpert)));
                 } catch (IllegalArgumentException | NullPointerException ex) {
@@ -141,7 +138,7 @@ public enum GameCommand {
         @Override
         public EventHandler<ActionEvent> getGUIHandler(ViewGUI viewGUI) {
             return actionEvent -> {
-                SceneController sceneController = GuiFX.getSceneController();
+                SceneController sceneController = GuiFX.getActiveSceneController();
                 TextField t = (TextField) sceneController.getElementById("#inputIdMatch");
                 try {
                     viewGUI.sendToServer(new JoinMatchById(Long.parseLong(t.getText())));
@@ -266,7 +263,7 @@ public enum GameCommand {
         @Override
         public EventHandler<ActionEvent> getGUIHandler(ViewGUI viewGUI) {
             return actionEvent -> {
-                SceneController sceneController = GuiFX.getSceneController();
+                SceneController sceneController = GuiFX.getActiveSceneController();
                 TextField t = (TextField) sceneController.getElementById("#message");
                 viewGUI.sendToServer(new TextMessageCS(t.getText()));
                 viewGUI.addMessage("[You]: " + t.getText());
@@ -300,6 +297,19 @@ public enum GameCommand {
             if (viewCli.getBooleanInput("Quit?", false)) {
                 viewCli.setQuit(false);
             } else viewCli.repeatPhase(false);
+        }
+
+        @Override
+        public EventHandler<ActionEvent> getGUIHandler(ViewGUI viewGUI) {
+            return actionEvent -> {
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Exit");
+                alert.setContentText("Do you want to quit?");
+
+                if (alert.showAndWait().filter(ButtonType.OK::equals).isPresent()) {
+                    viewGUI.setQuit(false);
+                }
+            };
         }
 
         @Override

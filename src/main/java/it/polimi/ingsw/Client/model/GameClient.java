@@ -104,7 +104,6 @@ public class GameClient extends GameClientListened implements GameClientView {
         from 0 to 2*numberOfPlayer-1 is entranceHall,LunchHall
         from 2*numberOfPlayer to 2*numberOfPlayer+12 are the island
         from -1 to -4 are clouds;
-        from -10 to -12 are the characters, here I ignore this
         */
         if (idGameComponent >= 0 && idGameComponent < 2 * matchType.nPlayers()) {
             int playerIndex = idGameComponent / 2;

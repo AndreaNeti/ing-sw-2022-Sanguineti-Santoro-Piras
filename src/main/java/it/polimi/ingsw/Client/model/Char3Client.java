@@ -14,6 +14,11 @@ public class Char3Client implements CharacterCardClient {
     }
 
     @Override
+    public boolean containsStudents() {
+        return false;
+    }
+
+    @Override
     public String getDescription() {
         return "You may move Mother Nature up to 2 additional Islands than is indicated by the Assistant card you've played.";
     }
