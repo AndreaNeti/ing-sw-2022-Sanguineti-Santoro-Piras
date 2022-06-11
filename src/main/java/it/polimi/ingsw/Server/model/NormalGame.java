@@ -20,10 +20,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * NormalGame class contains the main logic of "Eriantys" and correspond to the model in the MVC pattern.
+ * NormalGame class contains the main logic of "Eriantys" and correspond to the model in the MVC pattern. <br>
  * The game is divided into various game components: the islands, the clouds, the bag and
  * the players' lunch halls and entrance halls. The game also contains the playing teams and their
- * respective players. Most functions add the updated info of the game to the Game Delta, which is then sent to the
+ * respective players. <br>
+ * Most functions add the updated info of the game to the Game Delta, which is then sent to the
  * clients to inform them about the changes happening in the game.
  *
  */
@@ -478,22 +479,22 @@ public class NormalGame implements Game {
     /**
      * Method setCharacterInputs not available for normal games.
      *
-     * @param input of type List<Integer> - list of inputs for character chard.
+     * @param inputs of type List<Integer> - list of inputs for character chard.
      * @throws GameException when this method is played during a normal game.
      */
     @Override
-    public void setCharacterInputs(List<Integer> input) throws GameException {
+    public void setCharacterInputs(List<Integer> inputs) throws GameException {
         throw new NotExpertGameException();
     }
 
     /**
      * Method chooseCharacter not available for normal games.
      *
-     * @param index of type byte - index of the character card chosen.
+     * @param charId of type byte - index of the character card chosen.
      * @throws GameException when this method is played during a normal game.
      */
     @Override
-    public void chooseCharacter(byte index) throws GameException {
+    public void chooseCharacter(byte charId) throws GameException {
         throw new NotExpertGameException();
     }
 
@@ -561,11 +562,11 @@ public class NormalGame implements Game {
     /**
      * Method setCurrentPlayer updates the current player.
      *
-     * @param p Player - the instance of the new current player.
+     * @param player of type Player - the instance of the new current player.
      */
-    public void setCurrentPlayer(Player p) {
-        if (p == null) throw new IllegalArgumentException("Cannot set null current player");
-        byte newCurrentPlayer = (byte) p.getWizard().ordinal();
+    public void setCurrentPlayer(Player player) {
+        if (player == null) throw new IllegalArgumentException("Cannot set null current player");
+        byte newCurrentPlayer = (byte) player.getWizard().ordinal();
         if (newCurrentPlayer != this.currentPlayer) {
             this.currentPlayer = newCurrentPlayer;
         }
@@ -574,7 +575,7 @@ public class NormalGame implements Game {
     /**
      * Method setCurrentPlayer updates the current player based on his index.
      *
-     * @param currentPlayerIndex byte - the index of the new current player.
+     * @param currentPlayerIndex of type byte - the index of the new current player.
      */
     @Override
     public void setCurrentPlayer(byte currentPlayerIndex) {

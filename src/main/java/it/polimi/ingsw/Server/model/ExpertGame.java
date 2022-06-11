@@ -19,9 +19,12 @@ import java.util.List;
 import java.util.Random;
 
 /**
- * ExpertGame class represents the second game type available on "Eriantys". It adds to the NormalGame logic
- * the coins logic and also adds the character cards, with all the effects they provide. Most function are therefore
- * overridden to add checks on coins and character card effects.
+ * ExpertGame class represents the second game type available on "Eriantys". <br>
+ * Following the decorator pattern, it adds to the NormalGame logic the coins logic and also adds the character cards,
+ * with all the effects they provide. Most function are therefore overridden to add checks
+ * on coins and character card effects. <br>
+ * Most functions add the updated info of the game to the Game Delta, which is then sent to the
+ * clients to inform them about the changes happening in the game.
  */
 public class ExpertGame extends NormalGame implements CharacterCardGame, CoinListener, Serializable {
     private final byte[] coinsPlayer;
