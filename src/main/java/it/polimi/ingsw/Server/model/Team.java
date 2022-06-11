@@ -8,6 +8,11 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Objects;
 
+/**
+ * Team class represents the team logic of "Eriantys". If the game has 2 or 3 players, the team will coincide
+ * with the single player. If the game has 4 players there will be 2 teams of 2 players each.
+ * Each team has its unique house color, number of members and number of towers.
+ */
 public class Team implements Serializable {
     private final HouseColor houseColor;
     private final ArrayList<Player> members;
@@ -15,49 +20,93 @@ public class Team implements Serializable {
     private transient final byte maxTowers;
     private transient byte towersLeft;
 
-    public Team(HouseColor hc, byte teamSize, byte maxTowers) {
-        if (hc == null) throw new IllegalArgumentException("Null house color");
-        this.houseColor = hc;
+    /**
+     * Constructor Team creates a new instance of Team.
+     *
+     * @param houseColor of type HouseColor - house color of the team.
+     * @param teamSize of type byte - number of players in the team.
+     * @param maxTowers of type byte - total number of towers in the team.
+     */
+    public Team(HouseColor houseColor, byte teamSize, byte maxTowers) {
+        if (houseColor == null) throw new IllegalArgumentException("Null house color");
+        this.houseColor = houseColor;
         this.teamSize = teamSize;
         this.maxTowers = maxTowers;
         this.members = new ArrayList<>(teamSize);
         this.towersLeft = maxTowers;
     }
 
+    /**
+     * Method getPlayers returns all the players in the team.
+     *
+     * @return ArrayList<Player> - list of the instances of the team's players.
+     */
     public ArrayList<Player> getPlayers() {
         return new ArrayList<>(members);
     }
 
-    protected void addPlayer(Player p) throws NotAllowedException {
-        if (p == null) throw new IllegalArgumentException("Adding null player");
+    /**
+     * Method addPlayer adds the selected player to the team.
+     *
+     * @param player of type Player - instance of the player to add.
+     * @throws NotAllowedException if the team is full or the player is already inside the team.
+     */
+    protected void addPlayer(Player player) throws NotAllowedException {
+        if (player == null) throw new IllegalArgumentException("Adding null player");
         if (isFull()) throw new NotAllowedException("Team is already full");
-        if (members.contains(p)) throw new NotAllowedException("Player already in the team");
-        members.add(p);
+        if (members.contains(player)) throw new NotAllowedException("Player already in the team");
+        members.add(player);
     }
 
+    /**
+     * Method getHouseColor returns the house color of the team.
+     *
+     * @return HouseColor - house color of the team.
+     */
     public HouseColor getHouseColor() {
         return houseColor;
     }
 
+    /**
+     * Method isFull checks if the team is full.
+     *
+     * @return boolean true - if the number of players in the team is equal to the team size, false else.
+     */
     public boolean isFull() {
         return teamSize == members.size();
     }
 
+    /**
+     * Method getTowersLeft returns the number of towers left in the team.
+     *
+     * @return byte - number of towers left.
+     */
     public byte getTowersLeft() {
         return this.towersLeft;
     }
 
-    public void addTowers(byte b) {
-        if (b < 0) throw new IllegalArgumentException("Cannot add negative towers");
-        if (towersLeft + b > maxTowers) throw new IllegalArgumentException("Max towers exceeded");
-        towersLeft += b;
+    /**
+     * Method addTowers adds a selected amount of towers to the team.
+     *
+     * @param towers of type byte - number of towers to add.
+     */
+    public void addTowers(byte towers) {
+        if (towers < 0) throw new IllegalArgumentException("Cannot add negative towers");
+        if (towersLeft + towers > maxTowers) throw new IllegalArgumentException("Max towers exceeded");
+        towersLeft += towers;
     }
 
-    public void removeTowers(byte b) throws EndGameException {
-        if (b < 0) throw new IllegalArgumentException("Cannot remove negative towers");
-        if (b > 0) {
-            if (towersLeft > b)
-                towersLeft -= b;
+    /**
+     * Method removeTowers removes a selected amount of towers to the team.
+     *
+     * @param towers of type byte - number of towers to remove.
+     * @throws EndGameException if after removing the towers there are none left.
+     */
+    public void removeTowers(byte towers) throws EndGameException {
+        if (towers < 0) throw new IllegalArgumentException("Cannot remove negative towers");
+        if (towers > 0) {
+            if (towersLeft > towers)
+                towersLeft -= towers;
             else {
                 towersLeft = 0;
                 throw new EndGameException(true);
@@ -65,6 +114,12 @@ public class Team implements Serializable {
         }
     }
 
+    /**
+     * Method equals is used to compare two Teams, based on their house color.
+     *
+     * @param o of type Object - instance of the other Object.
+     * @return boolean - true if the other object is a Team and has the same house color of the team.
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -72,11 +127,21 @@ public class Team implements Serializable {
         return houseColor == team.houseColor;
     }
 
+    /**
+     * Method hasCode returns the hash code obtained by the team's house color.
+     *
+     * @return int - hash code of the team's house color.
+     */
     @Override
     public int hashCode() {
         return Objects.hash(houseColor);
     }
 
+    /**
+     * Method toString returns the house color of the team.
+     *
+     * @return String - "(HouseColor) team".
+     */
     @Override
     public String toString() {
         return houseColor.name().toLowerCase() + " team";

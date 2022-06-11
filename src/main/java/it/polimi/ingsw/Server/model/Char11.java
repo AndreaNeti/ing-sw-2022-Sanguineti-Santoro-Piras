@@ -5,10 +5,25 @@ import it.polimi.ingsw.exceptions.serverExceptions.GameException;
 import it.polimi.ingsw.exceptions.serverExceptions.NotAllowedException;
 import it.polimi.ingsw.exceptions.serverExceptions.NotEnoughStudentsException;
 
+/**
+ * Char11 class represents the <b>"Thief"</b> character card. <br>
+ * <b>Effect</b>: Choose a type of Student every player (including yourself) must return 3
+ * Students of that type from their Dining Room to the bag. If any player has fewer than 3
+ * Students of that type, return as many Students as they have. <br>
+ * <b>Inputs required</b>: Student color.
+ */
 public class Char11 implements CharacterCard {
 
+    /**
+     * Method play automatically moves up to 3 students (if available) of the selected color from
+     * each player's lunch hall to the bag.
+     *
+     * @param game of type CharacterCardGame - the game instance that the card modifies with its effect.
+     * @throws GameException if the student color is not valid.
+     */
     @Override
     public void play(CharacterCardGame game) throws GameException {
+        //TODO: calculate influence after moving students?
         int color = game.getCharacterInputs().get(0);
         if (color < 0 || color >= Color.values().length)
             throw new NotAllowedException("Set wrong input for color");

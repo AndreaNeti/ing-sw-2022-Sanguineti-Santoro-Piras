@@ -7,12 +7,24 @@ import it.polimi.ingsw.exceptions.serverExceptions.NotEnoughStudentsException;
 
 import java.util.List;
 
+/**
+ * Char9 class represents the <b>"Minstrel"</b> character card. <br>
+ * <b>Effect</b>:You may exchange up to 2 Students between your Entrance and your Dining Room. <br>
+ * <b>Inputs required</b>: 1 student color from the lunch hall and 1 student color from the entrance hall, up to 2 pairs.
+ */
 public class Char9 implements CharacterCard {
 
 
+    /**
+     * Method play swaps each student pair between the entrance hall and the lunch hall.
+     *
+     * @param game of type CharacterCardGame - the game instance that the card modifies with its effect.
+     * @throws GameException
+     */
     // switch the students between the lunch hall and the entrance hall one pair at a time
     @Override
     public void play(CharacterCardGame game) throws GameException {
+        //TODO: invert lunch and entrance hall slots to be coherent with the description
         List<Integer> inputs = game.getCharacterInputs();
         // input 0 and 2 are the colors of lunch hall students, input 1 and 3 are the colors of entrance hall students
         int lunchHallColor, entranceHallColor;

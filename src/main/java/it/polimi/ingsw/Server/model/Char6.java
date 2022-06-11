@@ -8,11 +8,31 @@ import it.polimi.ingsw.exceptions.serverExceptions.NotEnoughStudentsException;
 
 import java.util.List;
 
+/**
+ * Char6 class represents the <b>"Jester"</b> character card. <br>
+ * <b>Effect</b>: You may take up to 3 Students from this card and replace them
+ * with the same number of Students from your Entrance. <br>
+ * <b>Inputs required</b>: 1 student color from this card and 1 student color from the entrance hall, up to 3 pairs. <br>
+ * This is one of the 3 character cards that contain students and therefore extends the GameComponent class.
+ */
 public class Char6 extends GameComponent implements CharacterCard {
+
+    /**
+     * Constructor Char6 creates a new instance of Char6.
+     *
+     * @param idGameComponent of type byte - unique ID to assign to the component.
+     */
     public Char6(byte idGameComponent) {
         super(6, idGameComponent);
     }
 
+    /**
+     * Method play swaps each student pair between this card and the entrance hall.
+     *
+     * @param game of type CharacterCardGame - the game instance that the card modifies with its effect.
+     * @throws GameException if the students colors are not valid or there is not a student of the
+     *                       selected color either the card or the entrance hall.
+     */
     @Override
     public void play(CharacterCardGame game) throws GameException {
         List<Integer> inputs = game.getCharacterInputs();

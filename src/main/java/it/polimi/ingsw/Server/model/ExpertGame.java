@@ -364,7 +364,7 @@ public class ExpertGame extends NormalGame implements CharacterCardGame, CoinLis
      * from the player and increasing its cost by 1 if it has never been played before.
      *
      * @throws GameException if the inputs set by the player are invalid (wrong inputs or more/fewer than requested).
-     * @throws EndGameException if the character card effects trigger an endgame event (no more students in the bag,
+     * @throws EndGameException if the character card's effect trigger an endgame event (no more students in the bag,
      * no more towers in a team's board or less than 3 islands left)
      */
     @Override

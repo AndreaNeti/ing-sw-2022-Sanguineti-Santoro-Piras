@@ -158,7 +158,7 @@ public class Player implements Serializable {
      * Method equals is used to compare two Players, based on their unique nickname.
      *
      * @param o of type Object - instance of the other Object.
-     * @return boolean - true if the other object is a PLayer and has the same nickname of the player.
+     * @return boolean - true if the other object is a Player and has the same nickname of the player.
      */
     @Override
     public boolean equals(Object o) {
