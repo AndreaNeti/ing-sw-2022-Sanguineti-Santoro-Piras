@@ -1,7 +1,16 @@
 package it.polimi.ingsw.Util;
 
+/**
+ * IPAddress class is used to convert the string of the IP address inputted by the user to connect
+ * to a server into an array of bytes. <br>
+ */
 public class IPAddress {
-    // return null if it's not a valid ip, otherwise returns the IP bytes
+    /**
+     * Method getIpFromString converts the string of the IP address into an equivalent array of bytes.
+     *
+     * @param ip of type String - string of the address inputted by the user.
+     * @return byte[] - equivalent array of bytes of the address if the string is valid, null otherwise.
+     */
     public static byte[] getIpFromString(String ip) {
         ip = ip.toLowerCase();
         if (ip.equals("localhost") || ip.equals("l") || ip.equals("paolino")) return new byte[]{127, 0, 0, 1};
