@@ -270,7 +270,7 @@ public class NormalGame implements Game {
      * @param color of type Color - the color of the student to move.
      * @param idGameComponentSource of type Int - the ID of the source component.
      * @param idGameComponentDestination of type Int - the ID of the target component.
-     * @throws GameException if the color is null or if at least on ID is not valid or if it's not possible to move the student.
+     * @throws GameException if the color is null or if at least one ID is not valid or if it's not possible to move the student.
      */
     @Override
     public void move(Color color, int idGameComponentSource, int idGameComponentDestination) throws GameException {

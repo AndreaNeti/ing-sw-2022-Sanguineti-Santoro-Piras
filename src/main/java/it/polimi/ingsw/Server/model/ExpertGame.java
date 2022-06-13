@@ -23,7 +23,7 @@ import java.util.Random;
  * Following the decorator pattern, it adds to the NormalGame logic the coins logic and also adds the character cards,
  * with all the effects they provide. Most function are therefore overridden to add checks
  * on coins and character card effects. <br>
- * Most functions add the updated info of the game to the Game Delta, which is then sent to the
+ * Most functions add the updated info of the game to the Expert Game Delta, which is then sent to the
  * clients to inform them about the changes happening in the game.
  */
 public class ExpertGame extends NormalGame implements CharacterCardGame, CoinListener, Serializable {
@@ -367,7 +367,7 @@ public class ExpertGame extends NormalGame implements CharacterCardGame, CoinLis
      * from the player and increasing its cost by 1 if it has never been played before.
      *
      * @throws GameException if the inputs set by the player are invalid (wrong inputs or more/fewer than requested).
-     * @throws EndGameException if the character card's effect trigger an endgame event (no more students in the bag,
+     * @throws EndGameException if the character card's effect triggers an endgame event (no more students in the bag,
      * no more towers in a team's board or less than 3 islands left)
      */
     @Override
