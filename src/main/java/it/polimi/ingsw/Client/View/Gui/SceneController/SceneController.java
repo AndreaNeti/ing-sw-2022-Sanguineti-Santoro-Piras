@@ -11,5 +11,7 @@ public interface SceneController extends GameClientListener {
 
     void hideEverything();
 
+    void disableEverything();
+
     Node getElementById(String id);
 }

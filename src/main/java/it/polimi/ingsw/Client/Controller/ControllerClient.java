@@ -121,13 +121,10 @@ public class ControllerClient extends GameClientListened {
         for (Map.Entry<Color, Wizard> entry : gameDelta.getUpdatedProfessors().entrySet()) {
             if (entry.getValue() != null) model.setProfessors(entry.getKey(), entry.getValue());
         }
-
+        gameDelta.getNewMotherNaturePosition().ifPresent(mnPosition -> model.setMotherNaturePosition(mnPosition));
         for (Byte b : gameDelta.getDeletedIslands()) {
             model.removeIsland(b);
         }
-
-        gameDelta.getNewMotherNaturePosition().ifPresent(mnPosition -> model.setMotherNaturePosition(mnPosition));
-
         gameDelta.getPlayedCard().ifPresent(playedCard -> model.playCard(playedCard));
 
         for (Map.Entry<HouseColor, Byte> entry : gameDelta.getNewTeamTowersLeft().entrySet()) {
@@ -155,7 +152,7 @@ public class ControllerClient extends GameClientListened {
 
     private void startGame() {
         model = new GameClient(teamsClient, myWizard, matchType);
-        model.addListener(this);
+        //model.addListener(this);
         abstractView.setModel(model);
         notifyModelCreated();
     }
@@ -184,6 +181,9 @@ public class ControllerClient extends GameClientListened {
     protected void unsetModel() {
         chat.clear();
         isInMatch = false;
+        if (model != null) {
+            model.deleteModel();
+        }
         model = null;
         abstractView.setModel(null);
     }

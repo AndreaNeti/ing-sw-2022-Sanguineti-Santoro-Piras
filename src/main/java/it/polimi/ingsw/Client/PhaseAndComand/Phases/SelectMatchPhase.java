@@ -13,7 +13,6 @@ public class SelectMatchPhase extends ClientPhase {
     public void playPhase(ViewGUI viewGUI) {
         SceneController sceneController = GuiFX.getActiveSceneController();
         sceneController.hideEverything();
-        //TODO problema quando qualcuno si disconette da un match non trova più questo elemento
         sceneController.getElementById("#selectMatch").setVisible(true);
     }
 

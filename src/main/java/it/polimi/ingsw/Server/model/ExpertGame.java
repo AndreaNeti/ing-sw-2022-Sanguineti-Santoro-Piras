@@ -593,7 +593,7 @@ public class ExpertGame extends NormalGame implements CharacterCardGame, CoinLis
     }
 
     /**
-     * Method getPlayerSize returns the current player.
+     * Method getCurrentPlayer returns the current player.
      *
      * @return Player - instance of the current player.
      */

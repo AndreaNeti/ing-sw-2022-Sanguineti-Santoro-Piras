@@ -305,7 +305,7 @@ public enum GameCommand {
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                 alert.setTitle("Exit");
                 alert.setContentText("Do you want to quit?");
-
+                alert.initOwner(GuiFX.getPrimaryStage());
                 if (alert.showAndWait().filter(ButtonType.OK::equals).isPresent()) {
                     viewGUI.setQuit(false);
                 }
@@ -335,6 +335,7 @@ public enum GameCommand {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Input fields empty");
         alert.setContentText("Input not valid");
+        alert.initOwner(GuiFX.getPrimaryStage());
         alert.showAndWait();
     }
 }

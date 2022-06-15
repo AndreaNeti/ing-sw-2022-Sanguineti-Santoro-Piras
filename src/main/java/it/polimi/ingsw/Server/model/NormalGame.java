@@ -356,7 +356,6 @@ public class NormalGame implements Game {
 
             // add to game delta
             gameDelta.setNewMotherNaturePosition(motherNaturePosition);
-
             calculateInfluence(islands.get(motherNaturePosition));
         } finally {
             gameDelta.send();

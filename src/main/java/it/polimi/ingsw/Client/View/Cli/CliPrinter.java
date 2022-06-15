@@ -491,6 +491,7 @@ public class CliPrinter implements GameClientListener {
 
     @Override
     public void updateModelCreated() {
+        view.getModel().addListener(this);
 
     }
 
