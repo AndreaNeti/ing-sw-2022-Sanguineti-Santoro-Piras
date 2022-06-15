@@ -247,6 +247,8 @@ public class GameClient extends GameClientListened implements GameClientView {
 
     @Override
     public List<CharacterCardClient> getCharacters() {
+        if (characters == null || lockForCharacter == null)
+            return null;
         lockForCharacter.lock();
         List<CharacterCardClient> characterCardClients = Stream.concat(characters.stream(), charactersWithStudents.stream()).collect(Collectors.toList());
         lockForCharacter.unlock();
@@ -345,5 +347,9 @@ public class GameClient extends GameClientListened implements GameClientView {
         for (CharacterCardClientWithStudents c : charactersWithStudents)
             if (c.getCharId() == charId)
                 c.setUsed();
+    }
+
+    public void deleteModel() {
+        this.removeListeners();
     }
 }

@@ -35,8 +35,6 @@ public class Char11 implements CharacterCard {
             } catch (NotEnoughStudentsException ignored) {
                 //it shouldn't happen because we calculate the minimum value of the students of that color
             }
-
-            //TODO check if there is a better way
             game.getGameDelta().addUpdatedGC(game.getComponentById(2 * i + 1));
         }
     }

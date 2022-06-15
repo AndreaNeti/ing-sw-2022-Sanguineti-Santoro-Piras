@@ -51,11 +51,10 @@ public class MenuController implements SceneController {
     private void initialize() {
 
         hideEverything();
-        chatButton.setOnAction(actionEvent ->
-
-                switchChat());
+        chatButton.setOnAction(actionEvent -> chat.setVisible(!chat.isVisible()));
         //create the chat
         observableListChat = FXCollections.observableArrayList();
+        observableListChat.addAll(viewGUI.getChat());
         ListView<String> listView = new ListView<>(observableListChat);
         listView.prefWidthProperty().bind(paneForChat.widthProperty());
         listView.prefHeightProperty().bind(paneForChat.heightProperty());
@@ -80,6 +79,11 @@ public class MenuController implements SceneController {
     }
 
     @Override
+    public void disableEverything() {
+        hideEverything();
+    }
+
+    @Override
     public Node getElementById(String id) {
 
         //toggle group are not a node but i'll make them return the selected radio button
@@ -92,9 +96,6 @@ public class MenuController implements SceneController {
         return root.lookup(id);
     }
 
-    public void switchChat() {
-        chat.setVisible(!chat.isVisible());
-    }
 
     @Override
     public void updateMessage(String message) {
@@ -175,6 +176,6 @@ public class MenuController implements SceneController {
 
     @Override
     public void updateModelCreated() {
-
+        //here i don't need to receive the update of the model
     }
 }

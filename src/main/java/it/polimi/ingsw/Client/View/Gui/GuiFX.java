@@ -5,26 +5,28 @@ import it.polimi.ingsw.Client.View.Gui.SceneController.SceneController;
 import it.polimi.ingsw.Util.GamePhase;
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
+import javafx.stage.Window;
 
 import java.io.IOException;
 
 public class GuiFX extends Application {
     private static Stage primaryStage;
-    private static SceneController boardController;
-    private static SceneController menuController;
-    private static Scene menuScene;
-    private static Scene boardScene;
+    //true if i'm in menu scene, false in board scene
+    private static boolean inMenuScene;
     private static SceneController activeSceneController;
     private static ViewGUI viewGUI;
     private static ControllerClient controller;
 
+    public static Window getPrimaryStage() {
+        return primaryStage;
+    }
+
     @Override
     public void start(Stage primaryStage) {
+        inMenuScene = false;
         setPrimaryStage(primaryStage);
         primaryStage.setOnCloseRequest(event -> {
             Platform.exit();
@@ -37,48 +39,44 @@ public class GuiFX extends Application {
     }
 
     public static void goToBoardScene() {
-        if (boardScene == null) {
+        if (inMenuScene) {
+
             FXMLLoader loader = new FXMLLoader(GuiFX.class.getResource("/board.fxml"));
 
             try {
-                boardScene = new Scene(loader.load(), 1920, 1080);
+                primaryStage.setScene(new Scene(loader.load(), 1920, 1080));
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            primaryStage.setScene(boardScene);
+
             primaryStage.setFullScreen(false);
             primaryStage.setResizable(true);
             primaryStage.show();
-            boardController = loader.getController();
+            SceneController boardController = loader.getController();
             controller.addListener(boardController);
-            boardController.setViewGUI(viewGUI);
-
-        } else {
             activeSceneController = boardController;
-            primaryStage.setScene(boardScene);
-            primaryStage.show();
+            boardController.setViewGUI(viewGUI);
+            inMenuScene = false;
         }
     }
 
     public static void goToMenuScene() {
-        if (menuScene == null) {
+        if (!inMenuScene) {
             primaryStage.setResizable(false);
             primaryStage.setTitle("Eryantis");
             FXMLLoader loader = new FXMLLoader(GuiFX.class.getResource("/menu.fxml"));
             try {
-                menuScene = new Scene(loader.load(), 700, 700);
+                primaryStage.setScene(new Scene(loader.load(), 700, 700));
+                primaryStage.show();
+                SceneController menuController = loader.getController();
+                menuController.setViewGUI(viewGUI);
+                controller.addListener(menuController);
+                activeSceneController= menuController;
+                inMenuScene=true;
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
-            menuController = loader.getController();
-            menuController.setViewGUI(viewGUI);
-            controller.addListener(menuController);
-        } else {
-            activeSceneController = menuController;
-            primaryStage.setScene(menuScene);
         }
-
     }
 
     private static void setPrimaryStage(Stage primaryStage1) {

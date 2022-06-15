@@ -86,7 +86,6 @@ public abstract class AbstractView {
         if (setOldPhase)
             oldPhase = currentPhase;
         setPhaseInView(phases.get(gamePhase), forceImmediateExecution);
-
     }
 
     public GameClientView getModel() {

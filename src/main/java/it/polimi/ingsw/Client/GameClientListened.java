@@ -10,10 +10,11 @@ import it.polimi.ingsw.Util.Wizard;
 import it.polimi.ingsw.Util.AssistantCard;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public abstract class GameClientListened {
-    private List<GameClientListener> listeners;
+    private List<GameClientListener> listeners= new ArrayList<>();
     public void notifyModelCreated(){
         for (GameClientListener listener : listeners) {
             listener.updateModelCreated();
@@ -94,14 +95,12 @@ public abstract class GameClientListened {
         if (listeners == null) listeners = new ArrayList<>();
         listeners.add(listener);
     }
-
-    public void addListener(GameClientListened gameClientListened) {
-        if (listeners == null) listeners = gameClientListened.listeners;
-    }
     public void notifyMessage(String message) {
         for (GameClientListener listener : listeners) {
             listener.updateMessage(message);
         }
     }
-
+    public void removeListeners(){
+        listeners=new ArrayList<>();
+    }
 }
