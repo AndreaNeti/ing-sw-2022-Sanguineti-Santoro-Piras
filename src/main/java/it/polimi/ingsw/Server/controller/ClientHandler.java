@@ -172,7 +172,8 @@ public class ClientHandler implements Runnable, GameListener {
      * Method joinByMatchType adds the handler to the oldest game available that satisfy the match type selected.
      *
      * @param matchType of type MatchType - type of game the player wants to join.
-     * @throws GameException if the client handler has already a game controller set.
+     * @throws GameException if the client handler has already a game controller set or if the client
+     * cannot be added to the game.
      */
     public void joinByMatchType(MatchType matchType) throws GameException {
         if (controller != null) throw new NotAllowedException("Already joined a match");
@@ -184,7 +185,8 @@ public class ClientHandler implements Runnable, GameListener {
      * Method joinByMatchId adds the handler to the game with the ID selected.
      *
      * @param matchId of type Long - ID of the game the player wants to join.
-     * @throws GameException if the client handler has already a game controller set.
+     * @throws GameException if the client handler has already a game controller set or if the client
+     * cannot be added to the game.
      */
     public void joinByMatchId(Long matchId) throws GameException {
         if (controller != null) throw new NotAllowedException("Already joined a match");
@@ -195,7 +197,8 @@ public class ClientHandler implements Runnable, GameListener {
      * Method createMatch creates a new game with the specified match type and adds the handler to it.
      *
      * @param matchType of type MatchType - type of game the player wants to create.
-     * @throws GameException if the client handler has already a game controller set.
+     * @throws GameException if the client handler has already a game controller set or if the client
+     * cannot be added to the game created.
      */
     public void createMatch(MatchType matchType) throws GameException {
         if (controller != null) throw new NotAllowedException("Already joined a match");

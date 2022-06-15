@@ -123,7 +123,7 @@ public class Controller {
      *
      * @param idGameComponent of type byte - ID of the cloud.
      * @throws GameException if the selected game component is not a cloud or if this method is called
-     * during a phase that is not move_cl_phase.
+     * during a phase that is not move_cl_phase or if the selected cloud has no students.
      * @throws NullPointerException if
      * @throws EndGameException if it is the last turn and after moving students from the cloud the game ends.
      */
@@ -142,7 +142,7 @@ public class Controller {
      *
      * @param card of type AssistantCard - instance of the assistant card to play.
      * @throws GameException if the card selected cannot be played or if this method is called during a phase
-     * that is not planification_phase.
+     * that is not planification_phase or if the selected assistant card is not available to play.
      * @throws NullPointerException if
      * @throws EndGameException if
      */
@@ -169,7 +169,8 @@ public class Controller {
      * Method moveMotherNature is used to move mother nature a selected amount of moves.
      *
      * @param moves of type byte - number of moves wanted.
-     * @throws GameException if this method is called during a phase that is not move_mn_phase.
+     * @throws GameException if this method is called during a phase that is not move_mn_phase or if mother nature cannot
+     * be moved the selected amount of moves.
      * @throws NullPointerException if
      * @throws EndGameException if after moving mother nature there are less than 3 islands left in the game.
      */
@@ -236,7 +237,8 @@ public class Controller {
      * Method setCharacterInputs is used to add inputs to play the character card.
      *
      * @param inputs of type List<Integer> - list of inputs to add.
-     * @throws GameException if this method is called during the planification_phase.
+     * @throws GameException if this method is called during the planification_phase or if there is not selected
+     * character card.
      * @throws NullPointerException if
      */
     public synchronized void setCharacterInputs(List<Integer> inputs) throws GameException, NullPointerException {
@@ -250,9 +252,9 @@ public class Controller {
      * Method chooseCharacter is used to choose a character card to play.
      *
      * @param charId of type byte - ID of the character card.
-     * @throws GameException if the current player has already played a card in this turn or if the
-     * selected character card is not available or costs more than the number of coins of the player or if this
-     * method is called during the planification phase.
+     * @throws GameException if this method is called during the planification phase or
+     * if the current player has already played a card in this turn or if the
+     * selected character card is not available or costs more than the number of coins of the player.
      * @throws NullPointerException if
      */
     public synchronized void chooseCharacter(byte charId) throws GameException, NullPointerException {
@@ -268,8 +270,9 @@ public class Controller {
     /**
      * Method playCharacter is used to play the chosen character card with the inputs added by the player.
      *
-     * @throws GameException if the current player has already played a card in this turn or if there's an error
-     * while playing the card (invalid or wrong inputs) or if this method is called during the planification phase.
+     * @throws GameException if this method is called during the planification phase
+     * if the current player has already played a card in this turn or if there's an error
+     * while playing the card (invalid or wrong inputs).
      * @throws NullPointerException if
      * @throws EndGameException if the card's effect triggers an endgame event (no more students in the bag,
      *      * no more towers in a team's board or less than 3 islands left)
