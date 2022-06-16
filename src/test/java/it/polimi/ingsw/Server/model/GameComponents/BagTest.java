@@ -53,7 +53,7 @@ class BagTest {
         assertThrows(NotAllowedException.class, () -> bag.drawStudent(cloud, (byte) 5), "Can't add 5 students to cloud");
 
         assertThrows(EndGameException.class, () -> bag.drawStudent(island, (byte) (bag.howManyStudents() + 1)), "Not enough student in the bag should launch the exception");
-        assertThrows(IllegalArgumentException.class, () -> bag.moveAll(island), "Can't move pieces from the Bag");
+        assertThrows(NotAllowedException.class, () -> bag.moveAll(island), "You can't moveAll from the bag");
 
     }
 }

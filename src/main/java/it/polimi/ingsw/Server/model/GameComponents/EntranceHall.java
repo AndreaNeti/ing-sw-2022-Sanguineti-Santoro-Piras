@@ -1,6 +1,7 @@
 package it.polimi.ingsw.Server.model.GameComponents;
 
 
+import it.polimi.ingsw.Util.Color;
 import it.polimi.ingsw.exceptions.serverExceptions.NotAllowedException;
 
 /**
@@ -26,5 +27,17 @@ public class EntranceHall extends GameComponent {
     @Override
     public void moveAll(GameComponent destination) throws NotAllowedException {
         throw new NotAllowedException("You can't moveAll from the entranceHall");
+    }
+
+    /**
+     * Method canAddStudents checks if the entrance hall can receive enough students.
+     *
+     * @param color  of type {@link Color}, <b>IGNORED</b> - color of the students.
+     * @param number of type {@code byte} - number of students.
+     * @return {@code boolean} - true if the entrance hall can receive the specified number of students, false else.
+     */
+    @Override
+    protected boolean canAddStudents(Color color, byte number) {
+        return howManyStudents() + number <= getMaxStudents();
     }
 }

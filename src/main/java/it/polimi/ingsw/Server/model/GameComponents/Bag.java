@@ -73,5 +73,17 @@ public class Bag extends GameComponent {
     public void moveAll(GameComponent destination) throws NotAllowedException {
         throw new NotAllowedException("You can't moveAll from the bag");
     }
+
+    /**
+     * Method canAddStudents checks if the bag can receive enough students of a selected color.
+     *
+     * @param color  of type {@link Color} - color of the students.
+     * @param number of type {@code byte} - number of students.
+     * @return {@code boolean} - true if the bag can receive the specified number of students of the selected color, false else.
+     */
+    @Override
+    protected boolean canAddStudents(Color color, byte number) {
+        return howManyStudents(color) + number <= (getMaxStudents()/Color.values().length);
+    }
 }
 

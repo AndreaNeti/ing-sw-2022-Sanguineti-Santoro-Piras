@@ -172,7 +172,7 @@ public abstract class GameComponent implements Serializable {
      *
      * @param color of type {@link Color} - color of the students.
      * @param number of type {@code byte} - number of students.
-     * @return {@code boolean} - true if the component can receive the specified number of students for the selected color, boolean false else.
+     * @return {@code boolean} - true if the component can receive the specified number of students of the selected color, false else.
      */
     protected boolean canAddStudents(Color color, byte number) {
         return howManyStudents(color) + number <= maxStudents;
