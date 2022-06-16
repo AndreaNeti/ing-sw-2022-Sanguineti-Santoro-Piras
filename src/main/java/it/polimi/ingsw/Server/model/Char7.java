@@ -9,7 +9,7 @@ public class Char7 implements CharacterCard {
 
     /**
      * Method play sets the extraInfluence boolean to true in the game.
-     * @param game of type CharacterCardGame - the game instance that the card modifies with its effect.
+     * @param game of type {@link CharacterCardGame} - the game instance that the card modifies with its effect.
      */
     @Override
     public void play(CharacterCardGame game) {

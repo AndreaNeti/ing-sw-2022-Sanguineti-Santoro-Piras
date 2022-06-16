@@ -8,8 +8,8 @@ public class IPAddress {
     /**
      * Method getIpFromString converts the string of the IP address into an equivalent array of bytes.
      *
-     * @param ip of type String - string of the address inputted by the user.
-     * @return byte[] - equivalent array of bytes of the address if the string is valid, null otherwise.
+     * @param ip of type {@code String} - string of the address inputted by the user.
+     * @return {@code byte[]} - equivalent array of bytes of the address if the string is valid, null otherwise.
      */
     public static byte[] getIpFromString(String ip) {
         ip = ip.toLowerCase();

@@ -12,7 +12,7 @@ public interface CharacterCard {
     /**
      * Method play applies the card's effect to the game, using the CharacterCardGame interface's functions.
      *
-     * @param game of type CharacterCardGame - the game instance that the card modifies with its effect.
+     * @param game of type {@link CharacterCardGame} - the game instance that the card modifies with its effect.
      * @throws GameException if the inputs provided are wrong or invalid.
      * @throws EndGameException if the character card's effect trigger an endgame event (no more students in the bag,
      *                          no more towers in a team's board or less than 3 islands left)
@@ -22,22 +22,22 @@ public interface CharacterCard {
     /**
      * Method getCost returns the card's cost to play.
      *
-     * @return byte - the card's cost.
+     * @return {@code byte} - the card's cost.
      */
     byte getCost();
 
     /**
      * Method getCharId returns the card's unique ID.
      *
-     * @return byte - the card's ID.
+     * @return {@code byte} - the card's ID.
      */
     byte getCharId();
 
     /**
      * Method canPlay checks if the card can be played with the number of inputs provided by the player.
      *
-     * @param nInput of type int - number of inputs provided.
-     * @return boolean - true if the card can be played, false else.
+     * @param nInput of type {@code int} - number of inputs provided.
+     * @return {@code boolean} - true if the card can be played, false else.
      */
     boolean canPlay(int nInput);
 }

@@ -16,7 +16,7 @@ public class Char2 implements CharacterCard {
     /**
      * Method play recalculates the influence on the selected island.
      *
-     * @param game of type CharacterCardGame - the game instance that the card modifies with its effect.
+     * @param game of type {@link CharacterCardGame} - the game instance that the card modifies with its effect.
      * @throws GameException if the island ID is not valid.
      * @throws EndGameException if after calculating the influence on the island there are less than 3 islands left
      * or a team has no towers left.

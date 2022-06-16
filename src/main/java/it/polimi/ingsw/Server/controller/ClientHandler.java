@@ -7,6 +7,7 @@ import it.polimi.ingsw.network.toClientMessage.ErrorException;
 import it.polimi.ingsw.network.toClientMessage.OK;
 import it.polimi.ingsw.network.toClientMessage.ToClientMessage;
 import it.polimi.ingsw.network.toServerMessage.ToServerMessage;
+import it.polimi.ingsw.network.toServerMessage.Quit;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -30,7 +31,7 @@ public class ClientHandler implements Runnable, GameListener {
     /**
      * Constructor ClientHandler creates a new instance of ClientHandler.
      *
-     * @param socket of type Socket - socket connection between the server and the client.
+     * @param socket of type {@code Socket} - socket connection between the server and the client.
      */
     public ClientHandler(Socket socket) {
         if (socket == null) throw new NullPointerException();
@@ -46,9 +47,9 @@ public class ClientHandler implements Runnable, GameListener {
     }
 
     /**
-     * Method run waits for a player's command (ToServerMessage) to be received via socket connection and then executes it to
+     * Method run waits for a player's command ({@link ToServerMessage}) to be received via socket connection and then executes it to
      * modify the game through the game controller. <br>
-     * This method will end only after the player sends a <b>Quit</b> command while not in a game, closing the socket connection and
+     * This method will end only after the player sends a {@link Quit} command while not in a game, closing the socket connection and
      * relative data streams.
      */
     @Override
@@ -107,7 +108,7 @@ public class ClientHandler implements Runnable, GameListener {
     /**
      * Method setNickName adds the player's nickname to the client handler.
      *
-     * @param nickName of type String - nickname of the player.
+     * @param nickName of type {@code String} - nickname of the player.
      * @throws NotAllowedException if the nickname has been already set.
      */
     public void setNickName(String nickName) throws NotAllowedException {
@@ -135,7 +136,7 @@ public class ClientHandler implements Runnable, GameListener {
     /**
      * Method getNickName returns the nickname of the client handler's player.
      *
-     * @return String - nickname of the client handler.
+     * @return {@code String} - nickname of the client handler.
      */
     public String getNickName() {
         return nickName;
@@ -144,7 +145,7 @@ public class ClientHandler implements Runnable, GameListener {
     /**
      * Method update sends a message from the server to the client via socket connection.
      *
-     * @param message of type ToClientMessage - message to send to the client.
+     * @param message of type {@link ToClientMessage} - message to send to the client.
      */
     @Override
     public void update(ToClientMessage message) {
@@ -162,7 +163,7 @@ public class ClientHandler implements Runnable, GameListener {
     /**
      * Method getController returns the game controller associated with the client handler.
      *
-     * @return Controller - controller associated with the client handler.
+     * @return {@link Controller} - controller associated with the client handler.
      */
     public Controller getController() {
         return controller;
@@ -171,7 +172,7 @@ public class ClientHandler implements Runnable, GameListener {
     /**
      * Method joinByMatchType adds the handler to the oldest game available that satisfy the match type selected.
      *
-     * @param matchType of type MatchType - type of game the player wants to join.
+     * @param matchType of type {@link MatchType} - type of game the player wants to join.
      * @throws GameException if the client handler has already a game controller set or if the client
      * cannot be added to the game.
      */
@@ -184,7 +185,7 @@ public class ClientHandler implements Runnable, GameListener {
     /**
      * Method joinByMatchId adds the handler to the game with the ID selected.
      *
-     * @param matchId of type Long - ID of the game the player wants to join.
+     * @param matchId of type {@code Long} - ID of the game the player wants to join.
      * @throws GameException if the client handler has already a game controller set or if the client
      * cannot be added to the game.
      */
@@ -196,7 +197,7 @@ public class ClientHandler implements Runnable, GameListener {
     /**
      * Method createMatch creates a new game with the specified match type and adds the handler to it.
      *
-     * @param matchType of type MatchType - type of game the player wants to create.
+     * @param matchType of type {@link MatchType} - type of game the player wants to create.
      * @throws GameException if the client handler has already a game controller set or if the client
      * cannot be added to the game created.
      */
@@ -209,7 +210,7 @@ public class ClientHandler implements Runnable, GameListener {
     /**
      * Method joinMatch adds the game controller selected in the handler.
      *
-     * @param match of type Controller - game controller to add in the handler.
+     * @param match of type {@link Controller} - game controller to add in the handler.
      * @throws GameException if the player (and respective handler) cannot be added in the selected controller.
      */
     private void joinMatch(Controller match) throws GameException {
@@ -220,8 +221,8 @@ public class ClientHandler implements Runnable, GameListener {
     /**
      * Method equals is used to compare two ClientHandlers, based on their unique socket.
      *
-     * @param o of type Object - instance of the other Object.
-     * @return boolean - true if the other object is a ClientHandler and has the same socket of the handler.
+     * @param o of type {@code Object} - instance of the other Object.
+     * @return {@code boolean} - true if the other object is a ClientHandler and has the same socket of the handler.
      */
     @Override
     public boolean equals(Object o) {
@@ -233,7 +234,7 @@ public class ClientHandler implements Runnable, GameListener {
     /**
      * Method hasCode returns the hash code obtained by the handler's socket.
      *
-     * @return int - hash code of the handler's socket.
+     * @return {@code int} - hash code of the handler's socket.
      */
     @Override
     public int hashCode() {

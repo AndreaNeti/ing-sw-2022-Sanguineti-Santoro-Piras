@@ -22,7 +22,7 @@ public class MatchInfo implements ToClientMessage {
      *
      * @param matchType of type {@link MatchType} - type of the match joined.
      * @param matchId of type {@code long} - unique ID of the match.
-     * @param teams of type List<{@link Team}> - list of teams in the match.
+     * @param teams of type {@code List}<{@link Team}> - list of teams in the match.
      * @param yourWizard of type {@link Wizard} - wizard assigned to the player.
      */
     public MatchInfo(MatchType matchType, long matchId, List<Team> teams, Wizard yourWizard) {

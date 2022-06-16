@@ -16,7 +16,7 @@ public class Island extends GameComponent {
     /**
      * Constructor Island creates a new instance of Island.
      *
-     * @param idGameComponent of type byte - unique ID to assign to the island.
+     * @param idGameComponent of type {@code byte} - unique ID to assign to the island.
      */
     public Island(byte idGameComponent) {
         super(idGameComponent);
@@ -28,7 +28,7 @@ public class Island extends GameComponent {
     /**
      * Method getTeamColor returns the team controlling the island.
      *
-     * @return HouseColor - team color controlling the island.
+     * @return {@link HouseColor} - team color controlling the island.
      */
     public HouseColor getTeamColor() {
         return team;
@@ -37,7 +37,7 @@ public class Island extends GameComponent {
     /**
      * Method setTeamColor updates the team controlling the island.
      *
-     * @param teamColor of type HouseColor - the new team color controlling the island.
+     * @param teamColor of type {@link HouseColor} - the new team color controlling the island.
      */
     public void setTeamColor(HouseColor teamColor) {
         if (teamColor == null) throw new IllegalArgumentException("Cannot set null house color");
@@ -50,7 +50,7 @@ public class Island extends GameComponent {
     /**
      * Method merge moves all students and towers from a source island to this island.
      *
-     * @param island of type Island - instance of the source island.
+     * @param island of type {@link Island} - instance of the source island.
      */
     public void merge(Island island) {
         if (island == null) throw new IllegalArgumentException("Cannot merge to null island");
@@ -66,7 +66,7 @@ public class Island extends GameComponent {
     /**
      * Method getNumber returns the number of towers that the island will contain if controlled.
      *
-     * @return byte - total number of towers.
+     * @return {@code byte} - total number of towers.
      */
     public byte getNumber() {
         return number;
@@ -76,7 +76,7 @@ public class Island extends GameComponent {
      * Method getProhibitions returns the number of prohibitions placed on the island.
      * This function should be called only during expert games.
      *
-     * @return byte - number of prohibitions.
+     * @return {@code byte} - number of prohibitions.
      */
     public byte getProhibitions() {
         return prohibition;
@@ -86,7 +86,7 @@ public class Island extends GameComponent {
      * Method addProhibitions add one prohibition or more (when merging islands with prohibitions) to the island.
      * This function should be called only during expert games.
      *
-     * @param value of type byte - amount of prohibitions to add.
+     * @param value of type {@code byte} - amount of prohibitions to add.
      */
     public void addProhibitions(byte value) {
         if (value < 0) throw new IllegalArgumentException("Cannot add negative prohibitions");

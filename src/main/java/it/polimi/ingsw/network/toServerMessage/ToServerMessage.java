@@ -15,7 +15,7 @@ public interface ToServerMessage extends Serializable {
     /**
      * Method execute is used to execute the ToServerMessage's function through the game controller.
      *
-     * @param clientHandler of type ClientHandler - instance of the client handler that sends the message.
+     * @param clientHandler of type {@link ClientHandler} - instance of the client handler that sends the message.
      * @throws GameException if the game is finished or if it's not the client's turn or if the controller throws
      * this exception.
      * @throws EndGameException if the controller throws this exception

@@ -15,7 +15,7 @@ public class EndGame implements ToClientMessage {
     /**
      * Constructor EndGame creates a new instance of EndGame.
      *
-     * @param winners of type List<{@link HouseColor}> - list of winner of the game.
+     * @param winners of type {@code List}<{@link HouseColor}> - list of winner of the game.
      */
     public EndGame(List<HouseColor> winners) {
         this.winners = winners;

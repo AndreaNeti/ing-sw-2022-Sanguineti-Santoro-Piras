@@ -15,7 +15,7 @@ import java.util.List;
  * All clients have to call the Controller's method to interact with the game's model. <br>
  * This class contains the players order and game phase logic, so it notifies the clients if a method is
  * called in the right or wrong phase. <br>
- * It also contains a list of all the players and their respective ClientHandlers, a list of the teams
+ * It also contains a list of all the players and their respective client handlers, a list of the teams
  * and an instance of the game it controls.
  */
 public class Controller {
@@ -46,8 +46,8 @@ public class Controller {
     /**
      * Constructor Controller creates a new instance of Controller.
      *
-     * @param matchType of type MatchType - match type of the controller.
-     * @param id of type Long - unique ID of the controller.
+     * @param matchType of type {@link MatchType} - match type of the controller.
+     * @param id of type {@code Long} - unique ID of the controller.
      */
     public Controller(MatchType matchType, Long id) {
         this.matchConstants = Server.getMatchConstants(matchType);
@@ -77,8 +77,8 @@ public class Controller {
     /**
      * Method isMyTurn checks if it is currently the turn of the caller ClientHandler to play.
      *
-     * @param caller of type ClientHandler - handler that wants to know if it's its turn.
-     * @return boolean - true if it is the turn of the caller, false else.
+     * @param caller of type {@link ClientHandler} - handler that wants to know if it's its turn.
+     * @return {@code boolean} - true if it is the turn of the caller, false else.
      */
     public boolean isMyTurn(ClientHandler caller) {
         synchronized (playerHandlers) {
@@ -90,8 +90,8 @@ public class Controller {
      * Method move is used to move a student of a specified color to a selected game component.
      * The source game component obtained by the current game phase.
      *
-     * @param color of type Color - the color of the student to move.
-     * @param idGameComponent of type Int - the ID of the source component.
+     * @param color of type {@code Color} - the color of the student to move.
+     * @param idGameComponent of type {@code Int} - the ID of the source component.
      * @throws GameException if the color is null or the game component's ID is not valid or if it's not possible to move the student
      * to the specified game component or if this method is called during a phase that is not move_st_phase.
      * @throws NullPointerException if
@@ -121,7 +121,7 @@ public class Controller {
     /**
      * Method moveFromCloud is used to move students from a cloud to the current player's entrance hall.
      *
-     * @param idGameComponent of type byte - ID of the cloud.
+     * @param idGameComponent of type {@code byte} - ID of the cloud.
      * @throws GameException if the selected game component is not a cloud or if this method is called
      * during a phase that is not move_cl_phase or if the selected cloud has no students.
      * @throws NullPointerException if
@@ -140,7 +140,7 @@ public class Controller {
     /**
      * Method playCard is used by the user to play an assistant card during the planification phase.
      *
-     * @param card of type AssistantCard - instance of the assistant card to play.
+     * @param card of type {@link AssistantCard} - instance of the assistant card to play.
      * @throws GameException if the card selected cannot be played or if this method is called during a phase
      * that is not planification_phase or if the selected assistant card is not available to play.
      * @throws NullPointerException if
@@ -168,7 +168,7 @@ public class Controller {
     /**
      * Method moveMotherNature is used to move mother nature a selected amount of moves.
      *
-     * @param moves of type byte - number of moves wanted.
+     * @param moves of type {@code byte} - number of moves wanted.
      * @throws GameException if this method is called during a phase that is not move_mn_phase or if mother nature cannot
      * be moved the selected amount of moves.
      * @throws NullPointerException if
@@ -192,8 +192,8 @@ public class Controller {
      * After adding the player, all players already in match are notified and the player receives
      * the game's info.
      *
-     * @param newPlayerHandler of type GameListener - instance of the player's ClientHandler.
-     * @param nickName of type String - nickname of the player to add.
+     * @param newPlayerHandler of type {@link GameListener} - instance of the player's ClientHandler.
+     * @param nickName of type {@code String} - nickname of the player to add.
      * @throws GameException if the match is already full.
      */
     public synchronized void addPlayer(GameListener newPlayerHandler, String nickName) throws GameException {
@@ -224,8 +224,8 @@ public class Controller {
     /**
      * Method sendMessage is used by the player to send a message to the other players in the game.
      *
-     * @param me of type ClientHandler - instance of the client handler that will send the message.
-     * @param message of type String - text of the message.
+     * @param me of type {@link ClientHandler} - instance of the client handler that will send the message.
+     * @param message of type {@code String} - text of the message.
      * @throws NullPointerException if the client handler instance is null.
      */
     public void sendMessage(ClientHandler me, String message) throws NullPointerException {
@@ -236,7 +236,7 @@ public class Controller {
     /**
      * Method setCharacterInputs is used to add inputs to play the character card.
      *
-     * @param inputs of type List<Integer> - list of inputs to add.
+     * @param inputs of type {@code List}<{@code Integer}> - list of inputs to add.
      * @throws GameException if this method is called during the planification_phase or if there is not selected
      * character card.
      * @throws NullPointerException if
@@ -251,7 +251,7 @@ public class Controller {
     /**
      * Method chooseCharacter is used to choose a character card to play.
      *
-     * @param charId of type byte - ID of the character card.
+     * @param charId of type {@code byte} - ID of the character card.
      * @throws GameException if this method is called during the planification phase or
      * if the current player has already played a card in this turn or if the
      * selected character card is not available or costs more than the number of coins of the player.
@@ -296,7 +296,7 @@ public class Controller {
      * Method disconnectPlayerQuit is used when a player disconnects from the game. All other players in the game
      * are notified and the game ends instantly with no winner.
      *
-     * @param playerAlreadyDisconnected of type GameListener - instance of the ClientHandler of the disconnected player.
+     * @param playerAlreadyDisconnected of type {@link GameListener} - instance of the ClientHandler of the disconnected player.
      */
     public void disconnectPlayerQuit(GameListener playerAlreadyDisconnected) {
         removePlayer(playerAlreadyDisconnected);
@@ -310,8 +310,8 @@ public class Controller {
      * Method notifyClients is used to send a message to all the players in the game, except a single GameListener
      * (usually the one who sent the message or currently playing their turn).
      *
-     * @param message of type ToClientMessage - instance of the message to send to the clients.
-     * @param excludeMe of type GameListener - instance of the ClientHandler that should not receive the message.
+     * @param message of type {@link ToClientMessage} - instance of the message to send to the clients.
+     * @param excludeMe of type {@link GameListener} - instance of the ClientHandler that should not receive the message.
      */
     private void notifyClients(ToClientMessage message, GameListener excludeMe) {
         synchronized (playerHandlers) {
@@ -324,7 +324,7 @@ public class Controller {
     /**
      * Method notifyClients is used to send a message to all players in the game.
      *
-     * @param message of type ToClientMessage - instance of the message to send to the clients.
+     * @param message of type {@link ToClientMessage} - instance of the message to send to the clients.
      */
     private void notifyClients(ToClientMessage message) {
         notifyClients(message, null);
@@ -333,7 +333,7 @@ public class Controller {
     /**
      * Method broadcastMessage is used by the server to send a broadcast message to all players in game.
      *
-     * @param message of type TextMessageSC - instance of the message to broadcast.
+     * @param message of type {@link TextMessageSC} - instance of the message to broadcast.
      */
     public void broadcastMessage(TextMessageSC message) {
         notifyClients(message);
@@ -342,7 +342,7 @@ public class Controller {
     /**
      * Method removePLayer is used to remove a player from the game.
      *
-     * @param toRemovePlayer of type GameListener - instance of the ClientHandler of the player to remove.
+     * @param toRemovePlayer of type {@link GameListener} - instance of the ClientHandler of the player to remove.
      * @throws NullPointerException if the player to remove is null.
      */
     public void removePlayer(GameListener toRemovePlayer) throws NullPointerException {
@@ -403,7 +403,7 @@ public class Controller {
     /**
      * Method getCurrentPlayerIndex returns the index of the current player based on the current round index.
      *
-     * @return byte - index of the current player.
+     * @return {@code byte} - index of the current player.
      */
     private byte getCurrentPlayerIndex() {
         if (gamePhase == GamePhase.PLANIFICATION_PHASE) {
@@ -417,6 +417,7 @@ public class Controller {
 
     /**
      * Method nextPhase updates the phase and the current player based on the current one. <br>
+     * <b>Transitions</b>: <br>
      * planification_phase -> new player, move_st_phase if all players have played an assistant card. <br>
      * move_st_phase -> move_mn_phase. <br>
      * move_mn_phase -> move_cl_phase. <br>
@@ -470,7 +471,7 @@ public class Controller {
     /**
      * Method setPhase sets the game phase to the selected one.
      *
-     * @param gamePhase of type GamePhase - game phase to set on the controller.
+     * @param gamePhase of type {@link GamePhase} - game phase to set on the controller.
      */
     private void setPhase(GamePhase gamePhase) {
         this.gamePhase = gamePhase;
@@ -493,7 +494,7 @@ public class Controller {
      * Method handleError handles EndGameExceptions and checks if the game should end instantly or
      * there will be a last round to be played, informing then the clients.
      *
-     * @param e of type EndGameException - instance of the exception.
+     * @param e of type {@link EndGameException} - instance of the exception.
      * @throws EndGameException if the game should end instantly (less than 3 islands left or a team has no more towers left).
      */
     protected void handleError(EndGameException e) throws EndGameException {
@@ -508,7 +509,7 @@ public class Controller {
     /**
      * Method getWinners returns all the teams that won the game.
      *
-     * @return ArrayList<HouseColor> - list of the house color of the winners.
+     * @return {@code ArrayList}<{@link HouseColor}> - list of the house color of the winners.
      */
     protected ArrayList<HouseColor> getWinners() {
         return winners;
@@ -517,7 +518,7 @@ public class Controller {
     /**
      * Method isGameFinished check if the controller's match is finished.
      *
-     * @return boolean - true if the game is finished, false else.
+     * @return {@code boolean} - true if the game is finished, false else.
      */
     public boolean isGameFinished() {
         return gameFinished;
@@ -526,7 +527,7 @@ public class Controller {
     /**
      * Method getMatchId returns the unique ID of the controller's match.
      *
-     * @return Long - ID of the controller's match.
+     * @return {@code Long} - ID of the controller's match.
      */
     protected Long getMatchId() {
         return matchId;

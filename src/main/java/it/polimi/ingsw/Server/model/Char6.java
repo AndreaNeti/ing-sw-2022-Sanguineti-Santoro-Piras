@@ -20,7 +20,7 @@ public class Char6 extends GameComponent implements CharacterCard {
     /**
      * Constructor Char6 creates a new instance of Char6.
      *
-     * @param idGameComponent of type byte - unique ID to assign to the component.
+     * @param idGameComponent of type {@code byte} - unique ID to assign to the component.
      */
     public Char6(byte idGameComponent) {
         super(6, idGameComponent);
@@ -29,7 +29,7 @@ public class Char6 extends GameComponent implements CharacterCard {
     /**
      * Method play swaps each student pair between this card and the entrance hall.
      *
-     * @param game of type CharacterCardGame - the game instance that the card modifies with its effect.
+     * @param game of type {@link CharacterCardGame} - the game instance that the card modifies with its effect.
      * @throws GameException if the students colors are not valid or there is not a student of the
      *                       selected color either the card or the entrance hall.
      */

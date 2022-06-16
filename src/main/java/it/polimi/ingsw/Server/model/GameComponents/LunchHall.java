@@ -17,8 +17,8 @@ public class LunchHall extends GameComponent {
     /**
      * Constructor LunchHall creates a new instance of LunchHall.
      *
-     * @param lunchHallSize of type int - maximum amount of students per color allowed (usually 10).
-     * @param idGameComponent of type byte - unique ID to assign to the lunch hall.
+     * @param lunchHallSize of type {@code int} - maximum amount of students per color allowed (usually 10).
+     * @param idGameComponent of type {@code byte} - unique ID to assign to the lunch hall.
      */
     public LunchHall(int lunchHallSize, byte idGameComponent) {
         super(lunchHallSize, idGameComponent);
@@ -27,9 +27,9 @@ public class LunchHall extends GameComponent {
     /**
      * Method canAddStudents checks if the lunch hall can receive enough students of a selected color.
      *
-     * @param color of type Color - color of the students.
-     * @param number of type byte - number of students.
-     * @return boolean - true if the lunch hall can receive the specified number of students for the selected color, boolean false else.
+     * @param color of type {@link Color} - color of the students.
+     * @param number of type {@code byte} - number of students.
+     * @return {@code boolean} - true if the lunch hall can receive the specified number of students for the selected color, boolean false else.
      */
     @Override
     protected boolean canAddStudents(Color color, byte number) {
@@ -40,7 +40,7 @@ public class LunchHall extends GameComponent {
     /**
      * Method moveAll not available for LunchHall.
      *
-     * @param destination of type GameComponent - the instance of the target component.
+     * @param destination of type {@link GameComponent} - the instance of the target component.
      * @throws NotAllowedException when this method is called on a LunchHall.
      */
     @Override
@@ -51,8 +51,8 @@ public class LunchHall extends GameComponent {
     /**
      * Method addStudents adds students of a selected color to the lunch hall.
      *
-     * @param color of type Color - color of the students to add.
-     * @param number of type byte - number of students to add.
+     * @param color of type {@link Color} - color of the students to add.
+     * @param number of type {@code byte} - number of students to add.
      * @throws NotEnoughCoinsException if there are no more coins in the game
      * to give to the player after placing 3, 6 or 9 students of the same color on the lunch hall.
      */
@@ -69,7 +69,7 @@ public class LunchHall extends GameComponent {
      * Method notifyCoins is used to notify the listeners when a player receives a coin
      * after placing 3, 6 or 9 students of the same color on the lunch hall
      *
-     * @param coins of type byte - number of coins received.
+     * @param coins of type {@code byte} - number of coins received.
      * @throws NotEnoughCoinsException if there are no more coins in the game to give to the player.
      */
     private void notifyCoins(byte coins) throws NotEnoughCoinsException {
@@ -82,7 +82,7 @@ public class LunchHall extends GameComponent {
      * Method addCoinListener adds a listener (should be the instance of Expert Game)
      * to the lunch hall that will be notified when a player receives one or more coins.
      *
-     * @param listener of type CoinListener - instance of the listener to add.
+     * @param listener of type {@link CoinListener} - instance of the listener to add.
      */
     public void addCoinListener(CoinListener listener) {
         if (coinListeners == null) coinListeners = new ArrayList<>();

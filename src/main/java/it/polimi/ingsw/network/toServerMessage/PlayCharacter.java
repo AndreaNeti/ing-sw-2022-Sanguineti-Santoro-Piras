@@ -19,7 +19,7 @@ public class PlayCharacter implements ToServerMessage {
     /**
      * Constructor PlayCharacter creates a new instance of PlayCharacter.
      *
-     * @param inputs of type List<{@code Integer}> - list of inputs to play the chosen character card.
+     * @param inputs of type {@code List}<{@code Integer}> - list of inputs to play the chosen character card.
      */
     public PlayCharacter(List<Integer> inputs) {
         this.inputs = Objects.requireNonNullElse(inputs, Collections.emptyList());

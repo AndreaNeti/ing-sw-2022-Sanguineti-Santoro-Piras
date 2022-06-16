@@ -11,7 +11,7 @@ public interface GameListener {
     /**
      * Method update sends a message from the server to the client via socket connection.
      *
-     * @param message of type ToClientMessage - message to send to the client.
+     * @param message of type {@link ToClientMessage} - message to send to the client.
      */
     void update(ToClientMessage message);
 }

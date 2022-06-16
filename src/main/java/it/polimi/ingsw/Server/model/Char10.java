@@ -18,7 +18,7 @@ public class Char10 extends GameComponent implements CharacterCard {
     /**
      * Constructor Char10 creates a new instance of Char10.
      *
-     * @param idGameComponent of type byte - unique ID to assign to the component.
+     * @param idGameComponent of type {@code byte} - unique ID to assign to the component.
      */
     public Char10(byte idGameComponent) {
         super(4, idGameComponent);
@@ -28,7 +28,7 @@ public class Char10 extends GameComponent implements CharacterCard {
      * Method play moves a student of choice from the card to the entrance hall and then draws another student from
      * the bag to the card.
      *
-     * @param game of type CharacterCardGame - the game instance that the card modifies with its effect.
+     * @param game of type {@link CharacterCardGame} - the game instance that the card modifies with its effect.
      * @throws GameException if the student's color is not valid or there is not a student of the
      * selected color on the card.
      * @throws EndGameException if after drawing a student, the bag has none left.

@@ -32,7 +32,7 @@ public class Server {
     /**
      * Method main initializes the server and accepts new connections, assigning each ClientHandler to a new thread.
      *
-     * @param args of type String[] - application arguments.
+     * @param args of type {@code String[]} - application arguments.
      */
     public static void main(String[] args) {
         try (ServerSocket server = new ServerSocket(serverPort)) {
@@ -54,7 +54,7 @@ public class Server {
     /**
      * Method setNickName adds a nickname to the Server's list of nicknames
      *
-     * @param nickNameToAdd of type String - nickname to add.
+     * @param nickNameToAdd of type {@code String} - nickname to add.
      * @throws NotAllowedException if the nickname has already been taken by another player.
      */
     public static void setNickName(String nickNameToAdd) throws NotAllowedException {
@@ -65,7 +65,7 @@ public class Server {
     /**
      * Method removeNickname removes a nickname from the Server's list of nicknames
      *
-     * @param nickNameToRemove of type String - nickname to remove.
+     * @param nickNameToRemove of type {@code String} - nickname to remove.
      */
     public static void removeNickName(String nickNameToRemove) {
         nickNames.remove(nickNameToRemove);
@@ -75,8 +75,8 @@ public class Server {
      * Method createMatch creates a match of the specified type and assigns a new controller to it. It then adds
      * the match and the controller to a Server's map of all available matches.
      *
-     * @param matchType of type MatchType - type of the match to create.
-     * @return Controller - controller assigned to the created match.
+     * @param matchType of type {@link MatchType} - type of the match to create.
+     * @return {@link Controller} - controller assigned to the created match.
      */
     public static Controller createMatch(MatchType matchType) {
         Map<Long, Controller> filteredMatches = matches.computeIfAbsent(matchType, k -> Collections.synchronizedMap(new LinkedHashMap<>()));
@@ -89,8 +89,8 @@ public class Server {
     /**
      * Method fetOldestMatchId returns the oldest active match with the specified match types.
      *
-     * @param matchType of type MatchType - type of the match of which we want to get the ID.
-     * @return Long - ID of the oldest match with the specified type.
+     * @param matchType of type {@link MatchType} - type of the match of which we want to get the ID.
+     * @return {@code Long} - ID of the oldest match with the specified type.
      * @throws NotAllowedException if no match with the specified type are found.
      * if no match with the specified type are found.
      */
@@ -111,8 +111,8 @@ public class Server {
     /**
      * Method getMatchById returns the controller of the match with the specified ID.
      *
-     * @param id of type Long - ID of the match we want to get the controller of.
-     * @return Controller - instance of the Controller associated with the match with the specified ID.
+     * @param id of type {@code Long} - ID of the match we want to get the controller of.
+     * @return {@link Controller} - instance of the Controller associated with the match with the specified ID.
      * @throws NotAllowedException if the match with the specified ID is not found.
      */
     public static Controller getMatchById(Long id) throws NotAllowedException {
@@ -125,7 +125,7 @@ public class Server {
 
     /**
      * Method removeMatch removes the match with the specified ID from the Server's map of all available matches.
-     * @param id of type Long - ID of the match to remove.
+     * @param id of type {@code Long} - ID of the match to remove.
      */
     public static void removeMatch(Long id) {
         for (Map<Long, Controller> matches : matches.values())
@@ -135,8 +135,8 @@ public class Server {
     /**
      * Method getMatchConstants returns the match constants of a specified match type.
      *
-     * @param matchType of type MatchType - match type of which we want to get the constants.
-     * @return MatchConstants - match constants of the specified match type.
+     * @param matchType of type {@link MatchType} - match type of which we want to get the constants.
+     * @return {@link MatchConstants} - match constants of the specified match type.
      */
     public static MatchConstants getMatchConstants(MatchType matchType) {
         return matchConstants.get(matchType);

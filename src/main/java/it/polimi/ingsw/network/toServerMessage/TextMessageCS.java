@@ -21,7 +21,7 @@ public class TextMessageCS implements ToServerMessage {
     /**
      * Method execute uses the game controller to send the text message to the other clients.
      *
-     * @param clientHandler of type ClientHandler - instance of the client handler that sends the message.
+     * @param clientHandler of type {@link ClientHandler} - instance of the client handler that sends the message.
      */
     @Override
     public void execute(ClientHandler clientHandler) {

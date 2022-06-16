@@ -48,8 +48,8 @@ public class ExpertGameDelta extends GameDelta {
     /**
      * Method addCharacterCard adds a character card to the expert game delta.
      *
-     * @param index of type byte - position on the list on which the card is added.
-     * @param id of type byte - unique ID of the character card.
+     * @param index of type {@code byte} - position on the list on which the card is added.
+     * @param id of type {@code byte} - unique ID of the character card.
      */
     public void addCharacterCard(byte index, byte id) {
         if (characters == null)
@@ -60,8 +60,8 @@ public class ExpertGameDelta extends GameDelta {
     /**
      * Method setUpdatedCoinPlayer adds the player and their new amount of coins to the expert game delta.
      *
-     * @param playerId     of type byte - ID of the player.
-     * @param newCoinsLeft of type byte - new amount of coins for the player.
+     * @param playerId     of type {@code byte} - ID of the player.
+     * @param newCoinsLeft of type {@code byte} - new amount of coins for the player.
      */
     @Override
     public void setUpdatedCoinPlayer(byte playerId, byte newCoinsLeft) {
@@ -73,8 +73,8 @@ public class ExpertGameDelta extends GameDelta {
     /**
      * Method setUsedCharacter adds a character card and info about if it has been already used to the expert game delta.
      *
-     * @param charId of type byte - ID of the used character card.
-     * @param used   of type boolean - boolean used to know if the character card has been already used.
+     * @param charId of type {@code byte} - ID of the used character card.
+     * @param used   of type {@code boolean} - boolean used to know if the character card has been already used.
      */
     @Override
     public void setUsedCharacter(byte charId, boolean used) {
@@ -86,7 +86,7 @@ public class ExpertGameDelta extends GameDelta {
     /**
      * Method setNewCoinsLeft adds the new amount of coins left in the game to the expert game delta.
      *
-     * @param newCoinsLeft of type byte - new amount of coins left in the game.
+     * @param newCoinsLeft of type {@code byte} - new amount of coins left in the game.
      */
     @Override
     public void setNewCoinsLeft(byte newCoinsLeft) {
@@ -96,7 +96,7 @@ public class ExpertGameDelta extends GameDelta {
     /**
      * Method setNewProhibitionsLeft adds the new amount of prohibitions left in the game to the expert game delta.
      *
-     * @param newProhibitionsLeft of type byte - new amount of prohibitions left in the game.
+     * @param newProhibitionsLeft of type {@code byte} - new amount of prohibitions left in the game.
      */
     @Override
     public void setNewProhibitionsLeft(byte newProhibitionsLeft) {
@@ -106,7 +106,7 @@ public class ExpertGameDelta extends GameDelta {
     /**
      * Method setExtraSteps adds the new value of the extraSteps boolean in the game to the expert game delta.
      *
-     * @param extraSteps of type Boolean - new value of the extraSteps boolean in the game.
+     * @param extraSteps of type {@code Boolean} - new value of the extraSteps boolean in the game.
      */
     @Override
     public void setExtraSteps(Boolean extraSteps) {
@@ -117,7 +117,7 @@ public class ExpertGameDelta extends GameDelta {
      * Method setIgnoredColorInfluence adds the color that will be ignored during influence
      * calculation in the game to the expert game delta.
      *
-     * @param ignoredColorInfluence of type Color - color that will be ignored.
+     * @param ignoredColorInfluence of type {@link Color} - color that will be ignored.
      */
     @Override
     public void setIgnoredColorInfluence(Color ignoredColorInfluence) {
@@ -127,7 +127,7 @@ public class ExpertGameDelta extends GameDelta {
     /**
      * Method getCharacters returns all the character cards in the expert game delta.
      *
-     * @return List<Byte> - list of all the character cards.
+     * @return {@code List}<{@code Byte}> - list of all the character cards.
      */
     @Override
     public List<Byte> getCharacters() {
@@ -139,7 +139,7 @@ public class ExpertGameDelta extends GameDelta {
      * Method getUpdatedCoinPlayer returns all the players with a new amount of coins left. <br>
      * <b>Map entry</b>: (Player's ID - new coins amount).
      *
-     * @return Map<Byte, Byte> - map of all the players with their new coins left.
+     * @return {@code Map}<{@code Byte, Byte}> - map of all the players with their new coins left.
      */
     @Override
     public Map<Byte, Byte> getUpdatedCoinPlayer() {
@@ -151,7 +151,7 @@ public class ExpertGameDelta extends GameDelta {
      * Method getUsedCharacter returns all the character cards with a new "used" boolean value. <br>
      * <b>Map entry</b>: (Character card's ID - true/false).
      *
-     * @return Map<Byte, Boolean> - map of the character cards with their new "used" value.
+     * @return {@code Map}<{@code Byte, Boolean}> - map of the character cards with their new "used" value.
      */
     @Override
     public Map<Byte, Boolean> getUsedCharacter() {
@@ -162,7 +162,7 @@ public class ExpertGameDelta extends GameDelta {
     /**
      * Method getNewCoinsLeft returns the new amounts of coins left in the game.
      *
-     * @return Optional<Byte> - if present the new amount of coins left in the game, Empty Optional else.
+     * @return {@code Optional}<{@code Byte}> - if present the new amount of coins left in the game, Empty Optional else.
      */
     @Override
     public Optional<Byte> getNewCoinsLeft() {
@@ -172,7 +172,7 @@ public class ExpertGameDelta extends GameDelta {
     /**
      * Method getNewProhibitionsLeft returns the new amounts of prohibitions left in the game.
      *
-     * @return Optional<Byte> - if present the new amount of prohibitions left in the game, Empty Optional else.
+     * @return {@code Optional}<{@code Byte}> - if present the new amount of prohibitions left in the game, Empty Optional else.
      */
     @Override
     public Optional<Byte> getNewProhibitionsLeft() {
@@ -182,7 +182,7 @@ public class ExpertGameDelta extends GameDelta {
     /**
      * Method isExtraSteps returns the new value of extraSteps boolean in the game.
      *
-     * @return Optional<Boolean> - if present the new value of extraSteps boolean in the game, Empty Optional else.
+     * @return {@code Optional}<{@code Boolean}> - if present the new value of extraSteps boolean in the game, Empty Optional else.
      */
     @Override
     public Optional<Boolean> isExtraSteps() {
@@ -192,7 +192,7 @@ public class ExpertGameDelta extends GameDelta {
     /**
      * Method getIgnoredColorInfluence returns the new color that will be ignored in the influence calculation in the game.
      *
-     * @return Optional<Color> - if present the new ignored color in the game, Empty Optional else.
+     * @return {@code Optional}<{@link Color}> - if present the new ignored color in the game, Empty Optional else.
      */
     @Override
     public Optional<Color> getIgnoredColorInfluence() {

@@ -55,7 +55,7 @@ public class GameDelta implements Serializable {
     /**
      * Method addUpdatedGC adds a game component that has been modified to the game delta.
      *
-     * @param gcUpdated of type GameComponent - instance of the updated game component.
+     * @param gcUpdated of type {@link GameComponent} - instance of the updated game component.
      */
     public void addUpdatedGC(GameComponent gcUpdated) {
         if (updatedGC == null)
@@ -66,7 +66,7 @@ public class GameDelta implements Serializable {
     /**
      * Method addDeletedIslands adds an island that has been merged and therefore deleted to the game delta.
      *
-     * @param deletedIsland of type Island - instance of the deleted island.
+     * @param deletedIsland of type {@link Island} - instance of the deleted island.
      */
     public void addDeletedIslands(Island deletedIsland) {
         if (deletedIslands == null)
@@ -77,8 +77,8 @@ public class GameDelta implements Serializable {
     /**
      * Method updateTeamTowersLeft adds the team with its new number of towers left to the game delta.
      *
-     * @param teamColor of type HouseColor - house color of the team.
-     * @param newTowersLeft of type byte - new amount of towers left in the team.
+     * @param teamColor of type {@link HouseColor} - house color of the team.
+     * @param newTowersLeft of type {@code byte} - new amount of towers left in the team.
      */
     public void updateTeamTowersLeft(HouseColor teamColor, byte newTowersLeft) {
         if (newTeamTowersLeft == null)
@@ -89,8 +89,8 @@ public class GameDelta implements Serializable {
     /**
      * Method addUpdatedProfessors adds the color of the professor and its new controller to the game delta.
      *
-     * @param professorColor of type Color - color of the professor.
-     * @param newController of type Wizard - wizard of the new professor's controller.
+     * @param professorColor of type {@link Color} - color of the professor.
+     * @param newController of type {@link Wizard} - wizard of the new professor's controller.
      */
     public void addUpdatedProfessors(Color professorColor, Wizard newController) {
         if (updatedProfessors == null)
@@ -101,7 +101,7 @@ public class GameDelta implements Serializable {
     /**
      * Method setNewMotherNaturePosition adds the new position of mother nature to the game delta.
      *
-     * @param newMotherNaturePosition of type byte - new position of mother nature.
+     * @param newMotherNaturePosition of type {@code byte} - new position of mother nature.
      */
     public void setNewMotherNaturePosition(byte newMotherNaturePosition) {
         this.newMotherNaturePosition = newMotherNaturePosition;
@@ -110,7 +110,7 @@ public class GameDelta implements Serializable {
     /**
      * Method setPlayedCard adds the played assistant card to the game delta.
      *
-     * @param playedCard of type AssistantCard - instance of the played assistant card.
+     * @param playedCard of type {@link AssistantCard} - instance of the played assistant card.
      */
     public void setPlayedCard(AssistantCard playedCard) {
         this.playedCard = playedCard;
@@ -119,7 +119,7 @@ public class GameDelta implements Serializable {
     /**
      * Method addListener adds a new game listener that will be updated by the game delta.
      *
-     * @param gameListener of type GameListener - instance of the new game listener.
+     * @param gameListener of type {@link GameListener} - instance of the new game listener.
      */
     public void addListener(GameListener gameListener) {
         listeners.add(gameListener);
@@ -140,8 +140,8 @@ public class GameDelta implements Serializable {
     /**
      * Method setUpdatedCoinPlayer not used for GameDelta.
      *
-     * @param playerId of type byte - ID of the player.
-     * @param newCoinsPlayer of type byte - new amount of coins for the player.
+     * @param playerId of type {@code byte} - ID of the player.
+     * @param newCoinsPlayer of type {@code byte} - new amount of coins for the player.
      */
     public void setUpdatedCoinPlayer(byte playerId, byte newCoinsPlayer) {
     }
@@ -149,7 +149,7 @@ public class GameDelta implements Serializable {
     /**
      * Method setNewCoinsLeft not used for GameDelta.
      *
-     * @param newCoinsLeft of type byte - new amount of coins left in the game.
+     * @param newCoinsLeft of type {@code byte} - new amount of coins left in the game.
      */
     public void setNewCoinsLeft(byte newCoinsLeft) {
     }
@@ -157,7 +157,7 @@ public class GameDelta implements Serializable {
     /**
      * Method setNewProhibitionsLeft not used for GameDelta.
      *
-     * @param newProhibitionsLeft of type byte - new amount of prohibitions left in the game.
+     * @param newProhibitionsLeft of type {@code byte} - new amount of prohibitions left in the game.
      */
     public void setNewProhibitionsLeft(byte newProhibitionsLeft) {
     }
@@ -165,7 +165,7 @@ public class GameDelta implements Serializable {
     /**
      * Method setExtraSteps not used for GameDelta.
      *
-     * @param extraSteps of type Boolean - new value of the extraSteps boolean in the game.
+     * @param extraSteps of type {@code Boolean} - new value of the extraSteps boolean in the game.
      */
     public void setExtraSteps(Boolean extraSteps) {
     }
@@ -173,7 +173,7 @@ public class GameDelta implements Serializable {
     /**
      * Method setIgnoredColorInfluence not used for GameDelta.
      *
-     * @param ignoredColorInfluence of type Color - color that will be ignored.
+     * @param ignoredColorInfluence of type {@link Color} - color that will be ignored.
      */
     public void setIgnoredColorInfluence(Color ignoredColorInfluence) {
     }
@@ -181,8 +181,8 @@ public class GameDelta implements Serializable {
     /**
      * Method setUsedCharacter not used for GameDelta.
      *
-     * @param charId of type byte - ID of the used character card.
-     * @param used of type boolean - boolean used to know if the character card has been already used.
+     * @param charId of type {@code byte} - ID of the used character card.
+     * @param used of type {@code boolean} - boolean used to know if the character card has been already used.
      */
     public void setUsedCharacter(byte charId, boolean used) {
     }
@@ -190,7 +190,7 @@ public class GameDelta implements Serializable {
     /**
      * Method getCharacters not used for GameDelta.
      *
-     * @return List<Byte> - Empty ArrayList.
+     * @return {@code List}<{@code Byte}> - Empty ArrayList.
      */
     public List<Byte> getCharacters() {
         return new ArrayList<>();
@@ -199,7 +199,7 @@ public class GameDelta implements Serializable {
     /**
      * Method getUpdatedCoinPlayer not used for GameDelta.
      *
-     * @return Map<Byte, Byte> - Empty Map.
+     * @return {@code Map}<{@code Byte, Byte}> - Empty Map.
      */
     public Map<Byte, Byte> getUpdatedCoinPlayer() {
         return Collections.emptyMap();
@@ -208,7 +208,7 @@ public class GameDelta implements Serializable {
     /**
      * Method getNewCoinsLeft not used for GameDelta.
      *
-     * @return Optional<Byte> - Empty Optional.
+     * @return {@code Optional}<{@code Byte}> - Empty Optional.
      */
     public Optional<Byte> getNewCoinsLeft() {
         return Optional.empty();
@@ -217,7 +217,7 @@ public class GameDelta implements Serializable {
     /**
      * Method getNewProhibitionsLeft not used for GameDelta.
      *
-     * @return Optional<Byte> - Empty Optional.
+     * @return {@code Optional}<{@code Byte}> - Empty Optional.
      */
     public Optional<Byte> getNewProhibitionsLeft() {
         return Optional.empty();
@@ -226,7 +226,7 @@ public class GameDelta implements Serializable {
     /**
      * Method isExtraSteps not used for GameDelta.
      *
-     * @return Optional<Boolean> - Empty Optional.
+     * @return {@code Optional}<{@code Boolean}> - Empty Optional.
      */
     public Optional<Boolean> isExtraSteps() {
         return Optional.empty();
@@ -235,7 +235,7 @@ public class GameDelta implements Serializable {
     /**
      * Method getIgnoredColorInfluence not used for GameDelta.
      *
-     * @return Optional<Color> - Empty Optional.
+     * @return {@code Optional}<{@code Color}> - Empty Optional.
      */
     public Optional<Color> getIgnoredColorInfluence() {
         return Optional.empty();
@@ -244,7 +244,7 @@ public class GameDelta implements Serializable {
     /**
      * Method getUsedCharacter not used for GameDelta.
      *
-     * @return Map<Byte, Boolean> - Empty Map.
+     * @return {@code Map}<{@code Byte, Boolean}> - Empty Map.
      */
     public Map<Byte, Boolean> getUsedCharacter() {
         return Collections.emptyMap();
@@ -255,7 +255,7 @@ public class GameDelta implements Serializable {
      * Method getUpdatedGC returns all the updated game components. <br>
      * <b>Map entry</b>: (game component's ID - GameComponent instance).
      *
-     * @return Map<Byte, GameComponent> - map of all the updated game components.
+     * @return {@code Map}<{@code Byte}, {@link GameComponent}> - map of all the updated game components.
      */
     public Map<Byte, GameComponent> getUpdatedGC() {
         if (updatedGC == null) return Collections.emptyMap();
@@ -265,7 +265,7 @@ public class GameDelta implements Serializable {
     /**
      * Method getNewMotherNaturePosition returns the new position of mother nature.
      *
-     * @return Optional<Byte> - if present the new mother nature's position, Empty Optional else.
+     * @return {@code Optional}<{@code Byte}> - if present the new mother nature's position, Empty Optional else.
      */
     public Optional<Byte> getNewMotherNaturePosition() {
         return Optional.ofNullable(newMotherNaturePosition);
@@ -275,7 +275,7 @@ public class GameDelta implements Serializable {
      * Method getUpdatedProfessors returns all the updated professors' controllers. <br>
      * <b>Map entry</b>: (Professor color - New controller).
      *
-     * @return Map<Color, Wizard> - map of all the updated professors' controllers.
+     * @return {@code Map}<{@link Color}, {@link Wizard}> - map of all the updated professors' controllers.
      */
     public Map<Color, Wizard> getUpdatedProfessors() {
         if (updatedProfessors == null) return Collections.emptyMap();
@@ -285,7 +285,7 @@ public class GameDelta implements Serializable {
     /**
      * Method getPlayedCard returns the played assistant card.
      *
-     * @return Optional<AssistantCard> - if present the played assistant card, Empty Optional else.
+     * @return {@code Optional}<{@link AssistantCard}> - if present the played assistant card, Empty Optional else.
      */
     public Optional<AssistantCard> getPlayedCard() {
         return Optional.ofNullable(playedCard);
@@ -295,7 +295,7 @@ public class GameDelta implements Serializable {
      * Method getDeletedIslands returns all the deleted islands. <br>
      * <b>Set entry</b>: (Island's ID).
      *
-     * @return Set<Byte> - map of all the deleted islands.
+     * @return {@code Set}<{@code Byte}> - map of all the deleted islands.
      */
     public Set<Byte> getDeletedIslands() {
         if (deletedIslands == null) return Collections.emptySet();
@@ -306,7 +306,7 @@ public class GameDelta implements Serializable {
      * Method getNewTeamTowersLeft returns all the teams with their updated number of towers left. <br>
      * <b>Map entry</b>: (Team's house color - new amount of towers left).
      *
-     * @return Map<HouseColor, Byte> - map of all the teams with their updated number of towers left.
+     * @return {@code Map}<{@link HouseColor}, {@code Byte}> - map of all the teams with their updated number of towers left.
      */
     public Map<HouseColor, Byte> getNewTeamTowersLeft() {
         if (newTeamTowersLeft == null) return Collections.emptyMap();
@@ -316,7 +316,7 @@ public class GameDelta implements Serializable {
     /**
      * Method toString returns all the GameDelta attributes.
      *
-     * @return "GameDelta{ listeners = X, updatedGC = Y, deletedIslands = Z, updatedProfessors = W, newTeamTowersLeft = XX,
+     * @return {@code String} - "GameDelta{ listeners = X, updatedGC = Y, deletedIslands = Z, updatedProfessors = W, newTeamTowersLeft = XX,
      *          newMotherNaturePosition = YY, playedCard = ZZ }"
      */
     @Override

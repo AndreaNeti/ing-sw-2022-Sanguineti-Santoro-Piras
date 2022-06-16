@@ -11,7 +11,7 @@ public class Char3 implements CharacterCard {
     /**
      * Method play sets the extraSteps boolean to true in the game.
      *
-     * @param game of type CharacterCardGame - the game instance that the card modifies with its effect.
+     * @param game of type {@link CharacterCardGame} - the game instance that the card modifies with its effect.
      */
     @Override
     public void play(CharacterCardGame game) {

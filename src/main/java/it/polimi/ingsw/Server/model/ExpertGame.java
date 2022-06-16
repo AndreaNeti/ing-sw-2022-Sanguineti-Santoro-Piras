@@ -44,8 +44,8 @@ public class ExpertGame extends NormalGame implements CharacterCardGame, CoinLis
     /**
      * Constructor ExpertGame creates a new instance of ExpertGame.
      *
-     * @param teamList of type ArrayList<Team> - list of the instances of team that are playing in the game.
-     * @param matchConstants of type MatchConstants - match constant of the game, based on its type.
+     * @param teamList of type {@code ArrayList}<{@link Team}> - list of the instances of team that are playing in the game.
+     * @param matchConstants of type {@link MatchConstants} - match constant of the game, based on its type.
      */
     public ExpertGame(ArrayList<Team> teamList, MatchConstants matchConstants) {
         super(teamList, matchConstants);
@@ -87,7 +87,7 @@ public class ExpertGame extends NormalGame implements CharacterCardGame, CoinLis
     /**
      * Method getNewGameDelta returns a new ExpertGameDelta for the game.
      *
-     * @return GameDelta - new instance of the game's ExpertGameDelta.
+     * @return {@link GameDelta} - new instance of the game's ExpertGameDelta.
      */
     @Override
     protected GameDelta getNewGameDelta() {
@@ -98,11 +98,11 @@ public class ExpertGame extends NormalGame implements CharacterCardGame, CoinLis
     /**
      * Method factoryCharacter creates an instance of one of the 12 possible character cards, based on an index.
      *
-     * @param i of type byte - index of the CharacterCard to instantiate.
-     * @return CharacterCard - instance of the CharacterCard requested.
+     * @param index of type {@code byte} - index of the CharacterCard to instantiate.
+     * @return {@link CharacterCard} - instance of the CharacterCard requested.
      */
-    private CharacterCard factoryCharacter(byte i) {
-        switch (i) {
+    private CharacterCard factoryCharacter(byte index) {
+        switch (index) {
             case 0:
                 Char0 c0 = new Char0((byte) -10);
                 try {
@@ -146,16 +146,16 @@ public class ExpertGame extends NormalGame implements CharacterCardGame, CoinLis
             case 11:
                 return new Char11();
         }
-        throw new IllegalArgumentException("Character card " + i + " doesn't exists");
+        throw new IllegalArgumentException("Character card " + index + " doesn't exists");
     }
 
     /**
      * Method move is used to move a student from a game component to another, using their unique ID.
      * This method is overridden to send the game's info using ExpertGameDelta instead of GameDelta.
      *
-     * @param color                    of type Color - the color of the student to move.
-     * @param gameComponentSource      of type Int - the ID of the source component.
-     * @param gameComponentDestination of type Int - the ID of the target component.
+     * @param color                    of type {@link Color} - the color of the student to move.
+     * @param gameComponentSource      of type {@code int} - the ID of the source component.
+     * @param gameComponentDestination of type {@code int} - the ID of the target component.
      * @throws GameException if the color is null or if at least on ID is not valid or if it's not possible to move the student.
      */
     @Override
@@ -173,7 +173,7 @@ public class ExpertGame extends NormalGame implements CharacterCardGame, CoinLis
      * based on the number of students present for each controlled color and on the number of towers on the island.
      * Eventual booleans set by the character card can skip or modify the influence calculation.
      *
-     * @param island of type Island - the island of which we want to calculate the new controller.
+     * @param island of type {@link Island} - the island of which we want to calculate the new controller.
      * @throws EndGameException if a team has no towers left in its board.
      */
     @Override
@@ -221,17 +221,17 @@ public class ExpertGame extends NormalGame implements CharacterCardGame, CoinLis
     /**
      * Method setCurrentPlayer updates the current player and resets ExpertGame's booleans.
      *
-     * @param p Player - the instance of the new current player.
+     * @param player {@link Player} - the instance of the new current player.
      */
-    public void setCurrentPlayer(Player p) {
-        if (p == null) throw new IllegalArgumentException("Cannot set null current player");
-        setCurrentPlayer((byte) p.getWizard().ordinal());
+    public void setCurrentPlayer(Player player) {
+        if (player == null) throw new IllegalArgumentException("Cannot set null current player");
+        setCurrentPlayer((byte) player.getWizard().ordinal());
     }
 
     /**
      * Method setCurrentPlayer updates the current player based on his index and resets ExpertGame's booleans.
      *
-     * @param currentPlayerIndex byte - the index of the new current player.
+     * @param currentPlayerIndex {@code byte} - the index of the new current player.
      */
     @Override
     public void setCurrentPlayer(byte currentPlayerIndex) {
@@ -250,7 +250,7 @@ public class ExpertGame extends NormalGame implements CharacterCardGame, CoinLis
     /**
      * Method transformAllGameInDelta saves all the game info inside the ExpertGameDelta that is sent to the client.
      *
-     * @return ExpertGameDelta - ExpertGameDelta with all the info of the game.
+     * @return {@link ExpertGameDelta} - ExpertGameDelta with all the info of the game.
      */
     @Override
     public GameDelta transformAllGameInDelta() {
@@ -269,8 +269,8 @@ public class ExpertGame extends NormalGame implements CharacterCardGame, CoinLis
      * Method checkMoveMotherNature checks if mother nature can move the requested number of steps, based
      * on the current player's played card and on the extraStep boolean set by the character cards.
      *
-     * @param moves of type Int - number of steps the player want to move mother nature.
-     * @return boolean - true if moves <= moves allowed by played card (possibly increased by 2 with the extraStep boolean), boolean false else.
+     * @param moves of type {@code int} - number of steps the player want to move mother nature.
+     * @return {@code boolean} - true if moves <= moves allowed by played card (possibly increased by 2 with the extraStep boolean), boolean false else.
      */
     @Override
     protected boolean checkMoveMotherNature(int moves) {
@@ -324,7 +324,7 @@ public class ExpertGame extends NormalGame implements CharacterCardGame, CoinLis
     /**
      * Method notifyCoins is used to add coins to the current player, removing or adding them from the game.
      *
-     * @param coins of type byte - number of coins to add to the current player.
+     * @param coins of type {@code byte} - number of coins to add to the current player.
      * @throws NotEnoughCoinsException if there are no more coins left in the game.
      */
     @Override
@@ -343,7 +343,7 @@ public class ExpertGame extends NormalGame implements CharacterCardGame, CoinLis
     /**
      * Method notifyCoins is used to remove coins from the current player, adding them from the game.
      *
-     * @param coins of type byte - number of coins to remove from the current player.
+     * @param coins of type {@code byte} - number of coins to remove from the current player.
      * @throws NotEnoughCoinsException if the player has fewer coins than the amount to remove.
      */
     private void removeCoinsFromCurrentPlayer(byte coins) throws NotEnoughCoinsException {
@@ -408,7 +408,7 @@ public class ExpertGame extends NormalGame implements CharacterCardGame, CoinLis
     /**
      * Method chooseCharacter is used to select one of the 3 available character cards based on their unique ID.
      *
-     * @param charId of type byte - index of the character card chosen.
+     * @param charId of type {@code byte} - index of the character card chosen.
      * @throws GameException if the selected card is not available in the current game or the player doesn't have enough coins.
      */
     @Override
@@ -434,7 +434,7 @@ public class ExpertGame extends NormalGame implements CharacterCardGame, CoinLis
     /**
      * Method setCharacterInputs is used by the player to add inputs to the character card.
      *
-     * @param inputs of type List<Integer> - list of inputs for character chard.
+     * @param inputs of type {@code List}<{@code Integer}> - list of inputs for character chard.
      * @throws GameException if there is no character card selected.
      */
     @Override
@@ -447,8 +447,8 @@ public class ExpertGame extends NormalGame implements CharacterCardGame, CoinLis
     /**
      * Method getComponentById gets a game component instance based on his unique ID.
      *
-     * @param idGameComponent of type int - the id of the game component
-     * @return GameComponent - the instance of the game component
+     * @param idGameComponent of type {@code int} - the id of the game component
+     * @return {@link GameComponent} - the instance of the game component
      * @throws GameException if the id is not a valid one or corresponds to a merged island
      */
     @Override
@@ -460,7 +460,7 @@ public class ExpertGame extends NormalGame implements CharacterCardGame, CoinLis
     /**
      * Method getChosenCharacter returns the character chard selected.
      *
-     * @return CharacterCard - instance of the chosen character chard.
+     * @return {@link CharacterCard} - instance of the chosen character chard.
      */
     private CharacterCard getChosenCharacter() {
         return characters.get(chosenCharacter);
@@ -494,7 +494,7 @@ public class ExpertGame extends NormalGame implements CharacterCardGame, CoinLis
     /**
      * Method setIgnoredColorInfluence is called by the character card to set the color to ignore when calculating influence.
      *
-     * @param ignoredColorInfluence of type Color - color of the students to ignore during the influence calculation.
+     * @param ignoredColorInfluence of type {@link Color} - color of the students to ignore during the influence calculation.
      */
     @Override
     public void setIgnoredColorInfluence(Color ignoredColorInfluence) {
@@ -518,7 +518,7 @@ public class ExpertGame extends NormalGame implements CharacterCardGame, CoinLis
     /**
      * Method getCharacterInputs returns the inputs added by the player for the chosen character card.
      *
-     * @return ArrayList<Integer> - list of the inputs added by the player.
+     * @return {@code ArrayList}<{@code Integer}> - list of the inputs added by the player.
      */
     @Override
     public ArrayList<Integer> getCharacterInputs() {
@@ -528,7 +528,7 @@ public class ExpertGame extends NormalGame implements CharacterCardGame, CoinLis
 
     /**
      * Method setProhibition is called by the character card to add a prohibition to a selected island.
-     * @param island of type Island - instance of the island to which the prohibition is added.
+     * @param island of type {@link Island} - instance of the island to which the prohibition is added.
      * @throws NotAllowedException if there are no more prohibitions left in the game (maximum 4).
      */
     @Override
@@ -560,8 +560,8 @@ public class ExpertGame extends NormalGame implements CharacterCardGame, CoinLis
     /**
      * Method getCoinsPlayer returns the amount of coins owned by a selected player based on its index.
      *
-     * @param playerIndex of type byte - index of the player.
-     * @return byte - number of coins owned by the selected player.
+     * @param playerIndex of type {@code byte} - index of the player.
+     * @return {@code byte} - number of coins owned by the selected player.
      */
     protected byte getCoinsPlayer(int playerIndex) {
         if (playerIndex < 0 || playerIndex >= getPlayerSize())
@@ -572,8 +572,8 @@ public class ExpertGame extends NormalGame implements CharacterCardGame, CoinLis
     /**
      * Method drawStudents draws students from the bag to the selected game component.
      *
-     * @param gameComponent of type GameComponent - the game component on which we want to put the students.
-     * @param students of type byte - the number of students to draw.
+     * @param gameComponent of type {@link GameComponent} - the game component on which we want to put the students.
+     * @param students of type {@code byte} - the number of students to draw.
      * @throws EndGameException if there are no more students available on the bag.
      * @throws GameException if the game component selected is null.
      */
@@ -585,7 +585,7 @@ public class ExpertGame extends NormalGame implements CharacterCardGame, CoinLis
     /**
      * Method getPlayerSize returns the number of players in the current game.
      *
-     * @return byte - number of players.
+     * @return {@code byte} - number of players.
      */
     @Override
     public byte getPlayerSize() {
@@ -595,7 +595,7 @@ public class ExpertGame extends NormalGame implements CharacterCardGame, CoinLis
     /**
      * Method getCurrentPlayer returns the current player.
      *
-     * @return Player - instance of the current player.
+     * @return {@link Player} - instance of the current player.
      */
     @Override
     public Player getCurrentPlayer() {

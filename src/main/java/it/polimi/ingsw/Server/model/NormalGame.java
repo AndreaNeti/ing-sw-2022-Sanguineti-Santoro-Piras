@@ -46,8 +46,8 @@ public class NormalGame implements Game {
     /**
      * Constructor NormalGame creates a new NormalGame instance.
      *
-     * @param teamList of type ArrayList<Team> - list of the instances of team that are playing in the game.
-     * @param matchConstants of type MatchConstants - match constant of the game, based on its type.
+     * @param teamList of type {@code ArrayList}<{@link Team}> - list of the instances of team that are playing in the game.
+     * @param matchConstants of type {@link MatchConstants} - match constant of the game, based on its type.
      */
     public NormalGame(ArrayList<Team> teamList, MatchConstants matchConstants) {
         if (teamList == null || matchConstants == null) throw new IllegalArgumentException("Passing null parameter");
@@ -86,7 +86,7 @@ public class NormalGame implements Game {
     /**
      * Method getNewGameDelta returns a new GameDelta for the game.
      *
-     * @return GameDelta - new instance of the game's GameDelta.
+     * @return {@link GameDelta} - new instance of the game's GameDelta.
      */
     protected GameDelta getNewGameDelta() {
         return new GameDelta();
@@ -115,7 +115,7 @@ public class NormalGame implements Game {
      * Method checkMerge checks if the islands before and/or after the selected island are controlled
      * by the same team and in case merges them together.
      *
-     * @param island of type Island - the island of which we want to check the neighbouring islands.
+     * @param island of type {@link Island} - the island of which we want to check the neighbouring islands.
      * @throws EndGameException if the number of islands left after merging is <= 3.
      */
     protected void checkMerge(Island island) throws EndGameException {
@@ -162,8 +162,8 @@ public class NormalGame implements Game {
     /**
      * Method drawStudents draws students from the bag to the selected game component.
      *
-     * @param gameComponent of type GameComponent - the game component on which we want to put the students.
-     * @param students of type byte - the number of students to draw.
+     * @param gameComponent of type {@link GameComponent} - the game component on which we want to put the students.
+     * @param students of type {@code byte} - the number of students to draw.
      * @throws EndGameException if there are no more students available on the bag.
      * @throws GameException if the game component selected is null.
      */
@@ -201,7 +201,7 @@ public class NormalGame implements Game {
     /**
      * Method playCard is used by each player to play an assistant card during the planification phase.
      *
-     * @param card of type AssistantCard - the card that the player wants to play.
+     * @param card of type {@link AssistantCard} - the card that the player wants to play.
      * @throws GameException if the card value is not in the permitted range of values.
      * @throws EndGameException if after playing the selected card there are no cards available left.
      */
@@ -221,8 +221,8 @@ public class NormalGame implements Game {
     /**
      * Method getComponentById gets a game component instance based on his unique ID.
      *
-     * @param idGameComponent of type int - the id of the game component
-     * @return GameComponent - the instance of the game component
+     * @param idGameComponent of type {@code int} - the id of the game component
+     * @return {@link GameComponent} - the instance of the game component
      * @throws GameException if the id is not a valid one or corresponds to a merged island
      */
     protected GameComponent getComponentById(int idGameComponent) throws GameException {
@@ -267,9 +267,9 @@ public class NormalGame implements Game {
     /**
      * Method move is used to move a student from a game component to another, using their unique ID.
      *
-     * @param color of type Color - the color of the student to move.
-     * @param idGameComponentSource of type Int - the ID of the source component.
-     * @param idGameComponentDestination of type Int - the ID of the target component.
+     * @param color of type {@link Color} - the color of the student to move.
+     * @param idGameComponentSource of type {@code int} - the ID of the source component.
+     * @param idGameComponentDestination of type {@code int} - the ID of the target component.
      * @throws GameException if the color is null or if at least one ID is not valid or if it's not possible to move the student.
      */
     @Override
@@ -330,8 +330,8 @@ public class NormalGame implements Game {
      * Method checkMoveMotherNature checks if mother nature can move the requested number of steps, based
      * on the current player's played card.
      *
-     * @param moves of type Int - number of steps the player want to move mother nature.
-     * @return boolean - true if moves <= moves allowed by played card, boolean false else.
+     * @param moves of type {@code int} - number of steps the player want to move mother nature.
+     * @return {@code boolean} - true if moves <= moves allowed by played card, boolean false else.
      */
     protected boolean checkMoveMotherNature(int moves) {
         return moves <= getCurrentPlayer().getPlayedCard().moves();
@@ -341,7 +341,7 @@ public class NormalGame implements Game {
      * Method moveMotherNature moves mother nature by a number of steps selected by the player and then
      * recalculates the influence on the new island position of mother nature.
      *
-     * @param moves of type Int - number of steps the player want to move mother nature.
+     * @param moves of type {@code int} - number of steps the player want to move mother nature.
      * @throws NotAllowedException if the number of moves is bigger than the value allowed.
      * @throws EndGameException if the number of islands left is <= 3.
      */
@@ -366,7 +366,7 @@ public class NormalGame implements Game {
      * Method calculateInfluence sets the team with the highest influence as the controller of the selected island,
      * based on the number of students present for each controlled color and on the number of towers on the island.
      *
-     * @param island of type Island - the island of which we want to calculate the new controller.
+     * @param island of type {@link Island} - the island of which we want to calculate the new controller.
      * @throws EndGameException if a team has no towers left in its board.
      */
     protected void calculateInfluence(Island island) throws EndGameException {
@@ -399,9 +399,9 @@ public class NormalGame implements Game {
      * Method setIslandController updates the controller of the island, adding towers to the old controller and removing
      * them from the new one.
      *
-     * @param island of type Island - island of which we want to update the controller.
-     * @param newController of type HouseColor - the new controller of the island.
-     * @param oldController of type HouseColor - the old controller of the island.
+     * @param island of type {@link Island} - island of which we want to update the controller.
+     * @param newController of type {@link HouseColor} - the new controller of the island.
+     * @param oldController of type {@link HouseColor} - the old controller of the island.
      * @throws EndGameException if after removing towers from the new controller he has no towers left in his board.
      */
     protected void setIslandController(Island island, HouseColor newController, HouseColor oldController) throws EndGameException {
@@ -435,7 +435,7 @@ public class NormalGame implements Game {
      * Method calculateWinner returns the team with fewer towers left. In case of a tie, the winner is the team with
      * more professors controlled. In case of another tie, two or more teams are considered winners.
      *
-     * @return ArrayList<HouseColor> - the list of winning teams.
+     * @return {@code ArrayList}<{@link HouseColor}> - the list of winning teams.
      */
     @Override
     public ArrayList<HouseColor> calculateWinner() {
@@ -478,7 +478,7 @@ public class NormalGame implements Game {
     /**
      * Method setCharacterInputs not available for normal games.
      *
-     * @param inputs of type List<Integer> - list of inputs for character chard.
+     * @param inputs of type {@code List}<{@code Integer}> - list of inputs for character chard.
      * @throws GameException when this method is played during a normal game.
      */
     @Override
@@ -489,7 +489,7 @@ public class NormalGame implements Game {
     /**
      * Method chooseCharacter not available for normal games.
      *
-     * @param charId of type byte - index of the character card chosen.
+     * @param charId of type {@code byte} - index of the character card chosen.
      * @throws GameException when this method is played during a normal game.
      */
     @Override
@@ -510,7 +510,7 @@ public class NormalGame implements Game {
     /**
      * Method moveFromCloud moves students from the selected cloud to the player's entrance hall.
      *
-     * @param cloudId of type int - the unique ID of the selected cloud.
+     * @param cloudId of type {@code int} - the unique ID of the selected cloud.
      * @throws GameException if the selected cloud has no students.
      */
     @Override
@@ -534,7 +534,7 @@ public class NormalGame implements Game {
     /**
      * Method getClouds returns the list of clouds.
      *
-     * @return ArrayList<Cloud> - clouds in the game.
+     * @return {@code ArrayList}<{@link Cloud}> - clouds in the game.
      */
     protected ArrayList<Cloud> getClouds() {
         return clouds;
@@ -543,7 +543,7 @@ public class NormalGame implements Game {
     /**
      * Method getCurrentPlayer returns the player currently playing.
      *
-     * @return Player - instance of the current player.
+     * @return {@link Player} - instance of the current player.
      */
     protected Player getCurrentPlayer() {
         return getPlayer(currentPlayer);
@@ -552,7 +552,7 @@ public class NormalGame implements Game {
     /**
      * Method getCurrentPlayerIndex returns the index of the player currently playing.
      *
-     * @return byte - index of the current player.
+     * @return {@code byte} - index of the current player.
      */
     protected byte getCurrentPlayerIndex() {
         return currentPlayer;
@@ -561,7 +561,7 @@ public class NormalGame implements Game {
     /**
      * Method setCurrentPlayer updates the current player.
      *
-     * @param player of type Player - the instance of the new current player.
+     * @param player of type {@link Player} - the instance of the new current player.
      */
     public void setCurrentPlayer(Player player) {
         if (player == null) throw new IllegalArgumentException("Cannot set null current player");
@@ -574,7 +574,7 @@ public class NormalGame implements Game {
     /**
      * Method setCurrentPlayer updates the current player based on his index.
      *
-     * @param currentPlayerIndex of type byte - the index of the new current player.
+     * @param currentPlayerIndex of type {@code byte} - the index of the new current player.
      */
     @Override
     public void setCurrentPlayer(byte currentPlayerIndex) {
@@ -587,7 +587,7 @@ public class NormalGame implements Game {
     /**
      * Method transformAllGameInDelta saves all the game info inside the GameDelta that is sent to the client.
      *
-     * @return GameDelta - GameDelta with all the info of the game.
+     * @return {@link GameDelta} - GameDelta with all the info of the game.
      */
     public GameDelta transformAllGameInDelta() {
         for (Team t : teams) {
@@ -611,8 +611,8 @@ public class NormalGame implements Game {
     /**
      * Method getPlayer returns the player based on the index provided.
      *
-     * @param index of type byte - the index of the player.
-     * @return Player - instance of the player with the requested index.
+     * @param index of type {@code byte} - the index of the player.
+     * @return {@link Player} - instance of the player with the requested index.
      */
     protected Player getPlayer(byte index) {
         if (index < 0 || index >= getPlayerSize())
@@ -626,7 +626,7 @@ public class NormalGame implements Game {
     /**
      * Method getPlayers returns all the players in the game.
      *
-     * @return ArrayList<Player> - list of the instances of all players in game.
+     * @return {@code ArrayList}<{@link Player}> - list of the instances of all players in game.
      */
     protected ArrayList<Player> getPlayers() {
         ArrayList<Player> ret = new ArrayList<>(getPlayerSize());
@@ -640,7 +640,7 @@ public class NormalGame implements Game {
     /**
      * Method getGameDelta is used to obtain the GameDelta of the game.
      *
-     * @return GameDelta - instance of the game's GameDelta.
+     * @return {@link GameDelta} - instance of the game's GameDelta.
      */
     public GameDelta getGameDelta() {
         return this.gameDelta;
@@ -649,7 +649,7 @@ public class NormalGame implements Game {
     /**
      * Method getPlayerSize returns the number of players in the game.
      *
-     * @return byte - number of players in the game.
+     * @return {@code byte} - number of players in the game.
      */
     protected byte getPlayerSize() {
         return (byte) (teams.size() * teams.get(0).getPlayers().size());
@@ -658,7 +658,7 @@ public class NormalGame implements Game {
     /**
      * Method getTeams returns the teams playing in the game.
      *
-     * @return ArrayList<Team> - list of the instances of all teams in game.
+     * @return {@code ArrayList}<{@link Team}> - list of the instances of all teams in game.
      */
     protected ArrayList<Team> getTeams() {
         return teams;
@@ -667,7 +667,7 @@ public class NormalGame implements Game {
     /**
      * Method getIslands returns the islands of the game.
      *
-     * @return ArrayList<Island> - list of the instances of the game's islands.
+     * @return {@code ArrayList}<{@link Island}> - list of the instances of the game's islands.
      */
     // used only in tests
     protected ArrayList<Island> getIslands() {
@@ -677,7 +677,7 @@ public class NormalGame implements Game {
     /**
      * Method getBag returns the game's bag.
      *
-     * @return Bag - instance of the game's bag.
+     * @return {@link Bag} - instance of the game's bag.
      */
     protected Bag getBag() {
         return this.bag;
@@ -686,7 +686,7 @@ public class NormalGame implements Game {
     /**
      * Method getProfessors returns the wizards controlling each professor.
      *
-     * @return Wizard[] - array of wizards controlling each professor (size = number of colors).
+     * @return {@link Wizard}{@code []} - array of wizards controlling each professor (size = number of colors).
      */
 
     protected Wizard[] getProfessor() {
@@ -697,7 +697,7 @@ public class NormalGame implements Game {
     /**
      * Method getMotherNaturePosition returns the current position of mother nature.
      *
-     * @return byte - current mother nature position.
+     * @return {@code byte} - current mother nature position.
      */
     // used only in tests
     protected byte getMotherNaturePosition() {

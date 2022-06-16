@@ -18,8 +18,9 @@ public class Char9 implements CharacterCard {
     /**
      * Method play swaps each student pair between the entrance hall and the lunch hall.
      *
-     * @param game of type CharacterCardGame - the game instance that the card modifies with its effect.
-     * @throws GameException
+     * @param game of type {@link CharacterCardGame} - the game instance that the card modifies with its effect.
+     * @throws GameException if the students colors are not valid or there is not a student of the
+     *                       selected color either the lunch hall or the entrance hall.
      */
     // switch the students between the lunch hall and the entrance hall one pair at a time
     @Override

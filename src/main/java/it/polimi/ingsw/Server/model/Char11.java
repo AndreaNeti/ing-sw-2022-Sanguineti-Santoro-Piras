@@ -18,7 +18,7 @@ public class Char11 implements CharacterCard {
      * Method play automatically moves up to 3 students (if available) of the selected color from
      * each player's lunch hall to the bag.
      *
-     * @param game of type CharacterCardGame - the game instance that the card modifies with its effect.
+     * @param game of type {@link CharacterCardGame} - the game instance that the card modifies with its effect.
      * @throws GameException if the student color is not valid.
      */
     @Override

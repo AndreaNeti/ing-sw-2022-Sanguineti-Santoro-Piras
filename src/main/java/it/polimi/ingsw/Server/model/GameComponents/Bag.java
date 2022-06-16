@@ -21,7 +21,7 @@ public class Bag extends GameComponent {
     /**
      * Constructor Bag creates a new instance of Bag.
      *
-     * @param studentsPerColor of type byte - number of students for each color available on the bag.
+     * @param studentsPerColor of type {@link byte} - number of students for each color available on the bag.
      */
     public Bag(byte studentsPerColor) {
         super(studentsPerColor, (byte) 69);
@@ -31,8 +31,8 @@ public class Bag extends GameComponent {
     /**
      * Method drawStudent moves a selected amount of students to a target component. Each student color is random.
      *
-     * @param gameComponent of type GameComponent - instance of the target component.
-     * @param number of type byte - number of students to draw.
+     * @param gameComponent of type {@link GameComponent} - instance of the target component.
+     * @param number of type {@code byte} - number of students to draw.
      * @throws EndGameException when there are no more students left on the bag.
      * @throws GameException if the target component cannot receive all the students to draw.
      */
@@ -66,7 +66,7 @@ public class Bag extends GameComponent {
     /**
      * Method moveAll not available for Bag.
      *
-     * @param destination of type GameComponent - the instance of the target component.
+     * @param destination of type {@link GameComponent} - the instance of the target component.
      * @throws NotAllowedException when this method is called on a Bag.
      */
     @Override

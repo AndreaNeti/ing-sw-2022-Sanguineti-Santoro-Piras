@@ -10,8 +10,8 @@ public class EntranceHall extends GameComponent {
     /**
      * Constructor EntranceHall creates a new instance of EntranceHall.
      *
-     * @param entranceHallSize of type int - maximum number of students placeable on the entrance hall.
-     * @param idGameComponent of type byte - unique ID to assign to the entrance hall.
+     * @param entranceHallSize of type {@code int} - maximum number of students placeable on the entrance hall.
+     * @param idGameComponent of type {@code byte} - unique ID to assign to the entrance hall.
      */
     public EntranceHall(int entranceHallSize, byte idGameComponent) {
         super(entranceHallSize,idGameComponent);
@@ -20,7 +20,7 @@ public class EntranceHall extends GameComponent {
     /**
      * Method moveAll not available for EntranceHall.
      *
-     * @param destination of type GameComponent - the instance of the target component.
+     * @param destination of type {@link GameComponent} - the instance of the target component.
      * @throws NotAllowedException when this method is called on an EntranceHall.
      */
     @Override

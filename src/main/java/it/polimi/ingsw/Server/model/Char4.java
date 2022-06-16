@@ -16,7 +16,7 @@ public class Char4 implements CharacterCard {
     /**
      * Method play adds a prohibition to the selected island
      *
-     * @param game of type CharacterCardGame - the game instance that the card modifies with its effect.
+     * @param game of type {@link CharacterCardGame} - the game instance that the card modifies with its effect.
      * @throws GameException if the island ID is not valid.
      */
     @Override

@@ -7,8 +7,8 @@ public class Cloud extends GameComponent {
     /**
      * Constructor Cloud creates a new instance of Cloud.
      *
-     * @param numOfStudents of type int - maximum number of students placeable on the cloud.
-     * @param idGameComponent of type byte - unique ID to assign to the cloud.
+     * @param numOfStudents of type {@code int} - maximum number of students placeable on the cloud.
+     * @param idGameComponent of type {@code byte} - unique ID to assign to the cloud.
      */
     public Cloud(int numOfStudents, byte idGameComponent) {
         super(numOfStudents, idGameComponent);
