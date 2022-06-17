@@ -6,6 +6,7 @@ import it.polimi.ingsw.Client.View.Gui.SceneController.SceneController;
 import it.polimi.ingsw.Client.View.Gui.ViewGUI;
 import it.polimi.ingsw.Server.model.Game;
 import it.polimi.ingsw.Util.AssistantCard;
+import it.polimi.ingsw.Util.Wizard;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
@@ -28,23 +29,29 @@ public class PlanificationPhase extends ClientPhase {
     @Override
     public void playPhase(ViewGUI viewGUI) {
         SceneController sceneController = GuiFX.getActiveSceneController();
-        //sceneController.disableEverything();
-        Pane assistantCardBox = (Pane) sceneController.getElementById("#assistantCardBox");
-        HBox box = (HBox) assistantCardBox.getChildren().get(0);
+        sceneController.disableEverything();
 
+        //add to  my image of wizard the handler that show all the playCharacter
+        Pane assistantCardBox = (Pane) sceneController.getElementById("#assistantCardBox");
+        AnchorPane assistantCardPane = (AnchorPane) sceneController.getElementById("#assistantCard" + viewGUI.getModel().getMyWizard());
+        AnchorPane back = (AnchorPane) assistantCardPane.getChildren().get(0);
+        sceneController.enableNode(back);
+        back.setOnMouseClicked(mouseEvent -> assistantCardBox.setVisible(!assistantCardBox.isVisible()));
+
+        HBox box = (HBox) assistantCardBox.getChildren().get(0);
         for (AssistantCard card : viewGUI.getModel().getCurrentPlayer().getAssistantCards()) {
             ImageView cardImage = new ImageView();
-            cardImage.setImage(new Image("Graphical_Assets/AssistantCard/Assistente (" + card.value() + ").png"));
+            cardImage.setImage(new Image("Graphical_Assets/AssistantCard/" + card.value() + ".png"));
             cardImage.setFitWidth(80);
             cardImage.setFitHeight(130);
+            cardImage.getProperties().put("cardValue", card);
             HBox.setMargin(cardImage, new Insets(10, 10, 10, 10));
             box.getChildren().add(cardImage);
+            sceneController.enableNode(cardImage);
             cardImage.addEventHandler(MouseEvent.MOUSE_CLICKED, GameCommand.PLAY_CARD.getGUIHandler(viewGUI));
         }
-        AnchorPane assistantCardPane = (AnchorPane) sceneController.getElementById("#assistantCard" + viewGUI.getModel().getMyWizard());
         AnchorPane deck = (AnchorPane) assistantCardPane.getChildren().get(0);
-        sceneController.getElementById("#mainBoard").setDisable(false);
-        deck.setDisable(false);
+        sceneController.enableNode(deck);
         deck.setStyle("-fx-border-color: #f5f50a");
     }
 

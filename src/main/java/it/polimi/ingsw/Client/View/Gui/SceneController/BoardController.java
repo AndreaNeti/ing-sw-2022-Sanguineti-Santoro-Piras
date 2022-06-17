@@ -11,21 +11,19 @@ import it.polimi.ingsw.Util.AssistantCard;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 public class BoardController implements SceneController {
     ViewGUI viewGUI;
@@ -44,6 +42,7 @@ public class BoardController implements SceneController {
     public Pane assistantCardBox;
     private ObservableList<String> observableListChat;
     public HBox clouds;
+    public List<Node> clickableElement = new ArrayList<>();
 
 
     private void initialize() {
@@ -80,6 +79,8 @@ public class BoardController implements SceneController {
                 }
                 //adding choose command button and on click showing the description of the character
                 Button b = (Button) singleChar.getChildren().get(2);
+
+
                 //b.setOnMouseClicked( GameCommand.CHOOSE_CHARACTER.getGUIHandler(viewGUI));
 
                 singleChar.setOnMouseClicked(mouseEvent -> {
@@ -129,15 +130,10 @@ public class BoardController implements SceneController {
                             //set id of the assistant card
                             AnchorPane assistantPane = (AnchorPane) board.getChildren().get(j);
                             assistantPane.setId("assistantCard" + Wizard.values()[localWizardIndex]);
-
                             //0 is the pane that contain the back of all the cards
                             AnchorPane back = (AnchorPane) assistantPane.getChildren().get(0);
                             ImageView imageView = (ImageView) back.getChildren().get(0);
                             imageView.setImage(new Image("Graphical_Assets/Wizard/" + Wizard.values()[localWizardIndex] + ".jpg"));
-                            //add to only my image of wizard the handler that show all the playCharacter
-                            if (Wizard.values()[localWizardIndex] == viewGUI.getModel().getMyWizard()) {
-                                back.setOnMouseClicked(mouseEvent -> assistantCardBox.setVisible(!assistantCardBox.isVisible()));
-                            }
                         }
                     }
                 }
@@ -169,17 +165,23 @@ public class BoardController implements SceneController {
 
     @Override
     public void hideEverything() {
-        for (Node child : root.getChildren()) {
-            child.setDisable(false);
+        for (Node node : clickableElement) {
+            node.setDisable(false);
         }
+    }
+
+    //to enable a node use this function-> this is needed so there is an eay way to disable all the element
+    public void enableNode(Node node) {
+        node.setDisable(false);
+        clickableElement.add(node);
     }
 
     @Override
     public void disableEverything() {
-        mainBoard.setDisable(true);
-        islands.setDisable(true);
-        clouds.setDisable(true);
-        //characters.setDisable(true);
+        for (Node n : clickableElement) {
+            n.setDisable(true);
+        }
+        clickableElement.clear();
     }
 
     @Override
@@ -241,10 +243,16 @@ public class BoardController implements SceneController {
                 insertedStudent++;
             }
         }
+        int maxStudent = viewGUI.getModel().getMatchConstants().studentsToMove();
+        for (; insertedStudent < maxStudent; insertedStudent++) {
+            ImageView student = (ImageView) paneStudents.getChildren().get(insertedStudent);
+            student.setImage(null);
+        }
+
+
     }
 
     private void updateEntranceHall(GameComponentClient entranceHall) {
-
     }
 
     private void updateLunchHall(GameComponentClient lunchHall) {

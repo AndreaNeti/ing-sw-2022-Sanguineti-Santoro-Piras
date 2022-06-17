@@ -14,4 +14,6 @@ public interface SceneController extends GameClientListener {
     void disableEverything();
 
     Node getElementById(String id);
+
+    void enableNode(Node node);
 }

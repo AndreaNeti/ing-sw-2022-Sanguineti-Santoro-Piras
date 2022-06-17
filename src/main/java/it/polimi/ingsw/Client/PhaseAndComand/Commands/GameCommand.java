@@ -8,12 +8,14 @@ import it.polimi.ingsw.Client.View.Gui.ViewGUI;
 import it.polimi.ingsw.Client.model.CharacterCardClient;
 import it.polimi.ingsw.Client.model.GameComponentClient;
 import it.polimi.ingsw.Server.controller.MatchType;
+import it.polimi.ingsw.Util.AssistantCard;
 import it.polimi.ingsw.Util.Color;
 import it.polimi.ingsw.Util.GamePhase;
 import it.polimi.ingsw.Util.IPAddress;
 import it.polimi.ingsw.exceptions.clientExceptions.SkipCommandException;
 import it.polimi.ingsw.network.toServerMessage.*;
 import javafx.event.EventHandler;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 
@@ -160,12 +162,13 @@ public enum GameCommand {
 
         @Override
         public EventHandler<MouseEvent> getGUIHandler(ViewGUI viewGUI) {
-            return null;
-
-
+            return mouseEvent -> {
+                Node clicked = (Node) mouseEvent.getSource();
+                AssistantCard assistantCard = (AssistantCard) clicked.getProperties().get("cardValue");
+                viewGUI.sendToServer(new PlayCard(assistantCard));
+                GuiFX.getActiveSceneController().getElementById("#assistantCardBox").setVisible(false);
+            };
         }
-
-
 
         @Override
         public String toString() {
