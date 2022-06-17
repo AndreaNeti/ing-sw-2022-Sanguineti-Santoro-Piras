@@ -75,7 +75,8 @@ public class BoardController implements SceneController {
                 if (character.containsStudents()) {
                     CharacterCardClientWithStudents character1 = (CharacterCardClientWithStudents) character;
                     singleChar.getChildren().get(1).setVisible(true);
-                    singleChar.setId(character1.getNameOfComponent() + character1.getId());
+                    singleChar.setId(String.valueOf(character1.getId()));
+                    //TODO see what id we need to put here
                 }
                 //adding choose command button and on click showing the description of the character
                 Button b = (Button) singleChar.getChildren().get(2);
@@ -83,7 +84,7 @@ public class BoardController implements SceneController {
 
                 //b.setOnMouseClicked( GameCommand.CHOOSE_CHARACTER.getGUIHandler(viewGUI));
 
-                singleChar.setOnMouseClicked(mouseEvent -> {
+                imageView.setOnMouseClicked(mouseEvent -> {
 
                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
                     alert.setContentText(character.getDescription());
@@ -119,12 +120,14 @@ public class BoardController implements SceneController {
                         case 1 -> ((Label) element).setText(player.getNickName());
                         //set the id of the entrance hall
                         case 2 -> {
-                            element.setId(player.getEntranceHall().getNameOfComponent() + player.getEntranceHall().getId());
+                            element.setId(String.valueOf(player.getEntranceHall().getId()));
+                            element.getProperties().put("name", player.getEntranceHall().getNameOfComponent());
                             updateEntranceHall(player.getEntranceHall());
                         }
                         //set the id of the lunch hall
                         case 3 -> {
-                            element.setId(player.getLunchHall().getNameOfComponent() + player.getLunchHall().getId());
+                            element.setId((String.valueOf(player.getLunchHall().getId())));
+                            element.getProperties().put("name", player.getLunchHall().getNameOfComponent());
                             for (Color c : Color.values()) {
                                 ((VBox) element).getChildren().get(c.ordinal()).getProperties().put("color", c);
                             }
@@ -152,7 +155,6 @@ public class BoardController implements SceneController {
             clouds.getChildren().get(i).setVisible(false);
         }
         for (GameComponentClient cloud : model.getClouds()) {
-
             updateGameComponent(cloud);
         }
     }
@@ -198,7 +200,7 @@ public class BoardController implements SceneController {
     public void updateMotherNature(Byte motherNaturePosition) {
         Platform.runLater(() -> {
             int idIsland = viewGUI.getModel().getIslands().get(motherNaturePosition).getId();
-            AnchorPane island = (AnchorPane) getElementById("#Island" + idIsland);
+            AnchorPane island = (AnchorPane) getElementById("#"+idIsland);
             island.getChildren().add(getMotherNature());
         });
     }
@@ -220,7 +222,7 @@ public class BoardController implements SceneController {
             } else {
                 //a game component usually has an anchor pane for himself that contains an image( children 0), an anchor pane with all the students
                 //this anchor pane has an anchor pane for all colors-> this contains an image view (children 0) and a label for the number of students
-                AnchorPane paneGameComponent = (AnchorPane) this.getElementById("#" + gameComponent.getNameOfComponent() + id);
+                AnchorPane paneGameComponent = (AnchorPane) this.getElementById("#" +id);
                 AnchorPane paneStudents = (AnchorPane) paneGameComponent.getChildren().get(1);
                 for (int i = 0; i < Color.values().length; i++) {
                     AnchorPane paneSingleStudent = (AnchorPane) paneStudents.getChildren().get(i);
@@ -237,7 +239,7 @@ public class BoardController implements SceneController {
         //each cloud has a image[0] and an anchor pane for students [1]
         //this anchor pane has 4 images
         byte[] students = cloud.getStudents();
-        AnchorPane paneCloud = (AnchorPane) getElementById("#" + cloud.getNameOfComponent() + cloud.getId());
+        AnchorPane paneCloud = (AnchorPane) getElementById("#" + cloud.getId());
         AnchorPane paneStudents = (AnchorPane) paneCloud.getChildren().get(1);
         byte insertedStudent = 0;
         for (Color c : Color.values()) {
@@ -260,7 +262,7 @@ public class BoardController implements SceneController {
     }
 
     private void updateLunchHall(GameComponentClient lunchHall) {
-        VBox paneLunchHall = (VBox) getElementById("#" + lunchHall.getNameOfComponent() + lunchHall.getId());
+        VBox paneLunchHall = (VBox) getElementById("#" + lunchHall.getId());
         HBox hBox;
         for (Color c : Color.values()) {
             hBox = (HBox) paneLunchHall.getChildren().get(c.ordinal());
@@ -285,7 +287,7 @@ public class BoardController implements SceneController {
         //the anchor pane of the students contains all 5 possible color in 5 other anchor pane
         Platform.runLater(() -> {
             updateGameComponent((GameComponentClient) island);
-            AnchorPane paneIsland = (AnchorPane) this.getElementById("#" + island.getNameOfComponent() + island.getId());
+            AnchorPane paneIsland = (AnchorPane) this.getElementById("#" +island.getId());
             HouseColor islandTeam = island.getTeam();
             if (islandTeam != null) {
                 paneIsland.getChildren().add(getTower(islandTeam));
@@ -300,8 +302,8 @@ public class BoardController implements SceneController {
             // retrieve the team that deleted the island and enlarge it using the position of mother nature
             IslandClient winner = viewGUI.getModel().getIslands().get(viewGUI.getModel().getMotherNaturePosition());
             HouseColor winnerTeam = winner.getTeam();
-            AnchorPane paneIsland = (AnchorPane) this.getElementById("#Island" + island.getId());
-            AnchorPane paneWinnerIsland = (AnchorPane) this.getElementById("#Island" + winner.getId());
+            AnchorPane paneIsland = (AnchorPane) this.getElementById("#" + island.getId());
+            AnchorPane paneWinnerIsland = (AnchorPane) this.getElementById("#" + winner.getId());
             //remove the pane of students
             paneIsland.getChildren().remove(1);
             //add tower

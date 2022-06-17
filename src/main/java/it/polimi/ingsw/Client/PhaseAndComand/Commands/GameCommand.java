@@ -18,6 +18,8 @@ import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 
 import java.util.List;
 
@@ -175,6 +177,8 @@ public enum GameCommand {
             return "Play card";
         }
     }, MOVE_STUDENT() {
+        Color color = null;
+
         @Override
         public void playCLICommand(ViewCli viewCli) throws SkipCommandException {
             // request the student color
@@ -182,6 +186,33 @@ public enum GameCommand {
             // request the destination where you want the student to move
             GameComponentClient destination = viewCli.getMoveStudentDestination(false);
             viewCli.sendToServer(new MoveStudent(color, destination.getId(), destination.getNameOfComponent()));
+        }
+
+        @Override
+        public EventHandler<MouseEvent> getGUIHandler(ViewGUI viewGUI) {
+            return mouseEvent -> {
+                SceneController sceneController = GuiFX.getActiveSceneController();
+                sceneController.disableEverything();
+                Node clicked = (Node) mouseEvent.getSource();
+                if (color == null) {
+
+                    color = (Color) clicked.getProperties().get("color");
+
+                    AnchorPane islands = (AnchorPane) sceneController.getElementById("#islands");
+                    for (Node island : islands.getChildren()) {
+                        island.setOnMouseClicked(GameCommand.MOVE_STUDENT.getGUIHandler(viewGUI));
+                        sceneController.enableNode(island);
+                    }
+                    //lunchHall is the third children
+                    VBox lunchHall = (VBox) ((AnchorPane) sceneController.getElementById("#mainBoard")).getChildren().get(3);
+                    sceneController.enableNode(lunchHall);
+                    lunchHall.setOnMouseClicked(GameCommand.MOVE_STUDENT.getGUIHandler(viewGUI));
+                } else {
+                    int id = Integer.parseInt(clicked.getId());
+                    viewGUI.sendToServer(new MoveStudent(color, id, (String) clicked.getProperties().get("name")));
+                    color = null;
+                }
+            };
         }
 
         @Override
