@@ -133,6 +133,10 @@ public class BoardController implements SceneController {
                             }
                             updateLunchHall(player.getLunchHall());
                         }
+                        // set the id of professors
+                        case 4 -> {
+                            element.setId("professors" + localWizardIndex);
+                        }
                         case 6 -> {
                             //set id of the assistant card
                             AnchorPane assistantPane = (AnchorPane) board.getChildren().get(j);
@@ -338,7 +342,9 @@ public class BoardController implements SceneController {
 
     @Override
     public void updateProfessor(Color color, Wizard wizard) {
-
+        for (Wizard p : Wizard.values())
+            ((VBox) getElementById("#professors" + p.ordinal())).getChildren().get(color.ordinal()).setVisible(false);
+        ((VBox) getElementById("#professors" + wizard.ordinal())).getChildren().get(color.ordinal()).setVisible(true);
     }
 
     @Override
