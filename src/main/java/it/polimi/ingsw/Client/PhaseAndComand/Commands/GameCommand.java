@@ -13,9 +13,9 @@ import it.polimi.ingsw.Util.GamePhase;
 import it.polimi.ingsw.Util.IPAddress;
 import it.polimi.ingsw.exceptions.clientExceptions.SkipCommandException;
 import it.polimi.ingsw.network.toServerMessage.*;
-import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
 
 import java.util.List;
 
@@ -31,8 +31,8 @@ public enum GameCommand {
         }
 
         @Override
-        public EventHandler<ActionEvent> getGUIHandler(ViewGUI viewGUI) {
-            return actionEvent -> {
+        public EventHandler<MouseEvent> getGUIHandler(ViewGUI viewGUI) {
+            return event -> {
                 SceneController sceneController = GuiFX.getActiveSceneController();
                 TextField t = (TextField) sceneController.getElementById("#inputIp");
                 String ipString = t.getText();
@@ -61,8 +61,8 @@ public enum GameCommand {
         }
 
         @Override
-        public EventHandler<ActionEvent> getGUIHandler(ViewGUI viewGUI) {
-            return actionEvent -> {
+        public EventHandler<MouseEvent> getGUIHandler(ViewGUI viewGUI) {
+            return event -> {
                 SceneController sceneController = GuiFX.getActiveSceneController();
                 TextField t = (TextField) sceneController.getElementById("#inputNickName");
                 String nick = t.getText();
@@ -85,8 +85,8 @@ public enum GameCommand {
         }
 
         @Override
-        public EventHandler<ActionEvent> getGUIHandler(ViewGUI viewGUI) {
-            return actionEvent -> {
+        public EventHandler<MouseEvent> getGUIHandler(ViewGUI viewGUI) {
+            return event -> {
                 try {
                     RadioButton r = (RadioButton) GuiFX.getActiveSceneController().getElementById("#gameType");
                     boolean isExpert = r.getText().equals("ExpertGame");
@@ -110,8 +110,8 @@ public enum GameCommand {
         }
 
         @Override
-        public EventHandler<ActionEvent> getGUIHandler(ViewGUI viewGUI) {
-            return actionEvent -> {
+        public EventHandler<MouseEvent> getGUIHandler(ViewGUI viewGUI) {
+            return event -> {
                 try {
                     RadioButton r = (RadioButton) GuiFX.getActiveSceneController().getElementById("#gameType");
                     boolean isExpert = r.getText().equals("ExpertGame");
@@ -136,7 +136,7 @@ public enum GameCommand {
         }
 
         @Override
-        public EventHandler<ActionEvent> getGUIHandler(ViewGUI viewGUI) {
+        public EventHandler<MouseEvent> getGUIHandler(ViewGUI viewGUI) {
             return actionEvent -> {
                 SceneController sceneController = GuiFX.getActiveSceneController();
                 TextField t = (TextField) sceneController.getElementById("#inputIdMatch");
@@ -157,6 +157,15 @@ public enum GameCommand {
         public void playCLICommand(ViewCli viewCli) throws SkipCommandException {
             viewCli.sendToServer(new PlayCard(viewCli.getAssistantCardToPlayInput(false)));
         }
+
+        @Override
+        public EventHandler<MouseEvent> getGUIHandler(ViewGUI viewGUI) {
+            return null;
+
+
+        }
+
+
 
         @Override
         public String toString() {
@@ -261,8 +270,8 @@ public enum GameCommand {
         }
 
         @Override
-        public EventHandler<ActionEvent> getGUIHandler(ViewGUI viewGUI) {
-            return actionEvent -> {
+        public EventHandler<MouseEvent> getGUIHandler(ViewGUI viewGUI) {
+            return event -> {
                 SceneController sceneController = GuiFX.getActiveSceneController();
                 TextField t = (TextField) sceneController.getElementById("#message");
                 viewGUI.sendToServer(new TextMessageCS(t.getText()));
@@ -299,9 +308,9 @@ public enum GameCommand {
             } else viewCli.repeatPhase(false);
         }
 
-        @Override
-        public EventHandler<ActionEvent> getGUIHandler(ViewGUI viewGUI) {
-            return actionEvent -> {
+        // @Override
+        public EventHandler<MouseEvent> getGUIHandler(ViewGUI viewGUI) {
+            return event -> {
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                 alert.setTitle("Exit");
                 alert.setContentText("Do you want to quit?");
@@ -321,7 +330,7 @@ public enum GameCommand {
     public abstract void playCLICommand(ViewCli viewCli) throws SkipCommandException;
 
     //TODO set this function abstract
-    public EventHandler<ActionEvent> getGUIHandler(ViewGUI viewGUI) {
+    public EventHandler<MouseEvent> getGUIHandler(ViewGUI viewGUI) {
         return null;
     }
 

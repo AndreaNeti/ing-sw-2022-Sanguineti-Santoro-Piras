@@ -154,7 +154,6 @@ public class ControllerClient extends GameClientListened {
         model = new GameClient(teamsClient, myWizard, matchType);
         //model.addListener(this);
         abstractView.setModel(model);
-        notifyModelCreated();
     }
 
     // returns true if the client process has to quit
@@ -205,7 +204,6 @@ public class ControllerClient extends GameClientListened {
     }
 
     public void unsetCurrentCharacterCard() {
-        if (model != null)
-            model.unsetCurrentCharacterCard();
+        if (model != null) model.unsetCurrentCharacterCard();
     }
 }

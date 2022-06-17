@@ -11,7 +11,11 @@ import it.polimi.ingsw.Util.AssistantCard;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -54,8 +58,8 @@ public class BoardController implements SceneController {
         paneForChat.getChildren().add(listView);
         chat.toFront();
         chat.setVisible(false);
-        sendButton.setOnAction(GameCommand.TEXT_MESSAGE.getGUIHandler(viewGUI));
-        quitButton.setOnAction(GameCommand.QUIT.getGUIHandler(viewGUI));
+        sendButton.setOnMouseClicked(GameCommand.TEXT_MESSAGE.getGUIHandler(viewGUI));
+        quitButton.setOnMouseClicked(GameCommand.QUIT.getGUIHandler(viewGUI));
 
         //initialize all the model
         GameClientView model = viewGUI.getModel();
@@ -76,7 +80,7 @@ public class BoardController implements SceneController {
                 }
                 //adding choose command button and on click showing the description of the character
                 Button b = (Button) singleChar.getChildren().get(2);
-                b.setOnAction(GameCommand.CHOOSE_CHARACTER.getGUIHandler(viewGUI));
+                //b.setOnMouseClicked( GameCommand.CHOOSE_CHARACTER.getGUIHandler(viewGUI));
 
                 singleChar.setOnMouseClicked(mouseEvent -> {
 
@@ -156,8 +160,11 @@ public class BoardController implements SceneController {
     @Override
     public void setViewGUI(ViewGUI viewGUI) {
         this.viewGUI = viewGUI;
-        if (viewGUI.getModel() != null)
-            updateModelCreated();
+        if (viewGUI.getModel() != null) {
+            viewGUI.getModel().addListener(this);
+
+            initialize();
+        }
     }
 
     @Override
@@ -179,12 +186,6 @@ public class BoardController implements SceneController {
     public Node getElementById(String id) {
         if (id.equals("#mainBoard")) return mainBoard;
         return root.lookup(id);
-    }
-
-    @Override
-    public void updateModelCreated() {
-        viewGUI.getModel().addListener(this);
-        initialize();
     }
 
     @Override
@@ -213,7 +214,6 @@ public class BoardController implements SceneController {
             } else {
                 //a game component usually has an anchor pane for himself that contains an image( children 0), an anchor pane with all the students
                 //this anchor pane has an anchor pane for all colors-> this contains an image view (children 0) and a label for the number of students
-                System.out.println("son qui");
                 AnchorPane paneGameComponent = (AnchorPane) this.getElementById("#" + gameComponent.getNameOfComponent() + id);
                 AnchorPane paneStudents = (AnchorPane) paneGameComponent.getChildren().get(1);
                 for (int i = 0; i < Color.values().length; i++) {
@@ -321,17 +321,14 @@ public class BoardController implements SceneController {
 
     @Override
     public void updateCharacter(List<CharacterCardClient> characters) {
-
     }
 
     @Override
     public void updateCoins(Byte coins) {
-
     }
 
     @Override
     public void setWinners(List<HouseColor> winners) {
-
     }
 
     @Override
@@ -369,6 +366,4 @@ public class BoardController implements SceneController {
         AnchorPane.setTopAnchor(tower, 20.0);
         return tower;
     }
-
-
 }

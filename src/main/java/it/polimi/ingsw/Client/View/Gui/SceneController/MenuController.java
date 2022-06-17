@@ -13,6 +13,7 @@ import it.polimi.ingsw.Util.AssistantCard;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Group;
 import javafx.scene.Node;
@@ -62,13 +63,13 @@ public class MenuController implements SceneController {
         chat.toFront();
         chat.setVisible(false);
         //add event handler
-        connectButton.setOnAction(GameCommand.CONNECT_SERVER.getGUIHandler(viewGUI));
-        nickNameButton.setOnAction(GameCommand.SET_NICKNAME.getGUIHandler(viewGUI));
-        createButton.setOnAction(GameCommand.CREATE_MATCH.getGUIHandler(viewGUI));
-        joinIdButton.setOnAction(GameCommand.JOIN_MATCH_BY_ID.getGUIHandler(viewGUI));
-        joinMatchTypeButton.setOnAction(GameCommand.JOIN_MATCH_BY_TYPE.getGUIHandler(viewGUI));
-        sendButton.setOnAction(GameCommand.TEXT_MESSAGE.getGUIHandler(viewGUI));
-        quitButton.setOnAction(GameCommand.QUIT.getGUIHandler(viewGUI));
+        connectButton.setOnMouseClicked(GameCommand.CONNECT_SERVER.getGUIHandler(viewGUI));
+        nickNameButton.setOnMouseClicked(GameCommand.SET_NICKNAME.getGUIHandler(viewGUI));
+        createButton.setOnMouseClicked(GameCommand.CREATE_MATCH.getGUIHandler(viewGUI));
+        joinIdButton.setOnMouseClicked(GameCommand.JOIN_MATCH_BY_ID.getGUIHandler(viewGUI));
+        joinMatchTypeButton.setOnMouseClicked(GameCommand.JOIN_MATCH_BY_TYPE.getGUIHandler(viewGUI));
+        sendButton.setOnMouseClicked(GameCommand.TEXT_MESSAGE.getGUIHandler(viewGUI));
+        quitButton.setOnMouseClicked(GameCommand.QUIT.getGUIHandler(viewGUI));
     }
 
     @Override
@@ -172,10 +173,5 @@ public class MenuController implements SceneController {
     @Override
     public void setWinners(List<HouseColor> winners) {
 
-    }
-
-    @Override
-    public void updateModelCreated() {
-        //here i don't need to receive the update of the model
     }
 }

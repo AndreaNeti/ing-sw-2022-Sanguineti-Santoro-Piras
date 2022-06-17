@@ -15,11 +15,7 @@ import java.util.List;
 
 public abstract class GameClientListened {
     private List<GameClientListener> listeners= new ArrayList<>();
-    public void notifyModelCreated(){
-        for (GameClientListener listener : listeners) {
-            listener.updateModelCreated();
-        }
-    }
+
     public void notifyMotherNature(Byte motherNaturePosition) {
         for (GameClientListener listener : listeners) {
             listener.updateMotherNature(motherNaturePosition);

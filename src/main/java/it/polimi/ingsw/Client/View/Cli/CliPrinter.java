@@ -489,11 +489,7 @@ public class CliPrinter implements GameClientListener {
         view.setMustReprint(true);
     }
 
-    @Override
-    public void updateModelCreated() {
-        view.getModel().addListener(this);
 
-    }
 
     public void clearConsole() {
         System.out.print("\033[H\033[2J");
