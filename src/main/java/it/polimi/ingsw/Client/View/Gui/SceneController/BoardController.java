@@ -72,7 +72,7 @@ public class BoardController implements SceneController {
                 CharacterCardClient character = characters.get(i);
                 AnchorPane singleChar = (AnchorPane) this.characters.getChildren().get(i);
                 ImageView imageView = (ImageView) singleChar.getChildren().get(0);
-                imageView.setImage(new Image("Graphical_Assets/CharacterCards/CarteTOT_front" + character.getCharId() + ".jpg"));
+                imageView.setImage(new Image("Graphical_Assets/CharacterCards/" + character.getCharId() + ".jpg"));
                 if (character.containsStudents()) {
                     CharacterCardClientWithStudents character1 = (CharacterCardClientWithStudents) character;
                     singleChar.getChildren().get(1).setVisible(true);
@@ -234,10 +234,10 @@ public class BoardController implements SceneController {
         AnchorPane paneCloud = (AnchorPane) getElementById("#Cloud" + gameComponentClient.getId());
         AnchorPane paneStudents = (AnchorPane) paneCloud.getChildren().get(1);
         byte insertedStudent = 0;
-        for (byte i = 0; i < students.length; i++) {
-            for (byte j = students[i]; j > 0; j--) {
+        for (Color c : Color.values()) {
+            for (byte j = 0; j < students[c.ordinal()]; j++) {
                 ImageView student = (ImageView) paneStudents.getChildren().get(insertedStudent);
-                student.setImage(new Image("Graphical_Assets/Students/student_" + Color.values()[i].toString().toLowerCase() + ".png"));
+                student.setImage(new Image("Graphical_Assets/Students/" + c + ".png"));
                 insertedStudent++;
             }
         }
@@ -306,7 +306,7 @@ public class BoardController implements SceneController {
         //1 is the pane that contain the played card
         AnchorPane played = (AnchorPane) assistantPane.getChildren().get(1);
         ImageView imageView = (ImageView) played.getChildren().get(0);
-        imageView.setImage(new Image("Graphical_Assets/AssistantCard/Assistente (" + playedCard.value() + ").png"));
+        imageView.setImage(new Image("Graphical_Assets/AssistantCard/" + playedCard.value() + ".png"));
     }
 
     @Override
@@ -354,12 +354,7 @@ public class BoardController implements SceneController {
     }
 
     private ImageView getTower(HouseColor houseColor) {
-        ImageView tower = null;
-        switch (houseColor) {
-            case BLACK -> tower = new ImageView("Graphical_Assets/Towers/black_tower.png");
-            case WHITE -> tower = new ImageView("Graphical_Assets/Towers/white_tower.png");
-            case GREY -> tower = new ImageView("Graphical_Assets/Towers/grey_tower.png");
-        }
+        ImageView tower = new ImageView("Graphical_Assets/Towers/" + houseColor + ".png");
         tower.setFitWidth(50.0);
         tower.setPreserveRatio(true);
         AnchorPane.setLeftAnchor(tower, 61.5);

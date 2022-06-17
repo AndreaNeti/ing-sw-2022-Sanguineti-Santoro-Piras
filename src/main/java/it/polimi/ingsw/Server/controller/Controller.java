@@ -375,7 +375,7 @@ public class Controller {
     /**
      * Method nextPlayer updates the current player of the game with the next one. If it was the last player playing their turn,
      * the next player will be the first in the playerOrder array. <br>
-     * If the phase was planification phase, a new palyerOrder is obtained based on the lowest assistant card played and who played
+     * If the phase was planification phase, a new playerOrder is obtained based on the lowest assistant card played and who played
      * it first in case two players have used the same value.
      */
     private void nextPlayer() {
