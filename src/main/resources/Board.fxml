@@ -17,7 +17,7 @@
         <AnchorPane fx:id="islands" disable="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="865.0" AnchorPane.bottomAnchor="210.0" AnchorPane.leftAnchor="100.0" AnchorPane.topAnchor="70.0">
             <children>
                 <AnchorPane id="8" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="173.0" style="-fx-scale-x: 0.8; -fx-scale-y: 0.8;" AnchorPane.topAnchor="300.0">
-                    <properties name="Island"/>
+                    <properties name="Island" />
                     <children>
                         <ImageView fitHeight="200.0" fitWidth="179.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="-3.0">
                             <Image url="@Graphical_Assets/Islands/Island1.png" />
@@ -110,7 +110,7 @@
                     </children>
                 </AnchorPane>
                 <AnchorPane id="9" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="173.0" style="-fx-scale-x: 0.8; -fx-scale-y: 0.8;" AnchorPane.leftAnchor="86.5" AnchorPane.topAnchor="150.0">
-                    <properties name="Island"/>
+                    <properties name="Island" />
                     <children>
                         <ImageView fitHeight="200.0" fitWidth="179.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="-3.0">
                             <Image url="@Graphical_Assets/Islands/Island2.png" />
@@ -207,7 +207,7 @@
                     </children>
                 </AnchorPane>
                 <AnchorPane id="10" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="173.0" style="-fx-scale-x: 0.8; -fx-scale-y: 0.8;" AnchorPane.leftAnchor="173.0">
-                    <properties name="Island"/>
+                    <properties name="Island" />
                     <children>
                         <ImageView fitHeight="200.0" fitWidth="179.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="-3.0">
                             <Image url="@Graphical_Assets/Islands/Island3.png" />
@@ -304,7 +304,7 @@
                     </children>
                 </AnchorPane>
                 <AnchorPane id="11" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="173.0" style="-fx-scale-x: 0.8; -fx-scale-y: 0.8;" AnchorPane.leftAnchor="346.0">
-                    <properties name="Island"/>
+                    <properties name="Island" />
                     <children>
                         <ImageView fitHeight="200.0" fitWidth="179.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="-3.0">
                             <Image url="@Graphical_Assets/Islands/Island1.png" />
@@ -401,7 +401,7 @@
                     </children>
                 </AnchorPane>
                 <AnchorPane id="12" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="173.0" style="-fx-scale-x: 0.8; -fx-scale-y: 0.8;" AnchorPane.leftAnchor="519.0">
-                    <properties name="Island"/>
+                    <properties name="Island" />
                     <children>
                         <ImageView fitHeight="200.0" fitWidth="179.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="-3.0">
                             <Image url="@Graphical_Assets/Islands/Island2.png" />
@@ -498,7 +498,7 @@
                     </children>
                 </AnchorPane>
                 <AnchorPane id="13" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="173.0" style="-fx-scale-x: 0.8; -fx-scale-y: 0.8;" AnchorPane.leftAnchor="605.5" AnchorPane.topAnchor="150.0">
-                    <properties name="Island"/>
+                    <properties name="Island" />
                     <children>
                         <ImageView fitHeight="200.0" fitWidth="179.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="-3.0">
                             <Image url="@Graphical_Assets/Islands/Island3.png" />
@@ -595,7 +595,7 @@
                     </children>
                 </AnchorPane>
                 <AnchorPane id="14" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="173.0" style="-fx-scale-x: 0.8; -fx-scale-y: 0.8;" AnchorPane.leftAnchor="692.0" AnchorPane.topAnchor="300.0">
-                    <properties name="Island"/>
+                    <properties name="Island" />
                     <children>
                         <ImageView fitHeight="200.0" fitWidth="179.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="-3.0">
                             <Image url="@Graphical_Assets/Islands/Island1.png" />
@@ -692,7 +692,7 @@
                     </children>
                 </AnchorPane>
                 <AnchorPane id="15" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="173.0" style="-fx-scale-x: 0.8; -fx-scale-y: 0.8;" AnchorPane.leftAnchor="605.5" AnchorPane.topAnchor="450.0">
-                    <properties name="Island"/>
+                    <properties name="Island" />
                     <children>
                         <ImageView fitHeight="200.0" fitWidth="179.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="-3.0">
                             <Image url="@Graphical_Assets/Islands/Island2.png" />
@@ -789,7 +789,7 @@
                     </children>
                 </AnchorPane>
                 <AnchorPane id="16" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="173.0" style="-fx-scale-x: 0.8; -fx-scale-y: 0.8;" AnchorPane.leftAnchor="519.0" AnchorPane.topAnchor="600.0">
-                    <properties name="Island"/>
+                    <properties name="Island" />
                     <children>
                         <ImageView fitHeight="200.0" fitWidth="179.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="-3.0">
                             <Image url="@Graphical_Assets/Islands/Island3.png" />
@@ -886,7 +886,7 @@
                     </children>
                 </AnchorPane>
                 <AnchorPane id="17" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="173.0" style="-fx-scale-x: 0.8; -fx-scale-y: 0.8;" AnchorPane.leftAnchor="346.0" AnchorPane.topAnchor="600.0">
-                    <properties name="Island"/>
+                    <properties name="Island" />
                     <children>
                         <ImageView fitHeight="200.0" fitWidth="179.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="-3.0">
                             <Image url="@Graphical_Assets/Islands/Island1.png" />
@@ -983,7 +983,7 @@
                     </children>
                 </AnchorPane>
                 <AnchorPane id="18" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="173.0" style="-fx-scale-x: 0.8; -fx-scale-y: 0.8;" AnchorPane.leftAnchor="173.0" AnchorPane.topAnchor="600.0">
-                    <properties name="Island"/>
+                    <properties name="Island" />
                     <children>
                         <ImageView fitHeight="200.0" fitWidth="179.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="-3.0">
                             <Image url="@Graphical_Assets/Islands/Island2.png" />
@@ -1080,7 +1080,7 @@
                     </children>
                 </AnchorPane>
                 <AnchorPane id="19" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="173.0" style="-fx-scale-x: 0.8; -fx-scale-y: 0.8;" AnchorPane.leftAnchor="86.5" AnchorPane.topAnchor="450.0">
-                    <properties name="Island"/>
+                    <properties name="Island" />
                     <children>
                         <ImageView fitHeight="200.0" fitWidth="179.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="-3.0">
                             <Image url="@Graphical_Assets/Islands/Island3.png" />
@@ -1195,7 +1195,54 @@
                                 <Font name="System Bold" size="12.0" />
                             </font>
                         </Label>
-                        <AnchorPane prefHeight="304.0" prefWidth="114.0" />
+                        <AnchorPane prefHeight="304.0" prefWidth="114.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="586.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <ImageView fitWidth="30.0" layoutX="65.0" layoutY="37.0" preserveRatio="true" AnchorPane.bottomAnchor="237.0" AnchorPane.rightAnchor="19.0">
+                           <image>
+                              <Image url="@Graphical_Assets/Students/BLUE.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitWidth="30.0" layoutX="24.0" layoutY="87.0" preserveRatio="true" AnchorPane.bottomAnchor="187.0" AnchorPane.rightAnchor="61.0">
+                           <image>
+                              <Image url="@Graphical_Assets/Students/BLUE.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitWidth="30.0" layoutX="34.0" layoutY="97.0" preserveRatio="true" AnchorPane.bottomAnchor="187.0" AnchorPane.rightAnchor="20.0">
+                           <image>
+                              <Image url="@Graphical_Assets/Students/BLUE.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitWidth="30.0" layoutX="44.0" layoutY="107.0" preserveRatio="true" AnchorPane.bottomAnchor="137.0" AnchorPane.rightAnchor="61.0">
+                           <image>
+                              <Image url="@Graphical_Assets/Students/BLUE.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitWidth="30.0" layoutX="54.0" layoutY="117.0" preserveRatio="true" AnchorPane.bottomAnchor="137.0" AnchorPane.rightAnchor="20.0">
+                           <image>
+                              <Image url="@Graphical_Assets/Students/BLUE.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitWidth="30.0" layoutX="64.0" layoutY="127.0" preserveRatio="true" AnchorPane.bottomAnchor="87.0" AnchorPane.rightAnchor="61.0">
+                           <image>
+                              <Image url="@Graphical_Assets/Students/BLUE.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitWidth="30.0" layoutX="74.0" layoutY="137.0" preserveRatio="true" AnchorPane.bottomAnchor="87.0" AnchorPane.rightAnchor="20.0">
+                           <image>
+                              <Image url="@Graphical_Assets/Students/BLUE.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitWidth="30.0" layoutX="84.0" layoutY="147.0" preserveRatio="true" AnchorPane.bottomAnchor="38.0" AnchorPane.rightAnchor="61.0">
+                           <image>
+                              <Image url="@Graphical_Assets/Students/BLUE.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitWidth="30.0" layoutX="94.0" layoutY="157.0" preserveRatio="true" AnchorPane.bottomAnchor="38.0" AnchorPane.rightAnchor="20.0">
+                           <image>
+                              <Image url="@Graphical_Assets/Students/BLUE.png" />
+                           </image>
+                        </ImageView>
+                     </children></AnchorPane>
                         <VBox snapToPixel="false" AnchorPane.bottomAnchor="28.0" AnchorPane.leftAnchor="129.0" AnchorPane.rightAnchor="239.0" AnchorPane.topAnchor="28.0">
                             <children>
                                 <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" snapToPixel="false">
@@ -1214,11 +1261,11 @@
                         <AnchorPane id="towers" layoutX="557.0" layoutY="52.0" prefHeight="200.0" prefWidth="143.0" AnchorPane.bottomAnchor="52.0" AnchorPane.leftAnchor="557.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="52.0" />
                         <AnchorPane pickOnBounds="false" prefHeight="300.0" prefWidth="300.0" AnchorPane.leftAnchor="-320.0" AnchorPane.topAnchor="0.0">
                             <children>
-                                <AnchorPane layoutY="104.0" prefHeight="200.0" prefWidth="135.0" style="-fx-border-color: yellow;">
+                                <AnchorPane layoutY="104.0" prefHeight="200.0" prefWidth="135.0">
                                     <children>
                                         <ImageView fitHeight="200.0" fitWidth="135.0" pickOnBounds="true">
                                             <image>
-                                                <Image url="@Graphical_Assets/Wizard/WOODMAGE.jpg" />
+                                                <Image url="@Graphical_Assets/Wizard/WOODMAGE.png" />
                                             </image>
                                         </ImageView>
                                     </children>
@@ -1247,7 +1294,55 @@
                                 <Font name="System Bold" size="12.0" />
                             </font>
                         </Label>
-                        <AnchorPane prefHeight="200.0" prefWidth="200.0" />
+                  <AnchorPane prefHeight="304.0" prefWidth="114.0">
+                     <children>
+                        <ImageView fitWidth="30.0" layoutX="65.0" layoutY="37.0" preserveRatio="true" AnchorPane.bottomAnchor="237.0" AnchorPane.rightAnchor="19.0">
+                           <image>
+                              <Image url="@Graphical_Assets/Students/BLUE.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitWidth="30.0" layoutX="24.0" layoutY="87.0" preserveRatio="true" AnchorPane.bottomAnchor="187.0" AnchorPane.rightAnchor="61.0">
+                           <image>
+                              <Image url="@Graphical_Assets/Students/BLUE.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitWidth="30.0" layoutX="34.0" layoutY="97.0" preserveRatio="true" AnchorPane.bottomAnchor="187.0" AnchorPane.rightAnchor="20.0">
+                           <image>
+                              <Image url="@Graphical_Assets/Students/BLUE.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitWidth="30.0" layoutX="44.0" layoutY="107.0" preserveRatio="true" AnchorPane.bottomAnchor="137.0" AnchorPane.rightAnchor="61.0">
+                           <image>
+                              <Image url="@Graphical_Assets/Students/BLUE.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitWidth="30.0" layoutX="54.0" layoutY="117.0" preserveRatio="true" AnchorPane.bottomAnchor="137.0" AnchorPane.rightAnchor="20.0">
+                           <image>
+                              <Image url="@Graphical_Assets/Students/BLUE.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitWidth="30.0" layoutX="64.0" layoutY="127.0" preserveRatio="true" AnchorPane.bottomAnchor="87.0" AnchorPane.rightAnchor="61.0">
+                           <image>
+                              <Image url="@Graphical_Assets/Students/BLUE.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitWidth="30.0" layoutX="74.0" layoutY="137.0" preserveRatio="true" AnchorPane.bottomAnchor="87.0" AnchorPane.rightAnchor="20.0">
+                           <image>
+                              <Image url="@Graphical_Assets/Students/BLUE.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitWidth="30.0" layoutX="84.0" layoutY="147.0" preserveRatio="true" AnchorPane.bottomAnchor="38.0" AnchorPane.rightAnchor="61.0">
+                           <image>
+                              <Image url="@Graphical_Assets/Students/BLUE.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitWidth="30.0" layoutX="94.0" layoutY="157.0" preserveRatio="true" AnchorPane.bottomAnchor="38.0" AnchorPane.rightAnchor="20.0">
+                           <image>
+                              <Image url="@Graphical_Assets/Students/BLUE.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </AnchorPane>
                         <VBox snapToPixel="false" AnchorPane.bottomAnchor="28.0" AnchorPane.leftAnchor="129.0" AnchorPane.rightAnchor="239.0" AnchorPane.topAnchor="28.0">
                             <children>
                                 <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" snapToPixel="false">
@@ -1266,11 +1361,11 @@
                         <AnchorPane id="towers" layoutX="557.0" layoutY="52.0" prefHeight="200.0" prefWidth="143.0" AnchorPane.bottomAnchor="52.0" AnchorPane.leftAnchor="557.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="52.0" />
                         <AnchorPane prefHeight="300.0" prefWidth="300.0" AnchorPane.leftAnchor="-320.0">
                             <children>
-                                <AnchorPane layoutY="104.0" prefHeight="200.0" prefWidth="135.0" style="-fx-border-color: yellow;">
+                                <AnchorPane layoutY="104.0" prefHeight="200.0" prefWidth="135.0">
                                     <children>
                                         <ImageView fitHeight="200.0" fitWidth="135.0" pickOnBounds="true">
                                             <image>
-                                                <Image url="@Graphical_Assets/Wizard/WOODMAGE.jpg" />
+                                                <Image url="@Graphical_Assets/Wizard/WOODMAGE.png" />
                                             </image>
                                         </ImageView>
                                     </children>
@@ -1299,7 +1394,55 @@
                                 <Font name="System Bold" size="12.0" />
                             </font>
                         </Label>
-                        <AnchorPane prefHeight="200.0" prefWidth="200.0" />
+                  <AnchorPane prefHeight="304.0" prefWidth="114.0">
+                     <children>
+                        <ImageView fitWidth="30.0" layoutX="65.0" layoutY="37.0" preserveRatio="true" AnchorPane.bottomAnchor="237.0" AnchorPane.rightAnchor="19.0">
+                           <image>
+                              <Image url="@Graphical_Assets/Students/BLUE.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitWidth="30.0" layoutX="24.0" layoutY="87.0" preserveRatio="true" AnchorPane.bottomAnchor="187.0" AnchorPane.rightAnchor="61.0">
+                           <image>
+                              <Image url="@Graphical_Assets/Students/BLUE.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitWidth="30.0" layoutX="34.0" layoutY="97.0" preserveRatio="true" AnchorPane.bottomAnchor="187.0" AnchorPane.rightAnchor="20.0">
+                           <image>
+                              <Image url="@Graphical_Assets/Students/BLUE.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitWidth="30.0" layoutX="44.0" layoutY="107.0" preserveRatio="true" AnchorPane.bottomAnchor="137.0" AnchorPane.rightAnchor="61.0">
+                           <image>
+                              <Image url="@Graphical_Assets/Students/BLUE.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitWidth="30.0" layoutX="54.0" layoutY="117.0" preserveRatio="true" AnchorPane.bottomAnchor="137.0" AnchorPane.rightAnchor="20.0">
+                           <image>
+                              <Image url="@Graphical_Assets/Students/BLUE.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitWidth="30.0" layoutX="64.0" layoutY="127.0" preserveRatio="true" AnchorPane.bottomAnchor="87.0" AnchorPane.rightAnchor="61.0">
+                           <image>
+                              <Image url="@Graphical_Assets/Students/BLUE.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitWidth="30.0" layoutX="74.0" layoutY="137.0" preserveRatio="true" AnchorPane.bottomAnchor="87.0" AnchorPane.rightAnchor="20.0">
+                           <image>
+                              <Image url="@Graphical_Assets/Students/BLUE.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitWidth="30.0" layoutX="84.0" layoutY="147.0" preserveRatio="true" AnchorPane.bottomAnchor="38.0" AnchorPane.rightAnchor="61.0">
+                           <image>
+                              <Image url="@Graphical_Assets/Students/BLUE.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitWidth="30.0" layoutX="94.0" layoutY="157.0" preserveRatio="true" AnchorPane.bottomAnchor="38.0" AnchorPane.rightAnchor="20.0">
+                           <image>
+                              <Image url="@Graphical_Assets/Students/BLUE.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </AnchorPane>
                         <VBox snapToPixel="false" AnchorPane.bottomAnchor="28.0" AnchorPane.leftAnchor="129.0" AnchorPane.rightAnchor="239.0" AnchorPane.topAnchor="28.0">
                             <children>
                                 <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" snapToPixel="false">
@@ -1319,11 +1462,11 @@
 
                         <AnchorPane prefHeight="300.0" prefWidth="300.0" AnchorPane.leftAnchor="-320.0">
                             <children>
-                                <AnchorPane layoutY="104.0" prefHeight="200.0" prefWidth="135.0" style="-fx-border-color: yellow;">
+                                <AnchorPane layoutY="104.0" prefHeight="200.0" prefWidth="135.0">
                                     <children>
                                         <ImageView fitHeight="200.0" fitWidth="135.0" pickOnBounds="true">
                                             <image>
-                                                <Image url="@Graphical_Assets/Wizard/WOODMAGE.jpg" />
+                                                <Image url="@Graphical_Assets/Wizard/WOODMAGE.png" />
                                             </image>
                                         </ImageView>
                                     </children>
@@ -1350,7 +1493,55 @@
                                 <Font name="System Bold" size="12.0" />
                             </font>
                         </Label>
-                        <AnchorPane prefHeight="200.0" prefWidth="200.0" />
+                  <AnchorPane prefHeight="304.0" prefWidth="114.0">
+                     <children>
+                        <ImageView fitWidth="30.0" layoutX="65.0" layoutY="37.0" preserveRatio="true" AnchorPane.bottomAnchor="237.0" AnchorPane.rightAnchor="19.0">
+                           <image>
+                              <Image url="@Graphical_Assets/Students/BLUE.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitWidth="30.0" layoutX="24.0" layoutY="87.0" preserveRatio="true" AnchorPane.bottomAnchor="187.0" AnchorPane.rightAnchor="61.0">
+                           <image>
+                              <Image url="@Graphical_Assets/Students/BLUE.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitWidth="30.0" layoutX="34.0" layoutY="97.0" preserveRatio="true" AnchorPane.bottomAnchor="187.0" AnchorPane.rightAnchor="20.0">
+                           <image>
+                              <Image url="@Graphical_Assets/Students/BLUE.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitWidth="30.0" layoutX="44.0" layoutY="107.0" preserveRatio="true" AnchorPane.bottomAnchor="137.0" AnchorPane.rightAnchor="61.0">
+                           <image>
+                              <Image url="@Graphical_Assets/Students/BLUE.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitWidth="30.0" layoutX="54.0" layoutY="117.0" preserveRatio="true" AnchorPane.bottomAnchor="137.0" AnchorPane.rightAnchor="20.0">
+                           <image>
+                              <Image url="@Graphical_Assets/Students/BLUE.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitWidth="30.0" layoutX="64.0" layoutY="127.0" preserveRatio="true" AnchorPane.bottomAnchor="87.0" AnchorPane.rightAnchor="61.0">
+                           <image>
+                              <Image url="@Graphical_Assets/Students/BLUE.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitWidth="30.0" layoutX="74.0" layoutY="137.0" preserveRatio="true" AnchorPane.bottomAnchor="87.0" AnchorPane.rightAnchor="20.0">
+                           <image>
+                              <Image url="@Graphical_Assets/Students/BLUE.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitWidth="30.0" layoutX="84.0" layoutY="147.0" preserveRatio="true" AnchorPane.bottomAnchor="38.0" AnchorPane.rightAnchor="61.0">
+                           <image>
+                              <Image url="@Graphical_Assets/Students/BLUE.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitWidth="30.0" layoutX="94.0" layoutY="157.0" preserveRatio="true" AnchorPane.bottomAnchor="38.0" AnchorPane.rightAnchor="20.0">
+                           <image>
+                              <Image url="@Graphical_Assets/Students/BLUE.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </AnchorPane>
                         <VBox snapToPixel="false" AnchorPane.bottomAnchor="28.0" AnchorPane.leftAnchor="129.0" AnchorPane.rightAnchor="239.0" AnchorPane.topAnchor="28.0">
                             <children>
                                 <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" snapToPixel="false">
@@ -1369,11 +1560,11 @@
                         <AnchorPane id="towers" layoutX="557.0" layoutY="52.0" prefHeight="200.0" prefWidth="143.0" AnchorPane.bottomAnchor="52.0" AnchorPane.leftAnchor="557.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="52.0" />
                         <AnchorPane prefHeight="300.0" prefWidth="300.0" AnchorPane.leftAnchor="-320.0">
                             <children>
-                                <AnchorPane layoutY="104.0" prefHeight="200.0" prefWidth="135.0" style="-fx-border-color: yellow;">
+                                <AnchorPane layoutY="104.0" prefHeight="200.0" prefWidth="135.0">
                                     <children>
                                         <ImageView fitHeight="200.0" fitWidth="135.0" pickOnBounds="true">
                                             <image>
-                                                <Image url="@Graphical_Assets/Wizard/WOODMAGE.jpg" />
+                                                <Image url="@Graphical_Assets/Wizard/WOODMAGE.png" />
                                             </image>
                                         </ImageView>
                                     </children>
@@ -1716,7 +1907,7 @@
         <HBox fx:id="clouds" prefHeight="71.0" prefWidth="342.0" AnchorPane.leftAnchor="365.0" AnchorPane.topAnchor="275.0">
             <children>
                 <AnchorPane id="-1" prefHeight="80.0" prefWidth="80.0">
-                    <properties name="Cloud"/>
+                    <properties name="Cloud" />
                     <children>
                         <ImageView fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
                             <image>
@@ -1734,7 +1925,7 @@
                     </children>
                 </AnchorPane>
                 <AnchorPane id="-2" prefHeight="80.0" prefWidth="80.0">
-                    <properties name="Cloud"/>
+                    <properties name="Cloud" />
                     <children>
                         <ImageView fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
                             <image>
@@ -1752,7 +1943,7 @@
                     </children>
                 </AnchorPane>
                 <AnchorPane id="-3" prefHeight="80.0" prefWidth="80.0">
-                    <properties name="Cloud"/>
+                    <properties name="Cloud" />
                     <children>
                         <ImageView fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
                             <image>
@@ -1770,7 +1961,7 @@
                     </children>
                 </AnchorPane>
                 <AnchorPane id="-4" prefHeight="80.0" prefWidth="80.0">
-                    <properties name="Cloud"/>
+                    <properties name="Cloud" />
                     <children>
                         <ImageView fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
                             <image>

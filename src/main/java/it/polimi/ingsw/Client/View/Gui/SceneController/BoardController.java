@@ -140,7 +140,7 @@ public class BoardController implements SceneController {
                             //0 is the pane that contain the back of all the cards
                             AnchorPane back = (AnchorPane) assistantPane.getChildren().get(0);
                             ImageView imageView = (ImageView) back.getChildren().get(0);
-                            imageView.setImage(new Image("Graphical_Assets/Wizard/" + Wizard.values()[localWizardIndex] + ".jpg"));
+                            imageView.setImage(new Image("Graphical_Assets/Wizard/" + Wizard.values()[localWizardIndex] + ".png"));
                         }
                     }
                 }
@@ -200,7 +200,7 @@ public class BoardController implements SceneController {
     public void updateMotherNature(Byte motherNaturePosition) {
         Platform.runLater(() -> {
             int idIsland = viewGUI.getModel().getIslands().get(motherNaturePosition).getId();
-            AnchorPane island = (AnchorPane) getElementById("#"+idIsland);
+            AnchorPane island = (AnchorPane) getElementById("#" + idIsland);
             island.getChildren().add(getMotherNature());
         });
     }
@@ -222,7 +222,7 @@ public class BoardController implements SceneController {
             } else {
                 //a game component usually has an anchor pane for himself that contains an image( children 0), an anchor pane with all the students
                 //this anchor pane has an anchor pane for all colors-> this contains an image view (children 0) and a label for the number of students
-                AnchorPane paneGameComponent = (AnchorPane) this.getElementById("#" +id);
+                AnchorPane paneGameComponent = (AnchorPane) this.getElementById("#" + id);
                 AnchorPane paneStudents = (AnchorPane) paneGameComponent.getChildren().get(1);
                 for (int i = 0; i < Color.values().length; i++) {
                     AnchorPane paneSingleStudent = (AnchorPane) paneStudents.getChildren().get(i);
@@ -259,6 +259,23 @@ public class BoardController implements SceneController {
     }
 
     private void updateEntranceHall(GameComponentClient entranceHall) {
+        byte[] students = entranceHall.getStudents();
+        AnchorPane paneEntrance = (AnchorPane) getElementById("#" + entranceHall.getId());
+        byte insertedStudent = 0;
+        for (Color c : Color.values()) {
+            for (byte j = 0; j < students[c.ordinal()]; j++) {
+                ImageView student = (ImageView) paneEntrance.getChildren().get(insertedStudent);
+                student.setImage(new Image("Graphical_Assets/Students/" + c + ".png"));
+                student.getProperties().clear();
+                student.getProperties().put("color", c);
+                insertedStudent++;
+            }
+        }
+        int maxStudent = viewGUI.getModel().getMatchConstants().entranceHallStudents();
+        for (; insertedStudent < maxStudent; insertedStudent++) {
+            ImageView student = (ImageView) paneEntrance.getChildren().get(insertedStudent);
+            student.setImage(null);
+        }
     }
 
     private void updateLunchHall(GameComponentClient lunchHall) {
@@ -287,7 +304,7 @@ public class BoardController implements SceneController {
         //the anchor pane of the students contains all 5 possible color in 5 other anchor pane
         Platform.runLater(() -> {
             updateGameComponent((GameComponentClient) island);
-            AnchorPane paneIsland = (AnchorPane) this.getElementById("#" +island.getId());
+            AnchorPane paneIsland = (AnchorPane) this.getElementById("#" + island.getId());
             HouseColor islandTeam = island.getTeam();
             if (islandTeam != null) {
                 paneIsland.getChildren().add(getTower(islandTeam));

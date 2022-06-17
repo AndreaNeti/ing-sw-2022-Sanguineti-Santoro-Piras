@@ -39,6 +39,7 @@ public class PlanificationPhase extends ClientPhase {
         back.setOnMouseClicked(mouseEvent -> assistantCardBox.setVisible(!assistantCardBox.isVisible()));
 
         HBox box = (HBox) assistantCardBox.getChildren().get(0);
+        box.getChildren().clear();
         for (AssistantCard card : viewGUI.getModel().getCurrentPlayer().getAssistantCards()) {
             ImageView cardImage = new ImageView();
             cardImage.setImage(new Image("Graphical_Assets/AssistantCard/" + card.value() + ".png"));
