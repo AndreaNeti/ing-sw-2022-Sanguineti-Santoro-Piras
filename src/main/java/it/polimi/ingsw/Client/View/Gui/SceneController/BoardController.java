@@ -11,8 +11,8 @@ import it.polimi.ingsw.Util.AssistantCard;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.geometry.Insets;
 import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -103,27 +103,31 @@ public class BoardController implements SceneController {
 
         List<PlayerClient> players = viewGUI.getModel().getPlayers();
         int localWizardIndex = model.getMyWizard().ordinal();
-        for (int i = boards.getChildren().size() - 1; i >= 0; i--) {
+        for (int i = 0; i < boards.getChildren().size(); i++) {
             //TODO
             //hide the board from the top make it drop that's some wap
-            if (i <= boards.getChildren().size() - 1 - players.size()) {
+            if (i >= players.size()) {
                 boards.getChildren().get(i).setVisible(false);
             } else {
                 PlayerClient player = players.get(localWizardIndex);
                 AnchorPane board = (AnchorPane) boards.getChildren().get(i);
                 board.setId(String.valueOf(Wizard.values()[localWizardIndex]));
                 for (int j = 0; j < 7; j++) {
+                    Node element = board.getChildren().get(j);
                     switch (j) {
                         //set the label of the main board
-                        case 1 -> ((Label) board.getChildren().get(j)).setText(player.getNickName());
+                        case 1 -> ((Label) element).setText(player.getNickName());
                         //set the id of the entrance hall
                         case 2 -> {
-                            board.getChildren().get(j).setId(player.getEntranceHall().getNameOfComponent() + player.getEntranceHall().getId());
+                            element.setId(player.getEntranceHall().getNameOfComponent() + player.getEntranceHall().getId());
                             updateEntranceHall(player.getEntranceHall());
                         }
                         //set the id of the lunch hall
                         case 3 -> {
-                            board.getChildren().get(j).setId(player.getLunchHall().getNameOfComponent() + player.getLunchHall().getId());
+                            element.setId(player.getLunchHall().getNameOfComponent() + player.getLunchHall().getId());
+                            for (Color c : Color.values()) {
+                                ((VBox) element).getChildren().get(c.ordinal()).getProperties().put("color", c);
+                            }
                             updateLunchHall(player.getLunchHall());
                         }
                         case 6 -> {
@@ -228,12 +232,12 @@ public class BoardController implements SceneController {
         });
     }
 
-    private void updateCloud(GameComponentClient gameComponentClient) {
+    private void updateCloud(GameComponentClient cloud) {
         //"clouds" contains 4 children: one for cloud
         //each cloud has a image[0] and an anchor pane for students [1]
         //this anchor pane has 4 images
-        byte[] students = gameComponentClient.getStudents();
-        AnchorPane paneCloud = (AnchorPane) getElementById("#Cloud" + gameComponentClient.getId());
+        byte[] students = cloud.getStudents();
+        AnchorPane paneCloud = (AnchorPane) getElementById("#" + cloud.getNameOfComponent() + cloud.getId());
         AnchorPane paneStudents = (AnchorPane) paneCloud.getChildren().get(1);
         byte insertedStudent = 0;
         for (Color c : Color.values()) {
@@ -256,7 +260,23 @@ public class BoardController implements SceneController {
     }
 
     private void updateLunchHall(GameComponentClient lunchHall) {
-
+        VBox paneLunchHall = (VBox) getElementById("#" + lunchHall.getNameOfComponent() + lunchHall.getId());
+        HBox hBox;
+        for (Color c : Color.values()) {
+            hBox = (HBox) paneLunchHall.getChildren().get(c.ordinal());
+            byte diff = (byte) (lunchHall.howManyStudents(c) - hBox.getChildren().size());
+            for (byte i = 0; i < diff; i++) {
+                ImageView student = new ImageView();
+                student.setImage(new Image("Graphical_Assets/Students/" + c + ".png"));
+                student.setFitWidth(30);
+                student.setPreserveRatio(true);
+                HBox.setMargin(student, new Insets(1.6, 1.6, 1.6, 1.6));
+                hBox.getChildren().add(student);
+            }
+            for (byte i = 0; i > diff; i--) {
+                hBox.getChildren().remove(0);
+            }
+        }
     }
 
     @Override
