@@ -16,7 +16,8 @@
     <children>
         <AnchorPane fx:id="islands" disable="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="865.0" AnchorPane.bottomAnchor="210.0" AnchorPane.leftAnchor="100.0" AnchorPane.topAnchor="70.0">
             <children>
-                <AnchorPane id="Island8" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="173.0" style="-fx-scale-x: 0.8; -fx-scale-y: 0.8;" AnchorPane.topAnchor="300.0">
+                <AnchorPane id="8" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="173.0" style="-fx-scale-x: 0.8; -fx-scale-y: 0.8;" AnchorPane.topAnchor="300.0">
+                    <properties name="Island"/>
                     <children>
                         <ImageView fitHeight="200.0" fitWidth="179.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="-3.0">
                             <Image url="@Graphical_Assets/Islands/Island1.png" />
@@ -108,7 +109,8 @@
                         </AnchorPane>
                     </children>
                 </AnchorPane>
-                <AnchorPane id="Island9" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="173.0" style="-fx-scale-x: 0.8; -fx-scale-y: 0.8;" AnchorPane.leftAnchor="86.5" AnchorPane.topAnchor="150.0">
+                <AnchorPane id="9" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="173.0" style="-fx-scale-x: 0.8; -fx-scale-y: 0.8;" AnchorPane.leftAnchor="86.5" AnchorPane.topAnchor="150.0">
+                    <properties name="Island"/>
                     <children>
                         <ImageView fitHeight="200.0" fitWidth="179.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="-3.0">
                             <Image url="@Graphical_Assets/Islands/Island2.png" />
@@ -204,7 +206,8 @@
                         </AnchorPane>
                     </children>
                 </AnchorPane>
-                <AnchorPane id="Island10" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="173.0" style="-fx-scale-x: 0.8; -fx-scale-y: 0.8;" AnchorPane.leftAnchor="173.0">
+                <AnchorPane id="10" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="173.0" style="-fx-scale-x: 0.8; -fx-scale-y: 0.8;" AnchorPane.leftAnchor="173.0">
+                    <properties name="Island"/>
                     <children>
                         <ImageView fitHeight="200.0" fitWidth="179.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="-3.0">
                             <Image url="@Graphical_Assets/Islands/Island3.png" />
@@ -300,7 +303,8 @@
                         </AnchorPane>
                     </children>
                 </AnchorPane>
-                <AnchorPane id="Island11" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="173.0" style="-fx-scale-x: 0.8; -fx-scale-y: 0.8;" AnchorPane.leftAnchor="346.0">
+                <AnchorPane id="11" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="173.0" style="-fx-scale-x: 0.8; -fx-scale-y: 0.8;" AnchorPane.leftAnchor="346.0">
+                    <properties name="Island"/>
                     <children>
                         <ImageView fitHeight="200.0" fitWidth="179.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="-3.0">
                             <Image url="@Graphical_Assets/Islands/Island1.png" />
@@ -396,7 +400,8 @@
                         </AnchorPane>
                     </children>
                 </AnchorPane>
-                <AnchorPane id="Island12" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="173.0" style="-fx-scale-x: 0.8; -fx-scale-y: 0.8;" AnchorPane.leftAnchor="519.0">
+                <AnchorPane id="12" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="173.0" style="-fx-scale-x: 0.8; -fx-scale-y: 0.8;" AnchorPane.leftAnchor="519.0">
+                    <properties name="Island"/>
                     <children>
                         <ImageView fitHeight="200.0" fitWidth="179.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="-3.0">
                             <Image url="@Graphical_Assets/Islands/Island2.png" />
@@ -492,7 +497,8 @@
                         </AnchorPane>
                     </children>
                 </AnchorPane>
-                <AnchorPane id="Island13" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="173.0" style="-fx-scale-x: 0.8; -fx-scale-y: 0.8;" AnchorPane.leftAnchor="605.5" AnchorPane.topAnchor="150.0">
+                <AnchorPane id="13" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="173.0" style="-fx-scale-x: 0.8; -fx-scale-y: 0.8;" AnchorPane.leftAnchor="605.5" AnchorPane.topAnchor="150.0">
+                    <properties name="Island"/>
                     <children>
                         <ImageView fitHeight="200.0" fitWidth="179.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="-3.0">
                             <Image url="@Graphical_Assets/Islands/Island3.png" />
@@ -588,7 +594,8 @@
                         </AnchorPane>
                     </children>
                 </AnchorPane>
-                <AnchorPane id="Island14" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="173.0" style="-fx-scale-x: 0.8; -fx-scale-y: 0.8;" AnchorPane.leftAnchor="692.0" AnchorPane.topAnchor="300.0">
+                <AnchorPane id="14" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="173.0" style="-fx-scale-x: 0.8; -fx-scale-y: 0.8;" AnchorPane.leftAnchor="692.0" AnchorPane.topAnchor="300.0">
+                    <properties name="Island"/>
                     <children>
                         <ImageView fitHeight="200.0" fitWidth="179.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="-3.0">
                             <Image url="@Graphical_Assets/Islands/Island1.png" />
@@ -684,7 +691,8 @@
                         </AnchorPane>
                     </children>
                 </AnchorPane>
-                <AnchorPane id="Island15" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="173.0" style="-fx-scale-x: 0.8; -fx-scale-y: 0.8;" AnchorPane.leftAnchor="605.5" AnchorPane.topAnchor="450.0">
+                <AnchorPane id="15" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="173.0" style="-fx-scale-x: 0.8; -fx-scale-y: 0.8;" AnchorPane.leftAnchor="605.5" AnchorPane.topAnchor="450.0">
+                    <properties name="Island"/>
                     <children>
                         <ImageView fitHeight="200.0" fitWidth="179.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="-3.0">
                             <Image url="@Graphical_Assets/Islands/Island2.png" />
@@ -780,7 +788,8 @@
                         </AnchorPane>
                     </children>
                 </AnchorPane>
-                <AnchorPane id="Island16" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="173.0" style="-fx-scale-x: 0.8; -fx-scale-y: 0.8;" AnchorPane.leftAnchor="519.0" AnchorPane.topAnchor="600.0">
+                <AnchorPane id="16" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="173.0" style="-fx-scale-x: 0.8; -fx-scale-y: 0.8;" AnchorPane.leftAnchor="519.0" AnchorPane.topAnchor="600.0">
+                    <properties name="Island"/>
                     <children>
                         <ImageView fitHeight="200.0" fitWidth="179.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="-3.0">
                             <Image url="@Graphical_Assets/Islands/Island3.png" />
@@ -876,7 +885,8 @@
                         </AnchorPane>
                     </children>
                 </AnchorPane>
-                <AnchorPane id="Island17" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="173.0" style="-fx-scale-x: 0.8; -fx-scale-y: 0.8;" AnchorPane.leftAnchor="346.0" AnchorPane.topAnchor="600.0">
+                <AnchorPane id="17" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="173.0" style="-fx-scale-x: 0.8; -fx-scale-y: 0.8;" AnchorPane.leftAnchor="346.0" AnchorPane.topAnchor="600.0">
+                    <properties name="Island"/>
                     <children>
                         <ImageView fitHeight="200.0" fitWidth="179.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="-3.0">
                             <Image url="@Graphical_Assets/Islands/Island1.png" />
@@ -972,7 +982,8 @@
                         </AnchorPane>
                     </children>
                 </AnchorPane>
-                <AnchorPane id="Island18" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="173.0" style="-fx-scale-x: 0.8; -fx-scale-y: 0.8;" AnchorPane.leftAnchor="173.0" AnchorPane.topAnchor="600.0">
+                <AnchorPane id="18" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="173.0" style="-fx-scale-x: 0.8; -fx-scale-y: 0.8;" AnchorPane.leftAnchor="173.0" AnchorPane.topAnchor="600.0">
+                    <properties name="Island"/>
                     <children>
                         <ImageView fitHeight="200.0" fitWidth="179.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="-3.0">
                             <Image url="@Graphical_Assets/Islands/Island2.png" />
@@ -1068,7 +1079,8 @@
                         </AnchorPane>
                     </children>
                 </AnchorPane>
-                <AnchorPane id="Island19" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="173.0" style="-fx-scale-x: 0.8; -fx-scale-y: 0.8;" AnchorPane.leftAnchor="86.5" AnchorPane.topAnchor="450.0">
+                <AnchorPane id="19" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="173.0" style="-fx-scale-x: 0.8; -fx-scale-y: 0.8;" AnchorPane.leftAnchor="86.5" AnchorPane.topAnchor="450.0">
+                    <properties name="Island"/>
                     <children>
                         <ImageView fitHeight="200.0" fitWidth="179.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="-3.0">
                             <Image url="@Graphical_Assets/Islands/Island3.png" />
@@ -1577,7 +1589,7 @@
                             </AnchorPane>
                         </children>
                     </AnchorPane>
-                    <Button fx:id="chooseCharacterButton" layoutX="24.0" layoutY="165.0" mnemonicParsing="false" text="Choose" />
+                    <Button id="chooseCharacterButton" layoutX="24.0" layoutY="165.0" mnemonicParsing="false" text="Choose" />
                 </AnchorPane>
                 <AnchorPane prefHeight="150.0" prefWidth="100.0">
                     <HBox.margin>
@@ -1703,7 +1715,8 @@
         </Pane>
         <HBox fx:id="clouds" prefHeight="71.0" prefWidth="342.0" AnchorPane.leftAnchor="365.0" AnchorPane.topAnchor="275.0">
             <children>
-                <AnchorPane id="Cloud-1" prefHeight="80.0" prefWidth="80.0">
+                <AnchorPane id="-1" prefHeight="80.0" prefWidth="80.0">
+                    <properties name="Cloud"/>
                     <children>
                         <ImageView fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
                             <image>
@@ -1720,7 +1733,8 @@
                         </AnchorPane>
                     </children>
                 </AnchorPane>
-                <AnchorPane id="Cloud-2" prefHeight="80.0" prefWidth="80.0">
+                <AnchorPane id="-2" prefHeight="80.0" prefWidth="80.0">
+                    <properties name="Cloud"/>
                     <children>
                         <ImageView fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
                             <image>
@@ -1737,7 +1751,8 @@
                         </AnchorPane>
                     </children>
                 </AnchorPane>
-                <AnchorPane id="Cloud-3" prefHeight="80.0" prefWidth="80.0">
+                <AnchorPane id="-3" prefHeight="80.0" prefWidth="80.0">
+                    <properties name="Cloud"/>
                     <children>
                         <ImageView fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
                             <image>
@@ -1754,7 +1769,8 @@
                         </AnchorPane>
                     </children>
                 </AnchorPane>
-                <AnchorPane id="Cloud-4" prefHeight="80.0" prefWidth="80.0">
+                <AnchorPane id="-4" prefHeight="80.0" prefWidth="80.0">
+                    <properties name="Cloud"/>
                     <children>
                         <ImageView fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
                             <image>
