@@ -2,7 +2,27 @@
     -fx-opacity: 1;
 }
 
-.shadow {
+.root {
+    -fx-font-family: "Roboto Light";
+}
+
+.button {
+    -fx-background-color: white;
+    -fx-background-radius: 5;
+}
+
+.island .label {
+    -fx-background-radius: 10;
+    -fx-font-weight: bold;
+    -fx-font-size: 12;
+}
+
+.board .label {
+    -fx-font-weight: bold;
+    -fx-font-size: 15;
+}
+
+.shadow, .student, .professor, .button {
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 10, 0, 0, 0);
 }
 
@@ -20,6 +40,10 @@
 .island {
 }
 
+.clickable {
+    -fx-cursor: pointer;
+}
+
 .cloud .clickable {
     -fx-effect: dropshadow(gaussian, rgb(0, 0, 0), 15, 0.4, 0, 0);
 }
@@ -29,7 +53,9 @@
 }
 
 .lunchhall .clickable {
-    -fx-effect: dropshadow(gaussian, rgb(255, 255, 255), 15, 0.7, 0, 0);
+    -fx-border-color: white;
+    -fx-border-radius: 10;
+    -fx-effect: dropshadow(gaussian, rgb(255, 255, 255), 5, 0.7, 0, 0);
 }
 
 .island.clickable {

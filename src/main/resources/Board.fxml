@@ -35,14 +35,12 @@
                             <children>
                                 <AnchorPane>
                                     <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true"
-                                               AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                               styleClass="student" AnchorPane.leftAnchor="0.0"
+                                               AnchorPane.topAnchor="0.0">
                                         <Image url="@Graphical_Assets/Students/RED.png"/>
                                     </ImageView>
                                     <Label style="-fx-background-color: red;" text="0" textFill="WHITE"
                                            AnchorPane.bottomAnchor="-15.0" AnchorPane.rightAnchor="-15.0">
-                                        <font>
-                                            <Font name="System Bold" size="12.0"/>
-                                        </font>
                                         <padding>
                                             <Insets left="3.0" right="3.0"/>
                                         </padding>
@@ -51,16 +49,14 @@
                                 <AnchorPane layoutY="70.0">
                                     <children>
                                         <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true"
-                                                   AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                   styleClass="student" AnchorPane.leftAnchor="0.0"
+                                                   AnchorPane.topAnchor="0.0">
                                             <image>
                                                 <Image url="@Graphical_Assets/Students/BLUE.png"/>
                                             </image>
                                         </ImageView>
                                         <Label style="-fx-background-color: blue;" text="0" textFill="WHITE"
                                                AnchorPane.rightAnchor="-20.0" AnchorPane.topAnchor="-10.0">
-                                            <font>
-                                                <Font name="System Bold" size="12.0"/>
-                                            </font>
                                             <padding>
                                                 <Insets left="3.0" right="3.0"/>
                                             </padding>
@@ -70,16 +66,14 @@
                                 <AnchorPane layoutX="60.0" layoutY="110.0">
                                     <children>
                                         <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true"
-                                                   AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                   styleClass="student" AnchorPane.leftAnchor="0.0"
+                                                   AnchorPane.topAnchor="0.0">
                                             <image>
                                                 <Image url="@Graphical_Assets/Students/YELLOW.png"/>
                                             </image>
                                         </ImageView>
                                         <Label style="-fx-background-color: #fb0;" text="0" textFill="WHITE"
                                                AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="-30.0">
-                                            <font>
-                                                <Font name="System Bold" size="12.0"/>
-                                            </font>
                                             <padding>
                                                 <Insets left="3.0" right="3.0"/>
                                             </padding>
@@ -89,16 +83,14 @@
                                 <AnchorPane layoutX="123.0" layoutY="70.0">
                                     <children>
                                         <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true"
-                                                   AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                   styleClass="student" AnchorPane.leftAnchor="0.0"
+                                                   AnchorPane.topAnchor="0.0">
                                             <image>
                                                 <Image url="@Graphical_Assets/Students/GREEN.png"/>
                                             </image>
                                         </ImageView>
                                         <Label style="-fx-background-color: green;" text="0" textFill="WHITE"
                                                AnchorPane.leftAnchor="-20.0" AnchorPane.topAnchor="-10.0">
-                                            <font>
-                                                <Font name="System Bold" size="12.0"/>
-                                            </font>
                                             <padding>
                                                 <Insets left="3.0" right="3.0"/>
                                             </padding>
@@ -108,16 +100,14 @@
                                 <AnchorPane layoutX="123.0">
                                     <children>
                                         <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true"
-                                                   AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                   styleClass="student" AnchorPane.leftAnchor="0.0"
+                                                   AnchorPane.topAnchor="0.0">
                                             <image>
                                                 <Image url="@Graphical_Assets/Students/PINK.png"/>
                                             </image>
                                         </ImageView>
                                         <Label style="-fx-background-color: #f08;" text="0" textFill="WHITE"
                                                AnchorPane.bottomAnchor="-15.0" AnchorPane.leftAnchor="-15.0">
-                                            <font>
-                                                <Font name="System Bold" size="12.0"/>
-                                            </font>
                                             <padding>
                                                 <Insets left="3.0" right="3.0"/>
                                             </padding>
@@ -142,16 +132,14 @@
                                 <AnchorPane>
                                     <children>
                                         <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true"
-                                                   AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                   styleClass="student" AnchorPane.leftAnchor="0.0"
+                                                   AnchorPane.topAnchor="0.0">
                                             <image>
                                                 <Image url="@Graphical_Assets/Students/RED.png"/>
                                             </image>
                                         </ImageView>
                                         <Label style="-fx-background-color: red;" text="0" textFill="WHITE"
                                                AnchorPane.bottomAnchor="-15.0" AnchorPane.rightAnchor="-15.0">
-                                            <font>
-                                                <Font name="System Bold" size="12.0"/>
-                                            </font>
                                             <padding>
                                                 <Insets left="3.0" right="3.0"/>
                                             </padding>
@@ -161,16 +149,14 @@
                                 <AnchorPane layoutY="70.0">
                                     <children>
                                         <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true"
-                                                   AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                   styleClass="student" AnchorPane.leftAnchor="0.0"
+                                                   AnchorPane.topAnchor="0.0">
                                             <image>
                                                 <Image url="@Graphical_Assets/Students/BLUE.png"/>
                                             </image>
                                         </ImageView>
                                         <Label style="-fx-background-color: blue;" text="0" textFill="WHITE"
                                                AnchorPane.rightAnchor="-20.0" AnchorPane.topAnchor="-10.0">
-                                            <font>
-                                                <Font name="System Bold" size="12.0"/>
-                                            </font>
                                             <padding>
                                                 <Insets left="3.0" right="3.0"/>
                                             </padding>
@@ -180,16 +166,14 @@
                                 <AnchorPane layoutX="60.0" layoutY="110.0">
                                     <children>
                                         <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true"
-                                                   AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                   styleClass="student" AnchorPane.leftAnchor="0.0"
+                                                   AnchorPane.topAnchor="0.0">
                                             <image>
                                                 <Image url="@Graphical_Assets/Students/YELLOW.png"/>
                                             </image>
                                         </ImageView>
                                         <Label style="-fx-background-color: #fb0;" text="0" textFill="WHITE"
                                                AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="-30.0">
-                                            <font>
-                                                <Font name="System Bold" size="12.0"/>
-                                            </font>
                                             <padding>
                                                 <Insets left="3.0" right="3.0"/>
                                             </padding>
@@ -199,16 +183,14 @@
                                 <AnchorPane layoutX="123.0" layoutY="70.0">
                                     <children>
                                         <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true"
-                                                   AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                   styleClass="student" AnchorPane.leftAnchor="0.0"
+                                                   AnchorPane.topAnchor="0.0">
                                             <image>
                                                 <Image url="@Graphical_Assets/Students/GREEN.png"/>
                                             </image>
                                         </ImageView>
                                         <Label style="-fx-background-color: green;" text="0" textFill="WHITE"
                                                AnchorPane.leftAnchor="-20.0" AnchorPane.topAnchor="-10.0">
-                                            <font>
-                                                <Font name="System Bold" size="12.0"/>
-                                            </font>
                                             <padding>
                                                 <Insets left="3.0" right="3.0"/>
                                             </padding>
@@ -218,16 +200,14 @@
                                 <AnchorPane layoutX="123.0">
                                     <children>
                                         <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true"
-                                                   AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                   styleClass="student" AnchorPane.leftAnchor="0.0"
+                                                   AnchorPane.topAnchor="0.0">
                                             <image>
                                                 <Image url="@Graphical_Assets/Students/PINK.png"/>
                                             </image>
                                         </ImageView>
                                         <Label style="-fx-background-color: #f08;" text="0" textFill="WHITE"
                                                AnchorPane.bottomAnchor="-15.0" AnchorPane.leftAnchor="-15.0">
-                                            <font>
-                                                <Font name="System Bold" size="12.0"/>
-                                            </font>
                                             <padding>
                                                 <Insets left="3.0" right="3.0"/>
                                             </padding>
@@ -253,16 +233,14 @@
                                 <AnchorPane>
                                     <children>
                                         <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true"
-                                                   AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                   styleClass="student" AnchorPane.leftAnchor="0.0"
+                                                   AnchorPane.topAnchor="0.0">
                                             <image>
                                                 <Image url="@Graphical_Assets/Students/RED.png"/>
                                             </image>
                                         </ImageView>
                                         <Label style="-fx-background-color: red;" text="0" textFill="WHITE"
                                                AnchorPane.bottomAnchor="-15.0" AnchorPane.rightAnchor="-15.0">
-                                            <font>
-                                                <Font name="System Bold" size="12.0"/>
-                                            </font>
                                             <padding>
                                                 <Insets left="3.0" right="3.0"/>
                                             </padding>
@@ -272,16 +250,14 @@
                                 <AnchorPane layoutY="70.0">
                                     <children>
                                         <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true"
-                                                   AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                   styleClass="student" AnchorPane.leftAnchor="0.0"
+                                                   AnchorPane.topAnchor="0.0">
                                             <image>
                                                 <Image url="@Graphical_Assets/Students/BLUE.png"/>
                                             </image>
                                         </ImageView>
                                         <Label style="-fx-background-color: blue;" text="0" textFill="WHITE"
                                                AnchorPane.rightAnchor="-20.0" AnchorPane.topAnchor="-10.0">
-                                            <font>
-                                                <Font name="System Bold" size="12.0"/>
-                                            </font>
                                             <padding>
                                                 <Insets left="3.0" right="3.0"/>
                                             </padding>
@@ -291,16 +267,14 @@
                                 <AnchorPane layoutX="60.0" layoutY="110.0">
                                     <children>
                                         <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true"
-                                                   AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                   styleClass="student" AnchorPane.leftAnchor="0.0"
+                                                   AnchorPane.topAnchor="0.0">
                                             <image>
                                                 <Image url="@Graphical_Assets/Students/YELLOW.png"/>
                                             </image>
                                         </ImageView>
                                         <Label style="-fx-background-color: #fb0;" text="0" textFill="WHITE"
                                                AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="-30.0">
-                                            <font>
-                                                <Font name="System Bold" size="12.0"/>
-                                            </font>
                                             <padding>
                                                 <Insets left="3.0" right="3.0"/>
                                             </padding>
@@ -310,16 +284,14 @@
                                 <AnchorPane layoutX="123.0" layoutY="70.0">
                                     <children>
                                         <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true"
-                                                   AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                   styleClass="student" AnchorPane.leftAnchor="0.0"
+                                                   AnchorPane.topAnchor="0.0">
                                             <image>
                                                 <Image url="@Graphical_Assets/Students/GREEN.png"/>
                                             </image>
                                         </ImageView>
                                         <Label style="-fx-background-color: green;" text="0" textFill="WHITE"
                                                AnchorPane.leftAnchor="-20.0" AnchorPane.topAnchor="-10.0">
-                                            <font>
-                                                <Font name="System Bold" size="12.0"/>
-                                            </font>
                                             <padding>
                                                 <Insets left="3.0" right="3.0"/>
                                             </padding>
@@ -329,16 +301,14 @@
                                 <AnchorPane layoutX="123.0">
                                     <children>
                                         <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true"
-                                                   AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                   styleClass="student" AnchorPane.leftAnchor="0.0"
+                                                   AnchorPane.topAnchor="0.0">
                                             <image>
                                                 <Image url="@Graphical_Assets/Students/PINK.png"/>
                                             </image>
                                         </ImageView>
                                         <Label style="-fx-background-color: #f08;" text="0" textFill="WHITE"
                                                AnchorPane.bottomAnchor="-15.0" AnchorPane.leftAnchor="-15.0">
-                                            <font>
-                                                <Font name="System Bold" size="12.0"/>
-                                            </font>
                                             <padding>
                                                 <Insets left="3.0" right="3.0"/>
                                             </padding>
@@ -364,16 +334,14 @@
                                 <AnchorPane>
                                     <children>
                                         <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true"
-                                                   AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                   styleClass="student" AnchorPane.leftAnchor="0.0"
+                                                   AnchorPane.topAnchor="0.0">
                                             <image>
                                                 <Image url="@Graphical_Assets/Students/RED.png"/>
                                             </image>
                                         </ImageView>
                                         <Label style="-fx-background-color: red;" text="0" textFill="WHITE"
                                                AnchorPane.bottomAnchor="-15.0" AnchorPane.rightAnchor="-15.0">
-                                            <font>
-                                                <Font name="System Bold" size="12.0"/>
-                                            </font>
                                             <padding>
                                                 <Insets left="3.0" right="3.0"/>
                                             </padding>
@@ -383,16 +351,14 @@
                                 <AnchorPane layoutY="70.0">
                                     <children>
                                         <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true"
-                                                   AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                   styleClass="student" AnchorPane.leftAnchor="0.0"
+                                                   AnchorPane.topAnchor="0.0">
                                             <image>
                                                 <Image url="@Graphical_Assets/Students/BLUE.png"/>
                                             </image>
                                         </ImageView>
                                         <Label style="-fx-background-color: blue;" text="0" textFill="WHITE"
                                                AnchorPane.rightAnchor="-20.0" AnchorPane.topAnchor="-10.0">
-                                            <font>
-                                                <Font name="System Bold" size="12.0"/>
-                                            </font>
                                             <padding>
                                                 <Insets left="3.0" right="3.0"/>
                                             </padding>
@@ -402,16 +368,14 @@
                                 <AnchorPane layoutX="60.0" layoutY="110.0">
                                     <children>
                                         <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true"
-                                                   AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                   styleClass="student" AnchorPane.leftAnchor="0.0"
+                                                   AnchorPane.topAnchor="0.0">
                                             <image>
                                                 <Image url="@Graphical_Assets/Students/YELLOW.png"/>
                                             </image>
                                         </ImageView>
                                         <Label style="-fx-background-color: #fb0;" text="0" textFill="WHITE"
                                                AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="-30.0">
-                                            <font>
-                                                <Font name="System Bold" size="12.0"/>
-                                            </font>
                                             <padding>
                                                 <Insets left="3.0" right="3.0"/>
                                             </padding>
@@ -421,16 +385,14 @@
                                 <AnchorPane layoutX="123.0" layoutY="70.0">
                                     <children>
                                         <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true"
-                                                   AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                   styleClass="student" AnchorPane.leftAnchor="0.0"
+                                                   AnchorPane.topAnchor="0.0">
                                             <image>
                                                 <Image url="@Graphical_Assets/Students/GREEN.png"/>
                                             </image>
                                         </ImageView>
                                         <Label style="-fx-background-color: green;" text="0" textFill="WHITE"
                                                AnchorPane.leftAnchor="-20.0" AnchorPane.topAnchor="-10.0">
-                                            <font>
-                                                <Font name="System Bold" size="12.0"/>
-                                            </font>
                                             <padding>
                                                 <Insets left="3.0" right="3.0"/>
                                             </padding>
@@ -440,16 +402,14 @@
                                 <AnchorPane layoutX="123.0">
                                     <children>
                                         <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true"
-                                                   AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                   styleClass="student" AnchorPane.leftAnchor="0.0"
+                                                   AnchorPane.topAnchor="0.0">
                                             <image>
                                                 <Image url="@Graphical_Assets/Students/PINK.png"/>
                                             </image>
                                         </ImageView>
                                         <Label style="-fx-background-color: #f08;" text="0" textFill="WHITE"
                                                AnchorPane.bottomAnchor="-15.0" AnchorPane.leftAnchor="-15.0">
-                                            <font>
-                                                <Font name="System Bold" size="12.0"/>
-                                            </font>
                                             <padding>
                                                 <Insets left="3.0" right="3.0"/>
                                             </padding>
@@ -474,14 +434,12 @@
                             <children>
                                 <AnchorPane>
                                     <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true"
-                                               AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                               styleClass="student" AnchorPane.leftAnchor="0.0"
+                                               AnchorPane.topAnchor="0.0">
                                         <Image url="@Graphical_Assets/Students/RED.png"/>
                                     </ImageView>
                                     <Label style="-fx-background-color: red;" text="0" textFill="WHITE"
                                            AnchorPane.bottomAnchor="-15.0" AnchorPane.rightAnchor="-15.0">
-                                        <font>
-                                            <Font name="System Bold" size="12.0"/>
-                                        </font>
                                         <padding>
                                             <Insets left="3.0" right="3.0"/>
                                         </padding>
@@ -490,16 +448,14 @@
                                 <AnchorPane layoutY="70.0">
                                     <children>
                                         <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true"
-                                                   AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                   styleClass="student" AnchorPane.leftAnchor="0.0"
+                                                   AnchorPane.topAnchor="0.0">
                                             <image>
                                                 <Image url="@Graphical_Assets/Students/BLUE.png"/>
                                             </image>
                                         </ImageView>
                                         <Label style="-fx-background-color: blue;" text="0" textFill="WHITE"
                                                AnchorPane.rightAnchor="-20.0" AnchorPane.topAnchor="-10.0">
-                                            <font>
-                                                <Font name="System Bold" size="12.0"/>
-                                            </font>
                                             <padding>
                                                 <Insets left="3.0" right="3.0"/>
                                             </padding>
@@ -509,16 +465,14 @@
                                 <AnchorPane layoutX="60.0" layoutY="110.0">
                                     <children>
                                         <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true"
-                                                   AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                   styleClass="student" AnchorPane.leftAnchor="0.0"
+                                                   AnchorPane.topAnchor="0.0">
                                             <image>
                                                 <Image url="@Graphical_Assets/Students/YELLOW.png"/>
                                             </image>
                                         </ImageView>
                                         <Label style="-fx-background-color: #fb0;" text="0" textFill="WHITE"
                                                AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="-30.0">
-                                            <font>
-                                                <Font name="System Bold" size="12.0"/>
-                                            </font>
                                             <padding>
                                                 <Insets left="3.0" right="3.0"/>
                                             </padding>
@@ -528,16 +482,14 @@
                                 <AnchorPane layoutX="123.0" layoutY="70.0">
                                     <children>
                                         <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true"
-                                                   AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                   styleClass="student" AnchorPane.leftAnchor="0.0"
+                                                   AnchorPane.topAnchor="0.0">
                                             <image>
                                                 <Image url="@Graphical_Assets/Students/GREEN.png"/>
                                             </image>
                                         </ImageView>
                                         <Label style="-fx-background-color: green;" text="0" textFill="WHITE"
                                                AnchorPane.leftAnchor="-20.0" AnchorPane.topAnchor="-10.0">
-                                            <font>
-                                                <Font name="System Bold" size="12.0"/>
-                                            </font>
                                             <padding>
                                                 <Insets left="3.0" right="3.0"/>
                                             </padding>
@@ -547,16 +499,14 @@
                                 <AnchorPane layoutX="123.0">
                                     <children>
                                         <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true"
-                                                   AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                   styleClass="student" AnchorPane.leftAnchor="0.0"
+                                                   AnchorPane.topAnchor="0.0">
                                             <image>
                                                 <Image url="@Graphical_Assets/Students/PINK.png"/>
                                             </image>
                                         </ImageView>
                                         <Label style="-fx-background-color: #f08;" text="0" textFill="WHITE"
                                                AnchorPane.bottomAnchor="-15.0" AnchorPane.leftAnchor="-15.0">
-                                            <font>
-                                                <Font name="System Bold" size="12.0"/>
-                                            </font>
                                             <padding>
                                                 <Insets left="3.0" right="3.0"/>
                                             </padding>
@@ -582,16 +532,14 @@
                                 <AnchorPane>
                                     <children>
                                         <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true"
-                                                   AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                   styleClass="student" AnchorPane.leftAnchor="0.0"
+                                                   AnchorPane.topAnchor="0.0">
                                             <image>
                                                 <Image url="@Graphical_Assets/Students/RED.png"/>
                                             </image>
                                         </ImageView>
                                         <Label style="-fx-background-color: red;" text="0" textFill="WHITE"
                                                AnchorPane.bottomAnchor="-15.0" AnchorPane.rightAnchor="-15.0">
-                                            <font>
-                                                <Font name="System Bold" size="12.0"/>
-                                            </font>
                                             <padding>
                                                 <Insets left="3.0" right="3.0"/>
                                             </padding>
@@ -601,16 +549,14 @@
                                 <AnchorPane layoutY="70.0">
                                     <children>
                                         <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true"
-                                                   AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                   styleClass="student" AnchorPane.leftAnchor="0.0"
+                                                   AnchorPane.topAnchor="0.0">
                                             <image>
                                                 <Image url="@Graphical_Assets/Students/BLUE.png"/>
                                             </image>
                                         </ImageView>
                                         <Label style="-fx-background-color: blue;" text="0" textFill="WHITE"
                                                AnchorPane.rightAnchor="-20.0" AnchorPane.topAnchor="-10.0">
-                                            <font>
-                                                <Font name="System Bold" size="12.0"/>
-                                            </font>
                                             <padding>
                                                 <Insets left="3.0" right="3.0"/>
                                             </padding>
@@ -620,16 +566,14 @@
                                 <AnchorPane layoutX="60.0" layoutY="110.0">
                                     <children>
                                         <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true"
-                                                   AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                   styleClass="student" AnchorPane.leftAnchor="0.0"
+                                                   AnchorPane.topAnchor="0.0">
                                             <image>
                                                 <Image url="@Graphical_Assets/Students/YELLOW.png"/>
                                             </image>
                                         </ImageView>
                                         <Label style="-fx-background-color: #fb0;" text="0" textFill="WHITE"
                                                AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="-30.0">
-                                            <font>
-                                                <Font name="System Bold" size="12.0"/>
-                                            </font>
                                             <padding>
                                                 <Insets left="3.0" right="3.0"/>
                                             </padding>
@@ -639,16 +583,14 @@
                                 <AnchorPane layoutX="123.0" layoutY="70.0">
                                     <children>
                                         <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true"
-                                                   AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                   styleClass="student" AnchorPane.leftAnchor="0.0"
+                                                   AnchorPane.topAnchor="0.0">
                                             <image>
                                                 <Image url="@Graphical_Assets/Students/GREEN.png"/>
                                             </image>
                                         </ImageView>
                                         <Label style="-fx-background-color: green;" text="0" textFill="WHITE"
                                                AnchorPane.leftAnchor="-20.0" AnchorPane.topAnchor="-10.0">
-                                            <font>
-                                                <Font name="System Bold" size="12.0"/>
-                                            </font>
                                             <padding>
                                                 <Insets left="3.0" right="3.0"/>
                                             </padding>
@@ -658,16 +600,14 @@
                                 <AnchorPane layoutX="123.0">
                                     <children>
                                         <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true"
-                                                   AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                   styleClass="student" AnchorPane.leftAnchor="0.0"
+                                                   AnchorPane.topAnchor="0.0">
                                             <image>
                                                 <Image url="@Graphical_Assets/Students/PINK.png"/>
                                             </image>
                                         </ImageView>
                                         <Label style="-fx-background-color: #f08;" text="0" textFill="WHITE"
                                                AnchorPane.bottomAnchor="-15.0" AnchorPane.leftAnchor="-15.0">
-                                            <font>
-                                                <Font name="System Bold" size="12.0"/>
-                                            </font>
                                             <padding>
                                                 <Insets left="3.0" right="3.0"/>
                                             </padding>
@@ -693,16 +633,14 @@
                                 <AnchorPane>
                                     <children>
                                         <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true"
-                                                   AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                   styleClass="student" AnchorPane.leftAnchor="0.0"
+                                                   AnchorPane.topAnchor="0.0">
                                             <image>
                                                 <Image url="@Graphical_Assets/Students/RED.png"/>
                                             </image>
                                         </ImageView>
                                         <Label style="-fx-background-color: red;" text="0" textFill="WHITE"
                                                AnchorPane.bottomAnchor="-15.0" AnchorPane.rightAnchor="-15.0">
-                                            <font>
-                                                <Font name="System Bold" size="12.0"/>
-                                            </font>
                                             <padding>
                                                 <Insets left="3.0" right="3.0"/>
                                             </padding>
@@ -712,16 +650,14 @@
                                 <AnchorPane layoutY="70.0">
                                     <children>
                                         <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true"
-                                                   AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                   styleClass="student" AnchorPane.leftAnchor="0.0"
+                                                   AnchorPane.topAnchor="0.0">
                                             <image>
                                                 <Image url="@Graphical_Assets/Students/BLUE.png"/>
                                             </image>
                                         </ImageView>
                                         <Label style="-fx-background-color: blue;" text="0" textFill="WHITE"
                                                AnchorPane.rightAnchor="-20.0" AnchorPane.topAnchor="-10.0">
-                                            <font>
-                                                <Font name="System Bold" size="12.0"/>
-                                            </font>
                                             <padding>
                                                 <Insets left="3.0" right="3.0"/>
                                             </padding>
@@ -731,16 +667,14 @@
                                 <AnchorPane layoutX="60.0" layoutY="110.0">
                                     <children>
                                         <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true"
-                                                   AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                   styleClass="student" AnchorPane.leftAnchor="0.0"
+                                                   AnchorPane.topAnchor="0.0">
                                             <image>
                                                 <Image url="@Graphical_Assets/Students/YELLOW.png"/>
                                             </image>
                                         </ImageView>
                                         <Label style="-fx-background-color: #fb0;" text="0" textFill="WHITE"
                                                AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="-30.0">
-                                            <font>
-                                                <Font name="System Bold" size="12.0"/>
-                                            </font>
                                             <padding>
                                                 <Insets left="3.0" right="3.0"/>
                                             </padding>
@@ -750,16 +684,14 @@
                                 <AnchorPane layoutX="123.0" layoutY="70.0">
                                     <children>
                                         <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true"
-                                                   AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                   styleClass="student" AnchorPane.leftAnchor="0.0"
+                                                   AnchorPane.topAnchor="0.0">
                                             <image>
                                                 <Image url="@Graphical_Assets/Students/GREEN.png"/>
                                             </image>
                                         </ImageView>
                                         <Label style="-fx-background-color: green;" text="0" textFill="WHITE"
                                                AnchorPane.leftAnchor="-20.0" AnchorPane.topAnchor="-10.0">
-                                            <font>
-                                                <Font name="System Bold" size="12.0"/>
-                                            </font>
                                             <padding>
                                                 <Insets left="3.0" right="3.0"/>
                                             </padding>
@@ -769,16 +701,14 @@
                                 <AnchorPane layoutX="123.0">
                                     <children>
                                         <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true"
-                                                   AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                   styleClass="student" AnchorPane.leftAnchor="0.0"
+                                                   AnchorPane.topAnchor="0.0">
                                             <image>
                                                 <Image url="@Graphical_Assets/Students/PINK.png"/>
                                             </image>
                                         </ImageView>
                                         <Label style="-fx-background-color: #f08;" text="0" textFill="WHITE"
                                                AnchorPane.bottomAnchor="-15.0" AnchorPane.leftAnchor="-15.0">
-                                            <font>
-                                                <Font name="System Bold" size="12.0"/>
-                                            </font>
                                             <padding>
                                                 <Insets left="3.0" right="3.0"/>
                                             </padding>
@@ -804,16 +734,14 @@
                                 <AnchorPane>
                                     <children>
                                         <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true"
-                                                   AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                   styleClass="student" AnchorPane.leftAnchor="0.0"
+                                                   AnchorPane.topAnchor="0.0">
                                             <image>
                                                 <Image url="@Graphical_Assets/Students/RED.png"/>
                                             </image>
                                         </ImageView>
                                         <Label style="-fx-background-color: red;" text="0" textFill="WHITE"
                                                AnchorPane.bottomAnchor="-15.0" AnchorPane.rightAnchor="-15.0">
-                                            <font>
-                                                <Font name="System Bold" size="12.0"/>
-                                            </font>
                                             <padding>
                                                 <Insets left="3.0" right="3.0"/>
                                             </padding>
@@ -823,16 +751,14 @@
                                 <AnchorPane layoutY="70.0">
                                     <children>
                                         <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true"
-                                                   AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                   styleClass="student" AnchorPane.leftAnchor="0.0"
+                                                   AnchorPane.topAnchor="0.0">
                                             <image>
                                                 <Image url="@Graphical_Assets/Students/BLUE.png"/>
                                             </image>
                                         </ImageView>
                                         <Label style="-fx-background-color: blue;" text="0" textFill="WHITE"
                                                AnchorPane.rightAnchor="-20.0" AnchorPane.topAnchor="-10.0">
-                                            <font>
-                                                <Font name="System Bold" size="12.0"/>
-                                            </font>
                                             <padding>
                                                 <Insets left="3.0" right="3.0"/>
                                             </padding>
@@ -842,16 +768,14 @@
                                 <AnchorPane layoutX="60.0" layoutY="110.0">
                                     <children>
                                         <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true"
-                                                   AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                   styleClass="student" AnchorPane.leftAnchor="0.0"
+                                                   AnchorPane.topAnchor="0.0">
                                             <image>
                                                 <Image url="@Graphical_Assets/Students/YELLOW.png"/>
                                             </image>
                                         </ImageView>
                                         <Label style="-fx-background-color: #fb0;" text="0" textFill="WHITE"
                                                AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="-30.0">
-                                            <font>
-                                                <Font name="System Bold" size="12.0"/>
-                                            </font>
                                             <padding>
                                                 <Insets left="3.0" right="3.0"/>
                                             </padding>
@@ -861,16 +785,14 @@
                                 <AnchorPane layoutX="123.0" layoutY="70.0">
                                     <children>
                                         <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true"
-                                                   AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                   styleClass="student" AnchorPane.leftAnchor="0.0"
+                                                   AnchorPane.topAnchor="0.0">
                                             <image>
                                                 <Image url="@Graphical_Assets/Students/GREEN.png"/>
                                             </image>
                                         </ImageView>
                                         <Label style="-fx-background-color: green;" text="0" textFill="WHITE"
                                                AnchorPane.leftAnchor="-20.0" AnchorPane.topAnchor="-10.0">
-                                            <font>
-                                                <Font name="System Bold" size="12.0"/>
-                                            </font>
                                             <padding>
                                                 <Insets left="3.0" right="3.0"/>
                                             </padding>
@@ -880,16 +802,14 @@
                                 <AnchorPane layoutX="123.0">
                                     <children>
                                         <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true"
-                                                   AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                   styleClass="student" AnchorPane.leftAnchor="0.0"
+                                                   AnchorPane.topAnchor="0.0">
                                             <image>
                                                 <Image url="@Graphical_Assets/Students/PINK.png"/>
                                             </image>
                                         </ImageView>
                                         <Label style="-fx-background-color: #f08;" text="0" textFill="WHITE"
                                                AnchorPane.bottomAnchor="-15.0" AnchorPane.leftAnchor="-15.0">
-                                            <font>
-                                                <Font name="System Bold" size="12.0"/>
-                                            </font>
                                             <padding>
                                                 <Insets left="3.0" right="3.0"/>
                                             </padding>
@@ -915,16 +835,14 @@
                                 <AnchorPane>
                                     <children>
                                         <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true"
-                                                   AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                   styleClass="student" AnchorPane.leftAnchor="0.0"
+                                                   AnchorPane.topAnchor="0.0">
                                             <image>
                                                 <Image url="@Graphical_Assets/Students/RED.png"/>
                                             </image>
                                         </ImageView>
                                         <Label style="-fx-background-color: red;" text="0" textFill="WHITE"
                                                AnchorPane.bottomAnchor="-15.0" AnchorPane.rightAnchor="-15.0">
-                                            <font>
-                                                <Font name="System Bold" size="12.0"/>
-                                            </font>
                                             <padding>
                                                 <Insets left="3.0" right="3.0"/>
                                             </padding>
@@ -934,16 +852,14 @@
                                 <AnchorPane layoutY="70.0">
                                     <children>
                                         <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true"
-                                                   AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                   styleClass="student" AnchorPane.leftAnchor="0.0"
+                                                   AnchorPane.topAnchor="0.0">
                                             <image>
                                                 <Image url="@Graphical_Assets/Students/BLUE.png"/>
                                             </image>
                                         </ImageView>
                                         <Label style="-fx-background-color: blue;" text="0" textFill="WHITE"
                                                AnchorPane.rightAnchor="-20.0" AnchorPane.topAnchor="-10.0">
-                                            <font>
-                                                <Font name="System Bold" size="12.0"/>
-                                            </font>
                                             <padding>
                                                 <Insets left="3.0" right="3.0"/>
                                             </padding>
@@ -953,16 +869,14 @@
                                 <AnchorPane layoutX="60.0" layoutY="110.0">
                                     <children>
                                         <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true"
-                                                   AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                   styleClass="student" AnchorPane.leftAnchor="0.0"
+                                                   AnchorPane.topAnchor="0.0">
                                             <image>
                                                 <Image url="@Graphical_Assets/Students/YELLOW.png"/>
                                             </image>
                                         </ImageView>
                                         <Label style="-fx-background-color: #fb0;" text="0" textFill="WHITE"
                                                AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="-30.0">
-                                            <font>
-                                                <Font name="System Bold" size="12.0"/>
-                                            </font>
                                             <padding>
                                                 <Insets left="3.0" right="3.0"/>
                                             </padding>
@@ -972,16 +886,14 @@
                                 <AnchorPane layoutX="123.0" layoutY="70.0">
                                     <children>
                                         <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true"
-                                                   AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                   styleClass="student" AnchorPane.leftAnchor="0.0"
+                                                   AnchorPane.topAnchor="0.0">
                                             <image>
                                                 <Image url="@Graphical_Assets/Students/GREEN.png"/>
                                             </image>
                                         </ImageView>
                                         <Label style="-fx-background-color: green;" text="0" textFill="WHITE"
                                                AnchorPane.leftAnchor="-20.0" AnchorPane.topAnchor="-10.0">
-                                            <font>
-                                                <Font name="System Bold" size="12.0"/>
-                                            </font>
                                             <padding>
                                                 <Insets left="3.0" right="3.0"/>
                                             </padding>
@@ -991,16 +903,14 @@
                                 <AnchorPane layoutX="123.0">
                                     <children>
                                         <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true"
-                                                   AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                   styleClass="student" AnchorPane.leftAnchor="0.0"
+                                                   AnchorPane.topAnchor="0.0">
                                             <image>
                                                 <Image url="@Graphical_Assets/Students/PINK.png"/>
                                             </image>
                                         </ImageView>
                                         <Label style="-fx-background-color: #f08;" text="0" textFill="WHITE"
                                                AnchorPane.bottomAnchor="-15.0" AnchorPane.leftAnchor="-15.0">
-                                            <font>
-                                                <Font name="System Bold" size="12.0"/>
-                                            </font>
                                             <padding>
                                                 <Insets left="3.0" right="3.0"/>
                                             </padding>
@@ -1026,16 +936,14 @@
                                 <AnchorPane>
                                     <children>
                                         <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true"
-                                                   AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                   styleClass="student" AnchorPane.leftAnchor="0.0"
+                                                   AnchorPane.topAnchor="0.0">
                                             <image>
                                                 <Image url="@Graphical_Assets/Students/RED.png"/>
                                             </image>
                                         </ImageView>
                                         <Label style="-fx-background-color: red;" text="0" textFill="WHITE"
                                                AnchorPane.bottomAnchor="-15.0" AnchorPane.rightAnchor="-15.0">
-                                            <font>
-                                                <Font name="System Bold" size="12.0"/>
-                                            </font>
                                             <padding>
                                                 <Insets left="3.0" right="3.0"/>
                                             </padding>
@@ -1045,16 +953,14 @@
                                 <AnchorPane layoutY="70.0">
                                     <children>
                                         <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true"
-                                                   AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                   styleClass="student" AnchorPane.leftAnchor="0.0"
+                                                   AnchorPane.topAnchor="0.0">
                                             <image>
                                                 <Image url="@Graphical_Assets/Students/BLUE.png"/>
                                             </image>
                                         </ImageView>
                                         <Label style="-fx-background-color: blue;" text="0" textFill="WHITE"
                                                AnchorPane.rightAnchor="-20.0" AnchorPane.topAnchor="-10.0">
-                                            <font>
-                                                <Font name="System Bold" size="12.0"/>
-                                            </font>
                                             <padding>
                                                 <Insets left="3.0" right="3.0"/>
                                             </padding>
@@ -1064,16 +970,14 @@
                                 <AnchorPane layoutX="60.0" layoutY="110.0">
                                     <children>
                                         <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true"
-                                                   AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                   styleClass="student" AnchorPane.leftAnchor="0.0"
+                                                   AnchorPane.topAnchor="0.0">
                                             <image>
                                                 <Image url="@Graphical_Assets/Students/YELLOW.png"/>
                                             </image>
                                         </ImageView>
                                         <Label style="-fx-background-color: #fb0;" text="0" textFill="WHITE"
                                                AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="-30.0">
-                                            <font>
-                                                <Font name="System Bold" size="12.0"/>
-                                            </font>
                                             <padding>
                                                 <Insets left="3.0" right="3.0"/>
                                             </padding>
@@ -1083,16 +987,14 @@
                                 <AnchorPane layoutX="123.0" layoutY="70.0">
                                     <children>
                                         <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true"
-                                                   AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                   styleClass="student" AnchorPane.leftAnchor="0.0"
+                                                   AnchorPane.topAnchor="0.0">
                                             <image>
                                                 <Image url="@Graphical_Assets/Students/GREEN.png"/>
                                             </image>
                                         </ImageView>
                                         <Label style="-fx-background-color: green;" text="0" textFill="WHITE"
                                                AnchorPane.leftAnchor="-20.0" AnchorPane.topAnchor="-10.0">
-                                            <font>
-                                                <Font name="System Bold" size="12.0"/>
-                                            </font>
                                             <padding>
                                                 <Insets left="3.0" right="3.0"/>
                                             </padding>
@@ -1102,16 +1004,14 @@
                                 <AnchorPane layoutX="123.0">
                                     <children>
                                         <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true"
-                                                   AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                   styleClass="student" AnchorPane.leftAnchor="0.0"
+                                                   AnchorPane.topAnchor="0.0">
                                             <image>
                                                 <Image url="@Graphical_Assets/Students/PINK.png"/>
                                             </image>
                                         </ImageView>
                                         <Label style="-fx-background-color: #f08;" text="0" textFill="WHITE"
                                                AnchorPane.bottomAnchor="-15.0" AnchorPane.leftAnchor="-15.0">
-                                            <font>
-                                                <Font name="System Bold" size="12.0"/>
-                                            </font>
                                             <padding>
                                                 <Insets left="3.0" right="3.0"/>
                                             </padding>
@@ -1137,16 +1037,14 @@
                                 <AnchorPane>
                                     <children>
                                         <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true"
-                                                   AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                   styleClass="student" AnchorPane.leftAnchor="0.0"
+                                                   AnchorPane.topAnchor="0.0">
                                             <image>
                                                 <Image url="@Graphical_Assets/Students/RED.png"/>
                                             </image>
                                         </ImageView>
                                         <Label style="-fx-background-color: red;" text="0" textFill="WHITE"
                                                AnchorPane.bottomAnchor="-15.0" AnchorPane.rightAnchor="-15.0">
-                                            <font>
-                                                <Font name="System Bold" size="12.0"/>
-                                            </font>
                                             <padding>
                                                 <Insets left="3.0" right="3.0"/>
                                             </padding>
@@ -1156,16 +1054,14 @@
                                 <AnchorPane layoutY="70.0">
                                     <children>
                                         <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true"
-                                                   AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                   styleClass="student" AnchorPane.leftAnchor="0.0"
+                                                   AnchorPane.topAnchor="0.0">
                                             <image>
                                                 <Image url="@Graphical_Assets/Students/BLUE.png"/>
                                             </image>
                                         </ImageView>
                                         <Label style="-fx-background-color: blue;" text="0" textFill="WHITE"
                                                AnchorPane.rightAnchor="-20.0" AnchorPane.topAnchor="-10.0">
-                                            <font>
-                                                <Font name="System Bold" size="12.0"/>
-                                            </font>
                                             <padding>
                                                 <Insets left="3.0" right="3.0"/>
                                             </padding>
@@ -1175,16 +1071,14 @@
                                 <AnchorPane layoutX="60.0" layoutY="110.0">
                                     <children>
                                         <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true"
-                                                   AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                   styleClass="student" AnchorPane.leftAnchor="0.0"
+                                                   AnchorPane.topAnchor="0.0">
                                             <image>
                                                 <Image url="@Graphical_Assets/Students/YELLOW.png"/>
                                             </image>
                                         </ImageView>
                                         <Label style="-fx-background-color: #fb0;" text="0" textFill="WHITE"
                                                AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="-30.0">
-                                            <font>
-                                                <Font name="System Bold" size="12.0"/>
-                                            </font>
                                             <padding>
                                                 <Insets left="3.0" right="3.0"/>
                                             </padding>
@@ -1194,16 +1088,14 @@
                                 <AnchorPane layoutX="123.0" layoutY="70.0">
                                     <children>
                                         <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true"
-                                                   AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                   styleClass="student" AnchorPane.leftAnchor="0.0"
+                                                   AnchorPane.topAnchor="0.0">
                                             <image>
                                                 <Image url="@Graphical_Assets/Students/GREEN.png"/>
                                             </image>
                                         </ImageView>
                                         <Label style="-fx-background-color: green;" text="0" textFill="WHITE"
                                                AnchorPane.leftAnchor="-20.0" AnchorPane.topAnchor="-10.0">
-                                            <font>
-                                                <Font name="System Bold" size="12.0"/>
-                                            </font>
                                             <padding>
                                                 <Insets left="3.0" right="3.0"/>
                                             </padding>
@@ -1213,16 +1105,14 @@
                                 <AnchorPane layoutX="123.0">
                                     <children>
                                         <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true"
-                                                   AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                   styleClass="student" AnchorPane.leftAnchor="0.0"
+                                                   AnchorPane.topAnchor="0.0">
                                             <image>
                                                 <Image url="@Graphical_Assets/Students/PINK.png"/>
                                             </image>
                                         </ImageView>
                                         <Label style="-fx-background-color: #f08;" text="0" textFill="WHITE"
                                                AnchorPane.bottomAnchor="-15.0" AnchorPane.leftAnchor="-15.0">
-                                            <font>
-                                                <Font name="System Bold" size="12.0"/>
-                                            </font>
                                             <padding>
                                                 <Insets left="3.0" right="3.0"/>
                                             </padding>
@@ -1248,16 +1138,14 @@
                                 <AnchorPane>
                                     <children>
                                         <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true"
-                                                   AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                   styleClass="student" AnchorPane.leftAnchor="0.0"
+                                                   AnchorPane.topAnchor="0.0">
                                             <image>
                                                 <Image url="@Graphical_Assets/Students/RED.png"/>
                                             </image>
                                         </ImageView>
                                         <Label style="-fx-background-color: red;" text="0" textFill="WHITE"
                                                AnchorPane.bottomAnchor="-15.0" AnchorPane.rightAnchor="-15.0">
-                                            <font>
-                                                <Font name="System Bold" size="12.0"/>
-                                            </font>
                                             <padding>
                                                 <Insets left="3.0" right="3.0"/>
                                             </padding>
@@ -1267,16 +1155,14 @@
                                 <AnchorPane layoutY="70.0">
                                     <children>
                                         <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true"
-                                                   AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                   styleClass="student" AnchorPane.leftAnchor="0.0"
+                                                   AnchorPane.topAnchor="0.0">
                                             <image>
                                                 <Image url="@Graphical_Assets/Students/BLUE.png"/>
                                             </image>
                                         </ImageView>
                                         <Label style="-fx-background-color: blue;" text="0" textFill="WHITE"
                                                AnchorPane.rightAnchor="-20.0" AnchorPane.topAnchor="-10.0">
-                                            <font>
-                                                <Font name="System Bold" size="12.0"/>
-                                            </font>
                                             <padding>
                                                 <Insets left="3.0" right="3.0"/>
                                             </padding>
@@ -1286,16 +1172,14 @@
                                 <AnchorPane layoutX="60.0" layoutY="110.0">
                                     <children>
                                         <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true"
-                                                   AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                   styleClass="student" AnchorPane.leftAnchor="0.0"
+                                                   AnchorPane.topAnchor="0.0">
                                             <image>
                                                 <Image url="@Graphical_Assets/Students/YELLOW.png"/>
                                             </image>
                                         </ImageView>
                                         <Label style="-fx-background-color: #fb0;" text="0" textFill="WHITE"
                                                AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="-30.0">
-                                            <font>
-                                                <Font name="System Bold" size="12.0"/>
-                                            </font>
                                             <padding>
                                                 <Insets left="3.0" right="3.0"/>
                                             </padding>
@@ -1305,16 +1189,14 @@
                                 <AnchorPane layoutX="123.0" layoutY="70.0">
                                     <children>
                                         <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true"
-                                                   AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                   styleClass="student" AnchorPane.leftAnchor="0.0"
+                                                   AnchorPane.topAnchor="0.0">
                                             <image>
                                                 <Image url="@Graphical_Assets/Students/GREEN.png"/>
                                             </image>
                                         </ImageView>
                                         <Label style="-fx-background-color: green;" text="0" textFill="WHITE"
                                                AnchorPane.leftAnchor="-20.0" AnchorPane.topAnchor="-10.0">
-                                            <font>
-                                                <Font name="System Bold" size="12.0"/>
-                                            </font>
                                             <padding>
                                                 <Insets left="3.0" right="3.0"/>
                                             </padding>
@@ -1324,16 +1206,14 @@
                                 <AnchorPane layoutX="123.0">
                                     <children>
                                         <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true"
-                                                   AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                   styleClass="student" AnchorPane.leftAnchor="0.0"
+                                                   AnchorPane.topAnchor="0.0">
                                             <image>
                                                 <Image url="@Graphical_Assets/Students/PINK.png"/>
                                             </image>
                                         </ImageView>
                                         <Label style="-fx-background-color: #f08;" text="0" textFill="WHITE"
                                                AnchorPane.bottomAnchor="-15.0" AnchorPane.leftAnchor="-15.0">
-                                            <font>
-                                                <Font name="System Bold" size="12.0"/>
-                                            </font>
                                             <padding>
                                                 <Insets left="3.0" right="3.0"/>
                                             </padding>
@@ -1350,7 +1230,7 @@
                     AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0">
             <children>
                 <AnchorPane fx:id="mainBoard" pickOnBounds="false" prefHeight="304.0" prefWidth="700.0"
-                            AnchorPane.bottomAnchor="50.0" AnchorPane.rightAnchor="50.0">
+                            styleClass="board" AnchorPane.bottomAnchor="50.0" AnchorPane.rightAnchor="50.0">
                     <children>
                         <ImageView fitWidth="700.0" preserveRatio="true" styleClass="shadow"
                                    AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0">
@@ -1358,74 +1238,81 @@
                                 <Image url="@Graphical_Assets/Board/Board.jpg"/>
                             </image>
                         </ImageView>
-                        <Label style="-fx-background-color: #7B5804; -fx-border-color: #333;" textAlignment="CENTER"
+                        <Label style="-fx-background-color: #7B5804; -fx-border-color: #333;" text="Procione Ciccione"
+                               textAlignment="CENTER"
                                textFill="WHITE" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                             <padding>
                                 <Insets bottom="2.0" left="6.0" right="6.0" top="2.0"/>
                             </padding>
-                            <font>
-                                <Font name="System Bold" size="15.0"/>
-                            </font>
+
                         </Label>
                         <AnchorPane prefHeight="304.0" prefWidth="114.0" styleClass="entrancehall"
                                     AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
                                     AnchorPane.rightAnchor="586.0" AnchorPane.topAnchor="0.0">
                             <children>
                                 <ImageView fitWidth="30.0" layoutX="65.0" layoutY="37.0" preserveRatio="true"
-                                           AnchorPane.bottomAnchor="237.0" AnchorPane.rightAnchor="19.0">
+                                           styleClass="student" AnchorPane.bottomAnchor="237.0"
+                                           AnchorPane.rightAnchor="19.0">
                                     <image>
                                         <Image url="@Graphical_Assets/Students/BLUE.png"/>
                                     </image>
                                 </ImageView>
                                 <ImageView fitWidth="30.0" layoutX="24.0" layoutY="87.0" preserveRatio="true"
-                                           AnchorPane.bottomAnchor="187.0" AnchorPane.rightAnchor="61.0">
+                                           styleClass="student" AnchorPane.bottomAnchor="187.0"
+                                           AnchorPane.rightAnchor="61.0">
                                     <image>
                                         <Image url="@Graphical_Assets/Students/BLUE.png"/>
                                     </image>
                                 </ImageView>
                                 <ImageView fitWidth="30.0" layoutX="34.0" layoutY="97.0" preserveRatio="true"
-                                           AnchorPane.bottomAnchor="187.0" AnchorPane.rightAnchor="20.0">
+                                           styleClass="student" AnchorPane.bottomAnchor="187.0"
+                                           AnchorPane.rightAnchor="20.0">
                                     <image>
                                         <Image url="@Graphical_Assets/Students/BLUE.png"/>
                                     </image>
                                 </ImageView>
                                 <ImageView fitWidth="30.0" layoutX="44.0" layoutY="107.0" preserveRatio="true"
-                                           AnchorPane.bottomAnchor="137.0" AnchorPane.rightAnchor="61.0">
+                                           styleClass="student" AnchorPane.bottomAnchor="137.0"
+                                           AnchorPane.rightAnchor="61.0">
                                     <image>
                                         <Image url="@Graphical_Assets/Students/BLUE.png"/>
                                     </image>
                                 </ImageView>
                                 <ImageView fitWidth="30.0" layoutX="54.0" layoutY="117.0" preserveRatio="true"
-                                           AnchorPane.bottomAnchor="137.0" AnchorPane.rightAnchor="20.0">
+                                           styleClass="student" AnchorPane.bottomAnchor="137.0"
+                                           AnchorPane.rightAnchor="20.0">
                                     <image>
                                         <Image url="@Graphical_Assets/Students/BLUE.png"/>
                                     </image>
                                 </ImageView>
                                 <ImageView fitWidth="30.0" layoutX="64.0" layoutY="127.0" preserveRatio="true"
-                                           AnchorPane.bottomAnchor="87.0" AnchorPane.rightAnchor="61.0">
+                                           styleClass="student" AnchorPane.bottomAnchor="87.0"
+                                           AnchorPane.rightAnchor="61.0">
                                     <image>
                                         <Image url="@Graphical_Assets/Students/BLUE.png"/>
                                     </image>
                                 </ImageView>
                                 <ImageView fitWidth="30.0" layoutX="74.0" layoutY="137.0" preserveRatio="true"
-                                           AnchorPane.bottomAnchor="87.0" AnchorPane.rightAnchor="20.0">
+                                           styleClass="student" AnchorPane.bottomAnchor="87.0"
+                                           AnchorPane.rightAnchor="20.0">
                                     <image>
                                         <Image url="@Graphical_Assets/Students/BLUE.png"/>
                                     </image>
                                 </ImageView>
                                 <ImageView fitWidth="30.0" layoutX="84.0" layoutY="147.0" preserveRatio="true"
-                                           AnchorPane.bottomAnchor="38.0" AnchorPane.rightAnchor="61.0"/>
+                                           styleClass="student" AnchorPane.bottomAnchor="38.0"
+                                           AnchorPane.rightAnchor="61.0"/>
                                 <ImageView fitWidth="30.0" layoutX="94.0" layoutY="157.0" preserveRatio="true"
-                                           AnchorPane.bottomAnchor="38.0" AnchorPane.rightAnchor="20.0"/>
+                                           styleClass="student" AnchorPane.bottomAnchor="38.0"
+                                           AnchorPane.rightAnchor="20.0"/>
                             </children>
                         </AnchorPane>
                         <VBox snapToPixel="false" styleClass="lunchhall" AnchorPane.bottomAnchor="28.0"
-                              AnchorPane.leftAnchor="129.0" AnchorPane.rightAnchor="239.0" AnchorPane.topAnchor="28.0">
+                              AnchorPane.leftAnchor="120.0" AnchorPane.rightAnchor="230.0" AnchorPane.topAnchor="28.0">
                             <children>
                                 <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" snapToPixel="false">
                                 </HBox>
-                                <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" snapToPixel="false">
-                                </HBox>
+                                <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" snapToPixel="false"/>
                                 <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" snapToPixel="false">
                                 </HBox>
                                 <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" snapToPixel="false">
@@ -1433,11 +1320,15 @@
                                 <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" snapToPixel="false">
                                 </HBox>
                             </children>
+                            <padding>
+                                <Insets left="8.0"/>
+                            </padding>
                         </VBox>
                         <VBox alignment="TOP_CENTER" pickOnBounds="false" AnchorPane.bottomAnchor="0.0"
                               AnchorPane.leftAnchor="485.0" AnchorPane.rightAnchor="164.0" AnchorPane.topAnchor="34.0">
                             <children>
-                                <ImageView fitWidth="36.0" preserveRatio="true" rotate="90.0" visible="false">
+                                <ImageView fitWidth="36.0" preserveRatio="true" rotate="90.0" styleClass="professor"
+                                           visible="false">
                                     <image>
                                         <Image url="@Graphical_Assets/Professors/RED.png"/>
                                     </image>
@@ -1445,7 +1336,8 @@
                                         <Insets bottom="14.0"/>
                                     </VBox.margin>
                                 </ImageView>
-                                <ImageView fitWidth="36.0" preserveRatio="true" rotate="90.0" visible="false">
+                                <ImageView fitWidth="36.0" preserveRatio="true" rotate="90.0" styleClass="professor"
+                                           visible="false">
                                     <image>
                                         <Image url="@Graphical_Assets/Professors/BLUE.png"/>
                                     </image>
@@ -1453,7 +1345,8 @@
                                         <Insets bottom="14.0"/>
                                     </VBox.margin>
                                 </ImageView>
-                                <ImageView fitWidth="36.0" preserveRatio="true" rotate="90.0" visible="false">
+                                <ImageView fitWidth="36.0" preserveRatio="true" rotate="90.0" styleClass="professor"
+                                           visible="false">
                                     <image>
                                         <Image url="@Graphical_Assets/Professors/YELLOW.png"/>
                                     </image>
@@ -1461,7 +1354,8 @@
                                         <Insets bottom="13.0"/>
                                     </VBox.margin>
                                 </ImageView>
-                                <ImageView fitWidth="36.0" preserveRatio="true" rotate="90.0" visible="false">
+                                <ImageView fitWidth="36.0" preserveRatio="true" rotate="90.0" styleClass="professor"
+                                           visible="false">
                                     <image>
                                         <Image url="@Graphical_Assets/Professors/GREEN.png"/>
                                     </image>
@@ -1469,7 +1363,8 @@
                                         <Insets bottom="14.0"/>
                                     </VBox.margin>
                                 </ImageView>
-                                <ImageView fitWidth="36.0" preserveRatio="true" rotate="90.0" visible="false">
+                                <ImageView fitWidth="36.0" preserveRatio="true" rotate="90.0" styleClass="professor"
+                                           visible="false">
                                     <image>
                                         <Image url="@Graphical_Assets/Professors/PINK.png"/>
                                     </image>
@@ -1561,7 +1456,8 @@
                     </children>
                 </AnchorPane>
                 <AnchorPane pickOnBounds="false" prefHeight="304.0" prefWidth="700.0" scaleX="0.5714" scaleY="0.5714"
-                            snapToPixel="false" translateX="150.0" translateY="65.0" AnchorPane.bottomAnchor="404.0"
+                            snapToPixel="false" styleClass="board" translateX="150.0" translateY="65.0"
+                            AnchorPane.bottomAnchor="404.0"
                             AnchorPane.rightAnchor="50.0">
                     <children>
                         <ImageView fitWidth="700.0" preserveRatio="true" styleClass="shadow"
@@ -1575,62 +1471,69 @@
                             <padding>
                                 <Insets bottom="2.0" left="6.0" right="6.0" top="2.0"/>
                             </padding>
-                            <font>
-                                <Font name="System Bold" size="15.0"/>
-                            </font>
+
                         </Label>
                         <AnchorPane prefHeight="304.0" prefWidth="114.0" styleClass="entrancehall">
                             <children>
                                 <ImageView fitWidth="30.0" layoutX="65.0" layoutY="37.0" preserveRatio="true"
-                                           AnchorPane.bottomAnchor="237.0" AnchorPane.rightAnchor="19.0">
+                                           styleClass="student" AnchorPane.bottomAnchor="237.0"
+                                           AnchorPane.rightAnchor="19.0">
                                     <image>
                                         <Image url="@Graphical_Assets/Students/BLUE.png"/>
                                     </image>
                                 </ImageView>
                                 <ImageView fitWidth="30.0" layoutX="24.0" layoutY="87.0" preserveRatio="true"
-                                           AnchorPane.bottomAnchor="187.0" AnchorPane.rightAnchor="61.0">
+                                           styleClass="student" AnchorPane.bottomAnchor="187.0"
+                                           AnchorPane.rightAnchor="61.0">
                                     <image>
                                         <Image url="@Graphical_Assets/Students/BLUE.png"/>
                                     </image>
                                 </ImageView>
                                 <ImageView fitWidth="30.0" layoutX="34.0" layoutY="97.0" preserveRatio="true"
-                                           AnchorPane.bottomAnchor="187.0" AnchorPane.rightAnchor="20.0">
+                                           styleClass="student" AnchorPane.bottomAnchor="187.0"
+                                           AnchorPane.rightAnchor="20.0">
                                     <image>
                                         <Image url="@Graphical_Assets/Students/BLUE.png"/>
                                     </image>
                                 </ImageView>
                                 <ImageView fitWidth="30.0" layoutX="44.0" layoutY="107.0" preserveRatio="true"
-                                           AnchorPane.bottomAnchor="137.0" AnchorPane.rightAnchor="61.0">
+                                           styleClass="student" AnchorPane.bottomAnchor="137.0"
+                                           AnchorPane.rightAnchor="61.0">
                                     <image>
                                         <Image url="@Graphical_Assets/Students/BLUE.png"/>
                                     </image>
                                 </ImageView>
                                 <ImageView fitWidth="30.0" layoutX="54.0" layoutY="117.0" preserveRatio="true"
-                                           AnchorPane.bottomAnchor="137.0" AnchorPane.rightAnchor="20.0">
+                                           styleClass="student" AnchorPane.bottomAnchor="137.0"
+                                           AnchorPane.rightAnchor="20.0">
                                     <image>
                                         <Image url="@Graphical_Assets/Students/BLUE.png"/>
                                     </image>
                                 </ImageView>
                                 <ImageView fitWidth="30.0" layoutX="64.0" layoutY="127.0" preserveRatio="true"
-                                           AnchorPane.bottomAnchor="87.0" AnchorPane.rightAnchor="61.0">
+                                           styleClass="student" AnchorPane.bottomAnchor="87.0"
+                                           AnchorPane.rightAnchor="61.0">
                                     <image>
                                         <Image url="@Graphical_Assets/Students/BLUE.png"/>
                                     </image>
                                 </ImageView>
                                 <ImageView fitWidth="30.0" layoutX="74.0" layoutY="137.0" preserveRatio="true"
-                                           AnchorPane.bottomAnchor="87.0" AnchorPane.rightAnchor="20.0">
+                                           styleClass="student" AnchorPane.bottomAnchor="87.0"
+                                           AnchorPane.rightAnchor="20.0">
                                     <image>
                                         <Image url="@Graphical_Assets/Students/BLUE.png"/>
                                     </image>
                                 </ImageView>
                                 <ImageView fitWidth="30.0" layoutX="84.0" layoutY="147.0" preserveRatio="true"
-                                           AnchorPane.bottomAnchor="38.0" AnchorPane.rightAnchor="61.0"/>
+                                           styleClass="student" AnchorPane.bottomAnchor="38.0"
+                                           AnchorPane.rightAnchor="61.0"/>
                                 <ImageView fitWidth="30.0" layoutX="94.0" layoutY="157.0" preserveRatio="true"
-                                           AnchorPane.bottomAnchor="38.0" AnchorPane.rightAnchor="20.0"/>
+                                           styleClass="student" AnchorPane.bottomAnchor="38.0"
+                                           AnchorPane.rightAnchor="20.0"/>
                             </children>
                         </AnchorPane>
                         <VBox snapToPixel="false" styleClass="lunchhall" AnchorPane.bottomAnchor="28.0"
-                              AnchorPane.leftAnchor="129.0" AnchorPane.rightAnchor="239.0" AnchorPane.topAnchor="28.0">
+                              AnchorPane.leftAnchor="120.0" AnchorPane.rightAnchor="230.0" AnchorPane.topAnchor="28.0">
                             <children>
                                 <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" snapToPixel="false">
                                 </HBox>
@@ -1643,11 +1546,15 @@
                                 <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" snapToPixel="false">
                                 </HBox>
                             </children>
+                            <padding>
+                                <Insets left="9.0" right="9.0"/>
+                            </padding>
                         </VBox>
                         <VBox alignment="TOP_CENTER" pickOnBounds="false" AnchorPane.bottomAnchor="0.0"
                               AnchorPane.leftAnchor="485.0" AnchorPane.rightAnchor="164.0" AnchorPane.topAnchor="34.0">
                             <children>
-                                <ImageView fitWidth="36.0" preserveRatio="true" rotate="90.0" visible="false">
+                                <ImageView fitWidth="36.0" preserveRatio="true" rotate="90.0" styleClass="professor"
+                                           visible="false">
                                     <image>
                                         <Image url="@Graphical_Assets/Professors/RED.png"/>
                                     </image>
@@ -1655,7 +1562,8 @@
                                         <Insets bottom="14.0"/>
                                     </VBox.margin>
                                 </ImageView>
-                                <ImageView fitWidth="36.0" preserveRatio="true" rotate="90.0" visible="false">
+                                <ImageView fitWidth="36.0" preserveRatio="true" rotate="90.0" styleClass="professor"
+                                           visible="false">
                                     <image>
                                         <Image url="@Graphical_Assets/Professors/BLUE.png"/>
                                     </image>
@@ -1663,7 +1571,8 @@
                                         <Insets bottom="14.0"/>
                                     </VBox.margin>
                                 </ImageView>
-                                <ImageView fitWidth="36.0" preserveRatio="true" rotate="90.0" visible="false">
+                                <ImageView fitWidth="36.0" preserveRatio="true" rotate="90.0" styleClass="professor"
+                                           visible="false">
                                     <image>
                                         <Image url="@Graphical_Assets/Professors/YELLOW.png"/>
                                     </image>
@@ -1671,7 +1580,8 @@
                                         <Insets bottom="13.0"/>
                                     </VBox.margin>
                                 </ImageView>
-                                <ImageView fitWidth="36.0" preserveRatio="true" rotate="90.0" visible="false">
+                                <ImageView fitWidth="36.0" preserveRatio="true" rotate="90.0" styleClass="professor"
+                                           visible="false">
                                     <image>
                                         <Image url="@Graphical_Assets/Professors/GREEN.png"/>
                                     </image>
@@ -1679,7 +1589,8 @@
                                         <Insets bottom="14.0"/>
                                     </VBox.margin>
                                 </ImageView>
-                                <ImageView fitWidth="36.0" preserveRatio="true" rotate="90.0" visible="false">
+                                <ImageView fitWidth="36.0" preserveRatio="true" rotate="90.0" styleClass="professor"
+                                           visible="false">
                                     <image>
                                         <Image url="@Graphical_Assets/Professors/PINK.png"/>
                                     </image>
@@ -1768,7 +1679,8 @@
                     </children>
                 </AnchorPane>
                 <AnchorPane pickOnBounds="false" prefHeight="304.0" prefWidth="700.0" scaleX="0.5714" scaleY="0.5714"
-                            snapToPixel="false" translateX="150.0" translateY="65.0" AnchorPane.bottomAnchor="628.0"
+                            snapToPixel="false" styleClass="board" translateX="150.0" translateY="65.0"
+                            AnchorPane.bottomAnchor="628.0"
                             AnchorPane.rightAnchor="50.0">
                     <children>
                         <ImageView fitWidth="700.0" preserveRatio="true" styleClass="shadow"
@@ -1782,62 +1694,69 @@
                             <padding>
                                 <Insets bottom="2.0" left="6.0" right="6.0" top="2.0"/>
                             </padding>
-                            <font>
-                                <Font name="System Bold" size="15.0"/>
-                            </font>
+
                         </Label>
                         <AnchorPane prefHeight="304.0" prefWidth="114.0" styleClass="entrancehall">
                             <children>
                                 <ImageView fitWidth="30.0" layoutX="65.0" layoutY="37.0" preserveRatio="true"
-                                           AnchorPane.bottomAnchor="237.0" AnchorPane.rightAnchor="19.0">
+                                           styleClass="student" AnchorPane.bottomAnchor="237.0"
+                                           AnchorPane.rightAnchor="19.0">
                                     <image>
                                         <Image url="@Graphical_Assets/Students/BLUE.png"/>
                                     </image>
                                 </ImageView>
                                 <ImageView fitWidth="30.0" layoutX="24.0" layoutY="87.0" preserveRatio="true"
-                                           AnchorPane.bottomAnchor="187.0" AnchorPane.rightAnchor="61.0">
+                                           styleClass="student" AnchorPane.bottomAnchor="187.0"
+                                           AnchorPane.rightAnchor="61.0">
                                     <image>
                                         <Image url="@Graphical_Assets/Students/BLUE.png"/>
                                     </image>
                                 </ImageView>
                                 <ImageView fitWidth="30.0" layoutX="34.0" layoutY="97.0" preserveRatio="true"
-                                           AnchorPane.bottomAnchor="187.0" AnchorPane.rightAnchor="20.0">
+                                           styleClass="student" AnchorPane.bottomAnchor="187.0"
+                                           AnchorPane.rightAnchor="20.0">
                                     <image>
                                         <Image url="@Graphical_Assets/Students/BLUE.png"/>
                                     </image>
                                 </ImageView>
                                 <ImageView fitWidth="30.0" layoutX="44.0" layoutY="107.0" preserveRatio="true"
-                                           AnchorPane.bottomAnchor="137.0" AnchorPane.rightAnchor="61.0">
+                                           styleClass="student" AnchorPane.bottomAnchor="137.0"
+                                           AnchorPane.rightAnchor="61.0">
                                     <image>
                                         <Image url="@Graphical_Assets/Students/BLUE.png"/>
                                     </image>
                                 </ImageView>
                                 <ImageView fitWidth="30.0" layoutX="54.0" layoutY="117.0" preserveRatio="true"
-                                           AnchorPane.bottomAnchor="137.0" AnchorPane.rightAnchor="20.0">
+                                           styleClass="student" AnchorPane.bottomAnchor="137.0"
+                                           AnchorPane.rightAnchor="20.0">
                                     <image>
                                         <Image url="@Graphical_Assets/Students/BLUE.png"/>
                                     </image>
                                 </ImageView>
                                 <ImageView fitWidth="30.0" layoutX="64.0" layoutY="127.0" preserveRatio="true"
-                                           AnchorPane.bottomAnchor="87.0" AnchorPane.rightAnchor="61.0">
+                                           styleClass="student" AnchorPane.bottomAnchor="87.0"
+                                           AnchorPane.rightAnchor="61.0">
                                     <image>
                                         <Image url="@Graphical_Assets/Students/BLUE.png"/>
                                     </image>
                                 </ImageView>
                                 <ImageView fitWidth="30.0" layoutX="74.0" layoutY="137.0" preserveRatio="true"
-                                           AnchorPane.bottomAnchor="87.0" AnchorPane.rightAnchor="20.0">
+                                           styleClass="student" AnchorPane.bottomAnchor="87.0"
+                                           AnchorPane.rightAnchor="20.0">
                                     <image>
                                         <Image url="@Graphical_Assets/Students/BLUE.png"/>
                                     </image>
                                 </ImageView>
                                 <ImageView fitWidth="30.0" layoutX="84.0" layoutY="147.0" preserveRatio="true"
-                                           AnchorPane.bottomAnchor="38.0" AnchorPane.rightAnchor="61.0"/>
+                                           styleClass="student" AnchorPane.bottomAnchor="38.0"
+                                           AnchorPane.rightAnchor="61.0"/>
                                 <ImageView fitWidth="30.0" layoutX="94.0" layoutY="157.0" preserveRatio="true"
-                                           AnchorPane.bottomAnchor="38.0" AnchorPane.rightAnchor="20.0"/>
+                                           styleClass="student" AnchorPane.bottomAnchor="38.0"
+                                           AnchorPane.rightAnchor="20.0"/>
                             </children>
                         </AnchorPane>
                         <VBox snapToPixel="false" styleClass="lunchhall" AnchorPane.bottomAnchor="28.0"
-                              AnchorPane.leftAnchor="129.0" AnchorPane.rightAnchor="239.0" AnchorPane.topAnchor="28.0">
+                              AnchorPane.leftAnchor="120.0" AnchorPane.rightAnchor="230.0" AnchorPane.topAnchor="28.0">
                             <children>
                                 <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" snapToPixel="false">
                                 </HBox>
@@ -1850,11 +1769,15 @@
                                 <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" snapToPixel="false">
                                 </HBox>
                             </children>
+                            <padding>
+                                <Insets left="9.0" right="9.0"/>
+                            </padding>
                         </VBox>
                         <VBox alignment="TOP_CENTER" pickOnBounds="false" AnchorPane.bottomAnchor="0.0"
                               AnchorPane.leftAnchor="485.0" AnchorPane.rightAnchor="164.0" AnchorPane.topAnchor="34.0">
                             <children>
-                                <ImageView fitWidth="36.0" preserveRatio="true" rotate="90.0" visible="false">
+                                <ImageView fitWidth="36.0" preserveRatio="true" rotate="90.0" styleClass="professor"
+                                           visible="false">
                                     <image>
                                         <Image url="@Graphical_Assets/Professors/RED.png"/>
                                     </image>
@@ -1862,7 +1785,8 @@
                                         <Insets bottom="14.0"/>
                                     </VBox.margin>
                                 </ImageView>
-                                <ImageView fitWidth="36.0" preserveRatio="true" rotate="90.0" visible="false">
+                                <ImageView fitWidth="36.0" preserveRatio="true" rotate="90.0" styleClass="professor"
+                                           visible="false">
                                     <image>
                                         <Image url="@Graphical_Assets/Professors/BLUE.png"/>
                                     </image>
@@ -1870,7 +1794,8 @@
                                         <Insets bottom="14.0"/>
                                     </VBox.margin>
                                 </ImageView>
-                                <ImageView fitWidth="36.0" preserveRatio="true" rotate="90.0" visible="false">
+                                <ImageView fitWidth="36.0" preserveRatio="true" rotate="90.0" styleClass="professor"
+                                           visible="false">
                                     <image>
                                         <Image url="@Graphical_Assets/Professors/YELLOW.png"/>
                                     </image>
@@ -1878,7 +1803,8 @@
                                         <Insets bottom="13.0"/>
                                     </VBox.margin>
                                 </ImageView>
-                                <ImageView fitWidth="36.0" preserveRatio="true" rotate="90.0" visible="false">
+                                <ImageView fitWidth="36.0" preserveRatio="true" rotate="90.0" styleClass="professor"
+                                           visible="false">
                                     <image>
                                         <Image url="@Graphical_Assets/Professors/GREEN.png"/>
                                     </image>
@@ -1886,7 +1812,8 @@
                                         <Insets bottom="14.0"/>
                                     </VBox.margin>
                                 </ImageView>
-                                <ImageView fitWidth="36.0" preserveRatio="true" rotate="90.0" visible="false">
+                                <ImageView fitWidth="36.0" preserveRatio="true" rotate="90.0" styleClass="professor"
+                                           visible="false">
                                     <image>
                                         <Image url="@Graphical_Assets/Professors/PINK.png"/>
                                     </image>
@@ -1976,7 +1903,8 @@
                     </children>
                 </AnchorPane>
                 <AnchorPane pickOnBounds="false" prefHeight="304.0" prefWidth="425.0" scaleX="0.5714" scaleY="0.5714"
-                            snapToPixel="false" translateX="150.0" translateY="65.0" AnchorPane.bottomAnchor="852.0"
+                            snapToPixel="false" styleClass="board" translateX="150.0" translateY="65.0"
+                            AnchorPane.bottomAnchor="852.0"
                             AnchorPane.rightAnchor="50.0">
                     <children>
                         <ImageView fitWidth="700.0" preserveRatio="true" styleClass="shadow"
@@ -1988,62 +1916,69 @@
                             <padding>
                                 <Insets bottom="2.0" left="6.0" right="6.0" top="2.0"/>
                             </padding>
-                            <font>
-                                <Font name="System Bold" size="15.0"/>
-                            </font>
+
                         </Label>
                         <AnchorPane prefHeight="304.0" prefWidth="114.0" styleClass="entrancehall">
                             <children>
                                 <ImageView fitWidth="30.0" layoutX="65.0" layoutY="37.0" preserveRatio="true"
-                                           AnchorPane.bottomAnchor="237.0" AnchorPane.rightAnchor="19.0">
+                                           styleClass="student" AnchorPane.bottomAnchor="237.0"
+                                           AnchorPane.rightAnchor="19.0">
                                     <image>
                                         <Image url="@Graphical_Assets/Students/BLUE.png"/>
                                     </image>
                                 </ImageView>
                                 <ImageView fitWidth="30.0" layoutX="24.0" layoutY="87.0" preserveRatio="true"
-                                           AnchorPane.bottomAnchor="187.0" AnchorPane.rightAnchor="61.0">
+                                           styleClass="student" AnchorPane.bottomAnchor="187.0"
+                                           AnchorPane.rightAnchor="61.0">
                                     <image>
                                         <Image url="@Graphical_Assets/Students/BLUE.png"/>
                                     </image>
                                 </ImageView>
                                 <ImageView fitWidth="30.0" layoutX="34.0" layoutY="97.0" preserveRatio="true"
-                                           AnchorPane.bottomAnchor="187.0" AnchorPane.rightAnchor="20.0">
+                                           styleClass="student" AnchorPane.bottomAnchor="187.0"
+                                           AnchorPane.rightAnchor="20.0">
                                     <image>
                                         <Image url="@Graphical_Assets/Students/BLUE.png"/>
                                     </image>
                                 </ImageView>
                                 <ImageView fitWidth="30.0" layoutX="44.0" layoutY="107.0" preserveRatio="true"
-                                           AnchorPane.bottomAnchor="137.0" AnchorPane.rightAnchor="61.0">
+                                           styleClass="student" AnchorPane.bottomAnchor="137.0"
+                                           AnchorPane.rightAnchor="61.0">
                                     <image>
                                         <Image url="@Graphical_Assets/Students/BLUE.png"/>
                                     </image>
                                 </ImageView>
                                 <ImageView fitWidth="30.0" layoutX="54.0" layoutY="117.0" preserveRatio="true"
-                                           AnchorPane.bottomAnchor="137.0" AnchorPane.rightAnchor="20.0">
+                                           styleClass="student" AnchorPane.bottomAnchor="137.0"
+                                           AnchorPane.rightAnchor="20.0">
                                     <image>
                                         <Image url="@Graphical_Assets/Students/BLUE.png"/>
                                     </image>
                                 </ImageView>
                                 <ImageView fitWidth="30.0" layoutX="64.0" layoutY="127.0" preserveRatio="true"
-                                           AnchorPane.bottomAnchor="87.0" AnchorPane.rightAnchor="61.0">
+                                           styleClass="student" AnchorPane.bottomAnchor="87.0"
+                                           AnchorPane.rightAnchor="61.0">
                                     <image>
                                         <Image url="@Graphical_Assets/Students/BLUE.png"/>
                                     </image>
                                 </ImageView>
                                 <ImageView fitWidth="30.0" layoutX="74.0" layoutY="137.0" preserveRatio="true"
-                                           AnchorPane.bottomAnchor="87.0" AnchorPane.rightAnchor="20.0">
+                                           styleClass="student" AnchorPane.bottomAnchor="87.0"
+                                           AnchorPane.rightAnchor="20.0">
                                     <image>
                                         <Image url="@Graphical_Assets/Students/BLUE.png"/>
                                     </image>
                                 </ImageView>
                                 <ImageView fitWidth="30.0" layoutX="84.0" layoutY="147.0" preserveRatio="true"
-                                           AnchorPane.bottomAnchor="38.0" AnchorPane.rightAnchor="61.0"/>
+                                           styleClass="student" AnchorPane.bottomAnchor="38.0"
+                                           AnchorPane.rightAnchor="61.0"/>
                                 <ImageView fitWidth="30.0" layoutX="94.0" layoutY="157.0" preserveRatio="true"
-                                           AnchorPane.bottomAnchor="38.0" AnchorPane.rightAnchor="20.0"/>
+                                           styleClass="student" AnchorPane.bottomAnchor="38.0"
+                                           AnchorPane.rightAnchor="20.0"/>
                             </children>
                         </AnchorPane>
                         <VBox snapToPixel="false" styleClass="lunchhall" AnchorPane.bottomAnchor="28.0"
-                              AnchorPane.leftAnchor="129.0" AnchorPane.rightAnchor="239.0" AnchorPane.topAnchor="28.0">
+                              AnchorPane.leftAnchor="120.0" AnchorPane.rightAnchor="230.0" AnchorPane.topAnchor="28.0">
                             <children>
                                 <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" snapToPixel="false">
                                 </HBox>
@@ -2056,6 +1991,9 @@
                                 <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" snapToPixel="false">
                                 </HBox>
                             </children>
+                            <padding>
+                                <Insets left="9.0" right="9.0"/>
+                            </padding>
                         </VBox>
                         <VBox alignment="TOP_CENTER" pickOnBounds="false" AnchorPane.bottomAnchor="0.0"
                               AnchorPane.leftAnchor="485.0" AnchorPane.rightAnchor="164.0" AnchorPane.topAnchor="34.0">
@@ -2210,9 +2148,6 @@
                                     </ImageView>
                                     <Label style="-fx-background-color: red;" text="0" textFill="WHITE"
                                            AnchorPane.bottomAnchor="-20.0" AnchorPane.rightAnchor="-20.0">
-                                        <font>
-                                            <Font name="System Bold" size="12.0"/>
-                                        </font>
                                         <padding>
                                             <Insets left="3.0" right="3.0"/>
                                         </padding>
@@ -2230,9 +2165,6 @@
                                     </ImageView>
                                     <Label style="-fx-background-color: blue;" text="0" textFill="WHITE"
                                            AnchorPane.rightAnchor="-20.0" AnchorPane.topAnchor="-10.0">
-                                        <font>
-                                            <Font name="System Bold" size="12.0"/>
-                                        </font>
                                         <padding>
                                             <Insets left="3.0" right="3.0"/>
                                         </padding>
@@ -2249,9 +2181,6 @@
                                     </ImageView>
                                     <Label style="-fx-background-color: #fb0;" text="0" textFill="WHITE"
                                            AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="-30.0">
-                                        <font>
-                                            <Font name="System Bold" size="12.0"/>
-                                        </font>
                                         <padding>
                                             <Insets left="3.0" right="3.0"/>
                                         </padding>
@@ -2269,9 +2198,6 @@
                                     </ImageView>
                                     <Label style="-fx-background-color: green;" text="0" textFill="WHITE"
                                            AnchorPane.leftAnchor="-20.0" AnchorPane.topAnchor="-10.0">
-                                        <font>
-                                            <Font name="System Bold" size="12.0"/>
-                                        </font>
                                         <padding>
                                             <Insets left="3.0" right="3.0"/>
                                         </padding>
@@ -2288,9 +2214,6 @@
                                     </ImageView>
                                     <Label style="-fx-background-color: #f08;" text="0" textFill="WHITE"
                                            AnchorPane.bottomAnchor="-20.0" AnchorPane.leftAnchor="-20.0">
-                                        <font>
-                                            <Font name="System Bold" size="12.0"/>
-                                        </font>
                                         <padding>
                                             <Insets left="3.0" right="3.0"/>
                                         </padding>
@@ -2324,9 +2247,6 @@
                                     </ImageView>
                                     <Label style="-fx-background-color: red;" text="0" textFill="WHITE"
                                            AnchorPane.bottomAnchor="-20.0" AnchorPane.rightAnchor="-20.0">
-                                        <font>
-                                            <Font name="System Bold" size="12.0"/>
-                                        </font>
                                         <padding>
                                             <Insets left="3.0" right="3.0"/>
                                         </padding>
@@ -2344,9 +2264,6 @@
                                     </ImageView>
                                     <Label style="-fx-background-color: blue;" text="0" textFill="WHITE"
                                            AnchorPane.rightAnchor="-20.0" AnchorPane.topAnchor="-10.0">
-                                        <font>
-                                            <Font name="System Bold" size="12.0"/>
-                                        </font>
                                         <padding>
                                             <Insets left="3.0" right="3.0"/>
                                         </padding>
@@ -2363,9 +2280,6 @@
                                     </ImageView>
                                     <Label style="-fx-background-color: #fb0;" text="0" textFill="WHITE"
                                            AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="-30.0">
-                                        <font>
-                                            <Font name="System Bold" size="12.0"/>
-                                        </font>
                                         <padding>
                                             <Insets left="3.0" right="3.0"/>
                                         </padding>
@@ -2383,9 +2297,6 @@
                                     </ImageView>
                                     <Label style="-fx-background-color: green;" text="0" textFill="WHITE"
                                            AnchorPane.leftAnchor="-20.0" AnchorPane.topAnchor="-10.0">
-                                        <font>
-                                            <Font name="System Bold" size="12.0"/>
-                                        </font>
                                         <padding>
                                             <Insets left="3.0" right="3.0"/>
                                         </padding>
@@ -2402,9 +2313,6 @@
                                     </ImageView>
                                     <Label style="-fx-background-color: #f08;" text="0" textFill="WHITE"
                                            AnchorPane.bottomAnchor="-20.0" AnchorPane.leftAnchor="-20.0">
-                                        <font>
-                                            <Font name="System Bold" size="12.0"/>
-                                        </font>
                                         <padding>
                                             <Insets left="3.0" right="3.0"/>
                                         </padding>
@@ -2439,9 +2347,6 @@
                                     </ImageView>
                                     <Label style="-fx-background-color: red;" text="0" textFill="WHITE"
                                            AnchorPane.bottomAnchor="-20.0" AnchorPane.rightAnchor="-20.0">
-                                        <font>
-                                            <Font name="System Bold" size="12.0"/>
-                                        </font>
                                         <padding>
                                             <Insets left="3.0" right="3.0"/>
                                         </padding>
@@ -2459,9 +2364,6 @@
                                     </ImageView>
                                     <Label style="-fx-background-color: blue;" text="0" textFill="WHITE"
                                            AnchorPane.rightAnchor="-20.0" AnchorPane.topAnchor="-10.0">
-                                        <font>
-                                            <Font name="System Bold" size="12.0"/>
-                                        </font>
                                         <padding>
                                             <Insets left="3.0" right="3.0"/>
                                         </padding>
@@ -2478,9 +2380,6 @@
                                     </ImageView>
                                     <Label style="-fx-background-color: #fb0;" text="0" textFill="WHITE"
                                            AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="-30.0">
-                                        <font>
-                                            <Font name="System Bold" size="12.0"/>
-                                        </font>
                                         <padding>
                                             <Insets left="3.0" right="3.0"/>
                                         </padding>
@@ -2498,9 +2397,6 @@
                                     </ImageView>
                                     <Label style="-fx-background-color: green;" text="0" textFill="WHITE"
                                            AnchorPane.leftAnchor="-20.0" AnchorPane.topAnchor="-10.0">
-                                        <font>
-                                            <Font name="System Bold" size="12.0"/>
-                                        </font>
                                         <padding>
                                             <Insets left="3.0" right="3.0"/>
                                         </padding>
@@ -2517,9 +2413,6 @@
                                     </ImageView>
                                     <Label style="-fx-background-color: #f08;" text="0" textFill="WHITE"
                                            AnchorPane.bottomAnchor="-20.0" AnchorPane.leftAnchor="-20.0">
-                                        <font>
-                                            <Font name="System Bold" size="12.0"/>
-                                        </font>
                                         <padding>
                                             <Insets left="3.0" right="3.0"/>
                                         </padding>
