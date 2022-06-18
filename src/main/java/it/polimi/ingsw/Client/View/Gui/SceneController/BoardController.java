@@ -23,7 +23,6 @@ import javafx.scene.layout.VBox;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Pattern;
 
 public class BoardController implements SceneController {
     ViewGUI viewGUI;
@@ -133,8 +132,7 @@ public class BoardController implements SceneController {
                             updateLunchHall(player.getLunchHall());
                         }
                         // set the id of professors
-                        case 4 ->
-                            element.setId("professors" + localWizardIndex);
+                        case 4 -> element.setId("professors" + localWizardIndex);
 
                         case 6 -> {
                             //set id of the assistant card
@@ -203,6 +201,13 @@ public class BoardController implements SceneController {
     @Override
     public void updateMotherNature(Byte motherNaturePosition) {
         Platform.runLater(() -> {
+            //delete old mother nature
+            Node motherNature = getElementById("#motherNature");
+            if (motherNature != null) {
+                AnchorPane islandOld = (AnchorPane) motherNature.getParent();
+                islandOld.getChildren().remove(motherNature);
+            }
+            //update the new mother nature
             int idIsland = viewGUI.getModel().getIslands().get(motherNaturePosition).getId();
             AnchorPane island = (AnchorPane) getElementById("#" + idIsland);
             island.getChildren().add(getMotherNature());
@@ -402,6 +407,7 @@ public class BoardController implements SceneController {
         mn.setLayoutX(60.0);
         mn.setLayoutY(75.0);
         mn.setPreserveRatio(true);
+        mn.setId("motherNature");
         AnchorPane.setBottomAnchor(mn, 75.0);
         AnchorPane.setTopAnchor(mn, 75.0);
         AnchorPane.setLeftAnchor(mn, 61.5);
