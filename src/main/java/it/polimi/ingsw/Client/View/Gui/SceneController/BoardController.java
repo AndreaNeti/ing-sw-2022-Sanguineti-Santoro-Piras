@@ -133,8 +133,7 @@ public class BoardController implements SceneController {
                             updateLunchHall(player.getLunchHall());
                         }
                         // set the id of professors
-                        case 4 ->
-                            element.setId("professors" + localWizardIndex);
+                        case 4 -> element.setId("professors" + localWizardIndex);
 
                         case 6 -> {
                             //set id of the assistant card
@@ -324,6 +323,7 @@ public class BoardController implements SceneController {
             IslandClient winner = viewGUI.getModel().getIslands().get(viewGUI.getModel().getMotherNaturePosition());
             HouseColor winnerTeam = winner.getTeam();
             AnchorPane paneIsland = (AnchorPane) this.getElementById("#" + island.getId());
+            paneIsland.getProperties().put("relativeId", winner.getId());
             AnchorPane paneWinnerIsland = (AnchorPane) this.getElementById("#" + winner.getId());
             //remove the pane of students
             paneIsland.getChildren().remove(1);

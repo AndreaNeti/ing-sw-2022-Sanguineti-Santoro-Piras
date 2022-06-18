@@ -208,9 +208,13 @@ public enum GameCommand {
                     lunchHall.setOnMouseClicked(GameCommand.MOVE_STUDENT.getGUIHandler(viewGUI));
 
                 } else {
-                    int id = Integer.parseInt(clicked.getId());
-                    System.out.println(id);
-                    System.out.println(color);
+                    // TODO mh
+                    int id;
+                    if (clicked.getProperties().get("relativeId") == null)
+                        id = Integer.parseInt(clicked.getId());
+                    else
+                        id = (int) clicked.getProperties().get("relativeId");
+
                     viewGUI.sendToServer(new MoveStudent(color, id, (String) clicked.getProperties().get("name")));
                     color = null;
                     sceneController.disableEverything();

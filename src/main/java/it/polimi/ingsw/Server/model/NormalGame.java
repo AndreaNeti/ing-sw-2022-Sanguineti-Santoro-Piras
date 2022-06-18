@@ -228,7 +228,7 @@ public class NormalGame implements Game {
     protected GameComponent getComponentById(int idGameComponent) throws GameException {
         /*here the id is static
         from 0 to 2*numberOfPlayer-1 is entranceHall,LunchHall
-        from 2*numberOfPlayer to 2*numberOfPlayer+12 are the island
+        from 2*maxNumberOfPlayer to 2*maxNumberOfPlayer+12 are the island
         from -1 to -4 are clouds;
         from -10 to -12 are the characters, here I ignore this because you can never move to this component
         */

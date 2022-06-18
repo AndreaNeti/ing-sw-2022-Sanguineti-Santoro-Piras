@@ -1,3 +1,38 @@
 * :disabled {
     -fx-opacity: 1;
 }
+.shadow{
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 10, 0, 0, 0);
+}
+.card {
+}
+
+.entrancehall {
+
+}
+
+.lunchhall {
+
+}
+
+.island {
+}
+
+.cloud.clickable {
+    -fx-effect: dropshadow(gaussian, rgb(0, 0, 0), 15, 0.4, 0, 0);
+}
+.entrancehall.clickable {
+    -fx-effect: dropshadow(gaussian, rgb(255, 255, 255), 10, 0.8, 0, 0);
+}
+
+.lunchhall.clickable {
+    -fx-effect: dropshadow(gaussian, rgb(255, 255, 255), 15, 0.7, 0, 0);
+}
+
+.island.clickable {
+    -fx-effect: dropshadow(gaussian, rgb(255, 255, 255), 30, 0.6, 0, 0);
+}
+
+.card.clickable {
+    -fx-effect: dropshadow(gaussian, rgba(150, 0, 255, 0.5), 40, 0.6, 0, 0);
+}
