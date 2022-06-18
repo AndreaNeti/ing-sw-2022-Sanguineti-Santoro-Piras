@@ -17,9 +17,9 @@ public class MoveCloudPhase extends ClientPhase {
         SceneController sceneController = GuiFX.getActiveSceneController();
         sceneController.disableEverything();
         for (GameComponentClient cloud : viewGUI.getModel().getClouds()) {
-            Node cloudCliclable = sceneController.getElementById("#" + cloud.getId());
-            sceneController.enableNode(cloudCliclable);
-            cloudCliclable.setOnMouseClicked(GameCommand.MOVE_FROM_CLOUD.getGUIHandler(viewGUI));
+            Node cloudClickable = sceneController.getElementById("#" + cloud.getId());
+            sceneController.enableNode(cloudClickable);
+            cloudClickable.setOnMouseClicked(GameCommand.MOVE_FROM_CLOUD.getGUIHandler(viewGUI));
         }
     }
 

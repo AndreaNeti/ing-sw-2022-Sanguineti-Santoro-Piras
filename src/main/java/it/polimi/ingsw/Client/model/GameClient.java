@@ -136,6 +136,7 @@ public class GameClient extends GameClientListened implements GameClientView {
             GameComponentClient cloud = clouds.get(-idGameComponent - 1);
             cloud.modifyGameComponent(gameComponent);
             notifyGameComponent(cloud);
+
         }
     }
 
@@ -153,6 +154,7 @@ public class GameClient extends GameClientListened implements GameClientView {
     }
 
     public void setMotherNaturePosition(byte motherNaturePosition) {
+
         this.motherNaturePosition = motherNaturePosition;
         notifyMotherNature(motherNaturePosition);
     }
@@ -165,11 +167,13 @@ public class GameClient extends GameClientListened implements GameClientView {
     public void playCard(AssistantCard playedCard) {
         getCurrentPlayer().playCard(playedCard);
         notifyCardPlayed(playedCard);
+
     }
 
     public void setTowerLeft(HouseColor houseColor, Byte towerLeft) {
         teams.get(houseColor.ordinal()).setTowersLeft(towerLeft);
         notifyTowerLeft(houseColor, towerLeft);
+
     }
 
     @Override
@@ -222,8 +226,9 @@ public class GameClient extends GameClientListened implements GameClientView {
     }
 
     public void setExtraSteps(boolean extraSteps) {
+    //    notifyExtraSteps(extraSteps);
         this.extraSteps = extraSteps;
-        notifyExtraSteps(extraSteps);
+
     }
 
     @Override
@@ -233,7 +238,7 @@ public class GameClient extends GameClientListened implements GameClientView {
 
     public void setIgnoredColorInfluence(Color ignoredColorInfluence) {
         this.ignoredColorInfluence = ignoredColorInfluence;
-        notifyIgnoredColor(ignoredColorInfluence);
+    //    notifyIgnoredColor(ignoredColorInfluence);
     }
 
     public void setUpdatedCoinPlayer(byte playerIndex, byte newCoins) {
