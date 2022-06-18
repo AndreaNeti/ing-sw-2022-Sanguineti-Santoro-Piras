@@ -7,6 +7,7 @@ import it.polimi.ingsw.Client.View.Gui.SceneController.SceneController;
 import it.polimi.ingsw.Client.View.Gui.ViewGUI;
 import it.polimi.ingsw.Client.model.CharacterCardClient;
 import it.polimi.ingsw.Client.model.GameComponentClient;
+import it.polimi.ingsw.Client.model.IslandClient;
 import it.polimi.ingsw.Server.controller.MatchType;
 import it.polimi.ingsw.Util.AssistantCard;
 import it.polimi.ingsw.Util.Color;
@@ -192,25 +193,27 @@ public enum GameCommand {
         public EventHandler<MouseEvent> getGUIHandler(ViewGUI viewGUI) {
             return mouseEvent -> {
                 SceneController sceneController = GuiFX.getActiveSceneController();
-                sceneController.disableEverything();
                 Node clicked = (Node) mouseEvent.getSource();
-                if (color == null) {
-
-                    color = (Color) clicked.getProperties().get("color");
-
-                    AnchorPane islands = (AnchorPane) sceneController.getElementById("#islands");
-                    for (Node island : islands.getChildren()) {
-                        island.setOnMouseClicked(GameCommand.MOVE_STUDENT.getGUIHandler(viewGUI));
+                Color c = (Color) clicked.getProperties().get("color");
+                if (c != null) {
+                    color = c;
+                    for (IslandClient islandClient : viewGUI.getModel().getIslands()) {
+                        Node island = sceneController.getElementById("#" + islandClient.getId());
                         sceneController.enableNode(island);
+                        island.setOnMouseClicked(GameCommand.MOVE_STUDENT.getGUIHandler(viewGUI));
                     }
                     //lunchHall is the third children
                     VBox lunchHall = (VBox) ((AnchorPane) sceneController.getElementById("#mainBoard")).getChildren().get(3);
                     sceneController.enableNode(lunchHall);
                     lunchHall.setOnMouseClicked(GameCommand.MOVE_STUDENT.getGUIHandler(viewGUI));
+
                 } else {
                     int id = Integer.parseInt(clicked.getId());
+                    System.out.println(id);
+                    System.out.println(color);
                     viewGUI.sendToServer(new MoveStudent(color, id, (String) clicked.getProperties().get("name")));
                     color = null;
+                    sceneController.disableEverything();
                 }
             };
         }
@@ -284,6 +287,15 @@ public enum GameCommand {
         public String toString() {
             return "Move mother nature";
         }
+
+        @Override
+        public EventHandler<MouseEvent> getGUIHandler(ViewGUI viewGUI) {
+            return mouseEvent -> {
+                Node clicked = (Node) mouseEvent.getSource();
+                int moves = (int) clicked.getProperties().get("moves");
+                viewGUI.sendToServer(new MoveMotherNature(moves));
+            };
+        }
     }, MOVE_FROM_CLOUD() {
         @Override
         public void playCLICommand(ViewCli viewCli) throws SkipCommandException {
@@ -293,6 +305,15 @@ public enum GameCommand {
         @Override
         public String toString() {
             return "Move from cloud";
+        }
+
+        @Override
+        public EventHandler<MouseEvent> getGUIHandler(ViewGUI viewGUI) {
+            return mouseEvent -> {
+                Node clicked = (Node) mouseEvent.getSource();
+                int id = Integer.parseInt(clicked.getId());
+                viewGUI.sendToServer(new MoveFromCloud(id));
+            };
         }
     }, TEXT_MESSAGE() {
         @Override

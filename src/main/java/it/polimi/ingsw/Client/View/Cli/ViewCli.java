@@ -252,7 +252,7 @@ public class ViewCli extends AbstractView implements ViewForCharacterCli {
 
     public byte getMotherNatureMovesInput(boolean canBeStopped) throws SkipCommandException {
         byte maxMoves = getModel().getCurrentPlayer().getPlayedCard().moves();
-        if (getModel().isExtraSteps()) maxMoves += 2;
+        if (getModel().isExtraSteps()) maxMoves += getModel().getMatchConstants().extraStep();
         return (byte) getIntInput(1, maxMoves, "How many steps do you want mother nature to move?", canBeStopped);
     }
 

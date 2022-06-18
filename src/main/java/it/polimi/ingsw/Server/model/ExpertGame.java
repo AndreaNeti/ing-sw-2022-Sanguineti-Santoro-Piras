@@ -39,16 +39,18 @@ public class ExpertGame extends NormalGame implements CharacterCardGame, CoinLis
     private Color ignoredColorInfluence;
     private byte prohibitionLeft;
     private byte chosenCharacter;
+    private final MatchConstants matchConstants;
 
 
     /**
      * Constructor ExpertGame creates a new instance of ExpertGame.
      *
-     * @param teamList of type {@code ArrayList}<{@link Team}> - list of the instances of team that are playing in the game.
+     * @param teamList       of type {@code ArrayList}<{@link Team}> - list of the instances of team that are playing in the game.
      * @param matchConstants of type {@link MatchConstants} - match constant of the game, based on its type.
      */
     public ExpertGame(ArrayList<Team> teamList, MatchConstants matchConstants) {
         super(teamList, matchConstants);
+        this.matchConstants = matchConstants;
         byte numberOfPlayers = super.getPlayerSize();
         this.coinsLeft = (byte) (matchConstants.totalCoins() - numberOfPlayers * matchConstants.initialPlayerCoins());
         this.coinsPlayer = new byte[numberOfPlayers];
@@ -193,8 +195,7 @@ public class ExpertGame extends NormalGame implements CharacterCardGame, CoinLis
                 for (Color c : Color.values()) {
                     if (c != ignoredColorInfluence) {
                         for (Player p : t.getPlayers()) {
-                            if (p.getWizard() == getProfessor()[c.ordinal()])
-                                influence += island.howManyStudents(c);
+                            if (p.getWizard() == getProfessor()[c.ordinal()]) influence += island.howManyStudents(c);
                         }
                     }
                 }
@@ -270,14 +271,13 @@ public class ExpertGame extends NormalGame implements CharacterCardGame, CoinLis
      * on the current player's played card and on the extraStep boolean set by the character cards.
      *
      * @param moves of type {@code int} - number of steps the player want to move mother nature.
-     * @return {@code boolean} - true if moves <= moves allowed by played card (possibly increased by 2 with the extraStep boolean), boolean false else.
+     * @return {@code boolean} - true if moves <= moves allowed by played card (possibly increased by matchConstants.extraStep with the extraStep boolean), boolean false else.
      */
     @Override
     protected boolean checkMoveMotherNature(int moves) {
-        if (!extraSteps)
-            return super.checkMoveMotherNature(moves);
+        if (!extraSteps) return super.checkMoveMotherNature(moves);
         if (moves < 0) throw new IllegalArgumentException("Cannot move backwards");
-        return moves <= getCurrentPlayer().getPlayedCard().moves() + 2;
+        return moves <= getCurrentPlayer().getPlayedCard().moves() + matchConstants.extraStep();
     }
 
     /**
@@ -297,8 +297,7 @@ public class ExpertGame extends NormalGame implements CharacterCardGame, CoinLis
             if (getProfessor()[c.ordinal()] != null)
                 currentOwner = getPlayer((byte) getProfessor()[c.ordinal()].ordinal());
 
-            if (currentOwner != null)
-                max = currentOwner.getLunchHall().howManyStudents(c);
+            if (currentOwner != null) max = currentOwner.getLunchHall().howManyStudents(c);
             else max = 0;
             newOwner = currentOwner;
 
@@ -366,9 +365,9 @@ public class ExpertGame extends NormalGame implements CharacterCardGame, CoinLis
      * Method playCharacter is used to play the selected character card, applying its effects, removing coins
      * from the player and increasing its cost by 1 if it has never been played before.
      *
-     * @throws GameException if the inputs set by the player are invalid (wrong inputs or more/fewer than requested).
+     * @throws GameException    if the inputs set by the player are invalid (wrong inputs or more/fewer than requested).
      * @throws EndGameException if the character card's effect triggers an endgame event (no more students in the bag,
-     * no more towers in a team's board or less than 3 islands left)
+     *                          no more towers in a team's board or less than 3 islands left)
      */
     @Override
     public void playCharacter() throws GameException, EndGameException {
@@ -422,8 +421,7 @@ public class ExpertGame extends NormalGame implements CharacterCardGame, CoinLis
                 indexCharacter = (byte) i;
             }
         }
-        if (indexCharacter == null)
-            throw new NotAllowedException("Card not available");
+        if (indexCharacter == null) throw new NotAllowedException("Card not available");
         // this character card has already been used, increase its cost
         if (playedCharacters[indexCharacter]) charCost++;
         if (charCost > coinsPlayer[getCurrentPlayer().getWizard().ordinal()])
@@ -439,8 +437,7 @@ public class ExpertGame extends NormalGame implements CharacterCardGame, CoinLis
      */
     @Override
     public void setCharacterInputs(List<Integer> inputs) throws GameException {
-        if (chosenCharacter != -1)
-            inputsCharacter.addAll(inputs);
+        if (chosenCharacter != -1) inputsCharacter.addAll(inputs);
         else throw new NotAllowedException("There is no chosen character card");
     }
 
@@ -528,6 +525,7 @@ public class ExpertGame extends NormalGame implements CharacterCardGame, CoinLis
 
     /**
      * Method setProhibition is called by the character card to add a prohibition to a selected island.
+     *
      * @param island of type {@link Island} - instance of the island to which the prohibition is added.
      * @throws NotAllowedException if there are no more prohibitions left in the game (maximum 4).
      */
@@ -546,7 +544,6 @@ public class ExpertGame extends NormalGame implements CharacterCardGame, CoinLis
     /**
      * Method restoreProhibition adds a prohibition on the game to be set, when an island with prohibition skips
      * the influence calculation.
-     *
      */
     private void restoreProhibition() {
         if (this.prohibitionLeft < 4) {
@@ -573,9 +570,9 @@ public class ExpertGame extends NormalGame implements CharacterCardGame, CoinLis
      * Method drawStudents draws students from the bag to the selected game component.
      *
      * @param gameComponent of type {@link GameComponent} - the game component on which we want to put the students.
-     * @param students of type {@code byte} - the number of students to draw.
+     * @param students      of type {@code byte} - the number of students to draw.
      * @throws EndGameException if there are no more students available on the bag.
-     * @throws GameException if the game component selected is null.
+     * @throws GameException    if the game component selected is null.
      */
     @Override
     public void drawStudents(GameComponent gameComponent, byte students) throws EndGameException, GameException {

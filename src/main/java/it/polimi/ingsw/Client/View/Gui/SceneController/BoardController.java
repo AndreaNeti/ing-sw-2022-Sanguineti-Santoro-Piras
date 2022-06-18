@@ -78,11 +78,11 @@ public class BoardController implements SceneController {
                     singleChar.setId(String.valueOf(character1.getId()));
                     //TODO see what id we need to put here
                 }
-                //adding choose command button and on click showing the description of the character
-                Button b = (Button) singleChar.getChildren().get(2);
-
-
-                //b.setOnMouseClicked( GameCommand.CHOOSE_CHARACTER.getGUIHandler(viewGUI));
+//                //adding choose command button and on click showing the description of the character
+//                Button b = (Button) singleChar.getChildren().get(2);
+//
+//
+//                //b.setOnMouseClicked( GameCommand.CHOOSE_CHARACTER.getGUIHandler(viewGUI));
 
                 imageView.setOnMouseClicked(mouseEvent -> {
 
@@ -105,8 +105,7 @@ public class BoardController implements SceneController {
         List<PlayerClient> players = viewGUI.getModel().getPlayers();
         int localWizardIndex = model.getMyWizard().ordinal();
         for (int i = 0; i < boards.getChildren().size(); i++) {
-            //TODO
-            //hide the board from the top make it drop that's some wap
+
             if (i >= players.size()) {
                 boards.getChildren().get(i).setVisible(false);
             } else {
@@ -134,9 +133,9 @@ public class BoardController implements SceneController {
                             updateLunchHall(player.getLunchHall());
                         }
                         // set the id of professors
-                        case 4 -> {
+                        case 4 ->
                             element.setId("professors" + localWizardIndex);
-                        }
+
                         case 6 -> {
                             //set id of the assistant card
                             AnchorPane assistantPane = (AnchorPane) board.getChildren().get(j);
@@ -183,7 +182,8 @@ public class BoardController implements SceneController {
     //to enable a node use this function-> this is needed so there is an eay way to disable all the element
     public void enableNode(Node node) {
         node.setDisable(false);
-        clickableElement.add(node);
+        if (!clickableElement.contains(node))
+            clickableElement.add(node);
     }
 
     @Override
@@ -270,8 +270,8 @@ public class BoardController implements SceneController {
             for (byte j = 0; j < students[c.ordinal()]; j++) {
                 ImageView student = (ImageView) paneEntrance.getChildren().get(insertedStudent);
                 student.setImage(new Image("Graphical_Assets/Students/" + c + ".png"));
-                student.getProperties().clear();
                 student.getProperties().put("color", c);
+                student.setPickOnBounds(true);
                 insertedStudent++;
             }
         }
@@ -342,9 +342,11 @@ public class BoardController implements SceneController {
 
     @Override
     public void updateProfessor(Color color, Wizard wizard) {
-        for (Wizard p : Wizard.values())
-            ((VBox) getElementById("#professors" + p.ordinal())).getChildren().get(color.ordinal()).setVisible(false);
-        ((VBox) getElementById("#professors" + wizard.ordinal())).getChildren().get(color.ordinal()).setVisible(true);
+        Platform.runLater(() -> {
+            for (int i = 0; i < viewGUI.getModel().getMatchType().nPlayers(); i++)
+                ((VBox) getElementById("#professors" + i)).getChildren().get(color.ordinal()).setVisible(false);
+            ((VBox) getElementById("#professors" + wizard.ordinal())).getChildren().get(color.ordinal()).setVisible(true);
+        });
     }
 
     @Override
