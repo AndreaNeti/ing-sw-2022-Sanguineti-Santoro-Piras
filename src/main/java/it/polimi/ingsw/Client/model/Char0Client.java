@@ -1,7 +1,11 @@
 package it.polimi.ingsw.Client.model;
 
 import it.polimi.ingsw.Client.View.Cli.ViewForCharacterCli;
+import it.polimi.ingsw.Client.View.Gui.ViewGUI;
 import it.polimi.ingsw.exceptions.clientExceptions.SkipCommandException;
+import javafx.event.EventHandler;
+import javafx.scene.Node;
+import javafx.scene.input.MouseEvent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +34,17 @@ public class Char0Client extends CharacterCardClientWithStudents {
     public void setNextInput(ViewForCharacterCli view) throws SkipCommandException {
         inputs.add(view.getColorInput(false).ordinal());
         inputs.add(view.getIslandDestination("Select the island where you want to put the student", false));
+    }
+
+    /*@Override
+    public void setHandler(ViewGUI viewGUI) {
+    }*/
+
+    public EventHandler<MouseEvent> setInput() {
+        return mouseEvent -> {
+            Node clicked = (Node) mouseEvent.getSource();
+
+        };
     }
 
     @Override

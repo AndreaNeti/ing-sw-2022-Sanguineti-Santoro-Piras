@@ -45,12 +45,12 @@ public class GuiFX extends Application {
             FXMLLoader loader = new FXMLLoader(GuiFX.class.getResource("/board.fxml"));
 
             try {
-                primaryStage.setScene(new Scene(loader.load(), 1920, 1080,false, SceneAntialiasing.BALANCED));
+                primaryStage.setScene(new Scene(loader.load(), 1920, 1080, false, SceneAntialiasing.BALANCED));
             } catch (IOException e) {
                 e.printStackTrace();
             }
 
-            primaryStage.setFullScreen(false);
+            primaryStage.setFullScreen(true);
             primaryStage.setResizable(true);
             primaryStage.show();
             SceneController boardController = loader.getController();
@@ -67,13 +67,13 @@ public class GuiFX extends Application {
             primaryStage.setTitle("Eryantis");
             FXMLLoader loader = new FXMLLoader(GuiFX.class.getResource("/menu.fxml"));
             try {
-                primaryStage.setScene(new Scene(loader.load(), 700, 700,false, SceneAntialiasing.BALANCED));
+                primaryStage.setScene(new Scene(loader.load(), 700, 700, false, SceneAntialiasing.BALANCED));
                 primaryStage.show();
                 SceneController menuController = loader.getController();
                 menuController.setViewGUI(viewGUI);
                 controller.addListener(menuController);
-                activeSceneController= menuController;
-                inMenuScene=true;
+                activeSceneController = menuController;
+                inMenuScene = true;
             } catch (IOException e) {
                 e.printStackTrace();
             }

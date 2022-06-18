@@ -196,17 +196,19 @@ public enum GameCommand {
                 Node clicked = (Node) mouseEvent.getSource();
                 Color c = (Color) clicked.getProperties().get("color");
                 if (c != null) {
-                    color = c;
-                    for (IslandClient islandClient : viewGUI.getModel().getIslands()) {
-                        Node island = sceneController.getElementById("#" + islandClient.getId());
-                        sceneController.enableNode(island);
-                        island.setOnMouseClicked(GameCommand.MOVE_STUDENT.getGUIHandler(viewGUI));
+                    if (color == null) {
+                        for (IslandClient islandClient : viewGUI.getModel().getIslands()) {
+                            Node island = sceneController.getElementById("#" + islandClient.getId());
+                            sceneController.enableNode(island);
+                            System.out.println(island.getEffect() + "  " + island.getStyleClass());
+                            island.setOnMouseClicked(GameCommand.MOVE_STUDENT.getGUIHandler(viewGUI));
+                        }
+                        //lunchHall is the third children
+                        VBox lunchHall = (VBox) ((AnchorPane) sceneController.getElementById("#mainBoard")).getChildren().get(3);
+                        sceneController.enableNode(lunchHall);
+                        lunchHall.setOnMouseClicked(GameCommand.MOVE_STUDENT.getGUIHandler(viewGUI));
                     }
-                    //lunchHall is the third children
-                    VBox lunchHall = (VBox) ((AnchorPane) sceneController.getElementById("#mainBoard")).getChildren().get(3);
-                    sceneController.enableNode(lunchHall);
-                    lunchHall.setOnMouseClicked(GameCommand.MOVE_STUDENT.getGUIHandler(viewGUI));
-
+                    color = c;
                 } else {
                     // TODO mh
                     int id;

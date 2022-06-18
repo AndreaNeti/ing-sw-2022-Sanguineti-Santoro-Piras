@@ -41,8 +41,7 @@ public class PlayerClient {
     }
 
     public void playCard(AssistantCard playedCard) {
-        if (assistantCards.remove(playedCard))
-            this.playedCard = playedCard;
+        if (assistantCards.remove(playedCard)) this.playedCard = playedCard;
     }
 
     public Wizard getWizard() {

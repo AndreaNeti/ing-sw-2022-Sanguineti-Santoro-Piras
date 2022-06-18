@@ -30,6 +30,11 @@ public abstract class ClientPhase {
     public abstract void playPhase(ViewGUI viewGUI);
 
     public void addCommand(GameCommand command) {
-        gameCommands.add(command);
+        if (!gameCommands.contains(command))
+            gameCommands.add(command);
+    }
+
+    List<GameCommand> getGameCommand() {
+        return gameCommands;
     }
 }

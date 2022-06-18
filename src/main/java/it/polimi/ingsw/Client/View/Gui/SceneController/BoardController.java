@@ -8,21 +8,29 @@ import it.polimi.ingsw.Util.Color;
 import it.polimi.ingsw.Util.HouseColor;
 import it.polimi.ingsw.Util.Wizard;
 import it.polimi.ingsw.Util.AssistantCard;
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.css.StyleClass;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.util.Duration;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.UnaryOperator;
 
 public class BoardController implements SceneController {
     ViewGUI viewGUI;
@@ -31,7 +39,7 @@ public class BoardController implements SceneController {
     //boards is the anchor pane that contains all the board from top to bottom->check showAllModel for more information
     public AnchorPane boards;
     public AnchorPane mainBoard;
-    //this is a hbox that contains three anchor pane, each contains the image character card [0], anchor pane of students (even the char that don't have it)[1], the button to choose[1]
+    //this is a hbox that contains three anchor pane, each contains the image character card [0], anchor pane of students (even the char that don't have it)[1], the button to choose[2]
     public HBox characters;
     public Button chatButton;
     public Button quitButton;
@@ -71,11 +79,16 @@ public class BoardController implements SceneController {
                 AnchorPane singleChar = (AnchorPane) this.characters.getChildren().get(i);
                 ImageView imageView = (ImageView) singleChar.getChildren().get(0);
                 imageView.setImage(new Image("Graphical_Assets/CharacterCards/" + character.getCharId() + ".jpg"));
+                singleChar.getProperties().put("charId", character.getCharId());
                 if (character.containsStudents()) {
                     CharacterCardClientWithStudents character1 = (CharacterCardClientWithStudents) character;
-                    singleChar.getChildren().get(1).setVisible(true);
+                    AnchorPane paneStudent = (AnchorPane) singleChar.getChildren().get(1);
+                    paneStudent.setVisible(true);
                     singleChar.setId(String.valueOf(character1.getId()));
-                    //TODO see what id we need to put here
+                    //set the properties of the color of the student
+                    for (Color color : Color.values()) {
+                        paneStudent.getChildren().get(color.ordinal()).getProperties().put("color", color);
+                    }
                 }
 //                //adding choose command button and on click showing the description of the character
 //                Button b = (Button) singleChar.getChildren().get(2);
@@ -83,8 +96,7 @@ public class BoardController implements SceneController {
 //
 //                //b.setOnMouseClicked( GameCommand.CHOOSE_CHARACTER.getGUIHandler(viewGUI));
 
-                imageView.setOnMouseClicked(mouseEvent -> {
-
+                singleChar.setOnMouseClicked(mouseEvent -> {
                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
                     alert.setContentText(character.getDescription());
                     alert.setTitle("Character card description");
@@ -133,7 +145,16 @@ public class BoardController implements SceneController {
                         }
                         // set the id of professors
                         case 4 -> element.setId("professors" + localWizardIndex);
+                        //set the id of the towers
 
+                        case 5 -> {
+                            List<TeamClient> teams = viewGUI.getModel().getTeams();
+                            TeamClient team = viewGUI.getModel().getTeams().get(localWizardIndex % teams.size());
+                            int teamSize = team.getPlayers().size();
+                            System.out.println(team.getHouseColor() + String.valueOf((i / teamSize) % teamSize));
+                            element.setId(team.getHouseColor() + String.valueOf((i / teamSize) % teamSize));
+                            updateTowerLeft(team.getHouseColor(), team.getTowersLeft());
+                        }
                         case 6 -> {
                             //set id of the assistant card
                             AnchorPane assistantPane = (AnchorPane) board.getChildren().get(j);
@@ -149,12 +170,14 @@ public class BoardController implements SceneController {
             }
         }
         for (IslandClient i : model.getIslands()) {
+            //TODO see if there is a better way
             updateGameComponent(i);
         }
         updateMotherNature(model.getMotherNaturePosition());
-        for (int i = model.getClouds().size(); i < clouds.getChildren().size(); i++) {
-            clouds.getChildren().get(i).setVisible(false);
-        }
+
+        //delete all the unused clouds
+        clouds.getChildren().subList(viewGUI.getModel().getClouds().size(), clouds.getChildren().size()).clear();
+
         for (GameComponentClient cloud : model.getClouds()) {
             updateGameComponent(cloud);
         }
@@ -180,14 +203,24 @@ public class BoardController implements SceneController {
     //to enable a node use this function-> this is needed so there is an eay way to disable all the element
     public void enableNode(Node node) {
         node.setDisable(false);
-        if (!clickableElement.contains(node))
-            clickableElement.add(node);
+        if (!clickableElement.contains(node)) clickableElement.add(node);
+        node.getStyleClass().add("clickable");
+
+        DropShadow shadow = (DropShadow) node.getEffect();
+        if (shadow != null) {
+            Timeline timeline = new Timeline();
+            timeline.getKeyFrames().setAll(new KeyFrame(Duration.ZERO, new KeyValue(shadow.radiusProperty(), shadow.getSpread())), new KeyFrame(Duration.millis(500), new KeyValue(shadow.spreadProperty(), 0)), new KeyFrame(Duration.millis(1000), new KeyValue(shadow.spreadProperty(), shadow.getSpread())));
+            timeline.setCycleCount(Animation.INDEFINITE);
+            timeline.play();
+        }
+
     }
 
     @Override
     public void disableEverything() {
         for (Node n : clickableElement) {
             n.setDisable(true);
+            n.getStyleClass().remove("clickable");
         }
         clickableElement.clear();
     }
@@ -344,6 +377,29 @@ public class BoardController implements SceneController {
 
     @Override
     public void updateTowerLeft(HouseColor houseColor, Byte towerLefts) {
+        Platform.runLater(() -> {
+            /*for (PlayerClient p : viewGUI.getModel().getTeams().get(houseColor.ordinal()).getPlayers()
+            ) {
+                AnchorPane towers = (AnchorPane) getElementById("towers" + p.getWizard().ordinal());
+                for (int i = 0; i < towerLefts; i++) {
+
+                }
+            }*/
+            int teamSize = viewGUI.getModel().getTeams().get(houseColor.ordinal()).getPlayers().size();
+            for (int i = 0; i < teamSize; i++) {
+
+                AnchorPane towers = (AnchorPane) getElementById("#" + houseColor + i);
+                for (int j = 0; j < towerLefts; j++) {
+                    ImageView tower = (ImageView) towers.getChildren().get(j);
+                    tower.setImage(new Image("/Graphical_Assets/Towers/" + houseColor + ".png"));
+                }
+                for (int k = towerLefts; k < towers.getChildren().size(); k++) {
+                    ImageView tower = (ImageView) towers.getChildren().get(k);
+                    tower.setImage(null);
+                }
+            }
+
+        });
     }
 
     @Override

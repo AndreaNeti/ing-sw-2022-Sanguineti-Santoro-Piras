@@ -1,9 +1,11 @@
 * :disabled {
     -fx-opacity: 1;
 }
-.shadow{
+
+.shadow {
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 10, 0, 0, 0);
 }
+
 .card {
 }
 
@@ -18,14 +20,15 @@
 .island {
 }
 
-.cloud.clickable {
+.cloud .clickable {
     -fx-effect: dropshadow(gaussian, rgb(0, 0, 0), 15, 0.4, 0, 0);
 }
-.entrancehall.clickable {
+
+.entrancehall .clickable {
     -fx-effect: dropshadow(gaussian, rgb(255, 255, 255), 10, 0.8, 0, 0);
 }
 
-.lunchhall.clickable {
+.lunchhall .clickable {
     -fx-effect: dropshadow(gaussian, rgb(255, 255, 255), 15, 0.7, 0, 0);
 }
 
