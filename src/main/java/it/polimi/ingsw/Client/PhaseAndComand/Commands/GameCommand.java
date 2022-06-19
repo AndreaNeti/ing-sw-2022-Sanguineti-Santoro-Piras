@@ -17,7 +17,10 @@ import it.polimi.ingsw.exceptions.clientExceptions.SkipCommandException;
 import it.polimi.ingsw.network.toServerMessage.*;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
-import javafx.scene.control.*;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.RadioButton;
+import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
@@ -94,7 +97,7 @@ public enum GameCommand {
             return event -> {
                 try {
                     RadioButton r = (RadioButton) GuiFX.getActiveSceneController().getElementById("#gameType");
-                    boolean isExpert = r.getText().equals("ExpertGame");
+                    boolean isExpert = r.getText().equals("Expert");
                     RadioButton r1 = (RadioButton) GuiFX.getActiveSceneController().getElementById("#player");
                     byte players = Byte.parseByte(r1.getText());
                     viewGUI.sendToServer(new CreateMatch(new MatchType(players, isExpert)));
@@ -119,7 +122,7 @@ public enum GameCommand {
             return event -> {
                 try {
                     RadioButton r = (RadioButton) GuiFX.getActiveSceneController().getElementById("#gameType");
-                    boolean isExpert = r.getText().equals("ExpertGame");
+                    boolean isExpert = r.getText().equals("Expert");
                     RadioButton r1 = (RadioButton) GuiFX.getActiveSceneController().getElementById("#player");
                     byte players = Byte.parseByte(r1.getText());
                     viewGUI.sendToServer(new JoinMatchByType(new MatchType(players, isExpert)));

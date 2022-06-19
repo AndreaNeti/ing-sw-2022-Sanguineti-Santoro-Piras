@@ -1,8 +1,8 @@
 package it.polimi.ingsw.Client.model;
 
-import it.polimi.ingsw.Util.HouseColor;
 import it.polimi.ingsw.Server.model.GameComponents.GameComponent;
 import it.polimi.ingsw.Server.model.GameComponents.Island;
+import it.polimi.ingsw.Util.HouseColor;
 
 public class    IslandClient extends GameComponentClient {
     private HouseColor team;

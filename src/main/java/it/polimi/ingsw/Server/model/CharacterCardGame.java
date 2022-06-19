@@ -1,9 +1,9 @@
 package it.polimi.ingsw.Server.model;
 
-import it.polimi.ingsw.Util.Color;
 import it.polimi.ingsw.Server.controller.GameDelta;
 import it.polimi.ingsw.Server.model.GameComponents.GameComponent;
 import it.polimi.ingsw.Server.model.GameComponents.Island;
+import it.polimi.ingsw.Util.Color;
 import it.polimi.ingsw.exceptions.serverExceptions.EndGameException;
 import it.polimi.ingsw.exceptions.serverExceptions.GameException;
 import it.polimi.ingsw.exceptions.serverExceptions.NotAllowedException;
@@ -35,7 +35,7 @@ public interface CharacterCardGame {
     /**
      * Method setIgnoredColorInfluence is called by the character card to set the color to ignore when calculating influence.
      *
-     * @param ignoredColorInfluence of type {@lnik Color} - color of the students to ignore during the influence calculation.
+     * @param ignoredColorInfluence of type {@link Color} - color of the students to ignore during the influence calculation.
      */
     void setIgnoredColorInfluence(Color ignoredColorInfluence);
     /**

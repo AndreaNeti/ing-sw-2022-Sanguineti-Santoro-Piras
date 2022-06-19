@@ -4,13 +4,12 @@ import it.polimi.ingsw.Client.View.GameClientListener;
 import it.polimi.ingsw.Client.model.CharacterCardClient;
 import it.polimi.ingsw.Client.model.GameComponentClient;
 import it.polimi.ingsw.Client.model.IslandClient;
+import it.polimi.ingsw.Util.AssistantCard;
 import it.polimi.ingsw.Util.Color;
 import it.polimi.ingsw.Util.HouseColor;
 import it.polimi.ingsw.Util.Wizard;
-import it.polimi.ingsw.Util.AssistantCard;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public abstract class GameClientListened {

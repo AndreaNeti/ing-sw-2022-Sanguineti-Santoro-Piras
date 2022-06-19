@@ -4,21 +4,14 @@ import it.polimi.ingsw.Client.PhaseAndComand.Commands.GameCommand;
 import it.polimi.ingsw.Client.View.Gui.GuiFX;
 import it.polimi.ingsw.Client.View.Gui.SceneController.SceneController;
 import it.polimi.ingsw.Client.View.Gui.ViewGUI;
-import it.polimi.ingsw.Server.model.Game;
 import it.polimi.ingsw.Util.AssistantCard;
-import it.polimi.ingsw.Util.Wizard;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
-import javafx.scene.Node;
-import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
-
-import javax.security.auth.login.AccountNotFoundException;
 
 
 public class PlanificationPhase extends ClientPhase {

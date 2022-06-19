@@ -7,7 +7,6 @@ import it.polimi.ingsw.Client.View.Gui.ViewGUI;
 import it.polimi.ingsw.Client.model.GameClientView;
 import it.polimi.ingsw.Client.model.IslandClient;
 import javafx.scene.Node;
-import javafx.scene.layout.AnchorPane;
 
 import java.util.List;
 

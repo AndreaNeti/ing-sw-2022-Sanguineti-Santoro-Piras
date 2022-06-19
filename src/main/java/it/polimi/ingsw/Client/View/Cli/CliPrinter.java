@@ -2,10 +2,10 @@ package it.polimi.ingsw.Client.View.Cli;
 
 import it.polimi.ingsw.Client.View.GameClientListener;
 import it.polimi.ingsw.Client.model.*;
+import it.polimi.ingsw.Util.AssistantCard;
 import it.polimi.ingsw.Util.Color;
 import it.polimi.ingsw.Util.HouseColor;
 import it.polimi.ingsw.Util.Wizard;
-import it.polimi.ingsw.Util.AssistantCard;
 import org.fusesource.jansi.AnsiConsole;
 
 import java.io.IOException;

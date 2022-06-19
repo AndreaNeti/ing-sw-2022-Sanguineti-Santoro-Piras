@@ -1,24 +1,24 @@
 package it.polimi.ingsw.Client.View.Gui.SceneController;
 
 import it.polimi.ingsw.Client.PhaseAndComand.Commands.GameCommand;
-import it.polimi.ingsw.Client.View.Gui.GuiFX;
 import it.polimi.ingsw.Client.View.Gui.ViewGUI;
 import it.polimi.ingsw.Client.model.CharacterCardClient;
 import it.polimi.ingsw.Client.model.GameComponentClient;
 import it.polimi.ingsw.Client.model.IslandClient;
+import it.polimi.ingsw.Util.AssistantCard;
 import it.polimi.ingsw.Util.Color;
 import it.polimi.ingsw.Util.HouseColor;
 import it.polimi.ingsw.Util.Wizard;
-import it.polimi.ingsw.Util.AssistantCard;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Group;
 import javafx.scene.Node;
-import javafx.scene.control.*;
-import javafx.scene.image.ImageView;
+import javafx.scene.control.Button;
+import javafx.scene.control.ListView;
+import javafx.scene.control.RadioButton;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -36,7 +36,7 @@ public class MenuController implements SceneController {
     AnchorPane root;
     ViewGUI viewGUI;
     @FXML
-    Group mainGroup;
+    AnchorPane mainGroup;
     @FXML
     Button connectButton;
     @FXML

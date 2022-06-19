@@ -4,22 +4,36 @@
 
 .root {
     -fx-font-family: "Roboto Light";
+    -fx-background-color: #80b5ff;
 }
 
 .button {
     -fx-background-color: white;
     -fx-background-radius: 5;
+    -fx-cursor: hand;
 }
 
 .island .label {
     -fx-background-radius: 10;
     -fx-font-weight: bold;
     -fx-font-size: 12;
+    -fx-padding: 0 3;
+}
+
+.card .label {
+    -fx-background-radius: 10;
+    -fx-font-weight: bold;
+    -fx-font-size: 10;
+    -fx-padding: 0 3;
 }
 
 .board .label {
     -fx-font-weight: bold;
     -fx-font-size: 15;
+    -fx-border-color: #333;
+    -fx-background-color: #7B5804;
+    -fx-border-radius: 0 0 0 5;
+    -fx-background-radius: 0 0 0 5;
 }
 
 .shadow, .student, .professor, .button {
@@ -41,18 +55,18 @@
 }
 
 .clickable {
-    -fx-cursor: pointer;
+    -fx-cursor: hand;
 }
 
-.cloud .clickable {
-    -fx-effect: dropshadow(gaussian, rgb(0, 0, 0), 15, 0.4, 0, 0);
+.cloud.clickable {
+    -fx-effect: dropshadow(gaussian, rgb(50, 150, 255), 15, 0.5, 0, 0);
 }
 
 .entrancehall .clickable {
     -fx-effect: dropshadow(gaussian, rgb(255, 255, 255), 10, 0.8, 0, 0);
 }
 
-.lunchhall .clickable {
+.lunchhall.clickable {
     -fx-border-color: white;
     -fx-border-radius: 10;
     -fx-effect: dropshadow(gaussian, rgb(255, 255, 255), 5, 0.7, 0, 0);
@@ -63,5 +77,55 @@
 }
 
 .card.clickable {
-    -fx-effect: dropshadow(gaussian, rgba(150, 0, 255, 0.5), 40, 0.6, 0, 0);
+    -fx-effect: dropshadow(gaussian, rgba(150, 0, 255, 0.5), 20, 0.5, 0, 0);
+}
+
+#nickName, #selectMatch, #connect {
+    -fx-background-color: rgba(0, 0, 0, 0.25);
+    -fx-background-radius: 10;
+    -fx-padding: 25 10 0 10;
+}
+
+#nickName, #connect {
+    -fx-padding: 20;
+}
+
+#nickName .label, #connect .label {
+    -fx-font-size: 20;
+    -fx-font-weight: bold;
+}
+
+#selectMatch {
+    -fx-hgap: 10;
+    -fx-vgap: 10;
+}
+
+#selectMatch .label {
+    -fx-font-size: 15;
+}
+
+#selectMatch .radio-button {
+    -fx-font-size: 12;
+    -fx-padding: 3;
+}
+
+#selectMatch .radio-button, #selectMatch .label {
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+#chatButton {
+    -fx-background-color: rgba(0, 0, 0, 0.2);
+    -fx-text-fill: white;
+    -fx-background-radius: 5 5 0 0;
+    -fx-font-size: 17;
+    -fx-padding: 10 50;
+}
+
+#quitButton {
+    -fx-background-color: #d00;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 15;
+    -fx-padding: 5 15;
 }

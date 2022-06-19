@@ -1,8 +1,6 @@
 package it.polimi.ingsw.network.toClientMessage;
 
 import it.polimi.ingsw.Client.Controller.ControllerClient;
-import it.polimi.ingsw.exceptions.serverExceptions.EndGameException;
-import it.polimi.ingsw.exceptions.serverExceptions.GameException;
 
 import java.io.Serializable;
 

@@ -1,9 +1,5 @@
 package it.polimi.ingsw.Server.model;
 
-import it.polimi.ingsw.Util.AssistantCard;
-import it.polimi.ingsw.Util.Color;
-import it.polimi.ingsw.Util.HouseColor;
-import it.polimi.ingsw.Util.Wizard;
 import it.polimi.ingsw.Server.controller.GameDelta;
 import it.polimi.ingsw.Server.controller.MatchConstants;
 import it.polimi.ingsw.Server.controller.MatchType;
@@ -11,6 +7,10 @@ import it.polimi.ingsw.Server.model.GameComponents.Bag;
 import it.polimi.ingsw.Server.model.GameComponents.Cloud;
 import it.polimi.ingsw.Server.model.GameComponents.GameComponent;
 import it.polimi.ingsw.Server.model.GameComponents.Island;
+import it.polimi.ingsw.Util.AssistantCard;
+import it.polimi.ingsw.Util.Color;
+import it.polimi.ingsw.Util.HouseColor;
+import it.polimi.ingsw.Util.Wizard;
 import it.polimi.ingsw.exceptions.serverExceptions.EndGameException;
 import it.polimi.ingsw.exceptions.serverExceptions.GameException;
 import it.polimi.ingsw.exceptions.serverExceptions.NotAllowedException;

@@ -1,8 +1,8 @@
 package it.polimi.ingsw.Client.model;
 
-import it.polimi.ingsw.Util.HouseColor;
 import it.polimi.ingsw.Server.controller.MatchConstants;
 import it.polimi.ingsw.Server.model.Player;
+import it.polimi.ingsw.Util.HouseColor;
 
 import java.util.ArrayList;
 import java.util.List;

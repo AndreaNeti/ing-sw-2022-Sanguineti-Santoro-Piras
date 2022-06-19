@@ -1,14 +1,14 @@
 package it.polimi.ingsw.Client.model;
 
 import it.polimi.ingsw.Client.GameClientListened;
-import it.polimi.ingsw.Util.Color;
-import it.polimi.ingsw.Util.HouseColor;
-import it.polimi.ingsw.Util.Wizard;
 import it.polimi.ingsw.Server.controller.MatchConstants;
 import it.polimi.ingsw.Server.controller.MatchType;
 import it.polimi.ingsw.Server.controller.Server;
-import it.polimi.ingsw.Util.AssistantCard;
 import it.polimi.ingsw.Server.model.GameComponents.GameComponent;
+import it.polimi.ingsw.Util.AssistantCard;
+import it.polimi.ingsw.Util.Color;
+import it.polimi.ingsw.Util.HouseColor;
+import it.polimi.ingsw.Util.Wizard;
 
 import java.util.*;
 import java.util.concurrent.locks.Lock;

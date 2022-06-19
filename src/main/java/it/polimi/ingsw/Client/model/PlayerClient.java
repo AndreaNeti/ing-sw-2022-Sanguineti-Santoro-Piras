@@ -1,8 +1,8 @@
 package it.polimi.ingsw.Client.model;
 
-import it.polimi.ingsw.Util.Wizard;
-import it.polimi.ingsw.Util.AssistantCard;
 import it.polimi.ingsw.Server.model.Player;
+import it.polimi.ingsw.Util.AssistantCard;
+import it.polimi.ingsw.Util.Wizard;
 
 import java.util.List;
 

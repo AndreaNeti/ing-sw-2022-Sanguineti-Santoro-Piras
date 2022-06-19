@@ -6,8 +6,8 @@ import it.polimi.ingsw.exceptions.serverExceptions.NotAllowedException;
 import it.polimi.ingsw.network.toClientMessage.ErrorException;
 import it.polimi.ingsw.network.toClientMessage.OK;
 import it.polimi.ingsw.network.toClientMessage.ToClientMessage;
-import it.polimi.ingsw.network.toServerMessage.ToServerMessage;
 import it.polimi.ingsw.network.toServerMessage.Quit;
+import it.polimi.ingsw.network.toServerMessage.ToServerMessage;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
