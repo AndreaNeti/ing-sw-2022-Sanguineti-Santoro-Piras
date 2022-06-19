@@ -26,6 +26,7 @@ public class MoveMotherNaturePhase extends ClientPhase {
         }
         List<IslandClient> islands = model.getIslands();
         byte motherNaturePosition = model.getMotherNaturePosition();
+        // TODO broken after merge
         for (int i = 1; i <= max_moves; i++) {
             int idClickableIsland = islands.get((motherNaturePosition + i) % islands.size()).getId();
             Node island = sceneController.getElementById("#" + idClickableIsland);

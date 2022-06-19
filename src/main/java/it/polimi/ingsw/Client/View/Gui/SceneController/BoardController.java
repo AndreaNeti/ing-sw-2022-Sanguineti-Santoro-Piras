@@ -28,10 +28,7 @@ import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 
 import java.sql.Time;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class BoardController implements SceneController {
     ViewGUI viewGUI;
@@ -50,7 +47,8 @@ public class BoardController implements SceneController {
     public AnchorPane assistantCardsBox;
     private ObservableList<String> observableListChat;
     public HBox clouds;
-    public Map<Node, Timeline> clickableElement = new HashMap<>();
+    public Set<Node> clickableElement = new HashSet<>();
+    private final HashMap<Node, Timeline> timelines = new HashMap<>();
 
 
     private void initialize() {
@@ -197,7 +195,7 @@ public class BoardController implements SceneController {
     @Override
     public void hideEverything() {
         // TODO not used
-        for (Node node : clickableElement.keySet()) {
+        for (Node node : clickableElement) {
             node.setDisable(false);
         }
     }
@@ -206,31 +204,40 @@ public class BoardController implements SceneController {
     public void enableNode(Node node) {
         node.setDisable(false);
         node.getStyleClass().add("clickable");
-        Platform.runLater(() -> {
-            DropShadow shadow = (DropShadow) node.getEffect();
-            Timeline timeline = null;
-            if (shadow != null) {
+        clickableElement.add(node);
+        // lost 3 hours because of this :D
+        node.applyCss();
+        DropShadow shadow = (DropShadow) node.getEffect();
+        Timeline timeline;
+        if (shadow != null) {
+            // check if already existing
+            timeline = timelines.get(node);
+            if (timeline == null) {
+                // create timeline with animation
                 timeline = new Timeline();
                 timeline.getKeyFrames().setAll(new KeyFrame(Duration.ZERO, new KeyValue(shadow.spreadProperty(), shadow.getSpread())), new KeyFrame(Duration.millis(1000), new KeyValue(shadow.spreadProperty(), 0)));
                 timeline.setCycleCount(Animation.INDEFINITE);
                 timeline.setAutoReverse(true);
                 timeline.play();
+                timelines.put(node, timeline);
             } else {
-                System.out.println("Not applied effect on " + node);
+                // already created, play from start
+                timeline.playFromStart();
             }
-            clickableElement.put(node, timeline);
-        });
+        } else {
+            System.err.println("Not applied effect on " + node);
+        }
     }
 
     @Override
     public void disableEverything() {
-        for (Map.Entry<Node, Timeline> entry : clickableElement.entrySet()) {
-            Node node = entry.getKey();
-            Timeline timeline = entry.getValue();
+        for (Node node : clickableElement) {
+            Timeline timeline = timelines.get(node);
             node.setDisable(true);
             node.getStyleClass().remove("clickable");
-            if (timeline != null)
+            if (timeline != null) {
                 timeline.stop();
+            }
         }
         clickableElement.clear();
     }
