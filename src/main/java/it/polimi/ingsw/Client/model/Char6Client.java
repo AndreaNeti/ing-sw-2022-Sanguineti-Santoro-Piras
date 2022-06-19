@@ -1,16 +1,23 @@
 package it.polimi.ingsw.Client.model;
 
 import it.polimi.ingsw.Client.View.Cli.ViewForCharacterCli;
+import it.polimi.ingsw.Server.model.Char6;
 import it.polimi.ingsw.exceptions.clientExceptions.SkipCommandException;
 
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Char6Client class represents the character card on the client side and corresponds to the server class {@link Char6}.
+ */
 public class Char6Client extends CharacterCardClientWithStudents {
     private final List<Integer> inputs;
 
     private boolean used;
 
+    /**
+     * Constructor Char6Client creates a new instance of Char6Client.
+     */
     public Char6Client() {
         super(-11);
         inputs = new ArrayList<>();
@@ -64,6 +71,11 @@ public class Char6Client extends CharacterCardClientWithStudents {
         return 6;
     }
 
+    /**
+     * Method toString returns the name of the character card.
+     *
+     * @return {@code String} - character card name.
+     */
     @Override
     public String toString() {
         return "Jester";

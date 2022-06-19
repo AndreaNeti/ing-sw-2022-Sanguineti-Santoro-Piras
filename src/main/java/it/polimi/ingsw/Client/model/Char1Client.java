@@ -1,10 +1,14 @@
 package it.polimi.ingsw.Client.model;
 
 import it.polimi.ingsw.Client.View.Cli.ViewForCharacterCli;
+import it.polimi.ingsw.Server.model.Char1;
 import it.polimi.ingsw.exceptions.clientExceptions.SkipCommandException;
 
 import java.util.List;
 
+/**
+ * Char1Client class represents the character card on the client side and corresponds to the server class {@link Char1}.
+ */
 public class Char1Client implements CharacterCardClient {
     private boolean used;
 
@@ -57,6 +61,11 @@ public class Char1Client implements CharacterCardClient {
         return  false;
     }
 
+    /**
+     * Method toString returns the name of the character card.
+     *
+     * @return {@code String} - character card name.
+     */
     @Override
     public String toString() {
         return "Farmer";

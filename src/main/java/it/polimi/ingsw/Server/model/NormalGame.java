@@ -686,7 +686,8 @@ public class NormalGame implements Game {
     /**
      * Method getProfessors returns the wizards controlling each professor.
      *
-     * @return {@link Wizard}{@code []} - array of wizards controlling each professor (size = number of colors).
+     * @return {@link Wizard}{@code []} - array of wizards controlling each professor (size = number of colors). <br>
+     * Each position in the array corresponds to the respective professor's color in the {@link Color} enum.
      */
 
     protected Wizard[] getProfessor() {
@@ -697,7 +698,7 @@ public class NormalGame implements Game {
     /**
      * Method getMotherNaturePosition returns the current position of mother nature.
      *
-     * @return {@code byte} - current mother nature position.
+     * @return {@code byte} - mother nature position, corresponding to the index of the island on which she currently is.
      */
     // used only in tests
     protected byte getMotherNaturePosition() {

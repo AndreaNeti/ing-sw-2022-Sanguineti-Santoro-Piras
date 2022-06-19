@@ -4,7 +4,10 @@ import it.polimi.ingsw.Server.model.GameComponents.GameComponent;
 import it.polimi.ingsw.Server.model.GameComponents.Island;
 import it.polimi.ingsw.Util.HouseColor;
 
-public class    IslandClient extends GameComponentClient {
+/**
+ * IslandClient class represents the island on the client side and corresponds to the server class {@link Island}.
+ */
+public class IslandClient extends GameComponentClient {
     private HouseColor team;
     private byte prohibition;
     private byte number;
@@ -33,6 +36,12 @@ public class    IslandClient extends GameComponentClient {
         this.number = number;
     }
 
+    /**
+     * Method modifyGameComponent updates the students, the ID, the owner team, the number of towers and the prohibitions
+     * of the island to match the ones of the game component provided.
+     *
+     * @param gameComponent of type {@link GameComponent} - instance of the game component.
+     */
     @Override
     protected void modifyGameComponent(GameComponent gameComponent) {
         super.modifyGameComponent(gameComponent);
@@ -42,6 +51,11 @@ public class    IslandClient extends GameComponentClient {
         prohibition = island.getProhibitions();
     }
 
+    /**
+     * Method toString returns the name of the island, its students, its team, its number of towers and its prohibitions.
+     *
+     * @return {@code String} - "Island | Students: (RED = X, BLUE = Y, ...) | Owned by (team) with Z towers | Number of prohibitions: W".
+     */
     @Override
     public String toString() {
         String s = super.toString();
@@ -53,6 +67,11 @@ public class    IslandClient extends GameComponentClient {
         return s;
     }
 
+    /**
+     * Method getNameOfComponent returns the name of the component.
+     *
+     * @return {@code String} - "Island".
+     */
     @Override
     public String getNameOfComponent() {
         return "Island";

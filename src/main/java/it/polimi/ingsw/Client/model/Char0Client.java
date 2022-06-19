@@ -5,10 +5,13 @@ import it.polimi.ingsw.exceptions.clientExceptions.SkipCommandException;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
-
+import it.polimi.ingsw.Server.model.Char0;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Char0Client class represents the character card on the client side and corresponds to the server class {@link Char0}.
+ */
 public class Char0Client extends CharacterCardClientWithStudents {
     private final List<Integer> inputs;
     private boolean used;
@@ -18,6 +21,9 @@ public class Char0Client extends CharacterCardClientWithStudents {
         this.used = true;
     }
 
+    /**
+     * Constructor Char0Client creates a new instance of Char0Client.
+     */
     public Char0Client() {
         super(-10);
         inputs = new ArrayList<>();
@@ -66,6 +72,11 @@ public class Char0Client extends CharacterCardClientWithStudents {
         inputs.clear();
     }
 
+    /**
+     * Method toString returns the name of the character card.
+     *
+     * @return {@code String} - character card name.
+     */
     @Override
     public String toString() {
         return "Monk";
