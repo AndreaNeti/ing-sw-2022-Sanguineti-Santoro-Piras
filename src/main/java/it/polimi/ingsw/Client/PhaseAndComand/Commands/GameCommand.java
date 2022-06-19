@@ -172,7 +172,7 @@ public enum GameCommand {
                 Node clicked = (Node) mouseEvent.getSource();
                 AssistantCard assistantCard = (AssistantCard) clicked.getProperties().get("cardValue");
                 viewGUI.sendToServer(new PlayCard(assistantCard));
-                GuiFX.getActiveSceneController().getElementById("#assistantCardBox").setVisible(false);
+                GuiFX.getActiveSceneController().getElementById("#assistantCardsBox").setVisible(false);
             };
         }
 
@@ -203,7 +203,6 @@ public enum GameCommand {
                         for (IslandClient islandClient : viewGUI.getModel().getIslands()) {
                             Node island = sceneController.getElementById("#" + islandClient.getId());
                             sceneController.enableNode(island);
-                            System.out.println(island.getEffect() + "  " + island.getStyleClass());
                             island.setOnMouseClicked(GameCommand.MOVE_STUDENT.getGUIHandler(viewGUI));
                         }
                         //lunchHall is the third children
@@ -341,7 +340,6 @@ public enum GameCommand {
                 viewGUI.sendToServer(new TextMessageCS(t.getText()));
                 viewGUI.addMessage("[You]: " + t.getText());
                 t.clear();
-
             };
         }
 

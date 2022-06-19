@@ -8,10 +8,7 @@ import it.polimi.ingsw.Util.AssistantCard;
 import it.polimi.ingsw.Util.Color;
 import it.polimi.ingsw.Util.HouseColor;
 import it.polimi.ingsw.Util.Wizard;
-import javafx.animation.Animation;
-import javafx.animation.KeyFrame;
-import javafx.animation.KeyValue;
-import javafx.animation.Timeline;
+import javafx.animation.*;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -30,8 +27,11 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 
+import java.sql.Time;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class BoardController implements SceneController {
     ViewGUI viewGUI;
@@ -47,10 +47,10 @@ public class BoardController implements SceneController {
     public VBox chat;
     public Pane paneForChat;
     public Button sendButton;
-    public Pane assistantCardBox;
+    public AnchorPane assistantCardsBox;
     private ObservableList<String> observableListChat;
     public HBox clouds;
-    public List<Node> clickableElement = new ArrayList<>();
+    public Map<Node, Timeline> clickableElement = new HashMap<>();
 
 
     private void initialize() {
@@ -79,7 +79,7 @@ public class BoardController implements SceneController {
                 CharacterCardClient character = characters.get(i);
                 AnchorPane singleChar = (AnchorPane) this.characters.getChildren().get(i);
                 ImageView imageView = (ImageView) singleChar.getChildren().get(0);
-                imageView.setImage(new Image("Graphical_Assets/CharacterCards/" + character.getCharId() + ".jpg"));
+                imageView.setImage(new Image("Graphical_Assets/CharacterCards/" + character.getCharId() + ".png"));
                 singleChar.getProperties().put("charId", character.getCharId());
                 if (character.containsStudents()) {
                     CharacterCardClientWithStudents character1 = (CharacterCardClientWithStudents) character;
@@ -196,7 +196,8 @@ public class BoardController implements SceneController {
 
     @Override
     public void hideEverything() {
-        for (Node node : clickableElement) {
+        // TODO not used
+        for (Node node : clickableElement.keySet()) {
             node.setDisable(false);
         }
     }
@@ -204,24 +205,32 @@ public class BoardController implements SceneController {
     //to enable a node use this function-> this is needed so there is an eay way to disable all the element
     public void enableNode(Node node) {
         node.setDisable(false);
-        if (!clickableElement.contains(node)) clickableElement.add(node);
         node.getStyleClass().add("clickable");
-
-        DropShadow shadow = (DropShadow) node.getEffect();
-        if (shadow != null) {
-            Timeline timeline = new Timeline();
-            timeline.getKeyFrames().setAll(new KeyFrame(Duration.ZERO, new KeyValue(shadow.radiusProperty(), shadow.getSpread())), new KeyFrame(Duration.millis(500), new KeyValue(shadow.spreadProperty(), 0)), new KeyFrame(Duration.millis(1000), new KeyValue(shadow.spreadProperty(), shadow.getSpread())));
-            timeline.setCycleCount(Animation.INDEFINITE);
-            timeline.play();
-        }
-
+        Platform.runLater(() -> {
+            DropShadow shadow = (DropShadow) node.getEffect();
+            Timeline timeline = null;
+            if (shadow != null) {
+                timeline = new Timeline();
+                timeline.getKeyFrames().setAll(new KeyFrame(Duration.ZERO, new KeyValue(shadow.spreadProperty(), shadow.getSpread())), new KeyFrame(Duration.millis(1000), new KeyValue(shadow.spreadProperty(), 0)));
+                timeline.setCycleCount(Animation.INDEFINITE);
+                timeline.setAutoReverse(true);
+                timeline.play();
+            } else {
+                System.out.println("Not applied effect on " + node);
+            }
+            clickableElement.put(node, timeline);
+        });
     }
 
     @Override
     public void disableEverything() {
-        for (Node n : clickableElement) {
-            n.setDisable(true);
-            n.getStyleClass().remove("clickable");
+        for (Map.Entry<Node, Timeline> entry : clickableElement.entrySet()) {
+            Node node = entry.getKey();
+            Timeline timeline = entry.getValue();
+            node.setDisable(true);
+            node.getStyleClass().remove("clickable");
+            if (timeline != null)
+                timeline.stop();
         }
         clickableElement.clear();
     }

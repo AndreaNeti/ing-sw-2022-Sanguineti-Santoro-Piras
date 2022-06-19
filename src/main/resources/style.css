@@ -2,6 +2,10 @@
     -fx-opacity: 1;
 }
 
+.text {
+    -fx-font-smoothing-type: gray;
+}
+
 .root {
     -fx-font-family: "Roboto Light";
     -fx-background-color: #80b5ff;
@@ -59,7 +63,7 @@
 }
 
 .cloud.clickable {
-    -fx-effect: dropshadow(gaussian, rgb(50, 150, 255), 15, 0.5, 0, 0);
+    -fx-effect: dropshadow(gaussian, rgb(50, 100, 255), 20, 0.75, 0, 0);
 }
 
 .entrancehall .clickable {
@@ -128,4 +132,10 @@
     -fx-font-weight: bold;
     -fx-font-size: 15;
     -fx-padding: 5 15;
+}
+
+#assistantCardsBox {
+    -fx-background-color: rgba(255, 255, 255, 0.9);
+    -fx-background-radius: 5;
+    -fx-padding: 20;
 }
