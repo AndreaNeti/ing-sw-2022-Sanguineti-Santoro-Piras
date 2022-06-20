@@ -4,6 +4,7 @@ import it.polimi.ingsw.Server.model.GameComponents.GameComponent;
 import it.polimi.ingsw.Util.Color;
 
 import java.util.Arrays;
+import java.util.Objects;
 
 /**
  * GameComponentClient abstract class represents the game components on the client side and corresponds
@@ -120,5 +121,17 @@ public class GameComponentClient {
             else
                 return "LunchHall";
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof GameComponentClient that)) return false;
+        return getId() == that.getId();
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId());
     }
 }

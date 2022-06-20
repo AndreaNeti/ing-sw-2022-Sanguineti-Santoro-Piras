@@ -87,7 +87,7 @@ public class CliPrinter implements GameClientListener {
             HouseColor t = island.getTeam();
             String team = t == null ? "  " : (t == HouseColor.WHITE ? "WT" : (t == HouseColor.BLACK ? "BT" : "GT"));
             islandPrint.append("  \u2571\u001b[40;1m ").append(team).append("  \u001b[0m\u001b[40;1m ")
-                    .append(island.getNumber()).append(" \u001b[0m\u2572  ");
+                    .append(island.getArchipelagoSize()).append(" \u001b[0m\u2572  ");
         }
         islandPrint.append("\n");
         // print number of red students per island and mother nature if it's on that island

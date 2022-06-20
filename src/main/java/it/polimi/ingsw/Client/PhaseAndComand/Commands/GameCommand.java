@@ -7,7 +7,6 @@ import it.polimi.ingsw.Client.View.Gui.SceneController.SceneController;
 import it.polimi.ingsw.Client.View.Gui.ViewGUI;
 import it.polimi.ingsw.Client.model.CharacterCardClient;
 import it.polimi.ingsw.Client.model.GameComponentClient;
-import it.polimi.ingsw.Client.model.IslandClient;
 import it.polimi.ingsw.Server.controller.MatchType;
 import it.polimi.ingsw.Util.AssistantCard;
 import it.polimi.ingsw.Util.Color;
@@ -181,7 +180,7 @@ public enum GameCommand {
             return "Play card";
         }
     }, MOVE_STUDENT() {
-        Color color = null;
+        private Color color = null;
 
         @Override
         public void playCLICommand(ViewCli viewCli) throws SkipCommandException {
@@ -200,8 +199,9 @@ public enum GameCommand {
                 Color c = (Color) clicked.getProperties().get("color");
                 if (c != null) {
                     if (color == null) {
-                        for (IslandClient islandClient : viewGUI.getModel().getIslands()) {
-                            Node island = sceneController.getElementById("#" + islandClient.getId());
+                        // enable all islands
+                        for (byte id = (byte) (2 * MatchType.MAX_PLAYERS); id < 2 * MatchType.MAX_PLAYERS + 12; id++) {
+                            Node island = sceneController.getElementById("#" + id);
                             sceneController.enableNode(island);
                             island.setOnMouseClicked(GameCommand.MOVE_STUDENT.getGUIHandler(viewGUI));
                         }
@@ -212,13 +212,13 @@ public enum GameCommand {
                     }
                     color = c;
                 } else {
-                    // TODO mh
+                    // if an island is merged, relativeId is the one representing the "archipelago" (!= id)
+                    Object relativeId = clicked.getProperties().get("relativeId");
                     int id;
-                    if (clicked.getProperties().get("relativeId") == null)
+                    if (relativeId != null)
+                        id = (int) relativeId;
+                    else // it's the lunch hall
                         id = Integer.parseInt(clicked.getId());
-                    else
-                        id = (int) clicked.getProperties().get("relativeId");
-
                     viewGUI.sendToServer(new MoveStudent(color, id, (String) clicked.getProperties().get("name")));
                     color = null;
                     sceneController.disableEverything();

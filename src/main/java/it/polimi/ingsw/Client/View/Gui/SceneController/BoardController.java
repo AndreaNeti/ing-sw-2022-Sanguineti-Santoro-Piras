@@ -4,11 +4,15 @@ import it.polimi.ingsw.Client.PhaseAndComand.Commands.GameCommand;
 import it.polimi.ingsw.Client.View.Gui.GuiFX;
 import it.polimi.ingsw.Client.View.Gui.ViewGUI;
 import it.polimi.ingsw.Client.model.*;
+import it.polimi.ingsw.Server.controller.MatchType;
 import it.polimi.ingsw.Util.AssistantCard;
 import it.polimi.ingsw.Util.Color;
 import it.polimi.ingsw.Util.HouseColor;
 import it.polimi.ingsw.Util.Wizard;
-import javafx.animation.*;
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -27,9 +31,9 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 
-import java.sql.Time;
 import java.util.*;
 
+@SuppressWarnings("unchecked") // imho, \_O_/
 public class BoardController implements SceneController {
     ViewGUI viewGUI;
     public AnchorPane root;
@@ -150,7 +154,6 @@ public class BoardController implements SceneController {
                             List<TeamClient> teams = viewGUI.getModel().getTeams();
                             TeamClient team = viewGUI.getModel().getTeams().get(localWizardIndex % teams.size());
                             int teamSize = team.getPlayers().size();
-                            System.out.println(team.getHouseColor() + String.valueOf((i / teamSize) % teamSize));
                             element.setId(team.getHouseColor() + String.valueOf((i / teamSize) % teamSize));
                             updateTowerLeft(team.getHouseColor(), team.getTowersLeft());
                         }
@@ -169,6 +172,11 @@ public class BoardController implements SceneController {
             }
         }
         for (IslandClient i : model.getIslands()) {
+            Node islandPane = islands.getChildren().get(i.getId() - 2 * MatchType.MAX_PLAYERS);
+            islandPane.getProperties().put("relativeId", i.getId());
+            Set<Integer> containedIslands = new TreeSet<>();
+            containedIslands.add(i.getId());
+            islandPane.getProperties().put("containedIslands", containedIslands);
             //TODO see if there is a better way
             updateGameComponent(i);
         }
@@ -215,7 +223,7 @@ public class BoardController implements SceneController {
             if (timeline == null) {
                 // create timeline with animation
                 timeline = new Timeline();
-                timeline.getKeyFrames().setAll(new KeyFrame(Duration.ZERO, new KeyValue(shadow.spreadProperty(), shadow.getSpread())), new KeyFrame(Duration.millis(1000), new KeyValue(shadow.spreadProperty(), 0)));
+                timeline.getKeyFrames().setAll(new KeyFrame(Duration.ZERO, new KeyValue(shadow.spreadProperty(), shadow.getSpread())), new KeyFrame(Duration.millis(750), new KeyValue(shadow.spreadProperty(), 0)));
                 timeline.setCycleCount(Animation.INDEFINITE);
                 timeline.setAutoReverse(true);
                 timeline.play();
@@ -257,10 +265,11 @@ public class BoardController implements SceneController {
                 AnchorPane islandOld = (AnchorPane) motherNature.getParent();
                 islandOld.getChildren().remove(motherNature);
             }
-            //update the new mother nature
-            int idIsland = viewGUI.getModel().getIslands().get(motherNaturePosition).getId();
-            AnchorPane island = (AnchorPane) getElementById("#" + idIsland);
-            island.getChildren().add(getMotherNature());
+            // update the new mother nature
+            IslandClient motherNatureIsland = viewGUI.getModel().getIslands().get(motherNaturePosition);
+            AnchorPane islandPane = (AnchorPane) getElementById("#" + getCenterArchipelagoId(motherNatureIsland));
+            System.out.println("Mother Nature position: " + motherNaturePosition + ", moved on island #" + getCenterArchipelagoId(motherNatureIsland));
+            islandPane.getChildren().add(getMotherNature());
         });
     }
 
@@ -268,9 +277,9 @@ public class BoardController implements SceneController {
     public void updateGameComponent(GameComponentClient gameComponent) {
         Platform.runLater(() -> {
             int id = gameComponent.getId();
-            //entrance hall and lunch are handled in a different way in view so I need to distinguish them
+            //entrance hall and lunch are handled in a different way in view, so I need to distinguish them
             //but island,character card, cloud with student are handled in the same way
-            if (id < 8 && id >= 0) {
+            if (id < 2 * MatchType.MAX_PLAYERS && id >= 0) {
                 if (id % 2 == 0) {
                     updateEntranceHall(gameComponent);
                 } else {
@@ -279,23 +288,31 @@ public class BoardController implements SceneController {
             } else if (id < 0) {
                 updateCloud(gameComponent);
             } else {
-                //a game component usually has an anchor pane for himself that contains an image( children 0), an anchor pane with all the students
-                //this anchor pane has an anchor pane for all colors-> this contains an image view (children 0) and a label for the number of students
-                AnchorPane paneGameComponent = (AnchorPane) this.getElementById("#" + id);
-                AnchorPane paneStudents = (AnchorPane) paneGameComponent.getChildren().get(1);
-                for (int i = 0; i < Color.values().length; i++) {
-                    AnchorPane paneSingleStudent = (AnchorPane) paneStudents.getChildren().get(i);
-                    //get(1) is the label in the pane of the students
-                    Label l = (Label) paneSingleStudent.getChildren().get(1);
-                    l.setText(String.valueOf(gameComponent.howManyStudents(Color.values()[i])));
-                }
+                updateGeneric(gameComponent);
             }
         });
     }
 
+    private void updateGeneric(GameComponentClient component, int nodeID) {
+        //a game component usually has an anchor pane for himself that contains an image( children 0), an anchor pane with all the students
+        //this anchor pane has an anchor pane for all colors-> this contains an image view (children 0) and a label for the number of students
+        AnchorPane paneGameComponent = (AnchorPane) this.getElementById("#" + nodeID);
+        AnchorPane paneStudents = (AnchorPane) paneGameComponent.getChildren().get(1);
+        for (int i = 0; i < Color.values().length; i++) {
+            AnchorPane paneSingleStudent = (AnchorPane) paneStudents.getChildren().get(i);
+            //get(1) is the label in the pane of the students
+            Label l = (Label) paneSingleStudent.getChildren().get(1);
+            l.setText(String.valueOf(component.howManyStudents(Color.values()[i])));
+        }
+    }
+
+    private void updateGeneric(GameComponentClient component) {
+        updateGeneric(component, component.getId());
+    }
+
     private void updateCloud(GameComponentClient cloud) {
         //"clouds" contains 4 children: one for cloud
-        //each cloud has a image[0] and an anchor pane for students [1]
+        //each cloud has an image[0] and an anchor pane for students [1]
         //this anchor pane has 4 images
         byte[] students = cloud.getStudents();
         AnchorPane paneCloud = (AnchorPane) getElementById("#" + cloud.getId());
@@ -362,33 +379,62 @@ public class BoardController implements SceneController {
         //all Island in gui are saved as anchor pane=> this contains the image of the island and an anchor pane of the students
         //the anchor pane of the students contains all 5 possible color in 5 other anchor pane
         Platform.runLater(() -> {
-            updateGameComponent((GameComponentClient) island);
             AnchorPane paneIsland = (AnchorPane) this.getElementById("#" + island.getId());
+            int relativeId = (int) paneIsland.getProperties().get("relativeId");
+
+            if (island.getArchipelagoSize() > 1)
+                updateGeneric(island, getCenterArchipelagoId(island));
+            else
+                updateGeneric(island, relativeId);
             HouseColor islandTeam = island.getTeam();
             if (islandTeam != null) {
-                paneIsland.getChildren().add(getTower(islandTeam));
+                Set<Integer> containedIslands = (Set<Integer>) paneIsland.getProperties().get("containedIslands");
+                // change tower for each island contained
+                for (Integer i : containedIslands) {
+                    AnchorPane containedIslandPane = ((AnchorPane) this.getElementById("#" + i));
+                    containedIslandPane.getChildren().remove(containedIslandPane.lookup(".tower"));
+                    containedIslandPane.getChildren().add(getTower(islandTeam));
+                }
             }
         });
     }
 
     @Override
-    public void updateDeletedIsland(IslandClient island) {
-
+    public void updateDeletedIsland(IslandClient removedIsland) {
         Platform.runLater(() -> {
             // retrieve the team that deleted the island and enlarge it using the position of mother nature
-            IslandClient winner = viewGUI.getModel().getIslands().get(viewGUI.getModel().getMotherNaturePosition());
+            byte motherNaturePosition = viewGUI.getModel().getMotherNaturePosition();
+            IslandClient winner = viewGUI.getModel().getIslands().get(motherNaturePosition);
+            System.out.println("Mother Nature has position: " + motherNaturePosition + " and it's on island #" + getCenterArchipelagoId(winner) + " (relativeId = " + winner.getId() + ") removed island #" + removedIsland.getId());
             HouseColor winnerTeam = winner.getTeam();
-            AnchorPane paneIsland = (AnchorPane) this.getElementById("#" + island.getId());
-            paneIsland.getProperties().put("relativeId", winner.getId());
+
             AnchorPane paneWinnerIsland = (AnchorPane) this.getElementById("#" + winner.getId());
-            //remove the pane of students
-            paneIsland.getChildren().remove(1);
-            //add tower
-            paneIsland.getChildren().add(getTower(winnerTeam));
-            paneIsland.setStyle("-fx-scale-x:1");
-            paneIsland.setStyle("-fx-scale-y:1");
+            // make bigger
             paneWinnerIsland.setStyle("-fx-scale-x:1");
             paneWinnerIsland.setStyle("-fx-scale-y:1");
+
+            Set<Integer> containedIslands = (Set<Integer>) paneWinnerIsland.getProperties().get("containedIslands");
+            // add to contained islands the ones contained by the removed island
+            containedIslands.addAll((Set<Integer>) this.getElementById("#" + removedIsland.getId()).getProperties().get("containedIslands"));
+            containedIslands.add(removedIsland.getId());
+            // update relativeId of all merged islands
+            for (Integer i : containedIslands) {
+                AnchorPane node = (AnchorPane) this.getElementById("#" + i);
+                node.getProperties().put("relativeId", winner.getId());
+                // hide the pane of students
+                node.getChildren().get(1).setVisible(false);
+                //add tower and make bigger
+                node.getChildren().add(getTower(winnerTeam));
+                node.setStyle("-fx-scale-x:1");
+                node.setStyle("-fx-scale-y:1");
+            }
+            // update contained islands
+            paneWinnerIsland.getProperties().put("containedIslands", containedIslands);
+
+            AnchorPane paneMotherNatureIsland = (AnchorPane) this.getElementById("#" + getCenterArchipelagoId(winner));
+            // make students visible on the island where mother nature is visible
+            updateGeneric(winner, Integer.parseInt(paneMotherNatureIsland.getId()));
+            paneMotherNatureIsland.getChildren().get(1).setVisible(true);
         });
     }
 
@@ -490,10 +536,19 @@ public class BoardController implements SceneController {
 
     private ImageView getTower(HouseColor houseColor) {
         ImageView tower = new ImageView("Graphical_Assets/Towers/" + houseColor + ".png");
+        tower.getStyleClass().add("tower");
         tower.setFitWidth(50.0);
         tower.setPreserveRatio(true);
         AnchorPane.setLeftAnchor(tower, 61.5);
         AnchorPane.setTopAnchor(tower, 20.0);
         return tower;
+    }
+
+    private int getCenterArchipelagoId(IslandClient island) {
+        // love RB trees
+        TreeSet<Integer> containedIslands = (TreeSet<Integer>) getElementById("#" + island.getId()).getProperties().get("containedIslands");
+        System.out.println(2 * MatchType.MAX_PLAYERS + (containedIslands.first() - 2 * MatchType.MAX_PLAYERS + island.getArchipelagoSize() / 2) % 12);
+        // TODO improve this
+        return 2 * MatchType.MAX_PLAYERS + (containedIslands.first() - 2 * MatchType.MAX_PLAYERS + island.getArchipelagoSize() / 2) % 12;
     }
 }

@@ -3,8 +3,6 @@ package it.polimi.ingsw.Client.model;
 import it.polimi.ingsw.Server.model.Player;
 import it.polimi.ingsw.Util.AssistantCard;
 import it.polimi.ingsw.Util.Wizard;
-import it.polimi.ingsw.exceptions.serverExceptions.EndGameException;
-import it.polimi.ingsw.exceptions.serverExceptions.GameException;
 
 import java.util.List;
 

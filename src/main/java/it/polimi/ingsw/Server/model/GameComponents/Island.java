@@ -59,16 +59,16 @@ public class Island extends GameComponent {
         } catch (NotAllowedException ignored) {
 
         }
-        this.number += island.getNumber();
+        this.number += island.getArchipelagoSize();
         addProhibitions(island.getProhibitions());
     }
 
     /**
-     * Method getNumber returns the number of towers that the island will contain if controlled.
+     * Method getArchipelagoSize returns the number of towers that the island will contain if controlled.
      *
      * @return {@code byte} - total number of towers.
      */
-    public byte getNumber() {
+    public byte getArchipelagoSize() {
         return number;
     }
 

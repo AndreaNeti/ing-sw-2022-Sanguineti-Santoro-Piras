@@ -382,7 +382,7 @@ public class NormalGame implements Game {
                 }
             }
             if (oldController != null && t.getHouseColor() == oldController)
-                influence += island.getNumber();
+                influence += island.getArchipelagoSize();
 
             if (influence > maxInfluence) {
                 winnerColor = t.getHouseColor();
@@ -413,14 +413,14 @@ public class NormalGame implements Game {
 
             if (oldController != null) {
                 Team oldTeam = getTeams().get(oldController.ordinal());
-                oldTeam.addTowers(island.getNumber());
+                oldTeam.addTowers(island.getArchipelagoSize());
 
                 // add to game delta
                 gameDelta.updateTeamTowersLeft(oldController, oldTeam.getTowersLeft());
             }
             Team winnerTeam = getTeams().get(newController.ordinal());
             try {
-                winnerTeam.removeTowers(island.getNumber());
+                winnerTeam.removeTowers(island.getArchipelagoSize());
 
                 // add to game delta
                 gameDelta.updateTeamTowersLeft(newController, winnerTeam.getTowersLeft());

@@ -19,7 +19,7 @@ class IslandTest {
     @Test
     void constructorAndTeamTest() {
         assertEquals(island.getProhibitions(), 0);
-        assertEquals(island.getNumber(), 1);
+        assertEquals(island.getArchipelagoSize(), 1);
         assertTrue(island.canAddStudents(Color.GREEN, (byte) 135));
         assertTrue(island.canAddStudents(Color.RED, (byte) 57));
         assertTrue(island.canAddStudents(Color.YELLOW, (byte) 1));
@@ -58,7 +58,7 @@ class IslandTest {
             assertEquals(0, island1.howManyStudents(c));
 
         assertEquals(island.howManyStudents(), 20);
-        assertEquals(island.getNumber(), 2);
+        assertEquals(island.getArchipelagoSize(), 2);
         island.removeProhibition();
         assertEquals(island.getProhibitions(), 2);
     }

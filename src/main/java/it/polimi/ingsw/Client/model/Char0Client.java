@@ -1,11 +1,12 @@
 package it.polimi.ingsw.Client.model;
 
 import it.polimi.ingsw.Client.View.Cli.ViewForCharacterCli;
+import it.polimi.ingsw.Server.model.Char0;
 import it.polimi.ingsw.exceptions.clientExceptions.SkipCommandException;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
-import it.polimi.ingsw.Server.model.Char0;
+
 import java.util.ArrayList;
 import java.util.List;
 

@@ -201,7 +201,7 @@ public class ExpertGame extends NormalGame implements CharacterCardGame, CoinLis
                 }
                 // tower influence
                 if (oldController != null && towerInfluence && t.getHouseColor() == oldController)
-                    influence += island.getNumber();
+                    influence += island.getArchipelagoSize();
 
                 // extra influence
                 if (extraInfluence && t.getPlayers().contains(getCurrentPlayer())) {

@@ -12,8 +12,8 @@ public class IslandClient extends GameComponentClient {
     private byte prohibition;
     private byte number;
 
-    public IslandClient(int i) {
-        super(i);
+    public IslandClient(int id) {
+        super(id);
     }
 
     public HouseColor getTeam() {
@@ -28,7 +28,7 @@ public class IslandClient extends GameComponentClient {
         return prohibition;
     }
 
-    public byte getNumber() {
+    public byte getArchipelagoSize() {
         return number;
     }
 
@@ -47,7 +47,7 @@ public class IslandClient extends GameComponentClient {
         super.modifyGameComponent(gameComponent);
         Island island = (Island) gameComponent;
         team = island.getTeamColor();
-        number = island.getNumber();
+        number = island.getArchipelagoSize();
         prohibition = island.getProhibitions();
     }
 

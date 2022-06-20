@@ -51,7 +51,7 @@ public class GameClient extends GameClientListened implements GameClientView {
             clouds.add(new GameComponentClient(-i));
         }
         for (int i = 0; i < 12; i++) {
-            islands.add(new IslandClient(2 * matchType.nPlayers() + i));
+            islands.add(new IslandClient(2 * MatchType.MAX_PLAYERS + i));
         }
         this.teams = teamsClient;
         this.characters = new ArrayList<>();
@@ -97,12 +97,12 @@ public class GameClient extends GameClientListened implements GameClientView {
         notifyProfessor(color, owner);
     }
 
-    //I am trusting server pls
+    // I am trusting server pls
     public void setGameComponent(Byte idGameComponent, GameComponent gameComponent) {
 
         /*here the id is static
-        from 0 to 2*numberOfPlayer-1 is entranceHall,LunchHall
-        from 2*numberOfPlayer to 2*numberOfPlayer+12 are the island
+        from 0 to 2 * numberOfPlayer - 1 is entranceHall, LunchHall
+        from 2 * maxPlayers to 2 * maxPlayers + 12 are the island
         from -1 to -4 are clouds;
         */
         if (idGameComponent >= 0 && idGameComponent < 2 * matchType.nPlayers()) {
@@ -141,7 +141,14 @@ public class GameClient extends GameClientListened implements GameClientView {
     }
 
     private IslandClient getIslandById(byte idIsland) {
-        return islands.get(idIsland - 2 * MatchType.MAX_PLAYERS);
+        IslandClient islandToReturn = null;
+        for (IslandClient island : islands) {
+            if (island.getId() == idIsland) {
+                islandToReturn = island;
+                break;
+            }
+        }
+        return islandToReturn;
     }
 
     public void removeIsland(byte idIsland) {
@@ -226,7 +233,7 @@ public class GameClient extends GameClientListened implements GameClientView {
     }
 
     public void setExtraSteps(boolean extraSteps) {
-    //    notifyExtraSteps(extraSteps);
+        //    notifyExtraSteps(extraSteps);
         this.extraSteps = extraSteps;
 
     }
@@ -238,7 +245,7 @@ public class GameClient extends GameClientListened implements GameClientView {
 
     public void setIgnoredColorInfluence(Color ignoredColorInfluence) {
         this.ignoredColorInfluence = ignoredColorInfluence;
-    //    notifyIgnoredColor(ignoredColorInfluence);
+        //    notifyIgnoredColor(ignoredColorInfluence);
     }
 
     public void setUpdatedCoinPlayer(byte playerIndex, byte newCoins) {
