@@ -33,15 +33,14 @@ public class MoveMotherNaturePhase extends ClientPhase {
         SceneController sceneController = GuiFX.getActiveSceneController();
         sceneController.disableEverything();
         GameClientView model = viewGUI.getModel();
+        List<IslandClient> islands = model.getIslands();
+
         int max_moves = model.getCurrentPlayer().getPlayedCard().moves();
         if (model.isExtraSteps()) {
             max_moves += model.getMatchConstants().extraStep();
         }
-        List<IslandClient> islands = model.getIslands();
+        if (max_moves > islands.size()) max_moves = islands.size();
         byte motherNaturePosition = model.getMotherNaturePosition();
-        int motherNatureRelativeId = islands.get(motherNaturePosition).getId();
-        // the relative id (may be a merged one) of the last clickable island
-        int farthestClickableIslandRelativeId = islands.get((motherNaturePosition + max_moves) % islands.size()).getId();
         // the island distance in steps from the relative one where mother nature is positioned
         int moves = 1;
         // from 0 to 11
@@ -51,7 +50,7 @@ public class MoveMotherNaturePhase extends ClientPhase {
         int relativeId = (int) island.getProperties().get("relativeId");
         System.out.println("Max moves: " + max_moves);
         // until relative id is equal to the first not reachable island
-        while (farthestClickableIslandRelativeId + 1 != relativeId) {
+        do {
             island.getProperties().put("moves", moves);
             System.out.println("Island " + islandNumber + " (#" + islandId + " -> #" + relativeId + "), distance: " + moves);
             // make clickable
@@ -64,12 +63,13 @@ public class MoveMotherNaturePhase extends ClientPhase {
 
             // keep in temp to check if it's different from the old relative id before assigning it
             int temp = (int) island.getProperties().get("relativeId");
+            // TODO rewrite using contained islands
             // if true, it's a new archipelago
             if (relativeId != temp)
                 moves++;
 
             relativeId = temp;
-        }
+        } while (moves <= max_moves);
     }
 
     /**

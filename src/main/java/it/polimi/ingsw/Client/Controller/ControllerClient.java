@@ -122,11 +122,11 @@ public class ControllerClient extends GameClientListened {
             if (entry.getValue() != null) model.setProfessors(entry.getKey(), entry.getValue());
         }
 
+        gameDelta.getNewMotherNaturePosition().ifPresent(mnPosition -> model.setMotherNaturePosition(mnPosition));
+
         for (Byte b : gameDelta.getDeletedIslands()) {
             model.removeIsland(b);
         }
-        // TODO may have broken everything
-        gameDelta.getNewMotherNaturePosition().ifPresent(mnPosition -> model.setMotherNaturePosition(mnPosition));
 
         gameDelta.getPlayedCard().ifPresent(playedCard -> model.playCard(playedCard));
 

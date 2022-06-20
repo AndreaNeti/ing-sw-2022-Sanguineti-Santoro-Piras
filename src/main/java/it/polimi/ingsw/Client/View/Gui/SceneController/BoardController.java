@@ -435,6 +435,7 @@ public class BoardController implements SceneController {
             // make students visible on the island where mother nature is visible
             updateGeneric(winner, Integer.parseInt(paneMotherNatureIsland.getId()));
             paneMotherNatureIsland.getChildren().get(1).setVisible(true);
+            updateMotherNature(motherNaturePosition);
         });
     }
 
@@ -547,8 +548,23 @@ public class BoardController implements SceneController {
     private int getCenterArchipelagoId(IslandClient island) {
         // love RB trees
         TreeSet<Integer> containedIslands = (TreeSet<Integer>) getElementById("#" + island.getId()).getProperties().get("containedIslands");
-        System.out.println(2 * MatchType.MAX_PLAYERS + (containedIslands.first() - 2 * MatchType.MAX_PLAYERS + island.getArchipelagoSize() / 2) % 12);
-        // TODO improve this
-        return 2 * MatchType.MAX_PLAYERS + (containedIslands.first() - 2 * MatchType.MAX_PLAYERS + island.getArchipelagoSize() / 2) % 12;
+        int last = containedIslands.last();
+        int first = containedIslands.first();
+        int centerID;
+        if (last - first == 11) {
+            last = first;
+            for (Integer id : containedIslands) {
+                // there is a hole
+                if (id > last + 1) {
+                    first = id;
+                    break;
+                } else
+                    last = id;
+            }
+            last += 12;
+        }
+        centerID = Math.round((float) (last + first) / 2);
+        if (centerID >= 12 + 2 * MatchType.MAX_PLAYERS) centerID -= 12;
+        return centerID;
     }
 }
