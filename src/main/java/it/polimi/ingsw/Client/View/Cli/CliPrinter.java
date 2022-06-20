@@ -13,14 +13,22 @@ import java.io.PrintStream;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 
+/**
+ * CliPrinter class is used to print the entire game in the terminal for a CLI game. <br>
+ * Each group of elements is printed line by line and then joined together to print the complete game.
+ */
 public class CliPrinter implements GameClientListener {
-
 
     private final static String operatingSystem = System.getProperty("os.name");
     private final ViewCli view;
     private GameClientView game;
     private final PrintStream out;
 
+    /**
+     * Constructor CliPrinter creates a new instance of CliPrinter, setting the output stream.
+     *
+     * @param view of type {@link ViewCli} - instance of the client's view (CLI).
+     */
     public CliPrinter(ViewCli view) {
         this.view = view;
         if (operatingSystem.contains("Windows")) {
@@ -34,6 +42,10 @@ public class CliPrinter implements GameClientListener {
         out = new PrintStream(System.out, true, StandardCharsets.UTF_8);
     }
 
+    /**
+     * Method printLobby prints the chat before the game start, where the client can connect to a server, join a match or chat
+     * with other players before the start of the game.
+     */
     private void printLobby() {
         synchronized (view.getChat()) {
             ArrayList<String> chatCopy = view.getChat();
@@ -54,6 +66,9 @@ public class CliPrinter implements GameClientListener {
         }
     }
 
+    /**
+     * Method printGame prints the entire game of "Eriantys".
+     */
     public void printGame() {
         clearConsole();
         game = view.getModel();
@@ -72,6 +87,12 @@ public class CliPrinter implements GameClientListener {
         view.setMustReprint(false);
     }
 
+    /**
+     * Method printIsland creates a string that contains the islands.
+     *
+     * @param islands of type {@code ArrayList}<{@link IslandClient}> - list of the instances of the islands.
+     * @return {@code StringBuilder} - StringBuilder containing the islands.
+     */
     private StringBuilder printIslands(ArrayList<IslandClient> islands) {
         StringBuilder islandPrint = new StringBuilder();
         // print island number and prohibitions
@@ -128,6 +149,13 @@ public class CliPrinter implements GameClientListener {
         return islandPrint;
     }
 
+    /**
+     * Method printCloudsAndTeams creates a string that contains the clouds and the teams.
+     *
+     * @param clouds of type {@code ArrayList}<{@link GameComponentClient}> - list of the instances of the islands.
+     * @param teams of type {@code List}<{@link TeamClient}> - list of the instances of the teams.
+     * @return {@code StringBuilder} - StringBuilder containing the clouds and the teams.
+     */
     private StringBuilder printCloudsAndTeams(ArrayList<GameComponentClient> clouds, List<TeamClient> teams) {
         StringBuilder cloudsTeamsPrint = new StringBuilder();
         // print cloud number
@@ -183,6 +211,12 @@ public class CliPrinter implements GameClientListener {
         return cloudsTeamsPrint;
     }
 
+    /**
+     * Method printBoardsChatCharacters creates a string that contains the boards, the chat and the character cards, if present.
+     *
+     * @param players of type {@code List}<{@link PlayerClient}> - list of the instances of the players.
+     * @return {@code StringBuilder} - StringBuilder containing the boards, the chat and the character cards, if present.
+     */
     private StringBuilder printBoardsChatCharacters(List<PlayerClient> players) {
         StringBuilder boardsCharChatPrint = new StringBuilder();
         byte numOfPlayers = (byte) players.size();
@@ -382,6 +416,12 @@ public class CliPrinter implements GameClientListener {
 
     }
 
+    /**
+     * Method printAssistantCards creates a string that contains the assistant cards of the player.
+     *
+     * @param players of type {@code List}<{@link PlayerClient}> - list of the instances of the players.
+     * @return {@code StringBuilder} - StringBuilder containing the assistant cards of the player.
+     */
     private StringBuilder printAssistantCards(List<PlayerClient> players) {
         StringBuilder assistantCardsPrint = new StringBuilder();
         PlayerClient player = players.get(game.getMyWizard().ordinal());

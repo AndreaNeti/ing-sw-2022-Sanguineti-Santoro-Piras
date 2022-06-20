@@ -10,12 +10,24 @@ import javafx.scene.Node;
 
 import java.util.List;
 
+/**
+ * MoveMotherNaturePhase class represents the game phase in which the client can move mother nature.
+ */
 public class MoveMotherNaturePhase extends ClientPhase {
 
+    /**
+     * Constructor MoveMotherNaturePhase creates a new instance of MoveMotherNaturePhase.
+     */
     public MoveMotherNaturePhase() {
         super();
     }
 
+    /**
+     * Method playPhase disables everything except the islands where mother nature can be placed, according
+     * to the allowed number of moves, and adds the respective game command on the mouse clicked event.
+     *
+     * @param viewGUI of type {@link ViewGUI} - instance of the client's view (GUI).
+     */
     public void playPhase(ViewGUI viewGUI) {
         SceneController sceneController = GuiFX.getActiveSceneController();
         sceneController.disableEverything();
@@ -36,8 +48,13 @@ public class MoveMotherNaturePhase extends ClientPhase {
         }
     }
 
+    /**
+     * Method toString returns the name of the phase.
+     *
+     * @return {@code String} - "Move Mother Nature phase".
+     */
     @Override
     public String toString() {
-        return "Move mother nature phase";
+        return "Move Mother Nature phase";
     }
 }
