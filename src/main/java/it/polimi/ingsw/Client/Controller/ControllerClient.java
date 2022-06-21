@@ -110,7 +110,7 @@ public class ControllerClient extends GameClientListened {
             for (Map.Entry<Byte, Byte> newEntry : gameDelta.getUpdatedCoinPlayer().entrySet())
                 model.setUpdatedCoinPlayer(newEntry.getKey(), newEntry.getValue());
             for (Map.Entry<Byte, Boolean> entry : gameDelta.getUsedCharacter().entrySet()) {
-                model.setUpdatedCharacter(entry.getKey(), entry.getValue());
+                model.setUpdatedCharacter(entry.getKey());
             }
         }
 

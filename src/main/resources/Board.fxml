@@ -1580,6 +1580,35 @@
                 <Button id="chooseCharacterButton" layoutX="24.0" layoutY="165.0" mnemonicParsing="false" text="Choose" visible="false" />
                 <Button id="playCharacter" layoutY="164.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="35.0" text="❌" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" />
                 <Button id="deselectCharacter" layoutX="67.0" layoutY="164.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="35.0" text="✓" visible="false" AnchorPane.rightAnchor="0.0" />
+            <ImageView fitHeight="40.0" preserveRatio="true" visible="false" AnchorPane.leftAnchor="25.0" AnchorPane.topAnchor="-40.0">
+               <image>
+                  <Image url="@Graphical_Assets/Coin.png" />
+               </image>
+            </ImageView>
+            <AnchorPane layoutX="-51.0" prefHeight="200.0" prefWidth="200.0" visible="false" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="60.0">
+               <children>
+                  <ImageView fitWidth="40.0" preserveRatio="true" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <image>
+                        <Image url="@Graphical_Assets/deny_island_icon.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitWidth="40.0" layoutX="10.0" layoutY="10.0" preserveRatio="true" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <image>
+                        <Image url="@Graphical_Assets/deny_island_icon.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitWidth="40.0" preserveRatio="true" AnchorPane.bottomAnchor="0.0">
+                     <image>
+                        <Image url="@Graphical_Assets/deny_island_icon.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitWidth="40.0" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                     <image>
+                        <Image url="@Graphical_Assets/deny_island_icon.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </AnchorPane>
             </AnchorPane>
             <AnchorPane prefHeight="150.0" prefWidth="100.0">
                 <HBox.margin>
@@ -1647,6 +1676,35 @@
                 <Button id="chooseCharacterButton" layoutX="24.0" layoutY="165.0" mnemonicParsing="false" text="Choose" visible="false" />
                 <Button id="playCharacter" layoutY="164.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="35.0" text="❌" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" />
                 <Button id="deselectCharacter" layoutX="67.0" layoutY="164.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="35.0" text="✓" visible="false" AnchorPane.rightAnchor="0.0" />
+            <ImageView fitHeight="40.0" preserveRatio="true" visible="false" AnchorPane.leftAnchor="25.0" AnchorPane.topAnchor="-40.0">
+               <image>
+                  <Image url="@Graphical_Assets/Coin.png" />
+               </image>
+            </ImageView>
+            <AnchorPane prefHeight="200.0" prefWidth="200.0" visible="false" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="60.0">
+               <children>
+                  <ImageView fitWidth="40.0" preserveRatio="true" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <image>
+                        <Image url="@Graphical_Assets/deny_island_icon.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitWidth="40.0" layoutX="10.0" layoutY="10.0" preserveRatio="true" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <image>
+                        <Image url="@Graphical_Assets/deny_island_icon.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitWidth="40.0" preserveRatio="true" AnchorPane.bottomAnchor="0.0">
+                     <image>
+                        <Image url="@Graphical_Assets/deny_island_icon.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitWidth="40.0" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                     <image>
+                        <Image url="@Graphical_Assets/deny_island_icon.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </AnchorPane>
             </AnchorPane>
             <AnchorPane prefHeight="150.0" prefWidth="100.0">
                 <HBox.margin>
@@ -1714,6 +1772,35 @@
                 <Button id="chooseCharacterButton" layoutX="24.0" layoutY="165.0" mnemonicParsing="false" text="Choose" visible="false" />
                 <Button id="playCharacter" layoutY="164.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="35.0" text="❌" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" />
                 <Button id="deselectCharacter" layoutX="67.0" layoutY="164.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="35.0" text="✓" visible="false" AnchorPane.rightAnchor="0.0" />
+            <ImageView fitHeight="40.0" preserveRatio="true" visible="false" AnchorPane.leftAnchor="25.0" AnchorPane.topAnchor="-40.0">
+               <image>
+                  <Image url="@Graphical_Assets/Coin.png" />
+               </image>
+            </ImageView>
+            <AnchorPane prefHeight="200.0" prefWidth="200.0" visible="false" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="70.0">
+               <children>
+                  <ImageView fitWidth="40.0" preserveRatio="true" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <image>
+                        <Image url="@Graphical_Assets/deny_island_icon.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitWidth="40.0" layoutX="10.0" layoutY="10.0" preserveRatio="true" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <image>
+                        <Image url="@Graphical_Assets/deny_island_icon.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitWidth="40.0" preserveRatio="true" AnchorPane.bottomAnchor="0.0">
+                     <image>
+                        <Image url="@Graphical_Assets/deny_island_icon.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitWidth="40.0" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                     <image>
+                        <Image url="@Graphical_Assets/deny_island_icon.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </AnchorPane>
             </AnchorPane>
         </children>
     </HBox>

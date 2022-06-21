@@ -49,9 +49,9 @@ public class Char6Client extends CharacterCardClientWithStudents {
 
     @Override
     public void setHandler(ViewGUI viewGUI) {
-        if (inputs.size() == 0)
+        if (inputs.size() %2== 0 && !isFull())
             viewGUI.enableStudentsOnCharacter(getId(), setInput(viewGUI));
-        if (inputs.size() == 1)
+        else if (inputs.size() %2== 1 && !isFull())
             viewGUI.enableEntrance(setInput(viewGUI));
     }
 

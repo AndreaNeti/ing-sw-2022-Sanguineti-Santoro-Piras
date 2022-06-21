@@ -1,7 +1,6 @@
 package it.polimi.ingsw.Client;
 
 import it.polimi.ingsw.Client.View.GameClientListener;
-import it.polimi.ingsw.Client.model.CharacterCardClient;
 import it.polimi.ingsw.Client.model.GameComponentClient;
 import it.polimi.ingsw.Client.model.IslandClient;
 import it.polimi.ingsw.Util.AssistantCard;
@@ -68,9 +67,9 @@ public abstract class GameClientListened {
         }
     }
 
-    public void notifyCharacter(List<CharacterCardClient> characters) {
+    public void notifyCharacter(int charId) {
         for (GameClientListener listener : listeners) {
-            listener.updateCharacter(characters);
+            listener.updateCharacter(charId);
         }
     }
 
@@ -106,6 +105,10 @@ public abstract class GameClientListened {
     public void notifyCoins(Wizard wizard, Byte coins){
         for (GameClientListener listener : listeners) {
             listener.updateCoins( wizard,coins);
+        }
+    }public void notifyProhibitions(Byte prohibitions){
+        for (GameClientListener listener : listeners) {
+            listener.updateProhibitions( prohibitions);
         }
     }
 }

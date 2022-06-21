@@ -8,6 +8,8 @@ import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.SceneAntialiasing;
+import javafx.scene.control.ProgressBar;
+import javafx.scene.control.ProgressIndicator;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 
@@ -41,7 +43,10 @@ public class GuiFX extends Application {
 
     public static void goToBoardScene() {
         if (inMenuScene) {
+            primaryStage.setTitle("Eryantis");
 
+            //pb.setVisible(true);
+            //pb.setProgress(0);
             FXMLLoader loader = new FXMLLoader(GuiFX.class.getResource("/board.fxml"));
 
             try {
@@ -49,15 +54,17 @@ public class GuiFX extends Application {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
-            primaryStage.setFullScreen(true);
-            primaryStage.setResizable(true);
-            primaryStage.show();
+            //pb.setProgress(60);
             SceneController boardController = loader.getController();
             controller.addListener(boardController);
             activeSceneController = boardController;
+            //pb.setProgress(80);
             boardController.setViewGUI(viewGUI);
+            //pb.setProgress(100);
             inMenuScene = false;
+            primaryStage.setFullScreen(true);
+            primaryStage.setResizable(true);
+            primaryStage.show();
         }
     }
 

@@ -2,7 +2,6 @@ package it.polimi.ingsw.Client.View.Gui.SceneController;
 
 import it.polimi.ingsw.Client.PhaseAndComand.Commands.GameCommand;
 import it.polimi.ingsw.Client.View.Gui.ViewGUI;
-import it.polimi.ingsw.Client.model.CharacterCardClient;
 import it.polimi.ingsw.Client.model.GameComponentClient;
 import it.polimi.ingsw.Client.model.IslandClient;
 import it.polimi.ingsw.Util.AssistantCard;
@@ -14,10 +13,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -116,6 +112,11 @@ public class MenuController implements SceneController {
     }
 
     @Override
+    public void updateProhibitions(Byte newProhibitions) {
+
+    }
+
+    @Override
     public void setViewGUI(ViewGUI viewGUI) {
         this.viewGUI = viewGUI;
         this.initialize();
@@ -168,7 +169,7 @@ public class MenuController implements SceneController {
     }
 
     @Override
-    public void updateCharacter(List<CharacterCardClient> characters) {
+    public void updateCharacter(int charId) {
 
     }
 

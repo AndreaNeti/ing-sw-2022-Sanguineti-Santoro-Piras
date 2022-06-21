@@ -1,6 +1,5 @@
 package it.polimi.ingsw.Client.View;
 
-import it.polimi.ingsw.Client.model.CharacterCardClient;
 import it.polimi.ingsw.Client.model.GameComponentClient;
 import it.polimi.ingsw.Client.model.IslandClient;
 import it.polimi.ingsw.Util.AssistantCard;
@@ -32,7 +31,7 @@ public interface GameClientListener {
 
     void updateExtraSteps(boolean extraSteps);
 
-    void updateCharacter(List<CharacterCardClient> characters);
+    void updateCharacter(int charId);
 
     void updateCoins(Byte coins);
 
@@ -41,5 +40,5 @@ public interface GameClientListener {
     void setWinners(List<HouseColor> winners);
 
     void updateMessage(String message);
-
+    void updateProhibitions(Byte newProhibitions);
 }

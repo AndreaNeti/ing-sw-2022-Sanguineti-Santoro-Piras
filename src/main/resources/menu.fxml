@@ -1,13 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.*?>
 <?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.effect.Glow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
+
 <AnchorPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="700.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.Client.View.Gui.SceneController.MenuController">
     <ImageView fitHeight="700.0" fitWidth="700.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <Image url="@Graphical_Assets/logo.jpg" />
@@ -22,84 +33,73 @@
             </HBox.margin></Button>
         </HBox>
     </VBox>
-    <AnchorPane fx:id="mainGroup" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0"
-                AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-        <VBox id="nickName" alignment="CENTER" spacing="20.0" visible="false" AnchorPane.bottomAnchor="250.0"
-              AnchorPane.leftAnchor="150.0" AnchorPane.rightAnchor="150.0" AnchorPane.topAnchor="250.0">
+    <AnchorPane fx:id="mainGroup" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <VBox id="nickName" alignment="CENTER" spacing="20.0" visible="false" AnchorPane.bottomAnchor="250.0" AnchorPane.leftAnchor="150.0" AnchorPane.rightAnchor="150.0" AnchorPane.topAnchor="250.0">
          <Label text="Choose a nickname:" textFill="WHITE">
              <font>
-                 <Font size="20.0"/>
+                 <Font size="20.0" />
              </font>
          </Label>
             <TextField id="inputNickName" alignment="CENTER" promptText="Insert nickname">
                 <VBox.margin>
-                    <Insets left="50.0" right="50.0"/>
+                    <Insets left="50.0" right="50.0" />
                 </VBox.margin>
             </TextField>
-            <Button fx:id="nickNameButton" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="Set"/>
+            <Button fx:id="nickNameButton" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="Set" />
         </VBox>
-        <GridPane id="selectMatch" alignment="CENTER_RIGHT" visible="false" AnchorPane.bottomAnchor="200.0"
-                  AnchorPane.leftAnchor="150.0" AnchorPane.rightAnchor="150.0" AnchorPane.topAnchor="200.0">
+        <GridPane id="selectMatch" alignment="CENTER_RIGHT" visible="false" AnchorPane.bottomAnchor="200.0" AnchorPane.leftAnchor="150.0" AnchorPane.rightAnchor="150.0" AnchorPane.topAnchor="200.0">
             <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
             </columnConstraints>
             <rowConstraints>
-                <RowConstraints maxHeight="94.0" minHeight="10.0" prefHeight="88.0" vgrow="SOMETIMES"/>
-                <RowConstraints maxHeight="100.0" minHeight="10.0" prefHeight="66.0" vgrow="SOMETIMES"/>
-                <RowConstraints maxHeight="83.0" minHeight="10.0" prefHeight="32.0" vgrow="SOMETIMES"/>
-                <RowConstraints maxHeight="77.0" minHeight="4.0" prefHeight="55.0" vgrow="SOMETIMES"/>
+                <RowConstraints maxHeight="94.0" minHeight="10.0" prefHeight="88.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="100.0" minHeight="10.0" prefHeight="66.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="83.0" minHeight="10.0" prefHeight="32.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="77.0" minHeight="4.0" prefHeight="55.0" vgrow="SOMETIMES" />
             </rowConstraints>
-            <Label text="Players:" GridPane.halignment="RIGHT" GridPane.valignment="TOP"/>
+            <Label text="Players:" GridPane.halignment="RIGHT" GridPane.valignment="TOP" />
             <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1">
                 <RadioButton mnemonicParsing="false" selected="true" text="2">
                     <toggleGroup>
-                        <ToggleGroup fx:id="player"/>
+                        <ToggleGroup fx:id="player" />
                     </toggleGroup>
                 </RadioButton>
-                <RadioButton mnemonicParsing="false" text="3" toggleGroup="$player"/>
-                <RadioButton mnemonicParsing="false" text="4" toggleGroup="$player"/>
+                <RadioButton mnemonicParsing="false" text="3" toggleGroup="$player" />
+                <RadioButton mnemonicParsing="false" text="4" toggleGroup="$player" />
             </VBox>
-            <Label text="Game Mode:" GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="TOP"/>
+            <Label text="Game Mode:" GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="TOP" />
             <VBox GridPane.columnIndex="1" GridPane.rowIndex="1">
-                <RadioButton contentDisplay="TOP" mnemonicParsing="false" text="Normal" textAlignment="CENTER"
-                             textOverrun="CLIP">
+                <RadioButton contentDisplay="TOP" mnemonicParsing="false" text="Normal" textAlignment="CENTER" textOverrun="CLIP">
                     <effect>
-                        <Glow/>
+                        <Glow />
                     </effect>
                     <cursor>
-                        <Cursor fx:constant="DEFAULT"/>
+                        <Cursor fx:constant="DEFAULT" />
                     </cursor>
                     <toggleGroup>
-                        <ToggleGroup fx:id="gameType"/>
+                        <ToggleGroup fx:id="gameType" />
                     </toggleGroup>
                 </RadioButton>
-                <RadioButton mnemonicParsing="false" selected="true" text="Expert" toggleGroup="$gameType"/>
+                <RadioButton mnemonicParsing="false" selected="true" text="Expert" toggleGroup="$gameType" />
             </VBox>
-            <Button fx:id="joinMatchTypeButton" alignment="CENTER" mnemonicParsing="false" text="Join Match By Type"
-                    GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2"/>
-            <Button fx:id="createButton" mnemonicParsing="false" prefHeight="26.0" prefWidth="136.0"
-                    text="Create Match" GridPane.columnIndex="1" GridPane.halignment="CENTER"
-                    GridPane.hgrow="ALWAYS" GridPane.rowIndex="2"/>
-            <Button fx:id="joinIdButton" mnemonicParsing="false" prefHeight="26.0" prefWidth="136.0"
-                    text="Join Match By ID" GridPane.columnIndex="1" GridPane.halignment="CENTER"
-                    GridPane.hgrow="ALWAYS" GridPane.rowIndex="3"/>
-            <TextField id="inputIdMatch" alignment="CENTER" prefHeight="26.0" prefWidth="284.0" promptText="Game ID"
-                       GridPane.rowIndex="3"/>
+            <Button fx:id="joinMatchTypeButton" alignment="CENTER" mnemonicParsing="false" text="Join Match By Type" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" />
+            <Button fx:id="createButton" mnemonicParsing="false" prefHeight="26.0" prefWidth="136.0" text="Create Match" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" />
+            <Button fx:id="joinIdButton" mnemonicParsing="false" prefHeight="26.0" prefWidth="136.0" text="Join Match By ID" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" />
+            <TextField id="inputIdMatch" alignment="CENTER" prefHeight="26.0" prefWidth="284.0" promptText="Game ID" GridPane.rowIndex="3" />
         </GridPane>
-        <VBox id="connect" alignment="CENTER" spacing="20.0" visible="false" AnchorPane.bottomAnchor="250.0"
-              AnchorPane.leftAnchor="150.0" AnchorPane.rightAnchor="150.0" AnchorPane.topAnchor="250.0">
+        <VBox id="connect" alignment="CENTER" spacing="20.0" visible="false" AnchorPane.bottomAnchor="250.0" AnchorPane.leftAnchor="150.0" AnchorPane.rightAnchor="150.0" AnchorPane.topAnchor="250.0">
          <Label text="Connect to a server:" textFill="WHITE">
              <font>
-                 <Font size="20.0"/>
+                 <Font size="20.0" />
              </font>
          </Label>
             <TextField id="inputIp" alignment="CENTER" prefWidth="201.0" promptText="Insert Ip" text="localhost">
                 <VBox.margin>
-                    <Insets left="50.0" right="50.0"/>
+                    <Insets left="50.0" right="50.0" />
                 </VBox.margin>
             </TextField>
-            <Button fx:id="connectButton" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="Connect"/>
+            <Button fx:id="connectButton" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="Connect" />
         </VBox>
     </AnchorPane>
     <Button fx:id="chatButton" mnemonicParsing="false" text="Show Chat" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="10.0" />

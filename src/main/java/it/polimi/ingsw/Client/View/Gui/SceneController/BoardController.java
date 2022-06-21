@@ -85,6 +85,12 @@ public class BoardController implements SceneController {
                 ImageView imageView = (ImageView) singleChar.getChildren().get(0);
                 imageView.setImage(new Image("Graphical_Assets/CharacterCards/" + character.getCharId() + ".png"));
                 singleChar.getProperties().put("index", i);
+                singleChar.getProperties().put("charId", character.getCharId());
+                //this is for grandma weeds
+                if (character.getCharId() == 4) {
+                    singleChar.getChildren().get(6).setVisible(true);
+                    singleChar.setId("grandmaWeeds");
+                }
                 if (character.containsStudents()) {
                     CharacterCardClientWithStudents character1 = (CharacterCardClientWithStudents) character;
                     AnchorPane paneStudent = (AnchorPane) singleChar.getChildren().get(1);
@@ -104,6 +110,11 @@ public class BoardController implements SceneController {
 
                 imageView.setOnMouseClicked(mouseEvent -> {
                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    ImageView image = new ImageView(new Image("Graphical_Assets/CharacterCards/" + character.getCharId() + ".png"));
+                    image.setPreserveRatio(true);
+                    image.setFitWidth(150);
+                    alert.setGraphic(image);
+                    alert.setHeaderText(character + " cost= " + character.getCost());
                     alert.setContentText(character.getDescription());
                     alert.setTitle("Character card description");
                     alert.initOwner(GuiFX.getPrimaryStage());
@@ -509,6 +520,15 @@ public class BoardController implements SceneController {
     }
 
     @Override
+    public void updateProhibitions(Byte newProhibitions) {
+        AnchorPane singleChar = (AnchorPane) getElementById("#grandmaWeeds");
+        AnchorPane paneProhibitions = (AnchorPane) singleChar.getChildren().get(6);
+        for (int i = 0; i < paneProhibitions.getChildren().size(); i++) {
+            paneProhibitions.getChildren().get(i).setVisible(i < newProhibitions);
+        }
+    }
+
+    @Override
     public void updateCardPlayed(AssistantCard playedCard) {
         PlayerClient current = viewGUI.getModel().getCurrentPlayer();
         AnchorPane assistantPane = (AnchorPane) getElementById("#assistantCard" + current.getWizard());
@@ -528,7 +548,12 @@ public class BoardController implements SceneController {
     }
 
     @Override
-    public void updateCharacter(List<CharacterCardClient> characters) {
+    public void updateCharacter(int charId) {
+        for (Node n : characters.getChildren()) {
+            if ((int) n.getProperties().get("charId") == charId) {
+                ((AnchorPane) n).getChildren().get(5).setVisible(true);
+            }
+        }
     }
 
     @Override

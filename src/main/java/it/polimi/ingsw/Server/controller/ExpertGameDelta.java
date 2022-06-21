@@ -198,4 +198,13 @@ public class ExpertGameDelta extends GameDelta {
     public Optional<Color> getIgnoredColorInfluence() {
         return Optional.ofNullable(ignoredColorInfluence);
     }
+
+    @Override
+    public String toString() {
+        return super.toString()+",isExtraSteps "+extraSteps+",ignoredColor "+ignoredColorInfluence+", updateCharacters "+
+                usedCharacter+", updatedCoinPlayer "+ updatedCoinPlayer+" ,newProhibitionLeft " + newProhibitionsLeft+
+                "newCoinsLeft " +newCoinsLeft;
+
+
+    }
 }

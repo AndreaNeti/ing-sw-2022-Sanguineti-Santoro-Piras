@@ -297,7 +297,7 @@ public class GameClient extends GameClientListened implements GameClientView {
      */
     public void setNewProhibitionsLeft(Byte newProhibitionsLeft) {
         this.newProhibitionsLeft = newProhibitionsLeft;
-        //TODO add updateGameComponent
+        notifyProhibitions(newProhibitionsLeft);
     }
 
     @Override
@@ -375,7 +375,6 @@ public class GameClient extends GameClientListened implements GameClientView {
                         this.characters.add(factoryCharacter(character));
                     }
                 }
-                notifyCharacter(getCharacters());
             } finally {
                 lockForCharacter.unlock();
             }
@@ -465,9 +464,8 @@ public class GameClient extends GameClientListened implements GameClientView {
      * Method setUpdatedCharacter updates the character chard with the provided ID to used, increasing therefore its cost by 1.
      *
      * @param charId of type {@code Byte} - ID of the character card to update.
-     * @param value //TODO: remove parameter?
      */
-    public void setUpdatedCharacter(Byte charId, Boolean value) {
+    public void setUpdatedCharacter(Byte charId) {
         for (CharacterCardClient c : characters) {
             if (c.getCharId() == charId)
                 c.setUsed();
@@ -475,6 +473,7 @@ public class GameClient extends GameClientListened implements GameClientView {
         for (CharacterCardClientWithStudents c : charactersWithStudents)
             if (c.getCharId() == charId)
                 c.setUsed();
+        notifyCharacter(charId);
     }
 
     /**

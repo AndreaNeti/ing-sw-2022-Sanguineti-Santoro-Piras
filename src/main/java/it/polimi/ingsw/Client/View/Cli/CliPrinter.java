@@ -506,7 +506,7 @@ public class CliPrinter implements GameClientListener {
     }
 
     @Override
-    public void updateCharacter(List<CharacterCardClient> characters) {
+    public void updateCharacter(int charId) {
 
     }
 
@@ -534,6 +534,10 @@ public class CliPrinter implements GameClientListener {
         view.setMustReprint(true);
     }
 
+    @Override
+    public void updateProhibitions(Byte newProhibitions) {
+
+    }
 
 
     public void clearConsole() {
