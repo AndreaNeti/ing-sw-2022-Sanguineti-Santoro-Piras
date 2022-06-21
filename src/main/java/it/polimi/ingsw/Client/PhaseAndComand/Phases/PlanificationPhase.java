@@ -40,7 +40,7 @@ public class PlanificationPhase extends ClientPhase {
         AnchorPane assistantCardsBox = (AnchorPane) sceneController.getElementById("#assistantCardsBox");
         AnchorPane assistantCardPane = (AnchorPane) sceneController.getElementById("#assistantCard" + viewGUI.getModel().getMyWizard());
         AnchorPane deck = (AnchorPane) assistantCardPane.getChildren().get(0);
-        sceneController.enableNode(deck);
+        sceneController.enableNode(deck,false );
         deck.setOnMouseClicked(mouseEvent -> assistantCardsBox.setVisible(!assistantCardsBox.isVisible()));
 
         HBox box = (HBox) ((VBox) assistantCardsBox.getChildren().get(0)).getChildren().get(1);
@@ -54,7 +54,7 @@ public class PlanificationPhase extends ClientPhase {
             cardImage.getProperties().put("cardValue", card);
             HBox.setMargin(cardImage, new Insets(20, 10, 10, 10));
             box.getChildren().add(cardImage);
-            sceneController.enableNode(cardImage);
+            sceneController.enableNode(cardImage, false);
             cardImage.addEventHandler(MouseEvent.MOUSE_CLICKED, GameCommand.PLAY_CARD.getGUIHandler(viewGUI));
         }
     }

@@ -54,7 +54,7 @@ public class MoveMotherNaturePhase extends ClientPhase {
             island.getProperties().put("moves", moves);
             System.out.println("Island " + islandNumber + " (#" + islandId + " -> #" + relativeId + "), distance: " + moves);
             // make clickable
-            sceneController.enableNode(island);
+            sceneController.enableNode(island,false );
             island.setOnMouseClicked(GameCommand.MOVE_MOTHER_NATURE.getGUIHandler(viewGUI));
             islandNumber++;
             islandNumber %= 12;
@@ -69,7 +69,13 @@ public class MoveMotherNaturePhase extends ClientPhase {
                 moves++;
 
             relativeId = temp;
-        } while (moves <= max_moves);
+        }while (moves <= max_moves);
+
+        if (getGameCommands().contains(GameCommand.CHOOSE_CHARACTER)) {
+            viewGUI.enableChooseCharacter(GameCommand.CHOOSE_CHARACTER.getGUIHandler(viewGUI));
+
+        }
+
     }
 
     /**

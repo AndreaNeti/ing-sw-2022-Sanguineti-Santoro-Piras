@@ -1,8 +1,13 @@
 package it.polimi.ingsw.Client.model;
 
 import it.polimi.ingsw.Client.View.Cli.ViewForCharacterCli;
+import it.polimi.ingsw.Client.View.Gui.ViewGUI;
 import it.polimi.ingsw.Server.model.Char11;
+import it.polimi.ingsw.Util.Color;
 import it.polimi.ingsw.exceptions.clientExceptions.SkipCommandException;
+import javafx.event.EventHandler;
+import javafx.scene.Node;
+import javafx.scene.input.MouseEvent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,6 +46,20 @@ public class Char11Client implements CharacterCardClient {
     public void setNextInput(ViewForCharacterCli view) throws SkipCommandException {
         System.out.println("Select the color and everyone will put three students of that color from lunch hall to bag");
         inputs.add(view.getColorInput(false).ordinal());
+    }
+
+    @Override
+    public void setHandler(ViewGUI viewGUI) {
+        if (inputs.isEmpty()) {
+            viewGUI.enableColorBox(setInput(viewGUI));
+        }
+    }
+    private EventHandler<MouseEvent> setInput(ViewGUI viewGUI) {
+        return mouseEvent -> {
+            Node clicked = (Node) mouseEvent.getSource();
+            inputs.add(((Color) clicked.getProperties().get("color")).ordinal());
+            viewGUI.repeatPhase(false);
+        };
     }
 
     @Override

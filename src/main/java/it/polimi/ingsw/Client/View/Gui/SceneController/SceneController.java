@@ -14,5 +14,5 @@ public interface SceneController extends GameClientListener {
 
     Node getElementById(String id);
 
-    void enableNode(Node node);
+    void enableNode(Node node, boolean addVisibility);
 }

@@ -200,14 +200,10 @@ public enum GameCommand {
                 if (c != null) {
                     if (color == null) {
                         // enable all islands
-                        for (byte id = (byte) (2 * MatchType.MAX_PLAYERS); id < 2 * MatchType.MAX_PLAYERS + 12; id++) {
-                            Node island = sceneController.getElementById("#" + id);
-                            sceneController.enableNode(island);
-                            island.setOnMouseClicked(GameCommand.MOVE_STUDENT.getGUIHandler(viewGUI));
-                        }
+                        viewGUI.enableIslands(GameCommand.MOVE_STUDENT.getGUIHandler(viewGUI));
                         //lunchHall is the third children
                         VBox lunchHall = (VBox) ((AnchorPane) sceneController.getElementById("#mainBoard")).getChildren().get(3);
-                        sceneController.enableNode(lunchHall);
+                        sceneController.enableNode(lunchHall,false );
                         lunchHall.setOnMouseClicked(GameCommand.MOVE_STUDENT.getGUIHandler(viewGUI));
                     }
                     color = c;
@@ -235,9 +231,28 @@ public enum GameCommand {
         public void playCLICommand(ViewCli viewCli) throws SkipCommandException {
             int index = viewCli.getCharacterCharToPlayInput();
             CharacterCardClient chosenCharacter = viewCli.getModel().getCharacters().get(index);
-            viewCli.setCurrentCharacterCard(index);
-            viewCli.sendToServer(new ChooseCharacter((byte) chosenCharacter.getCharId(), chosenCharacter.toString()));
-            viewCli.setPhaseInView(GamePhase.PLAY_CH_CARD_PHASE, false, false);
+            if (chosenCharacter.getCost() <= viewCli.getModel().getCoinsPlayer((byte) viewCli.getModel().getCurrentPlayer().getWizard().ordinal())) {
+                viewCli.setCurrentCharacterCard(index);
+                viewCli.sendToServer(new ChooseCharacter((byte) chosenCharacter.getCharId(), chosenCharacter.toString()));
+                viewCli.setPhaseInView(GamePhase.PLAY_CH_CARD_PHASE, false, false);
+            } else viewCli.addMessage("You don't have enough coins to play this card");
+        }
+
+        @Override
+        public EventHandler<MouseEvent> getGUIHandler(ViewGUI viewGUI) {
+            return mouseEvent -> {
+                Node clicked = (Node) mouseEvent.getSource();
+                //clicked is the button-> the parent is the anchor pane of the card
+                AnchorPane singleChar = (AnchorPane) clicked.getParent();
+                int index = (int) singleChar.getProperties().get("index");
+                CharacterCardClient chosenCharacter = viewGUI.getModel().getCharacters().get(index);
+                if (chosenCharacter.getCost() <= viewGUI.getModel().getCoinsPlayer((byte) viewGUI.getModel().getCurrentPlayer().getWizard().ordinal())) {
+                    viewGUI.setCurrentCharacterCard(index);
+                    singleChar.getStyleClass().add("selected");
+                    viewGUI.sendToServer(new ChooseCharacter((byte) chosenCharacter.getCharId(), chosenCharacter.toString()));
+                    viewGUI.setPhaseInView(GamePhase.PLAY_CH_CARD_PHASE, false, false);
+                } else viewGUI.addMessage("You don't have enough coins to play this card");
+            };
         }
 
         @Override
@@ -279,6 +294,28 @@ public enum GameCommand {
             }
             viewCli.unsetCurrentCharacterCard();
             viewCli.goToOldPhase();
+        }
+
+        @Override
+        public EventHandler<MouseEvent> getGUIHandler(ViewGUI viewGUI) {
+            return mouseEvent -> {
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Play character");
+                alert.setContentText("Do you want to play the card?");
+                alert.initOwner(GuiFX.getPrimaryStage());
+                if (alert.showAndWait().filter(ButtonType.OK::equals).isPresent()) {
+                    CharacterCardClient current = viewGUI.getCurrentCharacterCard();
+                    viewGUI.sendToServer(new PlayCharacter(current.getInputs()));
+                    current.resetInput();
+                    viewGUI.unsetCurrentCharacterCard();
+
+                    AnchorPane singleChar = (AnchorPane) ((Node) mouseEvent.getSource()).getParent();
+                    singleChar.getStyleClass().remove("selected");
+                    singleChar.getChildren().get(4).setVisible(false);
+                    singleChar.getChildren().get(3).setVisible(false);
+                }
+                viewGUI.goToOldPhase();
+            };
         }
 
         @Override
@@ -356,6 +393,23 @@ public enum GameCommand {
                 viewCli.unsetCurrentCharacterCard();
             }
             viewCli.goToOldPhase();
+        }
+
+        @Override
+        public EventHandler<MouseEvent> getGUIHandler(ViewGUI viewGUI) {
+            return mouseEvent -> {
+                if (viewGUI.getCurrentCharacterCard() != null) {
+                    viewGUI.addMessage("Reset all input");
+                    viewGUI.getCurrentCharacterCard().resetInput();
+                    viewGUI.unsetCurrentCharacterCard();
+
+                    AnchorPane singleChar = (AnchorPane) ((Node) mouseEvent.getSource()).getParent();
+                    singleChar.getStyleClass().remove("selected");
+                    singleChar.getChildren().get(4).setVisible(false);
+                    singleChar.getChildren().get(3).setVisible(false);
+                }
+                viewGUI.goToOldPhase();
+            };
         }
 
         @Override

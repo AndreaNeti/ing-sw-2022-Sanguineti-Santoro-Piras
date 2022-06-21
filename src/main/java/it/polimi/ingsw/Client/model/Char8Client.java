@@ -1,8 +1,16 @@
 package it.polimi.ingsw.Client.model;
 
 import it.polimi.ingsw.Client.View.Cli.ViewForCharacterCli;
+import it.polimi.ingsw.Client.View.Gui.GuiFX;
+import it.polimi.ingsw.Client.View.Gui.SceneController.SceneController;
+import it.polimi.ingsw.Client.View.Gui.ViewGUI;
 import it.polimi.ingsw.Server.model.Char8;
+import it.polimi.ingsw.Util.Color;
 import it.polimi.ingsw.exceptions.clientExceptions.SkipCommandException;
+import javafx.event.EventHandler;
+import javafx.scene.Node;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,6 +49,21 @@ public class Char8Client implements CharacterCardClient {
     public void setNextInput(ViewForCharacterCli view) throws SkipCommandException {
         System.out.println("Select the color you want to ignore while calculating the influence");
         inputs.add(view.getColorInput(false).ordinal());
+    }
+
+    @Override
+    public void setHandler(ViewGUI viewGUI) {
+        if (inputs.isEmpty()) {
+            viewGUI.enableColorBox(setInput(viewGUI));
+        }
+    }
+
+    private EventHandler<MouseEvent> setInput(ViewGUI viewGUI) {
+        return mouseEvent -> {
+            Node clicked = (Node) mouseEvent.getSource();
+            inputs.add(((Color) clicked.getProperties().get("color")).ordinal());
+            viewGUI.repeatPhase(false);
+        };
     }
 
     @Override
