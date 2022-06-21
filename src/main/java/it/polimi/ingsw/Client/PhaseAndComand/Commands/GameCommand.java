@@ -26,8 +26,17 @@ import javafx.scene.layout.VBox;
 
 import java.util.List;
 
+/**
+ * GameCommand enum represents all the possible commands that a client can execute inside the application. <br>
+ * Each command has
+ */
 public enum GameCommand {
+    //TODO: add javadoc for all specific functions or keep the general one
+    /**
+     * CONNECT_SERVER GameCommand is used by the client to connect to the server.
+     */
     CONNECT_SERVER() {
+
         @Override
         public void playCLICommand(ViewCli viewCli) throws SkipCommandException {
             boolean connected = viewCli.connectToServer(viewCli.getIpAddressInput(false));
@@ -56,11 +65,20 @@ public enum GameCommand {
             };
         }
 
+        /**
+         * Method toString returns the name of the command.
+         *
+         * @return {@code String} - "Connect to server".
+         */
         @Override
         public String toString() {
             return "Connect to server";
         }
-    }, SET_NICKNAME() {
+    },
+    /**
+     * SET_NICKNAME GameCommand is used to associate a nickname to the client's player.
+     */
+    SET_NICKNAME() {
         @Override
         public void playCLICommand(ViewCli viewCli) throws SkipCommandException {
             String nick = viewCli.getStringInput("Select nickname", 16, false);
@@ -81,11 +99,20 @@ public enum GameCommand {
             };
         }
 
+        /**
+         * Method toString returns the name of the command.
+         *
+         * @return {@code String} - "Set nickname".
+         */
         @Override
         public String toString() {
             return "Set nickname";
         }
-    }, CREATE_MATCH() {
+    },
+    /**
+     * CREATE_MATCH GameCommand is used to by the client create a new match of a specific type in the server.
+     */
+    CREATE_MATCH() {
         @Override
         public void playCLICommand(ViewCli viewCli) throws SkipCommandException {
             viewCli.sendToServer(new CreateMatch(viewCli.getMatchTypeInput(false)));
@@ -106,11 +133,20 @@ public enum GameCommand {
             };
         }
 
+        /**
+         * Method toString returns the name of the command.
+         *
+         * @return {@code String} - "Create match".
+         */
         @Override
         public String toString() {
             return "Create match";
         }
-    }, JOIN_MATCH_BY_TYPE() {
+    },
+    /**
+     * JOIN_MATCH_BY_TYPE GameCommand is used by the client to join a match of a specific type available in the server.
+     */
+    JOIN_MATCH_BY_TYPE() {
         @Override
         public void playCLICommand(ViewCli viewCli) throws SkipCommandException {
             viewCli.sendToServer(new JoinMatchByType(viewCli.getMatchTypeInput(false)));
@@ -131,11 +167,20 @@ public enum GameCommand {
             };
         }
 
+        /**
+         * Method toString returns the name of the command.
+         *
+         * @return {@code String} - "Join match by type".
+         */
         @Override
         public String toString() {
             return "Join match by type";
         }
-    }, JOIN_MATCH_BY_ID() {
+    },
+    /**
+     * JOIN_MATCH_BY_ID GameCommand is used by the client to join a match with a specific ID available in the server.
+     */
+    JOIN_MATCH_BY_ID() {
         @Override
         public void playCLICommand(ViewCli viewCli) throws SkipCommandException {
             long ID = viewCli.getLongInput("Write game ID", false);
@@ -155,11 +200,20 @@ public enum GameCommand {
             };
         }
 
+        /**
+         * Method toString returns the name of the command.
+         *
+         * @return {@code String} - "Join match by ID".
+         */
         @Override
         public String toString() {
             return "Join match by ID";
         }
-    }, PLAY_CARD() {
+    },
+    /**
+     * PLAY_CARD GameCommand is used by the client to play an assistant card.
+     */
+    PLAY_CARD() {
         @Override
         public void playCLICommand(ViewCli viewCli) throws SkipCommandException {
             viewCli.sendToServer(new PlayCard(viewCli.getAssistantCardToPlayInput(false)));
@@ -175,11 +229,20 @@ public enum GameCommand {
             };
         }
 
+        /**
+         * Method toString returns the name of the command.
+         *
+         * @return {@code String} - "Play card".
+         */
         @Override
         public String toString() {
             return "Play card";
         }
-    }, MOVE_STUDENT() {
+    },
+    /**
+     * MOVE_STUDENT GameCommand is used by the client to move a student.
+     */
+    MOVE_STUDENT() {
         private Color color = null;
 
         @Override
@@ -222,11 +285,20 @@ public enum GameCommand {
             };
         }
 
+        /**
+         * Method toString returns the name of the command.
+         *
+         * @return {@code String} - "Move student".
+         */
         @Override
         public String toString() {
             return "Move student";
         }
-    }, CHOOSE_CHARACTER() {
+    },
+    /**
+     * CHOOSE_CHARACTER GameCommand is used by the client to choose a character card to play.
+     */
+    CHOOSE_CHARACTER() {
         @Override
         public void playCLICommand(ViewCli viewCli) throws SkipCommandException {
             int index = viewCli.getCharacterCharToPlayInput();
@@ -255,11 +327,20 @@ public enum GameCommand {
             };
         }
 
+        /**
+         * Method toString returns the name of the command.
+         *
+         * @return {@code String} - "Choose a character card".
+         */
         @Override
         public String toString() {
             return "Choose a character card";
         }
-    }, SET_CHARACTER_INPUT() {
+    },
+    /**
+     * SET_CHARACTER_INPUT GameCommand is used by the client to add inputs to the chosen character card.
+     */
+    SET_CHARACTER_INPUT() {
         @Override
         public void playCLICommand(ViewCli viewCli) throws SkipCommandException {
             CharacterCardClient current = viewCli.getCurrentCharacterCard();
@@ -271,11 +352,20 @@ public enum GameCommand {
             viewCli.repeatPhase(false);
         }
 
+        /**
+         * Method toString returns the name of the command.
+         *
+         * @return {@code String} - "Set the input for the character".
+         */
         @Override
         public String toString() {
             return "Set the input for the character";
         }
-    }, PLAY_CHARACTER() {
+    },
+    /**
+     * PLAY_CHARACTER GameCommand is used by the client to play the chosen character card with the provided inputs.
+     */
+    PLAY_CHARACTER() {
         @Override
         public void playCLICommand(ViewCli viewCli) throws SkipCommandException {
             CharacterCardClient current = viewCli.getCurrentCharacterCard();
@@ -318,16 +408,30 @@ public enum GameCommand {
             };
         }
 
+        /**
+         * Method toString returns the name of the command.
+         *
+         * @return {@code String} - "Play character".
+         */
         @Override
         public String toString() {
             return "Play character";
         }
-    }, MOVE_MOTHER_NATURE() {
+    },
+    /**
+     * MOVE_MOTHER_NATURE GameCommand is used by the client to move mother nature.
+     */
+    MOVE_MOTHER_NATURE() {
         @Override
         public void playCLICommand(ViewCli viewCli) throws SkipCommandException {
             viewCli.sendToServer(new MoveMotherNature(viewCli.getMotherNatureMovesInput(false)));
         }
 
+        /**
+         * Method toString returns the name of the command.
+         *
+         * @return {@code String} - "Move mother nature".
+         */
         @Override
         public String toString() {
             return "Move mother nature";
@@ -341,12 +445,21 @@ public enum GameCommand {
                 viewGUI.sendToServer(new MoveMotherNature(moves));
             };
         }
-    }, MOVE_FROM_CLOUD() {
+    },
+    /**
+     * MOVE_FROM_CLOUD GameCommand is used by the client to move students from a cloud to the entrance hall.
+     */
+    MOVE_FROM_CLOUD() {
         @Override
         public void playCLICommand(ViewCli viewCli) throws SkipCommandException {
             viewCli.sendToServer(new MoveFromCloud(viewCli.getCloudSource(false)));
         }
 
+        /**
+         * Method toString returns the name of the command.
+         *
+         * @return {@code String} - "Move from cloud".
+         */
         @Override
         public String toString() {
             return "Move from cloud";
@@ -360,7 +473,11 @@ public enum GameCommand {
                 viewGUI.sendToServer(new MoveFromCloud(id));
             };
         }
-    }, TEXT_MESSAGE() {
+    },
+    /**
+     * TEXT_MESSAGE GameCommand is used by the client to send a text message to the other clients in the match.
+     */
+    TEXT_MESSAGE() {
         @Override
         public void playCLICommand(ViewCli viewCli) throws SkipCommandException {
             String comment = viewCli.getStringInput("Comment", 50, false);
@@ -380,11 +497,20 @@ public enum GameCommand {
             };
         }
 
+        /**
+         * Method toString returns the name of the command.
+         *
+         * @return {@code String} - "Send message".
+         */
         @Override
         public String toString() {
             return "Send message";
         }
-    }, UNDO() {
+    },
+    /**
+     * UNDO GameCommand is used by the client to undo the selection of a character card and the respective inputs.
+     */
+    UNDO() {
         @Override
         public void playCLICommand(ViewCli viewCli) {
             if (viewCli.getCurrentCharacterCard() != null) {
@@ -412,11 +538,20 @@ public enum GameCommand {
             };
         }
 
+        /**
+         * Method toString returns the name of the command.
+         *
+         * @return {@code String} - "Undo".
+         */
         @Override
         public String toString() {
             return "Undo";
         }
-    }, QUIT() {
+    },
+    /**
+     * UNDO GameCommand is used by the client to quit the current match if the client is in one or the application.
+     */
+    QUIT() {
         @Override
         public void playCLICommand(ViewCli viewCli) throws SkipCommandException {
             if (viewCli.getBooleanInput("Quit?", false)) {
@@ -437,25 +572,52 @@ public enum GameCommand {
             };
         }
 
+        /**
+         * Method toString returns the name of the command.
+         *
+         * @return {@code String} - "Quit".
+         */
         @Override
         public String toString() {
             return "Quit";
         }
     };
 
+    /**
+     * Method playCLICommand requests the CLI client to provide the inputs required and then execute the command,
+     * sending it to the server in a {@link ToServerMessage}.
+     *
+     * @param viewCli of type {@link ViewCli} - instance of the client's view (CLI).
+     * @throws SkipCommandException if the command must be skipped before receiving all the inputs.
+     */
     public abstract void playCLICommand(ViewCli viewCli) throws SkipCommandException;
 
+    /**
+     * Method getGUIHandler returns the event handler for a mouse event to add to a specific component of the GUI.
+     *
+     * @param viewGUI of type {@link ViewGUI} - instance of the client's view (GUI).
+     * @return {@code EventHandler}<{@code MouseEvent}> - function that will be executed when the component that adds the
+     * event handler is clicked.
+     */
     //TODO set this function abstract
     public EventHandler<MouseEvent> getGUIHandler(ViewGUI viewGUI) {
         return null;
     }
 
+    /**
+     * Method attachToAPhase adds the command to the list of provided game phases, so that it can be executed during them.
+     *
+     * @param clientPhases of type {@code List}<{@link ClientPhase}> - list of the game phases to which the command is added.
+     */
     public void attachToAPhase(List<ClientPhase> clientPhases) {
         for (ClientPhase clientPhase : clientPhases) {
             clientPhase.addCommand(this);
         }
     }
 
+    /**
+     * ShowInputError is used in the GUI client when a command input is empty or invalid, showing an alert box.
+     */
     public void showInputError() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Input fields empty");

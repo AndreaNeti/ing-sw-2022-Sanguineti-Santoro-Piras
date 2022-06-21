@@ -101,7 +101,7 @@ public interface GameClientView {
     Wizard getMyWizard();
 
     /**
-     * Method getCoinsPlayer returns the coin of the player based on the index provided.
+     * Method getCoinsPlayer returns the amount of coins of the player with the player index provided.
      *
      * @param wizardIndex of type {@code byte} - index of the player of which we want to get the coins.
      * @return {@code byte} - amount of coins owned by the selected player.
@@ -145,7 +145,7 @@ public interface GameClientView {
     boolean isExtraSteps();
 
     /**
-     * Method getNewCoinsLeft returns the coins available in the game.
+     * Method getNewCoinsLeft returns the amount of coins available in the game.
      *
      * @return {@code Byte} - amount of coins available in the game.
      */
