@@ -98,7 +98,7 @@ public class ExpertGame extends NormalGame implements CharacterCardGame, CoinLis
 
 
     /**
-     * Method factoryCharacter creates an instance of one of the 12 possible character cards, based on an index.
+     * Method factoryCharacter creates an instance of one of the 12 possible character cards, based on the index provided.
      *
      * @param index of type {@code byte} - index of the CharacterCard to instantiate.
      * @return {@link CharacterCard} - instance of the CharacterCard requested.
