@@ -65,7 +65,7 @@ public class BoardController implements SceneController {
         observableListChat.addAll(viewGUI.getChat());
         ListView<String> listView = new ListView<>(observableListChat);
         listView.prefWidthProperty().bind(paneForChat.widthProperty());
-        listView.prefHeightProperty().bind(paneForChat.heightProperty());
+        // listView.getStyleClass().add("chat");
         paneForChat.getChildren().add(listView);
         chat.toFront();
         chat.setVisible(false);
@@ -126,8 +126,8 @@ public class BoardController implements SceneController {
             for (Color color : Color.values()) {
                 colorBox.getChildren().get(color.ordinal()).getProperties().put("color", color);
             }
-            //coins are in coinsBox
-            AnchorPane box = (AnchorPane) getElementById("#coinsBox");
+            // coins are in coinsBox
+            HBox box = (HBox) getElementById("#coinsBox");
             box.setVisible(true);
             updateCoins(model.getNewCoinsLeft());
         } else {
@@ -560,18 +560,18 @@ public class BoardController implements SceneController {
     public void updateCoins(Byte coins) {
         Platform.runLater(() -> {
             //coins are in coinsBox
-            AnchorPane box = (AnchorPane) getElementById("#coinsBox");
+            HBox box = (HBox) getElementById("#coinsBox");
             Label label = (Label) box.getChildren().get(1);
-            label.setText("X " + coins);
+            label.setText("× " + coins);
         });
     }
 
     public void updateCoins(Wizard wizard, Byte coins) {
         Platform.runLater(() -> {
-            //coins are the 7 children of the board
+            // coins are the 7 children of the board
             AnchorPane board = (AnchorPane) getElementById("#" + wizard);
-            Label label = (Label) ((AnchorPane) board.getChildren().get(7)).getChildren().get(1);
-            label.setText("X " + coins);
+            Label label = (Label) ((HBox) board.getChildren().get(7)).getChildren().get(1);
+            label.setText("× " + coins);
         });
     }
 

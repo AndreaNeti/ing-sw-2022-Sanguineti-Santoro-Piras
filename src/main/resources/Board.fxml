@@ -13,7 +13,7 @@
 <?import javafx.scene.text.Font?>
 
 <AnchorPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.Client.View.Gui.SceneController.BoardController">
-    <AnchorPane fx:id="islands" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="865.0" scaleX="1.1" scaleY="1.1" AnchorPane.bottomAnchor="210.0" AnchorPane.leftAnchor="100.0" AnchorPane.topAnchor="70.0">
+    <AnchorPane fx:id="islands" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="865.0" scaleX="1.1" scaleY="1.1" AnchorPane.leftAnchor="100.0" AnchorPane.topAnchor="70.0">
         <children>
             <AnchorPane id="8" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" pickOnBounds="false" prefHeight="200.0" prefWidth="173.0" styleClass="island" AnchorPane.topAnchor="300.0">
                 <properties name="Island" />
@@ -757,12 +757,12 @@
         <children>
             <AnchorPane fx:id="mainBoard" pickOnBounds="false" prefHeight="304.0" prefWidth="700.0" styleClass="board" AnchorPane.bottomAnchor="50.0" AnchorPane.rightAnchor="50.0">
                 <children>
-                    <ImageView fitWidth="700.0" preserveRatio="true" styleClass="shadow" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                    <ImageView cache="true" cacheHint="QUALITY" fitWidth="700.0" preserveRatio="true" styleClass="shadow" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0">
                         <image>
                             <Image url="@Graphical_Assets/Board/Board.jpg" />
                         </image>
                     </ImageView>
-                    <Label textAlignment="CENTER" textFill="WHITE" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <Label styleClass="nickname" textAlignment="CENTER" textFill="WHITE" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                         <padding>
                             <Insets bottom="2.0" left="6.0" right="6.0" top="2.0" />
                         </padding>
@@ -931,26 +931,26 @@
                             </AnchorPane>
                         </children>
                     </AnchorPane>
-               <AnchorPane layoutX="390.0" layoutY="-73.0" AnchorPane.bottomAnchor="304.0" AnchorPane.leftAnchor="600.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="-50.0">
+               <HBox alignment="CENTER" styleClass="coins" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="-35.0">
                   <children>
-                     <ImageView fitHeight="50.0" fitWidth="47.0" layoutX="-3.0" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <ImageView fitHeight="25.0" preserveRatio="true" styleClass="coin">
                         <image>
                            <Image url="@Graphical_Assets/Coin.png" />
                         </image>
                      </ImageView>
-                     <Label layoutX="47.0" layoutY="17.0" prefHeight="23.0" prefWidth="53.0" style="-fx-background-color: white;" text="Label" AnchorPane.leftAnchor="47.0" AnchorPane.rightAnchor="0.0" />
+                     <Label text="Label" />
                   </children>
-               </AnchorPane>
+               </HBox>
                 </children>
             </AnchorPane>
             <AnchorPane pickOnBounds="false" prefHeight="304.0" prefWidth="700.0" scaleX="0.5714" scaleY="0.5714" snapToPixel="false" styleClass="board" translateX="150.0" translateY="65.0" AnchorPane.bottomAnchor="404.0" AnchorPane.rightAnchor="50.0">
                 <children>
-                    <ImageView fitWidth="700.0" preserveRatio="true" styleClass="shadow" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                    <ImageView cache="true" cacheHint="QUALITY" fitWidth="700.0" preserveRatio="true" styleClass="shadow" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0">
                         <image>
                             <Image url="@Graphical_Assets/Board/Board.jpg" />
                         </image>
                     </ImageView>
-                    <Label textAlignment="CENTER" textFill="WHITE" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <Label styleClass="nickname" textAlignment="CENTER" textFill="WHITE" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                         <padding>
                             <Insets bottom="2.0" left="6.0" right="6.0" top="2.0" />
                         </padding>
@@ -1121,26 +1121,26 @@
                             </AnchorPane>
                         </children>
                     </AnchorPane>
-               <AnchorPane AnchorPane.bottomAnchor="304.0" AnchorPane.leftAnchor="600.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="-50.0">
+               <HBox alignment="CENTER" styleClass="coins" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="-35.0">
                   <children>
-                     <ImageView fitHeight="50.0" fitWidth="47.0" layoutX="-3.0" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <ImageView fitHeight="25.0" preserveRatio="true" styleClass="coin">
                         <image>
                            <Image url="@Graphical_Assets/Coin.png" />
                         </image>
                      </ImageView>
-                     <Label layoutX="4.0" layoutY="17.0" prefHeight="23.0" prefWidth="24.0" style="-fx-background-color: white;" text="Label" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="0.0" />
+                     <Label text="Label" />
                   </children>
-               </AnchorPane>
+               </HBox>
                 </children>
             </AnchorPane>
             <AnchorPane pickOnBounds="false" prefHeight="304.0" prefWidth="700.0" scaleX="0.5714" scaleY="0.5714" snapToPixel="false" styleClass="board" translateX="150.0" translateY="65.0" AnchorPane.bottomAnchor="628.0" AnchorPane.rightAnchor="50.0">
                 <children>
-                    <ImageView fitWidth="700.0" preserveRatio="true" styleClass="shadow" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                    <ImageView cache="true" cacheHint="QUALITY" fitWidth="700.0" preserveRatio="true" styleClass="shadow" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0">
                         <image>
                             <Image url="@Graphical_Assets/Board/Board.jpg" />
                         </image>
                     </ImageView>
-                    <Label textAlignment="CENTER" textFill="WHITE" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <Label styleClass="nickname" textAlignment="CENTER" textFill="WHITE" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                         <padding>
                             <Insets bottom="2.0" left="6.0" right="6.0" top="2.0" />
                         </padding>
@@ -1311,24 +1311,24 @@
                             </AnchorPane>
                         </children>
                     </AnchorPane>
-               <AnchorPane AnchorPane.bottomAnchor="306.0" AnchorPane.leftAnchor="600.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="-50.0">
+               <HBox alignment="CENTER" styleClass="coins" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="-35.0">
                   <children>
-                     <ImageView fitHeight="50.0" fitWidth="47.0" layoutX="-3.0" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <ImageView fitHeight="25.0" preserveRatio="true" styleClass="coin">
                         <image>
                            <Image url="@Graphical_Assets/Coin.png" />
                         </image>
                      </ImageView>
-                     <Label layoutX="4.0" layoutY="17.0" prefHeight="23.0" prefWidth="24.0" style="-fx-background-color: white;" text="Label" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="0.0" />
+                     <Label text="Label" />
                   </children>
-               </AnchorPane>
+               </HBox>
                 </children>
             </AnchorPane>
             <AnchorPane pickOnBounds="false" prefHeight="304.0" prefWidth="425.0" scaleX="0.5714" scaleY="0.5714" snapToPixel="false" styleClass="board" translateX="150.0" translateY="65.0" AnchorPane.bottomAnchor="852.0" AnchorPane.rightAnchor="50.0">
                 <children>
-                    <ImageView fitWidth="700.0" preserveRatio="true" styleClass="shadow" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                    <ImageView cache="true" cacheHint="QUALITY" fitWidth="700.0" preserveRatio="true" styleClass="shadow" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0">
                         <Image url="@Graphical_Assets/Board/Board.jpg" />
                     </ImageView>
-                    <Label textAlignment="CENTER" textFill="WHITE" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <Label styleClass="nickname" textAlignment="CENTER" textFill="WHITE" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                         <padding>
                             <Insets bottom="2.0" left="6.0" right="6.0" top="2.0" />
                         </padding>
@@ -1498,16 +1498,16 @@
                             </AnchorPane>
                         </children>
                     </AnchorPane>
-               <AnchorPane AnchorPane.bottomAnchor="306.0" AnchorPane.leftAnchor="600.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="-50.0">
+               <HBox alignment="CENTER" styleClass="coins" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="-35.0">
                   <children>
-                     <ImageView fitHeight="50.0" fitWidth="47.0" layoutX="-3.0" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <ImageView fitHeight="25.0" preserveRatio="true" styleClass="coin">
                         <image>
                            <Image url="@Graphical_Assets/Coin.png" />
                         </image>
                      </ImageView>
-                     <Label layoutX="4.0" layoutY="17.0" prefHeight="23.0" prefWidth="24.0" style="-fx-background-color: white;" text="Label" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="0.0" />
+                     <Label text="Label" />
                   </children>
-               </AnchorPane>
+               </HBox>
                 </children>
             </AnchorPane>
         </children>
@@ -1580,29 +1580,29 @@
                 <Button id="chooseCharacterButton" layoutX="24.0" layoutY="165.0" mnemonicParsing="false" text="Choose" visible="false" />
                 <Button id="playCharacter" layoutY="164.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="35.0" text="❌" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" />
                 <Button id="deselectCharacter" layoutX="67.0" layoutY="164.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="35.0" text="✓" visible="false" AnchorPane.rightAnchor="0.0" />
-            <ImageView fitHeight="40.0" preserveRatio="true" visible="false" AnchorPane.leftAnchor="25.0" AnchorPane.topAnchor="-40.0">
+            <ImageView fitHeight="30.0" preserveRatio="true" styleClass="coin" visible="false" AnchorPane.leftAnchor="35.0" AnchorPane.topAnchor="-35.0">
                <image>
                   <Image url="@Graphical_Assets/Coin.png" />
                </image>
             </ImageView>
-            <AnchorPane layoutX="-51.0" prefHeight="200.0" prefWidth="200.0" visible="false" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="60.0">
+            <AnchorPane visible="false" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="60.0">
                <children>
-                  <ImageView fitWidth="40.0" preserveRatio="true" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <ImageView fitWidth="35.0" preserveRatio="true" AnchorPane.leftAnchor="12.0" AnchorPane.topAnchor="14.0">
                      <image>
                         <Image url="@Graphical_Assets/deny_island_icon.png" />
                      </image>
                   </ImageView>
-                  <ImageView fitWidth="40.0" layoutX="10.0" layoutY="10.0" preserveRatio="true" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <ImageView fitWidth="35.0" layoutX="10.0" layoutY="10.0" preserveRatio="true" AnchorPane.rightAnchor="12.0" AnchorPane.topAnchor="14.0">
                      <image>
                         <Image url="@Graphical_Assets/deny_island_icon.png" />
                      </image>
                   </ImageView>
-                  <ImageView fitWidth="40.0" preserveRatio="true" AnchorPane.bottomAnchor="0.0">
+                  <ImageView fitWidth="35.0" preserveRatio="true" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="12.0">
                      <image>
                         <Image url="@Graphical_Assets/deny_island_icon.png" />
                      </image>
                   </ImageView>
-                  <ImageView fitWidth="40.0" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                  <ImageView fitWidth="35.0" preserveRatio="true" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="12.0">
                      <image>
                         <Image url="@Graphical_Assets/deny_island_icon.png" />
                      </image>
@@ -1676,29 +1676,29 @@
                 <Button id="chooseCharacterButton" layoutX="24.0" layoutY="165.0" mnemonicParsing="false" text="Choose" visible="false" />
                 <Button id="playCharacter" layoutY="164.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="35.0" text="❌" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" />
                 <Button id="deselectCharacter" layoutX="67.0" layoutY="164.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="35.0" text="✓" visible="false" AnchorPane.rightAnchor="0.0" />
-            <ImageView fitHeight="40.0" preserveRatio="true" visible="false" AnchorPane.leftAnchor="25.0" AnchorPane.topAnchor="-40.0">
+            <ImageView fitHeight="30.0" preserveRatio="true" styleClass="coin" visible="false" AnchorPane.leftAnchor="35.0" AnchorPane.topAnchor="-35.0">
                <image>
                   <Image url="@Graphical_Assets/Coin.png" />
                </image>
             </ImageView>
-            <AnchorPane prefHeight="200.0" prefWidth="200.0" visible="false" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="60.0">
+            <AnchorPane visible="false" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="60.0">
                <children>
-                  <ImageView fitWidth="40.0" preserveRatio="true" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <ImageView fitWidth="35.0" preserveRatio="true" AnchorPane.leftAnchor="12.0" AnchorPane.topAnchor="14.0">
                      <image>
                         <Image url="@Graphical_Assets/deny_island_icon.png" />
                      </image>
                   </ImageView>
-                  <ImageView fitWidth="40.0" layoutX="10.0" layoutY="10.0" preserveRatio="true" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <ImageView fitWidth="35.0" layoutX="10.0" layoutY="10.0" preserveRatio="true" AnchorPane.rightAnchor="12.0" AnchorPane.topAnchor="14.0">
                      <image>
                         <Image url="@Graphical_Assets/deny_island_icon.png" />
                      </image>
                   </ImageView>
-                  <ImageView fitWidth="40.0" preserveRatio="true" AnchorPane.bottomAnchor="0.0">
+                  <ImageView fitWidth="35.0" preserveRatio="true" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="12.0">
                      <image>
                         <Image url="@Graphical_Assets/deny_island_icon.png" />
                      </image>
                   </ImageView>
-                  <ImageView fitWidth="40.0" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                  <ImageView fitWidth="35.0" preserveRatio="true" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="12.0">
                      <image>
                         <Image url="@Graphical_Assets/deny_island_icon.png" />
                      </image>
@@ -1772,29 +1772,29 @@
                 <Button id="chooseCharacterButton" layoutX="24.0" layoutY="165.0" mnemonicParsing="false" text="Choose" visible="false" />
                 <Button id="playCharacter" layoutY="164.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="35.0" text="❌" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" />
                 <Button id="deselectCharacter" layoutX="67.0" layoutY="164.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="35.0" text="✓" visible="false" AnchorPane.rightAnchor="0.0" />
-            <ImageView fitHeight="40.0" preserveRatio="true" visible="false" AnchorPane.leftAnchor="25.0" AnchorPane.topAnchor="-40.0">
+            <ImageView fitHeight="30.0" preserveRatio="true" styleClass="coin" visible="false" AnchorPane.leftAnchor="35.0" AnchorPane.topAnchor="-35.0">
                <image>
                   <Image url="@Graphical_Assets/Coin.png" />
                </image>
             </ImageView>
-            <AnchorPane prefHeight="200.0" prefWidth="200.0" visible="false" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="70.0">
+            <AnchorPane visible="false" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="60.0">
                <children>
-                  <ImageView fitWidth="40.0" preserveRatio="true" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <ImageView fitWidth="35.0" preserveRatio="true" AnchorPane.leftAnchor="12.0" AnchorPane.topAnchor="14.0">
                      <image>
                         <Image url="@Graphical_Assets/deny_island_icon.png" />
                      </image>
                   </ImageView>
-                  <ImageView fitWidth="40.0" layoutX="10.0" layoutY="10.0" preserveRatio="true" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <ImageView fitWidth="35.0" layoutX="10.0" layoutY="10.0" preserveRatio="true" AnchorPane.rightAnchor="12.0" AnchorPane.topAnchor="14.0">
                      <image>
                         <Image url="@Graphical_Assets/deny_island_icon.png" />
                      </image>
                   </ImageView>
-                  <ImageView fitWidth="40.0" preserveRatio="true" AnchorPane.bottomAnchor="0.0">
+                  <ImageView fitWidth="35.0" preserveRatio="true" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="12.0">
                      <image>
                         <Image url="@Graphical_Assets/deny_island_icon.png" />
                      </image>
                   </ImageView>
-                  <ImageView fitWidth="40.0" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                  <ImageView fitWidth="35.0" preserveRatio="true" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="12.0">
                      <image>
                         <Image url="@Graphical_Assets/deny_island_icon.png" />
                      </image>
@@ -1804,11 +1804,11 @@
             </AnchorPane>
         </children>
     </HBox>
-    <VBox fx:id="chat" layoutY="681.0" prefHeight="610.0" prefWidth="225.0" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="10.0">
-        <Pane fx:id="paneForChat" prefHeight="666.0" prefWidth="225.0" />
-        <HBox prefHeight="70.0" prefWidth="214.0">
-            <TextField id="message" prefHeight="26.0" prefWidth="163.0" />
-            <Button fx:id="sendButton" mnemonicParsing="false" prefHeight="26.0" prefWidth="62.0" text="Send">
+    <VBox fx:id="chat" maxWidth="250.0" spacing="10.0" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="10.0">
+        <Pane fx:id="paneForChat" VBox.vgrow="ALWAYS" />
+        <HBox spacing="5.0" VBox.vgrow="ALWAYS">
+            <TextField id="message" />
+            <Button fx:id="sendButton" alignment="CENTER_RIGHT" mnemonicParsing="false" text="Send">
                 <HBox.margin>
                     <Insets left="5.0" />
                 </HBox.margin>
@@ -1817,16 +1817,16 @@
     </VBox>
     <Button fx:id="chatButton" mnemonicParsing="false" text="Show chat" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="20.0" />
     <Button fx:id="quitButton" mnemonicParsing="false" text="Quit" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0" />
-   <AnchorPane id="coinsBox" layoutX="16.0" layoutY="73.0" visible="false" AnchorPane.bottomAnchor="860.0" AnchorPane.rightAnchor="1800.0">
+   <HBox id="coinsBox" alignment="CENTER" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="120.0">
       <children>
-         <ImageView fitHeight="100.0" preserveRatio="true">
+         <ImageView fitHeight="80.0" preserveRatio="true" styleClass="coin">
             <image>
                <Image url="@Graphical_Assets/Coin.png" />
             </image>
          </ImageView>
-         <Label layoutX="60.0" layoutY="41.0" text="Label" AnchorPane.rightAnchor="-40.0" />
+         <Label text="Label" />
       </children>
-   </AnchorPane>
+   </HBox>
     <AnchorPane fx:id="assistantCardsBox" visible="false" AnchorPane.bottomAnchor="300.0" AnchorPane.leftAnchor="300.0" AnchorPane.rightAnchor="300.0">
         <children>
             <VBox alignment="TOP_CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -1842,7 +1842,7 @@
             </VBox>
         </children>
     </AnchorPane>
-    <HBox fx:id="clouds" alignment="CENTER" prefHeight="71.0" prefWidth="342.0" AnchorPane.leftAnchor="352.0" AnchorPane.topAnchor="275.0">
+    <HBox fx:id="clouds" alignment="CENTER" prefHeight="71.0" prefWidth="342.0" AnchorPane.leftAnchor="352.0" AnchorPane.topAnchor="270.0">
         <children>
             <AnchorPane id="-1" pickOnBounds="false" prefHeight="80.0" prefWidth="80.0" styleClass="cloud">
                 <properties name="Cloud" />
