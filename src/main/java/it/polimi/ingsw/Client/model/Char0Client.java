@@ -1,11 +1,19 @@
 package it.polimi.ingsw.Client.model;
 
+import it.polimi.ingsw.Client.PhaseAndComand.Commands.GameCommand;
 import it.polimi.ingsw.Client.View.Cli.ViewForCharacterCli;
 import it.polimi.ingsw.Server.model.Char0;
+import it.polimi.ingsw.Client.View.Gui.GuiFX;
+import it.polimi.ingsw.Client.View.Gui.SceneController.SceneController;
+import it.polimi.ingsw.Client.View.Gui.ViewGUI;
+import it.polimi.ingsw.Util.Color;
 import it.polimi.ingsw.exceptions.clientExceptions.SkipCommandException;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
+
+import it.polimi.ingsw.Server.model.Char0;
+import javafx.scene.layout.AnchorPane;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,14 +50,34 @@ public class Char0Client extends CharacterCardClientWithStudents {
         inputs.add(view.getIslandDestination("Select the island where you want to put the student", false));
     }
 
-    /*@Override
+    @Override
     public void setHandler(ViewGUI viewGUI) {
-    }*/
 
-    public EventHandler<MouseEvent> setInput() {
+        if (inputs.size() == 0) {
+            //this card has id -10 (it's a gameComponent)
+            viewGUI.enableStudentsOnCharacter(getId(), setInput(viewGUI));
+        }//else-> it means that color has already been chosen, now I need to set island
+        else if (inputs.size() == 1) {
+            viewGUI.enableIslands(setInput(viewGUI));
+        }
+    }
+
+    private EventHandler<MouseEvent> setInput(ViewGUI viewGUI) {
         return mouseEvent -> {
             Node clicked = (Node) mouseEvent.getSource();
-
+            Color c = (Color) clicked.getProperties().get("color");
+            if (c != null) {
+                inputs.add(c.ordinal());
+            } else {
+                // TODO mh
+                int id;
+                if (clicked.getProperties().get("relativeId") == null)
+                    id = Integer.parseInt(clicked.getId());
+                else
+                    id = (int) clicked.getProperties().get("relativeId");
+                inputs.add(id);
+            }
+            viewGUI.repeatPhase(false);
         };
     }
 

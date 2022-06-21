@@ -1,8 +1,13 @@
 package it.polimi.ingsw.Client.model;
 
 import it.polimi.ingsw.Client.View.Cli.ViewForCharacterCli;
+import it.polimi.ingsw.Client.View.Gui.ViewGUI;
 import it.polimi.ingsw.Server.model.Char10;
+import it.polimi.ingsw.Util.Color;
 import it.polimi.ingsw.exceptions.clientExceptions.SkipCommandException;
+import javafx.event.EventHandler;
+import javafx.scene.Node;
+import javafx.scene.input.MouseEvent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,6 +16,8 @@ import java.util.List;
  * Char10Client class represents the character card on the client side and corresponds to the server class {@link Char10}.
  */
 public class Char10Client extends CharacterCardClientWithStudents {
+
+
     private boolean used;
 
     private final List<Integer> inputs;
@@ -37,6 +44,22 @@ public class Char10Client extends CharacterCardClientWithStudents {
     public void setNextInput(ViewForCharacterCli view) throws SkipCommandException {
         System.out.println("Select the color of the student from this card");
         inputs.add(view.getColorInput(false).ordinal());
+    }
+
+    @Override
+    public void setHandler(ViewGUI viewGUI) {
+        if (inputs.isEmpty())
+            viewGUI.enableStudentsOnCharacter(getId(), setInput(viewGUI));
+
+    }
+
+    private EventHandler<MouseEvent> setInput(ViewGUI viewGUI) {
+        return mouseEvent -> {
+
+            Node clicked = (Node) mouseEvent.getSource();
+            inputs.add(((Color) clicked.getProperties().get("color")).ordinal());
+            viewGUI.repeatPhase(false);
+        };
     }
 
     @Override

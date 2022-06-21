@@ -59,6 +59,9 @@ public class MoveMotherNaturePhase extends ClientPhase {
                 island.setOnMouseClicked(GameCommand.MOVE_MOTHER_NATURE.getGUIHandler(viewGUI));
             }
         }
+        if (getGameCommands().contains(GameCommand.CHOOSE_CHARACTER)) {
+            viewGUI.enableChooseCharacter(GameCommand.CHOOSE_CHARACTER.getGUIHandler(viewGUI));
+        }
     }
 
     /**

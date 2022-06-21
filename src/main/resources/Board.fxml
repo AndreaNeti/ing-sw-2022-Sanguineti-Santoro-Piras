@@ -1049,7 +1049,7 @@
                                 </ImageView>
                             </children>
                         </VBox>
-                        <AnchorPane id="towers" layoutX="556.0" layoutY="52.0" pickOnBounds="false" prefHeight="200.0" prefWidth="143.0">
+                        <AnchorPane id="towers" layoutX="567.0" layoutY="62.0" pickOnBounds="false" prefHeight="200.0" prefWidth="143.0">
                             <children>
                                 <ImageView fitHeight="34.0" fitWidth="28.0" layoutX="7.0" layoutY="46.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="50.0">
                                     <image>
@@ -1473,7 +1473,7 @@
                 </AnchorPane>
             </children>
         </AnchorPane>
-        <HBox fx:id="characters" layoutX="793.0" layoutY="384.0" AnchorPane.leftAnchor="322.0" AnchorPane.topAnchor="390.0">
+        <HBox fx:id="characters" layoutX="793.0" layoutY="384.0" AnchorPane.bottomAnchor="480.0" AnchorPane.leftAnchor="325.0" AnchorPane.rightAnchor="1175.0" AnchorPane.topAnchor="410.0">
             <children>
                 <AnchorPane prefHeight="150.0" prefWidth="100.0">
                     <HBox.margin>
@@ -1538,7 +1538,9 @@
                             </AnchorPane>
                         </children>
                     </AnchorPane>
-                    <Button layoutX="23.0" layoutY="165.0" mnemonicParsing="false" text="Choose" />
+                    <Button id="chooseCharacterButton" layoutX="24.0" layoutY="165.0" mnemonicParsing="false" text="Choose" visible="false" />
+                    <Button id="playCharacter" layoutY="164.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="35.0" text="❌" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" />
+                    <Button id="deselectCharacter" layoutX="67.0" layoutY="164.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="35.0" text="✓" visible="false" AnchorPane.rightAnchor="0.0" />
                 </AnchorPane>
                 <AnchorPane prefHeight="150.0" prefWidth="100.0">
                     <HBox.margin>
@@ -1603,7 +1605,9 @@
                             </AnchorPane>
                         </children>
                     </AnchorPane>
-                    <Button id="chooseCharacterButton" layoutX="24.0" layoutY="165.0" mnemonicParsing="false" text="Choose" />
+                    <Button id="chooseCharacterButton" layoutX="24.0" layoutY="165.0" mnemonicParsing="false" text="Choose" visible="false" />
+                    <Button id="playCharacter" layoutY="164.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="35.0" text="❌" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" />
+                    <Button id="deselectCharacter" layoutX="67.0" layoutY="164.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="35.0" text="✓" visible="false" AnchorPane.rightAnchor="0.0" />
                 </AnchorPane>
                 <AnchorPane prefHeight="150.0" prefWidth="100.0">
                     <HBox.margin>
@@ -1668,7 +1672,9 @@
                             </AnchorPane>
                         </children>
                     </AnchorPane>
-                    <Button layoutX="24.0" layoutY="164.0" mnemonicParsing="false" text="Choose" />
+                    <Button id="chooseCharacterButton" layoutX="24.0" layoutY="165.0" mnemonicParsing="false" text="Choose" visible="false" />
+                    <Button id="playCharacter" layoutY="164.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="35.0" text="❌" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" />
+                    <Button id="deselectCharacter" layoutX="67.0" layoutY="164.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="35.0" text="✓" visible="false" AnchorPane.rightAnchor="0.0" />
                 </AnchorPane>
             </children>
         </HBox>
@@ -1677,29 +1683,30 @@
             <HBox prefHeight="70.0" prefWidth="214.0">
                 <TextField id="message" prefHeight="26.0" prefWidth="163.0" />
                 <Button fx:id="sendButton" mnemonicParsing="false" prefHeight="26.0" prefWidth="62.0" text="Send">
-               <HBox.margin>
-                  <Insets left="5.0" />
-               </HBox.margin></Button>
+                    <HBox.margin>
+                        <Insets left="5.0" />
+                    </HBox.margin>
+                </Button>
             </HBox>
         </VBox>
         <Button fx:id="chatButton" mnemonicParsing="false" text="Show chat" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="20.0" />
         <Button fx:id="quitButton" mnemonicParsing="false" text="Quit" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0" />
-      <AnchorPane fx:id="assistantCardsBox" visible="false" AnchorPane.bottomAnchor="300.0" AnchorPane.leftAnchor="300.0" AnchorPane.rightAnchor="300.0">
-         <children>
-            <VBox alignment="TOP_CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-               <children>
-                      <Label text="Select an assistant card to play" textAlignment="CENTER">
-                          <font>
-                              <Font size="40.0" />
-                          </font>
-                      </Label>
-                      <HBox alignment="CENTER_LEFT" VBox.vgrow="ALWAYS">
-                </HBox>
-               </children>
-            </VBox>
-         </children>
-      </AnchorPane>
-        <HBox fx:id="clouds" alignment="CENTER" prefHeight="71.0" prefWidth="342.0" AnchorPane.leftAnchor="355.0" AnchorPane.topAnchor="275.0">
+        <AnchorPane fx:id="assistantCardsBox" visible="false" AnchorPane.bottomAnchor="300.0" AnchorPane.leftAnchor="300.0" AnchorPane.rightAnchor="300.0">
+            <children>
+                <VBox alignment="TOP_CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <children>
+                        <Label text="Select an assistant card to play" textAlignment="CENTER">
+                            <font>
+                                <Font size="40.0" />
+                            </font>
+                        </Label>
+                        <HBox alignment="CENTER_LEFT" VBox.vgrow="ALWAYS">
+                        </HBox>
+                    </children>
+                </VBox>
+            </children>
+        </AnchorPane>
+        <HBox fx:id="clouds" alignment="CENTER" prefHeight="71.0" prefWidth="342.0" AnchorPane.leftAnchor="357.0" AnchorPane.topAnchor="275.0">
             <children>
                 <AnchorPane id="-1" pickOnBounds="false" prefHeight="80.0" prefWidth="80.0" styleClass="cloud">
                     <properties name="Cloud" />
@@ -1718,9 +1725,9 @@
                             </children>
                         </AnchorPane>
                     </children>
-               <HBox.margin>
-                  <Insets left="5.0" right="5.0" />
-               </HBox.margin>
+                    <HBox.margin>
+                        <Insets left="5.0" right="5.0" />
+                    </HBox.margin>
                 </AnchorPane>
                 <AnchorPane id="-2" pickOnBounds="false" prefHeight="80.0" prefWidth="80.0" styleClass="cloud">
                     <properties name="Cloud" />
@@ -1730,18 +1737,18 @@
                                 <Image url="@Graphical_Assets/cloud_card.png" />
                             </image>
                         </ImageView>
-                  <AnchorPane prefHeight="80.0" prefWidth="80.0">
-                     <children>
-                        <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" styleClass="student" AnchorPane.leftAnchor="17.0" AnchorPane.topAnchor="17.0" />
-                        <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" styleClass="student" AnchorPane.rightAnchor="17.0" AnchorPane.topAnchor="17.0" />
-                        <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" styleClass="student" AnchorPane.bottomAnchor="17.0" AnchorPane.rightAnchor="17.0" />
-                        <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" styleClass="student" AnchorPane.bottomAnchor="17.0" AnchorPane.leftAnchor="17.0" />
-                     </children>
-                  </AnchorPane>
+                        <AnchorPane prefHeight="80.0" prefWidth="80.0">
+                            <children>
+                                <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" styleClass="student" AnchorPane.leftAnchor="17.0" AnchorPane.topAnchor="17.0" />
+                                <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" styleClass="student" AnchorPane.rightAnchor="17.0" AnchorPane.topAnchor="17.0" />
+                                <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" styleClass="student" AnchorPane.bottomAnchor="17.0" AnchorPane.rightAnchor="17.0" />
+                                <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" styleClass="student" AnchorPane.bottomAnchor="17.0" AnchorPane.leftAnchor="17.0" />
+                            </children>
+                        </AnchorPane>
                     </children>
-               <HBox.margin>
-                  <Insets left="5.0" right="5.0" />
-               </HBox.margin>
+                    <HBox.margin>
+                        <Insets left="5.0" right="5.0" />
+                    </HBox.margin>
                 </AnchorPane>
                 <AnchorPane id="-3" pickOnBounds="false" prefHeight="80.0" prefWidth="80.0" styleClass="cloud">
                     <properties name="Cloud" />
@@ -1751,18 +1758,18 @@
                                 <Image url="@Graphical_Assets/cloud_card.png" />
                             </image>
                         </ImageView>
-                  <AnchorPane prefHeight="80.0" prefWidth="80.0">
-                     <children>
-                        <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" styleClass="student" AnchorPane.leftAnchor="17.0" AnchorPane.topAnchor="17.0" />
-                        <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" styleClass="student" AnchorPane.rightAnchor="17.0" AnchorPane.topAnchor="17.0" />
-                        <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" styleClass="student" AnchorPane.bottomAnchor="17.0" AnchorPane.rightAnchor="17.0" />
-                        <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" styleClass="student" AnchorPane.bottomAnchor="17.0" AnchorPane.leftAnchor="17.0" />
-                     </children>
-                  </AnchorPane>
+                        <AnchorPane prefHeight="80.0" prefWidth="80.0">
+                            <children>
+                                <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" styleClass="student" AnchorPane.leftAnchor="17.0" AnchorPane.topAnchor="17.0" />
+                                <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" styleClass="student" AnchorPane.rightAnchor="17.0" AnchorPane.topAnchor="17.0" />
+                                <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" styleClass="student" AnchorPane.bottomAnchor="17.0" AnchorPane.rightAnchor="17.0" />
+                                <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" styleClass="student" AnchorPane.bottomAnchor="17.0" AnchorPane.leftAnchor="17.0" />
+                            </children>
+                        </AnchorPane>
                     </children>
-               <HBox.margin>
-                  <Insets left="5.0" right="5.0" />
-               </HBox.margin>
+                    <HBox.margin>
+                        <Insets left="5.0" right="5.0" />
+                    </HBox.margin>
                 </AnchorPane>
                 <AnchorPane id="-4" pickOnBounds="false" prefHeight="80.0" prefWidth="80.0" styleClass="cloud">
                     <properties name="Cloud" />
@@ -1772,20 +1779,64 @@
                                 <Image url="@Graphical_Assets/cloud_card.png" />
                             </image>
                         </ImageView>
-                  <AnchorPane prefHeight="80.0" prefWidth="80.0">
-                     <children>
-                        <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" styleClass="student" AnchorPane.leftAnchor="17.0" AnchorPane.topAnchor="17.0" />
-                        <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" styleClass="student" AnchorPane.rightAnchor="17.0" AnchorPane.topAnchor="17.0" />
-                        <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" styleClass="student" AnchorPane.bottomAnchor="17.0" AnchorPane.rightAnchor="17.0" />
-                        <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" styleClass="student" AnchorPane.bottomAnchor="17.0" AnchorPane.leftAnchor="17.0" />
-                     </children>
-                  </AnchorPane>
+                        <AnchorPane prefHeight="80.0" prefWidth="80.0">
+                            <children>
+                                <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" styleClass="student" AnchorPane.leftAnchor="17.0" AnchorPane.topAnchor="17.0" />
+                                <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" styleClass="student" AnchorPane.rightAnchor="17.0" AnchorPane.topAnchor="17.0" />
+                                <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" styleClass="student" AnchorPane.bottomAnchor="17.0" AnchorPane.rightAnchor="17.0" />
+                                <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" styleClass="student" AnchorPane.bottomAnchor="17.0" AnchorPane.leftAnchor="17.0" />
+                            </children>
+                        </AnchorPane>
                     </children>
-               <HBox.margin>
-                  <Insets left="5.0" right="5.0" />
-               </HBox.margin>
+                    <HBox.margin>
+                        <Insets left="5.0" right="5.0" />
+                    </HBox.margin>
                 </AnchorPane>
             </children>
         </HBox>
+      <HBox id="colorBox" visible="false" AnchorPane.bottomAnchor="420.0" AnchorPane.rightAnchor="1210.0">
+         <children>
+            <ImageView pickOnBounds="true">
+               <image>
+                  <Image url="@Graphical_Assets/Students/BLUE.png" />
+               </image>
+               <HBox.margin>
+                  <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+               </HBox.margin>
+            </ImageView>
+            <ImageView pickOnBounds="true">
+               <image>
+                  <Image url="@Graphical_Assets/Students/GREEN.png" />
+               </image>
+               <HBox.margin>
+                  <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+               </HBox.margin>
+            </ImageView>
+            <ImageView pickOnBounds="true">
+               <image>
+                  <Image url="@Graphical_Assets/Students/PINK.png" />
+               </image>
+               <HBox.margin>
+                  <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+               </HBox.margin>
+            </ImageView>
+            <ImageView pickOnBounds="true">
+               <image>
+                  <Image url="@Graphical_Assets/Students/RED.png" />
+               </image>
+               <HBox.margin>
+                  <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+               </HBox.margin>
+            </ImageView>
+            <ImageView pickOnBounds="true">
+               <image>
+                  <Image url="@Graphical_Assets/Students/YELLOW.png" />
+               </image>
+               <HBox.margin>
+                  <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+               </HBox.margin>
+            </ImageView>
+         </children>
+      </HBox>
     </children>
 </AnchorPane>
