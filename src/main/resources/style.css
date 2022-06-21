@@ -56,6 +56,8 @@
 }
 
 .island {
+    -fx-scale-x: 0.8;
+    -fx-scale-y: 0.8;
 }
 
 .clickable {

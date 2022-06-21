@@ -440,8 +440,7 @@ public class BoardController implements SceneController {
 
             AnchorPane paneWinnerIsland = (AnchorPane) this.getElementById("#" + winner.getId());
             // make bigger
-            paneWinnerIsland.setStyle("-fx-scale-x:1");
-            paneWinnerIsland.setStyle("-fx-scale-y:1");
+            paneWinnerIsland.setStyle("-fx-scale-x:1; -fx-scale-y:1");
 
             Set<Integer> containedIslands = (Set<Integer>) paneWinnerIsland.getProperties().get("containedIslands");
             // add to contained islands the ones contained by the removed island
@@ -455,8 +454,7 @@ public class BoardController implements SceneController {
                 node.getChildren().get(1).setVisible(false);
                 //add tower and make bigger
                 node.getChildren().add(getTower(winnerTeam));
-                node.setStyle("-fx-scale-x:1");
-                node.setStyle("-fx-scale-y:1");
+                node.setStyle("-fx-scale-x:1; -fx-scale-y:1");
             }
             // update contained islands
             paneWinnerIsland.getProperties().put("containedIslands", containedIslands);
