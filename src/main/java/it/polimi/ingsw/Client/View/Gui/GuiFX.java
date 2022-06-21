@@ -10,6 +10,8 @@ import javafx.scene.Scene;
 import javafx.scene.SceneAntialiasing;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.ProgressIndicator;
+import javafx.scene.input.KeyCombination;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 
@@ -50,7 +52,9 @@ public class GuiFX extends Application {
             FXMLLoader loader = new FXMLLoader(GuiFX.class.getResource("/board.fxml"));
 
             try {
-                primaryStage.setScene(new Scene(loader.load(), 1920, 1080, false, SceneAntialiasing.BALANCED));
+                int width = (int) Screen.getPrimary().getBounds().getWidth();
+                int height = (int) Screen.getPrimary().getBounds().getHeight();
+                primaryStage.setScene(new Scene(loader.load(), width, height, false, SceneAntialiasing.BALANCED));
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -63,7 +67,8 @@ public class GuiFX extends Application {
             //pb.setProgress(100);
             inMenuScene = false;
             primaryStage.setFullScreen(true);
-            primaryStage.setResizable(true);
+            primaryStage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
+            primaryStage.setResizable(false);
             primaryStage.show();
         }
     }

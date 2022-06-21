@@ -753,9 +753,9 @@
             </AnchorPane>
         </children>
     </AnchorPane>
-    <AnchorPane fx:id="boards" pickOnBounds="false" prefHeight="1156.0" prefWidth="1000.0" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0">
+    <AnchorPane fx:id="boards" pickOnBounds="false" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0">
         <children>
-            <AnchorPane fx:id="mainBoard" pickOnBounds="false" prefHeight="304.0" prefWidth="700.0" styleClass="board" AnchorPane.bottomAnchor="50.0" AnchorPane.rightAnchor="50.0">
+            <AnchorPane fx:id="mainBoard" pickOnBounds="false" prefHeight="304.0" prefWidth="700.0" styleClass="board" AnchorPane.bottomAnchor="30.0" AnchorPane.rightAnchor="30.0">
                 <children>
                     <ImageView cache="true" cacheHint="QUALITY" fitWidth="700.0" preserveRatio="true" styleClass="shadow" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0">
                         <image>
@@ -913,24 +913,24 @@
                             </ImageView>
                         </children>
                     </AnchorPane>
-                    <AnchorPane pickOnBounds="false" prefHeight="300.0" prefWidth="300.0" AnchorPane.leftAnchor="-320.0" AnchorPane.topAnchor="0.0">
-                        <children>
-                            <AnchorPane layoutY="104.0" prefHeight="200.0" prefWidth="135.0" styleClass="card">
+               <HBox alignment="BOTTOM_CENTER" prefHeight="100.0" prefWidth="200.0" spacing="25.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="-320.0">
+                  <children>
+                            <AnchorPane pickOnBounds="false">
                                 <children>
-                                    <ImageView fitHeight="200.0" fitWidth="135.0" pickOnBounds="true" preserveRatio="true" styleClass="shadow">
+                                    <ImageView fitWidth="135.0" preserveRatio="true" styleClass="shadow" />
+                                </children>
+                            </AnchorPane>
+                            <AnchorPane styleClass="card">
+                                <children>
+                                    <ImageView fitWidth="135.0" pickOnBounds="true" preserveRatio="true" styleClass="shadow">
                                         <image>
                                             <Image url="@Graphical_Assets/Wizard/WOODMAGE.png" />
                                         </image>
                                     </ImageView>
                                 </children>
                             </AnchorPane>
-                            <AnchorPane layoutX="165.0" layoutY="104.0" pickOnBounds="false" prefHeight="200.0" prefWidth="135.0">
-                                <children>
-                                    <ImageView fitHeight="200.0" fitWidth="136.0" preserveRatio="true" styleClass="shadow" />
-                                </children>
-                            </AnchorPane>
-                        </children>
-                    </AnchorPane>
+                  </children>
+               </HBox>
                <HBox alignment="CENTER" styleClass="coins" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="-35.0">
                   <children>
                      <ImageView fitHeight="25.0" preserveRatio="true" styleClass="coin">
@@ -943,7 +943,7 @@
                </HBox>
                 </children>
             </AnchorPane>
-            <AnchorPane pickOnBounds="false" prefHeight="304.0" prefWidth="700.0" scaleX="0.5714" scaleY="0.5714" snapToPixel="false" styleClass="board" translateX="150.0" translateY="65.0" AnchorPane.bottomAnchor="404.0" AnchorPane.rightAnchor="50.0">
+            <AnchorPane pickOnBounds="false" prefHeight="304.0" prefWidth="700.0" scaleX="0.6" scaleY="0.6" snapToPixel="false" styleClass="board" translateX="150.0" translateY="65.0" AnchorPane.bottomAnchor="404.0" AnchorPane.rightAnchor="44.0">
                 <children>
                     <ImageView cache="true" cacheHint="QUALITY" fitWidth="700.0" preserveRatio="true" styleClass="shadow" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0">
                         <image>
@@ -1102,25 +1102,24 @@
                             </ImageView>
                         </children>
                     </AnchorPane>
-
-                    <AnchorPane pickOnBounds="false" prefHeight="300.0" prefWidth="300.0" AnchorPane.leftAnchor="-320.0">
+               <HBox alignment="BOTTOM_CENTER" prefHeight="100.0" prefWidth="200.0" spacing="35.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="-470.0">
+                  <children>
+                     <AnchorPane pickOnBounds="false">
                         <children>
-                            <AnchorPane layoutY="104.0" prefHeight="200.0" prefWidth="135.0" styleClass="card">
-                                <children>
-                                    <ImageView fitHeight="200.0" fitWidth="135.0" pickOnBounds="true" preserveRatio="true" styleClass="shadow">
-                                        <image>
-                                            <Image url="@Graphical_Assets/Wizard/WOODMAGE.png" />
-                                        </image>
-                                    </ImageView>
-                                </children>
-                            </AnchorPane>
-                            <AnchorPane layoutX="165.0" layoutY="104.0" pickOnBounds="false" prefHeight="200.0" prefWidth="135.0">
-                                <children>
-                                    <ImageView fitHeight="200.0" fitWidth="136.0" preserveRatio="true" styleClass="shadow" />
-                                </children>
-                            </AnchorPane>
+                           <ImageView fitWidth="200.0" preserveRatio="true" styleClass="shadow" />
                         </children>
-                    </AnchorPane>
+                     </AnchorPane>
+                     <AnchorPane styleClass="card">
+                        <children>
+                           <ImageView fitWidth="200.0" pickOnBounds="true" preserveRatio="true" styleClass="shadow">
+                              <image>
+                                 <Image url="@Graphical_Assets/Wizard/WOODMAGE.png" />
+                              </image>
+                           </ImageView>
+                        </children>
+                     </AnchorPane>
+                  </children>
+               </HBox>
                <HBox alignment="CENTER" styleClass="coins" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="-35.0">
                   <children>
                      <ImageView fitHeight="25.0" preserveRatio="true" styleClass="coin">
@@ -1133,7 +1132,7 @@
                </HBox>
                 </children>
             </AnchorPane>
-            <AnchorPane pickOnBounds="false" prefHeight="304.0" prefWidth="700.0" scaleX="0.5714" scaleY="0.5714" snapToPixel="false" styleClass="board" translateX="150.0" translateY="65.0" AnchorPane.bottomAnchor="628.0" AnchorPane.rightAnchor="50.0">
+            <AnchorPane pickOnBounds="false" prefHeight="304.0" prefWidth="700.0" scaleX="0.6" scaleY="0.6" snapToPixel="false" styleClass="board" translateX="150.0" translateY="65.0" AnchorPane.bottomAnchor="628.0" AnchorPane.rightAnchor="44.0">
                 <children>
                     <ImageView cache="true" cacheHint="QUALITY" fitWidth="700.0" preserveRatio="true" styleClass="shadow" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0">
                         <image>
@@ -1292,25 +1291,24 @@
                             </ImageView>
                         </children>
                     </AnchorPane>
-
-                    <AnchorPane pickOnBounds="false" prefHeight="300.0" prefWidth="300.0" AnchorPane.leftAnchor="-320.0">
+               <HBox alignment="BOTTOM_CENTER" layoutX="10.0" layoutY="10.0" prefHeight="100.0" prefWidth="200.0" spacing="35.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="-470.0">
+                  <children>
+                     <AnchorPane pickOnBounds="false">
                         <children>
-                            <AnchorPane layoutY="104.0" prefHeight="200.0" prefWidth="135.0" styleClass="card">
-                                <children>
-                                    <ImageView fitHeight="200.0" fitWidth="135.0" pickOnBounds="true" preserveRatio="true" styleClass="shadow">
-                                        <image>
-                                            <Image url="@Graphical_Assets/Wizard/WOODMAGE.png" />
-                                        </image>
-                                    </ImageView>
-                                </children>
-                            </AnchorPane>
-                            <AnchorPane layoutX="165.0" layoutY="104.0" pickOnBounds="false" prefHeight="200.0" prefWidth="135.0">
-                                <children>
-                                    <ImageView fitHeight="200.0" fitWidth="136.0" preserveRatio="true" styleClass="shadow" />
-                                </children>
-                            </AnchorPane>
+                           <ImageView fitWidth="200.0" preserveRatio="true" styleClass="shadow" />
                         </children>
-                    </AnchorPane>
+                     </AnchorPane>
+                     <AnchorPane styleClass="card">
+                        <children>
+                           <ImageView fitWidth="200.0" pickOnBounds="true" preserveRatio="true" styleClass="shadow">
+                              <image>
+                                 <Image url="@Graphical_Assets/Wizard/WOODMAGE.png" />
+                              </image>
+                           </ImageView>
+                        </children>
+                     </AnchorPane>
+                  </children>
+               </HBox>
                <HBox alignment="CENTER" styleClass="coins" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="-35.0">
                   <children>
                      <ImageView fitHeight="25.0" preserveRatio="true" styleClass="coin">
@@ -1323,7 +1321,7 @@
                </HBox>
                 </children>
             </AnchorPane>
-            <AnchorPane pickOnBounds="false" prefHeight="304.0" prefWidth="425.0" scaleX="0.5714" scaleY="0.5714" snapToPixel="false" styleClass="board" translateX="150.0" translateY="65.0" AnchorPane.bottomAnchor="852.0" AnchorPane.rightAnchor="50.0">
+            <AnchorPane pickOnBounds="false" prefHeight="304.0" prefWidth="425.0" scaleX="0.6" scaleY="0.6" snapToPixel="false" styleClass="board" translateX="150.0" translateY="65.0" AnchorPane.bottomAnchor="852.0" AnchorPane.rightAnchor="44.0">
                 <children>
                     <ImageView cache="true" cacheHint="QUALITY" fitWidth="700.0" preserveRatio="true" styleClass="shadow" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0">
                         <Image url="@Graphical_Assets/Board/Board.jpg" />
@@ -1480,24 +1478,24 @@
                             </ImageView>
                         </children>
                     </AnchorPane>
-                    <AnchorPane pickOnBounds="false" prefHeight="300.0" prefWidth="300.0" AnchorPane.leftAnchor="-320.0">
+               <HBox alignment="BOTTOM_CENTER" layoutX="10.0" layoutY="10.0" prefHeight="100.0" prefWidth="200.0" spacing="35.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="-470.0">
+                  <children>
+                     <AnchorPane pickOnBounds="false">
                         <children>
-                            <AnchorPane layoutY="104.0" prefHeight="200.0" prefWidth="135.0" styleClass="card">
-                                <children>
-                                    <ImageView fitHeight="200.0" fitWidth="135.0" pickOnBounds="true" preserveRatio="true" styleClass="shadow">
-                                        <image>
-                                            <Image url="@Graphical_Assets/Wizard/WOODMAGE.png" />
-                                        </image>
-                                    </ImageView>
-                                </children>
-                            </AnchorPane>
-                            <AnchorPane layoutX="165.0" layoutY="104.0" pickOnBounds="false" prefHeight="200.0" prefWidth="135.0">
-                                <children>
-                                    <ImageView fitHeight="200.0" fitWidth="136.0" preserveRatio="true" styleClass="shadow" />
-                                </children>
-                            </AnchorPane>
+                           <ImageView fitWidth="200.0" preserveRatio="true" styleClass="shadow" />
                         </children>
-                    </AnchorPane>
+                     </AnchorPane>
+                     <AnchorPane styleClass="card">
+                        <children>
+                           <ImageView fitWidth="200.0" pickOnBounds="true" preserveRatio="true" styleClass="shadow">
+                              <image>
+                                 <Image url="@Graphical_Assets/Wizard/WOODMAGE.png" />
+                              </image>
+                           </ImageView>
+                        </children>
+                     </AnchorPane>
+                  </children>
+               </HBox>
                <HBox alignment="CENTER" styleClass="coins" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="-35.0">
                   <children>
                      <ImageView fitHeight="25.0" preserveRatio="true" styleClass="coin">

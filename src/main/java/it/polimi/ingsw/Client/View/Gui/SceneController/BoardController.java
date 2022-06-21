@@ -114,9 +114,9 @@ public class BoardController implements SceneController {
                     image.setPreserveRatio(true);
                     image.setFitWidth(150);
                     alert.setGraphic(image);
-                    alert.setHeaderText(character + " cost= " + character.getCost());
+                    alert.setHeaderText(character + ", cost = " + character.getCost());
                     alert.setContentText(character.getDescription());
-                    alert.setTitle("Character card description");
+                    alert.setTitle(character.toString());
                     alert.initOwner(GuiFX.getPrimaryStage());
                     alert.showAndWait();
                 });
@@ -182,10 +182,10 @@ public class BoardController implements SceneController {
                         }
                         case 6 -> {
                             //set id of the assistant card
-                            AnchorPane assistantPane = (AnchorPane) board.getChildren().get(j);
+                            HBox assistantPane = (HBox) element;
                             assistantPane.setId("assistantCard" + Wizard.values()[localWizardIndex]);
-                            //0 is the pane that contain the back of all the cards
-                            AnchorPane back = (AnchorPane) assistantPane.getChildren().get(0);
+                            // 1 is the pane that contain the back of all the cards
+                            AnchorPane back = (AnchorPane) assistantPane.getChildren().get(1);
                             ImageView imageView = (ImageView) back.getChildren().get(0);
                             imageView.setImage(new Image("Graphical_Assets/Wizard/" + Wizard.values()[localWizardIndex] + ".png"));
                         }
@@ -224,7 +224,6 @@ public class BoardController implements SceneController {
         this.viewGUI = viewGUI;
         if (viewGUI.getModel() != null) {
             viewGUI.getModel().addListener(this);
-
             initialize();
         }
     }
@@ -531,9 +530,9 @@ public class BoardController implements SceneController {
     @Override
     public void updateCardPlayed(AssistantCard playedCard) {
         PlayerClient current = viewGUI.getModel().getCurrentPlayer();
-        AnchorPane assistantPane = (AnchorPane) getElementById("#assistantCard" + current.getWizard());
-        //1 is the pane that contain the played card
-        AnchorPane played = (AnchorPane) assistantPane.getChildren().get(1);
+        HBox assistantPane = (HBox) getElementById("#assistantCard" + current.getWizard());
+        // 0 is the pane that contain the played card
+        AnchorPane played = (AnchorPane) assistantPane.getChildren().get(0);
         ImageView imageView = (ImageView) played.getChildren().get(0);
         imageView.setImage(new Image("Graphical_Assets/AssistantCard/" + playedCard.value() + ".png"));
     }

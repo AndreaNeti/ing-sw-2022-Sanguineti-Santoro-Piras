@@ -38,8 +38,8 @@ public class PlanificationPhase extends ClientPhase {
 
         //add to my image of wizard the handler that show all the playCharacter
         AnchorPane assistantCardsBox = (AnchorPane) sceneController.getElementById("#assistantCardsBox");
-        AnchorPane assistantCardPane = (AnchorPane) sceneController.getElementById("#assistantCard" + viewGUI.getModel().getMyWizard());
-        AnchorPane deck = (AnchorPane) assistantCardPane.getChildren().get(0);
+        HBox assistantCardPane = (HBox) sceneController.getElementById("#assistantCard" + viewGUI.getModel().getMyWizard());
+        AnchorPane deck = (AnchorPane) assistantCardPane.getChildren().get(1);
         sceneController.enableNode(deck);
         deck.setOnMouseClicked(mouseEvent -> assistantCardsBox.setVisible(!assistantCardsBox.isVisible()));
 
