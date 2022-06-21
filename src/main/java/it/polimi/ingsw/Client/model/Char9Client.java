@@ -52,16 +52,18 @@ public class Char9Client implements CharacterCardClient {
 
     @Override
     public void setHandler(ViewGUI viewGUI) {
-        if(inputs.size()==0){
-            viewGUI.enableStudentsLunchHall();
-        } else if (inputs.size()==1) {
+        if (inputs.size() % 2 == 0 && !isFull()) {
+            viewGUI.enableStudentsLunchHall(setInput(viewGUI));
+        } else if (inputs.size() % 2 == 1 && !isFull()) {
             viewGUI.enableEntrance(setInput(viewGUI));
         }
     }
-    private EventHandler<MouseEvent> setInput(ViewGUI viewGUI){
+
+    private EventHandler<MouseEvent> setInput(ViewGUI viewGUI) {
         return mouseEvent -> {
             Node clicked = (Node) mouseEvent.getSource();
             inputs.add(((Color) clicked.getProperties().get("color")).ordinal());
+            System.out.println(inputs);
             viewGUI.repeatPhase(false);
         };
     }

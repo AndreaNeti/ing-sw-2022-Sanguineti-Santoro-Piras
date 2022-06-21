@@ -216,6 +216,11 @@ public class BoardController implements SceneController {
         }
     }
 
+    @Override
+    public void enableNode(Node node) {
+        enableNode(node, false);
+    }
+
     //to enable a node use this function-> this is needed so there is an eay way to disable all the element
     public void enableNode(Node node, boolean addVisibility) {
         node.setDisable(false);

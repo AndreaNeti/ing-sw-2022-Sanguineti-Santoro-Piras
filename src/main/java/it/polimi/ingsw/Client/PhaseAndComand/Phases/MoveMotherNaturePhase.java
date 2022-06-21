@@ -45,7 +45,6 @@ public class MoveMotherNaturePhase extends ClientPhase {
         int islandId;
         Node island;
         Set<Integer> containedIslands;
-        System.out.println("Max moves: " + max_moves);
         // the island distance in steps from the relative one where mother nature is positioned
         for (int moves = 1; moves <= max_moves; moves++) {
             islandId = islands.get((motherNaturePosition + moves) % islands.size()).getId();

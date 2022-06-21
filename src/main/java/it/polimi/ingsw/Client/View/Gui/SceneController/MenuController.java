@@ -79,8 +79,11 @@ public class MenuController implements SceneController {
     }
 
     @Override
+    public void enableNode(Node node) {
+    }
+
+    @Override
     public void enableNode(Node node, boolean addVisibility) {
-        node.setVisible(true);
     }
 
     @Override

@@ -66,7 +66,7 @@
     -fx-effect: dropshadow(gaussian, rgb(50, 100, 255), 20, 0.75, 0, 0);
 }
 
-.entrancehall .clickable {
+.entrancehall .clickable, .lunchhall .clickable, .colorbox .clickable {
     -fx-effect: dropshadow(gaussian, rgb(255, 255, 255), 10, 0.8, 0, 0);
 }
 
@@ -80,8 +80,11 @@
     -fx-effect: dropshadow(gaussian, rgb(255, 255, 255), 30, 0.6, 0, 0);
 }
 
-.board .card.clickable, .card .clickable {
+.board .card.clickable {
     -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.5), 30, 0.8, 0, 0);
+}
+.card .clickable{
+    -fx-effect: dropshadow(gaussian, rgba(0, 255, 255, 0.85), 15, 0.7, 0, 0);
 }
 
 #assistantCardsBox .card.clickable {
