@@ -178,6 +178,11 @@ public class MenuController implements SceneController {
     }
 
     @Override
+    public void updateCoins(Wizard wizard, Byte coins) {
+
+    }
+
+    @Override
     public void setWinners(List<HouseColor> winners) {
 
     }

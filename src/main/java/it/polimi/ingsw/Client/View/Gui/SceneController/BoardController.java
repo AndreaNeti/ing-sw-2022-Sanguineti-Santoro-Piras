@@ -75,7 +75,7 @@ public class BoardController implements SceneController {
         //initialize all the model
         GameClientView model = viewGUI.getModel();
         //initialize the character
-        //TODO do the coin
+
         if (model.isExpert()) {
             List<CharacterCardClient> characters = model.getCharacters();
             //add all image of the character card
@@ -115,6 +115,10 @@ public class BoardController implements SceneController {
             for (Color color : Color.values()) {
                 colorBox.getChildren().get(color.ordinal()).getProperties().put("color", color);
             }
+            //coins are in coinsBox
+            AnchorPane box = (AnchorPane) getElementById("#coinsBox");
+            box.setVisible(true);
+            updateCoins(model.getNewCoinsLeft());
         } else {
             characters.setVisible(false);
         }
@@ -133,7 +137,7 @@ public class BoardController implements SceneController {
                 PlayerClient player = players.get(localWizardIndex);
                 AnchorPane board = (AnchorPane) boards.getChildren().get(i);
                 board.setId(String.valueOf(Wizard.values()[localWizardIndex]));
-                for (int j = 0; j < 7; j++) {
+                for (int j = 0; j < 8; j++) {
                     Node element = board.getChildren().get(j);
                     switch (j) {
                         //set the label of the main board
@@ -173,6 +177,12 @@ public class BoardController implements SceneController {
                             AnchorPane back = (AnchorPane) assistantPane.getChildren().get(0);
                             ImageView imageView = (ImageView) back.getChildren().get(0);
                             imageView.setImage(new Image("Graphical_Assets/Wizard/" + Wizard.values()[localWizardIndex] + ".png"));
+                        }
+                        case 7 -> {
+                            if (model.isExpert()) {
+                                element.setVisible(true);
+                                updateCoins(player.getWizard(), model.getCoinsPlayer((byte) localWizardIndex));
+                            }
                         }
                     }
                 }
@@ -517,7 +527,6 @@ public class BoardController implements SceneController {
 
     @Override
     public void updateExtraSteps(boolean extraSteps) {
-
     }
 
     @Override
@@ -526,10 +535,26 @@ public class BoardController implements SceneController {
 
     @Override
     public void updateCoins(Byte coins) {
+        Platform.runLater(() -> {
+            //coins are in coinsBox
+            AnchorPane box = (AnchorPane) getElementById("#coinsBox");
+            Label label = (Label) box.getChildren().get(1);
+            label.setText("X " + coins);
+        });
+    }
+
+    public void updateCoins(Wizard wizard, Byte coins) {
+        Platform.runLater(() -> {
+            //coins are the 7 children of the board
+            AnchorPane board = (AnchorPane) getElementById("#" + wizard);
+            Label label = (Label) ((AnchorPane) board.getChildren().get(7)).getChildren().get(1);
+            label.setText("X " + coins);
+        });
     }
 
     @Override
     public void setWinners(List<HouseColor> winners) {
+
     }
 
     @Override
@@ -578,8 +603,7 @@ public class BoardController implements SceneController {
                 if (id > last + 1) {
                     first = id;
                     break;
-                } else
-                    last = id;
+                } else last = id;
             }
             last += 12;
         }

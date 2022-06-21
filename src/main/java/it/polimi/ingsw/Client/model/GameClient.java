@@ -214,7 +214,7 @@ public class GameClient extends GameClientListened implements GameClientView {
 
     public void setNewCoinsLeft(Byte newCoinsLeft) {
         this.newCoinsLeft = newCoinsLeft;
-        //TODO add updateGameComponent
+        notifyCoins(newCoinsLeft);
     }
 
     @Override
@@ -250,6 +250,7 @@ public class GameClient extends GameClientListened implements GameClientView {
 
     public void setUpdatedCoinPlayer(byte playerIndex, byte newCoins) {
         this.updatedCoinPlayer.put(playerIndex, newCoins);
+        notifyCoins(getPlayers().get(playerIndex).getWizard(), newCoins);
     }
 
     @Override

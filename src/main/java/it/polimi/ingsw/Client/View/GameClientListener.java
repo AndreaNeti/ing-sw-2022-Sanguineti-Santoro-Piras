@@ -36,6 +36,8 @@ public interface GameClientListener {
 
     void updateCoins(Byte coins);
 
+    void updateCoins(Wizard wizard, Byte coins);
+
     void setWinners(List<HouseColor> winners);
 
     void updateMessage(String message);

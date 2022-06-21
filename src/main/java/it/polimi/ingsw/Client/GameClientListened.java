@@ -98,4 +98,14 @@ public abstract class GameClientListened {
     public void removeListeners(){
         listeners=new ArrayList<>();
     }
+    public void notifyCoins(Byte coins){
+        for (GameClientListener listener : listeners) {
+            listener.updateCoins(coins);
+        }
+    }
+    public void notifyCoins(Wizard wizard, Byte coins){
+        for (GameClientListener listener : listeners) {
+            listener.updateCoins( wizard,coins);
+        }
+    }
 }

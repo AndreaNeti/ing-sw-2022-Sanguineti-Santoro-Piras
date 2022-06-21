@@ -516,6 +516,11 @@ public class CliPrinter implements GameClientListener {
     }
 
     @Override
+    public void updateCoins(Wizard wizard, Byte coins) {
+
+    }
+
+    @Override
     public void setWinners(List<HouseColor> winners) {
         String s = "Winner";
         if (winners.size() == 1) s += " is ";
