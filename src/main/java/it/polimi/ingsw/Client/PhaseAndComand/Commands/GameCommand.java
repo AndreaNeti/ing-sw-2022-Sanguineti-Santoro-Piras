@@ -266,7 +266,7 @@ public enum GameCommand {
                         viewGUI.enableIslands(GameCommand.MOVE_STUDENT.getGUIHandler(viewGUI));
                         //lunchHall is the third children
                         VBox lunchHall = (VBox) ((AnchorPane) sceneController.getElementById("#mainBoard")).getChildren().get(3);
-                        sceneController.enableNode(lunchHall,false );
+                        sceneController.enableNode(lunchHall);
                         lunchHall.setOnMouseClicked(GameCommand.MOVE_STUDENT.getGUIHandler(viewGUI));
                     }
                     color = c;
@@ -274,8 +274,7 @@ public enum GameCommand {
                     // if an island is merged, relativeId is the one representing the "archipelago" (!= id)
                     Object relativeId = clicked.getProperties().get("relativeId");
                     int id;
-                    if (relativeId != null)
-                        id = (int) relativeId;
+                    if (relativeId != null) id = (int) relativeId;
                     else // it's the lunch hall
                         id = Integer.parseInt(clicked.getId());
                     viewGUI.sendToServer(new MoveStudent(color, id, (String) clicked.getProperties().get("name")));

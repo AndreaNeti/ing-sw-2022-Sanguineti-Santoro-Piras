@@ -6,10 +6,10 @@ import it.polimi.ingsw.Client.View.Gui.SceneController.SceneController;
 import it.polimi.ingsw.Client.View.Gui.ViewGUI;
 import it.polimi.ingsw.Client.model.GameClientView;
 import it.polimi.ingsw.Client.model.IslandClient;
-import it.polimi.ingsw.Server.controller.MatchType;
 import javafx.scene.Node;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * MoveMotherNaturePhase class represents the game phase in which the client can move mother nature.
@@ -29,6 +29,7 @@ public class MoveMotherNaturePhase extends ClientPhase {
      *
      * @param viewGUI of type {@link ViewGUI} - instance of the client's view (GUI).
      */
+    @SuppressWarnings("unchecked")
     public void playPhase(ViewGUI viewGUI) {
         SceneController sceneController = GuiFX.getActiveSceneController();
         sceneController.disableEverything();
@@ -41,41 +42,25 @@ public class MoveMotherNaturePhase extends ClientPhase {
         }
         if (max_moves > islands.size()) max_moves = islands.size();
         byte motherNaturePosition = model.getMotherNaturePosition();
+        int islandId;
+        Node island;
+        Set<Integer> containedIslands;
         // the island distance in steps from the relative one where mother nature is positioned
-        int moves = 1;
-        // from 0 to 11
-        int islandId = islands.get((motherNaturePosition + 1) % islands.size()).getId();
-        int islandNumber = islandId - 2 * MatchType.MAX_PLAYERS;
-        Node island = sceneController.getElementById("#" + islandId);
-        int relativeId = (int) island.getProperties().get("relativeId");
-        System.out.println("Max moves: " + max_moves);
-        // until relative id is equal to the first not reachable island
-        do {
-            island.getProperties().put("moves", moves);
-            System.out.println("Island " + islandNumber + " (#" + islandId + " -> #" + relativeId + "), distance: " + moves);
-            // make clickable
-            sceneController.enableNode(island,false );
-            island.setOnMouseClicked(GameCommand.MOVE_MOTHER_NATURE.getGUIHandler(viewGUI));
-            islandNumber++;
-            islandNumber %= 12;
-            islandId = 2 * MatchType.MAX_PLAYERS + islandNumber;
+        for (int moves = 1; moves <= max_moves; moves++) {
+            islandId = islands.get((motherNaturePosition + moves) % islands.size()).getId();
             island = sceneController.getElementById("#" + islandId);
-
-            // keep in temp to check if it's different from the old relative id before assigning it
-            int temp = (int) island.getProperties().get("relativeId");
-            // TODO rewrite using contained islands
-            // if true, it's a new archipelago
-            if (relativeId != temp)
-                moves++;
-
-            relativeId = temp;
-        }while (moves <= max_moves);
-
+            containedIslands = (Set<Integer>) island.getProperties().get("containedIslands");
+            for (Integer i : containedIslands) {
+                island = sceneController.getElementById("#" + i);
+                island.getProperties().put("moves", moves);
+                // make clickable
+                sceneController.enableNode(island);
+                island.setOnMouseClicked(GameCommand.MOVE_MOTHER_NATURE.getGUIHandler(viewGUI));
+            }
+        }
         if (getGameCommands().contains(GameCommand.CHOOSE_CHARACTER)) {
             viewGUI.enableChooseCharacter(GameCommand.CHOOSE_CHARACTER.getGUIHandler(viewGUI));
-
         }
-
     }
 
     /**
