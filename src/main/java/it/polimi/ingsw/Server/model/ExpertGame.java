@@ -154,25 +154,6 @@ public class ExpertGame extends NormalGame implements CharacterCardGame, CoinLis
     }
 
     /**
-     * Method move is used to move a student from a game component to another, using their unique ID.
-     * This method is overridden to send the game's info using ExpertGameDelta instead of GameDelta.
-     *
-     * @param color                    of type {@link Color} - the color of the student to move.
-     * @param gameComponentSource      of type {@code int} - the ID of the source component.
-     * @param gameComponentDestination of type {@code int} - the ID of the target component.
-     * @throws GameException if the color is null or if at least on ID is not valid or if it's not possible to move the student.
-     */
-    @Override
-    public void move(Color color, int gameComponentSource, int gameComponentDestination) throws GameException {
-        //TODO: check if this function can be removed
-        try {
-            super.move(color, gameComponentSource, gameComponentDestination);
-        } finally {
-            getGameDelta().send();
-        }
-    }
-
-    /**
      * Method calculateInfluence sets the team with the highest influence as the controller of the selected island,
      * based on the number of students present for each controlled color and on the number of towers on the island.
      * Eventual booleans set by the character card can skip or modify the influence calculation.
@@ -394,7 +375,6 @@ public class ExpertGame extends NormalGame implements CharacterCardGame, CoinLis
                 }
                 // remove coins to player
                 removeCoinsFromCurrentPlayer(charCost);
-                coinsLeft += charCost;
                 chosenCharacter = -1;
                 inputsCharacter.clear();
             } finally {
