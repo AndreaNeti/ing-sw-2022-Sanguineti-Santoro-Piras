@@ -48,15 +48,17 @@ public class Char4Client implements CharacterCardClient {
 
     @Override
     public void setHandler(ViewGUI viewGUI) {
-        if(inputs.isEmpty()){
+        if (inputs.isEmpty()) {
             viewGUI.enableIslands(setInput(viewGUI));
         }
     }
+
     private EventHandler<MouseEvent> setInput(ViewGUI viewGUI) {
         return mouseEvent -> {
             Node clicked = (Node) mouseEvent.getSource();
             int relativeId = (int) clicked.getProperties().get("relativeId");
             inputs.add(relativeId);
+            System.out.println("input for grandma :" + inputs);
             viewGUI.repeatPhase(false);
         };
     }

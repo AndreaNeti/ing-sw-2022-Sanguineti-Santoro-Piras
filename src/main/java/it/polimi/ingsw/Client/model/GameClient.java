@@ -51,8 +51,8 @@ public class GameClient extends GameClientListened implements GameClientView {
      * Constructor GameClient creates a new instance of GameClient.
      *
      * @param teamsClient of type {@code ArrayList}<{@link TeamClient}> - list of the instances of the game's teams.
-     * @param myWizard of type {@link Wizard} - wizard associated with the client's player.
-     * @param matchType of type {@link MatchType} - type of the game that the client decided to join.
+     * @param myWizard    of type {@link Wizard} - wizard associated with the client's player.
+     * @param matchType   of type {@link MatchType} - type of the game that the client decided to join.
      */
     public GameClient(ArrayList<TeamClient> teamsClient, Wizard myWizard, MatchType matchType) {
         this.myWizard = myWizard;
@@ -134,7 +134,7 @@ public class GameClient extends GameClientListened implements GameClientView {
      * equal to the game component provided.
      *
      * @param idGameComponent of type {@code Byte} - unique ID of the game component.
-     * @param gameComponent of type {@link GameComponent} - instance of the game component to copy.
+     * @param gameComponent   of type {@link GameComponent} - instance of the game component to copy.
      */
     // I am trusting server pls
     public void setGameComponent(Byte idGameComponent, GameComponent gameComponent) {
@@ -166,9 +166,11 @@ public class GameClient extends GameClientListened implements GameClientView {
 
             notifyGameComponent(islandToReturn);
         } else if (idGameComponent <= -10) {
+            System.out.println(idGameComponent);
             for (CharacterCardClientWithStudents ch : charactersWithStudents) {
                 if (ch.getId() == idGameComponent) {
                     ch.modifyGameComponent(gameComponent);
+                    notifyGameComponent(ch);
                 }
             }
         } else {
@@ -239,7 +241,7 @@ public class GameClient extends GameClientListened implements GameClientView {
      * Method setTowerLeft updates the amount of towers left for a specific team.
      *
      * @param houseColor of type {@link HouseColor} - color of the team to update.
-     * @param towerLeft of type {@code Byte} - new amount of towers left.
+     * @param towerLeft  of type {@code Byte} - new amount of towers left.
      */
     public void setTowerLeft(HouseColor houseColor, Byte towerLeft) {
         teams.get(houseColor.ordinal()).setTowersLeft(towerLeft);
@@ -335,7 +337,7 @@ public class GameClient extends GameClientListened implements GameClientView {
      * Method setUpdatedCoinPlayer updates the amount of coins of the player with the player index provided.
      *
      * @param playerIndex of type {@code byte} - index of the player of which we want to update the coins.
-     * @param newCoins of type {@code byte} - new amount of coins.
+     * @param newCoins    of type {@code byte} - new amount of coins.
      */
     public void setUpdatedCoinPlayer(byte playerIndex, byte newCoins) {
         this.updatedCoinPlayer.put(playerIndex, newCoins);

@@ -36,7 +36,6 @@ public enum GameCommand {
      * CONNECT_SERVER GameCommand is used by the client to connect to the server.
      */
     CONNECT_SERVER() {
-
         @Override
         public void playCLICommand(ViewCli viewCli) throws SkipCommandException {
             boolean connected = viewCli.connectToServer(viewCli.getIpAddressInput(false));
@@ -394,6 +393,7 @@ public enum GameCommand {
                 alert.initOwner(GuiFX.getPrimaryStage());
                 if (alert.showAndWait().filter(ButtonType.OK::equals).isPresent()) {
                     CharacterCardClient current = viewGUI.getCurrentCharacterCard();
+                    System.out.println("Character card inputs:" + current.getInputs());
                     viewGUI.sendToServer(new PlayCharacter(current.getInputs()));
                     current.resetInput();
                     viewGUI.unsetCurrentCharacterCard();

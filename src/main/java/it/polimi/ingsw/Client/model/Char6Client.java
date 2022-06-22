@@ -59,6 +59,7 @@ public class Char6Client extends CharacterCardClientWithStudents {
         return mouseEvent -> {
             Node clicked = (Node) mouseEvent.getSource();
             inputs.add(((Color) clicked.getProperties().get("color")).ordinal());
+            System.out.println("input for jester :" + inputs);
             viewGUI.repeatPhase(false);
         };
     }
