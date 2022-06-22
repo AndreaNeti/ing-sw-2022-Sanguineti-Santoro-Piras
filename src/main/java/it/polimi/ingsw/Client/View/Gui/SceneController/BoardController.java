@@ -605,10 +605,10 @@ public class BoardController implements SceneController {
     private ImageView getTower(HouseColor houseColor) {
         ImageView tower = new ImageView("Graphical_Assets/Towers/" + houseColor + ".png");
         tower.getStyleClass().add("tower");
-        tower.setFitWidth(50.0);
+        tower.setFitWidth(30d);
         tower.setPreserveRatio(true);
-        AnchorPane.setLeftAnchor(tower, 61.5);
-        AnchorPane.setTopAnchor(tower, 20.0);
+        AnchorPane.setLeftAnchor(tower, 72.5d);
+        AnchorPane.setTopAnchor(tower, 5d);
         return tower;
     }
 

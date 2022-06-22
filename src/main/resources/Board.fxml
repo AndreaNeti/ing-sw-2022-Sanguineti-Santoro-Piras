@@ -18,20 +18,20 @@
             <AnchorPane id="8" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" pickOnBounds="false" prefHeight="200.0" prefWidth="173.0" styleClass="island" AnchorPane.topAnchor="300.0">
                 <properties name="Island" />
                 <children>
-                    <ImageView fitHeight="200.0" fitWidth="179.0" pickOnBounds="true" preserveRatio="true" styleClass="shadow" AnchorPane.leftAnchor="-3.0">
+                    <ImageView cache="true" fitHeight="200.0" fitWidth="179.0" pickOnBounds="true" preserveRatio="true" styleClass="shadow" AnchorPane.leftAnchor="-3.0">
                         <Image url="@Graphical_Assets/Islands/Island1.png" />
                     </ImageView>
                     <AnchorPane layoutX="10.0" layoutY="50.0">
                         <children>
                             <AnchorPane>
-                                <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true" styleClass="student" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                <ImageView cache="true" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" styleClass="student" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
                                     <Image url="@Graphical_Assets/Students/RED.png" />
                                 </ImageView>
                                 <Label style="-fx-background-color: red;" text="0" textFill="WHITE" AnchorPane.bottomAnchor="-15.0" AnchorPane.rightAnchor="-15.0" />
                             </AnchorPane>
                             <AnchorPane layoutY="70.0">
                                 <children>
-                                    <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true" styleClass="student" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <ImageView cache="true" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" styleClass="student" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
                                         <image>
                                             <Image url="@Graphical_Assets/Students/BLUE.png" />
                                         </image>
@@ -41,7 +41,7 @@
                             </AnchorPane>
                             <AnchorPane layoutX="60.0" layoutY="110.0">
                                 <children>
-                                    <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true" styleClass="student" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <ImageView cache="true" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" styleClass="student" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
                                         <image>
                                             <Image url="@Graphical_Assets/Students/YELLOW.png" />
                                         </image>
@@ -51,7 +51,7 @@
                             </AnchorPane>
                             <AnchorPane layoutX="123.0" layoutY="70.0">
                                 <children>
-                                    <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true" styleClass="student" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <ImageView cache="true" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" styleClass="student" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
                                         <image>
                                             <Image url="@Graphical_Assets/Students/GREEN.png" />
                                         </image>
@@ -61,7 +61,7 @@
                             </AnchorPane>
                             <AnchorPane layoutX="123.0">
                                 <children>
-                                    <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true" styleClass="student" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <ImageView cache="true" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" styleClass="student" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
                                         <image>
                                             <Image url="@Graphical_Assets/Students/PINK.png" />
                                         </image>
@@ -76,14 +76,14 @@
             <AnchorPane id="9" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" pickOnBounds="false" prefHeight="200.0" prefWidth="173.0" styleClass="island" AnchorPane.leftAnchor="86.5" AnchorPane.topAnchor="150.0">
                 <properties name="Island" />
                 <children>
-                    <ImageView fitHeight="200.0" fitWidth="179.0" pickOnBounds="true" preserveRatio="true" styleClass="shadow" AnchorPane.leftAnchor="-3.0">
+                    <ImageView cache="true" fitHeight="200.0" fitWidth="179.0" pickOnBounds="true" preserveRatio="true" styleClass="shadow" AnchorPane.leftAnchor="-3.0">
                         <Image url="@Graphical_Assets/Islands/Island2.png" />
                     </ImageView>
                     <AnchorPane layoutX="10.0" layoutY="50.0">
                         <children>
                             <AnchorPane>
                                 <children>
-                                    <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true" styleClass="student" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <ImageView cache="true" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" styleClass="student" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
                                         <image>
                                             <Image url="@Graphical_Assets/Students/RED.png" />
                                         </image>
@@ -93,7 +93,7 @@
                             </AnchorPane>
                             <AnchorPane layoutY="70.0">
                                 <children>
-                                    <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true" styleClass="student" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <ImageView cache="true" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" styleClass="student" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
                                         <image>
                                             <Image url="@Graphical_Assets/Students/BLUE.png" />
                                         </image>
@@ -103,7 +103,7 @@
                             </AnchorPane>
                             <AnchorPane layoutX="60.0" layoutY="110.0">
                                 <children>
-                                    <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true" styleClass="student" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <ImageView cache="true" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" styleClass="student" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
                                         <image>
                                             <Image url="@Graphical_Assets/Students/YELLOW.png" />
                                         </image>
@@ -113,7 +113,7 @@
                             </AnchorPane>
                             <AnchorPane layoutX="123.0" layoutY="70.0">
                                 <children>
-                                    <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true" styleClass="student" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <ImageView cache="true" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" styleClass="student" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
                                         <image>
                                             <Image url="@Graphical_Assets/Students/GREEN.png" />
                                         </image>
@@ -123,7 +123,7 @@
                             </AnchorPane>
                             <AnchorPane layoutX="123.0">
                                 <children>
-                                    <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true" styleClass="student" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <ImageView cache="true" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" styleClass="student" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
                                         <image>
                                             <Image url="@Graphical_Assets/Students/PINK.png" />
                                         </image>
@@ -138,14 +138,14 @@
             <AnchorPane id="10" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" pickOnBounds="false" prefHeight="200.0" prefWidth="173.0" styleClass="island" AnchorPane.leftAnchor="173.0">
                 <properties name="Island" />
                 <children>
-                    <ImageView fitHeight="200.0" fitWidth="179.0" pickOnBounds="true" preserveRatio="true" styleClass="shadow" AnchorPane.leftAnchor="-3.0">
+                    <ImageView cache="true" fitHeight="200.0" fitWidth="179.0" pickOnBounds="true" preserveRatio="true" styleClass="shadow" AnchorPane.leftAnchor="-3.0">
                         <Image url="@Graphical_Assets/Islands/Island3.png" />
                     </ImageView>
                     <AnchorPane layoutX="10.0" layoutY="50.0">
                         <children>
                             <AnchorPane>
                                 <children>
-                                    <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true" styleClass="student" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <ImageView cache="true" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" styleClass="student" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
                                         <image>
                                             <Image url="@Graphical_Assets/Students/RED.png" />
                                         </image>
@@ -155,7 +155,7 @@
                             </AnchorPane>
                             <AnchorPane layoutY="70.0">
                                 <children>
-                                    <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true" styleClass="student" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <ImageView cache="true" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" styleClass="student" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
                                         <image>
                                             <Image url="@Graphical_Assets/Students/BLUE.png" />
                                         </image>
@@ -165,7 +165,7 @@
                             </AnchorPane>
                             <AnchorPane layoutX="60.0" layoutY="110.0">
                                 <children>
-                                    <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true" styleClass="student" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <ImageView cache="true" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" styleClass="student" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
                                         <image>
                                             <Image url="@Graphical_Assets/Students/YELLOW.png" />
                                         </image>
@@ -175,7 +175,7 @@
                             </AnchorPane>
                             <AnchorPane layoutX="123.0" layoutY="70.0">
                                 <children>
-                                    <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true" styleClass="student" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <ImageView cache="true" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" styleClass="student" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
                                         <image>
                                             <Image url="@Graphical_Assets/Students/GREEN.png" />
                                         </image>
@@ -185,7 +185,7 @@
                             </AnchorPane>
                             <AnchorPane layoutX="123.0">
                                 <children>
-                                    <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true" styleClass="student" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <ImageView cache="true" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" styleClass="student" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
                                         <image>
                                             <Image url="@Graphical_Assets/Students/PINK.png" />
                                         </image>
@@ -200,14 +200,14 @@
             <AnchorPane id="11" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" pickOnBounds="false" prefHeight="200.0" prefWidth="173.0" styleClass="island" AnchorPane.leftAnchor="346.0">
                 <properties name="Island" />
                 <children>
-                    <ImageView fitHeight="200.0" fitWidth="179.0" pickOnBounds="true" preserveRatio="true" styleClass="shadow" AnchorPane.leftAnchor="-3.0">
+                    <ImageView cache="true" fitHeight="200.0" fitWidth="179.0" pickOnBounds="true" preserveRatio="true" styleClass="shadow" AnchorPane.leftAnchor="-3.0">
                         <Image url="@Graphical_Assets/Islands/Island1.png" />
                     </ImageView>
                     <AnchorPane layoutX="10.0" layoutY="50.0">
                         <children>
                             <AnchorPane>
                                 <children>
-                                    <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true" styleClass="student" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <ImageView cache="true" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" styleClass="student" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
                                         <image>
                                             <Image url="@Graphical_Assets/Students/RED.png" />
                                         </image>
@@ -217,7 +217,7 @@
                             </AnchorPane>
                             <AnchorPane layoutY="70.0">
                                 <children>
-                                    <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true" styleClass="student" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <ImageView cache="true" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" styleClass="student" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
                                         <image>
                                             <Image url="@Graphical_Assets/Students/BLUE.png" />
                                         </image>
@@ -227,7 +227,7 @@
                             </AnchorPane>
                             <AnchorPane layoutX="60.0" layoutY="110.0">
                                 <children>
-                                    <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true" styleClass="student" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <ImageView cache="true" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" styleClass="student" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
                                         <image>
                                             <Image url="@Graphical_Assets/Students/YELLOW.png" />
                                         </image>
@@ -237,7 +237,7 @@
                             </AnchorPane>
                             <AnchorPane layoutX="123.0" layoutY="70.0">
                                 <children>
-                                    <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true" styleClass="student" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <ImageView cache="true" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" styleClass="student" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
                                         <image>
                                             <Image url="@Graphical_Assets/Students/GREEN.png" />
                                         </image>
@@ -247,7 +247,7 @@
                             </AnchorPane>
                             <AnchorPane layoutX="123.0">
                                 <children>
-                                    <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true" styleClass="student" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <ImageView cache="true" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" styleClass="student" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
                                         <image>
                                             <Image url="@Graphical_Assets/Students/PINK.png" />
                                         </image>
@@ -262,20 +262,20 @@
             <AnchorPane id="12" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" pickOnBounds="false" prefHeight="200.0" prefWidth="173.0" styleClass="island" AnchorPane.leftAnchor="519.0">
                 <properties name="Island" />
                 <children>
-                    <ImageView fitHeight="200.0" fitWidth="179.0" pickOnBounds="true" preserveRatio="true" styleClass="shadow" AnchorPane.leftAnchor="-3.0">
+                    <ImageView cache="true" fitHeight="200.0" fitWidth="179.0" pickOnBounds="true" preserveRatio="true" styleClass="shadow" AnchorPane.leftAnchor="-3.0">
                         <Image url="@Graphical_Assets/Islands/Island2.png" />
                     </ImageView>
                     <AnchorPane layoutX="10.0" layoutY="50.0">
                         <children>
                             <AnchorPane>
-                                <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true" styleClass="student" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                <ImageView cache="true" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" styleClass="student" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
                                     <Image url="@Graphical_Assets/Students/RED.png" />
                                 </ImageView>
                                 <Label style="-fx-background-color: red;" text="0" textFill="WHITE" AnchorPane.bottomAnchor="-15.0" AnchorPane.rightAnchor="-15.0" />
                             </AnchorPane>
                             <AnchorPane layoutY="70.0">
                                 <children>
-                                    <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true" styleClass="student" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <ImageView cache="true" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" styleClass="student" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
                                         <image>
                                             <Image url="@Graphical_Assets/Students/BLUE.png" />
                                         </image>
@@ -285,7 +285,7 @@
                             </AnchorPane>
                             <AnchorPane layoutX="60.0" layoutY="110.0">
                                 <children>
-                                    <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true" styleClass="student" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <ImageView cache="true" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" styleClass="student" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
                                         <image>
                                             <Image url="@Graphical_Assets/Students/YELLOW.png" />
                                         </image>
@@ -295,7 +295,7 @@
                             </AnchorPane>
                             <AnchorPane layoutX="123.0" layoutY="70.0">
                                 <children>
-                                    <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true" styleClass="student" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <ImageView cache="true" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" styleClass="student" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
                                         <image>
                                             <Image url="@Graphical_Assets/Students/GREEN.png" />
                                         </image>
@@ -305,7 +305,7 @@
                             </AnchorPane>
                             <AnchorPane layoutX="123.0">
                                 <children>
-                                    <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true" styleClass="student" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <ImageView cache="true" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" styleClass="student" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
                                         <image>
                                             <Image url="@Graphical_Assets/Students/PINK.png" />
                                         </image>
@@ -320,14 +320,14 @@
             <AnchorPane id="13" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" pickOnBounds="false" prefHeight="200.0" prefWidth="173.0" styleClass="island" AnchorPane.leftAnchor="605.5" AnchorPane.topAnchor="150.0">
                 <properties name="Island" />
                 <children>
-                    <ImageView fitHeight="200.0" fitWidth="179.0" pickOnBounds="true" preserveRatio="true" styleClass="shadow" AnchorPane.leftAnchor="-3.0">
+                    <ImageView cache="true" fitHeight="200.0" fitWidth="179.0" pickOnBounds="true" preserveRatio="true" styleClass="shadow" AnchorPane.leftAnchor="-3.0">
                         <Image url="@Graphical_Assets/Islands/Island3.png" />
                     </ImageView>
                     <AnchorPane layoutX="10.0" layoutY="50.0">
                         <children>
                             <AnchorPane>
                                 <children>
-                                    <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true" styleClass="student" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <ImageView cache="true" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" styleClass="student" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
                                         <image>
                                             <Image url="@Graphical_Assets/Students/RED.png" />
                                         </image>
@@ -337,7 +337,7 @@
                             </AnchorPane>
                             <AnchorPane layoutY="70.0">
                                 <children>
-                                    <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true" styleClass="student" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <ImageView cache="true" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" styleClass="student" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
                                         <image>
                                             <Image url="@Graphical_Assets/Students/BLUE.png" />
                                         </image>
@@ -347,7 +347,7 @@
                             </AnchorPane>
                             <AnchorPane layoutX="60.0" layoutY="110.0">
                                 <children>
-                                    <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true" styleClass="student" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <ImageView cache="true" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" styleClass="student" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
                                         <image>
                                             <Image url="@Graphical_Assets/Students/YELLOW.png" />
                                         </image>
@@ -357,7 +357,7 @@
                             </AnchorPane>
                             <AnchorPane layoutX="123.0" layoutY="70.0">
                                 <children>
-                                    <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true" styleClass="student" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <ImageView cache="true" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" styleClass="student" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
                                         <image>
                                             <Image url="@Graphical_Assets/Students/GREEN.png" />
                                         </image>
@@ -367,7 +367,7 @@
                             </AnchorPane>
                             <AnchorPane layoutX="123.0">
                                 <children>
-                                    <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true" styleClass="student" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <ImageView cache="true" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" styleClass="student" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
                                         <image>
                                             <Image url="@Graphical_Assets/Students/PINK.png" />
                                         </image>
@@ -382,14 +382,14 @@
             <AnchorPane id="14" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" pickOnBounds="false" prefHeight="200.0" prefWidth="173.0" styleClass="island" AnchorPane.leftAnchor="692.0" AnchorPane.topAnchor="300.0">
                 <properties name="Island" />
                 <children>
-                    <ImageView fitHeight="200.0" fitWidth="179.0" pickOnBounds="true" preserveRatio="true" styleClass="shadow" AnchorPane.leftAnchor="-3.0">
+                    <ImageView cache="true" fitHeight="200.0" fitWidth="179.0" pickOnBounds="true" preserveRatio="true" styleClass="shadow" AnchorPane.leftAnchor="-3.0">
                         <Image url="@Graphical_Assets/Islands/Island1.png" />
                     </ImageView>
                     <AnchorPane layoutX="10.0" layoutY="50.0">
                         <children>
                             <AnchorPane>
                                 <children>
-                                    <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true" styleClass="student" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <ImageView cache="true" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" styleClass="student" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
                                         <image>
                                             <Image url="@Graphical_Assets/Students/RED.png" />
                                         </image>
@@ -399,7 +399,7 @@
                             </AnchorPane>
                             <AnchorPane layoutY="70.0">
                                 <children>
-                                    <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true" styleClass="student" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <ImageView cache="true" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" styleClass="student" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
                                         <image>
                                             <Image url="@Graphical_Assets/Students/BLUE.png" />
                                         </image>
@@ -409,7 +409,7 @@
                             </AnchorPane>
                             <AnchorPane layoutX="60.0" layoutY="110.0">
                                 <children>
-                                    <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true" styleClass="student" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <ImageView cache="true" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" styleClass="student" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
                                         <image>
                                             <Image url="@Graphical_Assets/Students/YELLOW.png" />
                                         </image>
@@ -419,7 +419,7 @@
                             </AnchorPane>
                             <AnchorPane layoutX="123.0" layoutY="70.0">
                                 <children>
-                                    <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true" styleClass="student" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <ImageView cache="true" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" styleClass="student" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
                                         <image>
                                             <Image url="@Graphical_Assets/Students/GREEN.png" />
                                         </image>
@@ -429,7 +429,7 @@
                             </AnchorPane>
                             <AnchorPane layoutX="123.0">
                                 <children>
-                                    <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true" styleClass="student" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <ImageView cache="true" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" styleClass="student" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
                                         <image>
                                             <Image url="@Graphical_Assets/Students/PINK.png" />
                                         </image>
@@ -444,14 +444,14 @@
             <AnchorPane id="15" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" pickOnBounds="false" prefHeight="200.0" prefWidth="173.0" styleClass="island" AnchorPane.leftAnchor="605.5" AnchorPane.topAnchor="450.0">
                 <properties name="Island" />
                 <children>
-                    <ImageView fitHeight="200.0" fitWidth="179.0" pickOnBounds="true" preserveRatio="true" styleClass="shadow" AnchorPane.leftAnchor="-3.0">
+                    <ImageView cache="true" fitHeight="200.0" fitWidth="179.0" pickOnBounds="true" preserveRatio="true" styleClass="shadow" AnchorPane.leftAnchor="-3.0">
                         <Image url="@Graphical_Assets/Islands/Island2.png" />
                     </ImageView>
                     <AnchorPane layoutX="10.0" layoutY="50.0">
                         <children>
                             <AnchorPane>
                                 <children>
-                                    <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true" styleClass="student" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <ImageView cache="true" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" styleClass="student" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
                                         <image>
                                             <Image url="@Graphical_Assets/Students/RED.png" />
                                         </image>
@@ -461,7 +461,7 @@
                             </AnchorPane>
                             <AnchorPane layoutY="70.0">
                                 <children>
-                                    <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true" styleClass="student" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <ImageView cache="true" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" styleClass="student" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
                                         <image>
                                             <Image url="@Graphical_Assets/Students/BLUE.png" />
                                         </image>
@@ -471,7 +471,7 @@
                             </AnchorPane>
                             <AnchorPane layoutX="60.0" layoutY="110.0">
                                 <children>
-                                    <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true" styleClass="student" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <ImageView cache="true" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" styleClass="student" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
                                         <image>
                                             <Image url="@Graphical_Assets/Students/YELLOW.png" />
                                         </image>
@@ -481,7 +481,7 @@
                             </AnchorPane>
                             <AnchorPane layoutX="123.0" layoutY="70.0">
                                 <children>
-                                    <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true" styleClass="student" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <ImageView cache="true" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" styleClass="student" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
                                         <image>
                                             <Image url="@Graphical_Assets/Students/GREEN.png" />
                                         </image>
@@ -491,7 +491,7 @@
                             </AnchorPane>
                             <AnchorPane layoutX="123.0">
                                 <children>
-                                    <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true" styleClass="student" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <ImageView cache="true" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" styleClass="student" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
                                         <image>
                                             <Image url="@Graphical_Assets/Students/PINK.png" />
                                         </image>
@@ -506,14 +506,14 @@
             <AnchorPane id="16" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" pickOnBounds="false" prefHeight="200.0" prefWidth="173.0" styleClass="island" AnchorPane.leftAnchor="519.0" AnchorPane.topAnchor="600.0">
                 <properties name="Island" />
                 <children>
-                    <ImageView fitHeight="200.0" fitWidth="179.0" pickOnBounds="true" preserveRatio="true" styleClass="shadow" AnchorPane.leftAnchor="-3.0">
+                    <ImageView cache="true" fitHeight="200.0" fitWidth="179.0" pickOnBounds="true" preserveRatio="true" styleClass="shadow" AnchorPane.leftAnchor="-3.0">
                         <Image url="@Graphical_Assets/Islands/Island3.png" />
                     </ImageView>
                     <AnchorPane layoutX="10.0" layoutY="50.0">
                         <children>
                             <AnchorPane>
                                 <children>
-                                    <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true" styleClass="student" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <ImageView cache="true" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" styleClass="student" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
                                         <image>
                                             <Image url="@Graphical_Assets/Students/RED.png" />
                                         </image>
@@ -523,7 +523,7 @@
                             </AnchorPane>
                             <AnchorPane layoutY="70.0">
                                 <children>
-                                    <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true" styleClass="student" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <ImageView cache="true" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" styleClass="student" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
                                         <image>
                                             <Image url="@Graphical_Assets/Students/BLUE.png" />
                                         </image>
@@ -533,7 +533,7 @@
                             </AnchorPane>
                             <AnchorPane layoutX="60.0" layoutY="110.0">
                                 <children>
-                                    <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true" styleClass="student" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <ImageView cache="true" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" styleClass="student" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
                                         <image>
                                             <Image url="@Graphical_Assets/Students/YELLOW.png" />
                                         </image>
@@ -543,7 +543,7 @@
                             </AnchorPane>
                             <AnchorPane layoutX="123.0" layoutY="70.0">
                                 <children>
-                                    <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true" styleClass="student" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <ImageView cache="true" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" styleClass="student" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
                                         <image>
                                             <Image url="@Graphical_Assets/Students/GREEN.png" />
                                         </image>
@@ -553,7 +553,7 @@
                             </AnchorPane>
                             <AnchorPane layoutX="123.0">
                                 <children>
-                                    <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true" styleClass="student" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <ImageView cache="true" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" styleClass="student" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
                                         <image>
                                             <Image url="@Graphical_Assets/Students/PINK.png" />
                                         </image>
@@ -568,14 +568,14 @@
             <AnchorPane id="17" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" pickOnBounds="false" prefHeight="200.0" prefWidth="173.0" styleClass="island" AnchorPane.leftAnchor="346.0" AnchorPane.topAnchor="600.0">
                 <properties name="Island" />
                 <children>
-                    <ImageView fitHeight="200.0" fitWidth="179.0" pickOnBounds="true" preserveRatio="true" styleClass="shadow" AnchorPane.leftAnchor="-3.0">
+                    <ImageView cache="true" fitHeight="200.0" fitWidth="179.0" pickOnBounds="true" preserveRatio="true" styleClass="shadow" AnchorPane.leftAnchor="-3.0">
                         <Image url="@Graphical_Assets/Islands/Island1.png" />
                     </ImageView>
                     <AnchorPane layoutX="10.0" layoutY="50.0">
                         <children>
                             <AnchorPane>
                                 <children>
-                                    <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true" styleClass="student" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <ImageView cache="true" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" styleClass="student" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
                                         <image>
                                             <Image url="@Graphical_Assets/Students/RED.png" />
                                         </image>
@@ -585,7 +585,7 @@
                             </AnchorPane>
                             <AnchorPane layoutY="70.0">
                                 <children>
-                                    <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true" styleClass="student" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <ImageView cache="true" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" styleClass="student" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
                                         <image>
                                             <Image url="@Graphical_Assets/Students/BLUE.png" />
                                         </image>
@@ -595,7 +595,7 @@
                             </AnchorPane>
                             <AnchorPane layoutX="60.0" layoutY="110.0">
                                 <children>
-                                    <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true" styleClass="student" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <ImageView cache="true" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" styleClass="student" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
                                         <image>
                                             <Image url="@Graphical_Assets/Students/YELLOW.png" />
                                         </image>
@@ -605,7 +605,7 @@
                             </AnchorPane>
                             <AnchorPane layoutX="123.0" layoutY="70.0">
                                 <children>
-                                    <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true" styleClass="student" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <ImageView cache="true" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" styleClass="student" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
                                         <image>
                                             <Image url="@Graphical_Assets/Students/GREEN.png" />
                                         </image>
@@ -615,7 +615,7 @@
                             </AnchorPane>
                             <AnchorPane layoutX="123.0">
                                 <children>
-                                    <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true" styleClass="student" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <ImageView cache="true" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" styleClass="student" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
                                         <image>
                                             <Image url="@Graphical_Assets/Students/PINK.png" />
                                         </image>
@@ -630,14 +630,14 @@
             <AnchorPane id="18" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" pickOnBounds="false" prefHeight="200.0" prefWidth="173.0" styleClass="island" AnchorPane.leftAnchor="173.0" AnchorPane.topAnchor="600.0">
                 <properties name="Island" />
                 <children>
-                    <ImageView fitHeight="200.0" fitWidth="179.0" pickOnBounds="true" preserveRatio="true" styleClass="shadow" AnchorPane.leftAnchor="-3.0">
+                    <ImageView cache="true" fitHeight="200.0" fitWidth="179.0" pickOnBounds="true" preserveRatio="true" styleClass="shadow" AnchorPane.leftAnchor="-3.0">
                         <Image url="@Graphical_Assets/Islands/Island2.png" />
                     </ImageView>
                     <AnchorPane layoutX="10.0" layoutY="50.0">
                         <children>
                             <AnchorPane>
                                 <children>
-                                    <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true" styleClass="student" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <ImageView cache="true" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" styleClass="student" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
                                         <image>
                                             <Image url="@Graphical_Assets/Students/RED.png" />
                                         </image>
@@ -647,7 +647,7 @@
                             </AnchorPane>
                             <AnchorPane layoutY="70.0">
                                 <children>
-                                    <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true" styleClass="student" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <ImageView cache="true" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" styleClass="student" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
                                         <image>
                                             <Image url="@Graphical_Assets/Students/BLUE.png" />
                                         </image>
@@ -657,7 +657,7 @@
                             </AnchorPane>
                             <AnchorPane layoutX="60.0" layoutY="110.0">
                                 <children>
-                                    <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true" styleClass="student" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <ImageView cache="true" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" styleClass="student" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
                                         <image>
                                             <Image url="@Graphical_Assets/Students/YELLOW.png" />
                                         </image>
@@ -667,7 +667,7 @@
                             </AnchorPane>
                             <AnchorPane layoutX="123.0" layoutY="70.0">
                                 <children>
-                                    <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true" styleClass="student" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <ImageView cache="true" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" styleClass="student" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
                                         <image>
                                             <Image url="@Graphical_Assets/Students/GREEN.png" />
                                         </image>
@@ -677,7 +677,7 @@
                             </AnchorPane>
                             <AnchorPane layoutX="123.0">
                                 <children>
-                                    <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true" styleClass="student" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <ImageView cache="true" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" styleClass="student" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
                                         <image>
                                             <Image url="@Graphical_Assets/Students/PINK.png" />
                                         </image>
@@ -692,14 +692,14 @@
             <AnchorPane id="19" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" pickOnBounds="false" prefHeight="200.0" prefWidth="173.0" styleClass="island" AnchorPane.leftAnchor="86.5" AnchorPane.topAnchor="450.0">
                 <properties name="Island" />
                 <children>
-                    <ImageView fitHeight="200.0" fitWidth="179.0" pickOnBounds="true" preserveRatio="true" styleClass="shadow" AnchorPane.leftAnchor="-3.0">
+                    <ImageView cache="true" fitHeight="200.0" fitWidth="179.0" pickOnBounds="true" preserveRatio="true" styleClass="shadow" AnchorPane.leftAnchor="-3.0">
                         <Image url="@Graphical_Assets/Islands/Island3.png" />
                     </ImageView>
                     <AnchorPane layoutX="10.0" layoutY="50.0">
                         <children>
                             <AnchorPane>
                                 <children>
-                                    <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true" styleClass="student" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <ImageView cache="true" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" styleClass="student" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
                                         <image>
                                             <Image url="@Graphical_Assets/Students/RED.png" />
                                         </image>
@@ -709,7 +709,7 @@
                             </AnchorPane>
                             <AnchorPane layoutY="70.0">
                                 <children>
-                                    <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true" styleClass="student" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <ImageView cache="true" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" styleClass="student" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
                                         <image>
                                             <Image url="@Graphical_Assets/Students/BLUE.png" />
                                         </image>
@@ -719,7 +719,7 @@
                             </AnchorPane>
                             <AnchorPane layoutX="60.0" layoutY="110.0">
                                 <children>
-                                    <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true" styleClass="student" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <ImageView cache="true" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" styleClass="student" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
                                         <image>
                                             <Image url="@Graphical_Assets/Students/YELLOW.png" />
                                         </image>
@@ -729,7 +729,7 @@
                             </AnchorPane>
                             <AnchorPane layoutX="123.0" layoutY="70.0">
                                 <children>
-                                    <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true" styleClass="student" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <ImageView cache="true" cacheHint="SCALE" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" styleClass="student" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
                                         <image>
                                             <Image url="@Graphical_Assets/Students/GREEN.png" />
                                         </image>
@@ -739,7 +739,7 @@
                             </AnchorPane>
                             <AnchorPane layoutX="123.0">
                                 <children>
-                                    <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true" styleClass="student" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <ImageView cache="true" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" styleClass="student" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
                                         <image>
                                             <Image url="@Graphical_Assets/Students/PINK.png" />
                                         </image>
@@ -757,7 +757,7 @@
         <children>
             <AnchorPane fx:id="mainBoard" pickOnBounds="false" prefHeight="304.0" prefWidth="700.0" styleClass="board" AnchorPane.bottomAnchor="30.0" AnchorPane.rightAnchor="30.0">
                 <children>
-                    <ImageView cache="true" cacheHint="QUALITY" fitWidth="700.0" preserveRatio="true" styleClass="shadow" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                    <ImageView cache="true" cacheHint="SCALE" fitWidth="700.0" preserveRatio="true" styleClass="shadow" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0">
                         <image>
                             <Image url="@Graphical_Assets/Board/Board.jpg" />
                         </image>
@@ -869,44 +869,44 @@
                             </ImageView>
                         </children>
                     </VBox>
-                    <AnchorPane id="towers" layoutX="557.0" layoutY="52.0" pickOnBounds="false" prefHeight="200.0" prefWidth="143.0" AnchorPane.bottomAnchor="52.0" AnchorPane.leftAnchor="557.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="52.0">
+                    <AnchorPane id="towers" pickOnBounds="false" AnchorPane.bottomAnchor="35.0" AnchorPane.leftAnchor="570.0" AnchorPane.rightAnchor="40.0">
                         <children>
-                            <ImageView fitHeight="34.0" fitWidth="28.0" layoutX="7.0" layoutY="46.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="50.0">
+                            <ImageView cache="true" fitWidth="38.0" layoutX="7.0" layoutY="46.0" preserveRatio="true" styleClass="tower" AnchorPane.bottomAnchor="160.0" AnchorPane.leftAnchor="0.0">
                                 <image>
                                     <Image url="@Graphical_Assets/Towers/BLACK.png" />
                                 </image>
                             </ImageView>
-                            <ImageView fitHeight="34.0" fitWidth="28.0" layoutX="51.0" layoutY="46.0" AnchorPane.leftAnchor="35.0" AnchorPane.topAnchor="50.0">
+                            <ImageView cache="true" fitWidth="38.0" layoutX="51.0" layoutY="46.0" preserveRatio="true" styleClass="tower" AnchorPane.bottomAnchor="160.0" AnchorPane.rightAnchor="0.0">
                                 <image>
                                     <Image url="@Graphical_Assets/Towers/BLACK.png" />
                                 </image>
                             </ImageView>
-                            <ImageView fitHeight="34.0" fitWidth="28.0" layoutX="91.0" layoutY="47.0" AnchorPane.leftAnchor="70.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="50.0">
+                            <ImageView cache="true" fitWidth="38.0" layoutX="91.0" layoutY="47.0" preserveRatio="true" styleClass="tower" AnchorPane.bottomAnchor="110.0" AnchorPane.leftAnchor="0.0">
                                 <image>
                                     <Image url="@Graphical_Assets/Towers/BLACK.png" />
                                 </image>
                             </ImageView>
-                            <ImageView fitHeight="34.0" fitWidth="28.0" layoutX="101.0" layoutY="57.0" AnchorPane.leftAnchor="105.0" AnchorPane.topAnchor="50.0">
+                            <ImageView cache="true" fitWidth="38.0" layoutX="101.0" layoutY="57.0" preserveRatio="true" styleClass="tower" AnchorPane.bottomAnchor="110.0" AnchorPane.rightAnchor="0.0">
                                 <image>
                                     <Image url="@Graphical_Assets/Towers/BLACK.png" />
                                 </image>
                             </ImageView>
-                            <ImageView fitHeight="34.0" fitWidth="28.0" AnchorPane.rightAnchor="115.0" AnchorPane.topAnchor="100.0">
+                            <ImageView cache="true" fitWidth="38.0" preserveRatio="true" styleClass="tower" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="0.0">
                                 <image>
                                     <Image url="@Graphical_Assets/Towers/BLACK.png" />
                                 </image>
                             </ImageView>
-                            <ImageView fitHeight="34.0" fitWidth="28.0" AnchorPane.leftAnchor="35.0" AnchorPane.topAnchor="100.0">
+                            <ImageView cache="true" fitWidth="38.0" preserveRatio="true" styleClass="tower" AnchorPane.bottomAnchor="60.0" AnchorPane.rightAnchor="0.0">
                                 <image>
                                     <Image url="@Graphical_Assets/Towers/BLACK.png" />
                                 </image>
                             </ImageView>
-                            <ImageView fitHeight="34.0" fitWidth="28.0" AnchorPane.leftAnchor="70.0" AnchorPane.topAnchor="100.0">
+                            <ImageView cache="true" fitWidth="38.0" preserveRatio="true" styleClass="tower" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="0.0">
                                 <image>
                                     <Image url="@Graphical_Assets/Towers/BLACK.png" />
                                 </image>
                             </ImageView>
-                            <ImageView fitHeight="34.0" fitWidth="28.0" AnchorPane.leftAnchor="105.0" AnchorPane.topAnchor="100.0">
+                            <ImageView cache="true" fitWidth="38.0" preserveRatio="true" styleClass="tower" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="0.0">
                                 <image>
                                     <Image url="@Graphical_Assets/Towers/BLACK.png" />
                                 </image>
@@ -917,12 +917,12 @@
                   <children>
                             <AnchorPane pickOnBounds="false">
                                 <children>
-                                    <ImageView fitWidth="135.0" preserveRatio="true" styleClass="shadow" />
+                                    <ImageView cache="true" cacheHint="SCALE" fitWidth="135.0" preserveRatio="true" styleClass="shadow" />
                                 </children>
                             </AnchorPane>
                             <AnchorPane styleClass="card">
                                 <children>
-                                    <ImageView fitWidth="135.0" pickOnBounds="true" preserveRatio="true" styleClass="shadow">
+                                    <ImageView cache="true" cacheHint="SCALE" fitWidth="135.0" pickOnBounds="true" preserveRatio="true" styleClass="shadow">
                                         <image>
                                             <Image url="@Graphical_Assets/Wizard/WOODMAGE.png" />
                                         </image>
@@ -933,7 +933,7 @@
                </HBox>
                <HBox alignment="CENTER" styleClass="coins" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="-35.0">
                   <children>
-                     <ImageView fitHeight="25.0" preserveRatio="true" styleClass="coin">
+                     <ImageView cache="true" cacheHint="SCALE" fitHeight="25.0" preserveRatio="true" styleClass="coin">
                         <image>
                            <Image url="@Graphical_Assets/Coin.png" />
                         </image>
@@ -943,9 +943,9 @@
                </HBox>
                 </children>
             </AnchorPane>
-            <AnchorPane pickOnBounds="false" prefHeight="304.0" prefWidth="700.0" scaleX="0.6" scaleY="0.6" snapToPixel="false" styleClass="board" translateX="150.0" translateY="65.0" AnchorPane.bottomAnchor="404.0" AnchorPane.rightAnchor="44.0">
+            <AnchorPane pickOnBounds="false" prefHeight="304.0" prefWidth="700.0" scaleX="0.65" scaleY="0.65" snapToPixel="false" styleClass="board" translateX="150.0" translateY="65.0" AnchorPane.bottomAnchor="392.0" AnchorPane.rightAnchor="60.0">
                 <children>
-                    <ImageView cache="true" cacheHint="QUALITY" fitWidth="700.0" preserveRatio="true" styleClass="shadow" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                    <ImageView cache="true" cacheHint="SCALE" fitWidth="700.0" preserveRatio="true" styleClass="shadow" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0">
                         <image>
                             <Image url="@Graphical_Assets/Board/Board.jpg" />
                         </image>
@@ -1058,60 +1058,60 @@
                             </ImageView>
                         </children>
                     </VBox>
-                    <AnchorPane id="towers" layoutX="557.0" layoutY="52.0" pickOnBounds="false" prefHeight="200.0" prefWidth="143.0">
-                        <children>
-                            <ImageView fitHeight="34.0" fitWidth="28.0" layoutX="7.0" layoutY="46.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="50.0">
-                                <image>
-                                    <Image url="@Graphical_Assets/Towers/BLACK.png" />
-                                </image>
-                            </ImageView>
-                            <ImageView fitHeight="34.0" fitWidth="28.0" layoutX="51.0" layoutY="46.0" AnchorPane.leftAnchor="35.0" AnchorPane.topAnchor="50.0">
-                                <image>
-                                    <Image url="@Graphical_Assets/Towers/BLACK.png" />
-                                </image>
-                            </ImageView>
-                            <ImageView fitHeight="34.0" fitWidth="28.0" layoutX="91.0" layoutY="47.0" AnchorPane.leftAnchor="70.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="50.0">
-                                <image>
-                                    <Image url="@Graphical_Assets/Towers/BLACK.png" />
-                                </image>
-                            </ImageView>
-                            <ImageView fitHeight="34.0" fitWidth="28.0" layoutX="101.0" layoutY="57.0" AnchorPane.leftAnchor="105.0" AnchorPane.topAnchor="50.0">
-                                <image>
-                                    <Image url="@Graphical_Assets/Towers/BLACK.png" />
-                                </image>
-                            </ImageView>
-                            <ImageView fitHeight="34.0" fitWidth="28.0" AnchorPane.rightAnchor="115.0" AnchorPane.topAnchor="100.0">
-                                <image>
-                                    <Image url="@Graphical_Assets/Towers/BLACK.png" />
-                                </image>
-                            </ImageView>
-                            <ImageView fitHeight="34.0" fitWidth="28.0" AnchorPane.leftAnchor="35.0" AnchorPane.topAnchor="100.0">
-                                <image>
-                                    <Image url="@Graphical_Assets/Towers/BLACK.png" />
-                                </image>
-                            </ImageView>
-                            <ImageView fitHeight="34.0" fitWidth="28.0" AnchorPane.leftAnchor="70.0" AnchorPane.topAnchor="100.0">
-                                <image>
-                                    <Image url="@Graphical_Assets/Towers/BLACK.png" />
-                                </image>
-                            </ImageView>
-                            <ImageView fitHeight="34.0" fitWidth="28.0" AnchorPane.leftAnchor="105.0" AnchorPane.topAnchor="100.0">
-                                <image>
-                                    <Image url="@Graphical_Assets/Towers/BLACK.png" />
-                                </image>
-                            </ImageView>
-                        </children>
-                    </AnchorPane>
+               <AnchorPane id="towers" layoutX="10.0" layoutY="10.0" pickOnBounds="false" AnchorPane.bottomAnchor="35.0" AnchorPane.leftAnchor="570.0" AnchorPane.rightAnchor="40.0">
+                  <children>
+                     <ImageView cache="true" cacheHint="SCALE" fitWidth="38.0" layoutX="7.0" layoutY="46.0" preserveRatio="true" styleClass="tower" AnchorPane.bottomAnchor="160.0" AnchorPane.leftAnchor="0.0">
+                        <image>
+                           <Image url="@Graphical_Assets/Towers/BLACK.png" />
+                        </image>
+                     </ImageView>
+                     <ImageView cache="true" cacheHint="SCALE" fitWidth="38.0" layoutX="51.0" layoutY="46.0" preserveRatio="true" styleClass="tower" AnchorPane.bottomAnchor="160.0" AnchorPane.rightAnchor="0.0">
+                        <image>
+                           <Image url="@Graphical_Assets/Towers/BLACK.png" />
+                        </image>
+                     </ImageView>
+                     <ImageView cache="true" cacheHint="SCALE" fitWidth="38.0" layoutX="91.0" layoutY="47.0" preserveRatio="true" styleClass="tower" AnchorPane.bottomAnchor="110.0" AnchorPane.leftAnchor="0.0">
+                        <image>
+                           <Image url="@Graphical_Assets/Towers/BLACK.png" />
+                        </image>
+                     </ImageView>
+                     <ImageView cache="true" cacheHint="SCALE" fitWidth="38.0" layoutX="101.0" layoutY="57.0" preserveRatio="true" styleClass="tower" AnchorPane.bottomAnchor="110.0" AnchorPane.rightAnchor="0.0">
+                        <image>
+                           <Image url="@Graphical_Assets/Towers/BLACK.png" />
+                        </image>
+                     </ImageView>
+                     <ImageView cache="true" cacheHint="SCALE" fitWidth="38.0" preserveRatio="true" styleClass="tower" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="0.0">
+                        <image>
+                           <Image url="@Graphical_Assets/Towers/BLACK.png" />
+                        </image>
+                     </ImageView>
+                     <ImageView cache="true" cacheHint="SCALE" fitWidth="38.0" preserveRatio="true" styleClass="tower" AnchorPane.bottomAnchor="60.0" AnchorPane.rightAnchor="0.0">
+                        <image>
+                           <Image url="@Graphical_Assets/Towers/BLACK.png" />
+                        </image>
+                     </ImageView>
+                     <ImageView cache="true" cacheHint="SCALE" fitWidth="38.0" preserveRatio="true" styleClass="tower" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="0.0">
+                        <image>
+                           <Image url="@Graphical_Assets/Towers/BLACK.png" />
+                        </image>
+                     </ImageView>
+                     <ImageView cache="true" cacheHint="SCALE" fitWidth="38.0" preserveRatio="true" styleClass="tower" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="0.0">
+                        <image>
+                           <Image url="@Graphical_Assets/Towers/BLACK.png" />
+                        </image>
+                     </ImageView>
+                  </children>
+               </AnchorPane>
                <HBox alignment="BOTTOM_CENTER" prefHeight="100.0" prefWidth="200.0" spacing="35.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="-470.0">
                   <children>
                      <AnchorPane pickOnBounds="false">
                         <children>
-                           <ImageView fitWidth="200.0" preserveRatio="true" styleClass="shadow" />
+                           <ImageView cache="true" cacheHint="SCALE" fitWidth="200.0" preserveRatio="true" styleClass="shadow" />
                         </children>
                      </AnchorPane>
                      <AnchorPane styleClass="card">
                         <children>
-                           <ImageView fitWidth="200.0" pickOnBounds="true" preserveRatio="true" styleClass="shadow">
+                           <ImageView cache="true" cacheHint="SCALE" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" styleClass="shadow">
                               <image>
                                  <Image url="@Graphical_Assets/Wizard/WOODMAGE.png" />
                               </image>
@@ -1122,7 +1122,7 @@
                </HBox>
                <HBox alignment="CENTER" styleClass="coins" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="-35.0">
                   <children>
-                     <ImageView fitHeight="25.0" preserveRatio="true" styleClass="coin">
+                     <ImageView cache="true" cacheHint="SCALE" fitHeight="25.0" preserveRatio="true" styleClass="coin">
                         <image>
                            <Image url="@Graphical_Assets/Coin.png" />
                         </image>
@@ -1132,9 +1132,9 @@
                </HBox>
                 </children>
             </AnchorPane>
-            <AnchorPane pickOnBounds="false" prefHeight="304.0" prefWidth="700.0" scaleX="0.6" scaleY="0.6" snapToPixel="false" styleClass="board" translateX="150.0" translateY="65.0" AnchorPane.bottomAnchor="628.0" AnchorPane.rightAnchor="44.0">
+            <AnchorPane pickOnBounds="false" prefHeight="304.0" prefWidth="700.0" scaleX="0.65" scaleY="0.65" snapToPixel="false" styleClass="board" translateX="150.0" translateY="65.0" AnchorPane.bottomAnchor="625.0" AnchorPane.rightAnchor="60.0">
                 <children>
-                    <ImageView cache="true" cacheHint="QUALITY" fitWidth="700.0" preserveRatio="true" styleClass="shadow" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                    <ImageView cache="true" cacheHint="SCALE" fitWidth="700.0" preserveRatio="true" styleClass="shadow" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0">
                         <image>
                             <Image url="@Graphical_Assets/Board/Board.jpg" />
                         </image>
@@ -1247,60 +1247,60 @@
                             </ImageView>
                         </children>
                     </VBox>
-                    <AnchorPane id="towers" layoutX="557.0" layoutY="52.0" pickOnBounds="false" prefHeight="200.0" prefWidth="143.0" AnchorPane.bottomAnchor="52.0" AnchorPane.leftAnchor="557.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="52.0">
-                        <children>
-                            <ImageView fitHeight="34.0" fitWidth="28.0" layoutY="50.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="50.0">
-                                <image>
-                                    <Image url="@Graphical_Assets/Towers/BLACK.png" />
-                                </image>
-                            </ImageView>
-                            <ImageView fitHeight="34.0" fitWidth="28.0" layoutX="35.0" layoutY="50.0" AnchorPane.leftAnchor="35.0" AnchorPane.topAnchor="50.0">
-                                <image>
-                                    <Image url="@Graphical_Assets/Towers/BLACK.png" />
-                                </image>
-                            </ImageView>
-                            <ImageView fitHeight="34.0" fitWidth="28.0" layoutX="70.0" layoutY="50.0" AnchorPane.leftAnchor="70.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="50.0">
-                                <image>
-                                    <Image url="@Graphical_Assets/Towers/BLACK.png" />
-                                </image>
-                            </ImageView>
-                            <ImageView fitHeight="34.0" fitWidth="28.0" layoutX="105.0" layoutY="50.0" AnchorPane.leftAnchor="105.0" AnchorPane.topAnchor="50.0">
-                                <image>
-                                    <Image url="@Graphical_Assets/Towers/BLACK.png" />
-                                </image>
-                            </ImageView>
-                            <ImageView fitHeight="34.0" fitWidth="28.0" layoutY="100.0" AnchorPane.rightAnchor="115.0" AnchorPane.topAnchor="100.0">
-                                <image>
-                                    <Image url="@Graphical_Assets/Towers/BLACK.png" />
-                                </image>
-                            </ImageView>
-                            <ImageView fitHeight="34.0" fitWidth="28.0" layoutX="35.0" layoutY="100.0" AnchorPane.leftAnchor="35.0" AnchorPane.topAnchor="100.0">
-                                <image>
-                                    <Image url="@Graphical_Assets/Towers/BLACK.png" />
-                                </image>
-                            </ImageView>
-                            <ImageView fitHeight="34.0" fitWidth="28.0" layoutX="70.0" layoutY="100.0" AnchorPane.leftAnchor="70.0" AnchorPane.topAnchor="100.0">
-                                <image>
-                                    <Image url="@Graphical_Assets/Towers/BLACK.png" />
-                                </image>
-                            </ImageView>
-                            <ImageView fitHeight="34.0" fitWidth="28.0" layoutX="105.0" layoutY="100.0" AnchorPane.leftAnchor="105.0" AnchorPane.topAnchor="100.0">
-                                <image>
-                                    <Image url="@Graphical_Assets/Towers/BLACK.png" />
-                                </image>
-                            </ImageView>
-                        </children>
-                    </AnchorPane>
+               <AnchorPane id="towers" layoutX="10.0" layoutY="10.0" pickOnBounds="false" AnchorPane.bottomAnchor="35.0" AnchorPane.leftAnchor="570.0" AnchorPane.rightAnchor="40.0">
+                  <children>
+                     <ImageView cache="true" cacheHint="SCALE" fitWidth="38.0" layoutX="7.0" layoutY="46.0" preserveRatio="true" styleClass="tower" AnchorPane.bottomAnchor="160.0" AnchorPane.leftAnchor="0.0">
+                        <image>
+                           <Image url="@Graphical_Assets/Towers/BLACK.png" />
+                        </image>
+                     </ImageView>
+                     <ImageView cache="true" cacheHint="SCALE" fitWidth="38.0" layoutX="51.0" layoutY="46.0" preserveRatio="true" styleClass="tower" AnchorPane.bottomAnchor="160.0" AnchorPane.rightAnchor="0.0">
+                        <image>
+                           <Image url="@Graphical_Assets/Towers/BLACK.png" />
+                        </image>
+                     </ImageView>
+                     <ImageView cache="true" cacheHint="SCALE" fitWidth="38.0" layoutX="91.0" layoutY="47.0" preserveRatio="true" styleClass="tower" AnchorPane.bottomAnchor="110.0" AnchorPane.leftAnchor="0.0">
+                        <image>
+                           <Image url="@Graphical_Assets/Towers/BLACK.png" />
+                        </image>
+                     </ImageView>
+                     <ImageView cache="true" cacheHint="SCALE" fitWidth="38.0" layoutX="101.0" layoutY="57.0" preserveRatio="true" styleClass="tower" AnchorPane.bottomAnchor="110.0" AnchorPane.rightAnchor="0.0">
+                        <image>
+                           <Image url="@Graphical_Assets/Towers/BLACK.png" />
+                        </image>
+                     </ImageView>
+                     <ImageView cache="true" cacheHint="SCALE" fitWidth="38.0" preserveRatio="true" styleClass="tower" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="0.0">
+                        <image>
+                           <Image url="@Graphical_Assets/Towers/BLACK.png" />
+                        </image>
+                     </ImageView>
+                     <ImageView cache="true" cacheHint="SCALE" fitWidth="38.0" preserveRatio="true" styleClass="tower" AnchorPane.bottomAnchor="60.0" AnchorPane.rightAnchor="0.0">
+                        <image>
+                           <Image url="@Graphical_Assets/Towers/BLACK.png" />
+                        </image>
+                     </ImageView>
+                     <ImageView cache="true" cacheHint="SCALE" fitWidth="38.0" preserveRatio="true" styleClass="tower" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="0.0">
+                        <image>
+                           <Image url="@Graphical_Assets/Towers/BLACK.png" />
+                        </image>
+                     </ImageView>
+                     <ImageView cache="true" cacheHint="SCALE" fitWidth="38.0" preserveRatio="true" styleClass="tower" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="0.0">
+                        <image>
+                           <Image url="@Graphical_Assets/Towers/BLACK.png" />
+                        </image>
+                     </ImageView>
+                  </children>
+               </AnchorPane>
                <HBox alignment="BOTTOM_CENTER" layoutX="10.0" layoutY="10.0" prefHeight="100.0" prefWidth="200.0" spacing="35.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="-470.0">
                   <children>
                      <AnchorPane pickOnBounds="false">
                         <children>
-                           <ImageView fitWidth="200.0" preserveRatio="true" styleClass="shadow" />
+                           <ImageView cache="true" cacheHint="SCALE" fitWidth="200.0" preserveRatio="true" styleClass="shadow" />
                         </children>
                      </AnchorPane>
                      <AnchorPane styleClass="card">
                         <children>
-                           <ImageView fitWidth="200.0" pickOnBounds="true" preserveRatio="true" styleClass="shadow">
+                           <ImageView cache="true" cacheHint="SCALE" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" styleClass="shadow">
                               <image>
                                  <Image url="@Graphical_Assets/Wizard/WOODMAGE.png" />
                               </image>
@@ -1311,7 +1311,7 @@
                </HBox>
                <HBox alignment="CENTER" styleClass="coins" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="-35.0">
                   <children>
-                     <ImageView fitHeight="25.0" preserveRatio="true" styleClass="coin">
+                     <ImageView cache="true" cacheHint="SCALE" fitHeight="25.0" preserveRatio="true" styleClass="coin">
                         <image>
                            <Image url="@Graphical_Assets/Coin.png" />
                         </image>
@@ -1321,9 +1321,9 @@
                </HBox>
                 </children>
             </AnchorPane>
-            <AnchorPane pickOnBounds="false" prefHeight="304.0" prefWidth="425.0" scaleX="0.6" scaleY="0.6" snapToPixel="false" styleClass="board" translateX="150.0" translateY="65.0" AnchorPane.bottomAnchor="852.0" AnchorPane.rightAnchor="44.0">
+            <AnchorPane pickOnBounds="false" prefHeight="304.0" prefWidth="425.0" scaleX="0.65" scaleY="0.65" snapToPixel="false" styleClass="board" translateX="150.0" translateY="65.0" AnchorPane.bottomAnchor="858.0" AnchorPane.rightAnchor="60.0">
                 <children>
-                    <ImageView cache="true" cacheHint="QUALITY" fitWidth="700.0" preserveRatio="true" styleClass="shadow" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                    <ImageView cache="true" cacheHint="SCALE" fitWidth="700.0" preserveRatio="true" styleClass="shadow" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0">
                         <Image url="@Graphical_Assets/Board/Board.jpg" />
                     </ImageView>
                     <Label styleClass="nickname" textAlignment="CENTER" textFill="WHITE" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -1434,60 +1434,60 @@
                             </ImageView>
                         </children>
                     </VBox>
-                    <AnchorPane id="towers" layoutX="557.0" layoutY="52.0" pickOnBounds="false" prefHeight="200.0" prefWidth="143.0" AnchorPane.bottomAnchor="52.0" AnchorPane.leftAnchor="557.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="52.0">
-                        <children>
-                            <ImageView fitHeight="34.0" fitWidth="28.0" layoutY="50.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="50.0">
-                                <image>
-                                    <Image url="@Graphical_Assets/Towers/BLACK.png" />
-                                </image>
-                            </ImageView>
-                            <ImageView fitHeight="34.0" fitWidth="28.0" layoutX="35.0" layoutY="50.0" AnchorPane.leftAnchor="35.0" AnchorPane.topAnchor="50.0">
-                                <image>
-                                    <Image url="@Graphical_Assets/Towers/BLACK.png" />
-                                </image>
-                            </ImageView>
-                            <ImageView fitHeight="34.0" fitWidth="28.0" layoutX="70.0" layoutY="50.0" AnchorPane.leftAnchor="70.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="50.0">
-                                <image>
-                                    <Image url="@Graphical_Assets/Towers/BLACK.png" />
-                                </image>
-                            </ImageView>
-                            <ImageView fitHeight="34.0" fitWidth="28.0" layoutX="105.0" layoutY="50.0" AnchorPane.leftAnchor="105.0" AnchorPane.topAnchor="50.0">
-                                <image>
-                                    <Image url="@Graphical_Assets/Towers/BLACK.png" />
-                                </image>
-                            </ImageView>
-                            <ImageView fitHeight="34.0" fitWidth="28.0" layoutY="100.0" AnchorPane.rightAnchor="115.0" AnchorPane.topAnchor="100.0">
-                                <image>
-                                    <Image url="@Graphical_Assets/Towers/BLACK.png" />
-                                </image>
-                            </ImageView>
-                            <ImageView fitHeight="34.0" fitWidth="28.0" layoutX="35.0" layoutY="100.0" AnchorPane.leftAnchor="35.0" AnchorPane.topAnchor="100.0">
-                                <image>
-                                    <Image url="@Graphical_Assets/Towers/BLACK.png" />
-                                </image>
-                            </ImageView>
-                            <ImageView fitHeight="34.0" fitWidth="28.0" layoutX="70.0" layoutY="100.0" AnchorPane.leftAnchor="70.0" AnchorPane.topAnchor="100.0">
-                                <image>
-                                    <Image url="@Graphical_Assets/Towers/BLACK.png" />
-                                </image>
-                            </ImageView>
-                            <ImageView fitHeight="34.0" fitWidth="28.0" layoutX="105.0" layoutY="100.0" AnchorPane.leftAnchor="105.0" AnchorPane.topAnchor="100.0">
-                                <image>
-                                    <Image url="@Graphical_Assets/Towers/BLACK.png" />
-                                </image>
-                            </ImageView>
-                        </children>
-                    </AnchorPane>
+               <AnchorPane id="towers" layoutX="10.0" layoutY="10.0" pickOnBounds="false" AnchorPane.bottomAnchor="35.0" AnchorPane.leftAnchor="570.0" AnchorPane.rightAnchor="40.0">
+                  <children>
+                     <ImageView cache="true" cacheHint="SCALE" fitWidth="38.0" layoutX="7.0" layoutY="46.0" preserveRatio="true" styleClass="tower" AnchorPane.bottomAnchor="160.0" AnchorPane.leftAnchor="0.0">
+                        <image>
+                           <Image url="@Graphical_Assets/Towers/BLACK.png" />
+                        </image>
+                     </ImageView>
+                     <ImageView cache="true" cacheHint="SCALE" fitWidth="38.0" layoutX="51.0" layoutY="46.0" preserveRatio="true" styleClass="tower" AnchorPane.bottomAnchor="160.0" AnchorPane.rightAnchor="0.0">
+                        <image>
+                           <Image url="@Graphical_Assets/Towers/BLACK.png" />
+                        </image>
+                     </ImageView>
+                     <ImageView cache="true" cacheHint="SCALE" fitWidth="38.0" layoutX="91.0" layoutY="47.0" preserveRatio="true" styleClass="tower" AnchorPane.bottomAnchor="110.0" AnchorPane.leftAnchor="0.0">
+                        <image>
+                           <Image url="@Graphical_Assets/Towers/BLACK.png" />
+                        </image>
+                     </ImageView>
+                     <ImageView cache="true" cacheHint="SCALE" fitWidth="38.0" layoutX="101.0" layoutY="57.0" preserveRatio="true" styleClass="tower" AnchorPane.bottomAnchor="110.0" AnchorPane.rightAnchor="0.0">
+                        <image>
+                           <Image url="@Graphical_Assets/Towers/BLACK.png" />
+                        </image>
+                     </ImageView>
+                     <ImageView cache="true" cacheHint="SCALE" fitWidth="38.0" preserveRatio="true" styleClass="tower" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="0.0">
+                        <image>
+                           <Image url="@Graphical_Assets/Towers/BLACK.png" />
+                        </image>
+                     </ImageView>
+                     <ImageView cache="true" cacheHint="SCALE" fitWidth="38.0" preserveRatio="true" styleClass="tower" AnchorPane.bottomAnchor="60.0" AnchorPane.rightAnchor="0.0">
+                        <image>
+                           <Image url="@Graphical_Assets/Towers/BLACK.png" />
+                        </image>
+                     </ImageView>
+                     <ImageView cache="true" cacheHint="SCALE" fitWidth="38.0" preserveRatio="true" styleClass="tower" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="0.0">
+                        <image>
+                           <Image url="@Graphical_Assets/Towers/BLACK.png" />
+                        </image>
+                     </ImageView>
+                     <ImageView cache="true" cacheHint="SCALE" fitWidth="38.0" preserveRatio="true" styleClass="tower" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="0.0">
+                        <image>
+                           <Image url="@Graphical_Assets/Towers/BLACK.png" />
+                        </image>
+                     </ImageView>
+                  </children>
+               </AnchorPane>
                <HBox alignment="BOTTOM_CENTER" layoutX="10.0" layoutY="10.0" prefHeight="100.0" prefWidth="200.0" spacing="35.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="-470.0">
                   <children>
                      <AnchorPane pickOnBounds="false">
                         <children>
-                           <ImageView fitWidth="200.0" preserveRatio="true" styleClass="shadow" />
+                           <ImageView cache="true" cacheHint="SCALE" fitWidth="200.0" preserveRatio="true" styleClass="shadow" />
                         </children>
                      </AnchorPane>
                      <AnchorPane styleClass="card">
                         <children>
-                           <ImageView fitWidth="200.0" pickOnBounds="true" preserveRatio="true" styleClass="shadow">
+                           <ImageView cache="true" cacheHint="SCALE" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" styleClass="shadow">
                               <image>
                                  <Image url="@Graphical_Assets/Wizard/WOODMAGE.png" />
                               </image>
@@ -1498,7 +1498,7 @@
                </HBox>
                <HBox alignment="CENTER" styleClass="coins" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="-35.0">
                   <children>
-                     <ImageView fitHeight="25.0" preserveRatio="true" styleClass="coin">
+                     <ImageView cache="true" cacheHint="SCALE" fitHeight="25.0" preserveRatio="true" styleClass="coin">
                         <image>
                            <Image url="@Graphical_Assets/Coin.png" />
                         </image>
@@ -1516,7 +1516,7 @@
                 <HBox.margin>
                     <Insets left="20.0" right="20.0" />
                 </HBox.margin>
-                <ImageView fitHeight="150.0" fitWidth="100.0" preserveRatio="true" styleClass="shadow">
+                <ImageView cache="true" fitHeight="150.0" fitWidth="100.0" preserveRatio="true" styleClass="shadow">
                     <image>
                         <Image url="@Graphical_Assets/CharacterCards/0.png" />
                     </image>
@@ -1612,7 +1612,7 @@
                 <HBox.margin>
                     <Insets left="20.0" right="20.0" />
                 </HBox.margin>
-                <ImageView fitHeight="150.0" fitWidth="100.0" layoutX="-15.0" layoutY="-26.0" styleClass="shadow" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                <ImageView cache="true" fitHeight="150.0" fitWidth="100.0" layoutX="-15.0" layoutY="-26.0" preserveRatio="true" styleClass="shadow" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <image>
                         <Image url="@Graphical_Assets/CharacterCards/6.png" />
                     </image>
@@ -1708,7 +1708,7 @@
                 <HBox.margin>
                     <Insets left="20.0" right="20.0" />
                 </HBox.margin>
-                <ImageView fitHeight="150.0" fitWidth="100.0" layoutX="13.0" layoutY="19.0" styleClass="shadow" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                <ImageView cache="true" fitHeight="150.0" fitWidth="100.0" layoutX="13.0" layoutY="19.0" preserveRatio="true" styleClass="shadow" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <image>
                         <Image url="@Graphical_Assets/CharacterCards/10.png" />
                     </image>
@@ -1817,7 +1817,7 @@
     <Button fx:id="quitButton" mnemonicParsing="false" text="Quit" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0" />
    <HBox id="coinsBox" alignment="CENTER" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="120.0">
       <children>
-         <ImageView fitHeight="80.0" preserveRatio="true" styleClass="coin">
+         <ImageView cache="true" cacheHint="SCALE" fitHeight="80.0" preserveRatio="true" styleClass="coin">
             <image>
                <Image url="@Graphical_Assets/Coin.png" />
             </image>
@@ -1845,7 +1845,7 @@
             <AnchorPane id="-1" pickOnBounds="false" prefHeight="80.0" prefWidth="80.0" styleClass="cloud">
                 <properties name="Cloud" />
                 <children>
-                    <ImageView fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true" styleClass="shadow">
+                    <ImageView cache="true" fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true" styleClass="shadow">
                         <image>
                             <Image url="@Graphical_Assets/cloud_card.png" />
                         </image>
@@ -1866,7 +1866,7 @@
             <AnchorPane id="-2" pickOnBounds="false" prefHeight="80.0" prefWidth="80.0" styleClass="cloud">
                 <properties name="Cloud" />
                 <children>
-                    <ImageView fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true" styleClass="shadow">
+                    <ImageView cache="true" fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true" styleClass="shadow">
                         <image>
                             <Image url="@Graphical_Assets/cloud_card.png" />
                         </image>
@@ -1887,7 +1887,7 @@
             <AnchorPane id="-3" pickOnBounds="false" prefHeight="80.0" prefWidth="80.0" styleClass="cloud">
                 <properties name="Cloud" />
                 <children>
-                    <ImageView fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true" styleClass="shadow">
+                    <ImageView cache="true" fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true" styleClass="shadow">
                         <image>
                             <Image url="@Graphical_Assets/cloud_card.png" />
                         </image>
@@ -1908,7 +1908,7 @@
             <AnchorPane id="-4" pickOnBounds="false" prefHeight="80.0" prefWidth="80.0" styleClass="cloud">
                 <properties name="Cloud" />
                 <children>
-                    <ImageView fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true" styleClass="shadow">
+                    <ImageView cache="true" fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true" styleClass="shadow">
                         <image>
                             <Image url="@Graphical_Assets/cloud_card.png" />
                         </image>
