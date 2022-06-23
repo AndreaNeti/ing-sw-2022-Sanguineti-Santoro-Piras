@@ -452,35 +452,74 @@ public class CliPrinter implements GameClientListener {
         return assistantCardsPrint;
     }
 
+    /**
+     * Method updateMotherNature not used for CliPrinter.
+     *
+     * @param motherNaturePosition of type {@code Byte} - updated island index position of mother nature.
+     */
     @Override
     public void updateMotherNature(Byte motherNaturePosition) {
     }
 
+    /**
+     * Method updateGameComponent not used for CliPrinter.
+     *
+     * @param gameComponent of type {@link GameComponentClient} - instance of the updated game component.
+     */
     @Override
     public void updateGameComponent(GameComponentClient gameComponent) {
 
     }
 
+    /**
+     * Method updateGameComponent not used for CliPrinter.
+     *
+     * @param island of type {@link IslandClient} - instance of the updated island.
+     */
     @Override
     public void updateGameComponent(IslandClient island) {
 
     }
 
+    /**
+     * Method updateDeletedIsland not used for CliPrinter.
+     *
+     * @param island of type {@link IslandClient} - instance of the removed island.
+     */
     @Override
     public void updateDeletedIsland(IslandClient island) {
 
     }
 
+    /**
+     * Method updateTowerLeft not used for CliPrinter.
+     *
+     * @param houseColor of type {@link HouseColor} - house color of the updated team.
+     * @param towerLefts of type {@code Byte} - updated amount of towers left.
+     */
     @Override
     public void updateTowerLeft(HouseColor houseColor, Byte towerLefts) {
 
     }
 
+    /**
+     * Method updateProfessor not used for CliPrinter.
+     *
+     * @param color  of type {@link Color} - color of the updated professor.
+     * @param wizard of type {@link Wizard} - wizard associated with the new controller.
+     */
     @Override
     public void updateProfessor(Color color, Wizard wizard) {
 
     }
 
+    /**
+     * Method updateMembers adds a message to the chat informing about the new player that joined
+     * and how many players are left before the game starts.
+     *
+     * @param membersLeftToStart of type {@code int} - updated amount of players left before the game starts.
+     * @param nickPlayerJoined   of type {@code String} - nickname of the player that just joined the game.
+     */
     @Override
     public void updateMembers(int membersLeftToStart, String nickPlayerJoined) {
         if (membersLeftToStart > 0) {
@@ -488,16 +527,31 @@ public class CliPrinter implements GameClientListener {
         }
     }
 
+    /**
+     * Method updateCardPlayed not used for CliPrinter.
+     *
+     * @param playedCard of type {@link AssistantCard} - instance of the updated assistant card played.
+     */
     @Override
     public void updateCardPlayed(AssistantCard playedCard) {
 
     }
 
+    /**
+     * Method updateIgnoredColor adds a message to the chat informing about the ignored color.
+     *
+     * @param color of type {@link Color} - instance of the updated ignored color.
+     */
     @Override
     public void updateIgnoredColor(Color color) {
         view.addMessage("During this turn color " + color + " will not add influence");
     }
 
+    /**
+     * Method updateExtraSteps adds a message to the chat to the chat informing about the two extra steps.
+     *
+     * @param extraSteps of type {@code boolean} - boolean to check if mother nature can move two extra steps.
+     */
     @Override
     public void updateExtraSteps(boolean extraSteps) {
         if (extraSteps) {
@@ -505,21 +559,42 @@ public class CliPrinter implements GameClientListener {
         }
     }
 
+    /**
+     * Method updateCharacter not used for CliPrinter.
+     *
+     * @param charId of type {@code int} - ID of the updated character card.
+     */
     @Override
     public void updateCharacter(int charId) {
 
     }
 
+    /**
+     * Method updateCoins not used for CliPrinter.
+     *
+     * @param coins of type {@code Byte} - updated amount of coins left in the game.
+     */
     @Override
     public void updateCoins(Byte coins) {
 
     }
 
+    /**
+     * Method updateCoins not used for CliPrinter.
+     *
+     * @param wizard of type {@link Wizard} - wizard associated with the updated player.
+     * @param coins  of type {@code Byte} - updated amount of coins owned by the player.
+     */
     @Override
     public void updateCoins(Wizard wizard, Byte coins) {
 
     }
 
+    /**
+     * Method setWinners adds to the chat the list of winners.
+     *
+     * @param winners of type {@code List}<{@link HouseColor}> - list of the house colors of the winner teams.
+     */
     @Override
     public void setWinners(List<HouseColor> winners) {
         String s = "Winner";
@@ -529,17 +604,31 @@ public class CliPrinter implements GameClientListener {
         view.addMessage(s);
     }
 
+    /**
+     * Method updateMessage reprints the game in the view. <br>
+     * This method is called each time a server message arrives, reprinting the game with the updated info.
+     *
+     * @param message of type {@code String} - new text message.
+     */
     @Override
     public void updateMessage(String message) {
         view.setMustReprint(true);
     }
 
+    /**
+     * Method updateProhibitions not used for CliPrinter.
+     *
+     * @param newProhibitions of type {@code Byte} - updated amount of prohibitions left in the game.
+     */
     @Override
     public void updateProhibitions(Byte newProhibitions) {
 
     }
 
 
+    /**
+     * Method clearConsole clears the client terminal.
+     */
     public void clearConsole() {
         System.out.print("\033[H\033[2J");
         System.out.flush();
