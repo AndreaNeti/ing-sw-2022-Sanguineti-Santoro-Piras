@@ -58,15 +58,15 @@ public class ExpertGame extends NormalGame implements CharacterCardGame, CoinLis
 
         characters = new ArrayList<>(matchConstants.numOfCharacterCards());
         Random rand = new Random(System.currentTimeMillis());
-        byte characterIndex = 4; //(byte) rand.nextInt(12);
+        byte characterIndex =11;//(byte) rand.nextInt(12);
         byte i = 0;
         ArrayList<Byte> selectedCharacters = new ArrayList<>(matchConstants.numOfCharacterCards());
         CharacterCard c;
-        byte tmp = 9;
+        //byte tmp = 9;
         while (i < matchConstants.numOfCharacterCards()) {
             while (selectedCharacters.contains(characterIndex)) {
-                characterIndex = tmp;//(byte) rand.nextInt(12);
-                tmp++;
+                characterIndex = (byte) rand.nextInt(12);
+                //tmp++;
             }
             c = factoryCharacter(characterIndex);
             characters.add(c);

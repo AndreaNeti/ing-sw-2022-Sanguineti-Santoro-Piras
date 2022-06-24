@@ -66,6 +66,7 @@ public abstract class AbstractView {
 
     public void goToOldPhase() {
         setPhaseInView(phases.get(oldPhase), false);
+        currentPhase = oldPhase;
     }
 
     public GamePhase getCurrentPhase() {

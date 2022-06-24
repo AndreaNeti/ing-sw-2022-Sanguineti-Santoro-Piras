@@ -917,7 +917,7 @@
                   <children>
                             <AnchorPane pickOnBounds="false">
                                 <children>
-                                    <ImageView cache="true" cacheHint="SCALE" fitWidth="135.0" preserveRatio="true" styleClass="shadow" />
+                                    <ImageView cacheHint="SCALE" fitWidth="135.0" preserveRatio="true" styleClass="shadow" />
                                 </children>
                             </AnchorPane>
                             <AnchorPane styleClass="card">
@@ -1932,7 +1932,23 @@
         <children>
           <ImageView pickOnBounds="true">
               <image>
+                  <Image url="@Graphical_Assets/Students/RED.png" />
+              </image>
+              <HBox.margin>
+                  <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+              </HBox.margin>
+          </ImageView>
+          <ImageView pickOnBounds="true">
+              <image>
                   <Image url="@Graphical_Assets/Students/BLUE.png" />
+              </image>
+              <HBox.margin>
+                  <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+              </HBox.margin>
+          </ImageView>
+          <ImageView pickOnBounds="true">
+              <image>
+                  <Image url="@Graphical_Assets/Students/YELLOW.png" />
               </image>
               <HBox.margin>
                   <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
@@ -1949,22 +1965,6 @@
           <ImageView pickOnBounds="true">
               <image>
                   <Image url="@Graphical_Assets/Students/PINK.png" />
-              </image>
-              <HBox.margin>
-                  <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
-              </HBox.margin>
-          </ImageView>
-          <ImageView pickOnBounds="true">
-              <image>
-                  <Image url="@Graphical_Assets/Students/RED.png" />
-              </image>
-              <HBox.margin>
-                  <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
-              </HBox.margin>
-          </ImageView>
-          <ImageView pickOnBounds="true">
-              <image>
-                  <Image url="@Graphical_Assets/Students/YELLOW.png" />
               </image>
               <HBox.margin>
                   <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
