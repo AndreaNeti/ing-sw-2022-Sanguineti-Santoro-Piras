@@ -59,7 +59,7 @@ public class ControllerClient extends GameClientListened {
     /**
      * Method connect is used to open a socket connection between the client and the server with the IP address provided.
      *
-     * @param ipAddress of type {@code byte[]} - IP address of the server to connect to.
+     * @param ipAddress of type {@code byte[]} - array of bytes equivalent to the IP address.
      * @return {@code boolean} - true if the connection was established correctly, false else.
      */
     public boolean connect(byte[] ipAddress) {

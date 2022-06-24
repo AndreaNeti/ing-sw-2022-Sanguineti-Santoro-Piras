@@ -16,7 +16,7 @@ import java.util.Map;
 import static java.util.Map.entry;
 
 /**
- * AbstractView abstract class represents the client's view that contains info about the phases and the game. <br>
+ * AbstractView abstract class represents the client's view that observes the game and contains info about the phases. <br>
  * This class also contains the instances of both the game's model and the client's controller.
  * Most methods are indeed used to get info about the game and to modify it through the controller. <br>
  * All available client's views (GUI and CLI) extend this abstract class. <br>
@@ -193,7 +193,7 @@ public abstract class AbstractView {
     /**
      * Method connectToServer is used by the view to connect to a server through the client's controller.
      *
-     * @param ipAddress of type {@code byte[]} - IP address of the server to connect to.
+     * @param ipAddress of type {@code byte[]} - array of bytes equivalent to the IP address.
      * @return {@code boolean} - true if the connection was established correctly, false else.
      */
     public boolean connectToServer(byte[] ipAddress) {
@@ -201,8 +201,8 @@ public abstract class AbstractView {
     }
 
     /**
-     * Method setQuit quits is used by the view to quit a game through the client's controller, setting the {@code quit} attribute
-     * to true only if the method is called during the init phase.
+     * Method setQuit quits is used by the view to quit a game through the client's controller. br>
+     * If the method is called during the init phase then the client's view (and therefore the client application) will stop.
      *
      * @param forceImmediateExecution of type {@code boolean} - boolean to check if the phase change after quitting the game should happen instantly.
      */

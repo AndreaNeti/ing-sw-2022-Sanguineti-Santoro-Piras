@@ -25,7 +25,7 @@ public abstract class ClientPhase {
 
     /**
      * Method playPhase refreshes the phase in the client's view (CLI), lists all the available commands and waits for the
-     * client to select one and then executes it.
+     * user to select one and then executes it.
      *
      * @param viewCli of type {@link ViewCli} - instance of the client's view (CLI).
      */

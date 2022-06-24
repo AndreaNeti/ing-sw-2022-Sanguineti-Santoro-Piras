@@ -16,12 +16,20 @@ import it.polimi.ingsw.exceptions.clientExceptions.SkipCommandException;
 
 import java.util.*;
 
+/**
+ *
+ */
 public class ViewCli extends AbstractView implements ViewForCharacterCli {
     private ClientPhase phaseToExecute;
     private volatile boolean isInputReady, phaseChanged, requestInput, forcedScannerSkip, mustReprint;
     private String input;
     private final CliPrinter cliPrinter;
 
+    /**
+     * Constructor ViewCli creates a new instance of ViewCli.
+     *
+     * @param controllerClient of type {@link ControllerClient} - instance of the client's controller.
+     */
     public ViewCli(ControllerClient controllerClient) {
         super(controllerClient);
         cliPrinter = new CliPrinter(this);
@@ -55,6 +63,12 @@ public class ViewCli extends AbstractView implements ViewForCharacterCli {
         setPhaseInView(GamePhase.INIT_PHASE, true, false);
     }
 
+    /**
+     * Method start is used by the view's thread to print the CLI game when the client needs to execute a new phase. <br>
+     * This method will run until the client quits the game.
+     *
+     * @throws InterruptedException if the thread is interrupted unexpectedly.
+     */
     public void start() throws InterruptedException {
         do {
             synchronized (this) {
@@ -74,19 +88,41 @@ public class ViewCli extends AbstractView implements ViewForCharacterCli {
         notifyAll();
     }
 
+    /**
+     * Method unsetPhase resets the client's phase to null.
+     */
     public void unsetPhase() {
         phaseToExecute = null;
     }
 
+    /**
+     * Method setMustReprint specifies if the view must reprint the game and in case wakes all sleeping threads.
+     *
+     * @param reprint of type{@code boolean} - boolean that specifies if the view must reprint the game.
+     */
     protected synchronized void setMustReprint(boolean reprint) {
         this.mustReprint = reprint;
         if (reprint) notifyAll();
     }
 
+    /**
+     * Method optionString creates a string with an option available and the number associated with it.
+     *
+     * @param value of type {@code int} - number associated with the option.
+     * @param option of type {@code String} - the text string of the option.
+     * @return {@code String} - "[n] option ".
+     */
     private String optionString(int value, String option) {
         return "[" + value + "] " + option + " ";
     }
 
+    /**
+     * Method optionString creates a string with the list of options available and the number associated with each.
+     *
+     * @param values of type {@code SortedSet}<{@code Integer}> - set of numbers associated with each option.
+     * @param option of type {@code String} - text string of the options.
+     * @return {@code String} - <br>"[n1] option<br>  [n2] option...".
+     */
     private String optionString(SortedSet<Integer> values, String option) {
         int start, end, temp;
         StringBuilder s = new StringBuilder();
@@ -118,6 +154,17 @@ public class ViewCli extends AbstractView implements ViewForCharacterCli {
         return s.toString();
     }
 
+    /**
+     * Method getIntInput parses the int input from the {@link #getIntInput(String, boolean)} method and checks if it is contained in the
+     * option values allowed.
+     *
+     * @param optionValues of type {@code Set}<{@code Integer}> - set of allowed numbers associated with each option.
+     * @param message of type {@code String} - text string of the message to print.
+     * @param canBeStopped of type {@code boolean} - boolean to check if the method can be stopped before user inputs all the
+     *                                               required info.
+     * @return {@code int} - user's input.
+     * @throws SkipCommandException if the method ends and the user's input must be skipped (input not repeated and not ready).
+     */
     private int getIntInput(Set<Integer> optionValues, String message, boolean canBeStopped) throws SkipCommandException {
         if (optionValues.isEmpty()) throw new SkipCommandException();
         int option = getIntInput(message, canBeStopped);
@@ -129,6 +176,17 @@ public class ViewCli extends AbstractView implements ViewForCharacterCli {
         return option;
     }
 
+    /**
+     * Method getIntInput lists all the available options and parses the int input from
+     * the {@link #getIntInput(int, int, String, boolean)} method.
+     *
+     * @param options of type {@code Object[]} - array of options available.
+     * @param message of type {@code String} - text string of the message to print.
+     * @param canBeStopped of type {@code boolean} - boolean to check if the method can be stopped before user inputs all the
+     *                                               required info.
+     * @return {@code int} - user's input.
+     * @throws SkipCommandException if the method ends and the user's input must be skipped (input not repeated and not ready).
+     */
     public int getIntInput(Object[] options, String message, boolean canBeStopped) throws SkipCommandException {
         StringBuilder s = new StringBuilder("--OPTIONS--\n");
         for (byte i = 0; i < options.length; i++)
@@ -137,6 +195,17 @@ public class ViewCli extends AbstractView implements ViewForCharacterCli {
         return getIntInput(0, options.length - 1, s.toString(), canBeStopped);
     }
 
+    /**
+     * Method getIntInput lists the range of available input values and parses the int input from the {@link #getIntInput(String, boolean)} method.
+     *
+     * @param min of type {@code int} - minimum input value allowed.
+     * @param max of type {@code int} - maximum input value allowed.
+     * @param message of type {@code String} - text string of the message to print.
+     * @param canBeStopped of type {@code boolean} - boolean to check if the method can be stopped before user inputs all the
+     *                                               required info.
+     * @return {@code int} - user's input.
+     * @throws SkipCommandException if the method ends and the user's input must be skipped (input not repeated and not ready).
+     */
     public int getIntInput(int min, int max, String message, boolean canBeStopped) throws SkipCommandException {
         message += " (from " + min + " to " + max + ")";
         int ret = getIntInput(message, canBeStopped);
@@ -148,6 +217,15 @@ public class ViewCli extends AbstractView implements ViewForCharacterCli {
         return ret;
     }
 
+    /**
+     * Method getIntInput requests a single input and parses it from the {@link #getInput} method.
+     *
+     * @param message of type {@code String} - text string of the message to print.
+     * @param canBeStopped of type {@code boolean} - boolean to check if the method can be stopped before user inputs all the
+     *                                               required info.
+     * @return {@code int} - user's input.
+     * @throws SkipCommandException if the method ends and the user's input must be skipped (input not repeated and not ready).
+     */
     //     Message is the string printed before asking the input
     public int getIntInput(String message, boolean canBeStopped) throws SkipCommandException {
         message += ": ";
@@ -166,6 +244,14 @@ public class ViewCli extends AbstractView implements ViewForCharacterCli {
         return ret;
     }
 
+    /**
+     * Method getIpAddressInput requests an IP address and parses it from the {@link #getStringInput(String, int, boolean)} method.
+     *
+     * @param canBeStopped of type {@code boolean} - boolean to check if the method can be stopped before user inputs all the
+     *                                               required info.
+     * @return {@code byte[]} - array of bytes equivalent to the IP address obtained by the user's input.
+     * @throws SkipCommandException if the method ends and the user's input must be skipped (input not repeated and not ready).
+     */
     public byte[] getIpAddressInput(boolean canBeStopped) throws SkipCommandException {
         String input = getStringInput("Select server IP", 15, canBeStopped);
         byte[] ret = IPAddress.getIpFromString(input);
@@ -178,7 +264,14 @@ public class ViewCli extends AbstractView implements ViewForCharacterCli {
         return ret;
     }
 
-
+    /**
+     * Method getColorInput requests a student color and parses it from the {@link #getIntInput(int, int, String, boolean)} method.
+     *
+     * @param canBeStopped of type {@code Boolean} - boolean to check if the method can be stopped before the user inputs all the
+     *                     required info.
+     * @return {@link Color} - student color obtained by the user's input.
+     * @throws SkipCommandException if the method ends and the user's input must be skipped (input not repeated and not ready).
+     */
     @Override
     public Color getColorInput(boolean canBeStopped) throws SkipCommandException {
         StringBuilder message = new StringBuilder("--COLORS--\n");
@@ -188,10 +281,25 @@ public class ViewCli extends AbstractView implements ViewForCharacterCli {
         return Color.values()[getIntInput(1, Color.values().length, message.toString(), canBeStopped) - 1];
     }
 
+    /**
+     * Method getMatchTypeInput returns the match type, parsing its number of players from the {@link #getIntInput(int, int, String, boolean)} method and the
+     * type of game (normal/expert) from the {@link #getBooleanInput(String, boolean)} method.
+     *
+     * @param canBeStopped of type {@code Boolean} - boolean to check if the method can be stopped before the user inputs all the
+     *                     required info.
+     * @return {@link MatchType} - match type obtained by the user's input.
+     * @throws SkipCommandException if the method ends and the user's input must be skipped (input not repeated and not ready).
+     */
     public MatchType getMatchTypeInput(boolean canBeStopped) throws SkipCommandException {
         return new MatchType((byte) getIntInput(2, 4, "Select the number of players", canBeStopped), getBooleanInput("Do you want to play in expert mode?", canBeStopped));
     }
 
+    /**
+     * Method getCharacterCharToPlayInput requests a character card to play and parses its index from the {@link #getIntInput(int, int, String, boolean)} method.
+     *
+     * @return {@code byte} - index of the character card obtained by the user's input.
+     * @throws SkipCommandException if the method ends and the user's input must be skipped (input not repeated and not ready).
+     */
     public byte getCharacterCharToPlayInput() throws SkipCommandException {
         List<CharacterCardClient> characterCards = getModel().getCharacters();
         StringBuilder message = new StringBuilder("--CHARACTERS--\n");
@@ -201,6 +309,14 @@ public class ViewCli extends AbstractView implements ViewForCharacterCli {
         return (byte) (getIntInput(1, characterCards.size(), message.toString(), false) - 1);
     }
 
+    /**
+     * Method getAssistantCardToPlayInput requests an assistant card to play and parses it from the {@link #getIntInput(Set, String, boolean)} method.
+     *
+     * @param canBeStopped of type {@code Boolean} - boolean to check if the method can be stopped before the user inputs all the
+     *                     required info.
+     * @return {@link AssistantCard} - assistant card obtained by the user's input.
+     * @throws SkipCommandException if the method ends and the user's input must be skipped (input not repeated and not ready).
+     */
     public AssistantCard getAssistantCardToPlayInput(boolean canBeStopped) throws SkipCommandException {
         TreeSet<Integer> choices = new TreeSet<>();
         List<AssistantCard> assistantCards = getModel().getCurrentPlayer().getAssistantCards();
@@ -216,6 +332,15 @@ public class ViewCli extends AbstractView implements ViewForCharacterCli {
         return ret.get();
     }
 
+    /**
+     * Method getMoveStudentDestination requests a game component of destination to move a student to it, 
+     * parsing it from the {@link #getIntInput(Set, String, boolean)} method.
+     *
+     * @param canBeStopped of type {@code Boolean} - boolean to check if the method can be stopped before the user inputs all the
+     *                     required info.
+     * @return {@link GameComponentClient} - game component of destination obtained by the user's input.
+     * @throws SkipCommandException if the method ends and the user's input must be skipped (input not repeated and not ready).
+     */
     public GameComponentClient getMoveStudentDestination(boolean canBeStopped) throws SkipCommandException {
         List<GameComponentClient> validDestinations = new ArrayList<>();
 
@@ -238,6 +363,15 @@ public class ViewCli extends AbstractView implements ViewForCharacterCli {
         return validDestinations.get(index);
     }
 
+    /**
+     * Method getIslandDestination requests an island of destination and parses it from the {@link #getIntInput(Set, String, boolean)} method.
+     *
+     * @param message of type {@code String} - message that will ask the user to input data.
+     * @param canBeStopped of type {@code Boolean} - boolean to check if the method can be stopped before the user inputs all the
+     *                     required info.
+     * @return {@code int} - ID of the island of destination inputted by the user.
+     * @throws SkipCommandException if the method ends and the user's input must be skipped (input not repeated and not ready).
+     */
     @Override
     public int getIslandDestination(String message, boolean canBeStopped) throws SkipCommandException {
         List<IslandClient> islandClients = getModel().getIslands();
@@ -250,12 +384,30 @@ public class ViewCli extends AbstractView implements ViewForCharacterCli {
         return islandClients.get(index).getId();
     }
 
+    /**
+     * Method getMotherNatureMovesInput requests the number of mother nature moves and parses it from 
+     * the {@link #getIntInput(int, int, String, boolean)} method.
+     *
+     * @param canBeStopped of type {@code Boolean} - boolean to check if the method can be stopped before the user inputs all the
+     *                     required info.
+     * @return {@code byte} - number of mother nature moves obtained by the user's input.
+     * @throws SkipCommandException if the method ends and the user's input must be skipped (input not repeated and not ready).
+     */
     public byte getMotherNatureMovesInput(boolean canBeStopped) throws SkipCommandException {
         byte maxMoves = getModel().getCurrentPlayer().getPlayedCard().moves();
         if (getModel().isExtraSteps()) maxMoves += getModel().getMatchConstants().extraStep();
         return (byte) getIntInput(1, maxMoves, "How many steps do you want mother nature to move?", canBeStopped);
     }
 
+    /**
+     * Method getCloudSource requests a cloud to take the students from, parsing it from
+     * the {@link #getIntInput(Set, String, boolean)} method.
+     *
+     * @param canBeStopped of type {@code Boolean} - boolean to check if the method can be stopped before the user inputs all the
+     *                     required info.
+     * @return {@code int} - ID of the cloud inputted by the user.
+     * @throws SkipCommandException if the method ends and the user's input must be skipped (input not repeated and not ready).
+     */
     public int getCloudSource(boolean canBeStopped) throws SkipCommandException {
         List<GameComponentClient> clouds = getModel().getClouds();
         List<GameComponentClient> availableClouds = new ArrayList<>();
@@ -274,6 +426,15 @@ public class ViewCli extends AbstractView implements ViewForCharacterCli {
         return availableClouds.get(index).getId();
     }
 
+    /**
+     * Method getBooleanInput parses the boolean input (Y/N) from the {@link #getInput} method.
+     *
+     * @param message of type {@code String} - text string of the message to print.
+     * @param canBeStopped of type {@code boolean} - boolean to check if the method can be stopped before user inputs all the
+     *                                               required info.
+     * @return {@code boolean} - user's input.
+     * @throws SkipCommandException if the method ends and the user's input must be skipped (input not repeated and not ready).
+     */
     public boolean getBooleanInput(String message, boolean canBeStopped) throws SkipCommandException {
         message += " (Y/N):";
         String s = getInput(message, canBeStopped).toLowerCase();
@@ -285,6 +446,16 @@ public class ViewCli extends AbstractView implements ViewForCharacterCli {
         return s.equals("y");
     }
 
+    /**
+     * Method getStringInput parses the string input with a maximum length provided from the {@link #getInput} method.
+     *
+     * @param message of type {@code String} - text string of the message to print.
+     * @param maxLength of type {@code int} - maximum input string length.
+     * @param canBeStopped of type {@code boolean} - boolean to check if the method can be stopped before user inputs all the
+     *                                               required info.
+     * @return {@code String} - user's input.
+     * @throws SkipCommandException if the method ends and the user's input must be skipped (input not repeated and not ready).
+     */
     public String getStringInput(String message, int maxLength, boolean canBeStopped) throws SkipCommandException {
         message += ": ";
         String s = getInput(message, canBeStopped);
@@ -296,6 +467,15 @@ public class ViewCli extends AbstractView implements ViewForCharacterCli {
         return s;
     }
 
+    /**
+     * Method getLongInput parses the long input from the {@link #getInput} method.
+     *
+     * @param message of type {@code String} - text string of the message to print.
+     * @param canBeStopped of type {@code boolean} - boolean to check if the method can be stopped before user inputs all the
+     *                                               required info.
+     * @return {@code long} - user's input.
+     * @throws SkipCommandException if the method ends and the user's input must be skipped (input not repeated and not ready).
+     */
     public long getLongInput(String message, boolean canBeStopped) throws SkipCommandException {
         message += ": ";
         long ret = 0;
@@ -313,6 +493,18 @@ public class ViewCli extends AbstractView implements ViewForCharacterCli {
         return ret;
     }
 
+    /**
+     * Method getInput waits for the scanner to notify, for a change of phase, for a forced skip (connection lost of another
+     * player) or if there have been some changes and the game needs to be reprinted. <br>
+     * When one of these events occur is checks if the game must be reprinted instantly or on the next phase change. <br>
+     * Finally, it checks if the input must be repeated (input not ready or the scanner was forced to skip it), returned or skipped.
+     *
+     * @param message of type {@code String} - text string of the message to print.
+     * @param canBeStopped of type {@code boolean} - boolean to check if the method can be stopped before user inputs all the
+     *                                               required info.
+     * @return {@code String} - text string of the user's input.
+     * @throws SkipCommandException if the method ends and the user's input must be skipped (input not repeated and not ready).
+     */
     public synchronized String getInput(String message, boolean canBeStopped) throws SkipCommandException {
         boolean repeatCommand;
         do {
