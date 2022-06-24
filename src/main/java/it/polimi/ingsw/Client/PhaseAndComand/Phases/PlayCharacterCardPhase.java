@@ -38,6 +38,7 @@ public class PlayCharacterCardPhase extends ClientPhase {
         int indexOfCurrent = viewGUI.getModel().getCharacters().indexOf(current);
         //children 2 is the button to choose, 3 to undo, 4 to play
         AnchorPane singleChar = (AnchorPane) ((HBox) sceneController.getElementById("#characters")).getChildren().get(indexOfCurrent);
+        sceneController.selectNode(singleChar);
         Button play = (Button) singleChar.getChildren().get(4);
         if (current.canPlay()) {
             sceneController.enableNode(play,true);

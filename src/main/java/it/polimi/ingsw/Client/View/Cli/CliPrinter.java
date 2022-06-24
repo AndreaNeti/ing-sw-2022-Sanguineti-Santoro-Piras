@@ -153,7 +153,7 @@ public class CliPrinter implements GameClientListener {
      * Method printCloudsAndTeams creates a string that contains the clouds and the teams.
      *
      * @param clouds of type {@code ArrayList}<{@link GameComponentClient}> - list of the instances of the islands.
-     * @param teams of type {@code List}<{@link TeamClient}> - list of the instances of the teams.
+     * @param teams  of type {@code List}<{@link TeamClient}> - list of the instances of the teams.
      * @return {@code StringBuilder} - StringBuilder containing the clouds and the teams.
      */
     private StringBuilder printCloudsAndTeams(ArrayList<GameComponentClient> clouds, List<TeamClient> teams) {
@@ -468,7 +468,7 @@ public class CliPrinter implements GameClientListener {
      */
     @Override
     public void updateGameComponent(GameComponentClient gameComponent) {
-
+        view.setMustReprint(true);
     }
 
     /**

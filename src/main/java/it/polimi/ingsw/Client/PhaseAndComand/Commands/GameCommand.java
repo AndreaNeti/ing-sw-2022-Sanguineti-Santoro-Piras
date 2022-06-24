@@ -257,10 +257,12 @@ public enum GameCommand {
         public EventHandler<MouseEvent> getGUIHandler(ViewGUI viewGUI) {
             return mouseEvent -> {
                 SceneController sceneController = GuiFX.getActiveSceneController();
+                sceneController.disableEverything();
                 Node clicked = (Node) mouseEvent.getSource();
                 Color c = (Color) clicked.getProperties().get("color");
                 if (c != null) {
                     if (color == null) {
+                        sceneController.selectNode(clicked);
                         // enable all islands
                         viewGUI.enableIslands(GameCommand.MOVE_STUDENT.getGUIHandler(viewGUI));
                         //lunchHall is the third children
@@ -305,7 +307,10 @@ public enum GameCommand {
                 viewCli.setCurrentCharacterCard(index);
                 viewCli.sendToServer(new ChooseCharacter((byte) chosenCharacter.getCharId(), chosenCharacter.toString()));
                 viewCli.setPhaseInView(GamePhase.PLAY_CH_CARD_PHASE, false, false);
-            } else viewCli.addMessage("You don't have enough coins to play this card");
+            } else {
+                viewCli.addMessage("You don't have enough coins to play this card");
+                viewCli.goToOldPhase();
+            }
         }
 
         @Override
@@ -318,7 +323,6 @@ public enum GameCommand {
                 CharacterCardClient chosenCharacter = viewGUI.getModel().getCharacters().get(index);
                 if (chosenCharacter.getCost() <= viewGUI.getModel().getCoinsPlayer((byte) viewGUI.getModel().getCurrentPlayer().getWizard().ordinal())) {
                     viewGUI.setCurrentCharacterCard(index);
-                    singleChar.getStyleClass().add("selected");
                     viewGUI.sendToServer(new ChooseCharacter((byte) chosenCharacter.getCharId(), chosenCharacter.toString()));
                     viewGUI.setPhaseInView(GamePhase.PLAY_CH_CARD_PHASE, false, false);
                 } else viewGUI.addMessage("You don't have enough coins to play this card");
@@ -399,7 +403,6 @@ public enum GameCommand {
                     viewGUI.unsetCurrentCharacterCard();
 
                     AnchorPane singleChar = (AnchorPane) ((Node) mouseEvent.getSource()).getParent();
-                    singleChar.getStyleClass().remove("selected");
                     singleChar.getChildren().get(4).setVisible(false);
                     singleChar.getChildren().get(3).setVisible(false);
                 }
@@ -529,11 +532,11 @@ public enum GameCommand {
                     viewGUI.unsetCurrentCharacterCard();
 
                     AnchorPane singleChar = (AnchorPane) ((Node) mouseEvent.getSource()).getParent();
-                    singleChar.getStyleClass().remove("selected");
                     singleChar.getChildren().get(4).setVisible(false);
                     singleChar.getChildren().get(3).setVisible(false);
                 }
                 viewGUI.goToOldPhase();
+                System.out.println(viewGUI.getCurrentPhase());
             };
         }
 
@@ -548,7 +551,7 @@ public enum GameCommand {
         }
     },
     /**
-     * UNDO GameCommand is used by the client to quit the current match if the client is in one or the application.
+     * QUIT GameCommand is used by the client to quit the current match if the client is in one or the application.
      */
     QUIT() {
         @Override

@@ -54,6 +54,7 @@ public class BoardController implements SceneController {
     public HBox clouds;
     public Set<Node> clickableElement = new HashSet<>();
     public Set<Node> visibleElement = new HashSet<>();
+    public Set<Node> selectedElement = new HashSet<>();
     private final HashMap<Node, Timeline> timelines = new HashMap<>();
 
 
@@ -235,6 +236,12 @@ public class BoardController implements SceneController {
             node.setDisable(false);
         }
     }
+    @Override
+    public void selectNode(Node node) {
+        selectedElement.add(node);
+        node.getStyleClass().add("selected");
+        node.applyCss();
+    }
 
     @Override
     public void enableNode(Node node) {
@@ -267,7 +274,7 @@ public class BoardController implements SceneController {
                 timelines.put(node, timeline);
             } else {
                 // already created, play from start
-                timeline.playFromStart();
+                timeline.play();
             }
         } else {
             System.err.println("Not applied effect on " + node);
@@ -282,12 +289,19 @@ public class BoardController implements SceneController {
             node.setDisable(true);
             node.getStyleClass().remove("clickable");
             if (timeline != null) {
-                timeline.stop();
+                timeline.pause();
             }
+            node.applyCss();
         }
         for (Node node : visibleElement) {
             node.setVisible(false);
+            node.applyCss();
         }
+        for(Node node:selectedElement) {
+            node.getStyleClass().remove("selected");
+            node.applyCss();
+        }
+        selectedElement.clear();
         clickableElement.clear();
         visibleElement.clear();
     }
