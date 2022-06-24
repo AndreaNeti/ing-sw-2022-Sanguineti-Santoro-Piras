@@ -429,7 +429,7 @@ public class GameClient extends GameClientListened implements GameClientView {
     }
 
     /**
-     * Method setCurrentCharacterCard updates the character card currently being played.
+     * Method setCurrentCharacterCard updates the character card currently being played, based on the index provided.
      *
      * @param indexCharacter of type {@code int} - index of the new character card being played.
      */
