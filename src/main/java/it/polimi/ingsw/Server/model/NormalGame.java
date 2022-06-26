@@ -154,10 +154,8 @@ public class NormalGame implements Game {
             gameDelta.addDeletedIslands(islandAfter);
 
         }
-        if (islands.size() <= matchConstants.minIslands()) {
-            gameDelta.send();
+        if (islands.size() <= matchConstants.minIslands())
             throw new EndGameException(true);
-        }
     }
 
     /**
@@ -359,6 +357,7 @@ public class NormalGame implements Game {
             gameDelta.setNewMotherNaturePosition(motherNaturePosition);
             calculateInfluence(islands.get(motherNaturePosition));
         } finally {
+            // TODO move all send calls in a single place
             gameDelta.send();
         }
     }
