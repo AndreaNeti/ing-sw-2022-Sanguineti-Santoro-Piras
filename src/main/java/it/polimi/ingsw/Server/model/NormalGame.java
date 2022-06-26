@@ -26,7 +26,6 @@ import java.util.List;
  * respective players. <br>
  * Most functions add the updated info of the game to the Game Delta, which is then sent to the
  * clients to inform them about the changes happening in the game.
- *
  */
 public class NormalGame implements Game {
     private final GameDelta gameDelta;
@@ -46,7 +45,7 @@ public class NormalGame implements Game {
     /**
      * Constructor NormalGame creates a new NormalGame instance.
      *
-     * @param teamList of type {@code ArrayList}<{@link Team}> - list of the instances of team that are playing in the game.
+     * @param teamList       of type {@code ArrayList}<{@link Team}> - list of the instances of team that are playing in the game.
      * @param matchConstants of type {@link MatchConstants} - match constant of the game, based on its type.
      */
     public NormalGame(ArrayList<Team> teamList, MatchConstants matchConstants) {
@@ -131,10 +130,11 @@ public class NormalGame implements Game {
             island.merge(islandBefore);
             islands.remove(islandBefore);
 
-            if (islandBeforeIndex < motherNaturePosition) {
-                motherNaturePosition--;
+            if (islandBeforeIndex < islandAfterIndex)
                 islandAfterIndex--;
-            }
+
+            if (islandBeforeIndex < motherNaturePosition)
+                motherNaturePosition--;
 
             // add to game delta
             gameDelta.setNewMotherNaturePosition(motherNaturePosition);
@@ -145,7 +145,8 @@ public class NormalGame implements Game {
             island.merge(islandAfter);
             islands.remove(islandAfter);
 
-            if (islandAfterIndex < motherNaturePosition) motherNaturePosition--;
+            if (islandAfterIndex <= motherNaturePosition)
+                motherNaturePosition = (byte) Math.floorMod(motherNaturePosition - 1, islands.size());
 
             // add to game delta
             gameDelta.setNewMotherNaturePosition(motherNaturePosition);
@@ -163,9 +164,9 @@ public class NormalGame implements Game {
      * Method drawStudents draws students from the bag to the selected game component.
      *
      * @param gameComponent of type {@link GameComponent} - the game component on which we want to put the students.
-     * @param students of type {@code byte} - the number of students to draw.
+     * @param students      of type {@code byte} - the number of students to draw.
      * @throws EndGameException if there are no more students available on the bag.
-     * @throws GameException if the game component selected is null.
+     * @throws GameException    if the game component selected is null.
      */
     protected void drawStudents(GameComponent gameComponent, byte students) throws EndGameException, GameException {
         if (gameComponent == null) throw new IllegalArgumentException("Drawing students to null gameComponent");
@@ -202,7 +203,7 @@ public class NormalGame implements Game {
      * Method playCard is used by each player to play an assistant card during the planification phase.
      *
      * @param card of type {@link AssistantCard} - the card that the player wants to play.
-     * @throws GameException if the card value is not in the permitted range of values.
+     * @throws GameException    if the card value is not in the permitted range of values.
      * @throws EndGameException if after playing the selected card there are no cards available left.
      */
     @Override
@@ -267,8 +268,8 @@ public class NormalGame implements Game {
     /**
      * Method move is used to move a student from a game component to another, using their unique ID.
      *
-     * @param color of type {@link Color} - the color of the student to move.
-     * @param idGameComponentSource of type {@code int} - the ID of the source component.
+     * @param color                      of type {@link Color} - the color of the student to move.
+     * @param idGameComponentSource      of type {@code int} - the ID of the source component.
      * @param idGameComponentDestination of type {@code int} - the ID of the target component.
      * @throws GameException if the color is null or if at least one ID is not valid or if it's not possible to move the student.
      */
@@ -296,7 +297,7 @@ public class NormalGame implements Game {
      * In case of a tie, no wizard will be put in the array.
      */
     protected void calculateProfessor() {
-        //TODO: make this function similar to notifycoins
+        //TODO: make this function similar to notify coins
         byte max;
         Player currentOwner;
         // player with the maximum number of students for the current color
@@ -343,7 +344,7 @@ public class NormalGame implements Game {
      *
      * @param moves of type {@code int} - number of steps the player want to move mother nature.
      * @throws NotAllowedException if the number of moves is bigger than the value allowed.
-     * @throws EndGameException if the number of islands left is <= 3.
+     * @throws EndGameException    if the number of islands left is <= 3.
      */
     @Override
     public void moveMotherNature(int moves) throws NotAllowedException, EndGameException {
@@ -399,7 +400,7 @@ public class NormalGame implements Game {
      * Method setIslandController updates the controller of the island, adding towers to the old controller and removing
      * them from the new one.
      *
-     * @param island of type {@link Island} - island of which we want to update the controller.
+     * @param island        of type {@link Island} - island of which we want to update the controller.
      * @param newController of type {@link HouseColor} - the new controller of the island.
      * @param oldController of type {@link HouseColor} - the old controller of the island.
      * @throws EndGameException if after removing towers from the new controller he has no towers left in his board.
