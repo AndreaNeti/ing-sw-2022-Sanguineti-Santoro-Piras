@@ -58,13 +58,15 @@ public class ExpertGame extends NormalGame implements CharacterCardGame, CoinLis
 
         characters = new ArrayList<>(matchConstants.numOfCharacterCards());
         Random rand = new Random(System.currentTimeMillis());
-        byte characterIndex = (byte) rand.nextInt(12);
+        byte characterIndex =11;//(byte) rand.nextInt(12);
         byte i = 0;
         ArrayList<Byte> selectedCharacters = new ArrayList<>(matchConstants.numOfCharacterCards());
         CharacterCard c;
+        //byte tmp = 9;
         while (i < matchConstants.numOfCharacterCards()) {
             while (selectedCharacters.contains(characterIndex)) {
                 characterIndex = (byte) rand.nextInt(12);
+                //tmp++;
             }
             c = factoryCharacter(characterIndex);
             characters.add(c);
@@ -98,7 +100,7 @@ public class ExpertGame extends NormalGame implements CharacterCardGame, CoinLis
 
 
     /**
-     * Method factoryCharacter creates an instance of one of the 12 possible character cards, based on an index.
+     * Method factoryCharacter creates an instance of one of the 12 possible character cards, based on the index provided.
      *
      * @param index of type {@code byte} - index of the CharacterCard to instantiate.
      * @return {@link CharacterCard} - instance of the CharacterCard requested.
@@ -152,25 +154,6 @@ public class ExpertGame extends NormalGame implements CharacterCardGame, CoinLis
     }
 
     /**
-     * Method move is used to move a student from a game component to another, using their unique ID.
-     * This method is overridden to send the game's info using ExpertGameDelta instead of GameDelta.
-     *
-     * @param color                    of type {@link Color} - the color of the student to move.
-     * @param gameComponentSource      of type {@code int} - the ID of the source component.
-     * @param gameComponentDestination of type {@code int} - the ID of the target component.
-     * @throws GameException if the color is null or if at least on ID is not valid or if it's not possible to move the student.
-     */
-    @Override
-    public void move(Color color, int gameComponentSource, int gameComponentDestination) throws GameException {
-        //TODO: check if this function can be removed
-        try {
-            super.move(color, gameComponentSource, gameComponentDestination);
-        } finally {
-            getGameDelta().send();
-        }
-    }
-
-    /**
      * Method calculateInfluence sets the team with the highest influence as the controller of the selected island,
      * based on the number of students present for each controlled color and on the number of towers on the island.
      * Eventual booleans set by the character card can skip or modify the influence calculation.
@@ -201,7 +184,7 @@ public class ExpertGame extends NormalGame implements CharacterCardGame, CoinLis
                 }
                 // tower influence
                 if (oldController != null && towerInfluence && t.getHouseColor() == oldController)
-                    influence += island.getNumber();
+                    influence += island.getArchipelagoSize();
 
                 // extra influence
                 if (extraInfluence && t.getPlayers().contains(getCurrentPlayer())) {
@@ -392,7 +375,6 @@ public class ExpertGame extends NormalGame implements CharacterCardGame, CoinLis
                 }
                 // remove coins to player
                 removeCoinsFromCurrentPlayer(charCost);
-                coinsLeft += charCost;
                 chosenCharacter = -1;
                 inputsCharacter.clear();
             } finally {

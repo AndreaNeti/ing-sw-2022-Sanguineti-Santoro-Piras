@@ -1,5 +1,7 @@
 package it.polimi.ingsw.Server.model;
 
+import it.polimi.ingsw.Server.controller.MatchConstants;
+import it.polimi.ingsw.Server.controller.MatchType;
 import it.polimi.ingsw.Server.model.GameComponents.Island;
 import it.polimi.ingsw.exceptions.serverExceptions.EndGameException;
 import it.polimi.ingsw.exceptions.serverExceptions.GameException;
@@ -24,7 +26,7 @@ public class Char2 implements CharacterCard {
     @Override
     public void play(CharacterCardGame game) throws GameException, EndGameException {
         int idIsland = game.getCharacterInputs().get(0);
-        if (idIsland > 2 * game.getPlayerSize() + 12 || idIsland < 2 * game.getPlayerSize())
+        if (idIsland > 2 * MatchType.MAX_PLAYERS + 12 || idIsland < 2 *MatchType.MAX_PLAYERS)
             throw new NotAllowedException("Set wrong inputs for idIsland");
         game.calculateInfluence((Island) game.getComponentById(idIsland));
     }

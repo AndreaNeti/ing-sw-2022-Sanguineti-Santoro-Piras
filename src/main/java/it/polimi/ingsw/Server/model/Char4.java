@@ -1,5 +1,6 @@
 package it.polimi.ingsw.Server.model;
 
+import it.polimi.ingsw.Server.controller.MatchType;
 import it.polimi.ingsw.Server.model.GameComponents.Island;
 import it.polimi.ingsw.exceptions.serverExceptions.GameException;
 import it.polimi.ingsw.exceptions.serverExceptions.NotAllowedException;
@@ -22,7 +23,8 @@ public class Char4 implements CharacterCard {
     @Override
     public void play(CharacterCardGame game) throws GameException {
         int idIsland = game.getCharacterInputs().get(0);
-        if (idIsland > 2 * game.getPlayerSize() + 12 || idIsland < 2 * game.getPlayerSize())
+        System.out.println(idIsland);
+        if (idIsland > 2 * MatchType.MAX_PLAYERS + 12 || idIsland < 2 * MatchType.MAX_PLAYERS)
             throw new NotAllowedException("Set wrong input for idIsland");
         Island chosenIsland = (Island) game.getComponentById(idIsland);
         game.setProhibition(chosenIsland);

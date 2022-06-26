@@ -3,6 +3,9 @@ package it.polimi.ingsw.Client;
 import it.polimi.ingsw.Client.Controller.ControllerClient;
 import it.polimi.ingsw.Client.View.Cli.ViewCli;
 
+/**
+ * AppCLI is the game's CLI application.
+ */
 public class AppCLI {
     static ViewCli view;
 

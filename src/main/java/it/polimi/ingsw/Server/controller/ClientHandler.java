@@ -49,8 +49,10 @@ public class ClientHandler implements Runnable, GameListener {
     /**
      * Method run waits for a player's command ({@link ToServerMessage}) to be received via socket connection and then executes it to
      * modify the game through the game controller. <br>
-     * This method will end only after the player sends a {@link Quit} command while not in a game, closing the socket connection and
-     * relative data streams.
+     * This method will end only after the player sends a {@link Quit} command while not in a game or if there's an error in the socket
+     * connection, closing the socket and relative data streams. <br>
+     * If there's an exception is thrown while trying to read a command and execute it, the controller will end the game if it was
+     * an {@link EndGameException}, else the error exception will be sent to the clients.
      */
     @Override
     public void run() {

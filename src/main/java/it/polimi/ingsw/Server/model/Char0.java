@@ -1,5 +1,6 @@
 package it.polimi.ingsw.Server.model;
 
+import it.polimi.ingsw.Server.controller.MatchType;
 import it.polimi.ingsw.Server.model.GameComponents.GameComponent;
 import it.polimi.ingsw.Util.Color;
 import it.polimi.ingsw.exceptions.serverExceptions.EndGameException;
@@ -31,8 +32,8 @@ public class Char0 extends GameComponent implements CharacterCard {
      * the bag to the card.
      *
      * @param game of type {@link CharacterCardGame} - the game instance that the card modifies with its effect.
-     * @throws GameException if the student's color or island's id are not valid or there is not a student of the
-     * selected color on the card.
+     * @throws GameException    if the student's color or island's id are not valid or there is not a student of the
+     *                          selected color on the card.
      * @throws EndGameException if after drawing a student, the bag has none left.
      */
     @Override
@@ -40,10 +41,9 @@ public class Char0 extends GameComponent implements CharacterCard {
         List<Integer> inputs = game.getCharacterInputs();
         // input 0 is the color chosen, input 1 is the island id chosen
         int color = inputs.get(0), idIsland = inputs.get(1);
-        //TODO Check this idIsland
         if (color < 0 || color >= Color.values().length)
             throw new NotAllowedException("Set wrong inputs for color");
-        if (idIsland > 2 * game.getPlayerSize() + 12 || idIsland < 2 * game.getPlayerSize())
+        if (idIsland > 2 * MatchType.MAX_PLAYERS + 12 || idIsland < 2 * MatchType.MAX_PLAYERS)
             throw new NotAllowedException("Set wrong input for id Island");
         GameComponent islandDestination = game.getComponentById(idIsland);
         this.moveStudents(Color.values()[color], (byte) 1, islandDestination);

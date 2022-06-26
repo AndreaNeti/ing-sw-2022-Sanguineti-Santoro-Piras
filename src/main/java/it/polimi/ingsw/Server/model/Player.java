@@ -59,7 +59,7 @@ public class Player implements Serializable {
 
 
     /**
-     * Method useCard is used by the player to play an assistant card during the planification phase.
+     * Method useCard is used by the player to play an assistant card, removing it from the list of available ones.
      *
      * @param card of type {@link AssistantCard} - the card the player wants to play.
      * @throws NotAllowedException if there are no more cards left or the chosen card is not valid.
@@ -78,9 +78,9 @@ public class Player implements Serializable {
     }
 
     /**
-     * Method getPlayedCard returns the assistant card chosen by the player during the current turn.
+     * Method getPlayedCard returns the assistant card used by the player during the ongoing turn.
      *
-     * @return {@link AssistantCard} - card chosen by the player.
+     * @return {@link AssistantCard} - instance of the played assistant card.
      */
     public AssistantCard getPlayedCard() {
         return playedCard;
@@ -167,7 +167,7 @@ public class Player implements Serializable {
         // only checks nickname, it's unique
         return this.toString().equals(player.toString());
     }
-
+    //TODO: redundant functions?
     /**
      * Method toString returns the nickname of the player.
      *

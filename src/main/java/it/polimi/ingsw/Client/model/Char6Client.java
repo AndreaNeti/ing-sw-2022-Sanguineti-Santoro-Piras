@@ -1,16 +1,29 @@
 package it.polimi.ingsw.Client.model;
 
+import it.polimi.ingsw.Client.PhaseAndComand.Commands.GameCommand;
 import it.polimi.ingsw.Client.View.Cli.ViewForCharacterCli;
+import it.polimi.ingsw.Client.View.Gui.ViewGUI;
+import it.polimi.ingsw.Server.model.Char6;
+import it.polimi.ingsw.Util.Color;
 import it.polimi.ingsw.exceptions.clientExceptions.SkipCommandException;
+import javafx.event.EventHandler;
+import javafx.scene.Node;
+import javafx.scene.input.MouseEvent;
 
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Char6Client class represents the character card on the client side and corresponds to the server class {@link Char6}.
+ */
 public class Char6Client extends CharacterCardClientWithStudents {
     private final List<Integer> inputs;
 
     private boolean used;
 
+    /**
+     * Constructor Char6Client creates a new instance of Char6Client.
+     */
     public Char6Client() {
         super(-11);
         inputs = new ArrayList<>();
@@ -32,6 +45,23 @@ public class Char6Client extends CharacterCardClientWithStudents {
         inputs.add(view.getColorInput(false).ordinal());
         System.out.println("Select the color of the student from your entrance");
         inputs.add(view.getColorInput(false).ordinal());
+    }
+
+    @Override
+    public void setHandler(ViewGUI viewGUI) {
+        if (inputs.size() %2== 0 && !isFull())
+            viewGUI.enableStudentsOnCharacter(getId(), setInput(viewGUI));
+        else if (inputs.size() %2== 1 && !isFull())
+            viewGUI.enableEntrance(setInput(viewGUI));
+    }
+
+    private EventHandler<MouseEvent> setInput(ViewGUI viewGUI) {
+        return mouseEvent -> {
+            Node clicked = (Node) mouseEvent.getSource();
+            inputs.add(((Color) clicked.getProperties().get("color")).ordinal());
+            System.out.println("input for jester :" + inputs);
+            viewGUI.repeatPhase(false);
+        };
     }
 
     @Override
@@ -64,6 +94,11 @@ public class Char6Client extends CharacterCardClientWithStudents {
         return 6;
     }
 
+    /**
+     * Method toString returns the name of the character card.
+     *
+     * @return {@code String} - character card name.
+     */
     @Override
     public String toString() {
         return "Jester";
