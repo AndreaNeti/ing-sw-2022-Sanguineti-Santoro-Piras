@@ -229,7 +229,7 @@ public class ControllerClient extends GameClientListened {
      * Method startGame creates starts the game, creating a client game instance for the client's view to observe.
      */
     private void startGame() {
-        model = new GameClient(teamsClient, myWizard, matchType);
+        model = new GameClient(teamsClient, myWizard, matchType, matchConstants);
         //model.addListener(this);
         abstractView.setModel(model);
     }

@@ -52,12 +52,12 @@ public class GameClient extends GameClientListened implements GameClientView {
      * @param myWizard    of type {@link Wizard} - wizard associated with the client's player.
      * @param matchType   of type {@link MatchType} - type of the game that the client decided to join.
      */
-    public GameClient(ArrayList<TeamClient> teamsClient, Wizard myWizard, MatchType matchType) {
+    public GameClient(ArrayList<TeamClient> teamsClient, Wizard myWizard, MatchType matchType, MatchConstants constants) {
         this.myWizard = myWizard;
         this.professors = new Wizard[Color.values().length];
         Arrays.fill(professors, null);
         this.matchType = matchType;
-        this.matchConstants = Server.getMatchConstants(matchType);
+        this.matchConstants = constants;
         islands = new ArrayList<>(12);
         clouds = new ArrayList<>(matchType.nPlayers());
         for (int i = 1; i <= matchType.nPlayers(); i++) {
