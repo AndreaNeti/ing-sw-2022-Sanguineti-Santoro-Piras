@@ -572,7 +572,7 @@ public class BoardController implements SceneController {
     }
 
     @Override
-    public void updateCoins(Byte coins) {
+    public void updateCoins(Integer coins) {
         Platform.runLater(() -> {
             //coins are in coinsBox
             HBox box = (HBox) getElementById("#coinsBox");
@@ -581,7 +581,7 @@ public class BoardController implements SceneController {
         });
     }
 
-    public void updateCoins(Wizard wizard, Byte coins) {
+    public void updateCoins(Wizard wizard, Integer coins) {
         Platform.runLater(() -> {
             // coins are the 7 children of the board
             AnchorPane board = (AnchorPane) getElementById("#" + wizard);

@@ -10,8 +10,8 @@ public interface CoinListener {
     /**
      * Method notifyCoins is used to add coins to the current player, removing or adding them from the game.
      *
-     * @param coins of type {@code byte} - number of coins to add to the current player.
+     * @param coins of type {@code int} - number of coins to add to the current player.
      * @throws NotEnoughCoinsException if there are no more coins left in the game.
      */
-    void notifyCoins(byte coins) throws NotEnoughCoinsException;
+    void notifyCoins(int coins) throws NotEnoughCoinsException;
 }

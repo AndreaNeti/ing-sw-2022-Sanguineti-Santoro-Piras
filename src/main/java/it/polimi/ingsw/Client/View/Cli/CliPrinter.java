@@ -406,7 +406,7 @@ public class CliPrinter implements GameClientListener {
 
             boardsCharChatPrint.append(players.get(i).getWizard()).append("\u001b[0m");
             if (expert) {
-                byte c = game.getCoinsPlayer((byte) i);
+                int c = game.getCoinsPlayer((byte) i);
                 String coins = c < 10 ? "0" + c : String.valueOf(c);
                 boardsCharChatPrint.append("\u001b[33;1m \u25cb\u001b[0m x ").append(coins).append(spacing2);
             } else boardsCharChatPrint.append("       ").append(spacing2);
@@ -573,10 +573,10 @@ public class CliPrinter implements GameClientListener {
     /**
      * Method updateCoins not used for CliPrinter.
      *
-     * @param coins of type {@code Byte} - updated amount of coins left in the game.
+     * @param coins of type {@code Integer} - updated amount of coins left in the game.
      */
     @Override
-    public void updateCoins(Byte coins) {
+    public void updateCoins(Integer coins) {
 
     }
 
@@ -584,10 +584,10 @@ public class CliPrinter implements GameClientListener {
      * Method updateCoins not used for CliPrinter.
      *
      * @param wizard of type {@link Wizard} - wizard associated with the updated player.
-     * @param coins  of type {@code Byte} - updated amount of coins owned by the player.
+     * @param coins  of type {@code Integer} - updated amount of coins owned by the player.
      */
     @Override
-    public void updateCoins(Wizard wizard, Byte coins) {
+    public void updateCoins(Wizard wizard, Integer coins) {
 
     }
 

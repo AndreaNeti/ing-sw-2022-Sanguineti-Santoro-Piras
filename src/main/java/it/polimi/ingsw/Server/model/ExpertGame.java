@@ -27,11 +27,11 @@ import java.util.Random;
  * clients to inform them about the changes happening in the game.
  */
 public class ExpertGame extends NormalGame implements CharacterCardGame, CoinListener, Serializable {
-    private final byte[] coinsPlayer;
+    private final int[] coinsPlayer;
     private final List<CharacterCard> characters;
     private final List<Integer> inputsCharacter;
     private final boolean[] playedCharacters;
-    private byte coinsLeft;
+    private int coinsLeft;
     private boolean extraInfluence; //default false
     private boolean towerInfluence;// default true
     private boolean extraSteps; //default false
@@ -53,7 +53,7 @@ public class ExpertGame extends NormalGame implements CharacterCardGame, CoinLis
         this.matchConstants = matchConstants;
         byte numberOfPlayers = super.getPlayerSize();
         this.coinsLeft = (byte) (matchConstants.totalCoins() - numberOfPlayers * matchConstants.initialPlayerCoins());
-        this.coinsPlayer = new byte[numberOfPlayers];
+        this.coinsPlayer = new int[numberOfPlayers];
         Arrays.fill(coinsPlayer, (byte) matchConstants.initialPlayerCoins());
 
         characters = new ArrayList<>(matchConstants.numOfCharacterCards());
@@ -62,8 +62,11 @@ public class ExpertGame extends NormalGame implements CharacterCardGame, CoinLis
         byte i = 0;
         ArrayList<Byte> selectedCharacters = new ArrayList<>(matchConstants.numOfCharacterCards());
         CharacterCard c;
-        //byte tmp = 9;
-        while (i < matchConstants.numOfCharacterCards()) {
+
+        characters.add(factoryCharacter((byte) 2));
+        characters.add(factoryCharacter((byte) 4));
+        characters.add(factoryCharacter((byte) 11));
+        /*while (i < matchConstants.numOfCharacterCards()) {
             while (selectedCharacters.contains(characterIndex)) {
                 characterIndex = (byte) rand.nextInt(12);
                 //tmp++;
@@ -72,7 +75,7 @@ public class ExpertGame extends NormalGame implements CharacterCardGame, CoinLis
             characters.add(c);
             selectedCharacters.add(c.getCharId());
             i++;
-        }
+        }*/
         // add Coin Listener
         for (Player p : getPlayers()) {
             p.getLunchHall().addCoinListener(this);
@@ -306,11 +309,11 @@ public class ExpertGame extends NormalGame implements CharacterCardGame, CoinLis
     /**
      * Method notifyCoins is used to add coins to the current player, removing or adding them from the game.
      *
-     * @param coins of type {@code byte} - number of coins to add to the current player.
+     * @param coins of type {@code int} - number of coins to add to the current player.
      * @throws NotEnoughCoinsException if there are no more coins left in the game.
      */
     @Override
-    public void notifyCoins(byte coins) throws NotEnoughCoinsException {
+    public void notifyCoins(int coins) throws NotEnoughCoinsException {
         if (coinsLeft == 0) throw new NotEnoughCoinsException();
         else if (coinsLeft < coins) coins = coinsLeft;
         byte playerIndex = getCurrentPlayerIndex();
@@ -325,10 +328,10 @@ public class ExpertGame extends NormalGame implements CharacterCardGame, CoinLis
     /**
      * Method notifyCoins is used to remove coins from the current player, adding them from the game.
      *
-     * @param coins of type {@code byte} - number of coins to remove from the current player.
+     * @param coins of type {@code int} - number of coins to remove from the current player.
      * @throws NotEnoughCoinsException if the player has fewer coins than the amount to remove.
      */
-    private void removeCoinsFromCurrentPlayer(byte coins) throws NotEnoughCoinsException {
+    private void removeCoinsFromCurrentPlayer(int coins) throws NotEnoughCoinsException {
         if (coins < 0)
             throw new IllegalArgumentException("Cannot remove negative amount of coins to the current player");
         // player's wizard is its index inside the list
@@ -542,7 +545,7 @@ public class ExpertGame extends NormalGame implements CharacterCardGame, CoinLis
      * @param playerIndex of type {@code byte} - index of the player.
      * @return {@code byte} - number of coins owned by the selected player.
      */
-    protected byte getCoinsPlayer(int playerIndex) {
+    protected int getCoinsPlayer(int playerIndex) {
         if (playerIndex < 0 || playerIndex >= getPlayerSize())
             throw new IllegalArgumentException("Not a valid player index");
         return coinsPlayer[playerIndex];

@@ -289,7 +289,7 @@ public class Controller {
         } catch (EndGameException e) {
             handleError(e);
         }
-        characterCardPlayed = true;
+        // characterCardPlayed = true;
     }
 
     /**

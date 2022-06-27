@@ -15,8 +15,9 @@ public class ExpertGameDelta extends GameDelta {
     //index of the character, id of the character
     private List<Byte> characters;
     // player id, new playerCoinsLeft
-    private Map<Byte, Byte> updatedCoinPlayer;
-    private Byte newCoinsLeft, newProhibitionsLeft;
+    private Map<Byte, Integer> updatedCoinPlayer;
+    private Byte newProhibitionsLeft;
+    private Integer newCoinsLeft;
     private Boolean extraSteps;
     private Color ignoredColorInfluence;
     //charId, used
@@ -61,10 +62,10 @@ public class ExpertGameDelta extends GameDelta {
      * Method setUpdatedCoinPlayer adds the player and their new amount of coins to the expert game delta.
      *
      * @param playerId     of type {@code byte} - ID of the player.
-     * @param newCoinsLeft of type {@code byte} - new amount of coins for the player.
+     * @param newCoinsLeft of type {@code int} - new amount of coins for the player.
      */
     @Override
-    public void setUpdatedCoinPlayer(byte playerId, byte newCoinsLeft) {
+    public void setUpdatedCoinPlayer(byte playerId, int newCoinsLeft) {
         if (updatedCoinPlayer == null)
             updatedCoinPlayer = new HashMap<>();
         updatedCoinPlayer.put(playerId, newCoinsLeft);
@@ -86,10 +87,10 @@ public class ExpertGameDelta extends GameDelta {
     /**
      * Method setNewCoinsLeft adds the new amount of coins left in the game to the expert game delta.
      *
-     * @param newCoinsLeft of type {@code byte} - new amount of coins left in the game.
+     * @param newCoinsLeft of type {@code int} - new amount of coins left in the game.
      */
     @Override
-    public void setNewCoinsLeft(byte newCoinsLeft) {
+    public void setNewCoinsLeft(int newCoinsLeft) {
         this.newCoinsLeft = newCoinsLeft;
     }
 
@@ -142,7 +143,7 @@ public class ExpertGameDelta extends GameDelta {
      * @return {@code Map}<{@code Byte, Byte}> - map of all the players with their new coins left.
      */
     @Override
-    public Map<Byte, Byte> getUpdatedCoinPlayer() {
+    public Map<Byte, Integer> getUpdatedCoinPlayer() {
         if (updatedCoinPlayer == null) return Collections.emptyMap();
         return updatedCoinPlayer;
     }
@@ -162,10 +163,10 @@ public class ExpertGameDelta extends GameDelta {
     /**
      * Method getNewCoinsLeft returns the new amounts of coins left in the game.
      *
-     * @return {@code Optional}<{@code Byte}> - if present the new amount of coins left in the game, Empty Optional else.
+     * @return {@code Optional}<{@code Integer}> - if present the new amount of coins left in the game, Empty Optional else.
      */
     @Override
-    public Optional<Byte> getNewCoinsLeft() {
+    public Optional<Integer> getNewCoinsLeft() {
         return Optional.ofNullable(newCoinsLeft);
     }
 

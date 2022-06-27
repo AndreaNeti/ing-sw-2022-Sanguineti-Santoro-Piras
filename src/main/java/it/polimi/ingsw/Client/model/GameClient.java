@@ -39,8 +39,9 @@ public class GameClient extends GameClientListened implements GameClientView {
     private CharacterCardClient currentCharacterCard;
     //TODO: maybe change these names
     // player id, new playerCoinsLeft
-    private final Map<Byte, Byte> updatedCoinPlayer;
-    private byte newCoinsLeft, newProhibitionsLeft;
+    private final Map<Byte, Integer> updatedCoinPlayer;
+    private byte newProhibitionsLeft;
+    private int newCoinsLeft;
     private boolean extraSteps;
     private Color ignoredColorInfluence;
 
@@ -71,7 +72,7 @@ public class GameClient extends GameClientListened implements GameClientView {
         this.charactersWithStudents = new ArrayList<>();
         this.updatedCoinPlayer = new HashMap<>();
         for (byte i = 0; i < matchType.nPlayers(); i++) {
-            updatedCoinPlayer.put(i, (byte) matchConstants.initialPlayerCoins());
+            updatedCoinPlayer.put(i, matchConstants.initialPlayerCoins());
         }
     }
 
@@ -274,16 +275,16 @@ public class GameClient extends GameClientListened implements GameClientView {
     }
 
     @Override
-    public Byte getNewCoinsLeft() {
+    public Integer getNewCoinsLeft() {
         return newCoinsLeft;
     }
 
     /**
      * Method setNewCoinsLeft updates the amount of coins available in the game.
      *
-     * @param newCoinsLeft of type {@code Byte} - new amount of coins available.
+     * @param newCoinsLeft of type {@code Integer} - new amount of coins available.
      */
-    public void setNewCoinsLeft(Byte newCoinsLeft) {
+    public void setNewCoinsLeft(Integer newCoinsLeft) {
         this.newCoinsLeft = newCoinsLeft;
         notifyCoins(newCoinsLeft);
     }
@@ -338,15 +339,15 @@ public class GameClient extends GameClientListened implements GameClientView {
      * Method setUpdatedCoinPlayer updates the amount of coins of the player with the player index provided.
      *
      * @param playerIndex of type {@code byte} - index of the player of which we want to update the coins.
-     * @param newCoins    of type {@code byte} - new amount of coins.
+     * @param newCoins    of type {@code int} - new amount of coins.
      */
-    public void setUpdatedCoinPlayer(byte playerIndex, byte newCoins) {
+    public void setUpdatedCoinPlayer(byte playerIndex, int newCoins) {
         this.updatedCoinPlayer.put(playerIndex, newCoins);
         notifyCoins(getPlayers().get(playerIndex).getWizard(), newCoins);
     }
 
     @Override
-    public byte getCoinsPlayer(byte wizardIndex) {
+    public int getCoinsPlayer(byte wizardIndex) {
         return updatedCoinPlayer.get(wizardIndex);
     }
 

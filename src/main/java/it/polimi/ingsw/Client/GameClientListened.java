@@ -96,13 +96,13 @@ public abstract class GameClientListened {
         listeners.remove(listener);
     }
 
-    public void notifyCoins(Byte coins) {
+    public void notifyCoins(Integer coins) {
         for (GameClientListener listener : listeners) {
             listener.updateCoins(coins);
         }
     }
 
-    public void notifyCoins(Wizard wizard, Byte coins) {
+    public void notifyCoins(Wizard wizard, Integer coins) {
         for (GameClientListener listener : listeners) {
             listener.updateCoins(wizard, coins);
         }

@@ -135,17 +135,17 @@ public class GameDelta implements Serializable {
      * Method setUpdatedCoinPlayer not used for GameDelta.
      *
      * @param playerId       of type {@code byte} - ID of the player.
-     * @param newCoinsPlayer of type {@code byte} - new amount of coins for the player.
+     * @param newCoinsPlayer of type {@code int} - new amount of coins for the player.
      */
-    public void setUpdatedCoinPlayer(byte playerId, byte newCoinsPlayer) {
+    public void setUpdatedCoinPlayer(byte playerId, int newCoinsPlayer) {
     }
 
     /**
      * Method setNewCoinsLeft not used for GameDelta.
      *
-     * @param newCoinsLeft of type {@code byte} - new amount of coins left in the game.
+     * @param newCoinsLeft of type {@code int} - new amount of coins left in the game.
      */
-    public void setNewCoinsLeft(byte newCoinsLeft) {
+    public void setNewCoinsLeft(int newCoinsLeft) {
     }
 
     /**
@@ -193,18 +193,18 @@ public class GameDelta implements Serializable {
     /**
      * Method getUpdatedCoinPlayer not used for GameDelta.
      *
-     * @return {@code Map}<{@code Byte, Byte}> - Empty Map.
+     * @return {@code Map}<{@code Byte, Integer}> - Empty Map.
      */
-    public Map<Byte, Byte> getUpdatedCoinPlayer() {
+    public Map<Byte, Integer> getUpdatedCoinPlayer() {
         return Collections.emptyMap();
     }
 
     /**
      * Method getNewCoinsLeft not used for GameDelta.
      *
-     * @return {@code Optional}<{@code Byte}> - Empty Optional.
+     * @return {@code Optional}<{@code Integer}> - Empty Optional.
      */
-    public Optional<Byte> getNewCoinsLeft() {
+    public Optional<Integer> getNewCoinsLeft() {
         return Optional.empty();
     }
 

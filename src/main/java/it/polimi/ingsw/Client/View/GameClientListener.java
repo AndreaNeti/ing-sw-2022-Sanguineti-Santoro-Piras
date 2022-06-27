@@ -100,17 +100,17 @@ public interface GameClientListener {
     /**
      * Method updateCoins updates the amount of coins left in the game.
      *
-     * @param coins of type {@code Byte} - updated amount of coins left in the game.
+     * @param coins of type {@code Integer} - updated amount of coins left in the game.
      */
-    void updateCoins(Byte coins);
+    void updateCoins(Integer coins);
 
     /**
      * Method updateCoins updates the amount of coins owned by a player.
      *
      * @param wizard of type {@link Wizard} - wizard associated with the updated player.
-     * @param coins of type {@code Byte} - updated amount of coins owned by the player.
+     * @param coins of type {@code Integer} - updated amount of coins owned by the player.
      */
-    void updateCoins(Wizard wizard, Byte coins);
+    void updateCoins(Wizard wizard, Integer coins);
 
     /**
      * Method setWinners updates the winners of the game.

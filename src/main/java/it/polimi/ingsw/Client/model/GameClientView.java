@@ -104,9 +104,9 @@ public interface GameClientView {
      * Method getCoinsPlayer returns the amount of coins of the player with the player index provided.
      *
      * @param wizardIndex of type {@code byte} - index of the player of which we want to get the coins.
-     * @return {@code byte} - amount of coins owned by the selected player.
+     * @return {@code int} - amount of coins owned by the selected player.
      */
-    byte getCoinsPlayer(byte wizardIndex);
+    int getCoinsPlayer(byte wizardIndex);
 
     /**
      * Method getMatchType returns the match type of the game.
@@ -147,9 +147,9 @@ public interface GameClientView {
     /**
      * Method getNewCoinsLeft returns the amount of coins available in the game.
      *
-     * @return {@code Byte} - amount of coins available in the game.
+     * @return {@code Integer} - amount of coins available in the game.
      */
-    Byte getNewCoinsLeft();
+    Integer getNewCoinsLeft();
 
     /**
      * Method addListener adds to the game a new client listener, to be notified when changes occur in the game.

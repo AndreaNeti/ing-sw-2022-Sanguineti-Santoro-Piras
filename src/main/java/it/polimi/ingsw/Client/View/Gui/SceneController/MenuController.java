@@ -190,12 +190,12 @@ public class MenuController implements SceneController {
     }
 
     @Override
-    public void updateCoins(Byte coins) {
+    public void updateCoins(Integer coins) {
 
     }
 
     @Override
-    public void updateCoins(Wizard wizard, Byte coins) {
+    public void updateCoins(Wizard wizard, Integer coins) {
 
     }
 
