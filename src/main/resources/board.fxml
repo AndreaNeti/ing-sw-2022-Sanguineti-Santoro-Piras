@@ -30,24 +30,24 @@
                                 <Label style="-fx-background-color: red;" text="0" textFill="WHITE" AnchorPane.bottomAnchor="-15.0" AnchorPane.rightAnchor="-15.0" />
                             </AnchorPane>
                             <AnchorPane layoutY="70.0">
-                                <children>
-                                    <ImageView cache="true" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" styleClass="student" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                        <image>
-                                            <Image url="@Graphical_Assets/Students/BLUE.png" />
-                                        </image>
-                                    </ImageView>
-                                    <Label style="-fx-background-color: blue;" text="0" textFill="WHITE" AnchorPane.rightAnchor="-20.0" AnchorPane.topAnchor="-10.0" />
-                                </children>
+                                <ImageView cache="true" fitWidth="30.0" pickOnBounds="true" preserveRatio="true"
+                                           styleClass="student" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <image>
+                                        <Image url="@Graphical_Assets/Students/BLUE.png"/>
+                                    </image>
+                                </ImageView>
+                                <Label style="-fx-background-color: blue;" text="0" textFill="WHITE"
+                                       AnchorPane.rightAnchor="-20.0" AnchorPane.topAnchor="-10.0"/>
                             </AnchorPane>
                             <AnchorPane layoutX="60.0" layoutY="110.0">
-                                <children>
-                                    <ImageView cache="true" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" styleClass="student" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                        <image>
-                                            <Image url="@Graphical_Assets/Students/YELLOW.png" />
-                                        </image>
-                                    </ImageView>
-                                    <Label style="-fx-background-color: #fb0;" text="0" textFill="WHITE" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="-30.0" />
-                                </children>
+                                <ImageView cache="true" fitWidth="30.0" pickOnBounds="true" preserveRatio="true"
+                                           styleClass="student" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <image>
+                                        <Image url="@Graphical_Assets/Students/YELLOW.png"/>
+                                    </image>
+                                </ImageView>
+                                <Label style="-fx-background-color: #fb0;" text="0" textFill="WHITE"
+                                       AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="-30.0"/>
                             </AnchorPane>
                             <AnchorPane layoutX="123.0" layoutY="70.0">
                                 <children>
@@ -174,14 +174,14 @@
                                 </children>
                             </AnchorPane>
                             <AnchorPane layoutX="123.0" layoutY="70.0">
-                                <children>
-                                    <ImageView cache="true" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" styleClass="student" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                        <image>
-                                            <Image url="@Graphical_Assets/Students/GREEN.png" />
-                                        </image>
-                                    </ImageView>
-                                    <Label style="-fx-background-color: green;" text="0" textFill="WHITE" AnchorPane.leftAnchor="-20.0" AnchorPane.topAnchor="-10.0" />
-                                </children>
+                                <ImageView cache="true" fitWidth="30.0" pickOnBounds="true" preserveRatio="true"
+                                           styleClass="student" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <image>
+                                        <Image url="@Graphical_Assets/Students/GREEN.png"/>
+                                    </image>
+                                </ImageView>
+                                <Label style="-fx-background-color: green;" text="0" textFill="WHITE"
+                                       AnchorPane.leftAnchor="-20.0" AnchorPane.topAnchor="-10.0"/>
                             </AnchorPane>
                             <AnchorPane layoutX="123.0">
                                 <children>
@@ -1930,14 +1930,12 @@
     </HBox>
     <HBox id="colorBox" styleClass="colorbox" visible="false" AnchorPane.bottomAnchor="430.0" AnchorPane.rightAnchor="1210.0">
         <children>
-          <ImageView pickOnBounds="true">
-              <image>
-                  <Image url="@Graphical_Assets/Students/RED.png" />
-              </image>
-              <HBox.margin>
-                  <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
-              </HBox.margin>
-          </ImageView>
+            <ImageView pickOnBounds="true">
+                <HBox.margin>
+                    <Insets bottom="15.0" left="15.0" right="15.0" top="15.0"/>
+                </HBox.margin>
+                <Image url="@Graphical_Assets/Students/RED.png"/>
+            </ImageView>
           <ImageView pickOnBounds="true">
               <image>
                   <Image url="@Graphical_Assets/Students/BLUE.png" />
