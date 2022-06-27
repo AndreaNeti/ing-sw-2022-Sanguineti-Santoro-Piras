@@ -123,6 +123,12 @@ public class GameComponentClient {
         }
     }
 
+    /**
+     * Method equals is used to compare two GameComponentClients, based on their unique ID.
+     *
+     * @param o of type {@code Object} - instance of the other Object.
+     * @return {@code boolean} - true if the other object is a GameComponentClient and has the same ID of the component.
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -130,6 +136,11 @@ public class GameComponentClient {
         return getId() == that.getId();
     }
 
+    /**
+     * Method hasCode returns the hash code obtained from the component's unique ID.
+     *
+     * @return {@code int} - hash code of the component's ID.
+     */
     @Override
     public int hashCode() {
         return Objects.hash(getId());

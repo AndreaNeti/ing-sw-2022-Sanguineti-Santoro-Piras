@@ -128,7 +128,7 @@ public class Team implements Serializable {
     }
 
     /**
-     * Method hasCode returns the hash code obtained by the team's house color.
+     * Method hasCode returns the hash code obtained from the team's house color.
      *
      * @return int - hash code of the team's house color.
      */

@@ -27,7 +27,6 @@ public class PlayerClient {
         this.wizard = p.getWizard();
         this.assistantCards = p.getAssistantCards();
         this.playedCard = null;
-
         this.entranceHall = new GameComponentClient(2 * wizard.ordinal());
         this.lunchHall = new GameComponentClient(2 * wizard.ordinal() + 1);
     }

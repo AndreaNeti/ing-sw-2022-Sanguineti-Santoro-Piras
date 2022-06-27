@@ -16,9 +16,8 @@ import java.util.List;
  * Char11Client class represents the character card on the client side and corresponds to the server class {@link Char11}.
  */
 public class Char11Client implements CharacterCardClient {
-    private final List<Integer> inputs;
-
     private boolean used;
+    private final List<Integer> inputs;
 
     /**
      * Constructor Char11Client creates a new instance of Char11Client.

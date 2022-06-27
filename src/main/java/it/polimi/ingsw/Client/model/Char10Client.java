@@ -16,10 +16,7 @@ import java.util.List;
  * Char10Client class represents the character card on the client side and corresponds to the server class {@link Char10}.
  */
 public class Char10Client extends CharacterCardClientWithStudents {
-
-
     private boolean used;
-
     private final List<Integer> inputs;
 
     /**

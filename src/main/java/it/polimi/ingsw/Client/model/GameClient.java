@@ -37,6 +37,7 @@ public class GameClient extends GameClientListened implements GameClientView {
     private final List<CharacterCardClient> characters;
     private final List<CharacterCardClientWithStudents> charactersWithStudents;
     private CharacterCardClient currentCharacterCard;
+    //TODO: maybe change these names
     // player id, new playerCoinsLeft
     private final Map<Byte, Byte> updatedCoinPlayer;
     private byte newCoinsLeft, newProhibitionsLeft;

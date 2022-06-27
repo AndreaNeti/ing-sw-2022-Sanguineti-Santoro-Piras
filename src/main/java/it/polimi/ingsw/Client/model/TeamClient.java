@@ -12,10 +12,8 @@ import java.util.List;
  * TeamClient class represents the team on the client side and corresponds to the server class {@link Team}.
  */
 public class TeamClient {
-
     private final HouseColor houseColor;
     private byte towersLeft;
-
     private final ArrayList<PlayerClient> membersClient;
 
     /**

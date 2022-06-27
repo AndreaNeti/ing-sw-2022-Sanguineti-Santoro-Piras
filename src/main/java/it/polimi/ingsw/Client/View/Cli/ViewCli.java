@@ -249,7 +249,7 @@ public class ViewCli extends AbstractView implements ViewForCharacterCli {
      *
      * @param canBeStopped of type {@code boolean} - boolean to check if the method can be stopped before user inputs all the
      *                                               required info.
-     * @return {@code byte[]} - array of bytes equivalent to the IP address obtained by the user's input.
+     * @return {@code byte[]} - array of bytes equivalent to the IP address obtained from the user's input.
      * @throws SkipCommandException if the method ends and the user's input must be skipped (input not repeated and not ready).
      */
     public byte[] getIpAddressInput(boolean canBeStopped) throws SkipCommandException {
@@ -269,7 +269,7 @@ public class ViewCli extends AbstractView implements ViewForCharacterCli {
      *
      * @param canBeStopped of type {@code Boolean} - boolean to check if the method can be stopped before the user inputs all the
      *                     required info.
-     * @return {@link Color} - student color obtained by the user's input.
+     * @return {@link Color} - student color obtained from the user's input.
      * @throws SkipCommandException if the method ends and the user's input must be skipped (input not repeated and not ready).
      */
     @Override
@@ -287,7 +287,7 @@ public class ViewCli extends AbstractView implements ViewForCharacterCli {
      *
      * @param canBeStopped of type {@code Boolean} - boolean to check if the method can be stopped before the user inputs all the
      *                     required info.
-     * @return {@link MatchType} - match type obtained by the user's input.
+     * @return {@link MatchType} - match type obtained from the user's input.
      * @throws SkipCommandException if the method ends and the user's input must be skipped (input not repeated and not ready).
      */
     public MatchType getMatchTypeInput(boolean canBeStopped) throws SkipCommandException {
@@ -297,7 +297,7 @@ public class ViewCli extends AbstractView implements ViewForCharacterCli {
     /**
      * Method getCharacterCharToPlayInput requests a character card to play and parses its index from the {@link #getIntInput(int, int, String, boolean)} method.
      *
-     * @return {@code byte} - index of the character card obtained by the user's input.
+     * @return {@code byte} - index of the character card obtained from the user's input.
      * @throws SkipCommandException if the method ends and the user's input must be skipped (input not repeated and not ready).
      */
     public byte getCharacterCharToPlayInput() throws SkipCommandException {
@@ -314,7 +314,7 @@ public class ViewCli extends AbstractView implements ViewForCharacterCli {
      *
      * @param canBeStopped of type {@code Boolean} - boolean to check if the method can be stopped before the user inputs all the
      *                     required info.
-     * @return {@link AssistantCard} - assistant card obtained by the user's input.
+     * @return {@link AssistantCard} - assistant card obtained from the user's input.
      * @throws SkipCommandException if the method ends and the user's input must be skipped (input not repeated and not ready).
      */
     public AssistantCard getAssistantCardToPlayInput(boolean canBeStopped) throws SkipCommandException {
@@ -338,7 +338,7 @@ public class ViewCli extends AbstractView implements ViewForCharacterCli {
      *
      * @param canBeStopped of type {@code Boolean} - boolean to check if the method can be stopped before the user inputs all the
      *                     required info.
-     * @return {@link GameComponentClient} - game component of destination obtained by the user's input.
+     * @return {@link GameComponentClient} - game component of destination obtained from the user's input.
      * @throws SkipCommandException if the method ends and the user's input must be skipped (input not repeated and not ready).
      */
     public GameComponentClient getMoveStudentDestination(boolean canBeStopped) throws SkipCommandException {
@@ -390,7 +390,7 @@ public class ViewCli extends AbstractView implements ViewForCharacterCli {
      *
      * @param canBeStopped of type {@code Boolean} - boolean to check if the method can be stopped before the user inputs all the
      *                     required info.
-     * @return {@code byte} - number of mother nature moves obtained by the user's input.
+     * @return {@code byte} - number of mother nature moves obtained from the user's input.
      * @throws SkipCommandException if the method ends and the user's input must be skipped (input not repeated and not ready).
      */
     public byte getMotherNatureMovesInput(boolean canBeStopped) throws SkipCommandException {
