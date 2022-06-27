@@ -11,7 +11,6 @@ import java.util.List;
  * Char7Client class represents the character card on the client side and corresponds to the server class {@link Char7}.
  */
 public class Char7Client implements CharacterCardClient {
-
     private boolean used;
 
     @Override

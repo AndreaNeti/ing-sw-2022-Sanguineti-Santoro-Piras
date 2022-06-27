@@ -234,7 +234,7 @@ public class ClientHandler implements Runnable, GameListener {
     }
 
     /**
-     * Method hasCode returns the hash code obtained by the handler's socket.
+     * Method hasCode returns the hash code obtained from the handler's socket.
      *
      * @return {@code int} - hash code of the handler's socket.
      */

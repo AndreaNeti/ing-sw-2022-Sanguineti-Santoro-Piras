@@ -50,7 +50,7 @@ public class ControllerClient extends GameClientListened {
     private final LimitedChat<String> chat;
 
     /**
-     * Constructor ControllerClient creates a new isntance of ControllerClient.
+     * Constructor ControllerClient creates a new instance of ControllerClient.
      */
     public ControllerClient() {
         this.chat = new LimitedChat<>(15);

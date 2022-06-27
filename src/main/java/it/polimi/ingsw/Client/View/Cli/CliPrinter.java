@@ -99,7 +99,7 @@ public class CliPrinter implements GameClientListener {
         for (int i = 0; i < islands.size(); i++) {
             String space = i < 9 ? " " : "";
             islandPrint.append("   \u001b[4m#:").append(i + 1).append(space).append(" \u001b[31mX\u001b[0m\u001b[4m:").
-                    append(islands.get(i).getProhibition()).append("\u001b[0m   ");
+                    append(islands.get(i).getProhibitions()).append("\u001b[0m   ");
         }
         islandPrint.append("\n");
 

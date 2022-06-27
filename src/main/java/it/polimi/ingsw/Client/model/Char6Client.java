@@ -17,9 +17,8 @@ import java.util.List;
  * Char6Client class represents the character card on the client side and corresponds to the server class {@link Char6}.
  */
 public class Char6Client extends CharacterCardClientWithStudents {
-    private final List<Integer> inputs;
-
     private boolean used;
+    private final List<Integer> inputs;
 
     /**
      * Constructor Char6Client creates a new instance of Char6Client.

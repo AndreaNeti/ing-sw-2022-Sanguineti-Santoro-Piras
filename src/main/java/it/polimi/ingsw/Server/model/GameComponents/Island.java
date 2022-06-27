@@ -28,7 +28,7 @@ public class Island extends GameComponent {
     /**
      * Method getTeamColor returns the team controlling the island.
      *
-     * @return {@link HouseColor} - team color controlling the island.
+     * @return {@link HouseColor} - color of the team controlling the island.
      */
     public HouseColor getTeamColor() {
         return team;
@@ -37,7 +37,7 @@ public class Island extends GameComponent {
     /**
      * Method setTeamColor updates the team controlling the island.
      *
-     * @param teamColor of type {@link HouseColor} - the new team color controlling the island.
+     * @param teamColor of type {@link HouseColor} - color of the new team controlling the island.
      */
     public void setTeamColor(HouseColor teamColor) {
         if (teamColor == null) throw new IllegalArgumentException("Cannot set null house color");
@@ -64,16 +64,17 @@ public class Island extends GameComponent {
     }
 
     /**
-     * Method getArchipelagoSize returns the number of towers that the island will contain if controlled.
+     * Method getArchipelagoSize returns the size of the archipelago of the island. <br>
+     * The size corresponds to the amount of towers placeable when a team controls the island.
      *
-     * @return {@code byte} - total number of towers.
+     * @return {@code byte} - total number of islands in the archipelago.
      */
     public byte getArchipelagoSize() {
         return number;
     }
 
     /**
-     * Method getProhibitions returns the number of prohibitions placed on the island.
+     * Method getProhibitions returns the number of prohibitions placed on the island. <br>
      * This function should be called only during expert games.
      *
      * @return {@code byte} - number of prohibitions.
@@ -83,7 +84,7 @@ public class Island extends GameComponent {
     }
 
     /**
-     * Method addProhibitions add one prohibition or more (when merging islands with prohibitions) to the island.
+     * Method addProhibitions add one prohibition or more (when merging islands with prohibitions) to the island. <br>
      * This function should be called only during expert games.
      *
      * @param value of type {@code byte} - amount of prohibitions to add.
@@ -94,7 +95,7 @@ public class Island extends GameComponent {
     }
 
     /**
-     * Method removeProhibition removes a prohibition to the island.
+     * Method removeProhibition removes a prohibition to the island. <br>
      * This function should be called only during expert games.
      */
     public void removeProhibition() {

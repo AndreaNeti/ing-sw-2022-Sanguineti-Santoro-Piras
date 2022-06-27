@@ -16,7 +16,6 @@ import java.util.List;
  */
 public class Char4Client implements CharacterCardClient {
     private boolean used;
-
     private final List<Integer> inputs;
 
     /**

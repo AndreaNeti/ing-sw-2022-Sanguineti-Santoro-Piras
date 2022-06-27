@@ -9,29 +9,60 @@ import it.polimi.ingsw.Util.HouseColor;
  */
 public class IslandClient extends GameComponentClient {
     private HouseColor team;
-    private byte prohibition;
+    private byte prohibitions;
     private byte number;
 
+    /**
+     * Constructor IslandClient creates a new instance of IslandClient.
+     *
+     * @param id of type {@code int} - unique ID to assign to the game component.
+     */
     public IslandClient(int id) {
         super(id);
     }
 
+    /**
+     * Method getTeam returns the team controlling the island.
+     *
+     * @return {@link HouseColor} - house color of the team controlling the island.
+     */
     public HouseColor getTeam() {
         return team;
     }
 
+    /**
+     * Method setTeam updates the team controlling the island.
+     *
+     * @param team of type {@link HouseColor} - color of the new team controlling the island.
+     */
     public void setTeam(HouseColor team) {
         this.team = team;
     }
 
-    public byte getProhibition() {
-        return prohibition;
+    /**
+     * Method getProhibitions returns the number of prohibitions placed on the island.
+     *
+     * @return {@code byte} - number of prohibitions.
+     */
+    public byte getProhibitions() {
+        return prohibitions;
     }
 
+    /**
+     * Method getArchipelagoSize returns the size of the archipelago of the island.
+     *
+     * @return {@code byte} - total number of islands in the archipelago.
+     */
     public byte getArchipelagoSize() {
         return number;
     }
 
+    //TODO: not used?
+    /**
+     * Method setNumber updates size of the archipelago of the island.
+     *
+     * @param number of type {@code byte} - new size of the archipelago.
+     */
     public void setNumber(byte number) {
         this.number = number;
     }
@@ -48,7 +79,7 @@ public class IslandClient extends GameComponentClient {
         Island island = (Island) gameComponent;
         team = island.getTeamColor();
         number = island.getArchipelagoSize();
-        prohibition = island.getProhibitions();
+        prohibitions = island.getProhibitions();
     }
 
     /**
@@ -62,8 +93,8 @@ public class IslandClient extends GameComponentClient {
         if (team != null) {
             s += "| Owned by " + team + " with " + number + " towers ";
         }
-        if (prohibition != 0)
-            s += "| Number of prohibitions: " + prohibition;
+        if (prohibitions != 0)
+            s += "| Number of prohibitions: " + prohibitions;
         return s;
     }
 

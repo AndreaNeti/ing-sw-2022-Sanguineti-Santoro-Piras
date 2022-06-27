@@ -179,7 +179,7 @@ public class Player implements Serializable {
     }
 
     /**
-     * Method hasCode returns the hash code obtained by the player's nickname.
+     * Method hasCode returns the hash code obtained from the player's nickname.
      *
      * @return {@code int} - hash code of the player's nickname.
      */

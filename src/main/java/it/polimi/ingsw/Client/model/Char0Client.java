@@ -22,8 +22,8 @@ import java.util.List;
  * Char0Client class represents the character card on the client side and corresponds to the server class {@link Char0}.
  */
 public class Char0Client extends CharacterCardClientWithStudents {
-    private final List<Integer> inputs;
     private boolean used;
+    private final List<Integer> inputs;
 
     @Override
     public void setUsed() {

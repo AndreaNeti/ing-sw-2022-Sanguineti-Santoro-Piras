@@ -87,8 +87,8 @@ public class Controller {
     }
 
     /**
-     * Method move is used to move a student of a specified color to a selected game component.
-     * The source game component obtained by the current game phase.
+     * Method move is used to move a student of a specified color to a selected game component. <br>
+     * The source game component is obtained from the current game phase.
      *
      * @param color of type {@code Color} - the color of the student to move.
      * @param idGameComponent of type {@code Int} - the ID of the source component.
