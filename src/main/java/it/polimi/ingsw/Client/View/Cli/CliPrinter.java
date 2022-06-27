@@ -485,7 +485,7 @@ public class CliPrinter implements GameClientListener {
      * Method updateDeletedIsland not used for CliPrinter.
      *
      * @param island         of type {@link IslandClient} - instance of the removed island.
-     * @param idIslandWInner of type {@link IslandClient} - instance of the island that last after merge
+     * @param idIslandWInner of type {@link IslandClient} - instance of the island that lasted after merge
      */
     @Override
     public void updateDeletedIsland(IslandClient island, IslandClient idIslandWInner) {
