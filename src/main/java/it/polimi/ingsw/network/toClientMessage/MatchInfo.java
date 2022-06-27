@@ -1,6 +1,7 @@
 package it.polimi.ingsw.network.toClientMessage;
 
 import it.polimi.ingsw.Client.Controller.ControllerClient;
+import it.polimi.ingsw.Server.controller.MatchConstants;
 import it.polimi.ingsw.Server.controller.MatchType;
 import it.polimi.ingsw.Server.model.Team;
 import it.polimi.ingsw.Util.Wizard;
@@ -13,6 +14,7 @@ import java.util.List;
 public class MatchInfo implements ToClientMessage {
     private final Wizard yourWizard;
     private final MatchType matchType;
+    private final MatchConstants constants;
     private final long matchId;
 
     private final List<Team> teams;
@@ -20,13 +22,14 @@ public class MatchInfo implements ToClientMessage {
     /**
      * Constructor MatchInfo creates a new instance of MatchInfo.
      *
-     * @param matchType of type {@link MatchType} - type of the match joined.
-     * @param matchId of type {@code long} - unique ID of the match.
-     * @param teams of type {@code List}<{@link Team}> - list of teams in the match.
+     * @param matchType  of type {@link MatchType} - type of the match joined.
+     * @param matchId    of type {@code long} - unique ID of the match.
+     * @param teams      of type {@code List}<{@link Team}> - list of teams in the match.
      * @param yourWizard of type {@link Wizard} - wizard assigned to the player.
      */
-    public MatchInfo(MatchType matchType, long matchId, List<Team> teams, Wizard yourWizard) {
+    public MatchInfo(MatchType matchType, MatchConstants constants, long matchId, List<Team> teams, Wizard yourWizard) {
         this.matchType = matchType;
+        this.constants = constants;
         this.matchId = matchId;
         this.teams = teams;
         this.yourWizard = yourWizard;
@@ -40,7 +43,7 @@ public class MatchInfo implements ToClientMessage {
      */
     @Override
     public void execute(ControllerClient controllerClient) {
-        controllerClient.setMatchInfo(matchType, teams, yourWizard);
+        controllerClient.setMatchInfo(matchType, constants, teams, yourWizard);
         controllerClient.addMessage("Match info: " + matchType + ", ID: " + matchId + ". Your wizard is: " + yourWizard);
     }
 }

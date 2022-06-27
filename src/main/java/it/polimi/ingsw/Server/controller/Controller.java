@@ -47,7 +47,7 @@ public class Controller {
      * Constructor Controller creates a new instance of Controller.
      *
      * @param matchType of type {@link MatchType} - match type of the controller.
-     * @param id of type {@code Long} - unique ID of the controller.
+     * @param id        of type {@code Long} - unique ID of the controller.
      */
     public Controller(MatchType matchType, Long id) {
         this.matchConstants = Server.getMatchConstants(matchType);
@@ -90,12 +90,12 @@ public class Controller {
      * Method move is used to move a student of a specified color to a selected game component. <br>
      * The source game component is obtained from the current game phase.
      *
-     * @param color of type {@code Color} - the color of the student to move.
+     * @param color           of type {@code Color} - the color of the student to move.
      * @param idGameComponent of type {@code Int} - the ID of the source component.
-     * @throws GameException if the color is null or the game component's ID is not valid or if it's not possible to move the student
-     * to the specified game component or if this method is called during a phase that is not move_st_phase.
+     * @throws GameException        if the color is null or the game component's ID is not valid or if it's not possible to move the student
+     *                              to the specified game component or if this method is called during a phase that is not move_st_phase.
      * @throws NullPointerException if
-     * @throws EndGameException if
+     * @throws EndGameException     if
      */
     public synchronized void move(Color color, int idGameComponent) throws GameException, NullPointerException, EndGameException {
         if (gamePhase == GamePhase.MOVE_ST_PHASE) {
@@ -122,10 +122,10 @@ public class Controller {
      * Method moveFromCloud is used to move students from a cloud to the current player's entrance hall.
      *
      * @param idGameComponent of type {@code byte} - ID of the cloud.
-     * @throws GameException if the selected game component is not a cloud or if this method is called
-     * during a phase that is not move_cl_phase or if the selected cloud has no students.
+     * @throws GameException        if the selected game component is not a cloud or if this method is called
+     *                              during a phase that is not move_cl_phase or if the selected cloud has no students.
      * @throws NullPointerException if
-     * @throws EndGameException if it is the last turn and after moving students from the cloud the game ends.
+     * @throws EndGameException     if it is the last turn and after moving students from the cloud the game ends.
      */
     public synchronized void moveFromCloud(int idGameComponent) throws GameException, NullPointerException, EndGameException {
         if (gamePhase == GamePhase.MOVE_CL_PHASE) { // move students from cloud, destination is player entrance hall
@@ -141,10 +141,10 @@ public class Controller {
      * Method playCard is used by the user to play an assistant card during the planification phase.
      *
      * @param card of type {@link AssistantCard} - instance of the assistant card to play.
-     * @throws GameException if the card selected cannot be played or if this method is called during a phase
-     * that is not planification_phase or if the selected assistant card is not available to play.
+     * @throws GameException        if the card selected cannot be played or if this method is called during a phase
+     *                              that is not planification_phase or if the selected assistant card is not available to play.
      * @throws NullPointerException if
-     * @throws EndGameException if
+     * @throws EndGameException     if
      */
     //the value here need to go from 1 to 10
     public synchronized void playCard(AssistantCard card) throws GameException, NullPointerException, EndGameException {
@@ -169,10 +169,10 @@ public class Controller {
      * Method moveMotherNature is used to move mother nature a selected amount of moves.
      *
      * @param moves of type {@code byte} - number of moves wanted.
-     * @throws GameException if this method is called during a phase that is not move_mn_phase or if mother nature cannot
-     * be moved the selected amount of moves.
+     * @throws GameException        if this method is called during a phase that is not move_mn_phase or if mother nature cannot
+     *                              be moved the selected amount of moves.
      * @throws NullPointerException if
-     * @throws EndGameException if after moving mother nature there are less than 3 islands left in the game.
+     * @throws EndGameException     if after moving mother nature there are less than 3 islands left in the game.
      */
     public synchronized void moveMotherNature(int moves) throws GameException, NullPointerException, EndGameException {
         if (gamePhase == GamePhase.MOVE_MN_PHASE) {
@@ -193,7 +193,7 @@ public class Controller {
      * the game's info.
      *
      * @param newPlayerHandler of type {@link GameListener} - instance of the player's ClientHandler.
-     * @param nickName of type {@code String} - nickname of the player to add.
+     * @param nickName         of type {@code String} - nickname of the player to add.
      * @throws GameException if the match is already full.
      */
     public synchronized void addPlayer(GameListener newPlayerHandler, String nickName) throws GameException {
@@ -207,7 +207,7 @@ public class Controller {
         // notifyGameComponent other players in lobby about the new player
         notifyClients(new PlayerJoined(newPlayer, HouseColor.values()[teamIndex]));
         // notifyGameComponent the new player about match info and other players in lobby
-        newPlayerHandler.update(new MatchInfo(matchType, matchId, teams, Wizard.values()[playersList.size()]));
+        newPlayerHandler.update(new MatchInfo(matchType, matchConstants, matchId, teams, Wizard.values()[playersList.size()]));
 
         playersList.add(newPlayer);
         playerHandlers.add(newPlayerHandler);
@@ -224,7 +224,7 @@ public class Controller {
     /**
      * Method sendMessage is used by the player to send a message to the other players in the game.
      *
-     * @param me of type {@link ClientHandler} - instance of the client handler that will send the message.
+     * @param me      of type {@link ClientHandler} - instance of the client handler that will send the message.
      * @param message of type {@code String} - text of the message.
      * @throws NullPointerException if the client handler instance is null.
      */
@@ -237,8 +237,8 @@ public class Controller {
      * Method setCharacterInputs is used to add inputs to play the character card.
      *
      * @param inputs of type {@code List}<{@code Integer}> - list of inputs to add.
-     * @throws GameException if this method is called during the planification_phase or if there is not selected
-     * character card.
+     * @throws GameException        if this method is called during the planification_phase or if there is not selected
+     *                              character card.
      * @throws NullPointerException if
      */
     public synchronized void setCharacterInputs(List<Integer> inputs) throws GameException, NullPointerException {
@@ -252,9 +252,9 @@ public class Controller {
      * Method chooseCharacter is used to choose a character card to play.
      *
      * @param charId of type {@code byte} - ID of the character card.
-     * @throws GameException if this method is called during the planification phase or
-     * if the current player has already played a card in this turn or if the
-     * selected character card is not available or costs more than the number of coins of the player.
+     * @throws GameException        if this method is called during the planification phase or
+     *                              if the current player has already played a card in this turn or if the
+     *                              selected character card is not available or costs more than the number of coins of the player.
      * @throws NullPointerException if
      */
     public synchronized void chooseCharacter(byte charId) throws GameException, NullPointerException {
@@ -270,12 +270,12 @@ public class Controller {
     /**
      * Method playCharacter is used to play the chosen character card with the inputs added by the player.
      *
-     * @throws GameException if this method is called during the planification phase
-     * if the current player has already played a card in this turn or if there's an error
-     * while playing the card (invalid or wrong inputs).
+     * @throws GameException        if this method is called during the planification phase
+     *                              if the current player has already played a card in this turn or if there's an error
+     *                              while playing the card (invalid or wrong inputs).
      * @throws NullPointerException if
-     * @throws EndGameException if the card's effect triggers an endgame event (no more students in the bag,
-     *      * no more towers in a team's board or less than 3 islands left)
+     * @throws EndGameException     if the card's effect triggers an endgame event (no more students in the bag,
+     *                              * no more towers in a team's board or less than 3 islands left)
      */
     public synchronized void playCharacter() throws GameException, NullPointerException, EndGameException {
         if (gamePhase == GamePhase.PLANIFICATION_PHASE) {
@@ -310,7 +310,7 @@ public class Controller {
      * Method notifyClients is used to send a message to all the players in the game, except a single GameListener
      * (usually the one who sent the message or currently playing their turn).
      *
-     * @param message of type {@link ToClientMessage} - instance of the message to send to the clients.
+     * @param message   of type {@link ToClientMessage} - instance of the message to send to the clients.
      * @param excludeMe of type {@link GameListener} - instance of the ClientHandler that should not receive the message.
      */
     private void notifyClients(ToClientMessage message, GameListener excludeMe) {

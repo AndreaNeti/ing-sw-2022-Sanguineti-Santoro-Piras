@@ -213,11 +213,11 @@ public class ControllerClient extends GameClientListened {
      * @param teams     of type {@code List}<{@link Team}> - list of instance of the game's teams.
      * @param myWizard  of type {@link Wizard} - wizard associated with the client's player.
      */
-    public void setMatchInfo(MatchType matchType, List<Team> teams, Wizard myWizard) {
+    public void setMatchInfo(MatchType matchType, MatchConstants constants, List<Team> teams, Wizard myWizard) {
         this.myWizard = myWizard;
         isInMatch = true;
         this.matchType = matchType;
-        this.matchConstants = Server.getMatchConstants(matchType);
+        this.matchConstants = constants;
         teamsClient = new ArrayList<>();
         for (Team t : teams)
             teamsClient.add(new TeamClient(t.getHouseColor(), t.getPlayers(), matchConstants));
