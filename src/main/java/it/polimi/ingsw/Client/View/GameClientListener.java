@@ -40,9 +40,10 @@ public interface GameClientListener {
     /**
      * Method updateDeletedIsland removes an island that was merged in the game.
      *
-     * @param island of type {@link IslandClient} - instance of the removed island.
+     * @param island         of type {@link IslandClient} - instance of the removed island.
+     * @param idIslandWInner is the island that last after the merge
      */
-    void updateDeletedIsland(IslandClient island);
+    void updateDeletedIsland(IslandClient island, IslandClient idIslandWInner);
 
     /**
      * Method updateTowerLeft updates the tower left of a team.
@@ -131,4 +132,6 @@ public interface GameClientListener {
      * @param newProhibitions of type {@code Byte} - updated amount of prohibitions left in the game.
      */
     void updateProhibitions(Byte newProhibitions);
+
+    void updateError(String error);
 }

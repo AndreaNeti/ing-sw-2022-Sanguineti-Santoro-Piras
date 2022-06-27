@@ -28,13 +28,12 @@ public class ErrorException implements ToClientMessage {
     }
 
     /**
-     * Method execute uses the client controller to add the error message to its chat and handle the error, repeating the phase.
+     * Method execute uses the client controller to handle the error, repeating the phase.
      *
      * @param controllerClient of type {@link ControllerClient} - instance of the client controller that receives the message.
      */
     @Override
     public void execute(ControllerClient controllerClient) {
-        controllerClient.addMessage("Server error: " + error);
-        controllerClient.error();
+        controllerClient.error(error);
     }
 }

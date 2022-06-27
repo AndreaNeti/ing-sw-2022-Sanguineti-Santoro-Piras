@@ -5,18 +5,14 @@ import it.polimi.ingsw.Client.View.Gui.SceneController.SceneController;
 import it.polimi.ingsw.Util.GamePhase;
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.application.Preloader;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Rectangle2D;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.SceneAntialiasing;
-import javafx.scene.control.ProgressBar;
-import javafx.scene.control.ProgressIndicator;
+import javafx.scene.control.Alert;
 import javafx.scene.input.KeyCombination;
-import javafx.scene.layout.BorderPane;
 
 import java.awt.*;
-import java.awt.color.*;
 
 import javafx.stage.Screen;
 import javafx.stage.Stage;
@@ -24,7 +20,6 @@ import javafx.stage.Window;
 
 import javax.swing.*;
 import java.io.IOException;
-import java.net.URL;
 
 public class GuiFX extends Application {
     private static Stage primaryStage;
@@ -56,6 +51,7 @@ public class GuiFX extends Application {
 
     public static void goToBoardScene() {
         if (inMenuScene) {
+            controller.removeListeners();
             primaryStage.setTitle("Eryantis");
             JFrame loadingWindow = new LoadingWindow().getInitWindow();
             //pb.setProgress(0);
@@ -79,9 +75,8 @@ public class GuiFX extends Application {
             primaryStage.setFullScreen(true);
             primaryStage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
             primaryStage.setResizable(false);
+            loadingWindow.dispose();
             primaryStage.show();
-            loadingWindow.dispose();
-            loadingWindow.dispose();
         }
     }
 
@@ -110,6 +105,7 @@ public class GuiFX extends Application {
 
     public static void goToMenuScene() {
         if (!inMenuScene) {
+            controller.removeListeners();
             primaryStage.setResizable(false);
             primaryStage.setTitle("Eryantis");
             FXMLLoader loader = new FXMLLoader(GuiFX.class.getResource("/menu.fxml"));
@@ -140,5 +136,34 @@ public class GuiFX extends Application {
         viewGUI = new ViewGUI(controller);
         controller.attachView(viewGUI);
         launch();
+    }
+
+    /**
+     * ShowInputError is used in the GUI client when a command input is empty or invalid, showing an alert box.
+     */
+    public static void showError(String title, String contentText, String headerText) {
+        Platform.runLater(() -> {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setHeaderText(headerText);
+            alert.setTitle(title);
+            alert.setContentText(contentText);
+            alert.initOwner(GuiFX.getPrimaryStage());
+            alert.showAndWait();
+        });
+    }
+
+    /**
+     * ShowInputError is used in the GUI client when a command input is empty or invalid, showing an alert box, you can pass also the graphic you want to put in alert box.
+     */
+    public static void showError(String title, String contentText, String headerText, Node node) {
+        Platform.runLater(() -> {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setHeaderText(headerText);
+            alert.setTitle(title);
+            alert.setContentText(contentText);
+            alert.initOwner(GuiFX.getPrimaryStage());
+            alert.setGraphic(node);
+            alert.showAndWait();
+        });
     }
 }

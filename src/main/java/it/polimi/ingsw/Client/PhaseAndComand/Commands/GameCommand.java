@@ -52,7 +52,7 @@ public enum GameCommand {
                 TextField t = (TextField) sceneController.getElementById("#inputIp");
                 String ipString = t.getText();
                 if (ipString == null) {
-                    showInputError();
+                    GuiFX.showError("Input fields empty", "Input not valid", "Error");
                     return;
                 }
                 byte[] ip = IPAddress.getIpFromString(ipString);
@@ -91,7 +91,7 @@ public enum GameCommand {
                 TextField t = (TextField) sceneController.getElementById("#inputNickName");
                 String nick = t.getText();
                 if (nick == null || nick.isBlank()) {
-                    showInputError();
+                    GuiFX.showError("Input fields empty", "Input not valid", "Error");
                     return;
                 }
                 viewGUI.sendToServer(new NickName(nick));
@@ -127,7 +127,7 @@ public enum GameCommand {
                     byte players = Byte.parseByte(r1.getText());
                     viewGUI.sendToServer(new CreateMatch(new MatchType(players, isExpert)));
                 } catch (IllegalArgumentException | NullPointerException ex) {
-                    showInputError();
+                    GuiFX.showError("Input fields empty", "Input not valid", "Error");
                 }
             };
         }
@@ -161,7 +161,7 @@ public enum GameCommand {
                     byte players = Byte.parseByte(r1.getText());
                     viewGUI.sendToServer(new JoinMatchByType(new MatchType(players, isExpert)));
                 } catch (IllegalArgumentException | NullPointerException ex) {
-                    showInputError();
+                    GuiFX.showError("Input fields empty", "Input not valid", "Error");
                 }
             };
         }
@@ -194,7 +194,7 @@ public enum GameCommand {
                 try {
                     viewGUI.sendToServer(new JoinMatchById(Long.parseLong(t.getText())));
                 } catch (IllegalArgumentException ex) {
-                    showInputError();
+                    GuiFX.showError("Input fields empty", "Input not valid", "Error");
                 }
             };
         }
@@ -325,7 +325,7 @@ public enum GameCommand {
                     viewGUI.setCurrentCharacterCard(index);
                     viewGUI.sendToServer(new ChooseCharacter((byte) chosenCharacter.getCharId(), chosenCharacter.toString()));
                     viewGUI.setPhaseInView(GamePhase.PLAY_CH_CARD_PHASE, false, false);
-                } else viewGUI.addMessage("You don't have enough coins to play this card");
+                } else GuiFX.showError("Character error", "You don't have enough money to play this card", "Error");
             };
         }
 
@@ -493,8 +493,11 @@ public enum GameCommand {
             return event -> {
                 SceneController sceneController = GuiFX.getActiveSceneController();
                 TextField t = (TextField) sceneController.getElementById("#message");
-                viewGUI.sendToServer(new TextMessageCS(t.getText()));
-                viewGUI.addMessage("[You]: " + t.getText());
+
+                if (!t.getText().isBlank()) {
+                    viewGUI.sendToServer(new TextMessageCS(t.getText()));
+                    viewGUI.addMessage("[You]: " + t.getText());
+                }
                 t.clear();
             };
         }
@@ -617,14 +620,4 @@ public enum GameCommand {
         }
     }
 
-    /**
-     * ShowInputError is used in the GUI client when a command input is empty or invalid, showing an alert box.
-     */
-    public void showInputError() {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Input fields empty");
-        alert.setContentText("Input not valid");
-        alert.initOwner(GuiFX.getPrimaryStage());
-        alert.showAndWait();
-    }
 }

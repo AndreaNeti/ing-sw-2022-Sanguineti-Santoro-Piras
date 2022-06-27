@@ -1928,7 +1928,7 @@
             </AnchorPane>
         </children>
     </HBox>
-    <HBox id="colorBox" visible="false" AnchorPane.bottomAnchor="430.0" AnchorPane.rightAnchor="1210.0">
+    <HBox id="colorBox" styleClass="colorbox" visible="false" AnchorPane.bottomAnchor="430.0" AnchorPane.rightAnchor="1210.0">
         <children>
           <ImageView pickOnBounds="true">
               <image>
@@ -1946,7 +1946,7 @@
                   <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
               </HBox.margin>
           </ImageView>
-          <ImageView pickOnBounds="true">
+          <ImageView pickOnBounds="true" styleClass="clickable">
               <image>
                   <Image url="@Graphical_Assets/Students/YELLOW.png" />
               </image>

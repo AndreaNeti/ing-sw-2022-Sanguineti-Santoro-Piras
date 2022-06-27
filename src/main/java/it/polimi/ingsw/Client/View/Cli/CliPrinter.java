@@ -484,10 +484,11 @@ public class CliPrinter implements GameClientListener {
     /**
      * Method updateDeletedIsland not used for CliPrinter.
      *
-     * @param island of type {@link IslandClient} - instance of the removed island.
+     * @param island         of type {@link IslandClient} - instance of the removed island.
+     * @param idIslandWInner of type {@link IslandClient} - instance of the island that last after merge
      */
     @Override
-    public void updateDeletedIsland(IslandClient island) {
+    public void updateDeletedIsland(IslandClient island, IslandClient idIslandWInner) {
 
     }
 
@@ -625,6 +626,15 @@ public class CliPrinter implements GameClientListener {
 
     }
 
+    /**
+     * This method add in chat the error passed by the server
+     *
+     * @param error is the string passed by the server that contains the error
+     */
+    @Override
+    public void updateError(String error) {
+        view.addMessage(error);
+    }
 
     /**
      * Method clearConsole clears the client terminal.

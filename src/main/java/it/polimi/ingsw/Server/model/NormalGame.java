@@ -7,17 +7,16 @@ import it.polimi.ingsw.Server.model.GameComponents.Bag;
 import it.polimi.ingsw.Server.model.GameComponents.Cloud;
 import it.polimi.ingsw.Server.model.GameComponents.GameComponent;
 import it.polimi.ingsw.Server.model.GameComponents.Island;
-import it.polimi.ingsw.Util.AssistantCard;
-import it.polimi.ingsw.Util.Color;
-import it.polimi.ingsw.Util.HouseColor;
-import it.polimi.ingsw.Util.Wizard;
+import it.polimi.ingsw.Util.*;
 import it.polimi.ingsw.exceptions.serverExceptions.EndGameException;
 import it.polimi.ingsw.exceptions.serverExceptions.GameException;
 import it.polimi.ingsw.exceptions.serverExceptions.NotAllowedException;
 import it.polimi.ingsw.exceptions.serverExceptions.NotExpertGameException;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * NormalGame class contains the main logic of "Eriantys" and correspond to the model in the MVC pattern. <br>
@@ -121,39 +120,48 @@ public class NormalGame implements Game {
         if (island == null) throw new IllegalArgumentException("Passing null island");
         int islandBeforeIndex = Math.floorMod(islands.indexOf(island) - 1, islands.size());
         int islandAfterIndex = (islands.indexOf(island) + 1) % islands.size();
-
+        Set<Byte> deletedIsland = new HashSet<>();
         Island islandBefore = islands.get(islandBeforeIndex);
         Island islandAfter = islands.get(islandAfterIndex);
 
         if (islandBefore.getTeamColor() != null && islandBefore.getTeamColor().equals(island.getTeamColor())) {
 
             island.merge(islandBefore);
+            System.out.println("Removed island with id " + islandBefore.getId());
             islands.remove(islandBefore);
-
+            //TODO bug with herald
+            System.out.println("1index before: " + islandBeforeIndex + "index after:" + islandAfterIndex);
             if (islandBeforeIndex < islandAfterIndex)
                 islandAfterIndex--;
-
+            System.out.println("1position of mt" + motherNaturePosition);
             if (islandBeforeIndex < motherNaturePosition)
                 motherNaturePosition--;
+            System.out.println("1position of mt after" + motherNaturePosition);
 
             // add to game delta
             gameDelta.setNewMotherNaturePosition(motherNaturePosition);
             gameDelta.addUpdatedGC(island);
-            gameDelta.addDeletedIslands(islandBefore);
+            //TODO
+            deletedIsland.add(islandBefore.getId());
         }
         if (islandAfter.getTeamColor() != null && islandAfter.getTeamColor().equals(island.getTeamColor())) {
             island.merge(islandAfter);
+            System.out.println("Removed island with id " + islandAfter.getId());
             islands.remove(islandAfter);
-
+            System.out.println("2position of mt" + motherNaturePosition);
             if (islandAfterIndex <= motherNaturePosition)
                 motherNaturePosition = (byte) Math.floorMod(motherNaturePosition - 1, islands.size());
+
+            System.out.println("1position of mt after" + motherNaturePosition);
 
             // add to game delta
             gameDelta.setNewMotherNaturePosition(motherNaturePosition);
             gameDelta.addUpdatedGC(island);
-            gameDelta.addDeletedIslands(islandAfter);
+            //TODO
+            deletedIsland.add(islandAfter.getId());
 
         }
+        gameDelta.setDeletedIslands(new DeletedIsland(island.getId(), deletedIsland));
         if (islands.size() <= matchConstants.minIslands()) {
             gameDelta.send();
             throw new EndGameException(true);

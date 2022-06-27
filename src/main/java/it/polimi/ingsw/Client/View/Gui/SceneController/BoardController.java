@@ -236,6 +236,7 @@ public class BoardController implements SceneController {
             node.setDisable(false);
         }
     }
+
     @Override
     public void selectNode(Node node) {
         selectedElement.add(node);
@@ -297,7 +298,7 @@ public class BoardController implements SceneController {
             node.setVisible(false);
             node.applyCss();
         }
-        for(Node node:selectedElement) {
+        for (Node node : selectedElement) {
             node.getStyleClass().remove("selected");
             node.applyCss();
         }
@@ -322,6 +323,7 @@ public class BoardController implements SceneController {
                 islandOld.getChildren().remove(motherNature);
             }
             // update the new mother nature
+            //TODO bug here after using herald
             IslandClient motherNatureIsland = viewGUI.getModel().getIslands().get(motherNaturePosition);
             AnchorPane islandPane = (AnchorPane) getElementById("#" + getCenterArchipelagoId(motherNatureIsland));
             System.out.println("Mother Nature position: " + motherNaturePosition + ", moved on island #" + getCenterArchipelagoId(motherNatureIsland));
@@ -454,11 +456,10 @@ public class BoardController implements SceneController {
     }
 
     @Override
-    public void updateDeletedIsland(IslandClient removedIsland) {
+    public void updateDeletedIsland(IslandClient removedIsland, IslandClient winner) {
         Platform.runLater(() -> {
             // retrieve the team that deleted the island and enlarge it using the position of mother nature
             byte motherNaturePosition = viewGUI.getModel().getMotherNaturePosition();
-            IslandClient winner = viewGUI.getModel().getIslands().get(motherNaturePosition);
             System.out.println("Mother Nature has position: " + motherNaturePosition + " and it's on island #" + getCenterArchipelagoId(winner) + " (relativeId = " + winner.getId() + ") removed island #" + removedIsland.getId());
             HouseColor winnerTeam = winner.getTeam();
 
@@ -553,6 +554,7 @@ public class BoardController implements SceneController {
 
     @Override
     public void updateIgnoredColor(Color color) {
+        GuiFX.showError("Information", "For this turn " + color + " will not add up while calculating the influence", "Information");
 
     }
 
@@ -591,6 +593,21 @@ public class BoardController implements SceneController {
     @Override
     public void setWinners(List<HouseColor> winners) {
 
+
+        StringBuilder winnerString = new StringBuilder();
+        int i = 0;
+        while (i < winners.size() - 1) {
+            winnerString.append(winners.get(i));
+            winnerString.append(winners).append(" ");
+            i++;
+        }
+        winnerString.append(winners.get(i));
+        String res = winnerString.toString();
+        if (winners.size() > 1)
+            GuiFX.showError("WINNERS!", "THE WINNERS OF THE GAME ARE " + res, "END MATCH!");
+        else
+
+            GuiFX.showError("WINNERS!", "THE WINNER OF THE GAME IS " + res, "END MATCH!");
     }
 
     @Override
@@ -601,6 +618,11 @@ public class BoardController implements SceneController {
             }
             observableListChat.add(message);
         });
+    }
+
+    @Override
+    public void updateError(String error) {
+        GuiFX.showError("Server error", error, "Error");
     }
 
     private ImageView getMotherNature() {

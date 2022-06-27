@@ -1,11 +1,7 @@
 package it.polimi.ingsw.Server.controller;
 
 import it.polimi.ingsw.Server.model.GameComponents.GameComponent;
-import it.polimi.ingsw.Server.model.GameComponents.Island;
-import it.polimi.ingsw.Util.AssistantCard;
-import it.polimi.ingsw.Util.Color;
-import it.polimi.ingsw.Util.HouseColor;
-import it.polimi.ingsw.Util.Wizard;
+import it.polimi.ingsw.Util.*;
 import it.polimi.ingsw.network.toClientMessage.DeltaUpdate;
 import it.polimi.ingsw.network.toClientMessage.ToClientMessage;
 
@@ -23,7 +19,7 @@ public class GameDelta implements Serializable {
     // GC index, students array
     private Map<Byte, GameComponent> updatedGC;
     // deleted islands ids
-    private Set<Byte> deletedIslands;
+    private DeletedIsland deletedIslands;
 
     // professor color, new wizard controlling
     private Map<Color, Wizard> updatedProfessors;
@@ -45,11 +41,11 @@ public class GameDelta implements Serializable {
      */
     public void clear() {
         updatedGC = null;
-        deletedIslands = null;
         newTeamTowersLeft = null;
         updatedProfessors = null;
         newMotherNaturePosition = null;
         playedCard = null;
+        deletedIslands = null;
     }
 
     /**
@@ -64,20 +60,18 @@ public class GameDelta implements Serializable {
     }
 
     /**
-     * Method addDeletedIslands adds an island that has been merged and therefore deleted to the game delta.
+     * Method setDeletedIslands adds an island that has been merged and therefore deleted to the game delta.
      *
-     * @param deletedIsland of type {@link Island} - instance of the deleted island.
+     * @param deletedIsland of type {@link DeletedIsland} - instance of the record
      */
-    public void addDeletedIslands(Island deletedIsland) {
-        if (deletedIslands == null)
-            deletedIslands = new HashSet<>();
-        deletedIslands.add(deletedIsland.getId());
+    public void setDeletedIslands(DeletedIsland deletedIsland) {
+        this.deletedIslands = deletedIsland;
     }
 
     /**
      * Method updateTeamTowersLeft adds the team with its new number of towers left to the game delta.
      *
-     * @param teamColor of type {@link HouseColor} - house color of the team.
+     * @param teamColor     of type {@link HouseColor} - house color of the team.
      * @param newTowersLeft of type {@code byte} - new amount of towers left in the team.
      */
     public void updateTeamTowersLeft(HouseColor teamColor, byte newTowersLeft) {
@@ -90,7 +84,7 @@ public class GameDelta implements Serializable {
      * Method addUpdatedProfessors adds the color of the professor and its new controller to the game delta.
      *
      * @param professorColor of type {@link Color} - color of the professor.
-     * @param newController of type {@link Wizard} - wizard of the new professor's controller.
+     * @param newController  of type {@link Wizard} - wizard of the new professor's controller.
      */
     public void addUpdatedProfessors(Color professorColor, Wizard newController) {
         if (updatedProfessors == null)
@@ -140,7 +134,7 @@ public class GameDelta implements Serializable {
     /**
      * Method setUpdatedCoinPlayer not used for GameDelta.
      *
-     * @param playerId of type {@code byte} - ID of the player.
+     * @param playerId       of type {@code byte} - ID of the player.
      * @param newCoinsPlayer of type {@code byte} - new amount of coins for the player.
      */
     public void setUpdatedCoinPlayer(byte playerId, byte newCoinsPlayer) {
@@ -182,7 +176,7 @@ public class GameDelta implements Serializable {
      * Method setUsedCharacter not used for GameDelta.
      *
      * @param charId of type {@code byte} - ID of the used character card.
-     * @param used of type {@code boolean} - boolean used to know if the character card has been already used.
+     * @param used   of type {@code boolean} - boolean used to know if the character card has been already used.
      */
     public void setUsedCharacter(byte charId, boolean used) {
     }
@@ -293,13 +287,11 @@ public class GameDelta implements Serializable {
 
     /**
      * Method getDeletedIslands returns all the deleted islands. <br>
-     * <b>Set entry</b>: (Island's ID).
      *
-     * @return {@code Set}<{@code Byte}> - map of all the deleted islands.
+     * @return {@code Optional<DeletedIsland>} - record of all the deleted islands plus the winner
      */
-    public Set<Byte> getDeletedIslands() {
-        if (deletedIslands == null) return Collections.emptySet();
-        return deletedIslands;
+    public Optional<DeletedIsland> getDeletedIslands() {
+        return Optional.ofNullable(deletedIslands);
     }
 
     /**
@@ -317,7 +309,7 @@ public class GameDelta implements Serializable {
      * Method toString returns all the GameDelta attributes.
      *
      * @return {@code String} - "GameDelta{ listeners = X, updatedGC = Y, deletedIslands = Z, updatedProfessors = W, newTeamTowersLeft = XX,
-     *          newMotherNaturePosition = YY, playedCard = ZZ }"
+     * newMotherNaturePosition = YY, playedCard = ZZ }"
      */
     @Override
     public String toString() {

@@ -1,6 +1,7 @@
 package it.polimi.ingsw.Client.View.Gui.SceneController;
 
 import it.polimi.ingsw.Client.PhaseAndComand.Commands.GameCommand;
+import it.polimi.ingsw.Client.View.Gui.GuiFX;
 import it.polimi.ingsw.Client.View.Gui.ViewGUI;
 import it.polimi.ingsw.Client.model.GameComponentClient;
 import it.polimi.ingsw.Client.model.IslandClient;
@@ -142,7 +143,7 @@ public class MenuController implements SceneController {
     }
 
     @Override
-    public void updateDeletedIsland(IslandClient island) {
+    public void updateDeletedIsland(IslandClient island, IslandClient idIslandWInner) {
 
     }
 
@@ -158,6 +159,16 @@ public class MenuController implements SceneController {
 
     @Override
     public void updateMembers(int membersLeftToStart, String nickPlayerJoined) {
+        if (membersLeftToStart == 0) {
+            hideEverything();
+            chat.setVisible(false);
+            chatButton.setVisible(false);
+        }
+    }
+
+    @Override
+    public void updateError(String error) {
+        GuiFX.showError("Server error", error, "Error");
     }
 
     @Override

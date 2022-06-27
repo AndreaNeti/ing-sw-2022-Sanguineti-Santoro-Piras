@@ -107,8 +107,8 @@ public class ControllerClient extends GameClientListened {
      * Method changePhase updates the client's phase in the view to the provided one, also specifying if the
      * old phase must be saved and if the phase change must happen immediately.
      *
-     * @param newGamePhase of type {@link GamePhase} - new game phase to set in the client's view.
-     * @param setOldPhase of type {@code boolean} - boolean to check if old phase must be saved.
+     * @param newGamePhase            of type {@link GamePhase} - new game phase to set in the client's view.
+     * @param setOldPhase             of type {@code boolean} - boolean to check if old phase must be saved.
      * @param forceImmediateExecution of type {@code boolean} - boolean to check if the phase must change immediately.
      */
     public synchronized void changePhase(GamePhase newGamePhase, boolean setOldPhase, boolean forceImmediateExecution) {
@@ -120,8 +120,8 @@ public class ControllerClient extends GameClientListened {
      * If the client's player is the current one playing its turn the client's phase is set to the
      * provided one as well, else it is set to wait phase.
      *
-     * @param newGamePhase of type {@link GamePhase} - new game phase to set in the game.
-     * @param currentPlayerIndex of type {@code Byte} - index of the current player.
+     * @param newGamePhase            of type {@link GamePhase} - new game phase to set in the game.
+     * @param currentPlayerIndex      of type {@code Byte} - index of the current player.
      * @param forceImmediateExecution of type {@code boolean} - boolean to check if the phase must change immediately.
      */
     public void changePhase(GamePhase newGamePhase, Byte currentPlayerIndex, boolean forceImmediateExecution) {
@@ -143,15 +143,15 @@ public class ControllerClient extends GameClientListened {
      * @param command of type {@link ToServerMessage} - instance of the command to execute.
      */
     public void sendMessage(ToServerMessage command) {
-        if (serverSender == null) error();
+        if (serverSender == null) error("Can't send to server, server sender null");
         else serverSender.sendServerMessage(command);
     }
 
     /**
-     * Method error is called when an error occurs, resetting the current character card and returning to the old game phase.
+     * Method error is called when an error occurs updating that error to the view
      */
-    public void error() {
-        unsetCurrentCharacterCard();
+    public void error(String error) {
+        notifyError(error);
         abstractView.goToOldPhase();
     }
 
@@ -174,7 +174,6 @@ public class ControllerClient extends GameClientListened {
                 model.setUpdatedCharacter(entry.getKey());
             }
         }
-
         for (Map.Entry<Byte, GameComponent> entry : gameDelta.getUpdatedGC().entrySet()) {
             model.setGameComponent(entry.getKey(), entry.getValue());
         }
@@ -185,9 +184,7 @@ public class ControllerClient extends GameClientListened {
 
         gameDelta.getNewMotherNaturePosition().ifPresent(mnPosition -> model.setMotherNaturePosition(mnPosition));
 
-        for (Byte b : gameDelta.getDeletedIslands()) {
-            model.removeIsland(b);
-        }
+        gameDelta.getDeletedIslands().ifPresent(deletedIsland -> model.removeIslands(deletedIsland));
 
         gameDelta.getPlayedCard().ifPresent(playedCard -> model.playCard(playedCard));
 
@@ -201,7 +198,7 @@ public class ControllerClient extends GameClientListened {
      * game if the game has all the players required.
      *
      * @param playerJoined of type {@link Player} - instance of the player that joined the game.
-     * @param teamColor of type {@link HouseColor} - color of the player's team.
+     * @param teamColor    of type {@link HouseColor} - color of the player's team.
      */
     public void addMember(Player playerJoined, HouseColor teamColor) {
         teamsClient.get(teamColor.ordinal()).addPlayer(new PlayerClient(playerJoined));
@@ -213,8 +210,8 @@ public class ControllerClient extends GameClientListened {
      * Method setMatchInfo updates the controller info about the game.
      *
      * @param matchType of type {@link MatchType} - type of the controller's game.
-     * @param teams of type {@code List}<{@link Team}> - list of instance of the game's teams.
-     * @param myWizard of type {@link Wizard} - wizard associated with the client's player.
+     * @param teams     of type {@code List}<{@link Team}> - list of instance of the game's teams.
+     * @param myWizard  of type {@link Wizard} - wizard associated with the client's player.
      */
     public void setMatchInfo(MatchType matchType, List<Team> teams, Wizard myWizard) {
         this.myWizard = myWizard;

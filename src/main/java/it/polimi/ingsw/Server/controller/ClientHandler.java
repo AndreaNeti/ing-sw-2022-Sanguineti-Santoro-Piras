@@ -67,6 +67,7 @@ public class ClientHandler implements Runnable, GameListener {
                 command.execute(this);
             } catch (EndGameException e) {
                 // if the exception arrives here it means it was an end instantly exception
+                System.out.println(e.getMessage());
                 controller.endGame();
             } catch (GameException e1) {
                 update(new ErrorException(e1.getMessage()));
@@ -176,7 +177,7 @@ public class ClientHandler implements Runnable, GameListener {
      *
      * @param matchType of type {@link MatchType} - type of game the player wants to join.
      * @throws GameException if the client handler has already a game controller set or if the client
-     * cannot be added to the game.
+     *                       cannot be added to the game.
      */
     public void joinByMatchType(MatchType matchType) throws GameException {
         if (controller != null) throw new NotAllowedException("Already joined a match");
@@ -189,7 +190,7 @@ public class ClientHandler implements Runnable, GameListener {
      *
      * @param matchId of type {@code Long} - ID of the game the player wants to join.
      * @throws GameException if the client handler has already a game controller set or if the client
-     * cannot be added to the game.
+     *                       cannot be added to the game.
      */
     public void joinByMatchId(Long matchId) throws GameException {
         if (controller != null) throw new NotAllowedException("Already joined a match");
@@ -201,7 +202,7 @@ public class ClientHandler implements Runnable, GameListener {
      *
      * @param matchType of type {@link MatchType} - type of game the player wants to create.
      * @throws GameException if the client handler has already a game controller set or if the client
-     * cannot be added to the game created.
+     *                       cannot be added to the game created.
      */
     public void createMatch(MatchType matchType) throws GameException {
         if (controller != null) throw new NotAllowedException("Already joined a match");

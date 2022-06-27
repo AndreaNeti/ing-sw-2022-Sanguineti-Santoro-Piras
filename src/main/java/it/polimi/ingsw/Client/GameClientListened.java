@@ -3,16 +3,13 @@ package it.polimi.ingsw.Client;
 import it.polimi.ingsw.Client.View.GameClientListener;
 import it.polimi.ingsw.Client.model.GameComponentClient;
 import it.polimi.ingsw.Client.model.IslandClient;
-import it.polimi.ingsw.Util.AssistantCard;
-import it.polimi.ingsw.Util.Color;
-import it.polimi.ingsw.Util.HouseColor;
-import it.polimi.ingsw.Util.Wizard;
+import it.polimi.ingsw.Util.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public abstract class GameClientListened {
-    private List<GameClientListener> listeners= new ArrayList<>();
+    private List<GameClientListener> listeners = new ArrayList<>();
 
     public void notifyMotherNature(Byte motherNaturePosition) {
         for (GameClientListener listener : listeners) {
@@ -32,9 +29,9 @@ public abstract class GameClientListened {
         }
     }
 
-    public void notifyDeletedIsland(IslandClient islands) {
+    public void notifyDeletedIsland(IslandClient deletedIsland, IslandClient islandWInner) {
         for (GameClientListener listener : listeners) {
-            listener.updateDeletedIsland(islands);
+            listener.updateDeletedIsland(deletedIsland, islandWInner);
         }
     }
 
@@ -49,6 +46,7 @@ public abstract class GameClientListened {
             listener.updateProfessor(color, wizard);
         }
     }
+
     public void notifyCardPlayed(AssistantCard playedCard) {
         for (GameClientListener listener : listeners) {
             listener.updateCardPlayed(playedCard);
@@ -58,12 +56,6 @@ public abstract class GameClientListened {
     public void notifyIgnoredColor(Color color) {
         for (GameClientListener listener : listeners) {
             listener.updateIgnoredColor(color);
-        }
-    }
-
-    public void notifyExtraSteps(boolean extraSteps) {
-        for (GameClientListener listener : listeners) {
-            listener.updateExtraSteps(extraSteps);
         }
     }
 
@@ -89,26 +81,42 @@ public abstract class GameClientListened {
         if (listeners == null) listeners = new ArrayList<>();
         listeners.add(listener);
     }
+
     public void notifyMessage(String message) {
         for (GameClientListener listener : listeners) {
             listener.updateMessage(message);
         }
     }
-    public void removeListeners(){
-        listeners=new ArrayList<>();
+
+    public void removeListeners() {
+        listeners = new ArrayList<>();
     }
-    public void notifyCoins(Byte coins){
+
+    public void removeListener(GameClientListener listener) {
+        listeners.remove(listener);
+    }
+
+    public void notifyCoins(Byte coins) {
         for (GameClientListener listener : listeners) {
             listener.updateCoins(coins);
         }
     }
-    public void notifyCoins(Wizard wizard, Byte coins){
+
+    public void notifyCoins(Wizard wizard, Byte coins) {
         for (GameClientListener listener : listeners) {
-            listener.updateCoins( wizard,coins);
+            listener.updateCoins(wizard, coins);
         }
-    }public void notifyProhibitions(Byte prohibitions){
+    }
+
+    public void notifyProhibitions(Byte prohibitions) {
         for (GameClientListener listener : listeners) {
-            listener.updateProhibitions( prohibitions);
+            listener.updateProhibitions(prohibitions);
+        }
+    }
+
+    public void notifyError(String error) {
+        for (GameClientListener listener : listeners) {
+            listener.updateError(error);
         }
     }
 }

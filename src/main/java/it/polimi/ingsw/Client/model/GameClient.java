@@ -7,10 +7,7 @@ import it.polimi.ingsw.Server.controller.Server;
 import it.polimi.ingsw.Server.model.NormalGame;
 import it.polimi.ingsw.Server.model.ExpertGame;
 import it.polimi.ingsw.Server.model.GameComponents.GameComponent;
-import it.polimi.ingsw.Util.AssistantCard;
-import it.polimi.ingsw.Util.Color;
-import it.polimi.ingsw.Util.HouseColor;
-import it.polimi.ingsw.Util.Wizard;
+import it.polimi.ingsw.Util.*;
 
 import java.util.*;
 import java.util.concurrent.locks.Lock;
@@ -90,8 +87,7 @@ public class GameClient extends GameClientListened implements GameClientView {
 
     @Override
     public PlayerClient getCurrentPlayer() {
-        if (currentPlayer != null)
-            return getPlayer(currentPlayer);
+        if (currentPlayer != null) return getPlayer(currentPlayer);
         return null;
     }
 
@@ -201,15 +197,19 @@ public class GameClient extends GameClientListened implements GameClientView {
     /**
      * Method removeIsland removes an island (after merging it) from the game.
      *
-     * @param idIsland of type {@code byte} - unique ID of the island to remove.
+     * @param deletedIsland of {@code DeletedIsland} is the record received from the game delta
      */
-    public void removeIsland(byte idIsland) {
-        IslandClient islandToRemove = getIslandById(idIsland);
-        if (islandToRemove == null) {
-            System.err.println("Error in passing parameter, island not found");
+    public void removeIslands(DeletedIsland deletedIsland) {
+        for (Byte idIsland : deletedIsland.deletedIsland()
+        ) {
+            IslandClient islandToRemove = getIslandById(idIsland);
+            if (islandToRemove == null) {
+                System.err.println("Error in passing parameter, island not found");
+            }
+            islands.remove(islandToRemove);
+            notifyDeletedIsland(islandToRemove, getIslandById(deletedIsland.idWinnerIsland()));
         }
-        islands.remove(islandToRemove);
-        notifyDeletedIsland(islandToRemove);
+
     }
 
     /**
@@ -330,7 +330,7 @@ public class GameClient extends GameClientListened implements GameClientView {
      */
     public void setIgnoredColorInfluence(Color ignoredColorInfluence) {
         this.ignoredColorInfluence = ignoredColorInfluence;
-        //    notifyIgnoredColor(ignoredColorInfluence);
+        notifyIgnoredColor(ignoredColorInfluence);
     }
 
     /**
@@ -351,8 +351,7 @@ public class GameClient extends GameClientListened implements GameClientView {
 
     @Override
     public List<CharacterCardClient> getCharacters() {
-        if (characters == null || lockForCharacter == null)
-            return null;
+        if (characters == null || lockForCharacter == null) return null;
         lockForCharacter.lock();
         List<CharacterCardClient> characterCardClients = Stream.concat(characters.stream(), charactersWithStudents.stream()).collect(Collectors.toList());
         lockForCharacter.unlock();
@@ -366,20 +365,18 @@ public class GameClient extends GameClientListened implements GameClientView {
      * @param charactersReceived of type {@code List}<{@code Byte}> - list of the unique IDs of the character cards to add.
      */
     public void setCharacters(List<Byte> charactersReceived) {
-        if (lockForCharacter == null)
-            lockForCharacter = new ReentrantLock();
-        if (lockForCharacter.tryLock())
-            try {
-                for (Byte character : charactersReceived) {
-                    if (character == 0 || character == 6 || character == 10) {
-                        charactersWithStudents.add((CharacterCardClientWithStudents) factoryCharacter(character));
-                    } else {
-                        this.characters.add(factoryCharacter(character));
-                    }
+        if (lockForCharacter == null) lockForCharacter = new ReentrantLock();
+        if (lockForCharacter.tryLock()) try {
+            for (Byte character : charactersReceived) {
+                if (character == 0 || character == 6 || character == 10) {
+                    charactersWithStudents.add((CharacterCardClientWithStudents) factoryCharacter(character));
+                } else {
+                    this.characters.add(factoryCharacter(character));
                 }
-            } finally {
-                lockForCharacter.unlock();
             }
+        } finally {
+            lockForCharacter.unlock();
+        }
     }
 
     /**
@@ -439,8 +436,7 @@ public class GameClient extends GameClientListened implements GameClientView {
 
     @Override
     public PlayerClient getPlayer(int n) {
-        if (n < 0 || n >= matchType.nPlayers())
-            throw new IllegalArgumentException("Not a valid player index");
+        if (n < 0 || n >= matchType.nPlayers()) throw new IllegalArgumentException("Not a valid player index");
         // teams index = b % team size (in 4 players game, players are inserted in team 0, indexOf1, 0, 1)
         // player index (in team members) = b / team size (2 or 3 players -> = 0 (team contains only 1 member), 4 players -> first 2 = 0, last 2 = 1 (3rd player is in team 0 and is member[1]))
         return teams.get(n % teams.size()).getPlayers().get(n / teams.size());
@@ -469,12 +465,10 @@ public class GameClient extends GameClientListened implements GameClientView {
      */
     public void setUpdatedCharacter(Byte charId) {
         for (CharacterCardClient c : characters) {
-            if (c.getCharId() == charId)
-                c.setUsed();
+            if (c.getCharId() == charId) c.setUsed();
         }
         for (CharacterCardClientWithStudents c : charactersWithStudents)
-            if (c.getCharId() == charId)
-                c.setUsed();
+            if (c.getCharId() == charId) c.setUsed();
         notifyCharacter(charId);
     }
 

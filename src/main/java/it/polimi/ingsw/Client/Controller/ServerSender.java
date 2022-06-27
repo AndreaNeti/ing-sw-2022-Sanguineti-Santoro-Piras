@@ -35,6 +35,7 @@ public class ServerSender {
     public void sendServerMessage(ToServerMessage command){
         synchronized (objOut) {
             try {
+                objOut.reset();
                 objOut.writeObject(command);
                 objOut.flush();
             } catch (IOException e) {
