@@ -52,13 +52,17 @@ class ClientHandlerTest {
             fail();
         }
 
-        p1 = new ClientHandler(client1);
-        p2 = new ClientHandler(client2);
+        try {
+            p1 = new ClientHandler(client1);
+            p2 = new ClientHandler(client2);
+        } catch (IOException e) {
+            fail(e);
+        }
         try {
             p1.setNickName("Paolino");
             p2.setNickName("Franco");
         } catch (GameException e) {
-            fail();
+            fail(e);
         }
     }
 

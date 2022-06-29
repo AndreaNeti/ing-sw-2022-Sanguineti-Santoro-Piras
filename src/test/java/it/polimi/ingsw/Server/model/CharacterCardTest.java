@@ -126,12 +126,12 @@ class CharacterCardTest {
             old = game.getComponentById(islandId).howManyStudents(Color.values()[color]);
             c0.play(game);
         } catch (GameException | EndGameException e) {
-            fail();
+            fail(e);
         }
         try {
             assertEquals(game.getComponentById(islandId).howManyStudents(Color.values()[color]), old + 1);
         } catch (GameException e) {
-            throw new RuntimeException(e);
+            fail(e);
         }
         assertEquals(((GameComponent) c0).howManyStudents(), ((GameComponent) c0).getMaxStudents());
     }

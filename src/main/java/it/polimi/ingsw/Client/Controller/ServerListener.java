@@ -67,12 +67,12 @@ public class ServerListener implements Runnable {
         try {
             objIn.close();
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
         try {
             socket.close();
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
     }
 

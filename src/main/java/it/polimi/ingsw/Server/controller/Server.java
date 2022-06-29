@@ -23,12 +23,12 @@ public class Server {
     public static final ConcurrentHashMap<MatchType, Map<Long, Controller>> matches = new ConcurrentHashMap<>();
     private static final Set<String> nickNames = Collections.synchronizedSet(new HashSet<>());
     private static final Map<MatchType, MatchConstants> matchConstants = Map.ofEntries(
-            entry(new MatchType((byte) 2, false), new MatchConstants(10, 3, 0, 0, 0, 7, 10, 8, 3,0)),
-            entry(new MatchType((byte) 2, true), new MatchConstants(10, 3, 3, 20, 1, 7, 10, 8, 3,2)),
-            entry(new MatchType((byte) 3, false), new MatchConstants(10, 3, 0, 0, 0, 9, 10, 6, 4,2)),
-            entry(new MatchType((byte) 3, true), new MatchConstants(10, 3, 3, 20, 1, 9, 10, 6, 4,2)),
-            entry(new MatchType((byte) 4, false), new MatchConstants(10, 3, 0, 0, 0, 7, 10, 8, 3,2)),
-            entry(new MatchType((byte) 4, true), new MatchConstants(10, 3, 3, 20, 1, 7, 10, 8, 3,2))
+            entry(new MatchType((byte) 2, false), new MatchConstants(10, 3, 0, 0, 0, 7, 10, 8, 3, 0)),
+            entry(new MatchType((byte) 2, true), new MatchConstants(10, 3, 3, 20, 1, 7, 10, 8, 3, 2)),
+            entry(new MatchType((byte) 3, false), new MatchConstants(10, 3, 0, 0, 0, 9, 10, 6, 4, 2)),
+            entry(new MatchType((byte) 3, true), new MatchConstants(10, 3, 3, 20, 1, 9, 10, 6, 4, 2)),
+            entry(new MatchType((byte) 4, false), new MatchConstants(10, 3, 0, 0, 0, 7, 10, 8, 3, 2)),
+            entry(new MatchType((byte) 4, true), new MatchConstants(10, 3, 3, 20, 1, 7, 10, 8, 3, 2))
     );
 
     /**
@@ -44,8 +44,7 @@ public class Server {
                 try {
                     new Thread(new ClientHandler(server.accept())).start();
                 } catch (IOException e) {
-                    server.close();
-                    throw new RuntimeException(e);
+                    System.err.println("Failed connection to client: " + e.getMessage());
                 }
             }
         } catch (IOException e) {
@@ -94,7 +93,7 @@ public class Server {
      * @param matchType of type {@link MatchType} - type of the match of which we want to get the ID.
      * @return {@code Long} - ID of the oldest match with the specified type.
      * @throws NotAllowedException if no match with the specified type are found.
-     * if no match with the specified type are found.
+     *                             if no match with the specified type are found.
      */
     public static Long getOldestMatchId(MatchType matchType) throws NotAllowedException {
         Map<Long, Controller> filteredMatches = matches.get(matchType);
@@ -127,6 +126,7 @@ public class Server {
 
     /**
      * Method removeMatch removes the match with the specified ID from the Server's map of all available matches.
+     *
      * @param id of type {@code Long} - ID of the match to remove.
      */
     public static void removeMatch(Long id) {

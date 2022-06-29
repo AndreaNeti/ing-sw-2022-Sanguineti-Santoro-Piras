@@ -155,11 +155,11 @@ public class GameClient extends GameClientListened implements GameClientView {
         } else if (idGameComponent >= 2 * MatchType.MAX_PLAYERS) {
             IslandClient islandToReturn = getIslandById(idGameComponent);
             if (islandToReturn == null) {
-                throw new RuntimeException("error in passing parameters probably");
+                System.err.println("Error in passing parameters");
+            } else {
+                islandToReturn.modifyGameComponent(gameComponent);
+                notifyGameComponent(islandToReturn);
             }
-            islandToReturn.modifyGameComponent(gameComponent);
-
-            notifyGameComponent(islandToReturn);
         } else if (idGameComponent <= -10) {
             System.out.println(idGameComponent);
             for (CharacterCardClientWithStudents ch : charactersWithStudents) {

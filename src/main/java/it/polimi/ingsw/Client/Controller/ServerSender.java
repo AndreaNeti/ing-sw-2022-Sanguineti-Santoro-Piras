@@ -39,7 +39,7 @@ public class ServerSender {
                 objOut.writeObject(command);
                 objOut.flush();
             } catch (IOException e) {
-                e.printStackTrace();
+                System.err.println("Connection closed");
             }
         }
     }
@@ -51,7 +51,7 @@ public class ServerSender {
         try {
             objOut.close();
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
     }
 }

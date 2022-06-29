@@ -38,18 +38,13 @@ public class ClientHandler implements Runnable, GameListener, PingPongInterface 
      *
      * @param socket of type {@code Socket} - socket connection between the server and the client.
      */
-    public ClientHandler(Socket socket) {
+    public ClientHandler(Socket socket) throws IOException {
         if (socket == null) throw new NullPointerException();
         this.socket = socket;
-        try {
-            objOut = new ObjectOutputStream(socket.getOutputStream());
-            objIn = new ObjectInputStream(socket.getInputStream());
-            pingPong = new PingPong(this);
-            System.out.println("Connected with client " + socket.getPort());
-        } catch (IOException e) {
-            e.printStackTrace();
-            throw new RuntimeException(e);
-        }
+        objOut = new ObjectOutputStream(socket.getOutputStream());
+        objIn = new ObjectInputStream(socket.getInputStream());
+        pingPong = new PingPong(this);
+        System.out.println("Connected with client " + socket.getPort());
     }
 
     /**
