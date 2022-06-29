@@ -126,7 +126,7 @@ public class BoardController implements SceneController {
             // coins are in coinsBox
             HBox box = (HBox) getElementById("#coinsBox");
             box.setVisible(true);
-            updateCoins(model.getNewCoinsLeft());
+            updateCoins(model.getCoinsLeft());
         } else {
             characters.setVisible(false);
         }

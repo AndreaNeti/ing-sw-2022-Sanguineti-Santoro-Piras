@@ -299,7 +299,7 @@ public class CliPrinter implements GameClientListener {
                         // print third row of character cards with students if present
                         for (CharacterCardClient ch : game.getCharacters()) {
                             if (ch.toString().equals("Grandma weeds"))
-                                boardsCharChatPrint.append("\t\u2502   \u001b[31mX\u001b[0m: ").append(game.getNewProhibitionsLeft()).append("   ");
+                                boardsCharChatPrint.append("\t\u2502   \u001b[31mX\u001b[0m: ").append(game.getProhibitionsLeft()).append("   ");
                             else
                                 boardsCharChatPrint.append("\t\u2502          ");
                             if (ch.containsStudents())

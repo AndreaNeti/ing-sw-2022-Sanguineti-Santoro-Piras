@@ -50,6 +50,13 @@ public class Char10Client extends CharacterCardClientWithStudents {
 
     }
 
+    /**
+     * Method setInputs returns the event handler for a mouse event to add to a specific node of the GUI in order to obtain the card required inputs.
+     *
+     * @param viewGUI of type {@link ViewGUI} - client's GUI view from which the inputs are obtained.
+     * @return {@code EventHandler}<{{@code MouseEvent}> - function that will be executed when the node that adds the
+     *      event handler is clicked.
+     */
     private EventHandler<MouseEvent> setInput(ViewGUI viewGUI) {
         return mouseEvent -> {
 

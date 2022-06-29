@@ -84,7 +84,7 @@ public interface GameClientView {
      *
      * @return {@code Byte} - amounts of prohibitions left in the game.
      */
-    Byte getNewProhibitionsLeft();
+    Byte getProhibitionsLeft();
 
     /**
      * Method getMatchConstants returns the match constants of the game.
@@ -145,11 +145,11 @@ public interface GameClientView {
     boolean isExtraSteps();
 
     /**
-     * Method getNewCoinsLeft returns the amount of coins available in the game.
+     * Method getCoinsLeft returns the amount of coins available in the game.
      *
      * @return {@code Integer} - amount of coins available in the game.
      */
-    Integer getNewCoinsLeft();
+    Integer getCoinsLeft();
 
     /**
      * Method addListener adds to the game a new client listener, to be notified when changes occur in the game.

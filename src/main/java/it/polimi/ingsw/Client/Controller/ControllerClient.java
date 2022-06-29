@@ -169,7 +169,7 @@ public class ControllerClient extends GameClientListened implements PingPongInte
             gameDelta.isExtraSteps().ifPresent((extraSteps) -> model.setExtraSteps(extraSteps));
             gameDelta.getIgnoredColorInfluence().ifPresent((ignoredColorInfluence) -> model.setIgnoredColorInfluence(ignoredColorInfluence));
             for (Map.Entry<Byte, Integer> newEntry : gameDelta.getUpdatedCoinPlayer().entrySet())
-                model.setUpdatedCoinPlayer(newEntry.getKey(), newEntry.getValue());
+                model.setUpdatedCoinsPlayer(newEntry.getKey(), newEntry.getValue());
             for (Map.Entry<Byte, Boolean> entry : gameDelta.getUsedCharacter().entrySet()) {
                 model.setUpdatedCharacter(entry.getKey());
             }

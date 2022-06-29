@@ -23,7 +23,7 @@ public class PlayCharacterCardPhase extends ClientPhase {
     }
 
     /**
-     * //TODO: Method playPhase is empty lol .
+     * Method playPhase disables everything except the card buttons and the GUI nodes necessary for the card effect, adding the respective command on them.
      *
      * @param viewGUI of type {@link ViewGUI} - instance of the client's view (GUI).
      */

@@ -29,6 +29,11 @@ public interface CharacterCardClient {
     //return the next input needed for the character card, null if it can be played
     void setNextInput(ViewForCharacterCli view) throws SkipCommandException;
 
+    /**
+     * Method setHandler enables the GUI components necessary to apply the card effect.
+     *
+     * @param viewGUI of type {@link ViewGUI} - client's GUI view on which the required nodes are enabled.
+     */
     void setHandler(ViewGUI viewGUI);
 
     /**

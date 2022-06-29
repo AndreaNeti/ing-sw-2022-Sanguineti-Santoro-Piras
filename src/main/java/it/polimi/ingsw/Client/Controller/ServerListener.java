@@ -12,7 +12,6 @@ import java.net.Socket;
  * respective command using the client's controller.
  */
 public class ServerListener implements Runnable {
-    //TODO: check naming convention for final attributes
     private final ControllerClient controllerClient;
     private volatile boolean quit;
     private final ObjectInputStream objIn;

@@ -27,7 +27,6 @@ import java.util.List;
  * Each command has
  */
 public enum GameCommand {
-    //TODO: add javadoc for all specific functions or keep the general one
     /**
      * CONNECT_SERVER GameCommand is used by the client to connect to the server.
      */
@@ -594,10 +593,10 @@ public enum GameCommand {
     public abstract void playCLICommand(ViewCli viewCli) throws SkipCommandException;
 
     /**
-     * Method getGUIHandler returns the event handler for a mouse event to add to a specific component of the GUI.
+     * Method getGUIHandler returns the event handler for a mouse event to add to a specific node of the GUI.
      *
      * @param viewGUI of type {@link ViewGUI} - instance of the client's view (GUI).
-     * @return {@code EventHandler}<{@code MouseEvent}> - function that will be executed when the component that adds the
+     * @return {@code EventHandler}<{@code MouseEvent}> - function that will be executed when the node that adds the
      * event handler is clicked.
      */
     //TODO set this function abstract

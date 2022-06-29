@@ -34,11 +34,9 @@ public class GameClient extends GameClientListened implements GameClientView {
     private final List<CharacterCardClient> characters;
     private final List<CharacterCardClientWithStudents> charactersWithStudents;
     private CharacterCardClient currentCharacterCard;
-    //TODO: maybe change these names
-    // player id, new playerCoinsLeft
-    private final Map<Byte, Integer> updatedCoinPlayer;
-    private byte newProhibitionsLeft;
-    private int newCoinsLeft;
+    private final Map<Byte, Integer> coinsPlayers;
+    private byte prohibitionsLeft;
+    private int coinsLeft;
     private boolean extraSteps;
     private Color ignoredColorInfluence;
 
@@ -67,9 +65,9 @@ public class GameClient extends GameClientListened implements GameClientView {
         this.teams = teamsClient;
         this.characters = new ArrayList<>();
         this.charactersWithStudents = new ArrayList<>();
-        this.updatedCoinPlayer = new HashMap<>();
+        this.coinsPlayers = new HashMap<>();
         for (byte i = 0; i < matchType.nPlayers(); i++) {
-            updatedCoinPlayer.put(i, matchConstants.initialPlayerCoins());
+            coinsPlayers.put(i, matchConstants.initialPlayerCoins());
         }
     }
 
@@ -97,7 +95,6 @@ public class GameClient extends GameClientListened implements GameClientView {
      */
     public void setCurrentPlayer(Byte currentPlayer) {
         this.currentPlayer = currentPlayer;
-        boolean isMyTurn = currentPlayer == myWizard.ordinal();
     }
 
     /**
@@ -272,8 +269,8 @@ public class GameClient extends GameClientListened implements GameClientView {
     }
 
     @Override
-    public Integer getNewCoinsLeft() {
-        return newCoinsLeft;
+    public Integer getCoinsLeft() {
+        return coinsLeft;
     }
 
     /**
@@ -282,13 +279,13 @@ public class GameClient extends GameClientListened implements GameClientView {
      * @param newCoinsLeft of type {@code Integer} - new amount of coins available.
      */
     public void setNewCoinsLeft(Integer newCoinsLeft) {
-        this.newCoinsLeft = newCoinsLeft;
+        this.coinsLeft = newCoinsLeft;
         notifyCoins(newCoinsLeft);
     }
 
     @Override
-    public Byte getNewProhibitionsLeft() {
-        return newProhibitionsLeft;
+    public Byte getProhibitionsLeft() {
+        return prohibitionsLeft;
     }
 
     /**
@@ -297,7 +294,7 @@ public class GameClient extends GameClientListened implements GameClientView {
      * @param newProhibitionsLeft of type {@code byte} - new amount of prohibitions remaining.
      */
     public void setNewProhibitionsLeft(Byte newProhibitionsLeft) {
-        this.newProhibitionsLeft = newProhibitionsLeft;
+        this.prohibitionsLeft = newProhibitionsLeft;
         notifyProhibitions(newProhibitionsLeft);
     }
 
@@ -338,14 +335,14 @@ public class GameClient extends GameClientListened implements GameClientView {
      * @param playerIndex of type {@code byte} - index of the player of which we want to update the coins.
      * @param newCoins    of type {@code int} - new amount of coins.
      */
-    public void setUpdatedCoinPlayer(byte playerIndex, int newCoins) {
-        this.updatedCoinPlayer.put(playerIndex, newCoins);
+    public void setUpdatedCoinsPlayer(byte playerIndex, int newCoins) {
+        this.coinsPlayers.put(playerIndex, newCoins);
         notifyCoins(getPlayers().get(playerIndex).getWizard(), newCoins);
     }
 
     @Override
     public int getCoinsPlayer(byte wizardIndex) {
-        return updatedCoinPlayer.get(wizardIndex);
+        return coinsPlayers.get(wizardIndex);
     }
 
     @Override
