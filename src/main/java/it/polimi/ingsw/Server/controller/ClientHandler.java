@@ -3,6 +3,9 @@ package it.polimi.ingsw.Server.controller;
 import it.polimi.ingsw.exceptions.serverExceptions.EndGameException;
 import it.polimi.ingsw.exceptions.serverExceptions.GameException;
 import it.polimi.ingsw.exceptions.serverExceptions.NotAllowedException;
+import it.polimi.ingsw.network.PingMessage;
+import it.polimi.ingsw.network.PingPong;
+import it.polimi.ingsw.network.PingPongInterface;
 import it.polimi.ingsw.network.toClientMessage.ErrorException;
 import it.polimi.ingsw.network.toClientMessage.OK;
 import it.polimi.ingsw.network.toClientMessage.ToClientMessage;
@@ -19,7 +22,7 @@ import java.util.Objects;
  * ClientHandler class represents the 'middleman' between the user client and the controller, sending game updates to the client
  * and using the controller to modify the game through the user commands.
  */
-public class ClientHandler implements Runnable, GameListener {
+public class ClientHandler implements Runnable, GameListener, PingPongInterface {
     // TODO: Maybe move here check for turn, nickname and match joined
     private final Socket socket;
     private String nickName;
@@ -27,6 +30,7 @@ public class ClientHandler implements Runnable, GameListener {
     private boolean quit;
     private final ObjectOutputStream objOut;
     private final ObjectInputStream objIn;
+    private final PingPong pingPong;
 
     /**
      * Constructor ClientHandler creates a new instance of ClientHandler.
@@ -39,6 +43,7 @@ public class ClientHandler implements Runnable, GameListener {
         try {
             objOut = new ObjectOutputStream(socket.getOutputStream());
             objIn = new ObjectInputStream(socket.getInputStream());
+            pingPong = new PingPong(this);
             System.out.println("Connected with client " + socket.getPort());
         } catch (IOException e) {
             e.printStackTrace();
@@ -63,6 +68,7 @@ public class ClientHandler implements Runnable, GameListener {
         do {
             try {
                 command = (ToServerMessage) objIn.readObject();
+                //if (!(command instanceof PingMessage))
                 System.out.println(command.getClass().getName());
                 command.execute(this);
             } catch (EndGameException e) {
@@ -152,6 +158,7 @@ public class ClientHandler implements Runnable, GameListener {
      */
     @Override
     public void update(ToClientMessage message) {
+        //if (!(message instanceof PingMessage))
         System.out.println(message);
         try {
             objOut.reset();
@@ -242,5 +249,15 @@ public class ClientHandler implements Runnable, GameListener {
     @Override
     public int hashCode() {
         return Objects.hash(socket);
+    }
+
+    @Override
+    public void sendPingPong() {
+        update(new PingMessage());
+    }
+
+    @Override
+    public void resetPing() {
+        pingPong.resetTime();
     }
 }

@@ -6,18 +6,17 @@ import it.polimi.ingsw.Client.View.AbstractView;
 import it.polimi.ingsw.Client.model.GameClient;
 import it.polimi.ingsw.Client.model.PlayerClient;
 import it.polimi.ingsw.Client.model.TeamClient;
-import it.polimi.ingsw.Server.controller.GameDelta;
-import it.polimi.ingsw.Server.controller.MatchConstants;
-import it.polimi.ingsw.Server.controller.MatchType;
-import it.polimi.ingsw.Server.controller.Server;
+import it.polimi.ingsw.Server.controller.*;
 import it.polimi.ingsw.Server.model.GameComponents.GameComponent;
 import it.polimi.ingsw.Server.model.Player;
 import it.polimi.ingsw.Server.model.Team;
-import it.polimi.ingsw.Server.controller.Controller;
 import it.polimi.ingsw.Util.Color;
 import it.polimi.ingsw.Util.GamePhase;
 import it.polimi.ingsw.Util.HouseColor;
 import it.polimi.ingsw.Util.Wizard;
+import it.polimi.ingsw.network.PingMessage;
+import it.polimi.ingsw.network.PingPong;
+import it.polimi.ingsw.network.PingPongInterface;
 import it.polimi.ingsw.network.toServerMessage.Quit;
 import it.polimi.ingsw.network.toServerMessage.ToServerMessage;
 
@@ -37,7 +36,7 @@ import java.util.Map;
  * Similarly to the server class {@link Controller}, this class contains the client's game phase logic and
  * also updates the game based on the info received through delta update.
  */
-public class ControllerClient extends GameClientListened {
+public class ControllerClient extends GameClientListened implements PingPongInterface {
     private ServerSender serverSender;
     private GameClient model;
     private MatchType matchType;
@@ -48,6 +47,7 @@ public class ControllerClient extends GameClientListened {
     private AbstractView abstractView;
     private boolean isInMatch;
     private final LimitedChat<String> chat;
+    private PingPong pingPong;
 
     /**
      * Constructor ControllerClient creates a new instance of ControllerClient.
@@ -67,6 +67,7 @@ public class ControllerClient extends GameClientListened {
         try {
             socket = new Socket();
             socket.connect(new InetSocketAddress(InetAddress.getByAddress(ipAddress), Server.serverPort), 5000);
+            pingPong = new PingPong(this);
         } catch (IOException | NumberFormatException e) {
             return false;
         }
@@ -317,5 +318,24 @@ public class ControllerClient extends GameClientListened {
      */
     public void unsetCurrentCharacterCard() {
         if (model != null) model.unsetCurrentCharacterCard();
+    }
+
+    /**
+     * //TODO ANDREA WILL ADD THIS  thanks
+     */
+    @Override
+    public void sendPingPong() {
+        sendMessage(new PingMessage());
+    }
+
+    //**TODO ANDREA JAVA DOC PLS :) for ping pong interface
+    @Override
+    public void quit() {
+        closeConnection();
+    }
+
+    @Override
+    public void resetPing() {
+        pingPong.resetTime();
     }
 }
