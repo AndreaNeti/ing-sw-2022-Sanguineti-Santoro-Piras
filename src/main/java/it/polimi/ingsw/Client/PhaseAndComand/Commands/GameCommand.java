@@ -86,7 +86,7 @@ public enum GameCommand {
                 SceneController sceneController = GuiFX.getActiveSceneController();
                 TextField t = (TextField) sceneController.getElementById("#inputNickName");
                 String nick = t.getText();
-                if (nick == null || nick.isBlank()) {
+                if (nick == null || nick.isBlank() || nick.length() > 16) {
                     GuiFX.showError("Input fields empty", "Input not valid", "Error");
                     return;
                 }
