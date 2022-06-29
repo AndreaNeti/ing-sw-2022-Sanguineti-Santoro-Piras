@@ -20,7 +20,6 @@ import java.util.List;
  * and an instance of the game it controls.
  */
 public class Controller {
-    //TODO: all functions throw null pointer and endgame.
     private final MatchConstants matchConstants;
     private final MatchType matchType;
     private final ArrayList<Player> playersList;
@@ -95,8 +94,6 @@ public class Controller {
      * @param idGameComponent of type {@code Int} - the ID of the source component.
      * @throws GameException        if the color is null or the game component's ID is not valid or if it's not possible to move the student
      *                              to the specified game component or if this method is called during a phase that is not move_st_phase.
-     * @throws NullPointerException if
-     * @throws EndGameException     if
      */
     public synchronized void move(Color color, int idGameComponent) throws GameException, NullPointerException, EndGameException {
         if (gamePhase == GamePhase.MOVE_ST_PHASE) {
@@ -125,7 +122,6 @@ public class Controller {
      * @param idGameComponent of type {@code byte} - ID of the cloud.
      * @throws GameException        if the selected game component is not a cloud or if this method is called
      *                              during a phase that is not move_cl_phase or if the selected cloud has no students.
-     * @throws NullPointerException if
      * @throws EndGameException     if it is the last turn and after moving students from the cloud the game ends.
      */
     public synchronized void moveFromCloud(int idGameComponent) throws GameException, NullPointerException, EndGameException {
@@ -144,8 +140,6 @@ public class Controller {
      * @param card of type {@link AssistantCard} - instance of the assistant card to play.
      * @throws GameException        if the card selected cannot be played or if this method is called during a phase
      *                              that is not planification_phase or if the selected assistant card is not available to play.
-     * @throws NullPointerException if
-     * @throws EndGameException     if
      */
     //the value here need to go from 1 to 10
     public synchronized void playCard(AssistantCard card) throws GameException, NullPointerException, EndGameException {
@@ -172,7 +166,6 @@ public class Controller {
      * @param moves of type {@code byte} - number of moves wanted.
      * @throws GameException        if this method is called during a phase that is not move_mn_phase or if mother nature cannot
      *                              be moved the selected amount of moves.
-     * @throws NullPointerException if
      * @throws EndGameException     if after moving mother nature there are less than 3 islands left in the game.
      */
     public synchronized void moveMotherNature(int moves) throws GameException, NullPointerException, EndGameException {
@@ -240,7 +233,6 @@ public class Controller {
      * @param inputs of type {@code List}<{@code Integer}> - list of inputs to add.
      * @throws GameException        if this method is called during the planification_phase or if there is not selected
      *                              character card.
-     * @throws NullPointerException if
      */
     public synchronized void setCharacterInputs(List<Integer> inputs) throws GameException, NullPointerException {
         if (gamePhase == GamePhase.PLANIFICATION_PHASE) {
@@ -256,7 +248,6 @@ public class Controller {
      * @throws GameException        if this method is called during the planification phase or
      *                              if the current player has already played a card in this turn or if the
      *                              selected character card is not available or costs more than the number of coins of the player.
-     * @throws NullPointerException if
      */
     public synchronized void chooseCharacter(byte charId) throws GameException, NullPointerException {
         if (gamePhase == GamePhase.PLANIFICATION_PHASE) {
@@ -274,7 +265,6 @@ public class Controller {
      * @throws GameException        if this method is called during the planification phase
      *                              if the current player has already played a card in this turn or if there's an error
      *                              while playing the card (invalid or wrong inputs).
-     * @throws NullPointerException if
      * @throws EndGameException     if the card's effect triggers an endgame event (no more students in the bag,
      *                              * no more towers in a team's board or less than 3 islands left)
      */
@@ -364,7 +354,6 @@ public class Controller {
         if (matchType.isExpert()) game = new ExpertGame(teams, matchConstants);
         else game = new NormalGame(teams, matchConstants);
         game.setCurrentPlayer(currentPlayerIndex);
-        // TODO find a better way
         GameDelta gameDelta = game.getGameDelta();
         for (GameListener listener : playerHandlers)
             gameDelta.addListener(listener);

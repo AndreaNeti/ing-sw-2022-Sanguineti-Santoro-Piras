@@ -7,7 +7,6 @@ import it.polimi.ingsw.network.toClientMessage.ToClientMessage;
  * This interface is implemented by ClientHandler, used to interface the clients with the server's game model.
  */
 public interface GameListener {
-    //TODO: check if we can remove this interface
     /**
      * Method update sends a message from the server to the client via socket connection.
      *

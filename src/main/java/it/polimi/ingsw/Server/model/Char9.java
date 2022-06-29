@@ -47,7 +47,6 @@ public class Char9 implements CharacterCard {
             lunchHallColor = inputs.get(i);
             entranceHallColor = inputs.get(i + 1);
             game.getCurrentPlayer().getEntranceHall().swapStudents(Color.values()[entranceHallColor], Color.values()[lunchHallColor], game.getCurrentPlayer().getLunchHall());
-            // TODO find a way to add coins
         }
         game.calculateProfessor();
         game.getGameDelta().addUpdatedGC(game.getCurrentPlayer().getEntranceHall());

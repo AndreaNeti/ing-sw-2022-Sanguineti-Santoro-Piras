@@ -319,15 +319,12 @@ public class ControllerClient extends GameClientListened implements PingPongInte
         if (model != null) model.unsetCurrentCharacterCard();
     }
 
-    /**
-     * //TODO ANDREA WILL ADD THIS  thanks
-     */
+
     @Override
     public void sendPingPong() {
         sendMessage(new PingMessage());
     }
 
-    //**TODO ANDREA JAVA DOC PLS :) for ping pong interface
     @Override
     public void quit() {
         closeConnection();

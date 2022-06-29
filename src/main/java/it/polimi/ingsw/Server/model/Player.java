@@ -167,7 +167,7 @@ public class Player implements Serializable {
         // only checks nickname, it's unique
         return this.toString().equals(player.toString());
     }
-    //TODO: redundant functions?
+
     /**
      * Method toString returns the nickname of the player.
      *

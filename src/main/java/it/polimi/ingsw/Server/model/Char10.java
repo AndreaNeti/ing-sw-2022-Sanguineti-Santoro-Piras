@@ -40,7 +40,6 @@ public class Char10 extends GameComponent implements CharacterCard {
             throw new NotAllowedException("Set wrong input for color");
         }
         this.moveStudents(Color.values()[color], (byte) 1, game.getCurrentPlayer().getLunchHall());
-        // TODO find a way to add coins
         game.drawStudents(this, (byte) 1);
         game.calculateProfessor();
 

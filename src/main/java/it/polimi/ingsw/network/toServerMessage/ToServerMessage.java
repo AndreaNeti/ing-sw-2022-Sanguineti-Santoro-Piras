@@ -18,7 +18,7 @@ public interface ToServerMessage extends Serializable {
      * @param clientHandler of type {@link ClientHandler} - instance of the client handler that sends the message.
      * @throws GameException if the game is finished or if it's not the client's turn or if the controller throws
      * this exception.
-     * @throws EndGameException if the controller throws this exception
+     * @throws EndGameException if the controller throws this exception.
      */
     void execute(ClientHandler clientHandler) throws GameException, EndGameException;
 }

@@ -23,7 +23,6 @@ public class Char11 implements CharacterCard {
      */
     @Override
     public void play(CharacterCardGame game) throws GameException {
-        //TODO: calculate influence after moving students?
         int color = game.getCharacterInputs().get(0);
         if (color < 0 || color >= Color.values().length)
             throw new NotAllowedException("Set wrong input for color");
@@ -32,7 +31,8 @@ public class Char11 implements CharacterCard {
             byte s = (byte) Math.min(3, game.getComponentById(2 * i + 1).howManyStudents(Color.values()[color]));
             try { // nice bag bro
                 game.getComponentById(2 * i + 1).moveStudents(Color.values()[color], s, game.getComponentById(69));
-            } catch (NotEnoughStudentsException ignored) {
+            } catch (NotEnoughStudentsException e) {
+                e.printStackTrace();
                 //it shouldn't happen because we calculate the minimum value of the students of that color
             }
             game.getGameDelta().addUpdatedGC(game.getComponentById(2 * i + 1));

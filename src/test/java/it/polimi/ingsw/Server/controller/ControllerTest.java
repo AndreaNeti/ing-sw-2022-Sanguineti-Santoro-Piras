@@ -6,7 +6,7 @@ import it.polimi.ingsw.Util.MatchType;
 import it.polimi.ingsw.exceptions.serverExceptions.EndGameException;
 import it.polimi.ingsw.exceptions.serverExceptions.GameException;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
+import static org.mockito.Mockito.mock;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -25,10 +25,10 @@ class ControllerTest {
         controllerExpert2 = new Controller(new MatchType((byte) 2, true), 69L);
         controllerNormal = new Controller(new MatchType((byte) 3, false), 69L);
 
-        p1 = Mockito.mock(ClientHandler.class);
-        p2 = Mockito.mock(ClientHandler.class);
-        p3 = Mockito.mock(ClientHandler.class);
-        p4 = Mockito.mock(ClientHandler.class);
+        p1 = mock(ClientHandler.class);
+        p2 = mock(ClientHandler.class);
+        p3 = mock(ClientHandler.class);
+        p4 = mock(ClientHandler.class);
 
         try {
             controllerExpert.addPlayer(p1, "Gigi");
@@ -61,7 +61,7 @@ class ControllerTest {
 
     @Test
     void addPlayerTest() {
-        ClientHandler p = Mockito.mock(ClientHandler.class);
+        ClientHandler p = mock(ClientHandler.class);
         assertThrows(GameException.class, () -> controllerExpert.addPlayer(p, "Impostor"), "Match is full");
         assertThrows(GameException.class, () -> controllerNormal.addPlayer(p, "Impostor"), "Match is full");
     }
@@ -170,8 +170,8 @@ class ControllerTest {
     @Test
     void sendMessageTest() {
         assertThrows(NullPointerException.class, () -> controllerExpert.sendMessage(null, "Ciao"));
-        // TODO fix this test
-        // assertDoesNotThrow(() -> controllerExpert.sendMessage(new Socket(), "Ciao"));
+        ClientHandler clientHandler = mock(ClientHandler.class);
+        assertDoesNotThrow(() -> controllerExpert.sendMessage(clientHandler, "Ciao"));
     }
 
     @Test
