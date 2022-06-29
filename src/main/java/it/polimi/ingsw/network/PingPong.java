@@ -11,8 +11,8 @@ import java.util.TimerTask;
  * Both the client and the server contain a PingPong instance and therefore have their own timeout timer.
  */
 public class PingPong {
-    private long time;
-    long maxTime = 3000; //time that need to occur before closing the connection
+    private volatile long time;
+    long maxTime = 5000; //time that need to occur before closing the connection
     private final static long period = 2000;//frequency at which ping are send
 
     /**
@@ -26,9 +26,10 @@ public class PingPong {
         pingPong.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
-                if (System.currentTimeMillis() - time > maxTime) {
+                if ((System.currentTimeMillis() - time) > (maxTime + period)) {
                     pingPongController.quit();
                     pingPong.cancel();
+                    pingPong.purge();
                 } else pingPongController.sendPingPong();
             }
         }, period, period);
@@ -38,9 +39,9 @@ public class PingPong {
      * Method resetTime updates the time of the last ping received to the current one and updates the maximum time allowed based on the response time (capped at 15 seconds).
      */
     public void resetTime() {
-        long delta = System.currentTimeMillis() - time;
-        // updates the max time dynamically in function of the response time and caps it to 15 seconds
-        maxTime = Math.max(3 * Math.round((double) (maxTime / 3 + delta) / 2), 15000);
+        long delta = Math.abs(System.currentTimeMillis() - time - period);
+        // updates the max time dynamically in function of the 10 * average response time and caps it between 1 and 15 seconds
+        maxTime = Math.min(Math.max(Math.round((double) (maxTime + 20 * delta) / 2), 1000), 15000);
         time = System.currentTimeMillis();
     }
 }
