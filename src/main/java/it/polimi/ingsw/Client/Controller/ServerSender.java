@@ -51,7 +51,7 @@ public class ServerSender {
         try {
             objOut.close();
         } catch (IOException e) {
-            e.printStackTrace();
+            System.err.println("Stream closed");
         }
     }
 }

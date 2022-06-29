@@ -6,7 +6,7 @@ import java.util.TimerTask;
 
 public class PingPong {
     private long time;
-    long maxTime = 4000; //time that need to occurs before closing the connection
+    long maxTime = 3000; //time that need to occurs before closing the connection
     private final static long period = 2000;//frequency at which ping are send
 
     public PingPong(PingPongInterface pingPongController) {
@@ -24,6 +24,9 @@ public class PingPong {
     }
 
     public void resetTime() {
+        long delta = System.currentTimeMillis() - time;
+        // updates the max time dynamically in function of the response time and caps it to 15 seconds
+        maxTime = Math.max(3 * Math.round((double) (maxTime / 3 + delta) / 2), 15000);
         time = System.currentTimeMillis();
     }
 }
