@@ -1,5 +1,6 @@
-package it.polimi.ingsw.Server.controller;
+package it.polimi.ingsw.network;
 
+import it.polimi.ingsw.Server.controller.GameListener;
 import it.polimi.ingsw.Server.model.GameComponents.GameComponent;
 import it.polimi.ingsw.Util.*;
 import it.polimi.ingsw.network.toClientMessage.DeltaUpdate;

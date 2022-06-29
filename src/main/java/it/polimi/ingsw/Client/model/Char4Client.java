@@ -1,8 +1,8 @@
 package it.polimi.ingsw.Client.model;
 
 import it.polimi.ingsw.Client.View.Cli.ViewForCharacterCli;
-import it.polimi.ingsw.Server.model.Char4;
 import it.polimi.ingsw.Client.View.Gui.ViewGUI;
+import it.polimi.ingsw.Server.model.Char4;
 import it.polimi.ingsw.exceptions.clientExceptions.SkipCommandException;
 import javafx.event.EventHandler;
 import javafx.scene.Node;

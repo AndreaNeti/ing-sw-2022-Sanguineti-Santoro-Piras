@@ -1,6 +1,5 @@
 package it.polimi.ingsw.Client.Controller;
 
-import it.polimi.ingsw.network.PingPongInterface;
 import it.polimi.ingsw.network.toServerMessage.ToServerMessage;
 
 import java.io.IOException;

@@ -11,16 +11,11 @@ import javafx.scene.Scene;
 import javafx.scene.SceneAntialiasing;
 import javafx.scene.control.Alert;
 import javafx.scene.input.KeyCombination;
-
-import java.awt.*;
-
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 
-import javax.swing.*;
 import java.io.IOException;
-import java.util.Objects;
 
 public class GuiFX extends Application {
     private static Stage primaryStage;

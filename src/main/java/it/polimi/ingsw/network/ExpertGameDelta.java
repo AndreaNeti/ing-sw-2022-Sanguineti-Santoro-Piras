@@ -1,4 +1,4 @@
-package it.polimi.ingsw.Server.controller;
+package it.polimi.ingsw.network;
 
 import it.polimi.ingsw.Util.Color;
 

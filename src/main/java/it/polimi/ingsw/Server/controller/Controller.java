@@ -5,6 +5,7 @@ import it.polimi.ingsw.Util.*;
 import it.polimi.ingsw.exceptions.serverExceptions.EndGameException;
 import it.polimi.ingsw.exceptions.serverExceptions.GameException;
 import it.polimi.ingsw.exceptions.serverExceptions.NotAllowedException;
+import it.polimi.ingsw.network.GameDelta;
 import it.polimi.ingsw.network.toClientMessage.*;
 
 import java.util.ArrayList;

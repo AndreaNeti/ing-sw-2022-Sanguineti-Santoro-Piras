@@ -1,12 +1,12 @@
 package it.polimi.ingsw.Server.model;
 
-import it.polimi.ingsw.Server.controller.GameDelta;
 import it.polimi.ingsw.Util.AssistantCard;
 import it.polimi.ingsw.Util.Color;
 import it.polimi.ingsw.Util.HouseColor;
 import it.polimi.ingsw.exceptions.serverExceptions.EndGameException;
 import it.polimi.ingsw.exceptions.serverExceptions.GameException;
 import it.polimi.ingsw.exceptions.serverExceptions.NotAllowedException;
+import it.polimi.ingsw.network.GameDelta;
 
 import java.util.ArrayList;
 import java.util.List;

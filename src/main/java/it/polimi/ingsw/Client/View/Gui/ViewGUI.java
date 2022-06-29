@@ -4,7 +4,7 @@ import it.polimi.ingsw.Client.Controller.ControllerClient;
 import it.polimi.ingsw.Client.PhaseAndComand.Phases.ClientPhase;
 import it.polimi.ingsw.Client.View.AbstractView;
 import it.polimi.ingsw.Client.View.Gui.SceneController.SceneController;
-import it.polimi.ingsw.Server.controller.MatchType;
+import it.polimi.ingsw.Util.MatchType;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.scene.Node;

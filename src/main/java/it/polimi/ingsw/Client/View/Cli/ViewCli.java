@@ -7,11 +7,7 @@ import it.polimi.ingsw.Client.model.CharacterCardClient;
 import it.polimi.ingsw.Client.model.GameClientView;
 import it.polimi.ingsw.Client.model.GameComponentClient;
 import it.polimi.ingsw.Client.model.IslandClient;
-import it.polimi.ingsw.Server.controller.MatchType;
-import it.polimi.ingsw.Util.AssistantCard;
-import it.polimi.ingsw.Util.Color;
-import it.polimi.ingsw.Util.GamePhase;
-import it.polimi.ingsw.Util.IPAddress;
+import it.polimi.ingsw.Util.*;
 import it.polimi.ingsw.exceptions.clientExceptions.SkipCommandException;
 
 import java.util.*;

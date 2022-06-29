@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.Set;
 
 /**
- * AssistantCard record represents the assistant cards in "Eriantys", used by players during the planification phase.
+ * DeletedIsland record is used to inform the client about the islands that are merged into the group of islands.
  *
  * @param idWinnerIsland of type {@code Byte} - value of idIsland that "wins" after the merge -> the one that lasted
  * @param deletedIsland  of type {@code Set<Byte>} - all the id of the islands that are now merged in the winner

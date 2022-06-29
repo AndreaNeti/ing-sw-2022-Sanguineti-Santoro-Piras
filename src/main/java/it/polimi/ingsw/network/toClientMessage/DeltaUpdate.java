@@ -1,7 +1,7 @@
 package it.polimi.ingsw.network.toClientMessage;
 
 import it.polimi.ingsw.Client.Controller.ControllerClient;
-import it.polimi.ingsw.Server.controller.GameDelta;
+import it.polimi.ingsw.network.GameDelta;
 
 /**
  * DeltaUpdate class is used to update the client with a new game delta.
