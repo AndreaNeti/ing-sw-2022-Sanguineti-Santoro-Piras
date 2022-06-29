@@ -3,6 +3,7 @@ package it.polimi.ingsw.Server.controller;
 import it.polimi.ingsw.Util.MatchType;
 import it.polimi.ingsw.exceptions.serverExceptions.GameException;
 import it.polimi.ingsw.exceptions.serverExceptions.NotAllowedException;
+import it.polimi.ingsw.network.PingMessage;
 import it.polimi.ingsw.network.toClientMessage.OK;
 import it.polimi.ingsw.network.toClientMessage.ToClientMessage;
 import org.junit.jupiter.api.AfterEach;
@@ -14,39 +15,45 @@ import java.io.ObjectOutputStream;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
 import java.net.Socket;
+import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 class ClientHandlerTest {
-    ClientHandler p1, p2, p3, p4;
+    ClientHandler p1, p2;
     ObjectOutputStream out1, out2;
+
+    Socket client1, client2;
 
     @BeforeEach
     public void initialize() {
-        Socket client1 = mock(Socket.class);
-        Socket client2 = mock(Socket.class);
+        client1 = mock(Socket.class);
+        client2 = mock(Socket.class);
         PipedOutputStream outputStream1 = new PipedOutputStream();
         PipedOutputStream outputStream2 = new PipedOutputStream();
-        PipedInputStream a = new PipedInputStream();
-        PipedOutputStream b = mock(PipedOutputStream.class);
-        PipedInputStream c = new PipedInputStream();
-        PipedOutputStream d = mock(PipedOutputStream.class);
-        PipedInputStream inputStream1 = mock(PipedInputStream.class);
-        PipedInputStream inputStream2 = mock(PipedInputStream.class);
+        PipedInputStream inputStream1 = new PipedInputStream();
+        PipedInputStream inputStream2 = new PipedInputStream();
+        PipedOutputStream mockOutputStream1 = mock(PipedOutputStream.class);
+        PipedOutputStream mockOutputStream2 = mock(PipedOutputStream.class);
+        PipedInputStream mockInputStream1 = mock(PipedInputStream.class);
+        PipedInputStream mockInputStream2 = mock(PipedInputStream.class);
 
+        // each client handler's outputstream is a mock outputstream connected to a mock inputstream
+        // each client handler's inputstream is connected to an outputstream that doesnt write anything in order to avoid saturating the
+        // input stream buffer
         try {
-            a.connect(outputStream1);
-            inputStream1.connect(b);
+            inputStream1.connect(outputStream1);
+            mockInputStream1.connect(mockOutputStream1);
             out1 = new ObjectOutputStream(outputStream1);
-            c.connect(outputStream2);
-            inputStream2.connect(d);
+            inputStream2.connect(outputStream2);
+            mockInputStream2.connect(mockOutputStream2);
             out2 = new ObjectOutputStream(outputStream2);
-            when(client1.getOutputStream()).thenReturn(b);
-            when(client1.getInputStream()).thenReturn(a);
-            when(client2.getOutputStream()).thenReturn(d);
-            when(client2.getInputStream()).thenReturn(c);
+            when(client1.getOutputStream()).thenReturn(mockOutputStream1);
+            when(client1.getInputStream()).thenReturn(inputStream1);
+            when(client2.getOutputStream()).thenReturn(mockOutputStream2);
+            when(client2.getInputStream()).thenReturn(inputStream2);
 
         } catch (IOException e) {
             fail();
@@ -83,7 +90,6 @@ class ClientHandlerTest {
 
     @Test
     void NicknameTest() {
-
         assertEquals(p1.getNickName(), "Paolino");
         assertThrows(NotAllowedException.class, () -> p1.setNickName("Impostor"), "Nickname already set");
     }
@@ -96,6 +102,13 @@ class ClientHandlerTest {
 
     @Test
     void runTest() {
+        try {
+            out1.writeObject(new PingMessage());
+        } catch (IOException e) {
+            fail(e);
+        }
+        p1.quit();
+        p1.run();
     }
 
     @Test
@@ -133,5 +146,10 @@ class ClientHandlerTest {
             fail(e);
         }
         assertThrows(NotAllowedException.class, () -> p2.createMatch(type), "Already joined a match");
+    }
+
+    @Test
+    void hashTest() {
+        assertEquals(Objects.hash(client1), p1.hashCode());
     }
 }
