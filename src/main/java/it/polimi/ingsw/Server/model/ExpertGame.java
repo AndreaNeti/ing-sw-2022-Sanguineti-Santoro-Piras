@@ -52,9 +52,9 @@ public class ExpertGame extends NormalGame implements CharacterCardGame, CoinLis
         super(teamList, matchConstants);
         this.matchConstants = matchConstants;
         byte numberOfPlayers = super.getPlayerSize();
-        this.coinsLeft = (byte) (matchConstants.totalCoins() - numberOfPlayers * matchConstants.initialPlayerCoins());
+        this.coinsLeft = matchConstants.totalCoins() - numberOfPlayers * matchConstants.initialPlayerCoins();
         this.coinsPlayer = new int[numberOfPlayers];
-        Arrays.fill(coinsPlayer, (byte) matchConstants.initialPlayerCoins());
+        Arrays.fill(coinsPlayer, matchConstants.initialPlayerCoins());
 
         characters = new ArrayList<>(matchConstants.numOfCharacterCards());
         Random rand = new Random(System.currentTimeMillis());
@@ -63,10 +63,10 @@ public class ExpertGame extends NormalGame implements CharacterCardGame, CoinLis
         ArrayList<Byte> selectedCharacters = new ArrayList<>(matchConstants.numOfCharacterCards());
         CharacterCard c;
 
-        characters.add(factoryCharacter((byte) 8));
-        characters.add(factoryCharacter((byte) 0));
-        characters.add(factoryCharacter((byte) 3));
-        /*while (i < matchConstants.numOfCharacterCards()) {
+        // characters.add(factoryCharacter((byte) 8));
+        // characters.add(factoryCharacter((byte) 0));
+        // characters.add(factoryCharacter((byte) 3));
+        while (i < matchConstants.numOfCharacterCards()) {
             while (selectedCharacters.contains(characterIndex)) {
                 characterIndex = (byte) rand.nextInt(12);
                 //tmp++;
@@ -75,7 +75,7 @@ public class ExpertGame extends NormalGame implements CharacterCardGame, CoinLis
             characters.add(c);
             selectedCharacters.add(c.getCharId());
             i++;
-        }*/
+        }
         // add Coin Listener
         for (Player p : getPlayers()) {
             p.getLunchHall().addCoinListener(this);
