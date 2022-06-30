@@ -3,6 +3,7 @@ package it.polimi.ingsw.Client.model;
 import it.polimi.ingsw.Client.View.Cli.ViewForCharacterCli;
 import it.polimi.ingsw.Client.View.Gui.ViewGUI;
 import it.polimi.ingsw.Server.model.Char2;
+import it.polimi.ingsw.Server.model.CharacterCardDataInterface;
 import it.polimi.ingsw.exceptions.clientExceptions.SkipCommandException;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
@@ -15,13 +16,15 @@ import java.util.List;
  * Char2Client class represents the character card on the client side and corresponds to the server class {@link Char2}.
  */
 public class Char2Client implements CharacterCardClient {
-    private boolean used;
     private final List<Integer> inputs;
+
+    private CharacterCardDataInterface data;
 
     /**
      * Constructor Char2Client creates a new instance of Char2Client.
      */
-    public Char2Client() {
+    public Char2Client(CharacterCardDataInterface data) {
+        this.data = data;
         inputs = new ArrayList<>();
     }
 
@@ -46,7 +49,7 @@ public class Char2Client implements CharacterCardClient {
      *
      * @param viewGUI of type {@link ViewGUI} - client's GUI view from which the inputs are obtained.
      * @return {@code EventHandler}<{{@code MouseEvent}> - function that will be executed when the node that adds the
-     *      event handler is clicked.
+     * event handler is clicked.
      */
     private EventHandler<MouseEvent> setInput(ViewGUI viewGUI) {
         return mouseEvent -> {
@@ -63,8 +66,8 @@ public class Char2Client implements CharacterCardClient {
     }
 
     @Override
-    public byte getCost() {
-        return (byte) (used ? 4 : 3);
+    public void setData(CharacterCardDataInterface data) {
+        this.data = data;
     }
 
     @Override
@@ -82,11 +85,6 @@ public class Char2Client implements CharacterCardClient {
         return inputs;
     }
 
-    @Override
-    public int getCharId() {
-        return 2;
-    }
-
     /**
      * Method toString returns the name of the character card.
      *
@@ -98,12 +96,27 @@ public class Char2Client implements CharacterCardClient {
     }
 
     @Override
-    public void setUsed() {
-        this.used = true;
+    public byte getCost() {
+        return data.getCost();
     }
 
     @Override
-    public boolean containsStudents() {
-        return false;
+    public byte getCharId() {
+        return data.getCharId();
+    }
+
+    @Override
+    public boolean isUsed() {
+        return data.isUsed();
+    }
+
+    @Override
+    public boolean hasStudents() {
+        return data.hasStudents();
+    }
+
+    @Override
+    public void setUsed() {
+        data.setUsed();
     }
 }

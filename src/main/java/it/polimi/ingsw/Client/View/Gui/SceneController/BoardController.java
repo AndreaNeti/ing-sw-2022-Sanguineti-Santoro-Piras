@@ -88,7 +88,7 @@ public class BoardController implements SceneController {
                     singleChar.getChildren().get(6).setVisible(true);
                     singleChar.setId("grandmaWeeds");
                 }
-                if (character.containsStudents()) {
+                if (character.hasStudents()) {
                     CharacterCardClientWithStudents character1 = (CharacterCardClientWithStudents) character;
                     AnchorPane paneStudent = (AnchorPane) singleChar.getChildren().get(1);
                     paneStudent.setVisible(true);
@@ -576,9 +576,9 @@ public class BoardController implements SceneController {
     }
 
     @Override
-    public void updateCharacter(int charId) {
+    public void updateCharacter(byte charId) {
         for (Node n : characters.getChildren()) {
-            if ((int) n.getProperties().get("charId") == charId) {
+            if ((byte) n.getProperties().get("charId") == charId) {
                 ((AnchorPane) n).getChildren().get(5).setVisible(true);
             }
         }

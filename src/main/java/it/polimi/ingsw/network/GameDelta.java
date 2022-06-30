@@ -1,6 +1,7 @@
 package it.polimi.ingsw.network;
 
 import it.polimi.ingsw.Server.controller.GameListener;
+import it.polimi.ingsw.Server.model.CharacterCardDataInterface;
 import it.polimi.ingsw.Server.model.GameComponents.GameComponent;
 import it.polimi.ingsw.Util.*;
 import it.polimi.ingsw.network.toClientMessage.DeltaUpdate;
@@ -172,23 +173,20 @@ public class GameDelta implements Serializable {
      */
     public void setIgnoredColorInfluence(Color ignoredColorInfluence) {
     }
-
     /**
-     * Method setUsedCharacter not used for GameDelta.
+     * Method addCharacterCard not used for GameDelta.
      *
-     * @param charId of type {@code byte} - ID of the used character card.
-     * @param used   of type {@code boolean} - boolean used to know if the character card has been already used.
+     * @param characterCardData of type {@code CharacterCardData} - the record containing the card's data.
      */
-    public void setUsedCharacter(byte charId, boolean used) {
+    public void addCharacterCard(CharacterCardDataInterface characterCardData) {
     }
-
     /**
      * Method getCharacters not used for GameDelta.
      *
-     * @return {@code List}<{@code Byte}> - Empty ArrayList.
+     * @return {@code Set}<{@code CharacterCardData}> - Empty Set.
      */
-    public List<Byte> getCharacters() {
-        return new ArrayList<>();
+    public Set<CharacterCardDataInterface> getCharacters() {
+        return Collections.emptySet();
     }
 
     /**
@@ -234,15 +232,6 @@ public class GameDelta implements Serializable {
      */
     public Optional<Color> getIgnoredColorInfluence() {
         return Optional.empty();
-    }
-
-    /**
-     * Method getUsedCharacter not used for GameDelta.
-     *
-     * @return {@code Map}<{@code Byte, Boolean}> - Empty Map.
-     */
-    public Map<Byte, Boolean> getUsedCharacter() {
-        return Collections.emptyMap();
     }
 
 

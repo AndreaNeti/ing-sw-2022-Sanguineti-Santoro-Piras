@@ -1,5 +1,6 @@
 package it.polimi.ingsw.network;
 
+import it.polimi.ingsw.Server.model.CharacterCardDataInterface;
 import it.polimi.ingsw.Util.Color;
 
 import java.util.*;
@@ -13,15 +14,13 @@ import java.util.*;
  */
 public class ExpertGameDelta extends GameDelta {
     //index of the character, id of the character
-    private List<Byte> characters;
+    private Set<CharacterCardDataInterface> characters;
     // player id, new playerCoinsLeft
     private Map<Byte, Integer> updatedCoinPlayer;
     private Byte newProhibitionsLeft;
     private Integer newCoinsLeft;
     private Boolean extraSteps;
     private Color ignoredColorInfluence;
-    //charId, used
-    private Map<Byte, Boolean> usedCharacter;
 
 
     /**
@@ -43,19 +42,18 @@ public class ExpertGameDelta extends GameDelta {
         newProhibitionsLeft = null;
         extraSteps = null;
         ignoredColorInfluence = null;
-        usedCharacter = null;
     }
 
     /**
      * Method addCharacterCard adds a character card to the expert game delta.
      *
-     * @param index of type {@code byte} - position on the list on which the card is added.
-     * @param id of type {@code byte} - unique ID of the character card.
+     * @param characterCardData of type {@code CharacterCardData} - the record containing the card's data.
      */
-    public void addCharacterCard(byte index, byte id) {
+    @Override
+    public void addCharacterCard(CharacterCardDataInterface characterCardData) {
         if (characters == null)
-            characters = new ArrayList<>();
-        characters.add(index, id);
+            characters = new HashSet<>();
+        characters.add(characterCardData);
     }
 
     /**
@@ -69,19 +67,6 @@ public class ExpertGameDelta extends GameDelta {
         if (updatedCoinPlayer == null)
             updatedCoinPlayer = new HashMap<>();
         updatedCoinPlayer.put(playerId, newCoinsLeft);
-    }
-
-    /**
-     * Method setUsedCharacter adds a character card and info about if it has been already used to the expert game delta.
-     *
-     * @param charId of type {@code byte} - ID of the used character card.
-     * @param used   of type {@code boolean} - boolean used to know if the character card has been already used.
-     */
-    @Override
-    public void setUsedCharacter(byte charId, boolean used) {
-        if (usedCharacter == null)
-            usedCharacter = new HashMap<>();
-        usedCharacter.put(charId, used);
     }
 
     /**
@@ -128,11 +113,11 @@ public class ExpertGameDelta extends GameDelta {
     /**
      * Method getCharacters returns all the character cards in the expert game delta.
      *
-     * @return {@code List}<{@code Byte}> - list of all the character cards.
+     * @return {@code Set}<{@code CharacterCardData}> - list of all the character cards data.
      */
     @Override
-    public List<Byte> getCharacters() {
-        if (characters == null) return new ArrayList<>();
+    public Set<CharacterCardDataInterface> getCharacters() {
+        if (characters == null) return Collections.emptySet();
         return characters;
     }
 
@@ -146,18 +131,6 @@ public class ExpertGameDelta extends GameDelta {
     public Map<Byte, Integer> getUpdatedCoinPlayer() {
         if (updatedCoinPlayer == null) return Collections.emptyMap();
         return updatedCoinPlayer;
-    }
-
-    /**
-     * Method getUsedCharacter returns all the character cards with a new "used" boolean value. <br>
-     * <b>Map entry</b>: (Character card's ID - true/false).
-     *
-     * @return {@code Map}<{@code Byte, Boolean}> - map of the character cards with their new "used" value.
-     */
-    @Override
-    public Map<Byte, Boolean> getUsedCharacter() {
-        if (usedCharacter == null) return Collections.emptyMap();
-        return usedCharacter;
     }
 
     /**
@@ -202,9 +175,9 @@ public class ExpertGameDelta extends GameDelta {
 
     @Override
     public String toString() {
-        return super.toString()+",isExtraSteps "+extraSteps+",ignoredColor "+ignoredColorInfluence+", updateCharacters "+
-                usedCharacter+", updatedCoinPlayer "+ updatedCoinPlayer+" ,newProhibitionLeft " + newProhibitionsLeft+
-                "newCoinsLeft " +newCoinsLeft;
+        return super.toString() + ",isExtraSteps " + extraSteps + ",ignoredColor " + ignoredColorInfluence + ", updateCharacters " +
+                characters + ", updatedCoinPlayer " + updatedCoinPlayer + " ,newProhibitionLeft " + newProhibitionsLeft +
+                "newCoinsLeft " + newCoinsLeft;
 
 
     }

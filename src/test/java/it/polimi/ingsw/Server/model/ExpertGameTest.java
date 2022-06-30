@@ -197,7 +197,7 @@ public class ExpertGameTest {
             fail();
         }
         try {
-            gameWith2.chooseCharacter(gameWith2.transformAllGameInDelta().getCharacters().get(0));
+            gameWith2.chooseCharacter(gameWith2.transformAllGameInDelta().getCharacters().stream().findFirst().get().getCharId());
             for (int i = 0; i < 5; i++)
                 inputs.add(i);
             gameWith2.setCharacterInputs(inputs);
@@ -225,7 +225,7 @@ public class ExpertGameTest {
             for (Color color : Color.values()) {
                 gameWith2.getBag().moveStudents(color, (byte) 1, p1_2.getEntranceHall());
             }
-            gameWith2.chooseCharacter(gameWith2.transformAllGameInDelta().getCharacters().get(0));
+            gameWith2.chooseCharacter(gameWith2.transformAllGameInDelta().getCharacters().stream().findFirst().get().getCharId());
         } catch (GameException e) {
             fail();
         }

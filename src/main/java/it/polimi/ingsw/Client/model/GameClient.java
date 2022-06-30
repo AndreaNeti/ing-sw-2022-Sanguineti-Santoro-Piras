@@ -1,6 +1,7 @@
 package it.polimi.ingsw.Client.model;
 
 import it.polimi.ingsw.Client.GameClientListened;
+import it.polimi.ingsw.Server.model.CharacterCardDataInterface;
 import it.polimi.ingsw.Server.model.ExpertGame;
 import it.polimi.ingsw.Server.model.GameComponents.GameComponent;
 import it.polimi.ingsw.Server.model.NormalGame;
@@ -359,17 +360,18 @@ public class GameClient extends GameClientListened implements GameClientView {
      * Method setCharacters adds the list of characters received by the server to the client's game, creating a new instance
      * for each of them.
      *
-     * @param charactersReceived of type {@code List}<{@code Byte}> - list of the unique IDs of the character cards to add.
+     * @param charactersReceived of type {@code Set}<{@code CharacterCardData}> - list of the character cards to add.
      */
-    public void setCharacters(List<Byte> charactersReceived) {
+    public void setCharacters(Set<CharacterCardDataInterface> charactersReceived) {
         if (lockForCharacter == null) lockForCharacter = new ReentrantLock();
         if (lockForCharacter.tryLock()) try {
-            for (Byte character : charactersReceived) {
-                if (character == 0 || character == 6 || character == 10) {
-                    charactersWithStudents.add((CharacterCardClientWithStudents) factoryCharacter(character));
+            for (CharacterCardDataInterface c : charactersReceived) {
+                if (c.hasStudents()) {
+                    charactersWithStudents.add((CharacterCardClientWithStudents) factoryCharacter(c));
                 } else {
-                    this.characters.add(factoryCharacter(character));
+                    this.characters.add(factoryCharacter(c));
                 }
+
             }
         } finally {
             lockForCharacter.unlock();
@@ -379,37 +381,38 @@ public class GameClient extends GameClientListened implements GameClientView {
     /**
      * Method factoryCharacter creates an instance of one of the 12 possible character cards, based on the index provided.
      *
-     * @param index of type {@code byte} - index of the CharacterCard to instantiate.
+     * @param characterCardData {@code CharacterCardData} - CharacterCard to instantiate.
      * @return {@link CharacterCardClient} - instance of the CharacterCard requested.
      */
-    private CharacterCardClient factoryCharacter(byte index) {
-        switch (index) {
+    private CharacterCardClient factoryCharacter(CharacterCardDataInterface characterCardData) {
+// TODO reimplement this with new character data interface
+        switch (characterCardData.getCharId()) {
             case 0:
-                return new Char0Client();
+                return new Char0Client(characterCardData);
             case 1:
-                return new Char1Client();
+                return new Char1Client(characterCardData);
             case 2:
-                return new Char2Client();
+                return new Char2Client(characterCardData);
             case 3:
-                return new Char3Client();
+                return new Char3Client(characterCardData);
             case 4:
-                return new Char4Client();
+                return new Char4Client(characterCardData);
             case 5:
-                return new Char5Client();
+                return new Char5Client(characterCardData);
             case 6:
-                return new Char6Client();
+                return new Char6Client(characterCardData);
             case 7:
-                return new Char7Client();
+                return new Char7Client(characterCardData);
             case 8:
-                return new Char8Client();
+                return new Char8Client(characterCardData);
             case 9:
-                return new Char9Client();
+                return new Char9Client(characterCardData);
             case 10:
-                return new Char10Client();
+                return new Char10Client(characterCardData);
             case 11:
-                return new Char11Client();
+                return new Char11Client(characterCardData);
         }
-        throw new IllegalArgumentException("Character card " + index + " doesn't exists");
+        throw new IllegalArgumentException("Character card " + characterCardData.getCharId() + " doesn't exists");
     }
 
     @Override
@@ -456,17 +459,19 @@ public class GameClient extends GameClientListened implements GameClientView {
     }
 
     /**
-     * Method setUpdatedCharacter updates the character chard with the provided ID to used, increasing therefore its cost by 1.
+     * Method setUpdatedCharacter updates the given character chard.
      *
-     * @param charId of type {@code Byte} - ID of the character card to update.
+     * @param updatedCharacter of type {@code CharacterCardDataInterface} - character card to update.
      */
-    public void setUpdatedCharacter(Byte charId) {
-        for (CharacterCardClient c : characters) {
-            if (c.getCharId() == charId) c.setUsed();
-        }
+    public void setUpdatedCharacter(CharacterCardDataInterface updatedCharacter) {
+        for (CharacterCardClient c : characters)
+            if (c.getCharId() == updatedCharacter.getCharId())
+                c.setData(updatedCharacter);
+
         for (CharacterCardClientWithStudents c : charactersWithStudents)
-            if (c.getCharId() == charId) c.setUsed();
-        notifyCharacter(charId);
+            if (c.getCharId() == updatedCharacter.getCharId())
+                c.setData(updatedCharacter);
+        notifyCharacter(updatedCharacter.getCharId());
     }
 
     /**

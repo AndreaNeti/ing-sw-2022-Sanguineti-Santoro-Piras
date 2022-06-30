@@ -72,34 +72,34 @@ class CharacterCardTest {
 //                }
 //            }
         // Have to select a char card to pass inputs, get the first available
-        charToSelect = game.transformAllGameInDelta().getCharacters().get(0);
-        c0 = new Char0((byte) -10);
+        charToSelect = game.transformAllGameInDelta().getCharacters().stream().findFirst().get().getCharId();
+        c0 = new CharacterCard(new Char0((byte) -10), CharacterCardData.CH0);
         try {
-            game.drawStudents((GameComponent) c0, (byte) ((GameComponent) c0).getMaxStudents());
+            game.drawStudents((GameComponent) c0.getLogicCard(), (byte) ((GameComponent) c0.getLogicCard()).getMaxStudents());
         } catch (EndGameException | GameException e) {
             fail();
         }
-        c1 = new Char1();
-        c2 = new Char2();
-        c3 = new Char3();
-        c4 = new Char4();
-        c5 = new Char5();
-        c6 = new Char6((byte) -11);
+        c1 = new CharacterCard(new Char1(), CharacterCardData.CH1);
+        c2 = new CharacterCard(new Char2(), CharacterCardData.CH2);
+        c3 = new CharacterCard(new Char3(), CharacterCardData.CH3);
+        c4 = new CharacterCard(new Char4(), CharacterCardData.CH4);
+        c5 = new CharacterCard(new Char5(), CharacterCardData.CH5);
+        c6 = new CharacterCard(new Char6((byte) -11), CharacterCardData.CH6);
         try {
-            game.drawStudents((GameComponent) c6, (byte) ((GameComponent) c6).getMaxStudents());
+            game.drawStudents((GameComponent) c6.getLogicCard(), (byte) ((GameComponent) c6.getLogicCard()).getMaxStudents());
         } catch (EndGameException | GameException e) {
             fail();
         }
-        c7 = new Char7();
-        c8 = new Char8();
-        c9 = new Char9();
-        c10 = new Char10((byte) -12);
+        c7 = new CharacterCard(new Char7(), CharacterCardData.CH7);
+        c8 = new CharacterCard(new Char8(), CharacterCardData.CH8);
+        c9 = new CharacterCard(new Char9(), CharacterCardData.CH9);
+        c10 = new CharacterCard(new Char10((byte) -12), CharacterCardData.CH10);
         try {
-            game.drawStudents((GameComponent) c10, (byte) ((GameComponent) c10).getMaxStudents());
+            game.drawStudents((GameComponent) c10.getLogicCard(), (byte) ((GameComponent) c10.getLogicCard()).getMaxStudents());
         } catch (EndGameException | GameException e) {
             fail();
         }
-        c11 = new Char11();
+        c11 = new CharacterCard(new Char11(), CharacterCardData.CH11);
     }
 
     @Test
@@ -113,7 +113,7 @@ class CharacterCardTest {
             // also resets character inputs
             game.setCurrentPlayer(p1);
             // use first available color on the card to test (it's chosen randomly)
-            while (((GameComponent) c0).howManyStudents(Color.values()[color]) == 0 && color < Color.values().length) {
+            while (((GameComponent) c0.getLogicCard()).howManyStudents(Color.values()[color]) == 0 && color < Color.values().length) {
                 color++;
             }
             game.chooseCharacter(charToSelect);
@@ -133,7 +133,7 @@ class CharacterCardTest {
         } catch (GameException e) {
             fail(e);
         }
-        assertEquals(((GameComponent) c0).howManyStudents(), ((GameComponent) c0).getMaxStudents());
+        assertEquals(((GameComponent) c0.getLogicCard()).howManyStudents(), ((GameComponent) c0.getLogicCard()).getMaxStudents());
     }
 
     @Test
@@ -317,7 +317,7 @@ class CharacterCardTest {
             // also resets character inputs
             game.setCurrentPlayer(p1);
             // use first available color on the card to test (it's chosen randomly)
-            while (((GameComponent) c6).howManyStudents(Color.values()[color1]) == 0 && color1 < Color.values().length) {
+            while (((GameComponent) c6.getLogicCard()).howManyStudents(Color.values()[color1]) == 0 && color1 < Color.values().length) {
                 game.setCurrentPlayer(p1);
                 game.chooseCharacter(charToSelect);
                 game.setCharacterInputs(Arrays.asList(color1, color2));
@@ -343,8 +343,8 @@ class CharacterCardTest {
         } catch (GameException e) {
             fail();
         }
-        byte oldC6Color1 = ((GameComponent) c6).howManyStudents(Color.values()[color1]);
-        byte oldC6Color2 = ((GameComponent) c6).howManyStudents(Color.values()[color2]);
+        byte oldC6Color1 = ((GameComponent) c6.getLogicCard()).howManyStudents(Color.values()[color1]);
+        byte oldC6Color2 = ((GameComponent) c6.getLogicCard()).howManyStudents(Color.values()[color2]);
         byte oldEntranceColor1 = game.getCurrentPlayer().getEntranceHall().howManyStudents(Color.values()[color1]);
         byte oldEntranceColor2 = game.getCurrentPlayer().getEntranceHall().howManyStudents(Color.values()[color2]);
         try {
@@ -353,12 +353,12 @@ class CharacterCardTest {
             fail();
         }
         if (color1 != color2) {
-            assertEquals(((GameComponent) c6).howManyStudents(Color.values()[color1]), oldC6Color1 - 1);
-            assertEquals(((GameComponent) c6).howManyStudents(Color.values()[color2]), oldC6Color2 + 1);
+            assertEquals(((GameComponent) c6.getLogicCard()).howManyStudents(Color.values()[color1]), oldC6Color1 - 1);
+            assertEquals(((GameComponent) c6.getLogicCard()).howManyStudents(Color.values()[color2]), oldC6Color2 + 1);
             assertEquals(game.getCurrentPlayer().getEntranceHall().howManyStudents(Color.values()[color1]), oldEntranceColor1 + 1);
             assertEquals(game.getCurrentPlayer().getEntranceHall().howManyStudents(Color.values()[color2]), oldEntranceColor2 - 1);
         } else {
-            assertEquals(((GameComponent) c6).howManyStudents(Color.values()[color1]), oldC6Color1);
+            assertEquals(((GameComponent) c6.getLogicCard()).howManyStudents(Color.values()[color1]), oldC6Color1);
             assertEquals(game.getCurrentPlayer().getEntranceHall().howManyStudents(Color.values()[color1]), oldEntranceColor1);
         }
     }
@@ -506,13 +506,13 @@ class CharacterCardTest {
         int color = -1;
         int wrongColor = -1;
         for (int i = 0; i < 5 && color == -1; i++) {
-            if (((GameComponent) c10).howManyStudents(Color.values()[i]) != 0) {
+            if (((GameComponent) c10.getLogicCard()).howManyStudents(Color.values()[i]) != 0) {
                 color = i;
             }
         }
 
         for (int i = 0; i < 5 && wrongColor == -1; i++) {
-            if (((GameComponent) c10).howManyStudents(Color.values()[i]) == 0) {
+            if (((GameComponent) c10.getLogicCard()).howManyStudents(Color.values()[i]) == 0) {
                 wrongColor = i;
             }
         }
@@ -537,7 +537,7 @@ class CharacterCardTest {
             fail();
         }
         assertEquals(game.getCurrentPlayer().getLunchHall().howManyStudents(Color.values()[color]), oldSize + 1);
-        assertEquals(((GameComponent) c10).howManyStudents(), ((GameComponent) c10).getMaxStudents());
+        assertEquals(((GameComponent) c10.getLogicCard()).howManyStudents(), ((GameComponent) c10.getLogicCard()).getMaxStudents());
     }
 
     @Test
@@ -609,11 +609,11 @@ class CharacterCardTest {
         assertEquals(c9.getCharId(), 9);
         assertEquals(c10.getCharId(), 10);
         assertEquals(c11.getCharId(), 11);
-        GameComponent test = (GameComponent) c0;
+        GameComponent test = (GameComponent) c0.getLogicCard();
         assertEquals(test.getId(), -10);
-        test = (GameComponent) c6;
+        test = (GameComponent) c6.getLogicCard();
         assertEquals(test.getId(), -11);
-        test = (GameComponent) c10;
+        test = (GameComponent) c10.getLogicCard();
         assertEquals(test.getId(), -12);
 
     }

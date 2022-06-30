@@ -12,16 +12,16 @@ import it.polimi.ingsw.exceptions.serverExceptions.NotAllowedException;
  * DO NOT calculate influence on that Island, or place any Towers. <br>
  * <b>Inputs required</b>: Island ID.
  */
-public class Char4 implements CharacterCard {
+public class Char4 implements CharacterCardLogicInterface {
 
     /**
      * Method play adds a prohibition to the selected island
      *
-     * @param game of type {@link CharacterCardGame} - the game instance that the card modifies with its effect.
+     * @param game of type {@link GameInterfaceForCharacter} - the game instance that the card modifies with its effect.
      * @throws GameException if the island ID is not valid.
      */
     @Override
-    public void play(CharacterCardGame game) throws GameException {
+    public void play(GameInterfaceForCharacter game) throws GameException {
         int idIsland = game.getCharacterInputs().get(0);
         System.out.println(idIsland);
         if (idIsland > 2 * MatchType.MAX_PLAYERS + 12 || idIsland < 2 * MatchType.MAX_PLAYERS)
@@ -29,16 +29,6 @@ public class Char4 implements CharacterCard {
         Island chosenIsland = (Island) game.getComponentById(idIsland);
         game.setProhibition(chosenIsland);
         game.getGameDelta().addUpdatedGC(chosenIsland);
-    }
-
-    @Override
-    public byte getCost() {
-        return 2;
-    }
-
-    @Override
-    public byte getCharId() {
-        return 4;
     }
 
     @Override

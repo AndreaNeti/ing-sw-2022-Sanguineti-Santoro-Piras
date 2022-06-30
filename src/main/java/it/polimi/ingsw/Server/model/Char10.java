@@ -13,7 +13,7 @@ import it.polimi.ingsw.exceptions.serverExceptions.NotAllowedException;
  * <b>Inputs required</b>: 1 student color from this card. <br>
  * This is one of the 3 character cards that contain students and therefore extends the GameComponent class.
  */
-public class Char10 extends GameComponent implements CharacterCard {
+public class Char10 extends GameComponent implements CharacterCardLogicInterface {
 
     /**
      * Constructor Char10 creates a new instance of Char10.
@@ -28,13 +28,13 @@ public class Char10 extends GameComponent implements CharacterCard {
      * Method play moves a student of choice from the card to the entrance hall and then draws another student from
      * the bag to the card.
      *
-     * @param game of type {@link CharacterCardGame} - the game instance that the card modifies with its effect.
-     * @throws GameException if the student's color is not valid or there is not a student of the
-     * selected color on the card.
+     * @param game of type {@link GameInterfaceForCharacter} - the game instance that the card modifies with its effect.
+     * @throws GameException    if the student's color is not valid or there is not a student of the
+     *                          selected color on the card.
      * @throws EndGameException if after drawing a student, the bag has none left.
      */
     @Override
-    public void play(CharacterCardGame game) throws GameException, EndGameException {
+    public void play(GameInterfaceForCharacter game) throws GameException, EndGameException {
         int color = game.getCharacterInputs().get(0);
         if (color < 0 || color >= Color.values().length) {
             throw new NotAllowedException("Set wrong input for color");
@@ -45,17 +45,6 @@ public class Char10 extends GameComponent implements CharacterCard {
 
         game.getGameDelta().addUpdatedGC(this);
         game.getGameDelta().addUpdatedGC(game.getCurrentPlayer().getLunchHall());
-    }
-
-    @Override
-    public byte getCost() {
-        return 2;
-    }
-
-
-    @Override
-    public byte getCharId() {
-        return 10;
     }
 
     @Override

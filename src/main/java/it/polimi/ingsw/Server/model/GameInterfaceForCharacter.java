@@ -13,7 +13,7 @@ import java.util.ArrayList;
 /**
  * CharacterCardGame interface is a game with only functions required by character cards to apply their effects.
  */
-public interface CharacterCardGame {
+public interface GameInterfaceForCharacter {
     /**
      * Method getCharacterInputs returns the inputs added by the player for the chosen character card.
      *

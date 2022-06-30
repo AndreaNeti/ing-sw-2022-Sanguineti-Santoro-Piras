@@ -62,7 +62,7 @@ public abstract class GameClientListened {
         }
     }
 
-    public void notifyCharacter(int charId) {
+    public void notifyCharacter(byte charId) {
         for (GameClientListener listener : listeners) {
             listener.updateCharacter(charId);
         }

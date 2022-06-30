@@ -3,6 +3,7 @@ package it.polimi.ingsw.Client.model;
 import it.polimi.ingsw.Client.View.Cli.ViewForCharacterCli;
 import it.polimi.ingsw.Client.View.Gui.ViewGUI;
 import it.polimi.ingsw.Server.model.Char0;
+import it.polimi.ingsw.Server.model.CharacterCardDataInterface;
 import it.polimi.ingsw.Util.Color;
 import it.polimi.ingsw.exceptions.clientExceptions.SkipCommandException;
 import javafx.event.EventHandler;
@@ -16,21 +17,17 @@ import java.util.List;
  * Char0Client class represents the character card on the client side and corresponds to the server class {@link Char0}.
  */
 public class Char0Client extends CharacterCardClientWithStudents {
-    private boolean used;
     private final List<Integer> inputs;
 
-    @Override
-    public void setUsed() {
-        this.used = true;
-    }
+    private CharacterCardDataInterface data;
 
     /**
      * Constructor Char0Client creates a new instance of Char0Client.
      */
-    public Char0Client() {
+    public Char0Client(CharacterCardDataInterface data) {
         super(-10);
+        this.data = data;
         inputs = new ArrayList<>();
-        used = false;
     }
 
     @Override
@@ -61,7 +58,7 @@ public class Char0Client extends CharacterCardClientWithStudents {
      *
      * @param viewGUI of type {@link ViewGUI} - client's GUI view from which the inputs are obtained.
      * @return {@code EventHandler}<{{@code MouseEvent}> - function that will be executed when the node that adds the
-     *      event handler is clicked.
+     * event handler is clicked.
      */
     private EventHandler<MouseEvent> setInput(ViewGUI viewGUI) {
         return mouseEvent -> {
@@ -88,8 +85,8 @@ public class Char0Client extends CharacterCardClientWithStudents {
     }
 
     @Override
-    public byte getCost() {
-        return (byte) (used ? 2 : 1);
+    public void setData(CharacterCardDataInterface data) {
+        this.data = data;
     }
 
     @Override
@@ -118,12 +115,32 @@ public class Char0Client extends CharacterCardClientWithStudents {
     }
 
     @Override
-    public int getCharId() {
-        return 0;
+    public String getNameOfComponent() {
+        return "CharacterCard";
     }
 
     @Override
-    public String getNameOfComponent() {
-        return "CharacterCard";
+    public byte getCost() {
+        return data.getCost();
+    }
+
+    @Override
+    public byte getCharId() {
+        return data.getCharId();
+    }
+
+    @Override
+    public boolean isUsed() {
+        return data.isUsed();
+    }
+
+    @Override
+    public boolean hasStudents() {
+        return data.hasStudents();
+    }
+
+    @Override
+    public void setUsed() {
+        data.setUsed();
     }
 }

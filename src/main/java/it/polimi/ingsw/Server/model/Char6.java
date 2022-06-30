@@ -15,7 +15,7 @@ import java.util.List;
  * <b>Inputs required</b>: 1 student color from this card and 1 student color from the entrance hall, up to 3 pairs. <br>
  * This is one of the 3 character cards that contain students and therefore extends the GameComponent class.
  */
-public class Char6 extends GameComponent implements CharacterCard {
+public class Char6 extends GameComponent implements CharacterCardLogicInterface {
 
     /**
      * Constructor Char6 creates a new instance of Char6.
@@ -29,12 +29,12 @@ public class Char6 extends GameComponent implements CharacterCard {
     /**
      * Method play swaps each student pair between this card and the entrance hall.
      *
-     * @param game of type {@link CharacterCardGame} - the game instance that the card modifies with its effect.
+     * @param game of type {@link GameInterfaceForCharacter} - the game instance that the card modifies with its effect.
      * @throws GameException if the students colors are not valid or there is not a student of the
      *                       selected color either the card or the entrance hall.
      */
     @Override
-    public void play(CharacterCardGame game) throws GameException {
+    public void play(GameInterfaceForCharacter game) throws GameException {
         List<Integer> inputs = game.getCharacterInputs();
         // input 0 and 2 and 4 are the colors of this character, input 1 and 3 and 5 are the colors of entrance hall students
         int characterColor, entranceHallColor;
@@ -61,16 +61,6 @@ public class Char6 extends GameComponent implements CharacterCard {
         }
         game.getGameDelta().addUpdatedGC(this);
         game.getGameDelta().addUpdatedGC(game.getCurrentPlayer().getEntranceHall());
-    }
-
-    @Override
-    public byte getCost() {
-        return 1;
-    }
-
-    @Override
-    public byte getCharId() {
-        return 6;
     }
 
     @Override

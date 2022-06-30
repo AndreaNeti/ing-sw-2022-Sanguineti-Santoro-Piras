@@ -3,6 +3,7 @@ package it.polimi.ingsw.Client.model;
 import it.polimi.ingsw.Client.View.Cli.ViewForCharacterCli;
 import it.polimi.ingsw.Client.View.Gui.ViewGUI;
 import it.polimi.ingsw.Server.model.Char1;
+import it.polimi.ingsw.Server.model.CharacterCardDataInterface;
 import it.polimi.ingsw.exceptions.clientExceptions.SkipCommandException;
 
 import java.util.List;
@@ -11,7 +12,12 @@ import java.util.List;
  * Char1Client class represents the character card on the client side and corresponds to the server class {@link Char1}.
  */
 public class Char1Client implements CharacterCardClient {
-    private boolean used;
+
+    private CharacterCardDataInterface data;
+
+    public Char1Client(CharacterCardDataInterface data) {
+        this.data = data;
+    }
 
     @Override
     public String getDescription() {
@@ -34,8 +40,8 @@ public class Char1Client implements CharacterCardClient {
     }
 
     @Override
-    public byte getCost() {
-        return (byte) (used ? 3 : 2);
+    public void setData(CharacterCardDataInterface data) {
+        this.data = data;
     }
 
     @Override
@@ -52,21 +58,6 @@ public class Char1Client implements CharacterCardClient {
         return null;
     }
 
-    @Override
-    public int getCharId() {
-        return 1;
-    }
-
-    @Override
-    public void setUsed() {
-        used = true;
-    }
-
-    @Override
-    public boolean containsStudents() {
-        return  false;
-    }
-
     /**
      * Method toString returns the name of the character card.
      *
@@ -75,5 +66,30 @@ public class Char1Client implements CharacterCardClient {
     @Override
     public String toString() {
         return "Farmer";
+    }
+
+    @Override
+    public byte getCost() {
+        return data.getCost();
+    }
+
+    @Override
+    public byte getCharId() {
+        return data.getCharId();
+    }
+
+    @Override
+    public boolean isUsed() {
+        return data.isUsed();
+    }
+
+    @Override
+    public boolean hasStudents() {
+        return data.hasStudents();
+    }
+
+    @Override
+    public void setUsed() {
+        data.setUsed();
     }
 }

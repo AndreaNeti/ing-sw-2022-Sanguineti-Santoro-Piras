@@ -6,26 +6,16 @@ package it.polimi.ingsw.Server.model;
  * Mother Nature will still move and the Island where she ends her movement will also be resolved.<br>
  * <b>Inputs required</b>: None.
  */
-public class Char3 implements CharacterCard {
+public class Char3 implements CharacterCardLogicInterface {
 
     /**
      * Method play sets the extraSteps boolean to true in the game.
      *
-     * @param game of type {@link CharacterCardGame} - the game instance that the card modifies with its effect.
+     * @param game of type {@link GameInterfaceForCharacter} - the game instance that the card modifies with its effect.
      */
     @Override
-    public void play(CharacterCardGame game) {
+    public void play(GameInterfaceForCharacter game) {
         game.setExtraSteps();
-    }
-
-    @Override
-    public byte getCost() {
-        return 1;
-    }
-
-    @Override
-    public byte getCharId() {
-        return 3;
     }
 
     @Override

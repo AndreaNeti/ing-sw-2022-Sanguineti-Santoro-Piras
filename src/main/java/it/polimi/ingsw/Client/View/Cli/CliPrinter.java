@@ -258,7 +258,7 @@ public class CliPrinter implements GameClientListener {
             // print cost of character cards and students if there's any
             for (CharacterCardClient ch : game.getCharacters()) {
                 boardsCharChatPrint.append("\t\u2502 Cost: ").append(ch.getCost()).append("  ");
-                if (ch.containsStudents())
+                if (ch.hasStudents())
                     boardsCharChatPrint.append("\u2502  \u001b[41;1m ").append(((CharacterCardClientWithStudents) ch).howManyStudents(Color.RED)).append(" \u001b[0m  \u2502");
                 else
                     boardsCharChatPrint.append("\u2502       \u2502");
@@ -271,7 +271,7 @@ public class CliPrinter implements GameClientListener {
         if (expert) {
             for (CharacterCardClient ch : game.getCharacters()) {
                 boardsCharChatPrint.append("\t\u2502          ");
-                if (ch.containsStudents())
+                if (ch.hasStudents())
                     boardsCharChatPrint.append("\u2502\u001b[44;1m ").append(((CharacterCardClientWithStudents) ch).howManyStudents(Color.BLUE))
                             .append(" \u001b[0m \u001b[43;1m ").append(((CharacterCardClientWithStudents) ch).howManyStudents(Color.YELLOW)).append(" \u001b[0m\u2502");
                 else
@@ -302,7 +302,7 @@ public class CliPrinter implements GameClientListener {
                                 boardsCharChatPrint.append("\t\u2502   \u001b[31mX\u001b[0m: ").append(game.getProhibitionsLeft()).append("   ");
                             else
                                 boardsCharChatPrint.append("\t\u2502          ");
-                            if (ch.containsStudents())
+                            if (ch.hasStudents())
                                 boardsCharChatPrint.append("\u2502\u001b[42;1m ").append(((CharacterCardClientWithStudents) ch).howManyStudents(Color.GREEN))
                                         .append(" \u001b[0m \u001b[45;1m ").append(((CharacterCardClientWithStudents) ch).howManyStudents(Color.PINK)).append(" \u001b[0m\u2502");
                             else
@@ -566,7 +566,7 @@ public class CliPrinter implements GameClientListener {
      * @param charId of type {@code int} - ID of the updated character card.
      */
     @Override
-    public void updateCharacter(int charId) {
+    public void updateCharacter(byte charId) {
 
     }
 

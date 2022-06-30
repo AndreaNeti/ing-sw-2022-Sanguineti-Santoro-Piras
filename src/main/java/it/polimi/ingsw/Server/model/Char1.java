@@ -6,27 +6,17 @@ package it.polimi.ingsw.Server.model;
  * same number of Students as the player who currently controls them. <br>
  * <b>Inputs required</b>: None.
  */
-public class Char1 implements CharacterCard {
+public class Char1 implements CharacterCardLogicInterface {
 
     /**
      * Method play sets the equalProfessorCalculation boolean to true in the game.
      *
-     * @param game of type {@link CharacterCardGame} - the game instance that the card modifies with its effect.
+     * @param game of type {@link GameInterfaceForCharacter} - the game instance that the card modifies with its effect.
      */
     @Override
-    public void play(CharacterCardGame game) {
+    public void play(GameInterfaceForCharacter game) {
         //should set the boolean to true before the calculation
         game.setEqualProfessorCalculation();
-    }
-
-    @Override
-    public byte getCost() {
-        return 2;
-    }
-
-    @Override
-    public byte getCharId() {
-        return 1;
     }
 
     @Override

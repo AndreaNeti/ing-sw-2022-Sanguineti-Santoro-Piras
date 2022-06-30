@@ -3,6 +3,7 @@ package it.polimi.ingsw.Client.model;
 import it.polimi.ingsw.Client.View.Cli.ViewForCharacterCli;
 import it.polimi.ingsw.Client.View.Gui.ViewGUI;
 import it.polimi.ingsw.Server.model.Char4;
+import it.polimi.ingsw.Server.model.CharacterCardDataInterface;
 import it.polimi.ingsw.exceptions.clientExceptions.SkipCommandException;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
@@ -15,24 +16,16 @@ import java.util.List;
  * Char4Client class represents the character card on the client side and corresponds to the server class {@link Char4}.
  */
 public class Char4Client implements CharacterCardClient {
-    private boolean used;
     private final List<Integer> inputs;
+
+    private CharacterCardDataInterface data;
 
     /**
      * Constructor Char4Client creates a new instance of Char4Client.
      */
-    public Char4Client() {
+    public Char4Client(CharacterCardDataInterface data) {
+        this.data = data;
         inputs = new ArrayList<>();
-    }
-
-    @Override
-    public void setUsed() {
-        this.used = true;
-    }
-
-    @Override
-    public boolean containsStudents() {
-        return false;
     }
 
     @Override
@@ -57,7 +50,7 @@ public class Char4Client implements CharacterCardClient {
      *
      * @param viewGUI of type {@link ViewGUI} - client's GUI view from which the inputs are obtained.
      * @return {@code EventHandler}<{{@code MouseEvent}> - function that will be executed when the node that adds the
-     *      event handler is clicked.
+     * event handler is clicked.
      */
     private EventHandler<MouseEvent> setInput(ViewGUI viewGUI) {
         return mouseEvent -> {
@@ -75,11 +68,6 @@ public class Char4Client implements CharacterCardClient {
     }
 
     @Override
-    public byte getCost() {
-        return (byte) (used ? 3 : 2);
-    }
-
-    @Override
     public boolean isFull() {
         return inputs.size() == 1;
     }
@@ -94,11 +82,6 @@ public class Char4Client implements CharacterCardClient {
         return inputs;
     }
 
-    @Override
-    public int getCharId() {
-        return 4;
-    }
-
     /**
      * Method toString returns the name of the character card.
      *
@@ -107,5 +90,35 @@ public class Char4Client implements CharacterCardClient {
     @Override
     public String toString() {
         return "Grandma weeds";
+    }
+
+    @Override
+    public byte getCost() {
+        return data.getCost();
+    }
+
+    @Override
+    public byte getCharId() {
+        return data.getCharId();
+    }
+
+    @Override
+    public boolean isUsed() {
+        return data.isUsed();
+    }
+
+    @Override
+    public boolean hasStudents() {
+        return data.hasStudents();
+    }
+
+    @Override
+    public void setUsed() {
+        data.setUsed();
+    }
+
+    @Override
+    public void setData(CharacterCardDataInterface data) {
+        this.data = data;
     }
 }

@@ -3,6 +3,7 @@ package it.polimi.ingsw.Client.model;
 import it.polimi.ingsw.Client.View.Cli.ViewForCharacterCli;
 import it.polimi.ingsw.Client.View.Gui.ViewGUI;
 import it.polimi.ingsw.Server.model.Char11;
+import it.polimi.ingsw.Server.model.CharacterCardDataInterface;
 import it.polimi.ingsw.Util.Color;
 import it.polimi.ingsw.exceptions.clientExceptions.SkipCommandException;
 import javafx.event.EventHandler;
@@ -16,24 +17,16 @@ import java.util.List;
  * Char11Client class represents the character card on the client side and corresponds to the server class {@link Char11}.
  */
 public class Char11Client implements CharacterCardClient {
-    private boolean used;
     private final List<Integer> inputs;
+
+    private CharacterCardDataInterface data;
 
     /**
      * Constructor Char11Client creates a new instance of Char11Client.
      */
-    public Char11Client() {
+    public Char11Client(CharacterCardDataInterface data) {
+        this.data = data;
         inputs = new ArrayList<>();
-    }
-
-    @Override
-    public void setUsed() {
-        this.used = true;
-    }
-
-    @Override
-    public boolean containsStudents() {
-        return false;
     }
 
     @Override
@@ -59,7 +52,7 @@ public class Char11Client implements CharacterCardClient {
      *
      * @param viewGUI of type {@link ViewGUI} - client's GUI view from which the inputs are obtained.
      * @return {@code EventHandler}<{{@code MouseEvent}> - function that will be executed when the node that adds the
-     *      event handler is clicked.
+     * event handler is clicked.
      */
     private EventHandler<MouseEvent> setInput(ViewGUI viewGUI) {
         return mouseEvent -> {
@@ -72,11 +65,6 @@ public class Char11Client implements CharacterCardClient {
     @Override
     public boolean canPlay() {
         return inputs.size() == 1;
-    }
-
-    @Override
-    public byte getCost() {
-        return (byte) (used ? 4 : 3);
     }
 
     @Override
@@ -105,8 +93,33 @@ public class Char11Client implements CharacterCardClient {
     }
 
     @Override
-    public int getCharId() {
-        return 11;
+    public byte getCost() {
+        return data.getCost();
+    }
+
+    @Override
+    public byte getCharId() {
+        return data.getCharId();
+    }
+
+    @Override
+    public boolean isUsed() {
+        return data.isUsed();
+    }
+
+    @Override
+    public boolean hasStudents() {
+        return data.hasStudents();
+    }
+
+    @Override
+    public void setUsed() {
+        data.setUsed();
+    }
+
+    @Override
+    public void setData(CharacterCardDataInterface data) {
+        this.data = data;
     }
 }
 

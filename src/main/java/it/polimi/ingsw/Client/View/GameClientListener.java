@@ -93,9 +93,9 @@ public interface GameClientListener {
     /**
      * Method updateCharacter updates a character card.
      *
-     * @param charId of type {@code int} - ID of the updated character card.
+     * @param charId of type {@code byte} - ID of the updated character card.
      */
-    void updateCharacter(int charId);
+    void updateCharacter(byte charId);
 
     /**
      * Method updateCoins updates the amount of coins left in the game.

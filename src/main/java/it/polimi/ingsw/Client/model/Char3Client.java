@@ -3,6 +3,7 @@ package it.polimi.ingsw.Client.model;
 import it.polimi.ingsw.Client.View.Cli.ViewForCharacterCli;
 import it.polimi.ingsw.Client.View.Gui.ViewGUI;
 import it.polimi.ingsw.Server.model.Char3;
+import it.polimi.ingsw.Server.model.CharacterCardDataInterface;
 import it.polimi.ingsw.exceptions.clientExceptions.SkipCommandException;
 
 import java.util.List;
@@ -11,16 +12,11 @@ import java.util.List;
  * Char3Client class represents the character card on the client side and corresponds to the server class {@link Char3}.
  */
 public class Char3Client implements CharacterCardClient {
-    private boolean used;
 
-    @Override
-    public void setUsed() {
-        this.used = true;
-    }
+    private CharacterCardDataInterface data;
 
-    @Override
-    public boolean containsStudents() {
-        return false;
+    public Char3Client(CharacterCardDataInterface data) {
+        this.data = data;
     }
 
     @Override
@@ -42,11 +38,6 @@ public class Char3Client implements CharacterCardClient {
     }
 
     @Override
-    public byte getCost() {
-        return (byte) (used ? 2 : 1);
-    }
-
-    @Override
     public boolean isFull() {
         return true;
     }
@@ -61,11 +52,6 @@ public class Char3Client implements CharacterCardClient {
         return null;
     }
 
-    @Override
-    public int getCharId() {
-        return 3;
-    }
-
     /**
      * Method toString returns the name of the character card.
      *
@@ -74,5 +60,35 @@ public class Char3Client implements CharacterCardClient {
     @Override
     public String toString() {
         return "Magic postman";
+    }
+
+    @Override
+    public byte getCost() {
+        return data.getCost();
+    }
+
+    @Override
+    public byte getCharId() {
+        return data.getCharId();
+    }
+
+    @Override
+    public boolean isUsed() {
+        return data.isUsed();
+    }
+
+    @Override
+    public boolean hasStudents() {
+        return data.hasStudents();
+    }
+
+    @Override
+    public void setUsed() {
+        data.setUsed();
+    }
+
+    @Override
+    public void setData(CharacterCardDataInterface data) {
+        this.data = data;
     }
 }

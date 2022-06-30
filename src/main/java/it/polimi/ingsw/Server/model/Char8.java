@@ -9,30 +9,20 @@ import it.polimi.ingsw.exceptions.serverExceptions.NotAllowedException;
  * calculation this turn, that color adds no influence. <br>
  * <b>Inputs required</b>: Student color.
  */
-public class Char8 implements CharacterCard {
+public class Char8 implements CharacterCardLogicInterface {
 
     /**
      * Method play sets the selected color as ignoredColor in the game.
      *
-     * @param game of type {@link CharacterCardGame} - the game instance that the card modifies with its effect.
+     * @param game of type {@link GameInterfaceForCharacter} - the game instance that the card modifies with its effect.
      * @throws NotAllowedException if the color is not valid.
      */
     @Override
-    public void play(CharacterCardGame game) throws NotAllowedException {
+    public void play(GameInterfaceForCharacter game) throws NotAllowedException {
         int color = game.getCharacterInputs().get(0);
         if (color < 0 || color >= Color.values().length)
             throw new NotAllowedException("Set wrong input for color");
         game.setIgnoredColorInfluence(Color.values()[color]);
-    }
-
-    @Override
-    public byte getCost() {
-        return 3;
-    }
-
-    @Override
-    public byte getCharId() {
-        return 8;
     }
 
     @Override

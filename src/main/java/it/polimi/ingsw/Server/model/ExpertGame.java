@@ -2,6 +2,7 @@ package it.polimi.ingsw.Server.model;
 
 import it.polimi.ingsw.Server.model.GameComponents.GameComponent;
 import it.polimi.ingsw.Server.model.GameComponents.Island;
+import it.polimi.ingsw.Util.CharacterCardData;
 import it.polimi.ingsw.Util.Color;
 import it.polimi.ingsw.Util.HouseColor;
 import it.polimi.ingsw.Util.MatchConstants;
@@ -13,10 +14,7 @@ import it.polimi.ingsw.network.ExpertGameDelta;
 import it.polimi.ingsw.network.GameDelta;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 /**
  * ExpertGame class represents the second game type available on "Eriantys". <br>
@@ -26,11 +24,10 @@ import java.util.Random;
  * Most functions add the updated info of the game to the Expert Game Delta, which is then sent to the
  * clients to inform them about the changes happening in the game.
  */
-public class ExpertGame extends NormalGame implements CharacterCardGame, CoinListener, Serializable {
+public class ExpertGame extends NormalGame implements GameInterfaceForCharacter, CoinListener, Serializable {
     private final int[] coinsPlayer;
-    private final List<CharacterCard> characters;
+    private final Set<CharacterCard> characters;
     private final List<Integer> inputsCharacter;
-    private final boolean[] playedCharacters;
     private int coinsLeft;
     private boolean extraInfluence; //default false
     private boolean towerInfluence;// default true
@@ -38,7 +35,7 @@ public class ExpertGame extends NormalGame implements CharacterCardGame, CoinLis
     private boolean equalProfessorCalculation; //default false
     private Color ignoredColorInfluence;
     private byte prohibitionLeft;
-    private Byte chosenCharacter;
+    private CharacterCard chosenCharacter;
     private final MatchConstants matchConstants;
 
 
@@ -56,7 +53,7 @@ public class ExpertGame extends NormalGame implements CharacterCardGame, CoinLis
         this.coinsPlayer = new int[numberOfPlayers];
         Arrays.fill(coinsPlayer, matchConstants.initialPlayerCoins());
 
-        characters = new ArrayList<>(matchConstants.numOfCharacterCards());
+        characters = new HashSet<>(matchConstants.numOfCharacterCards());
         Random rand = new Random(System.currentTimeMillis());
         byte characterIndex = (byte) rand.nextInt(12);
         byte i = 0;
@@ -80,7 +77,6 @@ public class ExpertGame extends NormalGame implements CharacterCardGame, CoinLis
         for (Player p : getPlayers()) {
             p.getLunchHall().addCoinListener(this);
         }
-        playedCharacters = new boolean[matchConstants.numOfCharacterCards()];
         this.extraInfluence = false;
         this.towerInfluence = true;
         this.extraSteps = false;
@@ -117,17 +113,17 @@ public class ExpertGame extends NormalGame implements CharacterCardGame, CoinLis
                 } catch (EndGameException | GameException e) {
                     e.printStackTrace();
                 }
-                return c0;
+                return new CharacterCard(c0, CharacterCardData.CH0);
             case 1:
-                return new Char1();
+                return new CharacterCard(new Char1(), CharacterCardData.CH1);
             case 2:
-                return new Char2();
+                return new CharacterCard(new Char2(), CharacterCardData.CH2);
             case 3:
-                return new Char3();
+                return new CharacterCard(new Char3(), CharacterCardData.CH3);
             case 4:
-                return new Char4();
+                return new CharacterCard(new Char4(), CharacterCardData.CH4);
             case 5:
-                return new Char5();
+                return new CharacterCard(new Char5(), CharacterCardData.CH5);
             case 6:
                 Char6 c6 = new Char6((byte) -11);
                 try {
@@ -135,13 +131,13 @@ public class ExpertGame extends NormalGame implements CharacterCardGame, CoinLis
                 } catch (EndGameException | GameException e) {
                     e.printStackTrace();
                 }
-                return c6;
+                return new CharacterCard(c6, CharacterCardData.CH6);
             case 7:
-                return new Char7();
+                return new CharacterCard(new Char7(), CharacterCardData.CH7);
             case 8:
-                return new Char8();
+                return new CharacterCard(new Char8(), CharacterCardData.CH8);
             case 9:
-                return new Char9();
+                return new CharacterCard(new Char9(), CharacterCardData.CH9);
             case 10:
                 Char10 c10 = new Char10((byte) -12);
                 try {
@@ -149,9 +145,9 @@ public class ExpertGame extends NormalGame implements CharacterCardGame, CoinLis
                 } catch (EndGameException | GameException e) {
                     e.printStackTrace();
                 }
-                return c10;
+                return new CharacterCard(c10, CharacterCardData.CH10);
             case 11:
-                return new Char11();
+                return new CharacterCard(new Char11(), CharacterCardData.CH11);
         }
         throw new IllegalArgumentException("Character card " + index + " doesn't exists");
     }
@@ -244,8 +240,8 @@ public class ExpertGame extends NormalGame implements CharacterCardGame, CoinLis
         ExpertGameDelta g = (ExpertGameDelta) super.transformAllGameInDelta();
         g.setNewCoinsLeft(coinsLeft);
         g.setNewProhibitionsLeft(prohibitionLeft);
-        for (byte i = 0; i < characters.size(); i++) {
-            g.addCharacterCard(i, characters.get(i).getCharId());
+        for (CharacterCard c : characters) {
+            g.addCharacterCard(c);
         }
         getGameDelta().setExtraSteps(extraSteps);
         return g;
@@ -367,17 +363,16 @@ public class ExpertGame extends NormalGame implements CharacterCardGame, CoinLis
                     inputsCharacter.clear();
                     throw e;
                 }
-                byte charCost = getChosenCharacter().getCost();
-                // this character card has already been used, increase its cost
-                if (playedCharacters[characters.indexOf(getChosenCharacter())]) charCost++;
-                else {
-                    playedCharacters[characters.indexOf(getChosenCharacter())] = true;
-                    getGameDelta().setUsedCharacter(getChosenCharacter().getCharId(), true);
+                // remove coins to player
+                removeCoinsFromCurrentPlayer(getChosenCharacter().getCost());
+                // this character card is used for the first time
+                if (!getChosenCharacter().isUsed()) {
+                    getChosenCharacter().setUsed();
+                    getGameDelta().addCharacterCard(getChosenCharacter());
                     // a coin is left on the character card to remember it has been used
                     coinsLeft--;
+                    getGameDelta().setNewCoinsLeft(coinsLeft);
                 }
-                // remove coins to player
-                removeCoinsFromCurrentPlayer(charCost);
                 chosenCharacter = null;
                 inputsCharacter.clear();
             } finally {
@@ -392,29 +387,24 @@ public class ExpertGame extends NormalGame implements CharacterCardGame, CoinLis
     /**
      * Method chooseCharacter is used to select one of the 3 available character cards based on their unique ID.
      *
-     * @param charId of type {@code byte} - index of the character card chosen.
+     * @param charId of type {@code byte} - id of the character card chosen.
      * @throws GameException if the selected card is not available in the current game or the player doesn't have enough coins.
      */
     @Override
     public void chooseCharacter(Byte charId) throws GameException {
-        Byte indexCharacter = null;
-        byte charCost = 0;
-        if (charId == null) {
-            chosenCharacter = null;
-        } else {
-            for (int i = 0; i < characters.size(); i++) {
-                CharacterCard character = characters.get(i);
-                if (character.getCharId() == charId) {
-                    charCost = character.getCost();
-                    indexCharacter = (byte) i;
+        chosenCharacter = null;
+        if (charId != null) {
+            for (CharacterCard c : characters) {
+                if (c.getCharId() == charId) {
+                    chosenCharacter = c;
+                    break;
                 }
             }
-            if (indexCharacter == null) throw new NotAllowedException("Card not available");
-            // this character card has already been used, increase its cost
-            if (playedCharacters[indexCharacter]) charCost++;
-            if (charCost > coinsPlayer[getCurrentPlayer().getWizard().ordinal()])
+            if (chosenCharacter == null) throw new NotAllowedException("Card not available");
+            if (chosenCharacter.getCost() > coinsPlayer[getCurrentPlayer().getWizard().ordinal()]) {
+                chosenCharacter = null;
                 throw new NotAllowedException("You have not enough coins to play this card");
-            chosenCharacter = indexCharacter;
+            }
         }
 
     }
@@ -450,7 +440,7 @@ public class ExpertGame extends NormalGame implements CharacterCardGame, CoinLis
      * @return {@link CharacterCard} - instance of the chosen character chard.
      */
     private CharacterCard getChosenCharacter() {
-        return characters.get(chosenCharacter);
+        return chosenCharacter;
     }
 
     /**

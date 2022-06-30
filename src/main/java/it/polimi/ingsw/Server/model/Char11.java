@@ -12,17 +12,17 @@ import it.polimi.ingsw.exceptions.serverExceptions.NotEnoughStudentsException;
  * Students of that type, return as many Students as they have. <br>
  * <b>Inputs required</b>: Student color.
  */
-public class Char11 implements CharacterCard {
+public class Char11 implements CharacterCardLogicInterface {
 
     /**
      * Method play automatically moves up to 3 students (if available) of the selected color from
      * each player's lunch hall to the bag.
      *
-     * @param game of type {@link CharacterCardGame} - the game instance that the card modifies with its effect.
+     * @param game of type {@link GameInterfaceForCharacter} - the game instance that the card modifies with its effect.
      * @throws GameException if the student color is not valid.
      */
     @Override
-    public void play(CharacterCardGame game) throws GameException {
+    public void play(GameInterfaceForCharacter game) throws GameException {
         int color = game.getCharacterInputs().get(0);
         if (color < 0 || color >= Color.values().length)
             throw new NotAllowedException("Set wrong input for color");
@@ -37,16 +37,6 @@ public class Char11 implements CharacterCard {
             }
             game.getGameDelta().addUpdatedGC(game.getComponentById(2 * i + 1));
         }
-    }
-
-    @Override
-    public byte getCost() {
-        return 3;
-    }
-
-    @Override
-    public byte getCharId() {
-        return 11;
     }
 
     @Override

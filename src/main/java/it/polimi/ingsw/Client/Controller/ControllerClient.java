@@ -6,14 +6,15 @@ import it.polimi.ingsw.Client.View.AbstractView;
 import it.polimi.ingsw.Client.model.GameClient;
 import it.polimi.ingsw.Client.model.PlayerClient;
 import it.polimi.ingsw.Client.model.TeamClient;
+import it.polimi.ingsw.Server.controller.Controller;
 import it.polimi.ingsw.Server.controller.Server;
+import it.polimi.ingsw.Server.model.CharacterCardDataInterface;
 import it.polimi.ingsw.Server.model.GameComponents.GameComponent;
 import it.polimi.ingsw.Server.model.Player;
 import it.polimi.ingsw.Server.model.Team;
 import it.polimi.ingsw.Util.*;
 import it.polimi.ingsw.network.GameDelta;
 import it.polimi.ingsw.network.PingMessage;
-import it.polimi.ingsw.Server.controller.Controller;
 import it.polimi.ingsw.network.PingPong;
 import it.polimi.ingsw.network.PingPongInterface;
 import it.polimi.ingsw.network.toServerMessage.Quit;
@@ -161,6 +162,7 @@ public class ControllerClient extends GameClientListened implements PingPongInte
      */
     public void changeGame(GameDelta gameDelta) {
         if (matchType.isExpert()) {
+            // TODO fix this (card received is != from the one sent)
             if (gameDelta.getCharacters().size() != 0) model.setCharacters(gameDelta.getCharacters());
             gameDelta.getNewCoinsLeft().ifPresent(newCoinsLeft -> model.setNewCoinsLeft(newCoinsLeft));
             gameDelta.getNewProhibitionsLeft().ifPresent(newProhibitionsLeft -> model.setNewProhibitionsLeft(newProhibitionsLeft));
@@ -168,8 +170,9 @@ public class ControllerClient extends GameClientListened implements PingPongInte
             gameDelta.getIgnoredColorInfluence().ifPresent((ignoredColorInfluence) -> model.setIgnoredColorInfluence(ignoredColorInfluence));
             for (Map.Entry<Byte, Integer> newEntry : gameDelta.getUpdatedCoinPlayer().entrySet())
                 model.setUpdatedCoinsPlayer(newEntry.getKey(), newEntry.getValue());
-            for (Map.Entry<Byte, Boolean> entry : gameDelta.getUsedCharacter().entrySet()) {
-                model.setUpdatedCharacter(entry.getKey());
+            for (CharacterCardDataInterface updatedCharacter : gameDelta.getCharacters()) {
+                // TODO fix this
+                model.setUpdatedCharacter(updatedCharacter);
             }
         }
         for (Map.Entry<Byte, GameComponent> entry : gameDelta.getUpdatedGC().entrySet()) {

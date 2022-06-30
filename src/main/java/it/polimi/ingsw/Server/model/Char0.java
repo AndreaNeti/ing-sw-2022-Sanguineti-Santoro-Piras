@@ -16,7 +16,7 @@ import java.util.List;
  * <b>Inputs required</b>: 1 student color from this card. <br>
  * This is one of the 3 character cards that contain students and therefore extends the GameComponent class.
  */
-public class Char0 extends GameComponent implements CharacterCard {
+public class Char0 extends GameComponent implements CharacterCardLogicInterface {
 
     /**
      * Constructor Char0 creates a new instance of Char0
@@ -31,13 +31,13 @@ public class Char0 extends GameComponent implements CharacterCard {
      * Method play moves a student of choice from the card to an island of choice and then draws another student from
      * the bag to the card.
      *
-     * @param game of type {@link CharacterCardGame} - the game instance that the card modifies with its effect.
+     * @param game of type {@link GameInterfaceForCharacter} - the game instance that the card modifies with its effect.
      * @throws GameException    if the student's color or island's id are not valid or there is not a student of the
      *                          selected color on the card.
      * @throws EndGameException if after drawing a student, the bag has none left.
      */
     @Override
-    public void play(CharacterCardGame game) throws GameException, EndGameException {
+    public void play(GameInterfaceForCharacter game) throws GameException, EndGameException {
         List<Integer> inputs = game.getCharacterInputs();
         // input 0 is the color chosen, input 1 is the island id chosen
         int color = inputs.get(0), idIsland = inputs.get(1);
@@ -53,18 +53,7 @@ public class Char0 extends GameComponent implements CharacterCard {
     }
 
     @Override
-    public byte getCost() {
-        return 1;
-    }
-
-    @Override
-    public byte getCharId() {
-        return 0;
-    }
-
-    @Override
     public boolean canPlay(int nInput) {
         return nInput == 2;
     }
-
 }

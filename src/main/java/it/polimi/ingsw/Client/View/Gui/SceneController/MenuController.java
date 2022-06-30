@@ -193,7 +193,7 @@ public class MenuController implements SceneController {
     }
 
     @Override
-    public void updateCharacter(int charId) {
+    public void updateCharacter(byte charId) {
 
     }
 

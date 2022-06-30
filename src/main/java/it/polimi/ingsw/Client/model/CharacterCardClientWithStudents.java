@@ -15,15 +15,4 @@ public abstract class CharacterCardClientWithStudents extends GameComponentClien
     public CharacterCardClientWithStudents(int id) {
         super(id);
     }
-
-    /**
-     * Method containsStudents checks if the character card is one of the 3 ({@link Char0Client}, {@link Char6Client}, {@link Char10Client})
-     * that can contain students.
-     *
-     * @return {@code boolean} - true.
-     */
-    @Override
-    public boolean containsStudents() {
-        return true;
-    }
 }

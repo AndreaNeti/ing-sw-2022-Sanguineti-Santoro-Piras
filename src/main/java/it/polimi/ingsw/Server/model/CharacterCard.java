@@ -3,41 +3,71 @@ package it.polimi.ingsw.Server.model;
 import it.polimi.ingsw.exceptions.serverExceptions.EndGameException;
 import it.polimi.ingsw.exceptions.serverExceptions.GameException;
 
-/**
- * CharacterCard interface represents the character cards in "Eriantys", available in the expert game mode. <br>
- * There are a total of 12 character cards classes that implement this interface, each one with its own effect on the game and
- * with its own unique ID.
- */
-public interface CharacterCard {
-    /**
-     * Method play applies the card's effect to the game, using the CharacterCardGame interface's functions.
-     *
-     * @param game of type {@link CharacterCardGame} - the game instance that the card modifies with its effect.
-     * @throws GameException if the inputs provided are wrong or invalid.
-     * @throws EndGameException if the character card's effect trigger an endgame event (no more students in the bag,
-     *                          no more towers in a team's board or less than 3 islands left)
-     */
-    void play(CharacterCardGame game) throws GameException, EndGameException;
+import java.util.Objects;
 
-    /**
-     * Method getCost returns the card's cost to play.
-     *
-     * @return {@code byte} - the card's cost.
-     */
-    byte getCost();
+public class CharacterCard implements CharacterCardDataInterface, CharacterCardLogicInterface {
+    private final CharacterCardDataInterface characterData;
+    private final transient CharacterCardLogicInterface characterCard;
 
-    /**
-     * Method getCharId returns the card's unique ID.
-     *
-     * @return {@code byte} - the card's ID.
-     */
-    byte getCharId();
+    public CharacterCard(CharacterCardLogicInterface characterCard, CharacterCardDataInterface data) {
+        this.characterCard = characterCard;
+        this.characterData = data;
+    }
 
-    /**
-     * Method canPlay checks if the card can be played with the number of inputs provided by the player.
-     *
-     * @param nInput of type {@code int} - number of inputs provided.
-     * @return {@code boolean} - true if the card can be played, false else.
-     */
-    boolean canPlay(int nInput);
+    @Override
+    public byte getCost() {
+        return characterData.getCost();
+    }
+
+    @Override
+    public byte getCharId() {
+        return characterData.getCharId();
+    }
+
+    @Override
+    public boolean isUsed() {
+        return characterData.isUsed();
+    }
+
+    @Override
+    public boolean hasStudents() {
+        return characterData.hasStudents();
+    }
+
+    @Override
+    public void play(GameInterfaceForCharacter game) throws GameException, EndGameException {
+        characterCard.play(game);
+    }
+
+    @Override
+    public boolean canPlay(int nInput) {
+        return characterCard.canPlay(nInput);
+    }
+
+    @Override
+    public void setUsed() {
+        characterData.setUsed();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof CharacterCard that)) return false;
+        return characterData.equals(that.characterData);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(characterData);
+    }
+
+    @Override
+    public String toString() {
+        return getCharId() + ": used = " + isUsed() + ". cost = " + getCost();
+    }
+
+    /* ONLY FOR TESTS */
+    CharacterCardLogicInterface getLogicCard() {
+        return characterCard;
+    }
 }

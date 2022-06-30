@@ -11,6 +11,7 @@ import java.util.TimerTask;
  * Both the client and the server contain a PingPong instance and therefore have their own timeout timer.
  */
 public class PingPong {
+    private static final boolean DEBUGGING = true;
     private volatile long time;
     long maxTime = 5000; //time that need to occur before closing the connection
     private final static long period = 2000;//frequency at which ping are send
@@ -21,6 +22,7 @@ public class PingPong {
      * @param pingPongController of type {@link PingPongInterface} - instance of the ControllerClient (Client side) / ClientHandler (Server side).
      */
     public PingPong(PingPongInterface pingPongController) {
+        if (DEBUGGING) return;
         this.time = System.currentTimeMillis() + period;
         Timer pingPong = new Timer();
         pingPong.scheduleAtFixedRate(new TimerTask() {
