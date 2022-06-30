@@ -434,10 +434,12 @@ public class BoardController implements SceneController {
         //the anchor pane of the students contains all 5 possible color in 5 other anchor pane
         Platform.runLater(() -> {
             AnchorPane paneIsland = (AnchorPane) this.getElementById("#" + island.getId());
-            int relativeId = (int) paneIsland.getProperties().get("relativeId");
+            int relativeId;
+            // if it's an archipelago, get its center
+            if (island.getArchipelagoSize() > 1) relativeId = getCenterArchipelagoId(island);
+            else relativeId = Integer.parseInt(paneIsland.getId());
 
-            if (island.getArchipelagoSize() > 1) updateGeneric(island, getCenterArchipelagoId(island));
-            else updateGeneric(island, relativeId);
+            updateGeneric(island, relativeId);
             HouseColor islandTeam = island.getTeam();
             if (islandTeam != null) {
                 Set<Integer> containedIslands = (Set<Integer>) paneIsland.getProperties().get("containedIslands");
@@ -448,18 +450,27 @@ public class BoardController implements SceneController {
                     containedIslandPane.getChildren().add(getTower(islandTeam));
                 }
             }
+            HBox prohibitionsBox = (HBox) paneIsland.lookup(".prohibitions");
+            byte islandProhibitions = island.getProhibitions();
+            // set the island prohibitions box
+            if (islandProhibitions > 0) {
+                prohibitionsBox.setVisible(true);
+                Label prohibitionsLabel = (Label) prohibitionsBox.getChildren().get(1);
+                prohibitionsLabel.setText("× " + islandProhibitions);
+            } else
+                prohibitionsBox.setVisible(false);
         });
     }
 
     @Override
-    public void updateDeletedIsland(IslandClient removedIsland, IslandClient winner) {
+    public void updateDeletedIsland(IslandClient removedIsland, IslandClient winnerIsland) {
         Platform.runLater(() -> {
             // retrieve the team that deleted the island and enlarge it using the position of mother nature
             byte motherNaturePosition = viewGUI.getModel().getMotherNaturePosition();
-            System.out.println("Mother Nature has position: " + motherNaturePosition + " and it's on island #" + getCenterArchipelagoId(winner) + " (relativeId = " + winner.getId() + ") removed island #" + removedIsland.getId());
-            HouseColor winnerTeam = winner.getTeam();
+            System.out.println("Mother Nature has position: " + motherNaturePosition + " and it's on island #" + getCenterArchipelagoId(winnerIsland) + " (relativeId = " + winnerIsland.getId() + ") removed island #" + removedIsland.getId());
+            HouseColor winnerTeam = winnerIsland.getTeam();
 
-            AnchorPane paneWinnerIsland = (AnchorPane) this.getElementById("#" + winner.getId());
+            AnchorPane paneWinnerIsland = (AnchorPane) this.getElementById("#" + winnerIsland.getId());
             // make bigger
             paneWinnerIsland.setStyle("-fx-scale-x:1; -fx-scale-y:1");
 
@@ -470,20 +481,24 @@ public class BoardController implements SceneController {
             // update relativeId of all merged islands
             for (Integer i : containedIslands) {
                 AnchorPane node = (AnchorPane) this.getElementById("#" + i);
-                node.getProperties().put("relativeId", winner.getId());
+                node.getProperties().put("relativeId", winnerIsland.getId());
                 // hide the pane of students
                 node.getChildren().get(1).setVisible(false);
                 //add tower and make bigger
                 node.getChildren().add(getTower(winnerTeam));
                 node.setStyle("-fx-scale-x:1; -fx-scale-y:1");
+                // prohibitions are visible only on the winner island
+                HBox prohibitionsBox = (HBox) node.lookup(".prohibitions");
+                prohibitionsBox.setVisible(false);
             }
             // update contained islands
             paneWinnerIsland.getProperties().put("containedIslands", containedIslands);
-
-            AnchorPane paneMotherNatureIsland = (AnchorPane) this.getElementById("#" + getCenterArchipelagoId(winner));
+            AnchorPane paneArchipelago = (AnchorPane) this.getElementById("#" + getCenterArchipelagoId(winnerIsland));
             // make students visible on the island where mother nature is visible
-            updateGeneric(winner, Integer.parseInt(paneMotherNatureIsland.getId()));
-            paneMotherNatureIsland.getChildren().get(1).setVisible(true);
+            if (winnerIsland.getProhibitions() > 0)
+                paneArchipelago.lookup(".prohibitions").setVisible(true);
+            updateGeneric(winnerIsland, Integer.parseInt(paneArchipelago.getId()));
+            paneArchipelago.getChildren().get(1).setVisible(true);
             updateMotherNature(motherNaturePosition);
         });
     }

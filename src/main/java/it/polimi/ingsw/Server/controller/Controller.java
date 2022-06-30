@@ -280,6 +280,7 @@ public class Controller {
         } catch (EndGameException e) {
             handleError(e);
         }
+        // TODO uncomment this
         // characterCardPlayed = true;
     }
 

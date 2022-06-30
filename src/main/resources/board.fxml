@@ -67,9 +67,9 @@
                             </AnchorPane>
                         </children>
                     </AnchorPane>
-               <HBox alignment="CENTER_LEFT" styleClass="prohibition" visible="false" AnchorPane.leftAnchor="-60.0" AnchorPane.topAnchor="80.0">
+               <HBox alignment="CENTER_LEFT" styleClass="prohibitions" visible="false" AnchorPane.leftAnchor="-60.0" AnchorPane.topAnchor="80.0">
                   <children>
-                     <ImageView cache="true" cacheHint="SCALE" fitHeight="30.0" pickOnBounds="true" preserveRatio="true">
+                     <ImageView cache="true" fitHeight="30.0" pickOnBounds="true" preserveRatio="true">
                         <image>
                            <Image url="@Graphical_Assets/deny_island_icon.png" />
                         </image>
@@ -139,9 +139,9 @@
                             </AnchorPane>
                         </children>
                     </AnchorPane>
-               <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="10.0" styleClass="prohibition" visible="false" AnchorPane.leftAnchor="-60.0" AnchorPane.topAnchor="80.0">
+               <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="10.0" styleClass="prohibitions" visible="false" AnchorPane.leftAnchor="-60.0" AnchorPane.topAnchor="80.0">
                   <children>
-                     <ImageView cache="true" cacheHint="SCALE" fitHeight="30.0" pickOnBounds="true" preserveRatio="true">
+                     <ImageView cache="true" fitHeight="30.0" pickOnBounds="true" preserveRatio="true">
                         <image>
                            <Image url="@Graphical_Assets/deny_island_icon.png" />
                         </image>
@@ -209,9 +209,9 @@
                             </AnchorPane>
                         </children>
                     </AnchorPane>
-               <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="10.0" styleClass="prohibition" visible="false" AnchorPane.leftAnchor="67.0" AnchorPane.topAnchor="-40.0">
+               <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="10.0" styleClass="prohibitions" visible="false" AnchorPane.leftAnchor="67.0" AnchorPane.topAnchor="-40.0">
                   <children>
-                     <ImageView cache="true" cacheHint="SCALE" fitHeight="30.0" pickOnBounds="true" preserveRatio="true">
+                     <ImageView cache="true" fitHeight="30.0" pickOnBounds="true" preserveRatio="true">
                         <image>
                            <Image url="@Graphical_Assets/deny_island_icon.png" />
                         </image>
@@ -281,9 +281,9 @@
                             </AnchorPane>
                         </children>
                     </AnchorPane>
-               <HBox alignment="CENTER_LEFT" layoutX="20.0" layoutY="20.0" styleClass="prohibition" visible="false" AnchorPane.leftAnchor="67.0" AnchorPane.topAnchor="-40.0">
+               <HBox alignment="CENTER_LEFT" layoutX="20.0" layoutY="20.0" styleClass="prohibitions" visible="false" AnchorPane.leftAnchor="67.0" AnchorPane.topAnchor="-40.0">
                   <children>
-                     <ImageView cache="true" cacheHint="SCALE" fitHeight="30.0" pickOnBounds="true" preserveRatio="true">
+                     <ImageView cache="true" fitHeight="30.0" pickOnBounds="true" preserveRatio="true">
                         <image>
                            <Image url="@Graphical_Assets/deny_island_icon.png" />
                         </image>
@@ -349,9 +349,9 @@
                             </AnchorPane>
                         </children>
                     </AnchorPane>
-               <HBox alignment="CENTER_LEFT" layoutX="20.0" layoutY="20.0" styleClass="prohibition" visible="false" AnchorPane.leftAnchor="67.0" AnchorPane.topAnchor="-40.0">
+               <HBox alignment="CENTER_LEFT" layoutX="20.0" layoutY="20.0" styleClass="prohibitions" visible="false" AnchorPane.leftAnchor="67.0" AnchorPane.topAnchor="-40.0">
                   <children>
-                     <ImageView cache="true" cacheHint="SCALE" fitHeight="30.0" pickOnBounds="true" preserveRatio="true">
+                     <ImageView cache="true" fitHeight="30.0" pickOnBounds="true" preserveRatio="true">
                         <image>
                            <Image url="@Graphical_Assets/deny_island_icon.png" />
                         </image>
@@ -421,9 +421,9 @@
                             </AnchorPane>
                         </children>
                     </AnchorPane>
-               <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="10.0" styleClass="prohibition" visible="false" AnchorPane.rightAnchor="-60.0" AnchorPane.topAnchor="85.0">
+               <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="10.0" styleClass="prohibitions" visible="false" AnchorPane.rightAnchor="-60.0" AnchorPane.topAnchor="85.0">
                   <children>
-                     <ImageView cache="true" cacheHint="SCALE" fitHeight="30.0" pickOnBounds="true" preserveRatio="true">
+                     <ImageView cache="true" fitHeight="30.0" pickOnBounds="true" preserveRatio="true">
                         <image>
                            <Image url="@Graphical_Assets/deny_island_icon.png" />
                         </image>
@@ -493,9 +493,9 @@
                             </AnchorPane>
                         </children>
                     </AnchorPane>
-               <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="10.0" styleClass="prohibition" visible="false" AnchorPane.rightAnchor="-60.0" AnchorPane.topAnchor="85.0">
+               <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="10.0" styleClass="prohibitions" visible="false" AnchorPane.rightAnchor="-60.0" AnchorPane.topAnchor="85.0">
                   <children>
-                     <ImageView cache="true" cacheHint="SCALE" fitHeight="30.0" pickOnBounds="true" preserveRatio="true">
+                     <ImageView cache="true" fitHeight="30.0" pickOnBounds="true" preserveRatio="true">
                         <image>
                            <Image url="@Graphical_Assets/deny_island_icon.png" />
                         </image>
@@ -565,9 +565,9 @@
                             </AnchorPane>
                         </children>
                     </AnchorPane>
-               <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="10.0" styleClass="prohibition" visible="false" AnchorPane.rightAnchor="-60.0" AnchorPane.topAnchor="85.0">
+               <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="10.0" styleClass="prohibitions" visible="false" AnchorPane.rightAnchor="-60.0" AnchorPane.topAnchor="85.0">
                   <children>
-                     <ImageView cache="true" cacheHint="SCALE" fitHeight="30.0" pickOnBounds="true" preserveRatio="true">
+                     <ImageView cache="true" fitHeight="30.0" pickOnBounds="true" preserveRatio="true">
                         <image>
                            <Image url="@Graphical_Assets/deny_island_icon.png" />
                         </image>
@@ -637,9 +637,9 @@
                             </AnchorPane>
                         </children>
                     </AnchorPane>
-               <HBox alignment="CENTER_LEFT" layoutX="30.0" layoutY="30.0" styleClass="prohibition" visible="false" AnchorPane.bottomAnchor="-40.0" AnchorPane.leftAnchor="65.0">
+               <HBox alignment="CENTER_LEFT" layoutX="30.0" layoutY="30.0" styleClass="prohibitions" visible="false" AnchorPane.bottomAnchor="-40.0" AnchorPane.leftAnchor="65.0">
                   <children>
-                     <ImageView cache="true" cacheHint="SCALE" fitHeight="30.0" pickOnBounds="true" preserveRatio="true">
+                     <ImageView cache="true" fitHeight="30.0" pickOnBounds="true" preserveRatio="true">
                         <image>
                            <Image url="@Graphical_Assets/deny_island_icon.png" />
                         </image>
@@ -709,9 +709,9 @@
                             </AnchorPane>
                         </children>
                     </AnchorPane>
-               <HBox alignment="CENTER_LEFT" layoutX="30.0" layoutY="30.0" styleClass="prohibition" visible="false" AnchorPane.bottomAnchor="-40.0" AnchorPane.leftAnchor="65.0">
+               <HBox alignment="CENTER_LEFT" layoutX="30.0" layoutY="30.0" styleClass="prohibitions" visible="false" AnchorPane.bottomAnchor="-40.0" AnchorPane.leftAnchor="65.0">
                   <children>
-                     <ImageView cache="true" cacheHint="SCALE" fitHeight="30.0" pickOnBounds="true" preserveRatio="true">
+                     <ImageView cache="true" fitHeight="30.0" pickOnBounds="true" preserveRatio="true">
                         <image>
                            <Image url="@Graphical_Assets/deny_island_icon.png" />
                         </image>
@@ -781,9 +781,9 @@
                             </AnchorPane>
                         </children>
                     </AnchorPane>
-               <HBox alignment="CENTER_LEFT" layoutX="30.0" layoutY="30.0" styleClass="prohibition" visible="false" AnchorPane.bottomAnchor="-40.0" AnchorPane.leftAnchor="65.0">
+               <HBox alignment="CENTER_LEFT" layoutX="30.0" layoutY="30.0" styleClass="prohibitions" visible="false" AnchorPane.bottomAnchor="-40.0" AnchorPane.leftAnchor="65.0">
                   <children>
-                     <ImageView cache="true" cacheHint="SCALE" fitHeight="30.0" pickOnBounds="true" preserveRatio="true">
+                     <ImageView cache="true" fitHeight="30.0" pickOnBounds="true" preserveRatio="true">
                         <image>
                            <Image url="@Graphical_Assets/deny_island_icon.png" />
                         </image>
@@ -853,9 +853,9 @@
                             </AnchorPane>
                         </children>
                     </AnchorPane>
-               <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="10.0" styleClass="prohibition" visible="false" AnchorPane.leftAnchor="-60.0" AnchorPane.topAnchor="80.0">
+               <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="10.0" styleClass="prohibitions" visible="false" AnchorPane.leftAnchor="-60.0" AnchorPane.topAnchor="80.0">
                   <children>
-                     <ImageView cache="true" cacheHint="SCALE" fitHeight="30.0" pickOnBounds="true" preserveRatio="true">
+                     <ImageView cache="true" fitHeight="30.0" pickOnBounds="true" preserveRatio="true">
                         <image>
                            <Image url="@Graphical_Assets/deny_island_icon.png" />
                         </image>
