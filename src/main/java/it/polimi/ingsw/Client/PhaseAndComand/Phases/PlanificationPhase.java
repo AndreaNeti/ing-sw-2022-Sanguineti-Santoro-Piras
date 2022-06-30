@@ -4,6 +4,7 @@ import it.polimi.ingsw.Client.View.Gui.GuiFX;
 import it.polimi.ingsw.Client.View.Gui.SceneController.SceneController;
 import it.polimi.ingsw.Client.View.Gui.ViewGUI;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 /**
@@ -29,7 +30,7 @@ public class PlanificationPhase extends ClientPhase {
         SceneController sceneController = GuiFX.getActiveSceneController();
         sceneController.disableEverything();
 
-        AnchorPane assistantCardsBox = (AnchorPane) sceneController.getElementById("#assistantCardsBox");
+        HBox assistantCardsBox = (HBox) sceneController.getElementById("#assistantCardsBox");
         assistantCardsBox.setVisible(true);
         VBox VBox = (VBox) assistantCardsBox.getChildren().get(0);
         viewGUI.updateAssistantBox(true);

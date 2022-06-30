@@ -45,7 +45,7 @@ public class BoardController implements SceneController {
     public VBox chat;
     public Pane paneForChat;
     public Button sendButton;
-    public AnchorPane assistantCardsBox;
+    public HBox assistantCardsBox;
     private ObservableList<String> observableListChat;
     public HBox clouds;
     public Set<Node> clickableElement = new HashSet<>();
@@ -62,7 +62,6 @@ public class BoardController implements SceneController {
         observableListChat.addAll(viewGUI.getChat());
         ListView<String> listView = new ListView<>(observableListChat);
         listView.prefWidthProperty().bind(paneForChat.widthProperty());
-        // listView.getStyleClass().add("chat");
         paneForChat.getChildren().add(listView);
         chat.toFront();
         chat.setVisible(false);
@@ -200,7 +199,7 @@ public class BoardController implements SceneController {
 
         HBox assistantCardPane = (HBox) getElementById("#assistantCard" + viewGUI.getModel().getMyWizard());
         AnchorPane deck = (AnchorPane) assistantCardPane.getChildren().get(1);
-        AnchorPane assistantCardsBox = (AnchorPane) getElementById("#assistantCardsBox");
+        HBox assistantCardsBox = (HBox) getElementById("#assistantCardsBox");
         deck.setOnMouseClicked(mouseEvent -> assistantCardsBox.setVisible(!assistantCardsBox.isVisible()));
         viewGUI.updateAssistantBox();
 

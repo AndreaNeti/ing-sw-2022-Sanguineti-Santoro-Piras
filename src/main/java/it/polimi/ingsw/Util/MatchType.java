@@ -30,6 +30,6 @@ public record MatchType(byte nPlayers, boolean isExpert) implements Serializable
      */
     @Override
     public String toString() {
-        return nPlayers + " players, " + ((isExpert) ? "expert mode" : "normal mode");
+        return nPlayers + " players, " + ((isExpert) ? "Expert mode" : "Normal mode");
     }
 }

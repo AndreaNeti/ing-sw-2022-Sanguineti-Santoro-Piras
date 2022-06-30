@@ -115,7 +115,7 @@ public class ViewGUI extends AbstractView {
 
     public void updateAssistantBox(boolean addHandler) {
         SceneController sceneController = GuiFX.getActiveSceneController();
-        AnchorPane assistantCardsBox = (AnchorPane) sceneController.getElementById("#assistantCardsBox");
+        HBox assistantCardsBox = (HBox) sceneController.getElementById("#assistantCardsBox");
         HBox box = (HBox) ((VBox) assistantCardsBox.getChildren().get(0)).getChildren().get(1);
         box.getChildren().clear();
         for (AssistantCard card : this.getModel().getPlayers().get(getModel().getMyWizard().ordinal()).getAssistantCards()) {
