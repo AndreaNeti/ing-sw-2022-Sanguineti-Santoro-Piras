@@ -162,7 +162,6 @@ public class ControllerClient extends GameClientListened implements PingPongInte
      */
     public void changeGame(GameDelta gameDelta) {
         if (matchType.isExpert()) {
-            if (gameDelta.getCharacters().size() != 0) model.setCharacters(gameDelta.getCharacters());
             gameDelta.getNewCoinsLeft().ifPresent(newCoinsLeft -> model.setNewCoinsLeft(newCoinsLeft));
             gameDelta.getNewProhibitionsLeft().ifPresent(newProhibitionsLeft -> model.setNewProhibitionsLeft(newProhibitionsLeft));
             gameDelta.isExtraSteps().ifPresent((extraSteps) -> model.setExtraSteps(extraSteps));
