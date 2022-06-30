@@ -641,13 +641,15 @@ public class BoardController implements SceneController {
 
     @Override
     public void updateCurrentPlayer(byte newCurrentPlayer) {
-        GameClientView model = viewGUI.getModel();
-        byte oldCurrentPlayer = (byte) model.getCurrentPlayer().getWizard().ordinal();
-        byte oldPlayerBoardIndex = (byte) Math.floorMod(oldCurrentPlayer - model.getMyWizard().ordinal(), model.getPlayers().size());
-        byte newPlayerBoardIndex = (byte) Math.floorMod(newCurrentPlayer - model.getMyWizard().ordinal(), model.getPlayers().size());
+        Platform.runLater(() -> {
+            GameClientView model = viewGUI.getModel();
+            byte oldCurrentPlayer = (byte) model.getCurrentPlayer().getWizard().ordinal();
+            byte oldPlayerBoardIndex = (byte) Math.floorMod(oldCurrentPlayer - model.getMyWizard().ordinal(), model.getPlayers().size());
+            byte newPlayerBoardIndex = (byte) Math.floorMod(newCurrentPlayer - model.getMyWizard().ordinal(), model.getPlayers().size());
 
-        boards.getChildren().get(oldPlayerBoardIndex).getStyleClass().remove("currentPlayer");
-        boards.getChildren().get(newPlayerBoardIndex).getStyleClass().add("currentPlayer");
+            boards.getChildren().get(oldPlayerBoardIndex).getStyleClass().remove("currentPlayer");
+            boards.getChildren().get(newPlayerBoardIndex).getStyleClass().add("currentPlayer");
+        });
     }
 
     private ImageView getMotherNature() {

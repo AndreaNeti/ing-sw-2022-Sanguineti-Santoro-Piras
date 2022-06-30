@@ -877,12 +877,7 @@
                             <Image url="@Graphical_Assets/Board/Board.jpg" />
                         </image>
                     </ImageView>
-                    <Label styleClass="nickname" text="asdsadsadsada" textAlignment="CENTER" textFill="WHITE" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                        <padding>
-                            <Insets bottom="2.0" left="6.0" right="6.0" top="2.0" />
-                        </padding>
-
-                    </Label>
+                    <Label styleClass="nickname" textAlignment="CENTER" textFill="WHITE" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                     <AnchorPane prefHeight="304.0" prefWidth="114.0" styleClass="entrancehall" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="586.0" AnchorPane.topAnchor="0.0">
                         <children>
                             <ImageView fitWidth="30.0" layoutX="65.0" layoutY="37.0" preserveRatio="true" styleClass="student" AnchorPane.bottomAnchor="237.0" AnchorPane.rightAnchor="19.0">
@@ -1032,10 +1027,7 @@
                   <children>
                             <AnchorPane pickOnBounds="false">
                                 <children>
-                                    <ImageView cacheHint="SCALE" fitWidth="135.0" preserveRatio="true" styleClass="shadow">
-                              <image>
-                                 <Image url="@Graphical_Assets/AssistantCard/1.png" />
-                              </image></ImageView>
+                                    <ImageView cacheHint="SCALE" fitWidth="135.0" preserveRatio="true" styleClass="shadow" />
                                 </children>
                             </AnchorPane>
                             <AnchorPane styleClass="card">
@@ -1068,12 +1060,7 @@
                             <Image url="@Graphical_Assets/Board/Board.jpg" />
                         </image>
                     </ImageView>
-                    <Label styleClass="nickname" text="asdsadsadsadasd" textAlignment="CENTER" textFill="WHITE" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                        <padding>
-                            <Insets bottom="2.0" left="6.0" right="6.0" top="2.0" />
-                        </padding>
-
-                    </Label>
+                    <Label styleClass="nickname" textAlignment="CENTER" textFill="WHITE" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                     <AnchorPane prefHeight="304.0" prefWidth="114.0" styleClass="entrancehall">
                         <children>
                             <ImageView fitWidth="30.0" layoutX="65.0" layoutY="37.0" preserveRatio="true" styleClass="student" AnchorPane.bottomAnchor="237.0" AnchorPane.rightAnchor="19.0">
@@ -1257,12 +1244,7 @@
                             <Image url="@Graphical_Assets/Board/Board.jpg" />
                         </image>
                     </ImageView>
-                    <Label styleClass="nickname" text="wewfewfwefwef" textAlignment="CENTER" textFill="WHITE" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                        <padding>
-                            <Insets bottom="2.0" left="6.0" right="6.0" top="2.0" />
-                        </padding>
-
-                    </Label>
+                    <Label styleClass="nickname" textAlignment="CENTER" textFill="WHITE" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                     <AnchorPane prefHeight="304.0" prefWidth="114.0" styleClass="entrancehall">
                         <children>
                             <ImageView fitWidth="30.0" layoutX="65.0" layoutY="37.0" preserveRatio="true" styleClass="student" AnchorPane.bottomAnchor="237.0" AnchorPane.rightAnchor="19.0">
@@ -1444,12 +1426,7 @@
                     <ImageView cache="true" cacheHint="SCALE" fitWidth="700.0" preserveRatio="true" styleClass="shadow" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0">
                         <Image url="@Graphical_Assets/Board/Board.jpg" />
                     </ImageView>
-                    <Label styleClass="nickname" text="fdsfsdfdsfsfdsfs" textAlignment="CENTER" textFill="WHITE" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                        <padding>
-                            <Insets bottom="2.0" left="6.0" right="6.0" top="2.0" />
-                        </padding>
-
-                    </Label>
+                    <Label styleClass="nickname" textAlignment="CENTER" textFill="WHITE" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                     <AnchorPane prefHeight="304.0" prefWidth="114.0" styleClass="entrancehall">
                         <children>
                             <ImageView fitWidth="30.0" layoutX="65.0" layoutY="37.0" preserveRatio="true" styleClass="student" AnchorPane.bottomAnchor="237.0" AnchorPane.rightAnchor="19.0">
