@@ -20,7 +20,7 @@ public class GameComponentTest {
         try {
             bag.drawStudent(island, (byte) 9);
         } catch (EndGameException | GameException e) {
-            fail();
+            fail(e);
         }
         assertEquals(island.howManyStudents(), 9);
         for (Color c : Color.values())
@@ -33,14 +33,14 @@ public class GameComponentTest {
             assertEquals(cloud.howManyStudents(), 4);
             assertEquals(island.howManyStudents(), 5);
         } catch (GameException e) {
-            fail();
+            fail(e);
         }
         assertThrows(GameException.class, () -> island.moveStudents(Color.YELLOW, (byte) 1, cloud), "Cloud can't have more than 4 students");
         try {
             cloud.moveAll(island);
             island.moveAll(bag);
-        } catch (NotAllowedException exception) {
-            fail();
+        } catch (NotAllowedException e) {
+            fail(e);
         }
         assertEquals(island.howManyStudents(), 0);
         assertEquals(bag.howManyStudents(), 2 * Color.values().length);
@@ -55,7 +55,7 @@ public class GameComponentTest {
             bag = new Bag((byte) 2);
             bag.drawStudent(island2, (byte) (bag.howManyStudents() - 1));
         } catch (EndGameException | GameException e) {
-            fail();
+            fail(e);
         }
         byte oldBlue1 = island1.howManyStudents(Color.BLUE);
         byte oldBlue2 = island2.howManyStudents(Color.BLUE);
@@ -64,7 +64,7 @@ public class GameComponentTest {
         try {
             island1.swapStudents(Color.BLUE, Color.RED, island2);
         } catch (GameException e) {
-            fail();
+            fail(e);
         }
         assertEquals(island1.howManyStudents(Color.BLUE), oldBlue1 - 1);
         assertEquals(island1.howManyStudents(Color.RED), oldRed1 + 1);
@@ -77,7 +77,7 @@ public class GameComponentTest {
         try {
             island1.swapStudents(Color.PINK, Color.PINK, island2);
         } catch (GameException e) {
-            fail();
+            fail(e);
         }
         assertEquals(island1.howManyStudents(Color.BLUE), oldBlue1);
         assertEquals(island2.howManyStudents(Color.BLUE), oldBlue2);
@@ -107,13 +107,13 @@ public class GameComponentTest {
         try {
             bag.drawStudent(island, (byte) 3);
             bag.drawStudent(island1, (byte) 1);
-        } catch (GameException | EndGameException ex) {
-            fail();
+        } catch (GameException | EndGameException e) {
+            fail(e);
         }
         try {
             island.moveAll(island1);
-        } catch (NotAllowedException ex) {
-            fail();
+        } catch (NotAllowedException e) {
+            fail(e);
         }
         assertEquals(island.howManyStudents(), 0);
         assertEquals(island1.howManyStudents(), 4);
@@ -122,13 +122,13 @@ public class GameComponentTest {
         // prints an out line
         try {
             island.moveAll(island2);
-        } catch (NotAllowedException ex) {
-            fail();
+        } catch (NotAllowedException e) {
+            fail(e);
         }
         try {
             bag.drawStudent(island, (byte) 5);
-        } catch (EndGameException | GameException ex) {
-            fail();
+        } catch (EndGameException | GameException e) {
+            fail(e);
         }
 
         assertThrows(NotAllowedException.class, () -> island.moveAll(cloud), "Cloud is full should call exception");

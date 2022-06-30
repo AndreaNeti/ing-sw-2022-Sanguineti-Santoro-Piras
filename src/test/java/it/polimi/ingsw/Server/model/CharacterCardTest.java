@@ -10,10 +10,7 @@ import it.polimi.ingsw.exceptions.serverExceptions.NotAllowedException;
 import it.polimi.ingsw.exceptions.serverExceptions.NotEnoughStudentsException;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -35,7 +32,7 @@ class CharacterCardTest {
             p1 = new Player("Franco", t1, Wizard.WOODMAGE, matchConstants);
             p2 = new Player("Gigi", t2, Wizard.SANDMAGE, matchConstants);
         } catch (GameException e) {
-            fail();
+            fail(e);
         }
         teamList.add(t1);
         teamList.add(t2);
@@ -57,7 +54,7 @@ class CharacterCardTest {
             }
         } catch (GameException e) {
             e.printStackTrace();
-            fail();
+            fail(e);
         }
 //            for (Player p : playerList) {
 //                game.setCurrentPlayer(p);
@@ -67,39 +64,30 @@ class CharacterCardTest {
 //                        // move from entrance to lunch hall
 //                        game.move(c, 0, 1);
 //                    } catch (GameException e) {
-//                        fail();
+//                        fail(e);
 //                    }
 //                }
 //            }
         // Have to select a char card to pass inputs, get the first available
-        charToSelect = game.transformAllGameInDelta().getCharacters().stream().findFirst().get().getCharId();
-        c0 = new CharacterCard(new Char0((byte) -10), CharacterCardData.CH0);
-        try {
-            game.drawStudents((GameComponent) c0.getLogicCard(), (byte) ((GameComponent) c0.getLogicCard()).getMaxStudents());
-        } catch (EndGameException | GameException e) {
-            fail();
-        }
-        c1 = new CharacterCard(new Char1(), CharacterCardData.CH1);
-        c2 = new CharacterCard(new Char2(), CharacterCardData.CH2);
-        c3 = new CharacterCard(new Char3(), CharacterCardData.CH3);
-        c4 = new CharacterCard(new Char4(), CharacterCardData.CH4);
-        c5 = new CharacterCard(new Char5(), CharacterCardData.CH5);
-        c6 = new CharacterCard(new Char6((byte) -11), CharacterCardData.CH6);
-        try {
-            game.drawStudents((GameComponent) c6.getLogicCard(), (byte) ((GameComponent) c6.getLogicCard()).getMaxStudents());
-        } catch (EndGameException | GameException e) {
-            fail();
-        }
-        c7 = new CharacterCard(new Char7(), CharacterCardData.CH7);
-        c8 = new CharacterCard(new Char8(), CharacterCardData.CH8);
-        c9 = new CharacterCard(new Char9(), CharacterCardData.CH9);
-        c10 = new CharacterCard(new Char10((byte) -12), CharacterCardData.CH10);
-        try {
-            game.drawStudents((GameComponent) c10.getLogicCard(), (byte) ((GameComponent) c10.getLogicCard()).getMaxStudents());
-        } catch (EndGameException | GameException e) {
-            fail();
-        }
-        c11 = new CharacterCard(new Char11(), CharacterCardData.CH11);
+        charToSelect = Objects.requireNonNull(game.transformAllGameInDelta().getCharacters().stream().findFirst().orElse(null)).getCharId();
+
+        CharacterCardData[] characterConstants = (CharacterCardData[]) JsonReader.getObjFromJson("characterConstants", CharacterCardData[].class);
+
+        c0 = ExpertGame.factoryCharacter(0, game, characterConstants);
+        assertThrows(NotAllowedException.class, () -> game.drawStudents((GameComponent) c0.getLogicCard(), (byte) ((GameComponent) c0.getLogicCard()).getMaxStudents()));
+        c1 = ExpertGame.factoryCharacter(1, game, characterConstants);
+        c2 = ExpertGame.factoryCharacter(2, game, characterConstants);
+        c3 = ExpertGame.factoryCharacter(3, game, characterConstants);
+        c4 = ExpertGame.factoryCharacter(4, game, characterConstants);
+        c5 = ExpertGame.factoryCharacter(5, game, characterConstants);
+        c6 = ExpertGame.factoryCharacter(6, game, characterConstants);
+        assertThrows(NotAllowedException.class, () -> game.drawStudents((GameComponent) c6.getLogicCard(), (byte) ((GameComponent) c6.getLogicCard()).getMaxStudents()));
+        c7 = ExpertGame.factoryCharacter(7, game, characterConstants);
+        c8 = ExpertGame.factoryCharacter(8, game, characterConstants);
+        c9 = ExpertGame.factoryCharacter(9, game, characterConstants);
+        c10 = ExpertGame.factoryCharacter(10, game, characterConstants);
+        assertThrows(NotAllowedException.class, () -> game.drawStudents((GameComponent) c10.getLogicCard(), (byte) ((GameComponent) c10.getLogicCard()).getMaxStudents()));
+        c11 = ExpertGame.factoryCharacter(11, game, characterConstants);
     }
 
     @Test
@@ -149,20 +137,20 @@ class CharacterCardTest {
                 game.move(Color.RED, 2, 3);
             }
         } catch (GameException e) {
-            fail();
+            fail(e);
         }
         assertEquals(game.getProfessor()[0], p2.getWizard());
         game.setCurrentPlayer(p1);
         try {
             game.getBag().moveStudents(Color.RED, (byte) 1, p1.getLunchHall());
         } catch (GameException e) {
-            fail();
+            fail(e);
         }
 
         try {
             c1.play(game);
         } catch (GameException | EndGameException e) {
-            fail();
+            fail(e);
         }
 
         assertEquals(game.getProfessor()[0], p1.getWizard());
@@ -175,7 +163,7 @@ class CharacterCardTest {
             game.setCharacterInputs(List.of(-1));
             assertThrows(NotAllowedException.class, () -> c2.play(game), "not valid inputs");
         } catch (GameException e) {
-            fail();
+            fail(e);
         }
         int color = -1;
         Team winnerTeam = null;
@@ -193,13 +181,13 @@ class CharacterCardTest {
             game.getBag().moveStudents(Color.values()[color], (byte) 5, game.getIslands().get(0));
             game.setCharacterInputs(List.of(2 * MatchType.MAX_PLAYERS));
         } catch (GameException e) {
-            fail();
+            fail(e);
         }
 
         try {
             c2.play(game);
         } catch (GameException | EndGameException e) {
-            fail();
+            fail(e);
         }
 
         assertEquals(game.getIslands().get(0).getTeamColor(), winnerTeam.getHouseColor());
@@ -212,18 +200,18 @@ class CharacterCardTest {
             game.playCard(new AssistantCard((byte) 3, (byte) 2));
             game.chooseCharacter(charToSelect);
         } catch (GameException | EndGameException e) {
-            fail();
+            fail(e);
         }
 
         try {
             c3.play(game);
         } catch (GameException | EndGameException e) {
-            fail();
+            fail(e);
         }
         try {
             game.moveMotherNature(4);
         } catch (GameException | EndGameException e) {
-            fail();
+            fail(e);
         }
     }
 
@@ -233,7 +221,7 @@ class CharacterCardTest {
             game.chooseCharacter(charToSelect);
             game.setCharacterInputs(List.of(-1));
         } catch (GameException e) {
-            fail();
+            fail(e);
         }
         assertThrows(NotAllowedException.class, () -> c4.play(game), "not valid inputs");
         game.setCurrentPlayer(p1);
@@ -245,20 +233,20 @@ class CharacterCardTest {
             //id of island 2 is 2*maxPlayers + 2
             game.setCharacterInputs(List.of(2 * MatchType.MAX_PLAYERS + 2));
         } catch (GameException e) {
-            fail();
+            fail(e);
         }
 
         try {
             c4.play(game);
         } catch (GameException | EndGameException e) {
-            fail();
+            fail(e);
         }
         assertEquals(game.getIslands().get(2).getProhibitions(), 1);
 
         try {
             game.calculateInfluence(game.getIslands().get(2));
         } catch (EndGameException e) {
-            fail();
+            fail(e);
         }
 
         assertNull(game.getIslands().get(2).getTeamColor());
@@ -289,7 +277,7 @@ class CharacterCardTest {
                 game.getBag().moveStudents(color, (byte) (1), game.getIslands().get(4));
             }
         } catch (GameException e) {
-            fail();
+            fail(e);
         }
         HouseColor old = null;
         try {
@@ -327,7 +315,7 @@ class CharacterCardTest {
             try {
                 game.drawStudents(game.getCurrentPlayer().getEntranceHall(), (byte) game.getCurrentPlayer().getEntranceHall().getMaxStudents());
             } catch (EndGameException e) {
-                fail();
+                fail(e);
             }
             // use last available color on the card to test (it's chosen randomly), more likely to be different from color1
             while (game.getCurrentPlayer().getEntranceHall().howManyStudents(Color.values()[color2]) == 0 && color2 > 0) {
@@ -341,7 +329,7 @@ class CharacterCardTest {
             game.chooseCharacter(charToSelect);
             game.setCharacterInputs(Arrays.asList(color1, color2));
         } catch (GameException e) {
-            fail();
+            fail(e);
         }
         byte oldC6Color1 = ((GameComponent) c6.getLogicCard()).howManyStudents(Color.values()[color1]);
         byte oldC6Color2 = ((GameComponent) c6.getLogicCard()).howManyStudents(Color.values()[color2]);
@@ -350,7 +338,7 @@ class CharacterCardTest {
         try {
             c6.play(game);
         } catch (GameException | EndGameException e) {
-            fail();
+            fail(e);
         }
         if (color1 != color2) {
             assertEquals(((GameComponent) c6.getLogicCard()).howManyStudents(Color.values()[color1]), oldC6Color1 - 1);
@@ -378,7 +366,7 @@ class CharacterCardTest {
                 game.getBag().moveStudents(color, (byte) (1), game.getIslands().get(4));
             }
         } catch (GameException e) {
-            fail();
+            fail(e);
         }
         try {
             game.setCurrentPlayer(p1);
@@ -386,7 +374,7 @@ class CharacterCardTest {
             c7.play(game);
             game.calculateInfluence(game.getIslands().get(4));
         } catch (GameException | EndGameException e) {
-            fail();
+            fail(e);
         }
         // p1 team is t1
         assertEquals(game.getIslands().get(4).getTeamColor(), t1.getHouseColor());
@@ -401,7 +389,7 @@ class CharacterCardTest {
             assertThrows(NotAllowedException.class, () -> c8.play(game), "not valid inputs");
         } catch (GameException e) {
             e.printStackTrace();
-            fail();
+            fail(e);
         }
         game.setCurrentPlayer(p1);
         try {
@@ -418,7 +406,7 @@ class CharacterCardTest {
             }
         } catch (GameException e) {
             e.printStackTrace();
-            fail();
+            fail(e);
         }
         try {
             game.chooseCharacter(charToSelect);
@@ -427,7 +415,7 @@ class CharacterCardTest {
             game.calculateInfluence(game.getIslands().get(4));
         } catch (GameException | EndGameException e) {
             e.printStackTrace();
-            fail();
+            fail(e);
         }
         // p1 team is t1
         assertEquals(game.getIslands().get(4).getTeamColor(), t1.getHouseColor());
@@ -441,7 +429,7 @@ class CharacterCardTest {
             assertThrows(NotAllowedException.class, () -> c9.play(game), "not valid inputs");
             game.setCurrentPlayer(p1);
         } catch (GameException e) {
-            fail();
+            fail(e);
         }
         // remove all red students from p1 lunch hall and tests exception
         try {
@@ -452,7 +440,7 @@ class CharacterCardTest {
             assertThrows(NotEnoughStudentsException.class, () -> c9.play(game), "can't swap this, no red students");
             game.setCurrentPlayer(p1);
         } catch (GameException e) {
-            fail();
+            fail(e);
         }
         try {
             // entranceHall has no students, should launch exception
@@ -461,7 +449,7 @@ class CharacterCardTest {
             assertThrows(NotEnoughStudentsException.class, () -> c9.play(game), "can't swap this, no red students");
             game.setCurrentPlayer(p1);
         } catch (GameException e) {
-            fail();
+            fail(e);
         }
         // get two colors that can swap
         int colorLunch = -1;
@@ -471,20 +459,20 @@ class CharacterCardTest {
         try {
             game.getBag().moveStudents(Color.RED, (byte) 1, game.getCurrentPlayer().getEntranceHall());
         } catch (GameException e) {
-            fail();
+            fail(e);
         }
         try {
             game.chooseCharacter(charToSelect);
             game.setCharacterInputs(Arrays.asList(colorLunch, Color.RED.ordinal()));
         } catch (GameException e) {
-            fail();
+            fail(e);
         }
         byte redStudentsLunch = game.getCurrentPlayer().getLunchHall().howManyStudents(Color.RED);
         byte oldValue = game.getCurrentPlayer().getLunchHall().howManyStudents(Color.values()[colorLunch]);
         try {
             c9.play(game);
         } catch (GameException | EndGameException e) {
-            fail();
+            fail(e);
         }
         if (colorLunch != Color.RED.ordinal()) {
             assertEquals(0, game.getCurrentPlayer().getEntranceHall().howManyStudents(Color.RED));
@@ -527,14 +515,14 @@ class CharacterCardTest {
             game.chooseCharacter(charToSelect);
             game.setCharacterInputs(List.of(color));
         } catch (GameException e) {
-            fail();
+            fail(e);
         }
 
         int oldSize = game.getCurrentPlayer().getLunchHall().howManyStudents(Color.values()[color]);
         try {
             c10.play(game);
         } catch (GameException | EndGameException e) {
-            fail();
+            fail(e);
         }
         assertEquals(game.getCurrentPlayer().getLunchHall().howManyStudents(Color.values()[color]), oldSize + 1);
         assertEquals(((GameComponent) c10.getLogicCard()).howManyStudents(), ((GameComponent) c10.getLogicCard()).getMaxStudents());
@@ -553,7 +541,7 @@ class CharacterCardTest {
                 try {
                     game.drawStudents(p.getLunchHall(), (byte) 20);
                 } catch (EndGameException e) {
-                    fail();
+                    fail(e);
                 }
             }
             // also resets character inputs
@@ -571,7 +559,7 @@ class CharacterCardTest {
             c11.play(game);
         } catch (GameException | EndGameException e) {
             e.printStackTrace();
-            fail();
+            fail(e);
         }
         for (byte i = 0; i < players.size(); i++) {
             if (oldValues[i] < 3) assertEquals(0, players.get(i).getLunchHall().howManyStudents(Color.values()[color]));

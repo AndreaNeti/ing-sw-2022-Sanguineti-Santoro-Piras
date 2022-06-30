@@ -56,7 +56,7 @@ class ClientHandlerTest {
             when(client2.getInputStream()).thenReturn(inputStream2);
 
         } catch (IOException e) {
-            fail();
+            fail(e);
         }
 
         try {
@@ -118,7 +118,7 @@ class ClientHandlerTest {
         try {
             p2.createMatch(type);
         } catch (GameException e) {
-            fail();
+            fail(e);
         }
         assertDoesNotThrow(() -> p1.joinByMatchId(p2.getController().getMatchId()));
         assertThrows(NotAllowedException.class, () -> p1.joinByMatchId(1L), "Already joined a match");

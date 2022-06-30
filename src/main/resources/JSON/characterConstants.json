@@ -1,0 +1,74 @@
+[
+  {
+    "id": 0,
+    "cost": 1,
+    "used": false,
+    "hasStudents": true
+  },
+  {
+    "id": 1,
+    "cost": 2,
+    "used": false,
+    "hasStudents": false
+  },
+  {
+    "id": 2,
+    "cost": 3,
+    "used": false,
+    "hasStudents": false
+  },
+  {
+    "id": 3,
+    "cost": 1,
+    "used": false,
+    "hasStudents": false
+  },
+  {
+    "id": 4,
+    "cost": 2,
+    "used": false,
+    "hasStudents": false
+  },
+  {
+    "id": 5,
+    "cost": 3,
+    "used": false,
+    "hasStudents": false
+  },
+  {
+    "id": 6,
+    "cost": 1,
+    "used": false,
+    "hasStudents": true
+  },
+  {
+    "id": 7,
+    "cost": 2,
+    "used": false,
+    "hasStudents": false
+  },
+  {
+    "id": 8,
+    "cost": 3,
+    "used": false,
+    "hasStudents": false
+  },
+  {
+    "id": 9,
+    "cost": 1,
+    "used": false,
+    "hasStudents": false
+  },
+  {
+    "id": 10,
+    "cost": 2,
+    "used": false,
+    "hasStudents": true
+  },
+  {
+    "id": 11,
+    "cost": 3,
+    "used": false,
+    "hasStudents": false
+  }
+]

@@ -162,7 +162,6 @@ public class ControllerClient extends GameClientListened implements PingPongInte
      */
     public void changeGame(GameDelta gameDelta) {
         if (matchType.isExpert()) {
-            // TODO fix this (card received is != from the one sent)
             if (gameDelta.getCharacters().size() != 0) model.setCharacters(gameDelta.getCharacters());
             gameDelta.getNewCoinsLeft().ifPresent(newCoinsLeft -> model.setNewCoinsLeft(newCoinsLeft));
             gameDelta.getNewProhibitionsLeft().ifPresent(newProhibitionsLeft -> model.setNewProhibitionsLeft(newProhibitionsLeft));
@@ -171,7 +170,6 @@ public class ControllerClient extends GameClientListened implements PingPongInte
             for (Map.Entry<Byte, Integer> newEntry : gameDelta.getUpdatedCoinPlayer().entrySet())
                 model.setUpdatedCoinsPlayer(newEntry.getKey(), newEntry.getValue());
             for (CharacterCardDataInterface updatedCharacter : gameDelta.getCharacters()) {
-                // TODO fix this
                 model.setUpdatedCharacter(updatedCharacter);
             }
         }

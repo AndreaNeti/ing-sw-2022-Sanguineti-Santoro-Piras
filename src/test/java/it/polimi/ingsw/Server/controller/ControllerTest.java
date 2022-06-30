@@ -36,7 +36,7 @@ class ControllerTest {
             controllerExpert.addPlayer(p3, "Carola");
             controllerExpert.addPlayer(p4, "Filomena");
         } catch (GameException e) {
-            fail();
+            fail(e);
         }
 
         try {
@@ -44,14 +44,14 @@ class ControllerTest {
             controllerNormal.addPlayer(p2, "Franco");
             controllerNormal.addPlayer(p3, "Carola");
         } catch (GameException e) {
-            fail();
+            fail(e);
         }
 
         try {
             controllerExpert2.addPlayer(p1, "Gigi");
             controllerExpert2.addPlayer(p2, "Franco");
         } catch (GameException e) {
-            fail();
+            fail(e);
         }
         // just to make indexes equal to card value
         assistantCardList.add(new AssistantCard((byte) 0, (byte) 0));
@@ -71,7 +71,7 @@ class ControllerTest {
         try {
             controllerExpert.playCard(assistantCardList.get(1));
         } catch (GameException | EndGameException | NullPointerException e) {
-            fail();
+            fail(e);
         }
         assertThrows(GameException.class, () -> controllerExpert.playCard(assistantCardList.get(1)), "Cannot play this card");
         assertDoesNotThrow(() -> controllerExpert.playCard(assistantCardList.get(2)));
@@ -79,7 +79,7 @@ class ControllerTest {
             for (int i = 3; i < 5; i++)
                 controllerExpert.playCard(assistantCardList.get(i));
         } catch (GameException | EndGameException | NullPointerException e) {
-            fail();
+            fail(e);
         }
         assertThrows(GameException.class, () -> controllerExpert.playCard(assistantCardList.get(6)), "Not in planification phase");
     }
@@ -91,7 +91,7 @@ class ControllerTest {
             for (int i = 3; i < 7; i++)
                 controllerExpert.playCard(assistantCardList.get(i));
         } catch (GameException | EndGameException | NullPointerException e) {
-            fail();
+            fail(e);
         }
         assertThrows(GameException.class, () -> controllerExpert.move(Color.RED, 0), "Can't move to the selected GameComponent");
         assertThrows(GameException.class, () -> controllerExpert.move(Color.RED, -1), "Can't move to the selected GameComponent");
@@ -116,7 +116,7 @@ class ControllerTest {
             for (int i = 3; i < 7; i++)
                 controllerExpert.playCard(assistantCardList.get(i));
         } catch (GameException | EndGameException | NullPointerException e) {
-            fail();
+            fail(e);
         }
         assertThrows(GameException.class, () -> controllerExpert.moveMotherNature(1), "Wrong phase");
         int moved = 0;
@@ -141,7 +141,7 @@ class ControllerTest {
             for (int i = 3; i < 7; i++)
                 controllerExpert.playCard(assistantCardList.get(i));
         } catch (GameException | EndGameException | NullPointerException e) {
-            fail();
+            fail(e);
         }
         assertThrows(GameException.class, () -> controllerExpert.moveFromCloud(0), "Wrong phase");
         int moved = 0;
@@ -159,7 +159,7 @@ class ControllerTest {
         try {
             controllerExpert.moveMotherNature(1);
         } catch (GameException | EndGameException e) {
-            fail();
+            fail(e);
         }
         assertThrows(GameException.class, () -> controllerExpert.moveFromCloud(1), "Component is not a cloud");
         assertThrows(GameException.class, () -> controllerExpert.moveFromCloud(-5), "Component is not a cloud");
@@ -236,11 +236,13 @@ class ControllerTest {
         for (byte i = 0; i < nCharacters; i++) {
             try {
                 controllerExpert2.chooseCharacter(i);
-            } catch (GameException ignored) {
                 counter++;
+                if (counter >= selected)
+                    break;
+            } catch (GameException ignored) {
             }
         }
-        assertEquals(nCharacters - selected, counter);
+        assertEquals(selected, counter);
     }
 
     @Test
@@ -277,7 +279,7 @@ class ControllerTest {
                     }
                 }
             }
-            if (!worked) fail();
+            if (!worked) fail(e);
         }
         assertThrows(GameException.class, () -> controllerExpert2.playCharacter(), "A card has already been played this turn");
     }
@@ -351,7 +353,7 @@ class ControllerTest {
             try {
                 controllerExpert.playCard(assistantCardList.get(i + 1));
             } catch (GameException | EndGameException e) {
-                fail();
+                fail(e);
             }
         }
     }

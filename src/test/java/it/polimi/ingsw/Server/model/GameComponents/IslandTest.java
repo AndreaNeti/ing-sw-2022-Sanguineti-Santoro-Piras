@@ -41,7 +41,7 @@ class IslandTest {
             bag.drawStudent(island, (byte) 10);
             bag.drawStudent(island1, (byte) 10);
         } catch (GameException | EndGameException e) {
-            fail();
+            fail(e);
         }
         assertThrows(IllegalArgumentException.class, () -> island.addProhibitions((byte) -1), "Cannot add negative prohibitions");
 

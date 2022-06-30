@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -39,7 +40,7 @@ public class ExpertGameTest {
             p1_2 = new Player("Franco", t1, Wizard.WOODMAGE, matchConstants);
             p2_2 = new Player("Gigi", t2, Wizard.SANDMAGE, matchConstants);
         } catch (GameException e) {
-            fail();
+            fail(e);
         }
         players2 = new ArrayList<>(2);
         players2.add(p1_2);
@@ -63,7 +64,7 @@ public class ExpertGameTest {
             p4_4 = new Player("Filomena", t2, Wizard.ELECTROMAGE, matchConstants);
 
         } catch (GameException e) {
-            fail();
+            fail(e);
         }
         players4 = new ArrayList<>(4);
         players4.add(p1_4);
@@ -92,7 +93,7 @@ public class ExpertGameTest {
 
 
         } catch (GameException e) {
-            fail();
+            fail(e);
         }
         players3 = new ArrayList<>(3);
         players3.add(p1_3);
@@ -124,12 +125,12 @@ public class ExpertGameTest {
                 p1_2.getEntranceHall().moveStudents(color, p1_2.getEntranceHall().howManyStudents(color), gameWith2.getBag());
             }
         } catch (GameException e) {
-            fail();
+            fail(e);
         }
         try {
             gameWith2.getBag().moveStudents(Color.RED, (byte) 6, p1_2.getEntranceHall());
         } catch (GameException e) {
-            fail();
+            fail(e);
         }
         try {
             byte coins = 1;
@@ -154,7 +155,7 @@ public class ExpertGameTest {
             coins += 1;
             assertEquals(gameWith2.getCoinsPlayer(p1_2.getWizard().ordinal()), coins);
         } catch (GameException e) {
-            fail();
+            fail(e);
         }
     }
 
@@ -165,7 +166,7 @@ public class ExpertGameTest {
                 gameWith2.setProhibition(new Island((byte) (i + 2 * gameWith2.getPlayerSize())));
             }
         } catch (GameException e) {
-            fail();
+            fail(e);
         }
         assertThrows(NotAllowedException.class, () -> gameWith2.setProhibition(new Island((byte) 6)), "No more prohibitions");
     }
@@ -194,15 +195,15 @@ public class ExpertGameTest {
                 gameWith2.move(Color.RED, 0, 1);
             }
         } catch (GameException e) {
-            fail();
+            fail(e);
         }
         try {
-            gameWith2.chooseCharacter(gameWith2.transformAllGameInDelta().getCharacters().stream().findFirst().get().getCharId());
+            gameWith2.chooseCharacter(Objects.requireNonNull(gameWith2.transformAllGameInDelta().getCharacters().stream().findFirst().orElse(null)).getCharId());
             for (int i = 0; i < 5; i++)
                 inputs.add(i);
             gameWith2.setCharacterInputs(inputs);
         } catch (GameException e) {
-            fail();
+            fail(e);
         }
 
         assertEquals(gameWith2.getCharacterInputs(), inputs);
@@ -225,9 +226,9 @@ public class ExpertGameTest {
             for (Color color : Color.values()) {
                 gameWith2.getBag().moveStudents(color, (byte) 1, p1_2.getEntranceHall());
             }
-            gameWith2.chooseCharacter(gameWith2.transformAllGameInDelta().getCharacters().stream().findFirst().get().getCharId());
+            gameWith2.chooseCharacter(Objects.requireNonNull(gameWith2.transformAllGameInDelta().getCharacters().stream().findFirst().orElse(null)).getCharId());
         } catch (GameException e) {
-            fail();
+            fail(e);
         }
         List<Integer> inputs = new ArrayList<>();
         try {
@@ -236,7 +237,7 @@ public class ExpertGameTest {
             gameWith2.setCharacterInputs(inputs);
             inputs.clear();
         } catch (GameException e) {
-            fail();
+            fail(e);
         }
         assertThrows(NotAllowedException.class, () -> gameWith2.playCharacter());
         try {
@@ -244,7 +245,7 @@ public class ExpertGameTest {
                 inputs.add(i);
             gameWith2.setCharacterInputs(inputs);
         } catch (GameException e) {
-            fail();
+            fail(e);
         }
         assertThrows(NotAllowedException.class, () -> gameWith2.playCharacter());
         try {
@@ -252,7 +253,7 @@ public class ExpertGameTest {
                 inputs.add(i);
             gameWith2.setCharacterInputs(inputs);
         } catch (GameException e) {
-            fail();
+            fail(e);
         }
         assertThrows(NotAllowedException.class, () -> gameWith2.playCharacter());
         try {
@@ -301,7 +302,7 @@ public class ExpertGameTest {
                 gameWith4.move(Color.values()[players4.indexOf(p)], 2 * p.getWizard().ordinal(), 2 * p.getWizard().ordinal() + 1);
             }
         } catch (GameException e) {
-            fail();
+            fail(e);
         }
         for (Player p : players4) {
             assertEquals(gameWith4.getProfessor()[players4.indexOf(p)], p.getWizard());
@@ -314,14 +315,14 @@ public class ExpertGameTest {
         try {
             gameWith2.playCard(new AssistantCard((byte) 1, (byte) 1));
         } catch (GameException | EndGameException e) {
-            fail();
+            fail(e);
         }
         assertThrows(NotAllowedException.class, () -> gameWith2.moveMotherNature(2));
         byte old = gameWith2.getMotherNaturePosition();
         try {
             gameWith2.moveMotherNature(1);
         } catch (GameException | EndGameException e) {
-            fail();
+            fail(e);
         }
         assertEquals(gameWith2.getMotherNaturePosition(), old + 1);
     }
@@ -343,7 +344,7 @@ public class ExpertGameTest {
                 gameWith3.move(Color.values()[players3.indexOf(p)], 2 * p.getWizard().ordinal(), 2 * p.getWizard().ordinal() + 1);
             }
         } catch (GameException e) {
-            fail();
+            fail(e);
         }
 
         try {
@@ -353,7 +354,7 @@ public class ExpertGameTest {
             }
             gameWith3.calculateInfluence(gameWith3.getIslands().get(0));
         } catch (GameException | EndGameException e) {
-            fail();
+            fail(e);
         }
         // p3_3 team is t3
         assertEquals(gameWith3.getIslands().get(0).getTeamColor(), t3.getHouseColor());
@@ -366,7 +367,7 @@ public class ExpertGameTest {
             gameWith3.getBag().moveStudents(Color.RED, (byte) 3, gameWith3.getIslands().get(0));
             gameWith3.calculateInfluence(gameWith3.getIslands().get(0));
         } catch (GameException | EndGameException e) {
-            fail();
+            fail(e);
         }
         // p3_3 team is t3
         assertEquals(gameWith3.getIslands().get(0).getTeamColor(), t3.getHouseColor());
@@ -377,7 +378,7 @@ public class ExpertGameTest {
             gameWith3.getBag().moveStudents(Color.RED, (byte) 1, gameWith3.getIslands().get(0));
             gameWith3.calculateInfluence(gameWith3.getIslands().get(0));
         } catch (GameException | EndGameException e) {
-            fail();
+            fail(e);
         }
         // p1_3 team is t1
         assertEquals(gameWith3.getIslands().get(0).getTeamColor(), t1.getHouseColor());
@@ -388,7 +389,7 @@ public class ExpertGameTest {
             gameWith3.getBag().moveStudents(Color.BLUE, (byte) 7, gameWith3.getIslands().get(0));
             gameWith3.calculateInfluence(gameWith3.getIslands().get(0));
         } catch (GameException | EndGameException e) {
-            fail();
+            fail(e);
         }
         // p2_3 team is t3
         assertEquals(gameWith3.getIslands().get(0).getTeamColor(), t2.getHouseColor());

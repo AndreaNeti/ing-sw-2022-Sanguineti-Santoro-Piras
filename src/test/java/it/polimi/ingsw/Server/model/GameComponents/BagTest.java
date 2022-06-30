@@ -33,8 +33,8 @@ class BagTest {
         try {
             bag.drawStudent(island, (byte) 3);
 
-        } catch (GameException | EndGameException ex) {
-            fail();
+        } catch (GameException | EndGameException e) {
+            fail(e);
         }
         assertEquals(island.howManyStudents(), 3);
 
@@ -43,8 +43,8 @@ class BagTest {
         //another extraction to the same island
         try {
             bag.drawStudent(island, (byte) 7);
-        } catch (GameException | EndGameException ex) {
-            fail();
+        } catch (GameException | EndGameException e) {
+            fail(e);
         }
 
         assertEquals(island.howManyStudents(), 10);

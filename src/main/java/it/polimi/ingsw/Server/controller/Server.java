@@ -24,7 +24,7 @@ public class Server {
     private static final Set<String> nickNames = Collections.synchronizedSet(new HashSet<>());
     private static final Map<MatchType, MatchConstants> matchConstants = Map.ofEntries(
             entry(new MatchType((byte) 2, false), new MatchConstants(10, 3, 0, 0, 0, 7, 10, 8, 3, 0)),
-            entry(new MatchType((byte) 2, true), new MatchConstants(10, 3, 3, 8000, 3000, 7, 10, 8, 3, 2)),
+            entry(new MatchType((byte) 2, true), new MatchConstants(10, 3, 3, 20, 1, 7, 10, 8, 3, 2)),
             entry(new MatchType((byte) 3, false), new MatchConstants(10, 3, 0, 0, 0, 9, 10, 6, 4, 2)),
             entry(new MatchType((byte) 3, true), new MatchConstants(10, 3, 3, 20, 1, 9, 10, 6, 4, 2)),
             entry(new MatchType((byte) 4, false), new MatchConstants(10, 3, 0, 0, 0, 7, 10, 8, 3, 2)),

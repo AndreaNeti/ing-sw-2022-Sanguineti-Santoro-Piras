@@ -24,7 +24,7 @@ class PlayerTest {
             p = new Player("Franco", t, Wizard.AIRMAGE, matchConstants);
             p1 = new Player("Gigi", t1, Wizard.WOODMAGE, matchConstants);
         } catch (GameException e) {
-            fail();
+            fail(e);
         }
         // just to make indexes equal to card value
         assistantCardList.add(new AssistantCard((byte) -1, (byte) 0));
@@ -39,7 +39,7 @@ class PlayerTest {
         try {
             p2 = new Player("Filippo", t, Wizard.AIRMAGE, matchConstants);
         } catch (GameException e) {
-            fail();
+            fail(e);
         }
         assertNotEquals(p, p2);
         assertNull(p.getPlayedCard());
@@ -54,8 +54,8 @@ class PlayerTest {
         try {
             p.useCard(assistantCardList.get(4));
             p1.useCard(assistantCardList.get(3));
-        } catch (NotAllowedException | EndGameException ex) {
-            fail();
+        } catch (NotAllowedException | EndGameException e) {
+            fail(e);
         }
         assertEquals(p.getPlayedCard().value(), 4);
         assertEquals(p.getPlayedCard().moves(), 2);
@@ -88,8 +88,8 @@ class PlayerTest {
             p.useCard(assistantCardList.get(9));
             assertEquals(p.getPlayedCard().value(), 9);
             assertEquals(p.getPlayedCard().moves(), 5);
-        } catch (NotAllowedException | EndGameException ex) {
-            fail();
+        } catch (NotAllowedException | EndGameException e) {
+            fail(e);
         }
         assertThrows(NotAllowedException.class, () -> p.useCard(assistantCardList.get(0)), "not a valid input");
         assertThrows(EndGameException.class, () -> p.useCard(assistantCardList.get(10)), "used last card");
@@ -123,7 +123,7 @@ class PlayerTest {
             p.useCard(assistantCardList.get(9));
             p.useCard(assistantCardList.get(10));
         } catch (NotAllowedException | EndGameException e) {
-            fail();
+            fail(e);
         }
 
         playedCards.add(assistantCardList.get(3));

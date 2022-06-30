@@ -1,13 +1,9 @@
 package it.polimi.ingsw.Client.PhaseAndComand.Phases;
 
-import it.polimi.ingsw.Client.PhaseAndComand.Commands.GameCommand;
 import it.polimi.ingsw.Client.View.Gui.GuiFX;
 import it.polimi.ingsw.Client.View.Gui.SceneController.SceneController;
 import it.polimi.ingsw.Client.View.Gui.ViewGUI;
-import javafx.scene.Node;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 /**

@@ -329,7 +329,6 @@ public class BoardController implements SceneController {
                 islandOld.getChildren().remove(motherNature);
             }
             // update the new mother nature
-            //TODO bug here after using herald
             IslandClient motherNatureIsland = viewGUI.getModel().getIslands().get(motherNaturePosition);
             AnchorPane islandPane = (AnchorPane) getElementById("#" + getCenterArchipelagoId(motherNatureIsland));
             System.out.println("Mother Nature position: " + motherNaturePosition + ", moved on island #" + getCenterArchipelagoId(motherNatureIsland));

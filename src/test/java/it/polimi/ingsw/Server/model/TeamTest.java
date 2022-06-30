@@ -23,7 +23,7 @@ class TeamTest {
         try {
             p = new Player("Franco", t, Wizard.AIRMAGE, matchConstants);
         } catch (GameException e) {
-            fail();
+            fail(e);
         }
     }
 
@@ -42,8 +42,8 @@ class TeamTest {
             assertThrows(IllegalArgumentException.class, () -> t.addPlayer(null), "Passing null player to team");
             Player p1 = new Player("Gigi", new Team(HouseColor.BLACK, (byte) 2, (byte) 6), Wizard.WOODMAGE, matchConstants);
             t.addPlayer(p1);
-        } catch (GameException ex) {
-            fail();
+        } catch (GameException e) {
+            fail(e);
         }
         assertEquals(t.getPlayers().get(0), p);
         assertEquals(t.getPlayers().size(), 2);
@@ -58,8 +58,8 @@ class TeamTest {
         try {
             t.removeTowers((byte) 3);
             t.addTowers((byte) 2);
-        } catch (EndGameException ex1) {
-            fail();
+        } catch (EndGameException e) {
+            fail(e);
         }
         assertEquals(t.getTowersLeft(), 5);
         assertThrows(EndGameException.class, () -> t.removeTowers((byte) 10),

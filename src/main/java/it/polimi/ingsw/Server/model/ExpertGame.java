@@ -2,10 +2,7 @@ package it.polimi.ingsw.Server.model;
 
 import it.polimi.ingsw.Server.model.GameComponents.GameComponent;
 import it.polimi.ingsw.Server.model.GameComponents.Island;
-import it.polimi.ingsw.Util.CharacterCardData;
-import it.polimi.ingsw.Util.Color;
-import it.polimi.ingsw.Util.HouseColor;
-import it.polimi.ingsw.Util.MatchConstants;
+import it.polimi.ingsw.Util.*;
 import it.polimi.ingsw.exceptions.serverExceptions.EndGameException;
 import it.polimi.ingsw.exceptions.serverExceptions.GameException;
 import it.polimi.ingsw.exceptions.serverExceptions.NotAllowedException;
@@ -60,6 +57,8 @@ public class ExpertGame extends NormalGame implements GameInterfaceForCharacter,
         ArrayList<Byte> selectedCharacters = new ArrayList<>(matchConstants.numOfCharacterCards());
         CharacterCard c;
 
+        CharacterCardData[] characterConstants = (CharacterCardData[]) JsonReader.getObjFromJson("characterConstants", CharacterCardData[].class);
+
         //characters.add(factoryCharacter((byte) 2));
         //characters.add(factoryCharacter((byte) 3));
         //characters.add(factoryCharacter((byte) 4));
@@ -68,7 +67,7 @@ public class ExpertGame extends NormalGame implements GameInterfaceForCharacter,
                 characterIndex = (byte) rand.nextInt(12);
                 //tmp++;
             }
-            c = factoryCharacter(characterIndex);
+            c = factoryCharacter(characterIndex, this, characterConstants);
             characters.add(c);
             selectedCharacters.add(c.getCharId());
             i++;
@@ -104,50 +103,54 @@ public class ExpertGame extends NormalGame implements GameInterfaceForCharacter,
      * @param index of type {@code byte} - index of the CharacterCard to instantiate.
      * @return {@link CharacterCard} - instance of the CharacterCard requested.
      */
-    private CharacterCard factoryCharacter(byte index) {
+    static CharacterCard factoryCharacter(int index, GameInterfaceForCharacter game, CharacterCardData[] characterConstants) {
+        if (game == null || characterConstants == null)
+            throw new IllegalArgumentException("Cannot pass null values");
+        if (index >= characterConstants.length)
+            throw new IllegalArgumentException("Cannot retrieve character constants");
         switch (index) {
             case 0:
                 Char0 c0 = new Char0((byte) -10);
                 try {
-                    drawStudents(c0, (byte) c0.getMaxStudents());
+                    game.drawStudents(c0, (byte) c0.getMaxStudents());
                 } catch (EndGameException | GameException e) {
                     e.printStackTrace();
                 }
-                return new CharacterCard(c0, CharacterCardData.CH0);
+                return new CharacterCard(c0, characterConstants[index]);
             case 1:
-                return new CharacterCard(new Char1(), CharacterCardData.CH1);
+                return new CharacterCard(new Char1(), characterConstants[index]);
             case 2:
-                return new CharacterCard(new Char2(), CharacterCardData.CH2);
+                return new CharacterCard(new Char2(), characterConstants[index]);
             case 3:
-                return new CharacterCard(new Char3(), CharacterCardData.CH3);
+                return new CharacterCard(new Char3(), characterConstants[index]);
             case 4:
-                return new CharacterCard(new Char4(), CharacterCardData.CH4);
+                return new CharacterCard(new Char4(), characterConstants[index]);
             case 5:
-                return new CharacterCard(new Char5(), CharacterCardData.CH5);
+                return new CharacterCard(new Char5(), characterConstants[index]);
             case 6:
                 Char6 c6 = new Char6((byte) -11);
                 try {
-                    drawStudents(c6, (byte) c6.getMaxStudents());
+                    game.drawStudents(c6, (byte) c6.getMaxStudents());
                 } catch (EndGameException | GameException e) {
                     e.printStackTrace();
                 }
-                return new CharacterCard(c6, CharacterCardData.CH6);
+                return new CharacterCard(c6, characterConstants[index]);
             case 7:
-                return new CharacterCard(new Char7(), CharacterCardData.CH7);
+                return new CharacterCard(new Char7(), characterConstants[index]);
             case 8:
-                return new CharacterCard(new Char8(), CharacterCardData.CH8);
+                return new CharacterCard(new Char8(), characterConstants[index]);
             case 9:
-                return new CharacterCard(new Char9(), CharacterCardData.CH9);
+                return new CharacterCard(new Char9(), characterConstants[index]);
             case 10:
                 Char10 c10 = new Char10((byte) -12);
                 try {
-                    drawStudents(c10, (byte) c10.getMaxStudents());
+                    game.drawStudents(c10, (byte) c10.getMaxStudents());
                 } catch (EndGameException | GameException e) {
                     e.printStackTrace();
                 }
-                return new CharacterCard(c10, CharacterCardData.CH10);
+                return new CharacterCard(c10, characterConstants[index]);
             case 11:
-                return new CharacterCard(new Char11(), CharacterCardData.CH11);
+                return new CharacterCard(new Char11(), characterConstants[index]);
         }
         throw new IllegalArgumentException("Character card " + index + " doesn't exists");
     }

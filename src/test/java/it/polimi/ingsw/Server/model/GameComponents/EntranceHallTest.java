@@ -17,8 +17,8 @@ class EntranceHallTest {
         assertEquals(entranceHall.getMaxStudents(), 9);
         try{
             bag.drawStudent(entranceHall,(byte) 9);
-        }catch (EndGameException| GameException ex){
-            fail();
+        }catch (EndGameException| GameException e){
+            fail(e);
         }
         for (Color c : Color.values()) {
             assertFalse(entranceHall.canAddStudents(c, (byte) 1));

@@ -42,7 +42,7 @@ public class NormalGameTest {
             p1_2 = new Player("Franco", t1, Wizard.WOODMAGE, matchConstants);
             p2_2 = new Player("Gigi", t2, Wizard.SANDMAGE, matchConstants);
         } catch (GameException e) {
-            fail();
+            fail(e);
         }
         players2 = new ArrayList<>(2);
         players2.add(p1_2);
@@ -66,7 +66,7 @@ public class NormalGameTest {
             p4_4 = new Player("Filomena", t2, Wizard.ELECTROMAGE, matchConstants);
 
         } catch (GameException e) {
-            fail();
+            fail(e);
         }
         players4 = new ArrayList<>(4);
         players4.add(p1_4);
@@ -93,7 +93,7 @@ public class NormalGameTest {
 
 
         } catch (GameException e) {
-            fail();
+            fail(e);
         }
         players3 = new ArrayList<>(3);
         players3.add(p1_3);
@@ -190,14 +190,14 @@ public class NormalGameTest {
         for (Cloud cloud : gameWith2.getClouds()) {
             try {
                 cloud.moveAll(islandTest);
-            } catch (GameException ignored) {
-                fail();
+            } catch (GameException e) {
+                fail(e);
             }
         }
         try {
             gameWith2.refillClouds();
-        } catch (EndGameException ex) {
-            fail();
+        } catch (EndGameException e) {
+            fail(e);
         }
 
         for (Cloud cloud : gameWith2.getClouds()) {
@@ -212,7 +212,7 @@ public class NormalGameTest {
         try {
             gameWith2.playCard(assistantCardList.get(5));
         } catch (GameException | EndGameException e) {
-            fail();
+            fail(e);
         }
         assertEquals(5, p1_2.getPlayedCard().value());
         assertEquals(3, p1_2.getPlayedCard().moves());
@@ -220,7 +220,7 @@ public class NormalGameTest {
         try {
             gameWith2.playCard(assistantCardList.get(6));
         } catch (GameException | EndGameException e) {
-            fail();
+            fail(e);
         }
         assertEquals(6, p2_2.getPlayedCard().value());
         assertEquals(3, p2_2.getPlayedCard().moves());
@@ -244,34 +244,32 @@ public class NormalGameTest {
         }
         try {
             test.moveStudents(Color.BLUE, (byte) 5, gameWith4.getCurrentPlayer().getLunchHall());
-        } catch (GameException ex) {
-            fail();
+        } catch (GameException e) {
+            fail(e);
         }
         gameWith4.calculateProfessor();
         assertEquals(gameWith4.getProfessor()[1], gameWith4.getCurrentPlayer().getWizard());
 
         try {
             test.moveStudents(Color.BLUE, (byte) 5, p3_3.getLunchHall());
-        } catch (GameException ex) {
-            fail();
+        } catch (GameException e) {
+            fail(e);
         }
         gameWith3.calculateProfessor();
         assertEquals(p3_3.getWizard(), gameWith3.getProfessor()[1]);
         try {
             test.moveStudents(Color.RED, (byte) 5, p1_3.getLunchHall());
             test.moveStudents(Color.RED, (byte) 5, p2_3.getLunchHall());
-        } catch (GameException ex) {
-            fail();
+        } catch (GameException e) {
+            fail(e);
         }
         gameWith3.calculateProfessor();
         assertEquals(gameWith3.getProfessor()[0], p1_3.getWizard());
 
         try {
             test.moveStudents(Color.PINK, (byte) 6, p2_3.getLunchHall());
-        } catch (GameException ex) {
-            ex.printStackTrace();
-            System.out.println(ex.getMessage());
-            fail();
+        } catch (GameException e) {
+            fail(e);
         }
         gameWith3.calculateProfessor();
         assertEquals(p2_3.getWizard(), gameWith3.getProfessor()[4]);
@@ -289,7 +287,7 @@ public class NormalGameTest {
                     studentsBefore = gameWith2.getComponentById(islandId).howManyStudents(c);
                     gameWith2.move(c, 0, islandId);
                 } catch (GameException e) {
-                    fail();
+                    fail(e);
                 }
                 assertEquals(studentsBefore + 1, gameWith2.getIslands().get(1).howManyStudents(c));
             }
@@ -314,7 +312,7 @@ public class NormalGameTest {
             gameWith4.getIslands().get(10).moveAll(gameWith3.getIslands().get(4));
             gameWith4.getIslands().get(11).moveAll(gameWith3.getIslands().get(4));
         } catch (NotAllowedException e) {
-            fail();
+            fail(e);
         }
         gameWith4.setCurrentPlayer(p1_3);
         try {
@@ -332,7 +330,7 @@ public class NormalGameTest {
             gameWith4.playCard(assistantCardList.get(8));
             gameWith4.moveMotherNature(4);
         } catch (GameException | EndGameException e) {
-            fail();
+            fail(e);
         }
 
         assertEquals(gameWith4.getIslands().size(), 12);
@@ -346,7 +344,7 @@ public class NormalGameTest {
             //put on the island 1 some red students so the first player win
             bagTest.moveStudents(Color.RED, (byte) (2), gameWith4.getIslands().get(1));
         } catch (GameException e) {
-            fail();
+            fail(e);
         }
         assertEquals(gameWith4.getMotherNaturePosition(), 0);
 
@@ -354,7 +352,7 @@ public class NormalGameTest {
             gameWith4.playCard(assistantCardList.get(7));
             gameWith4.moveMotherNature(1);
         } catch (GameException | EndGameException e) {
-            fail();
+            fail(e);
         }
         // p1_4 team is t1
         assertEquals(gameWith4.getIslands().get(1).getTeamColor(), t1.getHouseColor());
@@ -370,7 +368,7 @@ public class NormalGameTest {
             gameWith4.playCard(assistantCardList.get(1));
             gameWith4.moveMotherNature(1);
         } catch (GameException | EndGameException e) {
-            fail();
+            fail(e);
         }
         assertEquals(gameWith4.getIslands().size(), 11);
         // p3_4 team is t1
@@ -386,8 +384,8 @@ public class NormalGameTest {
             //put on the island 3(which is now 2 after the merge) some green students so the second player win
             bagTest.moveStudents(Color.GREEN, (byte) (2), gameWith4.getIslands().get(2));
             gameWith4.moveMotherNature(1);
-        } catch (GameException | EndGameException ex) {
-            fail();
+        } catch (GameException | EndGameException e) {
+            fail(e);
         }
         // p2_4 team is t1
         assertEquals(gameWith4.getIslands().get(2).getTeamColor(), t2.getHouseColor());
@@ -404,8 +402,8 @@ public class NormalGameTest {
             bagTest.moveStudents(Color.YELLOW, (byte) (10), gameWith4.getIslands().get(1));
             gameWith4.moveMotherNature(5);
 
-        } catch (GameException | EndGameException ex) {
-            fail();
+        } catch (GameException | EndGameException e) {
+            fail(e);
         }
         assertEquals(gameWith4.getIslands().size(), 10);
         // p2_4 team is t1
@@ -428,7 +426,7 @@ public class NormalGameTest {
             gameWith2.getBag().moveStudents(Color.RED, (byte) 2, gameWith2.getIslands().get(1));
             gameWith2.moveMotherNature(1);
         } catch (GameException | EndGameException e) {
-            fail();
+            fail(e);
         }
         ArrayList<HouseColor> winner1 = gameWith2.calculateWinner();
         assertEquals(winner1.size(), 1);
@@ -447,7 +445,7 @@ public class NormalGameTest {
                 gameWith3.moveMotherNature(1);
             }
         } catch (GameException | EndGameException e) {
-            fail();
+            fail(e);
         }
         ArrayList<HouseColor> winner3 = gameWith3.calculateWinner();
         assertEquals(winner3.size(), 3);
@@ -468,7 +466,7 @@ public class NormalGameTest {
                 gameWith4.moveMotherNature(1);
             }
         } catch (GameException | EndGameException e) {
-            fail();
+            fail(e);
         }
         ArrayList<HouseColor> winner4 = gameWith4.calculateWinner();
         assertEquals(winner4.size(), 2);
@@ -494,7 +492,7 @@ public class NormalGameTest {
         try {
             gameWith4.moveFromCloud(-4);
         } catch (GameException e) {
-            fail();
+            fail(e);
         }
         assertEquals(gameWith4.getClouds().get(3).howManyStudents(), 0);
         assertEquals(gameWith4.getCurrentPlayer().getEntranceHall().howManyStudents(), 7);

@@ -18,7 +18,7 @@ class LunchHallTest {
         try {
             bag.drawStudent(gc, (byte) (20 * Color.values().length - 1));
         } catch (EndGameException | GameException e) {
-            fail();
+            fail(e);
         }
         assertEquals(0, lunchHall.howManyStudents());
         assertThrows(NotAllowedException.class, () -> gc.moveStudents(Color.BLUE, (byte) 11, lunchHall), "Cannot exceed 10 students per color");
@@ -26,7 +26,7 @@ class LunchHallTest {
         try {
             gc.moveStudents(Color.BLUE, (byte) 10, lunchHall);
         } catch (GameException e) {
-            fail();
+            fail(e);
         }
         assertEquals(10, lunchHall.howManyStudents());
         assertEquals(10, lunchHall.howManyStudents(Color.BLUE));
