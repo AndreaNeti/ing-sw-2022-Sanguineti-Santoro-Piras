@@ -64,6 +64,7 @@ public class GameClient extends GameClientListened implements GameClientView {
             islands.add(new IslandClient(2 * MatchType.MAX_PLAYERS + i));
         }
         this.teams = teamsClient;
+        lockForCharacter = new ReentrantLock();
         this.characters = new ArrayList<>();
         this.charactersWithStudents = new ArrayList<>();
         this.coinsPlayers = new HashMap<>();
@@ -363,7 +364,6 @@ public class GameClient extends GameClientListened implements GameClientView {
      * @param charactersReceived of type {@code Set}<{@code CharacterCardData}> - list of the character cards to add.
      */
     public void setCharacters(Set<CharacterCardDataInterface> charactersReceived) {
-        if (lockForCharacter == null) lockForCharacter = new ReentrantLock();
         if (lockForCharacter.tryLock()) try {
             for (CharacterCardDataInterface c : charactersReceived) {
                 if (c.hasStudents()) {

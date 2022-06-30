@@ -23,7 +23,7 @@ public class Controller {
     private final MatchConstants matchConstants;
     private final MatchType matchType;
     private final ArrayList<Player> playersList;
-    private final ArrayList<GameListener> playerHandlers;
+    private final ArrayList<GameListener> clientHandlers;
     private final ArrayList<Team> teams;
     // This array is also used to represent the order of round
     private final ArrayList<Byte> playerOrder;
@@ -53,7 +53,7 @@ public class Controller {
         this.matchConstants = Server.getMatchConstants(matchType);
         this.matchType = matchType;
         this.playersList = new ArrayList<>(matchType.nPlayers());
-        this.playerHandlers = new ArrayList<>(matchType.nPlayers());
+        this.clientHandlers = new ArrayList<>(matchType.nPlayers());
         this.playerOrder = new ArrayList<>(matchType.nPlayers());
         for (byte i = 0; i < matchType.nPlayers(); i++)
             playerOrder.add(i);
@@ -81,8 +81,8 @@ public class Controller {
      * @return {@code boolean} - true if it is the turn of the caller, false else.
      */
     public boolean isMyTurn(ClientHandler caller) {
-        synchronized (playerHandlers) {
-            return currentPlayerIndex == playerHandlers.indexOf(caller);
+        synchronized (clientHandlers) {
+            return currentPlayerIndex == clientHandlers.indexOf(caller);
         }
     }
 
@@ -215,7 +215,7 @@ public class Controller {
         newPlayerHandler.update(new MatchInfo(matchType, matchConstants, matchId, teams, Wizard.values()[playersList.size()]));
 
         playersList.add(newPlayer);
-        playerHandlers.add(newPlayerHandler);
+        clientHandlers.add(newPlayerHandler);
 
         if (playersList.size() == matchType.nPlayers()) {
             System.out.println("Game is starting...");
@@ -329,8 +329,8 @@ public class Controller {
      * @param excludeMe of type {@link GameListener} - instance of the ClientHandler that should not receive the message.
      */
     private void notifyClients(ToClientMessage message, GameListener excludeMe) {
-        synchronized (playerHandlers) {
-            for (GameListener gl : playerHandlers) {
+        synchronized (clientHandlers) {
+            for (GameListener gl : clientHandlers) {
                 if (!gl.equals(excludeMe)) gl.update(message);
             }
         }
@@ -361,11 +361,11 @@ public class Controller {
      * @throws NullPointerException if the player to remove is null.
      */
     public void removePlayer(GameListener toRemovePlayer) throws NullPointerException {
-        synchronized (playerHandlers) {
+        synchronized (clientHandlers) {
             if (toRemovePlayer == null) throw new NullPointerException();
-            else if (!playerHandlers.contains(toRemovePlayer))
+            else if (!clientHandlers.contains(toRemovePlayer))
                 System.err.println("PlayerHandler not present on controller");
-            playerHandlers.remove(toRemovePlayer);
+            clientHandlers.remove(toRemovePlayer);
         }
     }
 
@@ -379,7 +379,7 @@ public class Controller {
         else game = new NormalGame(teams, matchConstants);
         game.setCurrentPlayer(currentPlayerIndex);
         GameDelta gameDelta = game.getGameDelta();
-        for (GameListener listener : playerHandlers)
+        for (GameListener listener : clientHandlers)
             gameDelta.addListener(listener);
 
         game.transformAllGameInDelta().send();
