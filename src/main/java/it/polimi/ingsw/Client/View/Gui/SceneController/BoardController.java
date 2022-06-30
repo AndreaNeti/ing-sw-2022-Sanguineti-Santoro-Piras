@@ -83,7 +83,7 @@ public class BoardController implements SceneController {
                 singleChar.getProperties().put("index", i);
                 singleChar.getProperties().put("charId", character.getCharId());
                 //this is for grandma weeds
-                if (character.getCharId() == 4) {
+                if (character.hasProhibitions()) {
                     singleChar.getChildren().get(6).setVisible(true);
                     singleChar.setId("grandmaWeeds");
                 }
@@ -466,8 +466,7 @@ public class BoardController implements SceneController {
                 prohibitionsBox.setVisible(true);
                 Label prohibitionsLabel = (Label) prohibitionsBox.getChildren().get(1);
                 prohibitionsLabel.setText("× " + islandProhibitions);
-            } else
-                prohibitionsBox.setVisible(false);
+            } else prohibitionsBox.setVisible(false);
         });
     }
 
@@ -504,8 +503,7 @@ public class BoardController implements SceneController {
             paneWinnerIsland.getProperties().put("containedIslands", containedIslands);
             AnchorPane paneArchipelago = (AnchorPane) this.getElementById("#" + getCenterArchipelagoId(winnerIsland));
             // make students visible on the island where mother nature is visible
-            if (winnerIsland.getProhibitions() > 0)
-                paneArchipelago.lookup(".prohibitions").setVisible(true);
+            if (winnerIsland.getProhibitions() > 0) paneArchipelago.lookup(".prohibitions").setVisible(true);
             updateGeneric(winnerIsland, Integer.parseInt(paneArchipelago.getId()));
             paneArchipelago.getChildren().get(1).setVisible(true);
             updateMotherNature(motherNaturePosition);
@@ -571,8 +569,7 @@ public class BoardController implements SceneController {
             AnchorPane played = (AnchorPane) assistantPane.getChildren().get(0);
             ImageView imageView = (ImageView) played.getChildren().get(0);
             imageView.setImage(new Image("Graphical_Assets/AssistantCard/" + playedCard.value() + ".png"));
-            if (current.getWizard() == viewGUI.getModel().getMyWizard())
-                viewGUI.updateAssistantBox();
+            if (current.getWizard() == viewGUI.getModel().getMyWizard()) viewGUI.updateAssistantBox();
         });
     }
 
@@ -628,8 +625,7 @@ public class BoardController implements SceneController {
         }
         winnerString.append(winners.get(i));
         String res = winnerString.toString();
-        if (winners.size() > 1)
-            GuiFX.showError("WINNERS!", "THE WINNERS OF THE GAME ARE " + res, "END MATCH!");
+        if (winners.size() > 1) GuiFX.showError("WINNERS!", "THE WINNERS OF THE GAME ARE " + res, "END MATCH!");
         else
 
             GuiFX.showError("WINNERS!", "THE WINNER OF THE GAME IS " + res, "END MATCH!");

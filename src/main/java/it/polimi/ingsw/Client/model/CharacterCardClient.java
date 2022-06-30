@@ -88,7 +88,13 @@ public final class CharacterCardClient implements CharacterCardDataInterface, Ch
     public String toString() {
         return characterCard.toString();
     }
+
     public void setData(CharacterCardDataInterface data) {
         this.characterData = data;
+    }
+
+    @Override
+    public boolean hasProhibitions() {
+        return characterData.hasProhibitions();
     }
 }

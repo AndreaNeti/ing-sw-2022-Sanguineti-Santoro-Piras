@@ -5,11 +5,12 @@ import it.polimi.ingsw.Server.model.CharacterCardDataInterface;
 public class CharacterCardData implements CharacterCardDataInterface {
     private final byte id, cost;
     private boolean used;
-    private final boolean hasStudents;
+    private final boolean hasStudents, hasProhibitions;
 
-    CharacterCardData(byte id, byte cost, boolean hasStudents) {
+    CharacterCardData(byte id, byte cost, boolean hasStudents, boolean hasProhibitions) {
         this.id = id;
         this.cost = cost;
+        this.hasProhibitions = hasProhibitions;
         this.used = false;
         this.hasStudents = hasStudents;
     }
@@ -37,5 +38,10 @@ public class CharacterCardData implements CharacterCardDataInterface {
     @Override
     public boolean hasStudents() {
         return hasStudents;
+    }
+
+    @Override
+    public boolean hasProhibitions() {
+        return hasProhibitions;
     }
 }

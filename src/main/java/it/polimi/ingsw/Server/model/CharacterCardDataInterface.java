@@ -40,4 +40,11 @@ public interface CharacterCardDataInterface extends Serializable {
      * Method setUsed set the card as used.
      */
     void setUsed();
+
+    /**
+     * Method hasStudents returns true if the card contains prohibitions.
+     *
+     * @return {@code boolean} - does card contains students.
+     */
+    boolean hasProhibitions();
 }
