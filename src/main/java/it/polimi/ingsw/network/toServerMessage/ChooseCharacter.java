@@ -9,17 +9,18 @@ import it.polimi.ingsw.exceptions.serverExceptions.NotAllowedException;
  * ChooseCharacter class is used by the client to select a character card to play.
  */
 public class ChooseCharacter implements ToServerMessage {
-    private final byte charId;
+    private final Byte charId;
     private final String charName;
 
     /**
      * Constructor ChooseCharacter creates a new instance of ChooseCharacter.
      *
-     * @param charId of type {@code byte} - unique ID of the character card the client wants to choose.
+     * @param charId   of type {@code Byte} - unique ID of the character card the client wants to choose.
      * @param charName of type {@code String} - name of the character card.
      */
-    public ChooseCharacter(byte charId, String charName) {
+    public ChooseCharacter(Byte charId, String charName) {
         this.charId = charId;
+        //TODO here the name is orrendo
         this.charName = charName;
     }
 
@@ -28,7 +29,7 @@ public class ChooseCharacter implements ToServerMessage {
      *
      * @param clientHandler of type {@link ClientHandler} - instance of the client handler that sends the message.
      * @throws GameException if the game is finished or if it's not the client's turn or if the selected character
-     * card cannot be chosen.
+     *                       card cannot be chosen.
      */
     @Override
     public void execute(ClientHandler clientHandler) throws GameException {
@@ -38,7 +39,10 @@ public class ChooseCharacter implements ToServerMessage {
         }
         if (c.isMyTurn(clientHandler)) {
             c.chooseCharacter(charId);
-            c.sendMessage(clientHandler, "chose " + charName + " card");
+            if (charId != null)
+                c.sendMessage(clientHandler, "chose " + charName + " card");
+            else
+                c.sendMessage(clientHandler, " deselected character card");
         } else throw new NotAllowedException("It's not your turn");
     }
 }

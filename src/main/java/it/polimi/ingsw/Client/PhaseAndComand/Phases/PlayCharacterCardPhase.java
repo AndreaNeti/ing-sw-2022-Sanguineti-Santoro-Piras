@@ -47,7 +47,7 @@ public class PlayCharacterCardPhase extends ClientPhase {
 
         Node undo = singleChar.getChildren().get(3);
         sceneController.enableNode(undo, true);
-        undo.setOnMouseClicked(GameCommand.UNDO.getGUIHandler(viewGUI));
+        undo.setOnMouseClicked(GameCommand.DESELECT_CHARACTER.getGUIHandler(viewGUI));
 
     }
 

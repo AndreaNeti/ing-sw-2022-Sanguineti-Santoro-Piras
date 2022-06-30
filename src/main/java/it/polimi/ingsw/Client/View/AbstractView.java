@@ -27,7 +27,7 @@ public abstract class AbstractView {
     private volatile boolean quit;
     private boolean alreadyAttachedExpert = false;
     private Map<GamePhase, ClientPhase> phases;
-    private GamePhase oldPhase, currentPhase;
+    private GamePhase currentPhase;
 
     /**
      * Constructor AbstractView creates a new instance of AbstractView.
@@ -85,7 +85,7 @@ public abstract class AbstractView {
      * <b>CHOOSE_CHARACTER</b> => MOVE_ST_PHASE, MOVE_CL_PHASE, MOVE_MN_PHASE <br>
      * <b>SET_CHARACTER_INPUT</b> => PLAY_CH_CARD_PHASE <br>
      * <b>PLAY_CHARACTER</b> => PLAY_CH_CARD_PHASE <br>
-     * <b>UNDO</b> => PLAY_CH_CARD_PHASE <br>
+     * <b>DESELECT_CHARACTER</b> => PLAY_CH_CARD_PHASE <br>
      */
     private void attachExpertCommand() {
         //this is needed, so it doesn't attach commands multiple times
@@ -94,26 +94,16 @@ public abstract class AbstractView {
                     phases.get(GamePhase.MOVE_CL_PHASE), phases.get(GamePhase.MOVE_MN_PHASE)));
             GameCommand.SET_CHARACTER_INPUT.attachToAPhase(List.of(phases.get(GamePhase.PLAY_CH_CARD_PHASE)));
             GameCommand.PLAY_CHARACTER.attachToAPhase(List.of(phases.get(GamePhase.PLAY_CH_CARD_PHASE)));
-            GameCommand.UNDO.attachToAPhase(List.of(phases.get(GamePhase.PLAY_CH_CARD_PHASE)));
+            GameCommand.DESELECT_CHARACTER.attachToAPhase(List.of(phases.get(GamePhase.PLAY_CH_CARD_PHASE)));
             alreadyAttachedExpert = true;
         }
     }
 
     /**
      * Method repeatPhase sets the phase in the view to the current one, effectively repeating the phase.
-     *
-     * @param forceImmediateExecution of type {@code boolean} - boolean to check if the phase must change immediately.
      */
-    public void repeatPhase(boolean forceImmediateExecution) {
-        setPhaseInView(phases.get(currentPhase), forceImmediateExecution);
-    }
-
-    /**
-     * Method goToOldPhase sets the phase in the view to the old one.
-     */
-    public void goToOldPhase() {
-        setPhaseInView(phases.get(oldPhase), false);
-        currentPhase = oldPhase;
+    public void repeatPhase() {
+        setPhaseInView(phases.get(currentPhase), false);
     }
 
     /**
@@ -126,35 +116,31 @@ public abstract class AbstractView {
     }
 
     /**
-     * Method setNextClientPhase updates the game phase to the next one.
+     * Method setNextClientPhase updates the game phase to the next one. It's called by the ok message
      */
     public void setNextClientPhase() {
         GamePhase newPhase = GamePhase.values()[currentPhase.ordinal() + 1];
         currentPhase = newPhase;
-        oldPhase = currentPhase;
         setPhaseInView(phases.get(newPhase), false);
     }
 
     /**
      * Method setPhaseInView updates the phase to the provided one, also specifying if the phase change must happen immediately.
      *
-     * @param clientPhase of type {@link ClientPhase} - instance of the new client phase to set.
+     * @param clientPhase             of type {@link ClientPhase} - instance of the new client phase to set -> clientPhase contains inside the play phase then used by the
+     *                                children of abstract view
      * @param forceImmediateExecution of type {@code boolean} - boolean to check if the phase must change immediately.
      */
-    public abstract void setPhaseInView(ClientPhase clientPhase, boolean forceImmediateExecution);
+    protected abstract void setPhaseInView(ClientPhase clientPhase, boolean forceImmediateExecution);
 
     /**
-     * Method setPhaseInView updates the phase to the provided one, also specifying if the
-     * old phase must be saved and if the phase change must happen immediately.
+     * Method setPhaseInView updates the phase to the provided one, also specifying if the phase change must happen immediately.
      *
-     * @param newGamePhase of type {@link GamePhase} - new game phase to set in the client's view.
-     * @param setOldPhase of type {@code boolean} - boolean to check if old phase must be saved.
+     * @param newGamePhase            of type {@link GamePhase} - new game phase to set in the client's view.
      * @param forceImmediateExecution of type {@code boolean} - boolean to check if the phase must change immediately.
      */
-    public void setPhaseInView(GamePhase newGamePhase, boolean setOldPhase, boolean forceImmediateExecution) {
+    public void setPhaseInView(GamePhase newGamePhase, boolean forceImmediateExecution) {
         currentPhase = newGamePhase;
-        if (setOldPhase)
-            oldPhase = currentPhase;
         setPhaseInView(phases.get(newGamePhase), forceImmediateExecution);
     }
 
@@ -268,5 +254,4 @@ public abstract class AbstractView {
     public ArrayList<String> getChat() {
         return controllerClient.getChat();
     }
-
 }

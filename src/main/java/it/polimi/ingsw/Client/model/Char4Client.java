@@ -65,7 +65,7 @@ public class Char4Client implements CharacterCardClient {
             int relativeId = (int) clicked.getProperties().get("relativeId");
             inputs.add(relativeId);
             System.out.println("input for grandma :" + inputs);
-            viewGUI.repeatPhase(false);
+            viewGUI.repeatPhase();
         };
     }
 

@@ -66,7 +66,7 @@ public class Char8Client implements CharacterCardClient {
         return mouseEvent -> {
             Node clicked = (Node) mouseEvent.getSource();
             inputs.add(((Color) clicked.getProperties().get("color")).ordinal());
-            viewGUI.repeatPhase(false);
+            viewGUI.repeatPhase();
         };
     }
 

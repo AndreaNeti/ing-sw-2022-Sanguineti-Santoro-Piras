@@ -41,7 +41,7 @@ public class GuiFX extends Application {
         });
         goToMenuScene();
         primaryStage.show();
-        viewGUI.setPhaseInView(GamePhase.INIT_PHASE, true, false);
+        viewGUI.setPhaseInView(GamePhase.INIT_PHASE,false);
 
     }
 

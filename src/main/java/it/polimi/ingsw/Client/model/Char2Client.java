@@ -53,7 +53,7 @@ public class Char2Client implements CharacterCardClient {
             Node clicked = (Node) mouseEvent.getSource();
             int relativeId = (int) clicked.getProperties().get("relativeId");
             inputs.add(relativeId);
-            viewGUI.repeatPhase(false);
+            viewGUI.repeatPhase();
         };
     }
 

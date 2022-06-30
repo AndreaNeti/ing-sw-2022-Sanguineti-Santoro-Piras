@@ -499,7 +499,7 @@ public class NormalGame implements Game {
      * @throws GameException when this method is played during a normal game.
      */
     @Override
-    public void chooseCharacter(byte charId) throws GameException {
+    public void chooseCharacter(Byte charId) throws GameException {
         throw new NotExpertGameException();
     }
 

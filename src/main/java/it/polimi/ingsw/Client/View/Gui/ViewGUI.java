@@ -23,7 +23,7 @@ public class ViewGUI extends AbstractView {
     }
 
     @Override
-    public synchronized void setPhaseInView(ClientPhase clientPhase, boolean forceImmediateExecution) {
+    protected synchronized void setPhaseInView(ClientPhase clientPhase, boolean forceImmediateExecution) {
         phaseToExecute = clientPhase;
         //if it's not in a game should load the menu scene otherwise the board scene
         if (getModel() == null) {
