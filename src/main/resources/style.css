@@ -87,7 +87,7 @@
     -fx-effect: dropshadow(gaussian, rgb(50, 100, 255), 20, 0.75, 0, 0);
 }
 
-.entrancehall .clickable, .lunchhall .clickable, .colorbox .clickable {
+.entrancehall .clickable, .lunchhall .clickable, .colorbox.clickable {
     -fx-effect: dropshadow(gaussian, rgb(255, 255, 255), 10, 0.8, 0, 0);
 }
 
