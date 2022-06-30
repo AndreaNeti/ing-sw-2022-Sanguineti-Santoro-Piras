@@ -57,7 +57,6 @@ public class MenuController implements SceneController {
         observableListChat.addAll(viewGUI.getChat());
         ListView<String> listView = new ListView<>(observableListChat);
         listView.prefWidthProperty().bind(paneForChat.widthProperty());
-        listView.prefHeightProperty().bind(paneForChat.heightProperty());
         paneForChat.getChildren().add(listView);
         chat.toFront();
         chat.setVisible(false);
