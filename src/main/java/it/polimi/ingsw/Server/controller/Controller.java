@@ -329,11 +329,9 @@ public class Controller {
      * @param excludeMe of type {@link GameListener} - instance of the ClientHandler that should not receive the message.
      */
     private void notifyClients(ToClientMessage message, GameListener excludeMe) {
-        synchronized (playerHandlers) {
             for (GameListener gl : playerHandlers) {
                 if (!gl.equals(excludeMe)) gl.update(message);
             }
-        }
     }
 
     /**

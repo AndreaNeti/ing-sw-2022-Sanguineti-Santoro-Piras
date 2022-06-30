@@ -79,7 +79,7 @@ public class BoardController implements SceneController {
                 CharacterCardClient character = characters.get(i);
                 AnchorPane singleChar = (AnchorPane) this.characters.getChildren().get(i);
                 ImageView imageView = (ImageView) singleChar.getChildren().get(0);
-                imageView.setImage(new Image("Graphical_Assets/CharacterCards/" + character.getCharId() + ".png"));
+                imageView.setImage(new Image("Graphical_Assets/CharacterCards/" + (-character.getCharId() - 10) + ".png"));
                 singleChar.getProperties().put("index", i);
                 singleChar.getProperties().put("charId", character.getCharId());
                 //this is for grandma weeds
@@ -106,7 +106,7 @@ public class BoardController implements SceneController {
 
                 imageView.setOnMouseClicked(mouseEvent -> {
                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                    ImageView image = new ImageView(new Image("Graphical_Assets/CharacterCards/" + character.getCharId() + ".png"));
+                    ImageView image = new ImageView(new Image("Graphical_Assets/CharacterCards/" + (-character.getCharId() - 10) + ".png"));
                     image.setPreserveRatio(true);
                     image.setFitWidth(150);
                     alert.setGraphic(image);

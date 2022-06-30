@@ -65,11 +65,10 @@ public class ExpertGame extends NormalGame implements GameInterfaceForCharacter,
         while (i < matchConstants.numOfCharacterCards()) {
             while (selectedCharacters.contains(characterIndex)) {
                 characterIndex = (byte) rand.nextInt(12);
-                //tmp++;
             }
             c = factoryCharacter(characterIndex, this, characterConstants);
             characters.add(c);
-            selectedCharacters.add(c.getCharId());
+            selectedCharacters.add(characterIndex);
             i++;
         }
         // add Coin Listener
@@ -110,7 +109,7 @@ public class ExpertGame extends NormalGame implements GameInterfaceForCharacter,
             throw new IllegalArgumentException("Cannot retrieve character constants");
         switch (index) {
             case 0:
-                Char0 c0 = new Char0((byte) -10);
+                Char0 c0 = new Char0(characterConstants[index].getCharId());
                 try {
                     game.drawStudents(c0, (byte) c0.getMaxStudents());
                 } catch (EndGameException | GameException e) {
@@ -128,7 +127,7 @@ public class ExpertGame extends NormalGame implements GameInterfaceForCharacter,
             case 5:
                 return new CharacterCard(new Char5(), characterConstants[index]);
             case 6:
-                Char6 c6 = new Char6((byte) -11);
+                Char6 c6 = new Char6(characterConstants[index].getCharId());
                 try {
                     game.drawStudents(c6, (byte) c6.getMaxStudents());
                 } catch (EndGameException | GameException e) {
@@ -142,7 +141,7 @@ public class ExpertGame extends NormalGame implements GameInterfaceForCharacter,
             case 9:
                 return new CharacterCard(new Char9(), characterConstants[index]);
             case 10:
-                Char10 c10 = new Char10((byte) -12);
+                Char10 c10 = new Char10(characterConstants[index].getCharId());
                 try {
                     game.drawStudents(c10, (byte) c10.getMaxStudents());
                 } catch (EndGameException | GameException e) {

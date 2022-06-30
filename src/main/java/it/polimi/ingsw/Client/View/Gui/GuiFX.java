@@ -53,9 +53,9 @@ public class GuiFX extends Application {
             FXMLLoader loader = new FXMLLoader(GuiFX.class.getResource("/board.fxml"));
 
             try {
-                int width = (int) Screen.getPrimary().getBounds().getWidth();
-                int height = (int) Screen.getPrimary().getBounds().getHeight();
-                primaryStage.setScene(new Scene(loader.load(), width, height, false, SceneAntialiasing.BALANCED));
+                /*int width = (int) Screen.getPrimary().getBounds().getWidth();
+                int height = (int) Screen.getPrimary().getBounds().getHeight();*/
+                primaryStage.setScene(new Scene(loader.load(), 1920, 1080, false, SceneAntialiasing.BALANCED));
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -65,7 +65,7 @@ public class GuiFX extends Application {
             boardController.setViewGUI(viewGUI);
             inMenuScene = false;
             primaryStage.setFullScreen(true);
-            primaryStage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
+            //primaryStage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
             primaryStage.setResizable(false);
             //loadingWindow.dispose();
             primaryStage.show();

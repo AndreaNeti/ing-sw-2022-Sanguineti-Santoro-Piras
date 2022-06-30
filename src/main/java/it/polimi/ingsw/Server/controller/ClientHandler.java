@@ -153,7 +153,7 @@ public class ClientHandler implements Runnable, GameListener, PingPongInterface 
      * @param message of type {@link ToClientMessage} - message to send to the client.
      */
     @Override
-    public void update(ToClientMessage message) {
+    public synchronized void update(ToClientMessage message) {
         if (!(message instanceof PingMessage))
             System.out.println(message);
         try {

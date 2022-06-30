@@ -585,24 +585,24 @@ class CharacterCardTest {
 
     @Test
     void getId() {
-        assertEquals(c0.getCharId(), 0);
-        assertEquals(c1.getCharId(), 1);
-        assertEquals(c2.getCharId(), 2);
-        assertEquals(c3.getCharId(), 3);
-        assertEquals(c4.getCharId(), 4);
-        assertEquals(c5.getCharId(), 5);
-        assertEquals(c6.getCharId(), 6);
-        assertEquals(c7.getCharId(), 7);
-        assertEquals(c8.getCharId(), 8);
-        assertEquals(c9.getCharId(), 9);
-        assertEquals(c10.getCharId(), 10);
-        assertEquals(c11.getCharId(), 11);
+        assertEquals(c0.getCharId(), -10);
+        assertEquals(c1.getCharId(), -11);
+        assertEquals(c2.getCharId(), -12);
+        assertEquals(c3.getCharId(), -13);
+        assertEquals(c4.getCharId(), -14);
+        assertEquals(c5.getCharId(), -15);
+        assertEquals(c6.getCharId(), -16);
+        assertEquals(c7.getCharId(), -17);
+        assertEquals(c8.getCharId(), -18);
+        assertEquals(c9.getCharId(), -19);
+        assertEquals(c10.getCharId(), -20);
+        assertEquals(c11.getCharId(), -21);
         GameComponent test = (GameComponent) c0.getLogicCard();
         assertEquals(test.getId(), -10);
         test = (GameComponent) c6.getLogicCard();
-        assertEquals(test.getId(), -11);
+        assertEquals(test.getId(), -16);
         test = (GameComponent) c10.getLogicCard();
-        assertEquals(test.getId(), -12);
+        assertEquals(test.getId(), -20);
 
     }
 

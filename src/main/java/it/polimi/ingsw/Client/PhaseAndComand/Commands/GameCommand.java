@@ -303,7 +303,7 @@ public enum GameCommand {
             CharacterCardClient chosenCharacter = viewCli.getModel().getCharacters().get(index);
             if (chosenCharacter.getCost() <= viewCli.getModel().getCoinsPlayer((byte) viewCli.getModel().getCurrentPlayer().getWizard().ordinal())) {
                 viewCli.setCurrentCharacterCard(index);
-                viewCli.sendToServer(new ChooseCharacter((byte) chosenCharacter.getCharId(), chosenCharacter.toString()));
+                viewCli.sendToServer(new ChooseCharacter(chosenCharacter.getCharId(), chosenCharacter.toString()));
                 //viewCli.setPhaseInView(GamePhase.PLAY_CH_CARD_PHASE, false, false);
             } else {
                 viewCli.addMessage("You don't have enough coins to play this card");
@@ -321,7 +321,7 @@ public enum GameCommand {
                 CharacterCardClient chosenCharacter = viewGUI.getModel().getCharacters().get(index);
                 if (chosenCharacter.getCost() <= viewGUI.getModel().getCoinsPlayer((byte) viewGUI.getModel().getCurrentPlayer().getWizard().ordinal())) {
                     viewGUI.setCurrentCharacterCard(index);
-                    viewGUI.sendToServer(new ChooseCharacter((byte) chosenCharacter.getCharId(), chosenCharacter.toString()));
+                    viewGUI.sendToServer(new ChooseCharacter(chosenCharacter.getCharId(), chosenCharacter.toString()));
                     //viewGUI.setPhaseInView(GamePhase.PLAY_CH_CARD_PHASE, false, false);
                 } else GuiFX.showError("Character error", "You don't have enough money to play this card", "Error");
             };

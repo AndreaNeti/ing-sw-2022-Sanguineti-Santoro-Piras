@@ -386,7 +386,7 @@ public class GameClient extends GameClientListened implements GameClientView {
      */
     private CharacterCardClient factoryCharacter(CharacterCardDataInterface characterCardData) {
 // TODO reimplement this with new character data interface
-        switch (characterCardData.getCharId()) {
+        switch (-characterCardData.getCharId() - 10) {
             case 0:
                 return new Char0Client(characterCardData);
             case 1:

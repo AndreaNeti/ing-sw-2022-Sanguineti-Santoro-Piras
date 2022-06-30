@@ -53,12 +53,12 @@ public class CharacterCard implements CharacterCardDataInterface, CharacterCardL
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof CharacterCard that)) return false;
-        return characterData.equals(that.characterData);
+        return characterData.getCharId() == that.characterData.getCharId();
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(characterData);
+        return Objects.hash(characterData.getCharId());
     }
 
     @Override

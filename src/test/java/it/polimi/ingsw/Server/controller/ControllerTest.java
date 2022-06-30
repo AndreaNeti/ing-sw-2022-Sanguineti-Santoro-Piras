@@ -233,7 +233,7 @@ class ControllerTest {
         }
         // check if 3 different character cards have been selected
         int nCharacters = 12, selected = 3, counter = 0;
-        for (byte i = 0; i < nCharacters; i++) {
+        for (byte i = -10; i > -10 - nCharacters; i--) {
             try {
                 controllerExpert2.chooseCharacter(i);
                 counter++;

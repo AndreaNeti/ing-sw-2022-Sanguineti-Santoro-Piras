@@ -55,7 +55,7 @@
     -fx-padding: 5;
 }
 
-#mainBoard .card {
+.board .card {
     -fx-cursor: hand;
 }
 
