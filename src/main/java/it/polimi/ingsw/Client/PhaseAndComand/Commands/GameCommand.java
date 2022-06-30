@@ -372,7 +372,6 @@ public enum GameCommand {
                 return;
             }
             boolean confirmToPlay = viewCli.getBooleanInput("Confirm you want to play this character card?", false);
-
             if (current.canPlay() && confirmToPlay) {
                 viewCli.sendToServer(new PlayCharacter(current.getInputs()));
                 current.resetInput();
@@ -389,17 +388,19 @@ public enum GameCommand {
                 alert.setTitle("Play character");
                 alert.setContentText("Do you want to play the card?");
                 alert.initOwner(GuiFX.getPrimaryStage());
+                CharacterCardClient current = viewGUI.getCurrentCharacterCard();
                 if (alert.showAndWait().filter(ButtonType.OK::equals).isPresent()) {
-                    CharacterCardClient current = viewGUI.getCurrentCharacterCard();
                     System.out.println("Character card inputs:" + current.getInputs());
                     viewGUI.sendToServer(new PlayCharacter(current.getInputs()));
                     current.resetInput();
                     viewGUI.unsetCurrentCharacterCard();
-
                     AnchorPane singleChar = (AnchorPane) ((Node) mouseEvent.getSource()).getParent();
                     singleChar.getChildren().get(4).setVisible(false);
                     singleChar.getChildren().get(3).setVisible(false);
+                } else {
+                    viewGUI.repeatPhase();
                 }
+
             };
         }
 
