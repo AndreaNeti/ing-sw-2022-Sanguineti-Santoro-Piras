@@ -108,11 +108,10 @@ public class ControllerClient extends GameClientListened implements PingPongInte
      * old phase must be saved and if the phase change must happen immediately.
      *
      * @param newGamePhase            of type {@link GamePhase} - new game phase to set in the client's view.
-     * @param setOldPhase             of type {@code boolean} - boolean to check if old phase must be saved.
      * @param forceImmediateExecution of type {@code boolean} - boolean to check if the phase must change immediately.
      */
-    public synchronized void changePhase(GamePhase newGamePhase, boolean setOldPhase, boolean forceImmediateExecution) {
-        abstractView.setPhaseInView(newGamePhase, setOldPhase, forceImmediateExecution);
+    public synchronized void changePhase(GamePhase newGamePhase, boolean forceImmediateExecution) {
+        abstractView.setPhaseInView(newGamePhase, forceImmediateExecution);
     }
 
     /**
@@ -131,9 +130,9 @@ public class ControllerClient extends GameClientListened implements PingPongInte
         if (currentPlayerIndex == null) return;
         model.setCurrentPlayer(currentPlayerIndex);
         if (model.getCurrentPlayer().getWizard() != myWizard) {
-            changePhase(GamePhase.WAIT_PHASE, true, forceImmediateExecution);
+            changePhase(GamePhase.WAIT_PHASE, forceImmediateExecution);
         } else {
-            changePhase(newGamePhase, true, forceImmediateExecution);
+            changePhase(newGamePhase, forceImmediateExecution);
         }
     }
 
@@ -152,7 +151,6 @@ public class ControllerClient extends GameClientListened implements PingPongInte
      */
     public void error(String error) {
         notifyError(error);
-        abstractView.goToOldPhase();
     }
 
     /**
@@ -248,7 +246,7 @@ public class ControllerClient extends GameClientListened implements PingPongInte
         if (isInMatch) {
             sendMessage(new Quit());
             unsetModel();
-            changePhase(GamePhase.SELECT_MATCH_PHASE, true, forceImmediateExecution);
+            changePhase(GamePhase.SELECT_MATCH_PHASE, forceImmediateExecution);
             return false;
         } else if (abstractView.getCurrentPhase() != GamePhase.INIT_PHASE) {
             chat.clear();

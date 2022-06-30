@@ -60,7 +60,7 @@ public class ServerListener implements Runnable {
                 }
                 controllerClient.unsetModel();
                 controllerClient.closeConnection();
-                controllerClient.changePhase(GamePhase.INIT_PHASE, true, true);
+                controllerClient.changePhase(GamePhase.INIT_PHASE, true);
             }
         } while (!quit);
         try {

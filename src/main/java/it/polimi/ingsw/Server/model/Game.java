@@ -80,10 +80,10 @@ public interface Game {
     /**
      * Method chooseCharacter is used to select one of the 3 available character cards based on their unique ID.
      *
-     * @param charId of type {@code byte} - index of the character card chosen.
+     * @param charId of type {@code Byte} - index of the character card chosen. It can be null so it deselects the current character
      * @throws GameException if the selected card is not available in the current game or the player doesn't have enough coins.
      */
-    void chooseCharacter(byte charId) throws GameException;
+    void chooseCharacter(Byte charId) throws GameException;
 
     /**
      * Method playCharacter is used to play the selected character card, applying its effects, removing coins

@@ -36,7 +36,7 @@ public enum GameCommand {
             boolean connected = viewCli.connectToServer(viewCli.getIpAddressInput(false));
             if (!connected) {
                 viewCli.addMessage("Server Error: Cannot connect to this server");
-                viewCli.goToOldPhase();
+                viewCli.repeatPhase();
             }
         }
 
@@ -301,10 +301,10 @@ public enum GameCommand {
             if (chosenCharacter.getCost() <= viewCli.getModel().getCoinsPlayer((byte) viewCli.getModel().getCurrentPlayer().getWizard().ordinal())) {
                 viewCli.setCurrentCharacterCard(index);
                 viewCli.sendToServer(new ChooseCharacter((byte) chosenCharacter.getCharId(), chosenCharacter.toString()));
-                viewCli.setPhaseInView(GamePhase.PLAY_CH_CARD_PHASE, false, false);
+                //viewCli.setPhaseInView(GamePhase.PLAY_CH_CARD_PHASE, false, false);
             } else {
                 viewCli.addMessage("You don't have enough coins to play this card");
-                viewCli.goToOldPhase();
+                viewCli.repeatPhase();
             }
         }
 
@@ -319,7 +319,7 @@ public enum GameCommand {
                 if (chosenCharacter.getCost() <= viewGUI.getModel().getCoinsPlayer((byte) viewGUI.getModel().getCurrentPlayer().getWizard().ordinal())) {
                     viewGUI.setCurrentCharacterCard(index);
                     viewGUI.sendToServer(new ChooseCharacter((byte) chosenCharacter.getCharId(), chosenCharacter.toString()));
-                    viewGUI.setPhaseInView(GamePhase.PLAY_CH_CARD_PHASE, false, false);
+                    //viewGUI.setPhaseInView(GamePhase.PLAY_CH_CARD_PHASE, false, false);
                 } else GuiFX.showError("Character error", "You don't have enough money to play this card", "Error");
             };
         }
@@ -346,7 +346,7 @@ public enum GameCommand {
                 current.setNextInput(viewCli);
                 if (current.canPlay()) viewCli.addMessage("Card can already be played");
             }
-            viewCli.repeatPhase(false);
+            viewCli.repeatPhase();
         }
 
         /**
@@ -368,7 +368,7 @@ public enum GameCommand {
             CharacterCardClient current = viewCli.getCurrentCharacterCard();
             if (current == null) {
                 viewCli.addMessage("No card selected");
-                viewCli.goToOldPhase();
+                viewCli.repeatPhase();
                 return;
             }
             boolean confirmToPlay = viewCli.getBooleanInput("Confirm you want to play this character card?", false);
@@ -380,7 +380,6 @@ public enum GameCommand {
                 viewCli.addMessage("Card cannot be played because it needs more input");
             }
             viewCli.unsetCurrentCharacterCard();
-            viewCli.goToOldPhase();
         }
 
         @Override
@@ -401,7 +400,6 @@ public enum GameCommand {
                     singleChar.getChildren().get(4).setVisible(false);
                     singleChar.getChildren().get(3).setVisible(false);
                 }
-                viewGUI.goToOldPhase();
             };
         }
 
@@ -480,7 +478,7 @@ public enum GameCommand {
             String comment = viewCli.getStringInput("Comment", 50, false);
             viewCli.sendToServer(new TextMessageCS(comment));
             viewCli.addMessage("[You]: " + comment);
-            viewCli.repeatPhase(false);
+            viewCli.repeatPhase();
         }
 
         @Override
@@ -508,17 +506,17 @@ public enum GameCommand {
         }
     },
     /**
-     * UNDO GameCommand is used by the client to undo the selection of a character card and the respective inputs.
+     * DESELECT_CHARACTER GameCommand is used by the client to undo the selection of a character card and the respective inputs.
      */
-    UNDO() {
+    DESELECT_CHARACTER() {
         @Override
         public void playCLICommand(ViewCli viewCli) {
             if (viewCli.getCurrentCharacterCard() != null) {
                 viewCli.addMessage("Reset all input");
                 viewCli.getCurrentCharacterCard().resetInput();
                 viewCli.unsetCurrentCharacterCard();
+                viewCli.sendToServer(new ChooseCharacter(null, ""));
             }
-            viewCli.goToOldPhase();
         }
 
         @Override
@@ -532,8 +530,8 @@ public enum GameCommand {
                     AnchorPane singleChar = (AnchorPane) ((Node) mouseEvent.getSource()).getParent();
                     singleChar.getChildren().get(4).setVisible(false);
                     singleChar.getChildren().get(3).setVisible(false);
+                    viewGUI.sendToServer(new ChooseCharacter(null, ""));
                 }
-                viewGUI.goToOldPhase();
                 System.out.println(viewGUI.getCurrentPhase());
             };
         }
@@ -556,7 +554,7 @@ public enum GameCommand {
         public void playCLICommand(ViewCli viewCli) throws SkipCommandException {
             if (viewCli.getBooleanInput("Quit?", false)) {
                 viewCli.setQuit(false);
-            } else viewCli.repeatPhase(false);
+            } else viewCli.repeatPhase();
         }
 
         // @Override

@@ -634,6 +634,9 @@ public class CliPrinter implements GameClientListener {
     @Override
     public void updateError(String error) {
         view.addMessage(error);
+        if (view.getModel() == null) {
+            view.repeatPhase();
+        }
     }
 
     /**

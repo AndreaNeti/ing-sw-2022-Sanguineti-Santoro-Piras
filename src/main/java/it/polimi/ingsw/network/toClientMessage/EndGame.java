@@ -37,7 +37,7 @@ public class EndGame implements ToClientMessage {
             controllerClient.addMessage("Someone disconnected from match");
         } else {
             controllerClient.notifyWinners(winners);
-            controllerClient.changePhase(GamePhase.WAIT_PHASE, true, true);
+            controllerClient.changePhase(GamePhase.WAIT_PHASE, true);
         }
     }
 }

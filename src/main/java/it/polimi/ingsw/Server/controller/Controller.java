@@ -92,16 +92,19 @@ public class Controller {
      *
      * @param color           of type {@code Color} - the color of the student to move.
      * @param idGameComponent of type {@code Int} - the ID of the source component.
-     * @throws GameException        if the color is null or the game component's ID is not valid or if it's not possible to move the student
-     *                              to the specified game component or if this method is called during a phase that is not move_st_phase.
+     * @throws GameException if the color is null or the game component's ID is not valid or if it's not possible to move the student
+     *                       to the specified game component or if this method is called during a phase that is not move_st_phase.
      */
     public synchronized void move(Color color, int idGameComponent) throws GameException, NullPointerException, EndGameException {
         if (gamePhase == GamePhase.MOVE_ST_PHASE) {
             // not your lunchHall neither an island
             if (idGameComponent != (currentPlayerIndex * 2 + 1) && (idGameComponent < 2 * MatchType.MAX_PLAYERS || idGameComponent >= 2 * MatchType.MAX_PLAYERS + 12))
                 throw new NotAllowedException("Can't move to the selected GameComponent");
-
-            game.move(color, (currentPlayerIndex * 2), idGameComponent);
+            try {
+                game.move(color, (currentPlayerIndex * 2), idGameComponent);
+            } catch (GameException e) {
+                handleError(e);
+            }
             // do not increment counter if exception thrown
             movesCounter++;
             if (movesCounter == matchConstants.studentsToMove()) {
@@ -120,15 +123,19 @@ public class Controller {
      * Method moveFromCloud is used to move students from a cloud to the current player's entrance hall.
      *
      * @param idGameComponent of type {@code byte} - ID of the cloud.
-     * @throws GameException        if the selected game component is not a cloud or if this method is called
-     *                              during a phase that is not move_cl_phase or if the selected cloud has no students.
-     * @throws EndGameException     if it is the last turn and after moving students from the cloud the game ends.
+     * @throws GameException    if the selected game component is not a cloud or if this method is called
+     *                          during a phase that is not move_cl_phase or if the selected cloud has no students.
+     * @throws EndGameException if it is the last turn and after moving students from the cloud the game ends.
      */
     public synchronized void moveFromCloud(int idGameComponent) throws GameException, NullPointerException, EndGameException {
         if (gamePhase == GamePhase.MOVE_CL_PHASE) { // move students from cloud, destination is player entrance hall
             if (idGameComponent >= 0 || idGameComponent < -matchType.nPlayers())
                 throw new NotAllowedException("Component is not a cloud");
-            game.moveFromCloud(idGameComponent);
+            try {
+                game.moveFromCloud(idGameComponent);
+            } catch (GameException e) {
+                handleError(e);
+            }
             nextPhase();
         } else throw new NotAllowedException("Wrong Phase");
 
@@ -138,8 +145,8 @@ public class Controller {
      * Method playCard is used by the user to play an assistant card during the planification phase.
      *
      * @param card of type {@link AssistantCard} - instance of the assistant card to play.
-     * @throws GameException        if the card selected cannot be played or if this method is called during a phase
-     *                              that is not planification_phase or if the selected assistant card is not available to play.
+     * @throws GameException if the card selected cannot be played or if this method is called during a phase
+     *                       that is not planification_phase or if the selected assistant card is not available to play.
      */
     //the value here need to go from 1 to 10
     public synchronized void playCard(AssistantCard card) throws GameException, NullPointerException, EndGameException {
@@ -153,6 +160,8 @@ public class Controller {
                 playedCards.add(card);
             } catch (EndGameException e) {
                 handleError(e);
+            } catch (GameException e1) {
+                handleError(e1);
             }
             nextPhase();
         } else {
@@ -164,9 +173,9 @@ public class Controller {
      * Method moveMotherNature is used to move mother nature a selected amount of moves.
      *
      * @param moves of type {@code byte} - number of moves wanted.
-     * @throws GameException        if this method is called during a phase that is not move_mn_phase or if mother nature cannot
-     *                              be moved the selected amount of moves.
-     * @throws EndGameException     if after moving mother nature there are less than 3 islands left in the game.
+     * @throws GameException    if this method is called during a phase that is not move_mn_phase or if mother nature cannot
+     *                          be moved the selected amount of moves.
+     * @throws EndGameException if after moving mother nature there are less than 3 islands left in the game.
      */
     public synchronized void moveMotherNature(int moves) throws GameException, NullPointerException, EndGameException {
         if (gamePhase == GamePhase.MOVE_MN_PHASE) {
@@ -174,6 +183,8 @@ public class Controller {
                 game.moveMotherNature(moves);
             } catch (EndGameException e) {
                 handleError(e);
+            } catch (GameException e1) {
+                handleError(e1);
             }
             nextPhase();
         } else {
@@ -231,8 +242,8 @@ public class Controller {
      * Method setCharacterInputs is used to add inputs to play the character card.
      *
      * @param inputs of type {@code List}<{@code Integer}> - list of inputs to add.
-     * @throws GameException        if this method is called during the planification_phase or if there is not selected
-     *                              character card.
+     * @throws GameException if this method is called during the planification_phase or if there is not selected
+     *                       character card.
      */
     public synchronized void setCharacterInputs(List<Integer> inputs) throws GameException, NullPointerException {
         if (gamePhase == GamePhase.PLANIFICATION_PHASE) {
@@ -244,29 +255,38 @@ public class Controller {
     /**
      * Method chooseCharacter is used to choose a character card to play.
      *
-     * @param charId of type {@code byte} - ID of the character card.
-     * @throws GameException        if this method is called during the planification phase or
-     *                              if the current player has already played a card in this turn or if the
-     *                              selected character card is not available or costs more than the number of coins of the player.
+     * @param charId of type {@code Byte} - ID of the character card. If charId is null then the current chosen card is set to null
+     * @throws GameException if this method is called during the planification phase or
+     *                       if the current player has already played a card in this turn or if the
+     *                       selected character card is not available or costs more than the number of coins of the player.
      */
-    public synchronized void chooseCharacter(byte charId) throws GameException, NullPointerException {
+    public synchronized void chooseCharacter(Byte charId) throws GameException, NullPointerException {
         if (gamePhase == GamePhase.PLANIFICATION_PHASE) {
             throw new NotAllowedException("Not in action phase");
         }
         if (characterCardPlayed) {
             throw new NotAllowedException("You already played a card in this turn");
         }
-        game.chooseCharacter(charId);
+        try {
+            game.chooseCharacter(charId);
+            //if a card is deselected repeat the phase (which is one of the action)
+            if (charId != null)
+                notifyClients(new Phase(GamePhase.PLAY_CH_CARD_PHASE, currentPlayerIndex));
+            else
+                repeatPhase();
+        } catch (GameException e) {
+            handleError(e);
+        }
     }
 
     /**
      * Method playCharacter is used to play the chosen character card with the inputs added by the player.
      *
-     * @throws GameException        if this method is called during the planification phase
-     *                              if the current player has already played a card in this turn or if there's an error
-     *                              while playing the card (invalid or wrong inputs).
-     * @throws EndGameException     if the card's effect triggers an endgame event (no more students in the bag,
-     *                              * no more towers in a team's board or less than 3 islands left)
+     * @throws GameException    if this method is called during the planification phase
+     *                          if the current player has already played a card in this turn or if there's an error
+     *                          while playing the card (invalid or wrong inputs).
+     * @throws EndGameException if the card's effect triggers an endgame event (no more students in the bag,
+     *                          * no more towers in a team's board or less than 3 islands left)
      */
     public synchronized void playCharacter() throws GameException, NullPointerException, EndGameException {
         if (gamePhase == GamePhase.PLANIFICATION_PHASE) {
@@ -279,9 +299,12 @@ public class Controller {
             game.playCharacter();
         } catch (EndGameException e) {
             handleError(e);
+        } catch (GameException e1) {
+            handleError(e1);
         }
         // TODO uncomment this
         // characterCardPlayed = true;
+        repeatPhase();
     }
 
     /**
@@ -498,6 +521,19 @@ public class Controller {
     }
 
     /**
+     * Method handleError handles GameExceptions informing the client about the current game phase and then notifying about the error.
+     *
+     * @param e of type {@link GameException} - instance of the exception.
+     * @throws GameException everytime (it gets caught by the {@link ClientHandler}
+     */
+
+    protected void handleError(GameException e) throws GameException {
+        repeatPhase();
+        // throws to client handler, in this way should arrive phase and error message
+        throw e;
+    }
+
+    /**
      * Method getWinners returns all the teams that won the game.
      *
      * @return {@code ArrayList}<{@link HouseColor}> - list of the house color of the winners.
@@ -522,5 +558,12 @@ public class Controller {
      */
     protected Long getMatchId() {
         return matchId;
+    }
+
+    /**
+     * Method repeatPhase () is used to notify that there is again the same phase because there has been an error.
+     */
+    private void repeatPhase() {
+        setPhase(this.gamePhase);
     }
 }

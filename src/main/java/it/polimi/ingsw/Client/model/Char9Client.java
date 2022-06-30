@@ -70,7 +70,7 @@ public class Char9Client implements CharacterCardClient {
             Node clicked = (Node) mouseEvent.getSource();
             inputs.add(((Color) clicked.getProperties().get("color")).ordinal());
             System.out.println(inputs);
-            viewGUI.repeatPhase(false);
+            viewGUI.repeatPhase();
         };
     }
 

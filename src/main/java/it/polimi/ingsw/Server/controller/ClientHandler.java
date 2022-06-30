@@ -64,8 +64,8 @@ public class ClientHandler implements Runnable, GameListener, PingPongInterface 
         do {
             try {
                 command = (ToServerMessage) objIn.readObject();
-                //if (!(command instanceof PingMessage))
-                System.out.println(command.getClass().getName());
+                if (!(command instanceof PingMessage))
+                    System.out.println(command.getClass().getName());
                 command.execute(this);
             } catch (EndGameException e) {
                 // if the exception arrives here it means it was an end instantly exception
@@ -154,8 +154,8 @@ public class ClientHandler implements Runnable, GameListener, PingPongInterface 
      */
     @Override
     public void update(ToClientMessage message) {
-        //if (!(message instanceof PingMessage))
-        System.out.println(message);
+        if (!(message instanceof PingMessage))
+            System.out.println(message);
         try {
             objOut.reset();
             objOut.writeObject(message);
@@ -247,6 +247,7 @@ public class ClientHandler implements Runnable, GameListener, PingPongInterface 
         return Objects.hash(socket);
     }
 
+    //TODO javadoc
     @Override
     public void sendPingPong() {
         update(new PingMessage());

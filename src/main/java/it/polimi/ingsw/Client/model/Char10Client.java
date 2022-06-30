@@ -62,7 +62,7 @@ public class Char10Client extends CharacterCardClientWithStudents {
 
             Node clicked = (Node) mouseEvent.getSource();
             inputs.add(((Color) clicked.getProperties().get("color")).ordinal());
-            viewGUI.repeatPhase(false);
+            viewGUI.repeatPhase();
         };
     }
 

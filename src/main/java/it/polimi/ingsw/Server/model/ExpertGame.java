@@ -38,7 +38,7 @@ public class ExpertGame extends NormalGame implements CharacterCardGame, CoinLis
     private boolean equalProfessorCalculation; //default false
     private Color ignoredColorInfluence;
     private byte prohibitionLeft;
-    private byte chosenCharacter;
+    private Byte chosenCharacter;
     private final MatchConstants matchConstants;
 
 
@@ -87,7 +87,7 @@ public class ExpertGame extends NormalGame implements CharacterCardGame, CoinLis
         this.equalProfessorCalculation = false;
         this.ignoredColorInfluence = null;
         this.prohibitionLeft = 4;
-        this.chosenCharacter = -1;
+        this.chosenCharacter = null;
         this.inputsCharacter = new ArrayList<>();
     }
 
@@ -228,7 +228,7 @@ public class ExpertGame extends NormalGame implements CharacterCardGame, CoinLis
         this.extraSteps = false;
         this.equalProfessorCalculation = false;
         this.ignoredColorInfluence = null;
-        this.chosenCharacter = -1;
+        this.chosenCharacter = null;
         this.inputsCharacter.clear();
         getGameDelta().setExtraSteps(extraSteps);
     }
@@ -357,7 +357,7 @@ public class ExpertGame extends NormalGame implements CharacterCardGame, CoinLis
      */
     @Override
     public void playCharacter() throws GameException, EndGameException {
-        if (chosenCharacter == -1) throw new NotAllowedException("No character card selected");
+        if (chosenCharacter == null) throw new NotAllowedException("No character card selected");
         if (getChosenCharacter().canPlay(inputsCharacter.size())) {
             try {
                 try {
@@ -378,7 +378,7 @@ public class ExpertGame extends NormalGame implements CharacterCardGame, CoinLis
                 }
                 // remove coins to player
                 removeCoinsFromCurrentPlayer(charCost);
-                chosenCharacter = -1;
+                chosenCharacter = null;
                 inputsCharacter.clear();
             } finally {
                 getGameDelta().send();
@@ -396,22 +396,27 @@ public class ExpertGame extends NormalGame implements CharacterCardGame, CoinLis
      * @throws GameException if the selected card is not available in the current game or the player doesn't have enough coins.
      */
     @Override
-    public void chooseCharacter(byte charId) throws GameException {
+    public void chooseCharacter(Byte charId) throws GameException {
         Byte indexCharacter = null;
         byte charCost = 0;
-        for (int i = 0; i < characters.size(); i++) {
-            CharacterCard character = characters.get(i);
-            if (character.getCharId() == charId) {
-                charCost = character.getCost();
-                indexCharacter = (byte) i;
+        if (charId == null) {
+            chosenCharacter = null;
+        } else {
+            for (int i = 0; i < characters.size(); i++) {
+                CharacterCard character = characters.get(i);
+                if (character.getCharId() == charId) {
+                    charCost = character.getCost();
+                    indexCharacter = (byte) i;
+                }
             }
+            if (indexCharacter == null) throw new NotAllowedException("Card not available");
+            // this character card has already been used, increase its cost
+            if (playedCharacters[indexCharacter]) charCost++;
+            if (charCost > coinsPlayer[getCurrentPlayer().getWizard().ordinal()])
+                throw new NotAllowedException("You have not enough coins to play this card");
+            chosenCharacter = indexCharacter;
         }
-        if (indexCharacter == null) throw new NotAllowedException("Card not available");
-        // this character card has already been used, increase its cost
-        if (playedCharacters[indexCharacter]) charCost++;
-        if (charCost > coinsPlayer[getCurrentPlayer().getWizard().ordinal()])
-            throw new NotAllowedException("You have not enough coins to play this card");
-        chosenCharacter = indexCharacter;
+
     }
 
     /**
@@ -422,7 +427,7 @@ public class ExpertGame extends NormalGame implements CharacterCardGame, CoinLis
      */
     @Override
     public void setCharacterInputs(List<Integer> inputs) throws GameException {
-        if (chosenCharacter != -1) inputsCharacter.addAll(inputs);
+        if (chosenCharacter != null) inputsCharacter.addAll(inputs);
         else throw new NotAllowedException("There is no chosen character card");
     }
 

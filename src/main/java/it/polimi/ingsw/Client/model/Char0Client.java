@@ -78,7 +78,7 @@ public class Char0Client extends CharacterCardClientWithStudents {
                     id = (int) clicked.getProperties().get("relativeId");
                 inputs.add(id);
             }
-            viewGUI.repeatPhase(false);
+            viewGUI.repeatPhase();
         };
     }
 

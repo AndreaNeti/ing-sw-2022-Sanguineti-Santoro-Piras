@@ -56,7 +56,7 @@ public class ViewCli extends AbstractView implements ViewForCharacterCli {
         requestInput = false;
         scannerThread.setName("Scanner Thread");
         scannerThread.start();
-        setPhaseInView(GamePhase.INIT_PHASE, true, false);
+        setPhaseInView(GamePhase.INIT_PHASE,false);
     }
 
     /**
@@ -77,7 +77,7 @@ public class ViewCli extends AbstractView implements ViewForCharacterCli {
 
     // called by server listener or app thread
     @Override
-    public synchronized void setPhaseInView(ClientPhase clientPhase, boolean forceImmediateExecution) {
+    protected synchronized void setPhaseInView(ClientPhase clientPhase, boolean forceImmediateExecution) {
         phaseToExecute = clientPhase;
         phaseChanged = true;
         if (forceImmediateExecution) forcedScannerSkip = true;
