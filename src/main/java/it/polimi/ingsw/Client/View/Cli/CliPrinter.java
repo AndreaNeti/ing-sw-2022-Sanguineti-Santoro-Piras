@@ -639,6 +639,11 @@ public class CliPrinter implements GameClientListener {
         }
     }
 
+    @Override
+    public void updateCurrentPlayer(byte newCurrentPlayer) {
+
+    }
+
     /**
      * Method clearConsole clears the client terminal.
      */

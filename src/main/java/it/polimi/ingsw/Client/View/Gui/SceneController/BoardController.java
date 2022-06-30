@@ -214,6 +214,8 @@ public class BoardController implements SceneController {
         for (GameComponentClient cloud : model.getClouds()) {
             updateGameComponent(cloud);
         }
+        // set who is the current player
+        updateCurrentPlayer((byte) model.getCurrentPlayer().getWizard().ordinal());
     }
 
     @Override
@@ -592,6 +594,7 @@ public class BoardController implements SceneController {
         });
     }
 
+    @Override
     public void updateCoins(Wizard wizard, Integer coins) {
         Platform.runLater(() -> {
             // coins are the 7 children of the board
@@ -634,6 +637,17 @@ public class BoardController implements SceneController {
     @Override
     public void updateError(String error) {
         GuiFX.showError("Server error", error, "Error");
+    }
+
+    @Override
+    public void updateCurrentPlayer(byte newCurrentPlayer) {
+        GameClientView model = viewGUI.getModel();
+        byte oldCurrentPlayer = (byte) model.getCurrentPlayer().getWizard().ordinal();
+        byte oldPlayerBoardIndex = (byte) Math.floorMod(oldCurrentPlayer - model.getMyWizard().ordinal(), model.getPlayers().size());
+        byte newPlayerBoardIndex = (byte) Math.floorMod(newCurrentPlayer - model.getMyWizard().ordinal(), model.getPlayers().size());
+
+        boards.getChildren().get(oldPlayerBoardIndex).getStyleClass().remove("currentPlayer");
+        boards.getChildren().get(newPlayerBoardIndex).getStyleClass().add("currentPlayer");
     }
 
     private ImageView getMotherNature() {

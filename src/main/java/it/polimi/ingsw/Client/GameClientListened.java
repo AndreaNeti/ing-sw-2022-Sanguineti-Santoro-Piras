@@ -122,4 +122,9 @@ public abstract class GameClientListened {
             listener.updateError(error);
         }
     }
+    public void notifyCurrentPlayer(byte newCurrentPlayer){
+        for (GameClientListener listener : listeners) {
+            listener.updateCurrentPlayer(newCurrentPlayer);
+        }
+    }
 }

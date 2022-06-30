@@ -877,7 +877,7 @@
                             <Image url="@Graphical_Assets/Board/Board.jpg" />
                         </image>
                     </ImageView>
-                    <Label styleClass="nickname" textAlignment="CENTER" textFill="WHITE" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <Label styleClass="nickname" text="asdsadsadsada" textAlignment="CENTER" textFill="WHITE" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                         <padding>
                             <Insets bottom="2.0" left="6.0" right="6.0" top="2.0" />
                         </padding>
@@ -1068,7 +1068,7 @@
                             <Image url="@Graphical_Assets/Board/Board.jpg" />
                         </image>
                     </ImageView>
-                    <Label styleClass="nickname" textAlignment="CENTER" textFill="WHITE" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <Label styleClass="nickname" text="asdsadsadsadasd" textAlignment="CENTER" textFill="WHITE" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                         <padding>
                             <Insets bottom="2.0" left="6.0" right="6.0" top="2.0" />
                         </padding>
@@ -1257,7 +1257,7 @@
                             <Image url="@Graphical_Assets/Board/Board.jpg" />
                         </image>
                     </ImageView>
-                    <Label styleClass="nickname" textAlignment="CENTER" textFill="WHITE" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <Label styleClass="nickname" text="wewfewfwefwef" textAlignment="CENTER" textFill="WHITE" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                         <padding>
                             <Insets bottom="2.0" left="6.0" right="6.0" top="2.0" />
                         </padding>
@@ -1444,7 +1444,7 @@
                     <ImageView cache="true" cacheHint="SCALE" fitWidth="700.0" preserveRatio="true" styleClass="shadow" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0">
                         <Image url="@Graphical_Assets/Board/Board.jpg" />
                     </ImageView>
-                    <Label styleClass="nickname" textAlignment="CENTER" textFill="WHITE" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <Label styleClass="nickname" text="fdsfsdfdsfsfdsfs" textAlignment="CENTER" textFill="WHITE" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                         <padding>
                             <Insets bottom="2.0" left="6.0" right="6.0" top="2.0" />
                         </padding>

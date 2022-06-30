@@ -134,4 +134,6 @@ public interface GameClientListener {
     void updateProhibitions(Byte newProhibitions);
 
     void updateError(String error);
+
+    void updateCurrentPlayer(byte newCurrentPlayer);
 }

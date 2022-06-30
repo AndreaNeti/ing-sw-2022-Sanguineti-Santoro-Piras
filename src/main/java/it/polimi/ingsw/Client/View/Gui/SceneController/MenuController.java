@@ -175,6 +175,11 @@ public class MenuController implements SceneController {
     }
 
     @Override
+    public void updateCurrentPlayer(byte newCurrentPlayer) {
+
+    }
+
+    @Override
     public void updateCardPlayed(AssistantCard playedCard) {
 
     }

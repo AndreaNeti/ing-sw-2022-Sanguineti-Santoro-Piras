@@ -35,7 +35,8 @@
     -fx-font-weight: bold;
     -fx-font-size: 15;
     -fx-border-color: #333;
-    -fx-background-color: rgba(0, 0, 0, 0.6);
+    -fx-background-color: rgba(255, 255, 255, 0.8);
+    -fx-text-fill: black;
     -fx-border-radius: 0 0 0 5;
     -fx-background-radius: 0 0 0 5;
 }
@@ -52,7 +53,9 @@
     -fx-background-radius: 5 5 0 0;
     -fx-padding: 5;
 }
-
+.currentPlayer .nickname{
+    -fx-background-color: rgba(255, 0, 0, 0.8);
+}
 .board .coins .label {
     -fx-text-fill: white;
     -fx-font-weight: bold;

@@ -94,6 +94,7 @@ public class GameClient extends GameClientListened implements GameClientView {
      * @param currentPlayer of type {@code Byte} - index of the new current player.
      */
     public void setCurrentPlayer(Byte currentPlayer) {
+        notifyCurrentPlayer(currentPlayer);
         this.currentPlayer = currentPlayer;
     }
 
