@@ -13,7 +13,6 @@ import java.util.List;
  * There are a total of 12 client classes that implement this interface.
  */
 public interface CharacterCardClient extends CharacterCardDataInterface {
-    //TODO: add toString as function to override to avoid writing docs for all subclasses.
 
     /**
      * Method getDescription returns the description of the effect of the card.
