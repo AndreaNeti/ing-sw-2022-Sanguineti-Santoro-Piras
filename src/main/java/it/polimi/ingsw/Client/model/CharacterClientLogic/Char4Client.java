@@ -1,8 +1,9 @@
-package it.polimi.ingsw.Client.model;
+package it.polimi.ingsw.Client.model.CharacterClientLogic;
 
 import it.polimi.ingsw.Client.View.Cli.ViewForCharacterCli;
 import it.polimi.ingsw.Client.View.Gui.ViewGUI;
-import it.polimi.ingsw.Server.model.Char2;
+import it.polimi.ingsw.Client.model.CharacterCardClient;
+import it.polimi.ingsw.Server.model.CharacterServerLogic.Char4;
 import it.polimi.ingsw.Server.model.CharacterCardDataInterface;
 import it.polimi.ingsw.exceptions.clientExceptions.SkipCommandException;
 import javafx.event.EventHandler;
@@ -13,35 +14,33 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Char2Client class represents the character card on the client side and corresponds to the server class {@link Char2}.
+ * Char4Client class represents the character card on the client side and corresponds to the server class {@link Char4}.
  */
-public class Char2Client implements CharacterCardClient {
+public class Char4Client implements CharacterClientLogicInterface {
     private final List<Integer> inputs;
 
-    private CharacterCardDataInterface data;
-
     /**
-     * Constructor Char2Client creates a new instance of Char2Client.
+     * Constructor Char4Client creates a new instance of Char4Client.
      */
-    public Char2Client(CharacterCardDataInterface data) {
-        this.data = data;
+    public Char4Client() {
         inputs = new ArrayList<>();
     }
 
     @Override
     public String getDescription() {
-        return "Choose an Island and resolve the Island as if Mother Nature had ended her movement there. Mother Nature will still move and the Island where she ends her movement will also be resolved.";
+        return "Place a No Entry tile on an Island of your choice. The first time Mother Nature ends her movement there, put the No Entry tile back onto this card DO NOT calculate influence on that Island, or place any Towers.";
     }
 
     @Override
     public void setNextInput(ViewForCharacterCli view) throws SkipCommandException {
-        inputs.add(view.getIslandDestination("Select the island where you want to calculate influence", false));
+        inputs.add(view.getIslandDestination("Select the island where you want to put a prohibition", false));
     }
 
     @Override
     public void setHandler(ViewGUI viewGUI) {
-        if (inputs.isEmpty())
+        if (inputs.isEmpty()) {
             viewGUI.enableIslands(setInput(viewGUI));
+        }
     }
 
     /**
@@ -56,6 +55,7 @@ public class Char2Client implements CharacterCardClient {
             Node clicked = (Node) mouseEvent.getSource();
             int relativeId = (int) clicked.getProperties().get("relativeId");
             inputs.add(relativeId);
+            System.out.println("input for grandma :" + inputs);
             viewGUI.repeatPhase();
         };
     }
@@ -63,11 +63,6 @@ public class Char2Client implements CharacterCardClient {
     @Override
     public boolean canPlay() {
         return inputs.size() == 1;
-    }
-
-    @Override
-    public void setData(CharacterCardDataInterface data) {
-        this.data = data;
     }
 
     @Override
@@ -87,31 +82,6 @@ public class Char2Client implements CharacterCardClient {
 
     @Override
     public String toString() {
-        return "Herald";
-    }
-
-    @Override
-    public byte getCost() {
-        return data.getCost();
-    }
-
-    @Override
-    public byte getCharId() {
-        return data.getCharId();
-    }
-
-    @Override
-    public boolean isUsed() {
-        return data.isUsed();
-    }
-
-    @Override
-    public boolean hasStudents() {
-        return data.hasStudents();
-    }
-
-    @Override
-    public void setUsed() {
-        data.setUsed();
+        return "Grandma weeds";
     }
 }

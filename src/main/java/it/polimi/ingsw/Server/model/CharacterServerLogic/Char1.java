@@ -1,4 +1,7 @@
-package it.polimi.ingsw.Server.model;
+package it.polimi.ingsw.Server.model.CharacterServerLogic;
+
+import it.polimi.ingsw.Server.model.CharacterServerLogicInterface;
+import it.polimi.ingsw.Server.model.GameInterfaceForCharacter;
 
 /**
  * Char1 class represents the <b>"Farmer"</b> character card. <br>
@@ -6,7 +9,7 @@ package it.polimi.ingsw.Server.model;
  * same number of Students as the player who currently controls them. <br>
  * <b>Inputs required</b>: None.
  */
-public class Char1 implements CharacterCardLogicInterface {
+public class Char1 implements CharacterServerLogicInterface {
 
     /**
      * Method play sets the equalProfessorCalculation boolean to true in the game.

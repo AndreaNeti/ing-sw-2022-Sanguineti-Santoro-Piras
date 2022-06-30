@@ -1,4 +1,7 @@
-package it.polimi.ingsw.Server.model;
+package it.polimi.ingsw.Server.model.CharacterServerLogic;
+
+import it.polimi.ingsw.Server.model.CharacterServerLogicInterface;
+import it.polimi.ingsw.Server.model.GameInterfaceForCharacter;
 
 /**
  * Char3 class represents the <b>"Magic postman"</b> character card. <br>
@@ -6,7 +9,7 @@ package it.polimi.ingsw.Server.model;
  * Mother Nature will still move and the Island where she ends her movement will also be resolved.<br>
  * <b>Inputs required</b>: None.
  */
-public class Char3 implements CharacterCardLogicInterface {
+public class Char3 implements CharacterServerLogicInterface {
 
     /**
      * Method play sets the extraSteps boolean to true in the game.

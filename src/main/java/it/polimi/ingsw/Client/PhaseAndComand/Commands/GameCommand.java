@@ -467,6 +467,7 @@ public enum GameCommand {
         @Override
         public EventHandler<MouseEvent> getGUIHandler(ViewGUI viewGUI) {
             return mouseEvent -> {
+                GuiFX.getActiveSceneController().disableEverything();
                 Node clicked = (Node) mouseEvent.getSource();
                 int id = Integer.parseInt(clicked.getId());
                 viewGUI.sendToServer(new MoveFromCloud(id));

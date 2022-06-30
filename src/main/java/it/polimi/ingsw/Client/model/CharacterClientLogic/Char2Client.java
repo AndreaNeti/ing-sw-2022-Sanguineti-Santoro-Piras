@@ -1,10 +1,10 @@
-package it.polimi.ingsw.Client.model;
+package it.polimi.ingsw.Client.model.CharacterClientLogic;
 
 import it.polimi.ingsw.Client.View.Cli.ViewForCharacterCli;
 import it.polimi.ingsw.Client.View.Gui.ViewGUI;
-import it.polimi.ingsw.Server.model.Char11;
+import it.polimi.ingsw.Client.model.CharacterCardClient;
+import it.polimi.ingsw.Server.model.CharacterServerLogic.Char2;
 import it.polimi.ingsw.Server.model.CharacterCardDataInterface;
-import it.polimi.ingsw.Util.Color;
 import it.polimi.ingsw.exceptions.clientExceptions.SkipCommandException;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
@@ -14,37 +14,32 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Char11Client class represents the character card on the client side and corresponds to the server class {@link Char11}.
+ * Char2Client class represents the character card on the client side and corresponds to the server class {@link Char2}.
  */
-public class Char11Client implements CharacterCardClient {
+public class Char2Client implements CharacterClientLogicInterface {
     private final List<Integer> inputs;
 
-    private CharacterCardDataInterface data;
-
     /**
-     * Constructor Char11Client creates a new instance of Char11Client.
+     * Constructor Char2Client creates a new instance of Char2Client.
      */
-    public Char11Client(CharacterCardDataInterface data) {
-        this.data = data;
+    public Char2Client() {
         inputs = new ArrayList<>();
     }
 
     @Override
     public String getDescription() {
-        return "Choose a type of Student every player (including yourself) must return 3 Students of that type from their Dining Room to the bag. If any player has fewer than 3 Students of that type, return as many Students as they have.";
+        return "Choose an Island and resolve the Island as if Mother Nature had ended her movement there. Mother Nature will still move and the Island where she ends her movement will also be resolved.";
     }
 
     @Override
     public void setNextInput(ViewForCharacterCli view) throws SkipCommandException {
-        System.out.println("Select the color and everyone will put three students of that color from lunch hall to bag");
-        inputs.add(view.getColorInput(false).ordinal());
+        inputs.add(view.getIslandDestination("Select the island where you want to calculate influence", false));
     }
 
     @Override
     public void setHandler(ViewGUI viewGUI) {
-        if (inputs.isEmpty()) {
-            viewGUI.enableColorBox(setInput(viewGUI));
-        }
+        if (inputs.isEmpty())
+            viewGUI.enableIslands(setInput(viewGUI));
     }
 
     /**
@@ -57,7 +52,8 @@ public class Char11Client implements CharacterCardClient {
     private EventHandler<MouseEvent> setInput(ViewGUI viewGUI) {
         return mouseEvent -> {
             Node clicked = (Node) mouseEvent.getSource();
-            inputs.add(((Color) clicked.getProperties().get("color")).ordinal());
+            int relativeId = (int) clicked.getProperties().get("relativeId");
+            inputs.add(relativeId);
             viewGUI.repeatPhase();
         };
     }
@@ -78,43 +74,13 @@ public class Char11Client implements CharacterCardClient {
     }
 
     @Override
-    public String toString() {
-        return "Thief";
-    }
-
-    @Override
     public List<Integer> getInputs() {
         return inputs;
     }
 
     @Override
-    public byte getCost() {
-        return data.getCost();
+    public String toString() {
+        return "Herald";
     }
 
-    @Override
-    public byte getCharId() {
-        return data.getCharId();
-    }
-
-    @Override
-    public boolean isUsed() {
-        return data.isUsed();
-    }
-
-    @Override
-    public boolean hasStudents() {
-        return data.hasStudents();
-    }
-
-    @Override
-    public void setUsed() {
-        data.setUsed();
-    }
-
-    @Override
-    public void setData(CharacterCardDataInterface data) {
-        this.data = data;
-    }
 }
-

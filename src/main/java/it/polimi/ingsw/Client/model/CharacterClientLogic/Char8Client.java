@@ -1,8 +1,9 @@
-package it.polimi.ingsw.Client.model;
+package it.polimi.ingsw.Client.model.CharacterClientLogic;
 
 import it.polimi.ingsw.Client.View.Cli.ViewForCharacterCli;
 import it.polimi.ingsw.Client.View.Gui.ViewGUI;
-import it.polimi.ingsw.Server.model.Char6;
+import it.polimi.ingsw.Client.model.CharacterCardClient;
+import it.polimi.ingsw.Server.model.CharacterServerLogic.Char8;
 import it.polimi.ingsw.Server.model.CharacterCardDataInterface;
 import it.polimi.ingsw.Util.Color;
 import it.polimi.ingsw.exceptions.clientExceptions.SkipCommandException;
@@ -14,41 +15,36 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Char6Client class represents the character card on the client side and corresponds to the server class {@link Char6}.
+ * Char8Client class represents the character card on the client side and corresponds to the server class {@link Char8}.
  */
-public class Char6Client extends CharacterCardClientWithStudents {
+public class Char8Client implements CharacterClientLogicInterface {
     private final List<Integer> inputs;
 
-    private CharacterCardDataInterface data;
 
     /**
-     * Constructor Char6Client creates a new instance of Char6Client.
+     * Constructor Char8Client creates a new instance of Char8Client.
      */
-    public Char6Client(CharacterCardDataInterface data) {
-        super(-11);
-        this.data = data;
+    public Char8Client() {
         inputs = new ArrayList<>();
     }
 
     @Override
     public String getDescription() {
-        return "You may take up to 3 Students from this card and replace them with the same number of Students from your Entrance.";
+        return "Choose a color of Student: during the influence calculation this turn, that color adds no influence.";
     }
+
 
     @Override
     public void setNextInput(ViewForCharacterCli view) throws SkipCommandException {
-        System.out.println("Select the color of the student from this card");
-        inputs.add(view.getColorInput(false).ordinal());
-        System.out.println("Select the color of the student from your entrance");
+        System.out.println("Select the color you want to ignore while calculating the influence");
         inputs.add(view.getColorInput(false).ordinal());
     }
 
     @Override
     public void setHandler(ViewGUI viewGUI) {
-        if (inputs.size() % 2 == 0 && !isFull())
-            viewGUI.enableStudentsOnCharacter(getId(), setInput(viewGUI));
-        else if (inputs.size() % 2 == 1 && !isFull())
-            viewGUI.enableEntrance(setInput(viewGUI));
+        if (inputs.isEmpty()) {
+            viewGUI.enableColorBox(setInput(viewGUI));
+        }
     }
 
     /**
@@ -62,20 +58,18 @@ public class Char6Client extends CharacterCardClientWithStudents {
         return mouseEvent -> {
             Node clicked = (Node) mouseEvent.getSource();
             inputs.add(((Color) clicked.getProperties().get("color")).ordinal());
-            System.out.println("input for jester :" + inputs);
             viewGUI.repeatPhase();
         };
     }
 
     @Override
     public boolean canPlay() {
-        return inputs.size() % 2 == 0 && inputs.size() > 0 && inputs.size() <= 6;
+        return inputs.size() == 1;
     }
-
 
     @Override
     public boolean isFull() {
-        return inputs.size() == 6;
+        return inputs.size() == 1;
     }
 
     @Override
@@ -90,36 +84,7 @@ public class Char6Client extends CharacterCardClientWithStudents {
 
     @Override
     public String toString() {
-        return "Jester";
+        return "Mushroom man";
     }
 
-    @Override
-    public byte getCost() {
-        return data.getCost();
-    }
-
-    @Override
-    public byte getCharId() {
-        return data.getCharId();
-    }
-
-    @Override
-    public boolean isUsed() {
-        return data.isUsed();
-    }
-
-    @Override
-    public boolean hasStudents() {
-        return data.hasStudents();
-    }
-
-    @Override
-    public void setUsed() {
-        data.setUsed();
-    }
-
-    @Override
-    public void setData(CharacterCardDataInterface data) {
-        this.data = data;
-    }
 }

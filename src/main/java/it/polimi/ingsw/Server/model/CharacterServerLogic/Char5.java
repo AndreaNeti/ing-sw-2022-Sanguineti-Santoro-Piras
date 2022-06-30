@@ -1,11 +1,14 @@
-package it.polimi.ingsw.Server.model;
+package it.polimi.ingsw.Server.model.CharacterServerLogic;
+
+import it.polimi.ingsw.Server.model.CharacterServerLogicInterface;
+import it.polimi.ingsw.Server.model.GameInterfaceForCharacter;
 
 /**
  * Char5 class represents the <b>"Centaur"</b> character card. <br>
  * <b>Effect</b>: When resolving a Conquering on an Island, Towers do not count towards influence. <br>
  * <b>Inputs required</b>: None.
  */
-public class Char5 implements CharacterCardLogicInterface {
+public class Char5 implements CharacterServerLogicInterface {
 
     /**
      * Method play sets the towerInfluence boolean to false in the game.

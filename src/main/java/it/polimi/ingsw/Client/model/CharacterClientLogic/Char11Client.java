@@ -1,9 +1,11 @@
-package it.polimi.ingsw.Client.model;
+package it.polimi.ingsw.Client.model.CharacterClientLogic;
 
 import it.polimi.ingsw.Client.View.Cli.ViewForCharacterCli;
 import it.polimi.ingsw.Client.View.Gui.ViewGUI;
-import it.polimi.ingsw.Server.model.Char4;
+import it.polimi.ingsw.Client.model.CharacterCardClient;
+import it.polimi.ingsw.Server.model.CharacterServerLogic.Char11;
 import it.polimi.ingsw.Server.model.CharacterCardDataInterface;
+import it.polimi.ingsw.Util.Color;
 import it.polimi.ingsw.exceptions.clientExceptions.SkipCommandException;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
@@ -13,35 +15,35 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Char4Client class represents the character card on the client side and corresponds to the server class {@link Char4}.
+ * Char11Client class represents the character card on the client side and corresponds to the server class {@link Char11}.
  */
-public class Char4Client implements CharacterCardClient {
+public class Char11Client implements CharacterClientLogicInterface {
     private final List<Integer> inputs;
 
-    private CharacterCardDataInterface data;
 
     /**
-     * Constructor Char4Client creates a new instance of Char4Client.
+     * Constructor Char11Client creates a new instance of Char11Client.
      */
-    public Char4Client(CharacterCardDataInterface data) {
-        this.data = data;
+    public Char11Client() {
+
         inputs = new ArrayList<>();
     }
 
     @Override
     public String getDescription() {
-        return "Place a No Entry tile on an Island of your choice. The first time Mother Nature ends her movement there, put the No Entry tile back onto this card DO NOT calculate influence on that Island, or place any Towers.";
+        return "Choose a type of Student every player (including yourself) must return 3 Students of that type from their Dining Room to the bag. If any player has fewer than 3 Students of that type, return as many Students as they have.";
     }
 
     @Override
     public void setNextInput(ViewForCharacterCli view) throws SkipCommandException {
-        inputs.add(view.getIslandDestination("Select the island where you want to put a prohibition", false));
+        System.out.println("Select the color and everyone will put three students of that color from lunch hall to bag");
+        inputs.add(view.getColorInput(false).ordinal());
     }
 
     @Override
     public void setHandler(ViewGUI viewGUI) {
         if (inputs.isEmpty()) {
-            viewGUI.enableIslands(setInput(viewGUI));
+            viewGUI.enableColorBox(setInput(viewGUI));
         }
     }
 
@@ -55,9 +57,7 @@ public class Char4Client implements CharacterCardClient {
     private EventHandler<MouseEvent> setInput(ViewGUI viewGUI) {
         return mouseEvent -> {
             Node clicked = (Node) mouseEvent.getSource();
-            int relativeId = (int) clicked.getProperties().get("relativeId");
-            inputs.add(relativeId);
-            System.out.println("input for grandma :" + inputs);
+            inputs.add(((Color) clicked.getProperties().get("color")).ordinal());
             viewGUI.repeatPhase();
         };
     }
@@ -78,42 +78,14 @@ public class Char4Client implements CharacterCardClient {
     }
 
     @Override
+    public String toString() {
+        return "Thief";
+    }
+
+    @Override
     public List<Integer> getInputs() {
         return inputs;
     }
 
-    @Override
-    public String toString() {
-        return "Grandma weeds";
-    }
-
-    @Override
-    public byte getCost() {
-        return data.getCost();
-    }
-
-    @Override
-    public byte getCharId() {
-        return data.getCharId();
-    }
-
-    @Override
-    public boolean isUsed() {
-        return data.isUsed();
-    }
-
-    @Override
-    public boolean hasStudents() {
-        return data.hasStudents();
-    }
-
-    @Override
-    public void setUsed() {
-        data.setUsed();
-    }
-
-    @Override
-    public void setData(CharacterCardDataInterface data) {
-        this.data = data;
-    }
 }
+

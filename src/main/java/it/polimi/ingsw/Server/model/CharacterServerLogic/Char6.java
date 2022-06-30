@@ -1,6 +1,8 @@
-package it.polimi.ingsw.Server.model;
+package it.polimi.ingsw.Server.model.CharacterServerLogic;
 
+import it.polimi.ingsw.Server.model.CharacterServerLogicInterface;
 import it.polimi.ingsw.Server.model.GameComponents.GameComponent;
+import it.polimi.ingsw.Server.model.GameInterfaceForCharacter;
 import it.polimi.ingsw.Util.Color;
 import it.polimi.ingsw.exceptions.serverExceptions.GameException;
 import it.polimi.ingsw.exceptions.serverExceptions.NotAllowedException;
@@ -15,7 +17,7 @@ import java.util.List;
  * <b>Inputs required</b>: 1 student color from this card and 1 student color from the entrance hall, up to 3 pairs. <br>
  * This is one of the 3 character cards that contain students and therefore extends the GameComponent class.
  */
-public class Char6 extends GameComponent implements CharacterCardLogicInterface {
+public class Char6 extends GameComponent implements CharacterServerLogicInterface {
 
     /**
      * Constructor Char6 creates a new instance of Char6.

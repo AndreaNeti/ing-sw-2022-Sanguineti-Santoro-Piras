@@ -1,5 +1,6 @@
 package it.polimi.ingsw.Server.model;
 
+import it.polimi.ingsw.Server.model.CharacterServerLogic.*;
 import it.polimi.ingsw.Server.model.GameComponents.GameComponent;
 import it.polimi.ingsw.Server.model.GameComponents.Island;
 import it.polimi.ingsw.Util.*;
@@ -59,9 +60,9 @@ public class ExpertGame extends NormalGame implements GameInterfaceForCharacter,
 
         CharacterCardData[] characterConstants = (CharacterCardData[]) JsonReader.getObjFromJson("characterConstants", CharacterCardData[].class);
 
-        //characters.add(factoryCharacter((byte) 2));
-        //characters.add(factoryCharacter((byte) 3));
-        //characters.add(factoryCharacter((byte) 4));
+        /*characters.add(factoryCharacter((byte) 0, this, characterConstants));
+        characters.add(factoryCharacter((byte) 6, this, characterConstants));
+        characters.add(factoryCharacter((byte) 10, this, characterConstants));*/
         while (i < matchConstants.numOfCharacterCards()) {
             while (selectedCharacters.contains(characterIndex)) {
                 characterIndex = (byte) rand.nextInt(12);

@@ -1,8 +1,9 @@
-package it.polimi.ingsw.Client.model;
+package it.polimi.ingsw.Client.model.CharacterClientLogic;
 
 import it.polimi.ingsw.Client.View.Cli.ViewForCharacterCli;
 import it.polimi.ingsw.Client.View.Gui.ViewGUI;
-import it.polimi.ingsw.Server.model.Char7;
+import it.polimi.ingsw.Client.model.CharacterCardClient;
+import it.polimi.ingsw.Server.model.CharacterServerLogic.Char7;
 import it.polimi.ingsw.Server.model.CharacterCardDataInterface;
 import it.polimi.ingsw.exceptions.clientExceptions.SkipCommandException;
 
@@ -11,11 +12,10 @@ import java.util.List;
 /**
  * Char7Client class represents the character card on the client side and corresponds to the server class {@link Char7}.
  */
-public class Char7Client implements CharacterCardClient {
-    private CharacterCardDataInterface data;
+public class Char7Client implements CharacterClientLogicInterface {
 
-    public Char7Client(CharacterCardDataInterface data) {
-        this.data = data;
+    public Char7Client() {
+
     }
 
     @Override
@@ -58,33 +58,4 @@ public class Char7Client implements CharacterCardClient {
         return "Knight";
     }
 
-    @Override
-    public byte getCost() {
-        return data.getCost();
-    }
-
-    @Override
-    public byte getCharId() {
-        return data.getCharId();
-    }
-
-    @Override
-    public boolean isUsed() {
-        return data.isUsed();
-    }
-
-    @Override
-    public boolean hasStudents() {
-        return data.hasStudents();
-    }
-
-    @Override
-    public void setUsed() {
-        data.setUsed();
-    }
-
-    @Override
-    public void setData(CharacterCardDataInterface data) {
-        this.data = data;
-    }
 }

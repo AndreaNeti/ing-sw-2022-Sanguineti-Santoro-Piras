@@ -1,6 +1,8 @@
-package it.polimi.ingsw.Server.model;
+package it.polimi.ingsw.Server.model.CharacterServerLogic;
 
+import it.polimi.ingsw.Server.model.CharacterServerLogicInterface;
 import it.polimi.ingsw.Server.model.GameComponents.Island;
+import it.polimi.ingsw.Server.model.GameInterfaceForCharacter;
 import it.polimi.ingsw.Util.MatchType;
 import it.polimi.ingsw.exceptions.serverExceptions.EndGameException;
 import it.polimi.ingsw.exceptions.serverExceptions.GameException;
@@ -12,7 +14,7 @@ import it.polimi.ingsw.exceptions.serverExceptions.NotAllowedException;
  * Mother Nature will still move and the Island where she ends her movement will also be resolved.<br>
  * <b>Inputs required</b>: Island ID.
  */
-public class Char2 implements CharacterCardLogicInterface {
+public class Char2 implements CharacterServerLogicInterface {
 
     /**
      * Method play recalculates the influence on the selected island.

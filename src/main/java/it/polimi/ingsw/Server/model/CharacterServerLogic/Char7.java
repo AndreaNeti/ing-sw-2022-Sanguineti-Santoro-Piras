@@ -1,11 +1,14 @@
-package it.polimi.ingsw.Server.model;
+package it.polimi.ingsw.Server.model.CharacterServerLogic;
+
+import it.polimi.ingsw.Server.model.CharacterServerLogicInterface;
+import it.polimi.ingsw.Server.model.GameInterfaceForCharacter;
 
 /**
  * Char7 class represents the <b>"Knight"</b> character card. <br>
  * <b>Effect</b>: During the influence calculation this turn, you count as having 2 more influence. <br>
  * <b>Inputs required</b>: None.
  */
-public class Char7 implements CharacterCardLogicInterface {
+public class Char7 implements CharacterServerLogicInterface {
 
     /**
      * Method play sets the extraInfluence boolean to true in the game.

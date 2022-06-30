@@ -88,15 +88,16 @@ public class BoardController implements SceneController {
                     singleChar.setId("grandmaWeeds");
                 }
                 if (character.hasStudents()) {
-                    CharacterCardClientWithStudents character1 = (CharacterCardClientWithStudents) character;
+                    GameComponentClient gc = model.getComponentOfCharacter(character.getCharId());
+
                     AnchorPane paneStudent = (AnchorPane) singleChar.getChildren().get(1);
                     paneStudent.setVisible(true);
-                    singleChar.setId(String.valueOf(character1.getId()));
+                    singleChar.setId(String.valueOf(gc.getId()));
                     //set the properties of the color of the student
                     for (Color color : Color.values()) {
                         ((AnchorPane) paneStudent.getChildren().get(color.ordinal())).getChildren().get(0).getProperties().put("color", color);
                     }
-                    updateGameComponent(character1);
+                    updateGameComponent(gc);
                 }
 //                //adding choose command button and on click showing the description of the character
 //                Button b = (Button) singleChar.getChildren().get(2);

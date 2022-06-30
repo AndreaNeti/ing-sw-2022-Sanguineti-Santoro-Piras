@@ -1,5 +1,7 @@
-package it.polimi.ingsw.Server.model;
+package it.polimi.ingsw.Server.model.CharacterServerLogic;
 
+import it.polimi.ingsw.Server.model.CharacterServerLogicInterface;
+import it.polimi.ingsw.Server.model.GameInterfaceForCharacter;
 import it.polimi.ingsw.Util.Color;
 import it.polimi.ingsw.exceptions.serverExceptions.NotAllowedException;
 
@@ -9,7 +11,7 @@ import it.polimi.ingsw.exceptions.serverExceptions.NotAllowedException;
  * calculation this turn, that color adds no influence. <br>
  * <b>Inputs required</b>: Student color.
  */
-public class Char8 implements CharacterCardLogicInterface {
+public class Char8 implements CharacterServerLogicInterface {
 
     /**
      * Method play sets the selected color as ignoredColor in the game.

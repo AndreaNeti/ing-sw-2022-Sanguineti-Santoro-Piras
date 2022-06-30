@@ -1,6 +1,7 @@
 package it.polimi.ingsw.Client.model;
 
 import it.polimi.ingsw.Client.View.GameClientListener;
+import it.polimi.ingsw.Server.model.GameComponents.GameComponent;
 import it.polimi.ingsw.Util.Color;
 import it.polimi.ingsw.Util.MatchConstants;
 import it.polimi.ingsw.Util.MatchType;
@@ -157,4 +158,10 @@ public interface GameClientView {
      * @param listener of type {@link GameClientListener} - instance of the client listener to add.
      */
     void addListener(GameClientListener listener);
+
+    /**
+     * Method return the gameComponent associated with the character card
+     */
+    GameComponentClient getComponentOfCharacter(Byte id);
+
 }

@@ -1,5 +1,7 @@
-package it.polimi.ingsw.Server.model;
+package it.polimi.ingsw.Server.model.CharacterServerLogic;
 
+import it.polimi.ingsw.Server.model.CharacterServerLogicInterface;
+import it.polimi.ingsw.Server.model.GameInterfaceForCharacter;
 import it.polimi.ingsw.Util.Color;
 import it.polimi.ingsw.exceptions.serverExceptions.GameException;
 import it.polimi.ingsw.exceptions.serverExceptions.NotAllowedException;
@@ -12,7 +14,7 @@ import java.util.List;
  * <b>Effect</b>:You may exchange up to 2 Students between your Dining and your Entrance Room. <br>
  * <b>Inputs required</b>: 1 student color from the lunch hall and 1 student color from the entrance hall, up to 2 pairs.
  */
-public class Char9 implements CharacterCardLogicInterface {
+public class Char9 implements CharacterServerLogicInterface {
 
 
     /**

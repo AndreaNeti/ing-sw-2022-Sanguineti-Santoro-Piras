@@ -4,11 +4,11 @@ import it.polimi.ingsw.exceptions.serverExceptions.EndGameException;
 import it.polimi.ingsw.exceptions.serverExceptions.GameException;
 
 /**
- * CharacterCardLogicInterface interface represents the character cards logic in "Eriantys", available in the expert game mode. <br>
+ * CharacterServerLogicInterface interface represents the character cards logic in "Eriantys", available in the expert game mode. <br>
  * There are a total of 12 character cards classes that implement this interface, each one with its own effect on the game and
  * with its own unique ID.
  */
-public interface CharacterCardLogicInterface {
+public interface CharacterServerLogicInterface {
     /**
      * Method play applies the card's effect to the game, using the CharacterCardGame interface's functions.
      *

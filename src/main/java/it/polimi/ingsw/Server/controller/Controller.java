@@ -303,7 +303,7 @@ public class Controller {
             handleError(e1);
         }
         // TODO uncomment this
-        // characterCardPlayed = true;
+        characterCardPlayed = true;
         repeatPhase();
     }
 

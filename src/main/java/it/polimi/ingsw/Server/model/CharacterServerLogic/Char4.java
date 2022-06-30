@@ -1,6 +1,8 @@
-package it.polimi.ingsw.Server.model;
+package it.polimi.ingsw.Server.model.CharacterServerLogic;
 
+import it.polimi.ingsw.Server.model.CharacterServerLogicInterface;
 import it.polimi.ingsw.Server.model.GameComponents.Island;
+import it.polimi.ingsw.Server.model.GameInterfaceForCharacter;
 import it.polimi.ingsw.Util.MatchType;
 import it.polimi.ingsw.exceptions.serverExceptions.GameException;
 import it.polimi.ingsw.exceptions.serverExceptions.NotAllowedException;
@@ -12,7 +14,7 @@ import it.polimi.ingsw.exceptions.serverExceptions.NotAllowedException;
  * DO NOT calculate influence on that Island, or place any Towers. <br>
  * <b>Inputs required</b>: Island ID.
  */
-public class Char4 implements CharacterCardLogicInterface {
+public class Char4 implements CharacterServerLogicInterface {
 
     /**
      * Method play adds a prohibition to the selected island

@@ -1,6 +1,7 @@
 package it.polimi.ingsw.Client.model;
 
 import it.polimi.ingsw.Client.GameClientListened;
+import it.polimi.ingsw.Client.model.CharacterClientLogic.*;
 import it.polimi.ingsw.Server.model.CharacterCardDataInterface;
 import it.polimi.ingsw.Server.model.ExpertGame;
 import it.polimi.ingsw.Server.model.GameComponents.GameComponent;
@@ -31,9 +32,9 @@ public class GameClient extends GameClientListened implements GameClientView {
     private final MatchType matchType;
     //players are in the same order of wizard.ordinal
     private final List<TeamClient> teams;
-    private Lock lockForCharacter;
+    private final Lock lockForCharacter;
     private final List<CharacterCardClient> characters;
-    private final List<CharacterCardClientWithStudents> charactersWithStudents;
+    private final Map<Byte, GameComponentClient> charactersWithStudents;
     private CharacterCardClient currentCharacterCard;
     private final Map<Byte, Integer> coinsPlayers;
     private byte prohibitionsLeft;
@@ -66,11 +67,11 @@ public class GameClient extends GameClientListened implements GameClientView {
         this.teams = teamsClient;
         lockForCharacter = new ReentrantLock();
         this.characters = new ArrayList<>();
-        this.charactersWithStudents = new ArrayList<>();
         this.coinsPlayers = new HashMap<>();
         for (byte i = 0; i < matchType.nPlayers(); i++) {
             coinsPlayers.put(i, matchConstants.initialPlayerCoins());
         }
+        this.charactersWithStudents = new HashMap<>();
     }
 
 
@@ -162,12 +163,9 @@ public class GameClient extends GameClientListened implements GameClientView {
             }
         } else if (idGameComponent <= -10) {
             System.out.println(idGameComponent);
-            for (CharacterCardClientWithStudents ch : charactersWithStudents) {
-                if (ch.getId() == idGameComponent) {
-                    ch.modifyGameComponent(gameComponent);
-                    notifyGameComponent(ch);
-                }
-            }
+            GameComponentClient gc = charactersWithStudents.get(idGameComponent);
+            gc.modifyGameComponent(gameComponent);
+            notifyGameComponent(gc);
         } else {
             GameComponentClient cloud = clouds.get(-idGameComponent - 1);
             cloud.modifyGameComponent(gameComponent);
@@ -199,8 +197,7 @@ public class GameClient extends GameClientListened implements GameClientView {
      * @param deletedIsland of {@code DeletedIsland} is the record received from the game delta
      */
     public void removeIslands(DeletedIsland deletedIsland) {
-        for (Byte idIsland : deletedIsland.deletedIsland()
-        ) {
+        for (Byte idIsland : deletedIsland.deletedIsland()) {
             IslandClient islandToRemove = getIslandById(idIsland);
             if (islandToRemove == null) {
                 System.err.println("Error in passing parameter, island not found");
@@ -352,31 +349,12 @@ public class GameClient extends GameClientListened implements GameClientView {
     public List<CharacterCardClient> getCharacters() {
         if (characters == null || lockForCharacter == null) return null;
         lockForCharacter.lock();
-        List<CharacterCardClient> characterCardClients = Stream.concat(characters.stream(), charactersWithStudents.stream()).collect(Collectors.toList());
+        //List<CharacterCardClient> characterCardClients = Stream.concat(characters.stream(), charactersWithStudents.stream()).collect(Collectors.toList());
+
         lockForCharacter.unlock();
-        return characterCardClients;
+        return characters;
     }
 
-    /**
-     * Method setCharacters adds the list of characters received by the server to the client's game, creating a new instance
-     * for each of them.
-     *
-     * @param charactersReceived of type {@code Set}<{@code CharacterCardData}> - list of the character cards to add.
-     */
-    public void setCharacters(Set<CharacterCardDataInterface> charactersReceived) {
-        if (lockForCharacter.tryLock()) try {
-            for (CharacterCardDataInterface c : charactersReceived) {
-                if (c.hasStudents()) {
-                    charactersWithStudents.add((CharacterCardClientWithStudents) factoryCharacter(c));
-                } else {
-                    this.characters.add(factoryCharacter(c));
-                }
-
-            }
-        } finally {
-            lockForCharacter.unlock();
-        }
-    }
 
     /**
      * Method factoryCharacter creates an instance of one of the 12 possible character cards, based on the index provided.
@@ -385,32 +363,31 @@ public class GameClient extends GameClientListened implements GameClientView {
      * @return {@link CharacterCardClient} - instance of the CharacterCard requested.
      */
     private CharacterCardClient factoryCharacter(CharacterCardDataInterface characterCardData) {
-// TODO reimplement this with new character data interface
         switch (-characterCardData.getCharId() - 10) {
             case 0:
-                return new Char0Client(characterCardData);
+                return new CharacterCardClient(new Char0Client(characterCardData.getCharId()), characterCardData);
             case 1:
-                return new Char1Client(characterCardData);
+                return new CharacterCardClient(new Char1Client(), characterCardData);
             case 2:
-                return new Char2Client(characterCardData);
+                return new CharacterCardClient(new Char2Client(), characterCardData);
             case 3:
-                return new Char3Client(characterCardData);
+                return new CharacterCardClient(new Char3Client(), characterCardData);
             case 4:
-                return new Char4Client(characterCardData);
+                return new CharacterCardClient(new Char4Client(), characterCardData);
             case 5:
-                return new Char5Client(characterCardData);
+                return new CharacterCardClient(new Char5Client(), characterCardData);
             case 6:
-                return new Char6Client(characterCardData);
+                return new CharacterCardClient(new Char6Client(characterCardData.getCharId()), characterCardData);
             case 7:
-                return new Char7Client(characterCardData);
+                return new CharacterCardClient(new Char7Client(), characterCardData);
             case 8:
-                return new Char8Client(characterCardData);
+                return new CharacterCardClient(new Char8Client(), characterCardData);
             case 9:
-                return new Char9Client(characterCardData);
+                return new CharacterCardClient(new Char9Client(), characterCardData);
             case 10:
-                return new Char10Client(characterCardData);
+                return new CharacterCardClient(new Char10Client(characterCardData.getCharId()), characterCardData);
             case 11:
-                return new Char11Client(characterCardData);
+                return new CharacterCardClient(new Char11Client(), characterCardData);
         }
         throw new IllegalArgumentException("Character card " + characterCardData.getCharId() + " doesn't exists");
     }
@@ -464,14 +441,31 @@ public class GameClient extends GameClientListened implements GameClientView {
      * @param updatedCharacter of type {@code CharacterCardDataInterface} - character card to update.
      */
     public void setUpdatedCharacter(CharacterCardDataInterface updatedCharacter) {
+        boolean alreadyPresent = false;
         for (CharacterCardClient c : characters)
-            if (c.getCharId() == updatedCharacter.getCharId())
+            if (c.getCharId() == updatedCharacter.getCharId() && !alreadyPresent) {
                 c.setData(updatedCharacter);
-
-        for (CharacterCardClientWithStudents c : charactersWithStudents)
-            if (c.getCharId() == updatedCharacter.getCharId())
-                c.setData(updatedCharacter);
+                alreadyPresent = true;
+            }
+        if (!alreadyPresent) createCharacters(updatedCharacter);
         notifyCharacter(updatedCharacter.getCharId());
+    }
+
+    /**
+     * Method setCharacters adds the list of characters received by the server to the client's game, creating a new instance
+     * for each of them.
+     *
+     * @param updateCharacter of type {@code CharacterCardData}> - character cards to add.
+     */
+    private void createCharacters(CharacterCardDataInterface updateCharacter) {
+        if (lockForCharacter.tryLock()) try {
+
+            characters.add(factoryCharacter(updateCharacter));
+            if (updateCharacter.hasStudents())
+                charactersWithStudents.put(updateCharacter.getCharId(), new GameComponentClient(updateCharacter.getCharId()));
+        } finally {
+            lockForCharacter.unlock();
+        }
     }
 
     /**
@@ -479,5 +473,13 @@ public class GameClient extends GameClientListened implements GameClientView {
      */
     public void deleteModel() {
         this.removeListeners();
+    }
+
+    /**
+     * Method return the gameComponent associated with the character card
+     */
+    @Override
+    public GameComponentClient getComponentOfCharacter(Byte id) {
+        return charactersWithStudents.get(id);
     }
 }

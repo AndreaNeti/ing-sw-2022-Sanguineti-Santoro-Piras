@@ -1,9 +1,11 @@
-package it.polimi.ingsw.Client.model;
+package it.polimi.ingsw.Client.model.CharacterClientLogic;
 
 import it.polimi.ingsw.Client.View.Cli.ViewForCharacterCli;
 import it.polimi.ingsw.Client.View.Gui.ViewGUI;
-import it.polimi.ingsw.Server.model.Char0;
+import it.polimi.ingsw.Client.model.GameComponentClient;
+import it.polimi.ingsw.Server.model.CharacterServerLogic.Char0;
 import it.polimi.ingsw.Server.model.CharacterCardDataInterface;
+import it.polimi.ingsw.Server.model.GameComponents.GameComponent;
 import it.polimi.ingsw.Util.Color;
 import it.polimi.ingsw.exceptions.clientExceptions.SkipCommandException;
 import javafx.event.EventHandler;
@@ -16,17 +18,15 @@ import java.util.List;
 /**
  * Char0Client class represents the character card on the client side and corresponds to the server class {@link Char0}.
  */
-public class Char0Client extends CharacterCardClientWithStudents {
+public class Char0Client implements CharacterClientLogicInterface {
     private final List<Integer> inputs;
-
-    private CharacterCardDataInterface data;
+    private final Byte id;
 
     /**
      * Constructor Char0Client creates a new instance of Char0Client.
      */
-    public Char0Client(CharacterCardDataInterface data) {
-        super(-10);
-        this.data = data;
+    public Char0Client(Byte id) {
+        this.id = id;
         inputs = new ArrayList<>();
     }
 
@@ -46,7 +46,7 @@ public class Char0Client extends CharacterCardClientWithStudents {
 
         if (inputs.size() == 0) {
             //this card has id -10 (it's a gameComponent)
-            viewGUI.enableStudentsOnCharacter(getId(), setInput(viewGUI));
+            viewGUI.enableStudentsOnCharacter(id, setInput(viewGUI));
         }//else-> it means that color has already been chosen, now I need to set island
         else if (inputs.size() == 1) {
             viewGUI.enableIslands(setInput(viewGUI));
@@ -85,11 +85,6 @@ public class Char0Client extends CharacterCardClientWithStudents {
     }
 
     @Override
-    public void setData(CharacterCardDataInterface data) {
-        this.data = data;
-    }
-
-    @Override
     public boolean isFull() {
         return inputs.size() == 2;
     }
@@ -107,35 +102,5 @@ public class Char0Client extends CharacterCardClientWithStudents {
     @Override
     public List<Integer> getInputs() {
         return inputs;
-    }
-
-    @Override
-    public String getNameOfComponent() {
-        return "CharacterCard";
-    }
-
-    @Override
-    public byte getCost() {
-        return data.getCost();
-    }
-
-    @Override
-    public byte getCharId() {
-        return data.getCharId();
-    }
-
-    @Override
-    public boolean isUsed() {
-        return data.isUsed();
-    }
-
-    @Override
-    public boolean hasStudents() {
-        return data.hasStudents();
-    }
-
-    @Override
-    public void setUsed() {
-        data.setUsed();
     }
 }

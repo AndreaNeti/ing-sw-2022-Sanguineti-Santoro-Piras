@@ -1,8 +1,9 @@
-package it.polimi.ingsw.Client.model;
+package it.polimi.ingsw.Client.model.CharacterClientLogic;
 
 import it.polimi.ingsw.Client.View.Cli.ViewForCharacterCli;
 import it.polimi.ingsw.Client.View.Gui.ViewGUI;
-import it.polimi.ingsw.Server.model.Char1;
+import it.polimi.ingsw.Client.model.CharacterCardClient;
+import it.polimi.ingsw.Server.model.CharacterServerLogic.Char1;
 import it.polimi.ingsw.Server.model.CharacterCardDataInterface;
 import it.polimi.ingsw.exceptions.clientExceptions.SkipCommandException;
 
@@ -11,12 +12,9 @@ import java.util.List;
 /**
  * Char1Client class represents the character card on the client side and corresponds to the server class {@link Char1}.
  */
-public class Char1Client implements CharacterCardClient {
+public class Char1Client implements CharacterClientLogicInterface {
 
-    private CharacterCardDataInterface data;
-
-    public Char1Client(CharacterCardDataInterface data) {
-        this.data = data;
+    public Char1Client() {
     }
 
     @Override
@@ -40,11 +38,6 @@ public class Char1Client implements CharacterCardClient {
     }
 
     @Override
-    public void setData(CharacterCardDataInterface data) {
-        this.data = data;
-    }
-
-    @Override
     public boolean isFull() {
         return true;
     }
@@ -63,28 +56,4 @@ public class Char1Client implements CharacterCardClient {
         return "Farmer";
     }
 
-    @Override
-    public byte getCost() {
-        return data.getCost();
-    }
-
-    @Override
-    public byte getCharId() {
-        return data.getCharId();
-    }
-
-    @Override
-    public boolean isUsed() {
-        return data.isUsed();
-    }
-
-    @Override
-    public boolean hasStudents() {
-        return data.hasStudents();
-    }
-
-    @Override
-    public void setUsed() {
-        data.setUsed();
-    }
 }

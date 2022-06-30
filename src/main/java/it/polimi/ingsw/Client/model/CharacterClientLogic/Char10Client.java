@@ -1,9 +1,9 @@
-package it.polimi.ingsw.Client.model;
+package it.polimi.ingsw.Client.model.CharacterClientLogic;
 
 import it.polimi.ingsw.Client.View.Cli.ViewForCharacterCli;
 import it.polimi.ingsw.Client.View.Gui.ViewGUI;
-import it.polimi.ingsw.Server.model.Char9;
-import it.polimi.ingsw.Server.model.CharacterCardDataInterface;
+import it.polimi.ingsw.Client.model.GameComponentClient;
+import it.polimi.ingsw.Server.model.CharacterServerLogic.Char10;
 import it.polimi.ingsw.Util.Color;
 import it.polimi.ingsw.exceptions.clientExceptions.SkipCommandException;
 import javafx.event.EventHandler;
@@ -14,41 +14,35 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Char9Client class represents the character card on the client side and corresponds to the server class {@link Char9}.
+ * Char10Client class represents the character card on the client side and corresponds to the server class {@link Char10}.
  */
-public class Char9Client implements CharacterCardClient {
+public class Char10Client implements CharacterClientLogicInterface {
     private final List<Integer> inputs;
-
-    private CharacterCardDataInterface data;
+    private final Byte id;
 
     /**
-     * Constructor Char9Client creates a new instance of Char9Client.
+     * Constructor Char10Client creates a new instance of Char10Client.
      */
-    public Char9Client(CharacterCardDataInterface data) {
-        this.data = data;
+    public Char10Client(Byte id) {
+        this.id = id;
         inputs = new ArrayList<>();
     }
 
     @Override
     public String getDescription() {
-        return "You may exchange up to 2 Students between your Dining and your Entrance Room.";
+        return "Take 1 Student from this card and place it in your Dining Room. Then, draw a new Student from the Bag and place it on this card.";
     }
 
     @Override
     public void setNextInput(ViewForCharacterCli view) throws SkipCommandException {
-        System.out.println("Select the color of the student from Lunch Hall");
-        inputs.add(view.getColorInput(false).ordinal());
-        System.out.println("Select the color of the student from your Entrance Hall");
+        System.out.println("Select the color of the student from this card");
         inputs.add(view.getColorInput(false).ordinal());
     }
 
     @Override
     public void setHandler(ViewGUI viewGUI) {
-        if (inputs.size() % 2 == 0 && !isFull()) {
-            viewGUI.enableStudentsLunchHall(setInput(viewGUI));
-        } else if (inputs.size() % 2 == 1 && !isFull()) {
-            viewGUI.enableEntrance(setInput(viewGUI));
-        }
+        if (inputs.isEmpty()) viewGUI.enableStudentsOnCharacter(id, setInput(viewGUI));
+
     }
 
     /**
@@ -60,21 +54,21 @@ public class Char9Client implements CharacterCardClient {
      */
     private EventHandler<MouseEvent> setInput(ViewGUI viewGUI) {
         return mouseEvent -> {
+
             Node clicked = (Node) mouseEvent.getSource();
             inputs.add(((Color) clicked.getProperties().get("color")).ordinal());
-            System.out.println(inputs);
             viewGUI.repeatPhase();
         };
     }
 
     @Override
     public boolean canPlay() {
-        return (inputs.size() == 2 || inputs.size() == 4);
+        return inputs.size() == 1;
     }
 
     @Override
     public boolean isFull() {
-        return inputs.size() == 4;
+        return inputs.size() == 1;
     }
 
     @Override
@@ -89,37 +83,8 @@ public class Char9Client implements CharacterCardClient {
 
     @Override
     public String toString() {
-        return "Minstrel";
+        return "Spoiled princess";
     }
 
-    @Override
-    public byte getCost() {
-        return data.getCost();
-    }
-
-    @Override
-    public byte getCharId() {
-        return data.getCharId();
-    }
-
-    @Override
-    public boolean isUsed() {
-        return data.isUsed();
-    }
-
-    @Override
-    public boolean hasStudents() {
-        return data.hasStudents();
-    }
-
-    @Override
-    public void setUsed() {
-        data.setUsed();
-    }
-
-    @Override
-    public void setData(CharacterCardDataInterface data) {
-        this.data = data;
-    }
 }
 

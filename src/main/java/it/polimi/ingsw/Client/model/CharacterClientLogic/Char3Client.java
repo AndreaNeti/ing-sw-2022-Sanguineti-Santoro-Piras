@@ -1,8 +1,9 @@
-package it.polimi.ingsw.Client.model;
+package it.polimi.ingsw.Client.model.CharacterClientLogic;
 
 import it.polimi.ingsw.Client.View.Cli.ViewForCharacterCli;
 import it.polimi.ingsw.Client.View.Gui.ViewGUI;
-import it.polimi.ingsw.Server.model.Char3;
+import it.polimi.ingsw.Client.model.CharacterCardClient;
+import it.polimi.ingsw.Server.model.CharacterServerLogic.Char3;
 import it.polimi.ingsw.Server.model.CharacterCardDataInterface;
 import it.polimi.ingsw.exceptions.clientExceptions.SkipCommandException;
 
@@ -11,12 +12,8 @@ import java.util.List;
 /**
  * Char3Client class represents the character card on the client side and corresponds to the server class {@link Char3}.
  */
-public class Char3Client implements CharacterCardClient {
-
-    private CharacterCardDataInterface data;
-
-    public Char3Client(CharacterCardDataInterface data) {
-        this.data = data;
+public class Char3Client implements CharacterClientLogicInterface {
+    public Char3Client() {
     }
 
     @Override
@@ -44,7 +41,6 @@ public class Char3Client implements CharacterCardClient {
 
     @Override
     public void resetInput() {
-
     }
 
     @Override
@@ -57,33 +53,4 @@ public class Char3Client implements CharacterCardClient {
         return "Magic postman";
     }
 
-    @Override
-    public byte getCost() {
-        return data.getCost();
-    }
-
-    @Override
-    public byte getCharId() {
-        return data.getCharId();
-    }
-
-    @Override
-    public boolean isUsed() {
-        return data.isUsed();
-    }
-
-    @Override
-    public boolean hasStudents() {
-        return data.hasStudents();
-    }
-
-    @Override
-    public void setUsed() {
-        data.setUsed();
-    }
-
-    @Override
-    public void setData(CharacterCardDataInterface data) {
-        this.data = data;
-    }
 }

@@ -5,11 +5,11 @@ import it.polimi.ingsw.exceptions.serverExceptions.GameException;
 
 import java.util.Objects;
 
-public class CharacterCard implements CharacterCardDataInterface, CharacterCardLogicInterface {
+public final class CharacterCard implements CharacterCardDataInterface, CharacterServerLogicInterface {
     private final CharacterCardDataInterface characterData;
-    private final transient CharacterCardLogicInterface characterCard;
+    private final transient CharacterServerLogicInterface characterCard;
 
-    public CharacterCard(CharacterCardLogicInterface characterCard, CharacterCardDataInterface data) {
+    public CharacterCard(CharacterServerLogicInterface characterCard, CharacterCardDataInterface data) {
         this.characterCard = characterCard;
         this.characterData = data;
     }
@@ -67,7 +67,7 @@ public class CharacterCard implements CharacterCardDataInterface, CharacterCardL
     }
 
     /* ONLY FOR TESTS */
-    CharacterCardLogicInterface getLogicCard() {
+    CharacterServerLogicInterface getLogicCard() {
         return characterCard;
     }
 }

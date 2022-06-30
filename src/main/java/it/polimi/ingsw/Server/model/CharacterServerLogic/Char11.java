@@ -1,5 +1,7 @@
-package it.polimi.ingsw.Server.model;
+package it.polimi.ingsw.Server.model.CharacterServerLogic;
 
+import it.polimi.ingsw.Server.model.CharacterServerLogicInterface;
+import it.polimi.ingsw.Server.model.GameInterfaceForCharacter;
 import it.polimi.ingsw.Util.Color;
 import it.polimi.ingsw.exceptions.serverExceptions.GameException;
 import it.polimi.ingsw.exceptions.serverExceptions.NotAllowedException;
@@ -12,7 +14,7 @@ import it.polimi.ingsw.exceptions.serverExceptions.NotEnoughStudentsException;
  * Students of that type, return as many Students as they have. <br>
  * <b>Inputs required</b>: Student color.
  */
-public class Char11 implements CharacterCardLogicInterface {
+public class Char11 implements CharacterServerLogicInterface {
 
     /**
      * Method play automatically moves up to 3 students (if available) of the selected color from
