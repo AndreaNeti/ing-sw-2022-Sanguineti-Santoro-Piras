@@ -11,7 +11,7 @@ public class Island extends GameComponent {
     //prohibition is the representation of the NO Entry Tiles which avoids the calculation of the influence on an island
     private byte prohibition;
     //it's the number of the island merged in this island
-    private byte number;
+    private byte archipelagoSize;
 
     /**
      * Constructor Island creates a new instance of Island.
@@ -22,7 +22,7 @@ public class Island extends GameComponent {
         super(idGameComponent);
         team = null;
         prohibition = 0;
-        number = 1;
+        archipelagoSize = 1;
     }
 
     /**
@@ -59,7 +59,7 @@ public class Island extends GameComponent {
         } catch (NotAllowedException ignored) {
 
         }
-        this.number += island.getArchipelagoSize();
+        this.archipelagoSize += island.getArchipelagoSize();
         addProhibitions(island.getProhibitions());
     }
 
@@ -70,7 +70,7 @@ public class Island extends GameComponent {
      * @return {@code byte} - total number of islands in the archipelago.
      */
     public byte getArchipelagoSize() {
-        return number;
+        return archipelagoSize;
     }
 
     /**

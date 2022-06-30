@@ -10,7 +10,7 @@ import it.polimi.ingsw.Util.HouseColor;
 public class IslandClient extends GameComponentClient {
     private HouseColor team;
     private byte prohibitions;
-    private byte number;
+    private byte archipelagoSize;
 
     /**
      * Constructor IslandClient creates a new instance of IslandClient.
@@ -54,17 +54,17 @@ public class IslandClient extends GameComponentClient {
      * @return {@code byte} - total number of islands in the archipelago.
      */
     public byte getArchipelagoSize() {
-        return number;
+        return archipelagoSize;
     }
 
     //TODO: not used?
     /**
      * Method setNumber updates size of the archipelago of the island.
      *
-     * @param number of type {@code byte} - new size of the archipelago.
+     * @param archipelagoSize of type {@code byte} - new size of the archipelago.
      */
-    public void setNumber(byte number) {
-        this.number = number;
+    public void setArchipelagoSize(byte archipelagoSize) {
+        this.archipelagoSize = archipelagoSize;
     }
 
     /**
@@ -78,7 +78,7 @@ public class IslandClient extends GameComponentClient {
         super.modifyGameComponent(gameComponent);
         Island island = (Island) gameComponent;
         team = island.getTeamColor();
-        number = island.getArchipelagoSize();
+        archipelagoSize = island.getArchipelagoSize();
         prohibitions = island.getProhibitions();
     }
 
@@ -91,7 +91,7 @@ public class IslandClient extends GameComponentClient {
     public String toString() {
         String s = super.toString();
         if (team != null) {
-            s += "| Owned by " + team + " with " + number + " towers ";
+            s += "| Owned by " + team + " with " + archipelagoSize + " towers ";
         }
         if (prohibitions != 0)
             s += "| Number of prohibitions: " + prohibitions;
