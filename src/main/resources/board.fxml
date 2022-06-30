@@ -1917,7 +1917,7 @@
         <children>
             <VBox alignment="TOP_CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                 <children>
-                    <Label text="Select an assistant card to play" textAlignment="CENTER">
+                    <Label text="Select an assistant card to play" textAlignment="CENTER" visible="false">
                         <font>
                             <Font size="40.0" />
                         </font>

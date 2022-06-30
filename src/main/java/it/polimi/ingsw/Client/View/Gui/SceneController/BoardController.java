@@ -197,6 +197,14 @@ public class BoardController implements SceneController {
                 localWizardIndex = (localWizardIndex + 1) % players.size();
             }
         }
+
+        HBox assistantCardPane = (HBox) getElementById("#assistantCard" + viewGUI.getModel().getMyWizard());
+        AnchorPane deck = (AnchorPane) assistantCardPane.getChildren().get(1);
+        AnchorPane assistantCardsBox = (AnchorPane) getElementById("#assistantCardsBox");
+        deck.setOnMouseClicked(mouseEvent -> assistantCardsBox.setVisible(!assistantCardsBox.isVisible()));
+        viewGUI.updateAssistantBox();
+
+
         for (IslandClient i : model.getIslands()) {
             Node islandPane = islands.getChildren().get(i.getId() - 2 * MatchType.MAX_PLAYERS);
             islandPane.getProperties().put("relativeId", i.getId());
@@ -557,12 +565,16 @@ public class BoardController implements SceneController {
 
     @Override
     public void updateCardPlayed(AssistantCard playedCard) {
-        PlayerClient current = viewGUI.getModel().getCurrentPlayer();
-        HBox assistantPane = (HBox) getElementById("#assistantCard" + current.getWizard());
-        // 0 is the pane that contain the played card
-        AnchorPane played = (AnchorPane) assistantPane.getChildren().get(0);
-        ImageView imageView = (ImageView) played.getChildren().get(0);
-        imageView.setImage(new Image("Graphical_Assets/AssistantCard/" + playedCard.value() + ".png"));
+        Platform.runLater(() -> {
+            PlayerClient current = viewGUI.getModel().getCurrentPlayer();
+            HBox assistantPane = (HBox) getElementById("#assistantCard" + current.getWizard());
+            // 0 is the pane that contain the played card
+            AnchorPane played = (AnchorPane) assistantPane.getChildren().get(0);
+            ImageView imageView = (ImageView) played.getChildren().get(0);
+            imageView.setImage(new Image("Graphical_Assets/AssistantCard/" + playedCard.value() + ".png"));
+            if (current.getWizard() == viewGUI.getModel().getMyWizard())
+                viewGUI.updateAssistantBox();
+        });
     }
 
     @Override

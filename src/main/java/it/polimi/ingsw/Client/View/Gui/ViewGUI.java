@@ -1,18 +1,26 @@
 package it.polimi.ingsw.Client.View.Gui;
 
 import it.polimi.ingsw.Client.Controller.ControllerClient;
+import it.polimi.ingsw.Client.PhaseAndComand.Commands.GameCommand;
 import it.polimi.ingsw.Client.PhaseAndComand.Phases.ClientPhase;
 import it.polimi.ingsw.Client.View.AbstractView;
 import it.polimi.ingsw.Client.View.Gui.SceneController.SceneController;
+import it.polimi.ingsw.Util.AssistantCard;
 import it.polimi.ingsw.Util.MatchType;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class ViewGUI extends AbstractView {
@@ -37,8 +45,7 @@ public class ViewGUI extends AbstractView {
     @Override
     public void setQuit(boolean forceImmediateExecution) {
         super.setQuit(forceImmediateExecution);
-        if (canQuit())
-            Platform.exit();
+        if (canQuit()) Platform.exit();
     }
 
     public void enableEntrance(EventHandler<MouseEvent> event) {
@@ -75,8 +82,7 @@ public class ViewGUI extends AbstractView {
     public void enableStudentsOnCharacter(int idChar, EventHandler<MouseEvent> event) {
         SceneController sceneController = GuiFX.getActiveSceneController();
         AnchorPane paneStudent = (AnchorPane) ((AnchorPane) sceneController.getElementById("#" + idChar)).getChildren().get(1);
-        for (Node student : paneStudent.getChildren()
-        ) {
+        for (Node student : paneStudent.getChildren()) {
             Node imageToClick = ((AnchorPane) student).getChildren().get(0);
             imageToClick.setOnMouseClicked(event);
             sceneController.enableNode(imageToClick);
@@ -103,6 +109,31 @@ public class ViewGUI extends AbstractView {
         for (Node n : lunchHall.getChildren()) {
             sceneController.enableNode(n);
             n.setOnMouseClicked(event);
+        }
+    }
+
+    public void updateAssistantBox() {
+        updateAssistantBox(false);
+    }
+
+    public void updateAssistantBox(boolean addHandler) {
+        SceneController sceneController = GuiFX.getActiveSceneController();
+        AnchorPane assistantCardsBox = (AnchorPane) sceneController.getElementById("#assistantCardsBox");
+        HBox box = (HBox) ((VBox) assistantCardsBox.getChildren().get(0)).getChildren().get(1);
+        box.getChildren().clear();
+        for (AssistantCard card : this.getModel().getPlayers().get(getModel().getMyWizard().ordinal()).getAssistantCards()) {
+            ImageView cardImage = new ImageView();
+            cardImage.setImage(new Image("Graphical_Assets/AssistantCard/" + card.value() + ".png"));
+            cardImage.getStyleClass().add("card");
+            cardImage.setPreserveRatio(true);
+            cardImage.fitWidthProperty().bind(assistantCardsBox.widthProperty().subtract(2 * assistantCardsBox.getPadding().getLeft()).divide(10).subtract(20));
+            cardImage.getProperties().put("cardValue", card);
+            HBox.setMargin(cardImage, new Insets(20, 10, 10, 10));
+            box.getChildren().add(cardImage);
+            if (addHandler) {
+                sceneController.enableNode(cardImage);
+                cardImage.setOnMouseClicked(GameCommand.PLAY_CARD.getGUIHandler(this));
+            }
         }
     }
 }
