@@ -30,8 +30,8 @@ public class ExpertGame extends NormalGame implements GameInterfaceForCharacter,
     private boolean towerInfluence;// default true
     private boolean extraSteps; //default false
     private boolean equalProfessorCalculation; //default false
-    private Color ignoredColorInfluence;
-    private byte prohibitionLeft;
+    private Color ignoredColorInfluence; // default null
+    private byte prohibitionsLeft; // default 4
     private CharacterCard chosenCharacter;
     private final MatchConstants matchConstants;
 
@@ -81,7 +81,7 @@ public class ExpertGame extends NormalGame implements GameInterfaceForCharacter,
         this.extraSteps = false;
         this.equalProfessorCalculation = false;
         this.ignoredColorInfluence = null;
-        this.prohibitionLeft = 4;
+        this.prohibitionsLeft = 4;
         this.chosenCharacter = null;
         this.inputsCharacter = new ArrayList<>();
     }
@@ -242,7 +242,7 @@ public class ExpertGame extends NormalGame implements GameInterfaceForCharacter,
     public GameDelta transformAllGameInDelta() {
         ExpertGameDelta g = (ExpertGameDelta) super.transformAllGameInDelta();
         g.setNewCoinsLeft(coinsLeft);
-        g.setNewProhibitionsLeft(prohibitionLeft);
+        g.setNewProhibitionsLeft(prohibitionsLeft);
         for (CharacterCard c : characters) {
             g.addCharacterCard(c);
         }
@@ -515,12 +515,12 @@ public class ExpertGame extends NormalGame implements GameInterfaceForCharacter,
     @Override
     public void setProhibition(Island island) throws NotAllowedException {
         if (island == null) throw new IllegalArgumentException("Cannot set prohibition to a null island");
-        if (this.prohibitionLeft <= 0) throw new NotAllowedException("No more prohibitions to set");
-        this.prohibitionLeft--;
+        if (this.prohibitionsLeft <= 0) throw new NotAllowedException("No more prohibitions to set");
+        this.prohibitionsLeft--;
         island.addProhibitions((byte) 1);
 
         // add to game delta
-        getGameDelta().setNewProhibitionsLeft(prohibitionLeft);
+        getGameDelta().setNewProhibitionsLeft(prohibitionsLeft);
     }
 
 
@@ -529,11 +529,11 @@ public class ExpertGame extends NormalGame implements GameInterfaceForCharacter,
      * the influence calculation.
      */
     private void restoreProhibition() {
-        if (this.prohibitionLeft < 4) {
-            this.prohibitionLeft++;
+        if (this.prohibitionsLeft < 4) {
+            this.prohibitionsLeft++;
 
             // add to game delta
-            getGameDelta().setNewProhibitionsLeft(prohibitionLeft);
+            getGameDelta().setNewProhibitionsLeft(prohibitionsLeft);
         }
     }
 

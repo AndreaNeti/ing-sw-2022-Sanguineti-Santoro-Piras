@@ -53,11 +53,6 @@ public class Char7Client implements CharacterCardClient {
         return null;
     }
 
-    /**
-     * Method toString returns the name of the character card.
-     *
-     * @return {@code String} - character card name.
-     */
     @Override
     public String toString() {
         return "Knight";
