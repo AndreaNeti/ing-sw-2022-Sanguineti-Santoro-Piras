@@ -70,4 +70,11 @@ public interface CharacterCardClient extends CharacterCardDataInterface {
      * @return {@code List}<{@code Integer}> - list of inputs added to the card.
      */
     List<Integer> getInputs();
+
+    /**
+     * Method toString returns the name of the character card.
+     *
+     * @return {@code String} - character card name.
+     */
+    String toString();
 }

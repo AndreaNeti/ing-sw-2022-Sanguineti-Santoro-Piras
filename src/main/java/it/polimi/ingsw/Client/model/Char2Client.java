@@ -85,11 +85,6 @@ public class Char2Client implements CharacterCardClient {
         return inputs;
     }
 
-    /**
-     * Method toString returns the name of the character card.
-     *
-     * @return {@code String} - character card name.
-     */
     @Override
     public String toString() {
         return "Herald";
