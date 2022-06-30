@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.String?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
@@ -2045,7 +2046,7 @@
             </AnchorPane>
         </children>
     </HBox>
-    <HBox id="colorBox" styleClass="colorbox" visible="false" AnchorPane.bottomAnchor="400.0" AnchorPane.leftAnchor="407.0">
+    <HBox id="colorBox" visible="false" AnchorPane.bottomAnchor="400.0" AnchorPane.leftAnchor="407.0">
         <children>
             <ImageView pickOnBounds="true">
                 <HBox.margin>
@@ -2061,7 +2062,7 @@
                   <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
               </HBox.margin>
           </ImageView>
-          <ImageView pickOnBounds="true" styleClass="clickable">
+          <ImageView pickOnBounds="true">
               <image>
                   <Image url="@Graphical_Assets/Students/YELLOW.png" />
               </image>
@@ -2086,5 +2087,9 @@
               </HBox.margin>
           </ImageView>
         </children>
+      <styleClass>
+         <String fx:value="colorbox" />
+         <String fx:value="clickable" />
+      </styleClass>
     </HBox>
 </AnchorPane>
