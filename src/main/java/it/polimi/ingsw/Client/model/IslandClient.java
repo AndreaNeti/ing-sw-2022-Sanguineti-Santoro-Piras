@@ -40,6 +40,15 @@ public class IslandClient extends GameComponentClient {
     }
 
     /**
+     * Method setProhibitions updates the number of prohibitions on the island.
+     *
+     * @param prohibitions of type {@code byte} - new amount of prohibitions of the islands.
+     */
+    public void setProhibitions(byte prohibitions) {
+        this.prohibitions = prohibitions;
+    }
+
+    /**
      * Method getProhibitions returns the number of prohibitions placed on the island.
      *
      * @return {@code byte} - number of prohibitions.
@@ -57,7 +66,6 @@ public class IslandClient extends GameComponentClient {
         return archipelagoSize;
     }
 
-    //TODO: not used?
     /**
      * Method setNumber updates size of the archipelago of the island.
      *
@@ -77,9 +85,9 @@ public class IslandClient extends GameComponentClient {
     protected void modifyGameComponent(GameComponent gameComponent) {
         super.modifyGameComponent(gameComponent);
         Island island = (Island) gameComponent;
-        team = island.getTeamColor();
-        archipelagoSize = island.getArchipelagoSize();
-        prohibitions = island.getProhibitions();
+        setTeam(island.getTeamColor());
+        setArchipelagoSize(island.getArchipelagoSize());
+        setProhibitions(island.getProhibitions());
     }
 
     /**

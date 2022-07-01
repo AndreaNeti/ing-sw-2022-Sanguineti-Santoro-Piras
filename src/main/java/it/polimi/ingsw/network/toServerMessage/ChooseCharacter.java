@@ -20,7 +20,6 @@ public class ChooseCharacter implements ToServerMessage {
      */
     public ChooseCharacter(Byte charId, String charName) {
         this.charId = charId;
-        //TODO here the name is orrendo
         this.charName = charName;
     }
 

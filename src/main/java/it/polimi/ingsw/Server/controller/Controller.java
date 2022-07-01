@@ -300,7 +300,6 @@ public class Controller {
         } catch (GameException e1) {
             handleError(e1);
         }
-        // TODO uncomment this
         characterCardPlayed = true;
         repeatPhase();
     }

@@ -64,7 +64,6 @@ public class Char0Client implements CharacterClientLogicInterface {
             if (c != null) {
                 inputs.add(c.ordinal());
             } else {
-                // TODO mh
                 int id;
                 if (clicked.getProperties().get("relativeId") == null)
                     id = Integer.parseInt(clicked.getId());

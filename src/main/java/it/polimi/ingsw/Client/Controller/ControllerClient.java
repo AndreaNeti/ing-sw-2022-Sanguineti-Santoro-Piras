@@ -200,7 +200,6 @@ public class ControllerClient extends GameClientListened implements PingPongInte
     public void addMember(Player playerJoined, HouseColor teamColor) {
         PlayerClient newPlayer = new PlayerClient(playerJoined);
         teamsClient.get(teamColor.ordinal()).addPlayer(newPlayer);
-        //TODO box for player that joins
         addMessage(playerJoined + " joined the match");
         addMessage("Members left: " + (matchType.nPlayers() - playersInMatch()));
         notifyMembers(matchType.nPlayers() - playersInMatch(), newPlayer);

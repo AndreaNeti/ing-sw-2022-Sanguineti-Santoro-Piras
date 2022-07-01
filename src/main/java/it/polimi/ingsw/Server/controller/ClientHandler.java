@@ -24,7 +24,6 @@ import java.util.Objects;
  * and using the controller to modify the game through the user commands.
  */
 public class ClientHandler implements Runnable, GameListener, PingPongInterface {
-    // TODO: Maybe move here check for turn, nickname and match joined
     private final Socket socket;
     private String nickName;
     private Controller controller;

@@ -127,35 +127,33 @@ public class NormalGame implements Game {
             island.merge(islandBefore);
             System.out.println("Removed island with id " + islandBefore.getId());
             islands.remove(islandBefore);
-            //TODO bug with herald
-            System.out.println("1index before: " + islandBeforeIndex + "index after:" + islandAfterIndex);
+            System.out.println("index before: " + islandBeforeIndex + "index after:" + islandAfterIndex);
             if (islandBeforeIndex < islandAfterIndex)
                 islandAfterIndex--;
-            System.out.println("1position of mt" + motherNaturePosition);
+            System.out.println("position of mt" + motherNaturePosition);
             if (islandBeforeIndex < motherNaturePosition)
                 motherNaturePosition--;
-            System.out.println("1position of mt after" + motherNaturePosition);
+            System.out.println("position of mt after" + motherNaturePosition);
 
             // add to game delta
             gameDelta.setNewMotherNaturePosition(motherNaturePosition);
             gameDelta.addUpdatedGC(island);
-            //TODO
+
             deletedIsland.add(islandBefore.getId());
         }
         if (islandAfter.getTeamColor() != null && islandAfter.getTeamColor().equals(island.getTeamColor())) {
             island.merge(islandAfter);
             System.out.println("Removed island with id " + islandAfter.getId());
             islands.remove(islandAfter);
-            System.out.println("2position of mt" + motherNaturePosition);
+            System.out.println("position of mt" + motherNaturePosition);
             if (islandAfterIndex <= motherNaturePosition)
                 motherNaturePosition = (byte) Math.floorMod(motherNaturePosition - 1, islands.size());
 
-            System.out.println("1position of mt after" + motherNaturePosition);
+            System.out.println("position of mt after" + motherNaturePosition);
 
             // add to game delta
             gameDelta.setNewMotherNaturePosition(motherNaturePosition);
             gameDelta.addUpdatedGC(island);
-            //TODO
             deletedIsland.add(islandAfter.getId());
 
         }
@@ -301,7 +299,7 @@ public class NormalGame implements Game {
      * In case of a tie, no wizard will be put in the array.
      */
     protected void calculateProfessor() {
-        //TODO: make this function similar to notify coins
+        // next update: make this function similar to the coins logic
         byte max;
         Player currentOwner;
         // player with the maximum number of students for the current color
@@ -363,7 +361,6 @@ public class NormalGame implements Game {
             gameDelta.setNewMotherNaturePosition(motherNaturePosition);
             calculateInfluence(islands.get(motherNaturePosition));
         } finally {
-            // TODO move all send calls in a single place
             gameDelta.send();
         }
     }

@@ -211,7 +211,6 @@ public class BoardController implements SceneController {
             Set<Integer> containedIslands = new TreeSet<>();
             containedIslands.add(i.getId());
             islandPane.getProperties().put("containedIslands", containedIslands);
-            //TODO see if there is a better way
             updateGameComponent(i);
         }
 

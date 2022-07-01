@@ -41,7 +41,7 @@ public class PlayCharacter implements ToServerMessage {
             throw new NotAllowedException("Game is already finished");
         }
         if (c.isMyTurn(clientHandler)) {
-            // TODO unify?
+            // next update: unify
             c.setCharacterInputs(inputs);
             c.playCharacter();
             c.sendMessage(clientHandler, "played the chosen character card");

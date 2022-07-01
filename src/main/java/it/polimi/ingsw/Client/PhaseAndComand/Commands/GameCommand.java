@@ -352,6 +352,11 @@ public enum GameCommand {
             viewCli.repeatPhase();
         }
 
+        @Override
+        public EventHandler<MouseEvent> getGUIHandler(ViewGUI viewGUI) {
+            return null;
+        }
+
         /**
          * Method toString returns the name of the command.
          *
@@ -602,10 +607,7 @@ public enum GameCommand {
      * @return {@code EventHandler}<{@code MouseEvent}> - function that will be executed when the node that adds the
      * event handler is clicked.
      */
-    //TODO set this function abstract
-    public EventHandler<MouseEvent> getGUIHandler(ViewGUI viewGUI) {
-        return null;
-    }
+    public abstract EventHandler<MouseEvent> getGUIHandler(ViewGUI viewGUI);
 
     /**
      * Method attachToAPhase adds the command to the list of provided game phases, so that it can be executed during them.
