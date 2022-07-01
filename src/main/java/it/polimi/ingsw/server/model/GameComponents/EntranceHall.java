@@ -1,8 +1,8 @@
 package it.polimi.ingsw.server.model.GameComponents;
 
 
-import it.polimi.ingsw.utils.Color;
 import it.polimi.ingsw.exceptions.serverExceptions.NotAllowedException;
+import it.polimi.ingsw.utils.Color;
 
 /**
  * EntranceHall class represents the player's entrance hall, used to add students to the player's LunchHalls and to the Islands.

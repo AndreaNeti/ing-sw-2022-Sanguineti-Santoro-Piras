@@ -1,10 +1,10 @@
 package it.polimi.ingsw.server.model;
 
-import it.polimi.ingsw.server.controller.Server;
-import it.polimi.ingsw.utils.*;
 import it.polimi.ingsw.exceptions.serverExceptions.EndGameException;
 import it.polimi.ingsw.exceptions.serverExceptions.GameException;
 import it.polimi.ingsw.exceptions.serverExceptions.NotAllowedException;
+import it.polimi.ingsw.server.controller.Server;
+import it.polimi.ingsw.utils.*;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;

@@ -1,15 +1,15 @@
 package it.polimi.ingsw.server.model;
 
 
+import it.polimi.ingsw.exceptions.serverExceptions.EndGameException;
+import it.polimi.ingsw.exceptions.serverExceptions.GameException;
+import it.polimi.ingsw.exceptions.serverExceptions.NotAllowedException;
 import it.polimi.ingsw.server.model.GameComponents.EntranceHall;
 import it.polimi.ingsw.server.model.GameComponents.LunchHall;
 import it.polimi.ingsw.utils.AssistantCard;
 import it.polimi.ingsw.utils.Color;
 import it.polimi.ingsw.utils.MatchConstants;
 import it.polimi.ingsw.utils.Wizard;
-import it.polimi.ingsw.exceptions.serverExceptions.EndGameException;
-import it.polimi.ingsw.exceptions.serverExceptions.GameException;
-import it.polimi.ingsw.exceptions.serverExceptions.NotAllowedException;
 
 import java.io.Serializable;
 import java.util.ArrayList;

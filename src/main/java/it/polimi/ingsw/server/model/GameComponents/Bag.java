@@ -1,10 +1,10 @@
 package it.polimi.ingsw.server.model.GameComponents;
 
-import it.polimi.ingsw.utils.Color;
 import it.polimi.ingsw.exceptions.serverExceptions.EndGameException;
 import it.polimi.ingsw.exceptions.serverExceptions.GameException;
 import it.polimi.ingsw.exceptions.serverExceptions.NotAllowedException;
 import it.polimi.ingsw.exceptions.serverExceptions.NotEnoughStudentsException;
+import it.polimi.ingsw.utils.Color;
 
 import java.util.ArrayList;
 import java.util.Arrays;

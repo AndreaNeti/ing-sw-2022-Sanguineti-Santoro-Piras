@@ -1,13 +1,13 @@
 package it.polimi.ingsw.server.model;
 
+import it.polimi.ingsw.exceptions.serverExceptions.EndGameException;
+import it.polimi.ingsw.exceptions.serverExceptions.GameException;
+import it.polimi.ingsw.exceptions.serverExceptions.NotAllowedException;
 import it.polimi.ingsw.server.controller.Server;
 import it.polimi.ingsw.utils.HouseColor;
 import it.polimi.ingsw.utils.MatchConstants;
 import it.polimi.ingsw.utils.MatchType;
 import it.polimi.ingsw.utils.Wizard;
-import it.polimi.ingsw.exceptions.serverExceptions.EndGameException;
-import it.polimi.ingsw.exceptions.serverExceptions.GameException;
-import it.polimi.ingsw.exceptions.serverExceptions.NotAllowedException;
 import org.junit.jupiter.api.Test;
 
 import java.util.Objects;

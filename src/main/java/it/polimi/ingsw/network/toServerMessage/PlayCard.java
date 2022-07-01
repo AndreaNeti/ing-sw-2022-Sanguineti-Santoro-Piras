@@ -1,11 +1,11 @@
 package it.polimi.ingsw.network.toServerMessage;
 
-import it.polimi.ingsw.server.controller.ClientHandler;
-import it.polimi.ingsw.server.controller.Controller;
-import it.polimi.ingsw.utils.AssistantCard;
 import it.polimi.ingsw.exceptions.serverExceptions.EndGameException;
 import it.polimi.ingsw.exceptions.serverExceptions.GameException;
 import it.polimi.ingsw.exceptions.serverExceptions.NotAllowedException;
+import it.polimi.ingsw.server.controller.ClientHandler;
+import it.polimi.ingsw.server.controller.Controller;
+import it.polimi.ingsw.utils.AssistantCard;
 
 /**
  * PlayCard class is used by the client to play a selected assistant card.

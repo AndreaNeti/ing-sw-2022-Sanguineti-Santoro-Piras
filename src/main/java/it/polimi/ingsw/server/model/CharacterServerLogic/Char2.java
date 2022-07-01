@@ -1,11 +1,11 @@
 package it.polimi.ingsw.server.model.CharacterServerLogic;
 
-import it.polimi.ingsw.server.model.GameComponents.Island;
-import it.polimi.ingsw.server.model.GameInterfaceForCharacter;
-import it.polimi.ingsw.utils.MatchType;
 import it.polimi.ingsw.exceptions.serverExceptions.EndGameException;
 import it.polimi.ingsw.exceptions.serverExceptions.GameException;
 import it.polimi.ingsw.exceptions.serverExceptions.NotAllowedException;
+import it.polimi.ingsw.server.model.GameComponents.Island;
+import it.polimi.ingsw.server.model.GameInterfaceForCharacter;
+import it.polimi.ingsw.utils.MatchType;
 
 /**
  * Char2 class represents the <b>"Herald"</b> character card. <br>

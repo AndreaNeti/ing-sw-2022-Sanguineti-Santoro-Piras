@@ -1,10 +1,10 @@
 package it.polimi.ingsw.server.model.CharacterServerLogic;
 
-import it.polimi.ingsw.server.model.GameInterfaceForCharacter;
-import it.polimi.ingsw.utils.Color;
 import it.polimi.ingsw.exceptions.serverExceptions.GameException;
 import it.polimi.ingsw.exceptions.serverExceptions.NotAllowedException;
 import it.polimi.ingsw.exceptions.serverExceptions.NotEnoughStudentsException;
+import it.polimi.ingsw.server.model.GameInterfaceForCharacter;
+import it.polimi.ingsw.utils.Color;
 
 import java.util.List;
 

@@ -1,9 +1,9 @@
 package it.polimi.ingsw.network.toServerMessage;
 
-import it.polimi.ingsw.server.controller.ClientHandler;
-import it.polimi.ingsw.utils.MatchType;
 import it.polimi.ingsw.exceptions.serverExceptions.GameException;
 import it.polimi.ingsw.exceptions.serverExceptions.NotAllowedException;
+import it.polimi.ingsw.server.controller.ClientHandler;
+import it.polimi.ingsw.utils.MatchType;
 
 /**
  * CreateMatch class is used by the client to create and join a match of the selected type.

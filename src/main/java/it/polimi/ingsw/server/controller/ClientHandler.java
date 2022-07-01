@@ -1,6 +1,5 @@
 package it.polimi.ingsw.server.controller;
 
-import it.polimi.ingsw.utils.MatchType;
 import it.polimi.ingsw.exceptions.serverExceptions.EndGameException;
 import it.polimi.ingsw.exceptions.serverExceptions.GameException;
 import it.polimi.ingsw.exceptions.serverExceptions.NotAllowedException;
@@ -12,6 +11,7 @@ import it.polimi.ingsw.network.toClientMessage.OK;
 import it.polimi.ingsw.network.toClientMessage.ToClientMessage;
 import it.polimi.ingsw.network.toServerMessage.Quit;
 import it.polimi.ingsw.network.toServerMessage.ToServerMessage;
+import it.polimi.ingsw.utils.MatchType;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;

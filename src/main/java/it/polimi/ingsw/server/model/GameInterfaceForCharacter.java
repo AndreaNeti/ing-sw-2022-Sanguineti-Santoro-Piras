@@ -1,12 +1,12 @@
 package it.polimi.ingsw.server.model;
 
-import it.polimi.ingsw.server.model.GameComponents.GameComponent;
-import it.polimi.ingsw.server.model.GameComponents.Island;
-import it.polimi.ingsw.utils.Color;
 import it.polimi.ingsw.exceptions.serverExceptions.EndGameException;
 import it.polimi.ingsw.exceptions.serverExceptions.GameException;
 import it.polimi.ingsw.exceptions.serverExceptions.NotAllowedException;
 import it.polimi.ingsw.network.GameDelta;
+import it.polimi.ingsw.server.model.GameComponents.GameComponent;
+import it.polimi.ingsw.server.model.GameComponents.Island;
+import it.polimi.ingsw.utils.Color;
 
 import java.util.ArrayList;
 

@@ -1,8 +1,8 @@
 package it.polimi.ingsw.network.toServerMessage;
 
-import it.polimi.ingsw.server.controller.ClientHandler;
 import it.polimi.ingsw.exceptions.serverExceptions.GameException;
 import it.polimi.ingsw.exceptions.serverExceptions.NotAllowedException;
+import it.polimi.ingsw.server.controller.ClientHandler;
 
 /**
  * JoinMatchById class is used by the client to join a match based on its unique ID.

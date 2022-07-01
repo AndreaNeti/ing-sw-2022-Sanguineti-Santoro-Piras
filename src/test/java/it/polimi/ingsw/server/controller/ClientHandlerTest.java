@@ -1,11 +1,11 @@
 package it.polimi.ingsw.server.controller;
 
-import it.polimi.ingsw.utils.MatchType;
 import it.polimi.ingsw.exceptions.serverExceptions.GameException;
 import it.polimi.ingsw.exceptions.serverExceptions.NotAllowedException;
 import it.polimi.ingsw.network.PingMessage;
 import it.polimi.ingsw.network.toClientMessage.OK;
 import it.polimi.ingsw.network.toClientMessage.ToClientMessage;
+import it.polimi.ingsw.utils.MatchType;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

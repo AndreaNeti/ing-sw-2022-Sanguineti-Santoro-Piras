@@ -1,11 +1,11 @@
 package it.polimi.ingsw.network.toServerMessage;
 
-import it.polimi.ingsw.server.controller.ClientHandler;
-import it.polimi.ingsw.server.controller.Controller;
-import it.polimi.ingsw.utils.Color;
 import it.polimi.ingsw.exceptions.serverExceptions.EndGameException;
 import it.polimi.ingsw.exceptions.serverExceptions.GameException;
 import it.polimi.ingsw.exceptions.serverExceptions.NotAllowedException;
+import it.polimi.ingsw.server.controller.ClientHandler;
+import it.polimi.ingsw.server.controller.Controller;
+import it.polimi.ingsw.utils.Color;
 
 /**
  * MoveStudent class is used by the client to move a student to a selected game component.

@@ -1,8 +1,8 @@
 package it.polimi.ingsw.server.controller;
 
+import it.polimi.ingsw.exceptions.serverExceptions.NotAllowedException;
 import it.polimi.ingsw.utils.MatchConstants;
 import it.polimi.ingsw.utils.MatchType;
-import it.polimi.ingsw.exceptions.serverExceptions.NotAllowedException;
 
 import java.io.IOException;
 import java.net.InetAddress;

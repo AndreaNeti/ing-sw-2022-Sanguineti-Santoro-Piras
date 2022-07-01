@@ -1,10 +1,10 @@
 package it.polimi.ingsw.server.model.CharacterServerLogic;
 
+import it.polimi.ingsw.exceptions.serverExceptions.GameException;
+import it.polimi.ingsw.exceptions.serverExceptions.NotAllowedException;
 import it.polimi.ingsw.server.model.GameComponents.Island;
 import it.polimi.ingsw.server.model.GameInterfaceForCharacter;
 import it.polimi.ingsw.utils.MatchType;
-import it.polimi.ingsw.exceptions.serverExceptions.GameException;
-import it.polimi.ingsw.exceptions.serverExceptions.NotAllowedException;
 
 /**
  * Char4 class represents the <b>"Grandma weeds"</b> character card. <br>

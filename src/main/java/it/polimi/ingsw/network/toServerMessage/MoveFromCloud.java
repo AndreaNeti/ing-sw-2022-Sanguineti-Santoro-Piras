@@ -1,10 +1,10 @@
 package it.polimi.ingsw.network.toServerMessage;
 
-import it.polimi.ingsw.server.controller.ClientHandler;
-import it.polimi.ingsw.server.controller.Controller;
 import it.polimi.ingsw.exceptions.serverExceptions.EndGameException;
 import it.polimi.ingsw.exceptions.serverExceptions.GameException;
 import it.polimi.ingsw.exceptions.serverExceptions.NotAllowedException;
+import it.polimi.ingsw.server.controller.ClientHandler;
+import it.polimi.ingsw.server.controller.Controller;
 
 /**
  * MoveFromCloud class is used by the client to move students from a selected cloud to the entrance hall.

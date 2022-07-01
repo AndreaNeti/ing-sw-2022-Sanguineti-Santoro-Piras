@@ -1,8 +1,8 @@
 package it.polimi.ingsw.server.model.CharacterServerLogic;
 
-import it.polimi.ingsw.server.model.GameInterfaceForCharacter;
 import it.polimi.ingsw.exceptions.serverExceptions.EndGameException;
 import it.polimi.ingsw.exceptions.serverExceptions.GameException;
+import it.polimi.ingsw.server.model.GameInterfaceForCharacter;
 
 /**
  * CharacterServerLogicInterface interface represents the character cards server logic in "Eriantys", available in the expert game mode. <br>

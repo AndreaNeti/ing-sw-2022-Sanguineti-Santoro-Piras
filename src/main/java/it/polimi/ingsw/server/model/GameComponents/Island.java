@@ -1,7 +1,7 @@
 package it.polimi.ingsw.server.model.GameComponents;
 
-import it.polimi.ingsw.utils.HouseColor;
 import it.polimi.ingsw.exceptions.serverExceptions.NotAllowedException;
+import it.polimi.ingsw.utils.HouseColor;
 
 /**
  * Island class represents the game's islands, where students and towers can be placed.

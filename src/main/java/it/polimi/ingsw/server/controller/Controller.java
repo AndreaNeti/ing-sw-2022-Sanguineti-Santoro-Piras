@@ -1,12 +1,12 @@
 package it.polimi.ingsw.server.controller;
 
-import it.polimi.ingsw.server.model.*;
-import it.polimi.ingsw.utils.*;
 import it.polimi.ingsw.exceptions.serverExceptions.EndGameException;
 import it.polimi.ingsw.exceptions.serverExceptions.GameException;
 import it.polimi.ingsw.exceptions.serverExceptions.NotAllowedException;
 import it.polimi.ingsw.network.GameDelta;
 import it.polimi.ingsw.network.toClientMessage.*;
+import it.polimi.ingsw.server.model.*;
+import it.polimi.ingsw.utils.*;
 
 import java.util.ArrayList;
 import java.util.List;
