@@ -73,24 +73,24 @@ Once there it is possible to choose to run the server or the client (CLI or GUI)
 
 ### Run the Server
 ```bash
-java -jar Eriantys.jar -s 
+java -jar Eriantys-jar-with-dependencies.jar -s 
 ```
 or
 ```bash
-java -jar Eriantys.jar --server 
+java -jar Eriantys-jar-with-dependencies.jar --server 
 ```
 ### Run the Client (CLI)
 ```bash
-java -jar Eriantys.jar -c 
+java -jar Eriantys-jar-with-dependencies.jar -c 
 ```
 or
 ```bash
-java -jar Eriantys --cli 
+java -jar Eriantys-jar-with-dependencies --cli 
 ```
 
 ### Run the Client (GUI)
 ```bash
-java -jar Eriantys.jar 
+java -jar Eriantys-jar-with-dependencies.jar 
 ```
 To run the Client (GUI) it is also possible to open the JAR file directly from
 the file explorer.

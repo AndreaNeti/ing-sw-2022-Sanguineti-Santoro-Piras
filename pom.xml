@@ -112,10 +112,10 @@
                 <artifactId>maven-assembly-plugin</artifactId>
                 <version>3.3.0</version>
                 <configuration>
-                    <finalName>Eryantis</finalName>
+                    <finalName>Eriantys</finalName>
                     <archive>
                         <manifest>
-                            <mainClass>it.polimi.ingsw.Eryantis</mainClass>
+                            <mainClass>it.polimi.ingsw.Eriantys</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>
