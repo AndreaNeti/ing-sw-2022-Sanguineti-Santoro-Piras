@@ -1,7 +1,7 @@
 package it.polimi.ingsw.client;
 
-import it.polimi.ingsw.client.Controller.ControllerClient;
-import it.polimi.ingsw.client.View.Cli.ViewCli;
+import it.polimi.ingsw.client.controller.ControllerClient;
+import it.polimi.ingsw.client.view.Cli.ViewCli;
 
 /**
  * AppCLI is the game's CLI application.

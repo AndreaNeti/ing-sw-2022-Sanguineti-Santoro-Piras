@@ -1,7 +1,7 @@
 package it.polimi.ingsw.client.model.CharacterClientLogic;
 
-import it.polimi.ingsw.client.View.Cli.ViewForCharacterCli;
-import it.polimi.ingsw.client.View.Gui.ViewGUI;
+import it.polimi.ingsw.client.view.Cli.ViewForCharacterCli;
+import it.polimi.ingsw.client.view.Gui.ViewGUI;
 import it.polimi.ingsw.server.model.CharacterServerLogic.Char3;
 
 import java.util.List;

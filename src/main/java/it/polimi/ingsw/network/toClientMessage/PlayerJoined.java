@@ -1,6 +1,6 @@
 package it.polimi.ingsw.network.toClientMessage;
 
-import it.polimi.ingsw.client.Controller.ControllerClient;
+import it.polimi.ingsw.client.controller.ControllerClient;
 import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.utils.HouseColor;
 

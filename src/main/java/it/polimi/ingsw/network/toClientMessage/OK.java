@@ -1,6 +1,6 @@
 package it.polimi.ingsw.network.toClientMessage;
 
-import it.polimi.ingsw.client.Controller.ControllerClient;
+import it.polimi.ingsw.client.controller.ControllerClient;
 
 /**
  * OK class is used to send a "successful operation" message to the client.

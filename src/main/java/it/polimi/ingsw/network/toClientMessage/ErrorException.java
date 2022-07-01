@@ -1,6 +1,6 @@
 package it.polimi.ingsw.network.toClientMessage;
 
-import it.polimi.ingsw.client.Controller.ControllerClient;
+import it.polimi.ingsw.client.controller.ControllerClient;
 
 /**
  * ErrorException class is used to send an error message to the client.

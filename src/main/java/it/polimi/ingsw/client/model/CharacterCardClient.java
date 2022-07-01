@@ -1,11 +1,11 @@
 package it.polimi.ingsw.client.model;
 
-import it.polimi.ingsw.client.View.Cli.ViewForCharacterCli;
-import it.polimi.ingsw.client.View.Gui.ViewGUI;
 import it.polimi.ingsw.client.model.CharacterClientLogic.CharacterClientLogicInterface;
+import it.polimi.ingsw.client.view.Cli.ViewForCharacterCli;
+import it.polimi.ingsw.client.view.Gui.ViewGUI;
+import it.polimi.ingsw.exceptions.clientExceptions.SkipCommandException;
 import it.polimi.ingsw.server.model.CharacterServerLogic.CharacterServerLogicInterface;
 import it.polimi.ingsw.utils.CharacterCardDataInterface;
-import it.polimi.ingsw.exceptions.clientExceptions.SkipCommandException;
 
 import java.util.List;
 

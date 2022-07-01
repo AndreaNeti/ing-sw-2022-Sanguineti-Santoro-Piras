@@ -1,9 +1,9 @@
 package it.polimi.ingsw.network;
 
-import it.polimi.ingsw.client.Controller.ControllerClient;
-import it.polimi.ingsw.server.controller.ClientHandler;
+import it.polimi.ingsw.client.controller.ControllerClient;
 import it.polimi.ingsw.network.toClientMessage.ToClientMessage;
 import it.polimi.ingsw.network.toServerMessage.ToServerMessage;
+import it.polimi.ingsw.server.controller.ClientHandler;
 
 /**
  * PingMessage class is used by both the client and the server to reset the ping timeout timer in order not to close the connection.

@@ -1,10 +1,10 @@
 package it.polimi.ingsw.client.model.CharacterClientLogic;
 
-import it.polimi.ingsw.client.View.Cli.ViewForCharacterCli;
-import it.polimi.ingsw.client.View.Gui.ViewGUI;
+import it.polimi.ingsw.client.view.Cli.ViewForCharacterCli;
+import it.polimi.ingsw.client.view.Gui.ViewGUI;
+import it.polimi.ingsw.exceptions.clientExceptions.SkipCommandException;
 import it.polimi.ingsw.server.model.CharacterServerLogic.Char8;
 import it.polimi.ingsw.utils.Color;
-import it.polimi.ingsw.exceptions.clientExceptions.SkipCommandException;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
