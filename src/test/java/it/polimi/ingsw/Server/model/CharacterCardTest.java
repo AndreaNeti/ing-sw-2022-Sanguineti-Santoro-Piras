@@ -15,31 +15,28 @@ import java.util.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 class CharacterCardTest {
-    Team t1, t2;
+    private final Team t1;
     Player p1, p2;
-    ArrayList<Team> teamList = new ArrayList<>();
-    ArrayList<Player> playerList = new ArrayList<>();
-    ExpertGame game;
-    CharacterCard c0, c1, c2, c3, c4, c5, c6, c7, c8, c9, c10, c11;
-    Byte charToSelect;
+    private final ExpertGame game;
+    private final CharacterCard c0, c1, c2, c3, c4, c5, c6, c7, c8, c9, c10, c11;
+    private final Byte charToSelect;
 
-    ArrayList<CharacterCard> cards = new ArrayList<>();
+    private final ArrayList<CharacterCard> cards = new ArrayList<>();
 
     public CharacterCardTest() {
         MatchType matchType = new MatchType((byte) 2, true);
         MatchConstants matchConstants = Server.getMatchConstants(matchType);
         t1 = new Team(HouseColor.WHITE, (byte) 1, (byte) 8);
-        t2 = new Team(HouseColor.BLACK, (byte) 1, (byte) 8);
+        Team t2 = new Team(HouseColor.BLACK, (byte) 1, (byte) 8);
         try {
             p1 = new Player("Franco", t1, Wizard.WOODMAGE, matchConstants);
             p2 = new Player("Gigi", t2, Wizard.SANDMAGE, matchConstants);
         } catch (GameException e) {
             fail(e);
         }
+        ArrayList<Team> teamList = new ArrayList<>();
         teamList.add(t1);
         teamList.add(t2);
-        playerList.add(p1);
-        playerList.add(p2);
         game = new ExpertGame(teamList, matchConstants);
         // fill lunch halls, p1 will gain enough coins to test char.play methods
         game.setCurrentPlayer(p1);
@@ -124,9 +121,8 @@ class CharacterCardTest {
             cost = c1.getCost();
             assertEquals((id + ": used = " + used + ". cost = " + cost), c1.toString());
             c1.setUsed();
-            used = true;
-            cost ++;
-            assertEquals((id + ": used = " + used + ". cost = " + cost), c1.toString());
+            cost++;
+            assertEquals(id + ": used = " + true + ". cost = " + cost, c1.toString());
         }
     }
 

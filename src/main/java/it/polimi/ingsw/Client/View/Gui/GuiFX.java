@@ -17,7 +17,7 @@ import java.io.IOException;
 
 public class GuiFX extends Application {
     private static Stage primaryStage;
-    //true if i'm in menu scene, false in board scene
+    //true if I'm in menu scene, false in board scene
     private static boolean inMenuScene;
     private static SceneController activeSceneController;
     private static ViewGUI viewGUI;
@@ -39,10 +39,13 @@ public class GuiFX extends Application {
         });
         goToMenuScene();
         primaryStage.show();
-        viewGUI.setPhaseInView(GamePhase.INIT_PHASE,false);
+        viewGUI.setPhaseInView(GamePhase.INIT_PHASE, false);
 
     }
-    //192.168.115.81 ipAndrea
+
+    /**
+     * Method goToBoardScene loads and set the main game scene
+     */
     public static void goToBoardScene() {
         if (inMenuScene) {
             controller.removeListeners();
@@ -93,11 +96,14 @@ public class GuiFX extends Application {
 
     }*/
 
+    /**
+     * Method goToBoardScene loads and set the menu scene
+     */
     public static void goToMenuScene() {
         if (!inMenuScene) {
             controller.removeListeners();
             primaryStage.setResizable(false);
-            primaryStage.setTitle("Eryantis");
+            primaryStage.setTitle("Eriantys");
             FXMLLoader loader = new FXMLLoader(GuiFX.class.getResource("/menu.fxml"));
             try {
                 primaryStage.setScene(new Scene(loader.load(), 700, 700, false, SceneAntialiasing.BALANCED));
@@ -133,7 +139,7 @@ public class GuiFX extends Application {
      */
     public static void showError(String title, String contentText, String headerText) {
         Platform.runLater(() -> {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeaderText(headerText);
             alert.setTitle(title);
             alert.setContentText(contentText);

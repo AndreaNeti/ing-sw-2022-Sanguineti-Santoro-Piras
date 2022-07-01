@@ -7,7 +7,7 @@ import it.polimi.ingsw.exceptions.serverExceptions.GameException;
  * NickName class is used to set the nickname of the client's player.
  */
 public class NickName implements ToServerMessage{
-    String nickName;
+    private final String nickName;
 
     /**
      * Constructor NickName creates a new instance of NickName.

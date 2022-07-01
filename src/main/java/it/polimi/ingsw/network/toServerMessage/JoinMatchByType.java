@@ -9,7 +9,7 @@ import it.polimi.ingsw.exceptions.serverExceptions.NotAllowedException;
  * JoinMatchByType class is used by the client to join a match based on its type.
  */
 public class JoinMatchByType implements ToServerMessage {
-    MatchType matchType;
+    private final MatchType matchType;
 
     /**
      * Constructor JoinMatchByType creates a new instance of JoinMatchByType.

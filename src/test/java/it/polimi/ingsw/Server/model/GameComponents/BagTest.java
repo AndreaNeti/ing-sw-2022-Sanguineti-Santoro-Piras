@@ -9,25 +9,26 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class BagTest {
-    byte nStudentPerColor = 24;
-    Bag bag = new Bag(nStudentPerColor);
+    private final byte nStudentPerColor = 24;
+    private final Bag bag = new Bag(nStudentPerColor);
 
     @Test
     void constructorTest() {
 
         assertEquals(bag.howManyStudents(), nStudentPerColor * Color.values().length);
         for (Color c : Color.values()) {
-            assertFalse(bag.canAddStudents(c,(byte) 1));
-            assertTrue(bag.canAddStudents(c,(byte) 0));
-            assertEquals(bag.howManyStudents(c),nStudentPerColor);
+            assertFalse(bag.canAddStudents(c, (byte) 1));
+            assertTrue(bag.canAddStudents(c, (byte) 0));
+            assertEquals(bag.howManyStudents(c), nStudentPerColor);
         }
-        assertEquals(bag.getMaxStudents(),nStudentPerColor * Color.values().length);
-        assertEquals(bag.getId(),69);
+        assertEquals(bag.getMaxStudents(), nStudentPerColor * Color.values().length);
+        assertEquals(bag.getId(), 69);
 
     }
 
-    GameComponent island = new Island((byte) 2);
-    GameComponent cloud = new Cloud(2, (byte) -1);
+    private final GameComponent island = new Island((byte) 2);
+    private final GameComponent cloud = new Cloud(2, (byte) -1);
+
     @Test
     void drawStudentAndRefilledTest() {
         try {

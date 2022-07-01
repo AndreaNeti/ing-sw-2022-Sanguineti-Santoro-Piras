@@ -15,9 +15,9 @@ import java.util.Objects;
 import static org.junit.jupiter.api.Assertions.*;
 
 class TeamTest {
-    Team t = new Team(HouseColor.GREY, (byte) 2, (byte) 6);
-    MatchConstants matchConstants = Server.getMatchConstants(new MatchType((byte) 2, true));
-    Player p;
+    private final Team t = new Team(HouseColor.GREY, (byte) 2, (byte) 6);
+    private final MatchConstants matchConstants = Server.getMatchConstants(new MatchType((byte) 2, true));
+    private Player p;
 
     {
         try {

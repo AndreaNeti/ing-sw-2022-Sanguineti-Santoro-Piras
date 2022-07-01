@@ -10,10 +10,10 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class IslandTest {
-    Island island = new Island((byte) 2);
-    Island island1 = new Island((byte) 3);
-    Team t = new Team(HouseColor.BLACK, (byte) 2, (byte) 8);
-    Bag bag = new Bag((byte) 20);
+    private final Island island = new Island((byte) 2);
+    private final Island island1 = new Island((byte) 3);
+    private final Team t = new Team(HouseColor.BLACK, (byte) 2, (byte) 8);
+    private final Bag bag = new Bag((byte) 20);
 
 
     @Test

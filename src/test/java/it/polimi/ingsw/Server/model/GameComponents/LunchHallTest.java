@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class LunchHallTest {
-    Bag bag = new Bag((byte) 20);
+    private final Bag bag = new Bag((byte) 20);
 
     @Test
     void lunchHallTest() {

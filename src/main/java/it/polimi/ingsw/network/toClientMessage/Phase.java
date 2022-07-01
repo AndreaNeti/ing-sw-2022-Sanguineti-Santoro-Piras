@@ -8,8 +8,8 @@ import it.polimi.ingsw.Util.GamePhase;
  * Phase is send also every time there is an error
  */
 public class Phase implements ToClientMessage {
-    final GamePhase gamePhase;
-    byte currentPlayer;
+    private final GamePhase gamePhase;
+    private final byte currentPlayer;
 
     /**
      * Constructor Phase creates a new instance of Phase.

@@ -3,7 +3,6 @@ package it.polimi.ingsw.Client.model.CharacterClientLogic;
 import it.polimi.ingsw.Client.View.Cli.ViewForCharacterCli;
 import it.polimi.ingsw.Client.View.Gui.ViewGUI;
 import it.polimi.ingsw.Server.model.CharacterServerLogic.Char1;
-import it.polimi.ingsw.exceptions.clientExceptions.SkipCommandException;
 
 import java.util.List;
 
@@ -21,7 +20,7 @@ public class Char1Client implements CharacterClientLogicInterface {
     }
 
     @Override
-    public void setNextInput(ViewForCharacterCli view) throws SkipCommandException {
+    public void setNextInput(ViewForCharacterCli view) {
 
     }
 

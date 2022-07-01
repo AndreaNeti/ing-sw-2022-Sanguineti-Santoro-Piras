@@ -10,7 +10,7 @@ import java.io.Serializable;
  * @param isExpert of type {@code boolean} - boolean to describe if the game is expert (coins and character cards logic) or not.
  */
 public record MatchType(byte nPlayers, boolean isExpert) implements Serializable {
-    public static byte MAX_PLAYERS = 4;
+    public static final byte MAX_PLAYERS = 4;
 
     /**
      * Constructor MatchType creates a new instance of MatchType.

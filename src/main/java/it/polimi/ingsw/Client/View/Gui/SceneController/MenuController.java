@@ -48,7 +48,9 @@ public class MenuController implements SceneController {
     private ObservableList<String> observableListChat;
     private ObservableList<String> playersInLobbyList;
 
-
+    /**
+     * Method initialize creates and sets elements in the scene
+     */
     private void initialize() {
         hideEverything();
         chatButton.setOnAction(actionEvent -> chat.setVisible(!chat.isVisible()));
@@ -106,7 +108,7 @@ public class MenuController implements SceneController {
     @Override
     public Node getElementById(String id) {
 
-        //toggle group are not a node but i'll make them return the selected radio button
+        // toggle group are not a node, but I'll make them return the selected radio button
         if (id.equals("#gameType")) {
             return (RadioButton) gameType.getSelectedToggle();
         }

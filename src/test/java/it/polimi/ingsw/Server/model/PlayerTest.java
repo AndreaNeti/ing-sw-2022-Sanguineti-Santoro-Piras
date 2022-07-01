@@ -14,15 +14,15 @@ import java.util.Objects;
 import static org.junit.jupiter.api.Assertions.*;
 
 class PlayerTest {
-    MatchConstants matchConstants = Server.getMatchConstants(new MatchType((byte) 2, false));
-    Team t = new Team(HouseColor.WHITE, (byte) 2, (byte) 2);
-    Team t1 = new Team(HouseColor.BLACK, (byte) 1, (byte) 2);
-    Player p, p1;
-    List<AssistantCard> assistantCardList = new ArrayList<>(11);
+    private final MatchConstants matchConstants = Server.getMatchConstants(new MatchType((byte) 2, false));
+    private final Team t = new Team(HouseColor.WHITE, (byte) 2, (byte) 2);
+    private Player p, p1;
+    private final List<AssistantCard> assistantCardList = new ArrayList<>(11);
 
     public PlayerTest() {
         try {
             p = new Player("Franco", t, Wizard.AIRMAGE, matchConstants);
+            Team t1 = new Team(HouseColor.BLACK, (byte) 1, (byte) 2);
             p1 = new Player("Gigi", t1, Wizard.WOODMAGE, matchConstants);
         } catch (GameException e) {
             fail(e);

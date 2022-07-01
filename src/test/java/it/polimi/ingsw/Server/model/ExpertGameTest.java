@@ -16,11 +16,12 @@ import java.util.Objects;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class ExpertGameTest {
-    Team t1, t2, t3;
-    ArrayList<Team> teamList2, teamList3, teamList4;
-    Player p1_2, p2_2, p1_3, p2_3, p3_3, p1_4, p2_4, p3_4, p4_4;
-    ArrayList<Player> players2, players3, players4;
-    ExpertGame gameWith2, gameWith3, gameWith4;
+    private Team t1, t2;
+    private final Team t3;
+    private final ArrayList<Team> teamList2, teamList3, teamList4;
+    private Player p1_2, p2_2, p1_3, p2_3, p3_3, p1_4, p2_4, p3_4, p4_4;
+    private final ArrayList<Player> players2, players3, players4;
+    private final ExpertGame gameWith2, gameWith3, gameWith4;
 
     //constructor of expert game
     public ExpertGameTest() {
@@ -211,7 +212,7 @@ public class ExpertGameTest {
 
     @Test
     void playCharacterTest() {
-        assertThrows(NotAllowedException.class, () -> gameWith2.playCharacter(), "Cannot play character card");
+        assertThrows(NotAllowedException.class, gameWith2::playCharacter, "Cannot play character card");
         gameWith2.setCurrentPlayer(p1_2);
         try {
             for (Color color : Color.values()) {
@@ -239,7 +240,7 @@ public class ExpertGameTest {
         } catch (GameException e) {
             fail(e);
         }
-        assertThrows(NotAllowedException.class, () -> gameWith2.playCharacter());
+        assertThrows(NotAllowedException.class, gameWith2::playCharacter);
         try {
             for (int i = 0; i < 5; i++)
                 inputs.add(i);
@@ -247,7 +248,7 @@ public class ExpertGameTest {
         } catch (GameException e) {
             fail(e);
         }
-        assertThrows(NotAllowedException.class, () -> gameWith2.playCharacter());
+        assertThrows(NotAllowedException.class, gameWith2::playCharacter);
         try {
             for (int i = 0; i < 10; i++)
                 inputs.add(i);
@@ -255,7 +256,7 @@ public class ExpertGameTest {
         } catch (GameException e) {
             fail(e);
         }
-        assertThrows(NotAllowedException.class, () -> gameWith2.playCharacter());
+        assertThrows(NotAllowedException.class, gameWith2::playCharacter);
         try {
             gameWith2.playCharacter();
         } catch (GameException | EndGameException e) {
@@ -281,7 +282,7 @@ public class ExpertGameTest {
                 fail(gameWith2.transformAllGameInDelta().getCharacters().toString());
         }
 
-        assertThrows(NotAllowedException.class, () -> gameWith2.playCharacter(), "Cannot play character card");
+        assertThrows(NotAllowedException.class, gameWith2::playCharacter, "Cannot play character card");
     }
 
     @Test

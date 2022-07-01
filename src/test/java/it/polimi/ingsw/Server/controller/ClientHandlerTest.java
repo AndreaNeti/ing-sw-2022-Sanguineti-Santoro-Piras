@@ -40,8 +40,8 @@ class ClientHandlerTest {
         PipedInputStream mockInputStream1 = mock(PipedInputStream.class);
         PipedInputStream mockInputStream2 = mock(PipedInputStream.class);
 
-        // each client handler's outputstream is a mock outputstream connected to a mock inputstream
-        // each client handler's inputstream is connected to an outputstream that doesnt write anything in order to avoid saturating the
+        // each client handler's output stream is a mock output stream connected to a mock input stream
+        // each client handler's input stream is connected to an output stream that doesn't write anything in order to avoid saturating the
         // input stream buffer
         try {
             inputStream1.connect(outputStream1);

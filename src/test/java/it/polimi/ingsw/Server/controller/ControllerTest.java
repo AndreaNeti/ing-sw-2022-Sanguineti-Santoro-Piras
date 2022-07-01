@@ -16,9 +16,9 @@ import static org.mockito.Mockito.mock;
 
 
 class ControllerTest {
-    Controller controllerExpert, controllerExpert2, controllerNormal;
-    ClientHandler p1, p2, p3, p4;
-    List<AssistantCard> assistantCardList = new ArrayList<>(11);
+    private final Controller controllerExpert, controllerExpert2, controllerNormal;
+    private final ClientHandler p1, p2, p3, p4;
+    private final List<AssistantCard> assistantCardList = new ArrayList<>(11);
 
     public ControllerTest() {
         controllerExpert = new Controller(new MatchType((byte) 4, true), 69L);
@@ -258,7 +258,7 @@ class ControllerTest {
 
     @Test
     void playCharacterTest() {
-        assertThrows(GameException.class, () -> controllerExpert2.playCharacter(), "Not in action phase");
+        assertThrows(GameException.class, controllerExpert2::playCharacter, "Not in action phase");
         chooseCharacterTest();
         // rare case where game ends before being able to play any card, skip this test.
         if(controllerExpert2.isGameFinished())
@@ -289,7 +289,7 @@ class ControllerTest {
             }
             if (!worked && controllerExpert2.isGameFinished()) fail(e);
         }
-        assertThrows(GameException.class, () -> controllerExpert2.playCharacter(), "A card has already been played this turn");
+        assertThrows(GameException.class, controllerExpert2::playCharacter, "A card has already been played this turn");
     }
 
     @Test

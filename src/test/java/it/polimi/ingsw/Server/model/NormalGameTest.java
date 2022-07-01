@@ -18,12 +18,12 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class NormalGameTest {
-    Team t1, t2, t3;
-    ArrayList<Team> teamList2, teamList3, teamList4;
-    Player p1_2, p2_2, p1_3, p2_3, p3_3, p1_4, p2_4, p3_4, p4_4;
-    ArrayList<Player> players2, players3, players4;
-    NormalGame gameWith2, gameWith3, gameWith4;
-    List<AssistantCard> assistantCardList = new ArrayList<>(11);
+    private Team t1, t2;
+    private final ArrayList<Team> teamList2, teamList3, teamList4;
+    private Player p1_2, p2_2, p1_3, p2_3, p3_3, p1_4, p2_4, p3_4, p4_4;
+    private final ArrayList<Player> players2, players3, players4;
+    private final NormalGame gameWith2, gameWith3, gameWith4;
+    private final List<AssistantCard> assistantCardList = new ArrayList<>(11);
 
     //constructor of game
     public NormalGameTest() {
@@ -81,7 +81,7 @@ public class NormalGameTest {
         matchConstants = Server.getMatchConstants(matchType);
         t1 = new Team(HouseColor.BLACK, (byte) 2, (byte) 6);
         t2 = new Team(HouseColor.WHITE, (byte) 2, (byte) 6);
-        t3 = new Team(HouseColor.GREY, (byte) 1, (byte) 6);
+        Team t3 = new Team(HouseColor.GREY, (byte) 1, (byte) 6);
         teamList3 = new ArrayList<>(3);
         teamList3.add(t1);
         teamList3.add(t2);
@@ -512,7 +512,7 @@ public class NormalGameTest {
 
     @Test
     void playCharacter() {
-        assertThrows(NotExpertGameException.class, () -> gameWith2.playCharacter());
+        assertThrows(NotExpertGameException.class, gameWith2::playCharacter);
     }
 
 }

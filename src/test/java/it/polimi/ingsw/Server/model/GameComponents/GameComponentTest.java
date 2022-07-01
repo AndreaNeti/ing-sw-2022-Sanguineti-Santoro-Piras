@@ -10,11 +10,12 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class GameComponentTest {
-    Bag bag = new Bag((byte) 2);
-    GameComponent island = new Island((byte) 3);
-    GameComponent cloud = new Cloud(4, (byte)-3);
-    GameComponent island1 = new Island((byte ) 4);
-    GameComponent island2 = new Island((byte) 6);
+    private Bag bag = new Bag((byte) 2);
+    private final GameComponent island = new Island((byte) 3);
+    private final GameComponent cloud = new Cloud(4, (byte) -3);
+    private final GameComponent island1 = new Island((byte) 4);
+    private final GameComponent island2 = new Island((byte) 6);
+
     @Test
     public void testMoveStudents() {
         try {

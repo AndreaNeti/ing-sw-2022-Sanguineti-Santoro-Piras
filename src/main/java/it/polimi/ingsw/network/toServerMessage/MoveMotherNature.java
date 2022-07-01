@@ -10,7 +10,7 @@ import it.polimi.ingsw.exceptions.serverExceptions.NotAllowedException;
  * MoveMotherNature class is used by the client to move mother nature a selected amount of moves.
  */
 public class MoveMotherNature implements ToServerMessage {
-    int moves;
+    private final int moves;
 
     /**
      * Constructor MoveMotherNature creates a new instance of MoveMotherNature.

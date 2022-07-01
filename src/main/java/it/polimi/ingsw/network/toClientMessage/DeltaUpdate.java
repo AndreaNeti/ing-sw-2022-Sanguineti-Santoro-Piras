@@ -7,7 +7,7 @@ import it.polimi.ingsw.network.GameDelta;
  * DeltaUpdate class is used to update the client with a new game delta.
  */
 public class DeltaUpdate implements ToClientMessage {
-    GameDelta gameDelta;
+    private final GameDelta gameDelta;
 
     /**
      * Constructor DeltaUpdate creates a new instance of DeltaUpdate.

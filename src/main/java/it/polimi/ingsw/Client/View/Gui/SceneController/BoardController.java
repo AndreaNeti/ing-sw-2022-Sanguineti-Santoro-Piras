@@ -48,9 +48,9 @@ public class BoardController implements SceneController {
     public HBox assistantCardsBox;
     private ObservableList<String> observableListChat;
     public HBox clouds;
-    public Set<Node> clickableElement = new HashSet<>();
-    public Set<Node> visibleElement = new HashSet<>();
-    public Set<Node> selectedElement = new HashSet<>();
+    public final Set<Node> clickableElement = new HashSet<>();
+    public final Set<Node> visibleElement = new HashSet<>();
+    public final Set<Node> selectedElement = new HashSet<>();
     private final HashMap<Node, Timeline> timelines = new HashMap<>();
 
     /**

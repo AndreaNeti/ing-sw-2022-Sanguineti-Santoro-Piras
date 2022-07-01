@@ -8,7 +8,7 @@ public class NotAllowedException extends GameException {
     private final String message;
 
     /**
-     * Constructor NotAllowedException creates a new intance of NotAllowedException.
+     * Constructor NotAllowedException creates a new instance of NotAllowedException.
      *
      * @param errorMessage of type {@code String} - text message that describes the error.
      */
