@@ -2,7 +2,6 @@ package it.polimi.ingsw.Client.model;
 
 import it.polimi.ingsw.Client.GameClientListened;
 import it.polimi.ingsw.Client.model.CharacterClientLogic.*;
-import it.polimi.ingsw.Util.CharacterCardDataInterface;
 import it.polimi.ingsw.Server.model.ExpertGame;
 import it.polimi.ingsw.Server.model.GameComponents.GameComponent;
 import it.polimi.ingsw.Server.model.NormalGame;

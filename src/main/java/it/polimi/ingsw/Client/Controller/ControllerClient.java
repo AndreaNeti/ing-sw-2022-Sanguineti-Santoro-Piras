@@ -8,7 +8,6 @@ import it.polimi.ingsw.Client.model.PlayerClient;
 import it.polimi.ingsw.Client.model.TeamClient;
 import it.polimi.ingsw.Server.controller.Controller;
 import it.polimi.ingsw.Server.controller.Server;
-import it.polimi.ingsw.Util.CharacterCardDataInterface;
 import it.polimi.ingsw.Server.model.GameComponents.GameComponent;
 import it.polimi.ingsw.Server.model.Player;
 import it.polimi.ingsw.Server.model.Team;

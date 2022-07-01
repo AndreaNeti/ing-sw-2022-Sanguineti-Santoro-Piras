@@ -2,7 +2,6 @@ package it.polimi.ingsw.Client.model.CharacterClientLogic;
 
 import it.polimi.ingsw.Client.View.Cli.ViewForCharacterCli;
 import it.polimi.ingsw.Client.View.Gui.ViewGUI;
-import it.polimi.ingsw.Client.model.GameComponentClient;
 import it.polimi.ingsw.Server.model.CharacterServerLogic.Char10;
 import it.polimi.ingsw.Util.Color;
 import it.polimi.ingsw.exceptions.clientExceptions.SkipCommandException;
