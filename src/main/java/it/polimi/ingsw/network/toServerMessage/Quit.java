@@ -1,6 +1,6 @@
 package it.polimi.ingsw.network.toServerMessage;
 
-import it.polimi.ingsw.Server.controller.ClientHandler;
+import it.polimi.ingsw.server.controller.ClientHandler;
 
 /**
  * Quit class is used to make the client quit from the game or close the socket connection to quit the application.

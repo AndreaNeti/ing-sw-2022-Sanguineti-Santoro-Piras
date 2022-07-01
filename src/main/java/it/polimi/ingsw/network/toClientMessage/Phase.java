@@ -1,7 +1,7 @@
 package it.polimi.ingsw.network.toClientMessage;
 
-import it.polimi.ingsw.Client.Controller.ControllerClient;
-import it.polimi.ingsw.Util.GamePhase;
+import it.polimi.ingsw.client.Controller.ControllerClient;
+import it.polimi.ingsw.util.GamePhase;
 
 /**
  * Phase class is used to send info about the current player and the game phase he is currently playing to the client.

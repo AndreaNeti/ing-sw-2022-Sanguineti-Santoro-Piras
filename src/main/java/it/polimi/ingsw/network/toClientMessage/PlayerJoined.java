@@ -1,8 +1,8 @@
 package it.polimi.ingsw.network.toClientMessage;
 
-import it.polimi.ingsw.Client.Controller.ControllerClient;
-import it.polimi.ingsw.Server.model.Player;
-import it.polimi.ingsw.Util.HouseColor;
+import it.polimi.ingsw.client.Controller.ControllerClient;
+import it.polimi.ingsw.server.model.Player;
+import it.polimi.ingsw.util.HouseColor;
 
 /**
  * PlayerJoined class is used to send info about the player that just joined the match to the client.

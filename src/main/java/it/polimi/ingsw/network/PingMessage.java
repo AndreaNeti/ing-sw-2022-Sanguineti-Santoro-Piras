@@ -1,7 +1,7 @@
 package it.polimi.ingsw.network;
 
-import it.polimi.ingsw.Client.Controller.ControllerClient;
-import it.polimi.ingsw.Server.controller.ClientHandler;
+import it.polimi.ingsw.client.Controller.ControllerClient;
+import it.polimi.ingsw.server.controller.ClientHandler;
 import it.polimi.ingsw.network.toClientMessage.ToClientMessage;
 import it.polimi.ingsw.network.toServerMessage.ToServerMessage;
 

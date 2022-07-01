@@ -1,6 +1,6 @@
 package it.polimi.ingsw.network.toClientMessage;
 
-import it.polimi.ingsw.Client.Controller.ControllerClient;
+import it.polimi.ingsw.client.Controller.ControllerClient;
 
 /**
  * TextMessageCS class is used to send a text message from the server to the client.

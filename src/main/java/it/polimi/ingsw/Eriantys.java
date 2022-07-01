@@ -1,8 +1,8 @@
 package it.polimi.ingsw;
 
-import it.polimi.ingsw.Client.AppCLI;
-import it.polimi.ingsw.Client.AppGUI;
-import it.polimi.ingsw.Server.controller.Server;
+import it.polimi.ingsw.client.AppCLI;
+import it.polimi.ingsw.client.AppGUI;
+import it.polimi.ingsw.server.controller.Server;
 
 public class Eriantys {
     public static void main(String[] args) {

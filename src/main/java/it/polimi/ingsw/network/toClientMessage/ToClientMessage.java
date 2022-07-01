@@ -1,6 +1,6 @@
 package it.polimi.ingsw.network.toClientMessage;
 
-import it.polimi.ingsw.Client.Controller.ControllerClient;
+import it.polimi.ingsw.client.Controller.ControllerClient;
 
 import java.io.Serializable;
 

@@ -1,6 +1,6 @@
 package it.polimi.ingsw.network.toServerMessage;
 
-import it.polimi.ingsw.Server.controller.ClientHandler;
+import it.polimi.ingsw.server.controller.ClientHandler;
 import it.polimi.ingsw.exceptions.serverExceptions.GameException;
 import it.polimi.ingsw.exceptions.serverExceptions.NotAllowedException;
 
