@@ -13,7 +13,8 @@ import it.polimi.ingsw.exceptions.clientExceptions.SkipCommandException;
 import java.util.*;
 
 /**
- *
+ * ViewCLI class represents the CLI view that allows the user to interact with the client. <br>
+ * It contains methods to visualize the game and to requests inputs from the user.
  */
 public class ViewCli extends AbstractView implements ViewForCharacterCli {
     private ClientPhase phaseToExecute;

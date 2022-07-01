@@ -4,7 +4,7 @@ import it.polimi.ingsw.Util.Color;
 import it.polimi.ingsw.exceptions.clientExceptions.SkipCommandException;
 
 /**
- * ViewForCharacterCli interface is a view with only functions required by character cards to add inputs to them.
+ * ViewForCharacterCli interface is a CLI view with only functions required by character cards to add inputs to them.
  */
 public interface ViewForCharacterCli {
 

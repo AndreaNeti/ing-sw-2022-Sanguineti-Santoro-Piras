@@ -21,10 +21,18 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
-
+/**
+ * ViewCLI class represents the GUI view that allows the user to interact with the client. <br>
+ * It contains methods to modify the graphical components and interact with them in order to obtain inputs from the user.
+ */
 public class ViewGUI extends AbstractView {
     private ClientPhase phaseToExecute;
 
+    /**
+     * Constructor ViewGUI creates a new instance of ViewGUI.
+     *
+     * @param controllerClient of type {@link ControllerClient} - instance of the client's controller.
+     */
     public ViewGUI(ControllerClient controllerClient) {
         super(controllerClient);
     }
@@ -47,6 +55,11 @@ public class ViewGUI extends AbstractView {
         if (canQuit()) Platform.exit();
     }
 
+    /**
+     * Method enableEntrance enables the entrance hall, adding the provided event handler to its students on the mouse clicked event.
+     *
+     * @param event of type {@code EventHandler}<{@code MouseEvent}> - function that will be executed when a student is clicked.
+     */
     public void enableEntrance(EventHandler<MouseEvent> event) {
         SceneController sceneController = GuiFX.getActiveSceneController();
         //entranceHall is the second children
@@ -58,6 +71,11 @@ public class ViewGUI extends AbstractView {
         }
     }
 
+    /**
+     * Method enableIslands enables the islands, adding the provided event handler to them on the mouse clicked event.
+     *
+     * @param event of type {@code EventHandler}<{@code MouseEvent}> - function that will be executed when an island is clicked.
+     */
     public void enableIslands(EventHandler<MouseEvent> event) {
         SceneController sceneController = GuiFX.getActiveSceneController();
         for (byte id = (byte) (2 * MatchType.MAX_PLAYERS); id < 2 * MatchType.MAX_PLAYERS + 12; id++) {
@@ -67,8 +85,12 @@ public class ViewGUI extends AbstractView {
         }
     }
 
+    /**
+     * Method enableChooseCharacter enables the buttons to choose the character cards, adding the provided event handler to them on the mouse clicked event.
+     *
+     * @param event of type {@code EventHandler}<{@code MouseEvent}> - function that will be executed when the button to choose a character card is clicked.
+     */
     public void enableChooseCharacter(EventHandler<MouseEvent> event) {
-
         SceneController sceneController = GuiFX.getActiveSceneController();
         for (Node n : ((HBox) sceneController.getElementById("#characters")).getChildren()) {
             AnchorPane singleChar = (AnchorPane) n;
@@ -78,6 +100,11 @@ public class ViewGUI extends AbstractView {
         }
     }
 
+    /**
+     * Method enableStudentsOnCharacter enables the students of a character card, adding the provided event handler to them on the mouse clicked event.
+     *
+     * @param event of type {@code EventHandler}<{@code MouseEvent}> - function that will be executed when a student is clicked.
+     */
     public void enableStudentsOnCharacter(int idChar, EventHandler<MouseEvent> event) {
         SceneController sceneController = GuiFX.getActiveSceneController();
         AnchorPane paneStudent = (AnchorPane) ((AnchorPane) sceneController.getElementById("#" + idChar)).getChildren().get(1);
@@ -88,6 +115,11 @@ public class ViewGUI extends AbstractView {
         }
     }
 
+    /**
+     * Method enableColorBox enables the box to select colors, adding the provided event handler to them on the mouse clicked event.
+     *
+     * @param event of type {@code EventHandler}<{@code MouseEvent}> - function that will be executed when a color is clicked.
+     */
     public void enableColorBox(EventHandler<MouseEvent> event) {
 
         SceneController sceneController = GuiFX.getActiveSceneController();
@@ -99,6 +131,11 @@ public class ViewGUI extends AbstractView {
         }
     }
 
+    /**
+     * Method enableEntrance enables the students of the entrance hall, adding the provided event handler to them on the mouse clicked event.
+     *
+     * @param event of type {@code EventHandler}<{@code MouseEvent}> - function that will be executed when a student is clicked.
+     */
     public void enableStudentsLunchHall(EventHandler<MouseEvent> event) {
         SceneController sceneController = GuiFX.getActiveSceneController();
         //lunchHall is the third child of lunchHall
@@ -111,12 +148,20 @@ public class ViewGUI extends AbstractView {
         }
     }
 
-    //this update the assistant box with the card of local player
+    /**
+     * Method updateAssistantBox updates the assistant box of the client's player and makes it visible. <br>
+     */
     public void updateAssistantBox() {
         updateAssistantBox(this.getModel().getPlayers().get(getModel().getMyWizard().ordinal()));
     }
 
 
+    /**
+     * Method updateAssistantBox updates the assistant box of the provided player and makes it visible. <br>
+     * If the player provided is equal to the client's player and is currently its turn the event handler on mouse clicked is added on each card available.
+     *
+     * @param playerClient of type {@link PlayerClient} - instance of the player of which the assistant box is shown.
+     */
     public void updateAssistantBox(PlayerClient playerClient) {
         SceneController sceneController = GuiFX.getActiveSceneController();
 
