@@ -64,7 +64,7 @@ public interface GameClientListener {
      * Method updateMembers updates new list of member in the game.
      *
      * @param membersLeftToStart of type {@code int} - updated amount of players left before the game starts.
-     * @param playerJoined   of type {@code PlayerClient} - the player that just joined the game.
+     * @param playerJoined       of type {@code PlayerClient} - the player that just joined the game.
      */
     void updateMembers(int membersLeftToStart, PlayerClient playerJoined);
 
@@ -72,8 +72,8 @@ public interface GameClientListener {
      * Method updateMatchInfo sets the Match info when you join a match
      *
      * @param matchType of type {@code MatchType} - a record telling you in which type of match you joined.
-     * @param constants   of type {@code MatchConstants} - a record of constants used during the match.
-     * @param teams of type {@code List}<{@link TeamClient}> - list of teams already in lobby.
+     * @param constants of type {@code MatchConstants} - a record of constants used during the match.
+     * @param teams     of type {@code List}<{@link TeamClient}> - list of teams already in lobby.
      */
     void updateMatchInfo(MatchType matchType, MatchConstants constants, List<TeamClient> teams);
 
@@ -142,7 +142,17 @@ public interface GameClientListener {
      */
     void updateProhibitions(Byte newProhibitions);
 
+    /**
+     * Method updateError notifies a new error.
+     *
+     * @param error of type {@code String} - the error message.
+     */
     void updateError(String error);
 
+    /**
+     * Method updateCurrentPlayer updates the new current player.
+     *
+     * @param newCurrentPlayer of type {@code byte} - the new current player id.
+     */
     void updateCurrentPlayer(byte newCurrentPlayer);
 }

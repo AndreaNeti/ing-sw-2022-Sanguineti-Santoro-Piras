@@ -53,7 +53,9 @@ public class BoardController implements SceneController {
     public Set<Node> selectedElement = new HashSet<>();
     private final HashMap<Node, Timeline> timelines = new HashMap<>();
 
-
+    /**
+     * Method initialize creates and sets elements in the scene
+     */
     private void initialize() {
         //create and initialize chat
         chatButton.setOnAction(actionEvent -> chat.setVisible(!chat.isVisible()));
@@ -254,6 +256,7 @@ public class BoardController implements SceneController {
     }
 
     //to enable a node use this function-> this is needed so there is an eay way to disable all the element
+    @Override
     public void enableNode(Node node, boolean addVisibility) {
         node.setDisable(false);
         clickableElement.add(node);
@@ -355,6 +358,12 @@ public class BoardController implements SceneController {
         });
     }
 
+    /**
+     * Method updateGeneric is used to update generic nodes containing students (ex. character cards and islands)
+     *
+     * @param component of type {@code GameComponentClient} - is the updated component.
+     * @param nodeID    of type {@code int} - is the id of the Node to update (used if it's different from the component's id).
+     */
     private void updateGeneric(GameComponentClient component, int nodeID) {
         //a game component usually has an anchor pane for himself that contains an image( children 0), an anchor pane with all the students
         //this anchor pane has an anchor pane for all colors-> this contains an image view (children 0) and a label for the number of students
@@ -368,10 +377,20 @@ public class BoardController implements SceneController {
         }
     }
 
+    /**
+     * Method updateGeneric is used to update generic nodes in the scene containing students (ex. character cards and islands)
+     *
+     * @param component of type {@code GameComponentClient} - is the updated component.
+     */
     private void updateGeneric(GameComponentClient component) {
         updateGeneric(component, component.getId());
     }
 
+    /**
+     * Method updateCloud is used to update clouds in the scene
+     *
+     * @param cloud of type {@code GameComponentClient} - is the updated cloud component.
+     */
     private void updateCloud(GameComponentClient cloud) {
         //"clouds" contains 4 children: one for cloud
         //each cloud has an image[0] and an anchor pane for students [1]
@@ -396,6 +415,11 @@ public class BoardController implements SceneController {
 
     }
 
+    /**
+     * Method updateEntranceHall is used to update entranceHalls in the scene
+     *
+     * @param entranceHall of type {@code GameComponentClient} - is the updated entranceHall component.
+     */
     private void updateEntranceHall(GameComponentClient entranceHall) {
         byte[] students = entranceHall.getStudents();
         AnchorPane paneEntrance = (AnchorPane) getElementById("#" + entranceHall.getId());
@@ -416,6 +440,11 @@ public class BoardController implements SceneController {
         }
     }
 
+    /**
+     * Method updateLunchHall is used to update lunchHalls in the scene
+     *
+     * @param lunchHall of type {@code GameComponentClient} - is the updated lunchHall component.
+     */
     private void updateLunchHall(GameComponentClient lunchHall) {
         VBox paneLunchHall = (VBox) getElementById("#" + lunchHall.getId());
         HBox hBox;
@@ -654,6 +683,11 @@ public class BoardController implements SceneController {
         });
     }
 
+    /**
+     * Method getMotherNature creates an {@code ImageView} representing mother nature
+     *
+     * @return {@code ImageView} - the mother nature's {@code ImageView}.
+     */
     private ImageView getMotherNature() {
         ImageView mn = new ImageView("Graphical_Assets/MotherNature.png");
         mn.setFitWidth(50.0);
@@ -667,6 +701,12 @@ public class BoardController implements SceneController {
         return mn;
     }
 
+    /**
+     * Method getTower creates an {@code ImageView} representing a tower
+     *
+     * @param houseColor {@code HouseColor} - the tower's color
+     * @return {@code ImageView} - the tower's {@code ImageView}.
+     */
     private ImageView getTower(HouseColor houseColor) {
         ImageView tower = new ImageView("Graphical_Assets/Towers/" + houseColor + ".png");
         tower.getStyleClass().add("tower");
@@ -677,6 +717,12 @@ public class BoardController implements SceneController {
         return tower;
     }
 
+    /**
+     * Method getCenterArchipelagoId retrieves the id of the island in the center of the archipelago
+     *
+     * @param island {@code IslandClient} - the island representing the archipelago
+     * @return {@code int} - the id of the island in the center of the archipelago.
+     */
     private int getCenterArchipelagoId(IslandClient island) {
         // love RB trees
         TreeSet<Integer> containedIslands = (TreeSet<Integer>) getElementById("#" + island.getId()).getProperties().get("containedIslands");
