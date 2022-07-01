@@ -247,7 +247,7 @@ public class CliPrinter implements GameClientListener {
         if (expert) {
             // print cost of character cards and students if there's any
             for (CharacterCardClient ch : game.getCharacters()) {
-                GameComponentClient gc = view.getModel().getComponentOfCharacter(ch.getCharId());
+                GameComponentClient gc = game.getComponentOfCharacter(ch.getCharId());
                 boardsCharChatPrint.append("\t\u2502 Cost: ").append(ch.getCost()).append("  ");
                 if (ch.hasStudents())
                     boardsCharChatPrint.append("\u2502  \u001b[41;1m ").append((gc.howManyStudents(Color.RED))).append(" \u001b[0m  \u2502");
@@ -260,7 +260,7 @@ public class CliPrinter implements GameClientListener {
         // print second row of character cards with students if present
         if (expert) {
             for (CharacterCardClient ch : game.getCharacters()) {
-                GameComponentClient gc = view.getModel().getComponentOfCharacter(ch.getCharId());
+                GameComponentClient gc = game.getComponentOfCharacter(ch.getCharId());
                 boardsCharChatPrint.append("\t\u2502          ");
                 if (ch.hasStudents())
                     boardsCharChatPrint.append("\u2502\u001b[44;1m ").append((gc).howManyStudents(Color.BLUE)).append(" \u001b[0m \u001b[43;1m ").append((gc.howManyStudents(Color.YELLOW))).append(" \u001b[0m\u2502");
@@ -285,7 +285,7 @@ public class CliPrinter implements GameClientListener {
                     if (expert) {
                         // print third row of character cards with students if present
                         for (CharacterCardClient ch : game.getCharacters()) {
-                            GameComponentClient gc = view.getModel().getComponentOfCharacter(ch.getCharId());
+                            GameComponentClient gc = game.getComponentOfCharacter(ch.getCharId());
                             if (ch.hasProhibitions())
                                 boardsCharChatPrint.append("\t\u2502   \u001b[31mX\u001b[0m: ").append(game.getProhibitionsLeft()).append("   ");
                             else boardsCharChatPrint.append("\t\u2502          ");
