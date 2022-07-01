@@ -44,7 +44,7 @@ public class GuiFX extends Application {
         viewGUI.setPhaseInView(GamePhase.INIT_PHASE,false);
 
     }
-
+    //192.168.115.81 ipAndrea
     public static void goToBoardScene() {
         if (inMenuScene) {
             controller.removeListeners();

@@ -5,6 +5,7 @@ import it.polimi.ingsw.Util.GamePhase;
 
 /**
  * Phase class is used to send info about the current player and the game phase he is currently playing to the client.
+ * Phase is send also every time there is an error
  */
 public class Phase implements ToClientMessage {
     final GamePhase gamePhase;
