@@ -152,4 +152,10 @@ class ClientHandlerTest {
     void hashTest() {
         assertEquals(Objects.hash(client1), p1.hashCode());
     }
+
+    @Test
+    void pingTest() {
+        assertDoesNotThrow(() -> p1.sendPingPong());
+    }
+
 }

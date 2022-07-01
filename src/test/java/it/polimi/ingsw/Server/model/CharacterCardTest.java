@@ -23,6 +23,8 @@ class CharacterCardTest {
     CharacterCard c0, c1, c2, c3, c4, c5, c6, c7, c8, c9, c10, c11;
     Byte charToSelect;
 
+    ArrayList<CharacterCard> cards = new ArrayList<>();
+
     public CharacterCardTest() {
         MatchType matchType = new MatchType((byte) 2, true);
         MatchConstants matchConstants = Server.getMatchConstants(matchType);
@@ -88,6 +90,44 @@ class CharacterCardTest {
         c10 = ExpertGame.factoryCharacter(10, game, characterConstants);
         assertThrows(NotAllowedException.class, () -> game.drawStudents((GameComponent) c10.getLogicCard(), (byte) ((GameComponent) c10.getLogicCard()).getMaxStudents()));
         c11 = ExpertGame.factoryCharacter(11, game, characterConstants);
+        Collections.addAll(cards, c0, c1, c2, c3, c4, c5, c6, c7, c8, c9, c10, c11);
+    }
+
+    @Test
+    void studentsAndProhibitionsTest() {
+        for (CharacterCard c : cards) {
+            if (cards.indexOf(c) == 0 || cards.indexOf(c) == 6 || cards.indexOf(c) == 10)
+                assertTrue(c.hasStudents());
+            else
+                assertFalse(c.hasStudents());
+
+            if (cards.indexOf(c) == 4)
+                assertTrue(c.hasProhibitions());
+            else
+                assertFalse(c.hasProhibitions());
+
+        }
+    }
+
+    @Test
+    void dataTest() {
+        byte id;
+        boolean used;
+        byte cost;
+        for (CharacterCard c1 : cards) {
+            for (CharacterCard c2 : cards)
+                if (cards.indexOf(c1) != cards.indexOf(c2))
+                    assertNotEquals(c1, c2);
+
+            id = c1.getCharId();
+            used = c1.isUsed();
+            cost = c1.getCost();
+            assertEquals((id + ": used = " + used + ". cost = " + cost), c1.toString());
+            c1.setUsed();
+            used = true;
+            cost ++;
+            assertEquals((id + ": used = " + used + ". cost = " + cost), c1.toString());
+        }
     }
 
     @Test
@@ -565,8 +605,10 @@ class CharacterCardTest {
             fail(e);
         }
         for (byte i = 0; i < players.size(); i++) {
-            if (oldValues[i] < 3) assertEquals(0, players.get(i).getLunchHall().howManyStudents(Color.values()[color]));
-            else assertEquals(oldValues[i] - 3, players.get(i).getLunchHall().howManyStudents(Color.values()[color]));
+            if (oldValues[i] < 3)
+                assertEquals(0, players.get(i).getLunchHall().howManyStudents(Color.values()[color]));
+            else
+                assertEquals(oldValues[i] - 3, players.get(i).getLunchHall().howManyStudents(Color.values()[color]));
         }
     }
 

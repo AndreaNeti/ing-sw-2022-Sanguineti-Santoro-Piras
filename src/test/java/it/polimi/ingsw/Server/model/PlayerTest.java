@@ -7,8 +7,11 @@ import it.polimi.ingsw.exceptions.serverExceptions.GameException;
 import it.polimi.ingsw.exceptions.serverExceptions.NotAllowedException;
 import org.junit.jupiter.api.Test;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -112,7 +115,7 @@ class PlayerTest {
 
         playedCards.add(assistantCardList.get(5));
         assertFalse(p.canPlayCard(playedCards, assistantCardList.get(5)));
-
+        playedCards.remove(0);
 
         try {
             p.useCard(assistantCardList.get(1));
@@ -129,9 +132,20 @@ class PlayerTest {
         playedCards.add(assistantCardList.get(3));
         playedCards.add(assistantCardList.get(4));
         playedCards.add(assistantCardList.get(5));
+        assertEquals(playedCards, p.getAssistantCards());
         assertTrue(p.canPlayCard(playedCards, assistantCardList.get(5)));
+        try {
+            p.useCard(assistantCardList.get(3));
+            p.useCard(assistantCardList.get(4));
+        } catch (NotAllowedException | EndGameException e) {
+            fail(e);
+        }
+        assertTrue(p.canPlayCard(playedCards, assistantCardList.get(5)));
+    }
 
-
+    @Test
+    void hashTest() {
+        assertEquals(Objects.hash(p.toString()), p.hashCode());
     }
 
 }
