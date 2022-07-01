@@ -5,7 +5,9 @@ import it.polimi.ingsw.Client.PhaseAndComand.Commands.GameCommand;
 import it.polimi.ingsw.Client.PhaseAndComand.Phases.ClientPhase;
 import it.polimi.ingsw.Client.View.AbstractView;
 import it.polimi.ingsw.Client.View.Gui.SceneController.SceneController;
+import it.polimi.ingsw.Client.model.PlayerClient;
 import it.polimi.ingsw.Util.AssistantCard;
+import it.polimi.ingsw.Util.GamePhase;
 import it.polimi.ingsw.Util.MatchType;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
@@ -109,16 +111,26 @@ public class ViewGUI extends AbstractView {
         }
     }
 
+    //this update the assistant box with the card of local player
     public void updateAssistantBox() {
-        updateAssistantBox(false);
+        updateAssistantBox(this.getModel().getPlayers().get(getModel().getMyWizard().ordinal()));
     }
 
-    public void updateAssistantBox(boolean addHandler) {
+
+    public void updateAssistantBox(PlayerClient playerClient) {
         SceneController sceneController = GuiFX.getActiveSceneController();
+
         HBox assistantCardsBox = (HBox) sceneController.getElementById("#assistantCardsBox");
-        HBox box = (HBox) ((VBox) assistantCardsBox.getChildren().get(0)).getChildren().get(1);
+        VBox content = (VBox) assistantCardsBox.getChildren().get(0);
+        HBox box = (HBox) (content).getChildren().get(1);
         box.getChildren().clear();
-        for (AssistantCard card : this.getModel().getPlayers().get(getModel().getMyWizard().ordinal()).getAssistantCards()) {
+        sceneController.hideEverything();
+        boolean condition = getModel().getCurrentPlayer().equals(playerClient) && getCurrentPhase().equals(GamePhase.PLANIFICATION_PHASE);
+        if (condition) {
+            sceneController.disableEverything();
+            sceneController.enableNode(content.getChildren().get(0), true);
+        }
+        for (AssistantCard card : playerClient.getAssistantCards()) {
             ImageView cardImage = new ImageView();
             cardImage.setImage(new Image("Graphical_Assets/AssistantCard/" + card.value() + ".png"));
             cardImage.getStyleClass().add("card");
@@ -127,7 +139,7 @@ public class ViewGUI extends AbstractView {
             cardImage.getProperties().put("cardValue", card);
             HBox.setMargin(cardImage, new Insets(20, 10, 10, 10));
             box.getChildren().add(cardImage);
-            if (addHandler) {
+            if (condition) {
                 sceneController.enableNode(cardImage);
                 cardImage.setOnMouseClicked(GameCommand.PLAY_CARD.getGUIHandler(this));
             }

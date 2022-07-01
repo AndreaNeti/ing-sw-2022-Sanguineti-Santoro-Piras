@@ -179,7 +179,7 @@ public class MenuController implements SceneController {
     }
 
     @Override
-    public void updateCardPlayed(AssistantCard playedCard) {
+    public void updateCardPlayed(AssistantCard playedCard, Wizard wizard) {
 
     }
 

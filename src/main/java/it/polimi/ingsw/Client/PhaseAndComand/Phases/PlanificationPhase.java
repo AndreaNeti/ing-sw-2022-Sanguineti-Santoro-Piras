@@ -32,10 +32,9 @@ public class PlanificationPhase extends ClientPhase {
 
         HBox assistantCardsBox = (HBox) sceneController.getElementById("#assistantCardsBox");
         assistantCardsBox.setVisible(true);
-        VBox VBox = (VBox) assistantCardsBox.getChildren().get(0);
-        viewGUI.updateAssistantBox(true);
+        viewGUI.updateAssistantBox();
         // this is the label of the vbox
-        sceneController.enableNode(VBox.getChildren().get(0), true);
+
 
     }
 

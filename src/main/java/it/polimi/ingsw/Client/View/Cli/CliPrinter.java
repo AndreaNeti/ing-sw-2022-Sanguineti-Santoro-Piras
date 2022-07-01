@@ -301,7 +301,7 @@ public class CliPrinter implements GameClientListener {
                         // print third row of character cards with students if present
                         for (CharacterCardClient ch : game.getCharacters()) {
                             GameComponentClient gc = view.getModel().getComponentOfCharacter(ch.getCharId());
-                            if (ch.toString().equals("Grandma weeds"))
+                            if (ch.hasProhibitions())
                                 boardsCharChatPrint.append("\t\u2502   \u001b[31mX\u001b[0m: ").append(game.getProhibitionsLeft()).append("   ");
                             else
                                 boardsCharChatPrint.append("\t\u2502          ");
@@ -535,9 +535,10 @@ public class CliPrinter implements GameClientListener {
      * Method updateCardPlayed not used for CliPrinter.
      *
      * @param playedCard of type {@link AssistantCard} - instance of the updated assistant card played.
+     * @param wizard     of type {@link Wizard } - wizard that played the card
      */
     @Override
-    public void updateCardPlayed(AssistantCard playedCard) {
+    public void updateCardPlayed(AssistantCard playedCard, Wizard wizard) {
 
     }
 

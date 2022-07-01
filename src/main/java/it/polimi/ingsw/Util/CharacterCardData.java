@@ -6,7 +6,7 @@ package it.polimi.ingsw.Util;
 public class CharacterCardData implements CharacterCardDataInterface {
     private final byte id, cost;
     private boolean used;
-    private final boolean hasStudents;
+    private final boolean hasStudents, hasProhibitions;
 
     /**
      * Constructor CharacterCardData creates a new instance of CharacterCardData.
@@ -14,10 +14,12 @@ public class CharacterCardData implements CharacterCardDataInterface {
      * @param id of type {@code byte} - unique ID of the card.
      * @param cost of type {@code byte} - cost of the card.
      * @param hasStudents of type {@code boolean} - boolean to check if the character card can contain students.
+     * @param hasProhibitions of type {@code boolean} - boolean to check if the character card contains prohibitions.
      */
-    CharacterCardData(byte id, byte cost, boolean hasStudents) {
+    CharacterCardData(byte id, byte cost, boolean hasStudents, boolean hasProhibitions) {
         this.id = id;
         this.cost = cost;
+        this.hasProhibitions = hasProhibitions;
         this.used = false;
         this.hasStudents = hasStudents;
     }
@@ -50,5 +52,10 @@ public class CharacterCardData implements CharacterCardDataInterface {
     @Override
     public boolean hasStudents() {
         return hasStudents;
+    }
+
+    @Override
+    public boolean hasProhibitions() {
+        return hasProhibitions;
     }
 }

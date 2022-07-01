@@ -3,6 +3,7 @@ package it.polimi.ingsw.Client;
 import it.polimi.ingsw.Client.View.GameClientListener;
 import it.polimi.ingsw.Client.model.GameComponentClient;
 import it.polimi.ingsw.Client.model.IslandClient;
+import it.polimi.ingsw.Client.model.PlayerClient;
 import it.polimi.ingsw.Util.AssistantCard;
 import it.polimi.ingsw.Util.Color;
 import it.polimi.ingsw.Util.HouseColor;
@@ -50,9 +51,9 @@ public abstract class GameClientListened {
         }
     }
 
-    public void notifyCardPlayed(AssistantCard playedCard) {
+    public void notifyCardPlayed(AssistantCard playedCard, PlayerClient currentPlayer) {
         for (GameClientListener listener : listeners) {
-            listener.updateCardPlayed(playedCard);
+            listener.updateCardPlayed(playedCard, currentPlayer.getWizard());
         }
     }
 
@@ -122,7 +123,8 @@ public abstract class GameClientListened {
             listener.updateError(error);
         }
     }
-    public void notifyCurrentPlayer(byte newCurrentPlayer){
+
+    public void notifyCurrentPlayer(byte newCurrentPlayer) {
         for (GameClientListener listener : listeners) {
             listener.updateCurrentPlayer(newCurrentPlayer);
         }

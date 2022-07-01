@@ -83,7 +83,7 @@ public class BoardController implements SceneController {
                 singleChar.getProperties().put("index", i);
                 singleChar.getProperties().put("charId", character.getCharId());
                 //this is for grandma weeds
-                if (character.getCharId() == 4) {
+                if (character.hasProhibitions()) {
                     singleChar.getChildren().get(6).setVisible(true);
                     singleChar.setId("grandmaWeeds");
                 }
@@ -185,6 +185,11 @@ public class BoardController implements SceneController {
                             AnchorPane back = (AnchorPane) assistantPane.getChildren().get(1);
                             ImageView imageView = (ImageView) back.getChildren().get(0);
                             imageView.setImage(new Image("Graphical_Assets/Wizard/" + Wizard.values()[localWizardIndex] + ".png"));
+
+                            imageView.setOnMouseClicked(mouseEvent -> {
+                                if (!assistantCardsBox.isVisible()) viewGUI.updateAssistantBox(player);
+                                assistantCardsBox.setVisible(!assistantCardsBox.isVisible());
+                            });
                         }
                         case 7 -> {
                             if (model.isExpert()) {
@@ -198,13 +203,6 @@ public class BoardController implements SceneController {
             }
         }
 
-        HBox assistantCardPane = (HBox) getElementById("#assistantCard" + viewGUI.getModel().getMyWizard());
-        AnchorPane deck = (AnchorPane) assistantCardPane.getChildren().get(1);
-        HBox assistantCardsBox = (HBox) getElementById("#assistantCardsBox");
-        deck.setOnMouseClicked(mouseEvent -> assistantCardsBox.setVisible(!assistantCardsBox.isVisible()));
-        viewGUI.updateAssistantBox();
-
-
         for (IslandClient i : model.getIslands()) {
             Node islandPane = islands.getChildren().get(i.getId() - 2 * MatchType.MAX_PLAYERS);
             islandPane.getProperties().put("relativeId", i.getId());
@@ -214,6 +212,7 @@ public class BoardController implements SceneController {
             //TODO see if there is a better way
             updateGameComponent(i);
         }
+
         updateMotherNature(model.getMotherNaturePosition());
 
         //delete all the unused clouds
@@ -237,9 +236,8 @@ public class BoardController implements SceneController {
 
     @Override
     public void hideEverything() {
-        // TODO not used
-        for (Node node : clickableElement) {
-            node.setDisable(false);
+        for (Node node : visibleElement) {
+            node.setVisible(false);
         }
     }
 
@@ -277,11 +275,11 @@ public class BoardController implements SceneController {
                 timeline.getKeyFrames().setAll(new KeyFrame(Duration.ZERO, new KeyValue(shadow.spreadProperty(), shadow.getSpread())), new KeyFrame(Duration.millis(750), new KeyValue(shadow.spreadProperty(), 0)));
                 timeline.setCycleCount(Animation.INDEFINITE);
                 timeline.setAutoReverse(true);
-                timeline.play();
+                timeline.playFromStart();
                 timelines.put(node, timeline);
             } else {
                 // already created, play from start
-                timeline.play();
+                timeline.playFromStart();
             }
         } else {
             System.err.println("Not applied effect on " + node);
@@ -301,6 +299,7 @@ public class BoardController implements SceneController {
             node.applyCss();
         }
         for (Node node : visibleElement) {
+            node.getStyleClass().remove("clickable");
             node.setVisible(false);
             node.applyCss();
         }
@@ -466,8 +465,7 @@ public class BoardController implements SceneController {
                 prohibitionsBox.setVisible(true);
                 Label prohibitionsLabel = (Label) prohibitionsBox.getChildren().get(1);
                 prohibitionsLabel.setText("× " + islandProhibitions);
-            } else
-                prohibitionsBox.setVisible(false);
+            } else prohibitionsBox.setVisible(false);
         });
     }
 
@@ -504,8 +502,7 @@ public class BoardController implements SceneController {
             paneWinnerIsland.getProperties().put("containedIslands", containedIslands);
             AnchorPane paneArchipelago = (AnchorPane) this.getElementById("#" + getCenterArchipelagoId(winnerIsland));
             // make students visible on the island where mother nature is visible
-            if (winnerIsland.getProhibitions() > 0)
-                paneArchipelago.lookup(".prohibitions").setVisible(true);
+            if (winnerIsland.getProhibitions() > 0) paneArchipelago.lookup(".prohibitions").setVisible(true);
             updateGeneric(winnerIsland, Integer.parseInt(paneArchipelago.getId()));
             paneArchipelago.getChildren().get(1).setVisible(true);
             updateMotherNature(motherNaturePosition);
@@ -563,16 +560,14 @@ public class BoardController implements SceneController {
     }
 
     @Override
-    public void updateCardPlayed(AssistantCard playedCard) {
+    public void updateCardPlayed(AssistantCard playedCard, Wizard current) {
+        System.out.println("son qui");
         Platform.runLater(() -> {
-            PlayerClient current = viewGUI.getModel().getCurrentPlayer();
-            HBox assistantPane = (HBox) getElementById("#assistantCard" + current.getWizard());
+            HBox assistantPane = (HBox) getElementById("#assistantCard" + current);
             // 0 is the pane that contain the played card
             AnchorPane played = (AnchorPane) assistantPane.getChildren().get(0);
             ImageView imageView = (ImageView) played.getChildren().get(0);
             imageView.setImage(new Image("Graphical_Assets/AssistantCard/" + playedCard.value() + ".png"));
-            if (current.getWizard() == viewGUI.getModel().getMyWizard())
-                viewGUI.updateAssistantBox();
         });
     }
 
@@ -628,8 +623,7 @@ public class BoardController implements SceneController {
         }
         winnerString.append(winners.get(i));
         String res = winnerString.toString();
-        if (winners.size() > 1)
-            GuiFX.showError("WINNERS!", "THE WINNERS OF THE GAME ARE " + res, "END MATCH!");
+        if (winners.size() > 1) GuiFX.showError("WINNERS!", "THE WINNERS OF THE GAME ARE " + res, "END MATCH!");
         else
 
             GuiFX.showError("WINNERS!", "THE WINNER OF THE GAME IS " + res, "END MATCH!");

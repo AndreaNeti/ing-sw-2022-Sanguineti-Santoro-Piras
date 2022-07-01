@@ -62,6 +62,11 @@ public final class CharacterCard implements CharacterCardDataInterface, Characte
     }
 
     @Override
+    public boolean hasProhibitions() {
+        return characterData.hasProhibitions();
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof CharacterCard that)) return false;
