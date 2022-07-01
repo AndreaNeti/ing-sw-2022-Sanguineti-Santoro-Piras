@@ -1,12 +1,29 @@
 # Eriantys - Software Engineering Project
 
-<img src="src/main/resources/Graphical_Assets/logo.jpg" width=192px height=192px align="right"  alt="Eriantyis Logo"/>
-Eriantys is the final test of "Software Engineering", course of "Computer Science Engineering" 
-held at Politecnico di Milano (2021/2022).
+<img src="src/main/resources/Graphical_Assets/logo.jpg" width=192px height=192px align="right"  alt="Eriantys Logo"/>
+
+Eriantys is the final test of **"Software Engineering"**, course of **"Computer Science Engineering"** 
+held at Politecnico di Milano (2021/2022). <br />
 
 **Professor**: Gianpaolo Cugola
 
 **Group**: GC-45
+
+**Students**: 
+- Andrea Piras (ID Number: 936909)
+- Andrea Sanguineti (ID Number: 936930)
+- Emanuele Santoro (ID Number: 933198)
+
+## Project info
+The project consists of a Java version of the board game *Eriantys*.
+
+The project includes:
+- High level uml diagram;
+- Complete uml diagram;
+- Peer Reviews of model and network of group GC-55;
+- Source code of the game implementation;
+- Source code of junit tests;
+- Compiled JAR file.
 
 ## Implemented Functionalities
 
@@ -23,6 +40,10 @@ held at Politecnico di Milano (2021/2022).
 
 ## Testing
 
+Almost all `model` and `controller` classes have a class and method coverage of 100%.
+
+**Coverage**: code lines covered.
+
 | Package    | Class          | Coverage      |
 |------------|----------------|---------------|
 | Model      | Entire Package | 94% (720/763) |
@@ -31,11 +52,6 @@ held at Politecnico di Milano (2021/2022).
 | Controller | Controller     | 90% (166/184) |
 | Controller | Server         | 72% (31/43)   | 
 
-## Students
-
-- Andrea Piras (ID Number: 936909)
-- Andrea Sanguineti (ID Number: 936930)
-- Emanuele Santoro (ID Number: 933198)
 
 ## Compile
 
