@@ -2,10 +2,9 @@ package it.polimi.ingsw.Client.View;
 
 import it.polimi.ingsw.Client.model.GameComponentClient;
 import it.polimi.ingsw.Client.model.IslandClient;
-import it.polimi.ingsw.Util.AssistantCard;
-import it.polimi.ingsw.Util.Color;
-import it.polimi.ingsw.Util.HouseColor;
-import it.polimi.ingsw.Util.Wizard;
+import it.polimi.ingsw.Client.model.PlayerClient;
+import it.polimi.ingsw.Client.model.TeamClient;
+import it.polimi.ingsw.Util.*;
 
 import java.util.List;
 
@@ -56,7 +55,7 @@ public interface GameClientListener {
     /**
      * Method updateProfessor updates the controller of a professor.
      *
-     * @param color of type {@link Color} - color of the updated professor.
+     * @param color  of type {@link Color} - color of the updated professor.
      * @param wizard of type {@link Wizard} - wizard associated with the new controller.
      */
     void updateProfessor(Color color, Wizard wizard);
@@ -65,9 +64,18 @@ public interface GameClientListener {
      * Method updateMembers updates new list of member in the game.
      *
      * @param membersLeftToStart of type {@code int} - updated amount of players left before the game starts.
-     * @param nickPlayerJoined of type {@code String} - nickname of the player that just joined the game.
+     * @param playerJoined   of type {@code PlayerClient} - the player that just joined the game.
      */
-    void updateMembers(int membersLeftToStart, String nickPlayerJoined);
+    void updateMembers(int membersLeftToStart, PlayerClient playerJoined);
+
+    /**
+     * Method updateMatchInfo sets the Match info when you join a match
+     *
+     * @param matchType of type {@code MatchType} - a record telling you in which type of match you joined.
+     * @param constants   of type {@code MatchConstants} - a record of constants used during the match.
+     * @param teams of type {@code List}<{@link TeamClient}> - list of teams already in lobby.
+     */
+    void updateMatchInfo(MatchType matchType, MatchConstants constants, List<TeamClient> teams);
 
     /**
      * Method updateCardPlayed updates the assistant card played.
@@ -109,7 +117,7 @@ public interface GameClientListener {
      * Method updateCoins updates the amount of coins owned by a player.
      *
      * @param wizard of type {@link Wizard} - wizard associated with the updated player.
-     * @param coins of type {@code Integer} - updated amount of coins owned by the player.
+     * @param coins  of type {@code Integer} - updated amount of coins owned by the player.
      */
     void updateCoins(Wizard wizard, Integer coins);
 

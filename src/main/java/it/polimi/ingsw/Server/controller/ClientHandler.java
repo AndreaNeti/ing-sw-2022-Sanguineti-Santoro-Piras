@@ -88,6 +88,7 @@ public class ClientHandler implements Runnable, GameListener, PingPongInterface 
             }
         }
         while (!quit);
+        pingPong.quit();
         Server.removeNickName(nickName);
         if (objIn != null) {
             try {
@@ -131,8 +132,12 @@ public class ClientHandler implements Runnable, GameListener, PingPongInterface 
      * the method closes the connection between the server and the client.
      */
     public void quit() {
-        if (controller == null) quit = true;
-        else {
+        if (controller == null) {
+            // is quitting connection with server
+            pingPong.quit();
+            quit = true;
+        } else {
+            // is quitting match
             controller.disconnectPlayerQuit(this);
             controller = null;
         }

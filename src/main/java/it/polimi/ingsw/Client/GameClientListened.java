@@ -4,10 +4,8 @@ import it.polimi.ingsw.Client.View.GameClientListener;
 import it.polimi.ingsw.Client.model.GameComponentClient;
 import it.polimi.ingsw.Client.model.IslandClient;
 import it.polimi.ingsw.Client.model.PlayerClient;
-import it.polimi.ingsw.Util.AssistantCard;
-import it.polimi.ingsw.Util.Color;
-import it.polimi.ingsw.Util.HouseColor;
-import it.polimi.ingsw.Util.Wizard;
+import it.polimi.ingsw.Client.model.TeamClient;
+import it.polimi.ingsw.Util.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -69,9 +67,15 @@ public abstract class GameClientListened {
         }
     }
 
-    public void notifyMembers(int membersLeftToStart, String nickPlayerJoined) {
+    public void notifyMatchInfo(MatchType matchType, MatchConstants constants, List<TeamClient> teams) {
         for (GameClientListener listener : listeners) {
-            listener.updateMembers(membersLeftToStart, nickPlayerJoined);
+            listener.updateMatchInfo(matchType, constants, teams);
+        }
+    }
+
+    public void notifyMembers(int membersLeftToStart, PlayerClient playerJoined) {
+        for (GameClientListener listener : listeners) {
+            listener.updateMembers(membersLeftToStart, playerJoined);
         }
     }
 

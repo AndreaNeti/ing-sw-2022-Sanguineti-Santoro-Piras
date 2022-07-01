@@ -43,7 +43,8 @@ public class MatchInfo implements ToClientMessage {
      */
     @Override
     public void execute(ControllerClient controllerClient) {
-        controllerClient.setMatchInfo(matchType, constants, teams, yourWizard);
         controllerClient.addMessage(matchType + " (ID: " + matchId + ")");
+        controllerClient.setNextClientPhase();
+        controllerClient.setMatchInfo(matchType, constants, teams, yourWizard);
     }
 }

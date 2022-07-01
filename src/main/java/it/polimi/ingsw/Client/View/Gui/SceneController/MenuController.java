@@ -5,10 +5,9 @@ import it.polimi.ingsw.Client.View.Gui.GuiFX;
 import it.polimi.ingsw.Client.View.Gui.ViewGUI;
 import it.polimi.ingsw.Client.model.GameComponentClient;
 import it.polimi.ingsw.Client.model.IslandClient;
-import it.polimi.ingsw.Util.AssistantCard;
-import it.polimi.ingsw.Util.Color;
-import it.polimi.ingsw.Util.HouseColor;
-import it.polimi.ingsw.Util.Wizard;
+import it.polimi.ingsw.Client.model.PlayerClient;
+import it.polimi.ingsw.Client.model.TeamClient;
+import it.polimi.ingsw.Util.*;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -23,6 +22,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class MenuController implements SceneController {
     public Button createButton;
@@ -44,12 +44,13 @@ public class MenuController implements SceneController {
     Button nickNameButton;
     public VBox chat;
     public Pane paneForChat;
+    public VBox playerLobby;
     public Button sendButton;
     private ObservableList<String> observableListChat;
+    private ObservableList<String> playersInLobbyList;
 
 
     private void initialize() {
-
         hideEverything();
         chatButton.setOnAction(actionEvent -> chat.setVisible(!chat.isVisible()));
         //create the chat
@@ -60,6 +61,13 @@ public class MenuController implements SceneController {
         paneForChat.getChildren().add(listView);
         chat.toFront();
         chat.setVisible(false);
+
+        Pane playerLobbyPane = (Pane) ((VBox) playerLobby.getChildren().get(0)).getChildren().get(1);
+        playersInLobbyList = FXCollections.observableArrayList();
+        ListView<String> lobbyListView = new ListView<>(playersInLobbyList);
+        playerLobby.setVisible(false);
+        lobbyListView.prefHeightProperty().bind(playerLobbyPane.heightProperty());
+        playerLobbyPane.getChildren().add(lobbyListView);
         //add event handler
         connectButton.setOnMouseClicked(GameCommand.CONNECT_SERVER.getGUIHandler(viewGUI));
         nickNameButton.setOnMouseClicked(GameCommand.SET_NICKNAME.getGUIHandler(viewGUI));
@@ -75,6 +83,7 @@ public class MenuController implements SceneController {
         for (Node child : mainGroup.getChildren()) {
             child.setVisible(false);
         }
+        playerLobby.setVisible(false);
     }
 
     @Override
@@ -160,12 +169,26 @@ public class MenuController implements SceneController {
     }
 
     @Override
-    public void updateMembers(int membersLeftToStart, String nickPlayerJoined) {
-        if (membersLeftToStart == 0) {
-            hideEverything();
-            chat.setVisible(false);
-            chatButton.setVisible(false);
-        }
+    public void updateMembers(int membersLeftToStart, PlayerClient playerJoined) {
+        Platform.runLater(() -> {
+            if (membersLeftToStart == 0) {
+                hideEverything();
+                chat.setVisible(false);
+                chatButton.setVisible(false);
+            } else {
+                playersInLobbyList.add(playerJoined.getNickName());
+            }
+        });
+    }
+
+    @Override
+    public void updateMatchInfo(MatchType matchType, MatchConstants constants, List<TeamClient> teams) {
+        Platform.runLater(() -> {
+            playersInLobbyList.clear();
+            for (TeamClient t : teams)
+                playersInLobbyList.addAll(t.getPlayers().stream().map(PlayerClient::getNickName).toList());
+            playerLobby.setVisible(true);
+        });
     }
 
     @Override

@@ -104,4 +104,18 @@
     </AnchorPane>
     <Button fx:id="chatButton" mnemonicParsing="false" text="Show Chat" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="10.0" />
    <Button fx:id="quitButton" mnemonicParsing="false" text="Quit" textFill="RED" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0" />
+   <HBox alignment="CENTER" mouseTransparent="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <children>
+         <VBox fx:id="playerLobby" alignment="CENTER" visible="false">
+            <children>
+               <VBox alignment="CENTER" spacing="10.0">
+                  <children>
+                     <Label text="Lobby" />
+                     <Pane prefHeight="100.0" />
+                  </children>
+               </VBox>
+            </children>
+         </VBox>
+      </children>
+   </HBox>
 </AnchorPane>

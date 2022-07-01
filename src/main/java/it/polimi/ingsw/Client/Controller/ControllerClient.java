@@ -199,11 +199,12 @@ public class ControllerClient extends GameClientListened implements PingPongInte
      * @param teamColor    of type {@link HouseColor} - color of the player's team.
      */
     public void addMember(Player playerJoined, HouseColor teamColor) {
-        teamsClient.get(teamColor.ordinal()).addPlayer(new PlayerClient(playerJoined));
+        PlayerClient newPlayer = new PlayerClient(playerJoined);
+        teamsClient.get(teamColor.ordinal()).addPlayer(newPlayer);
         //TODO box for player that joins
         addMessage(playerJoined + " joined the match");
         addMessage("Members left: " + (matchType.nPlayers() - playersInMatch()));
-        notifyMembers(matchType.nPlayers() - playersInMatch(), playerJoined.toString());
+        notifyMembers(matchType.nPlayers() - playersInMatch(), newPlayer);
         if (playersInMatch() == matchType.nPlayers()) startGame();
     }
 
@@ -222,7 +223,7 @@ public class ControllerClient extends GameClientListened implements PingPongInte
         teamsClient = new ArrayList<>();
         for (Team t : teams)
             teamsClient.add(new TeamClient(t.getHouseColor(), t.getPlayers(), matchConstants));
-        notifyMembers(matchType.nPlayers() - playersInMatch(), "You");
+        notifyMatchInfo(matchType, constants, teamsClient);
         if (playersInMatch() == matchType.nPlayers()) startGame();
     }
 
@@ -265,6 +266,7 @@ public class ControllerClient extends GameClientListened implements PingPongInte
      */
     protected void closeConnection() {
         // quit connection to server
+        pingPong.quit();
         serverListener.quit();
         serverSender.closeStream();
     }

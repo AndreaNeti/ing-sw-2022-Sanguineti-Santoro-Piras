@@ -221,8 +221,6 @@ public class Controller {
             System.out.println("Game is starting...");
             startGame();
             Server.removeMatch(matchId);
-        } else { // sends ok only if it needs to wait other players, otherwise newPlayer will receive Phase message
-            newPlayerHandler.update(new OK());
         }
     }
 

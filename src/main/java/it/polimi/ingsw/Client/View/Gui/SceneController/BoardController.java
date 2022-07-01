@@ -512,13 +512,6 @@ public class BoardController implements SceneController {
     @Override
     public void updateTowerLeft(HouseColor houseColor, Byte towerLefts) {
         Platform.runLater(() -> {
-            /*for (PlayerClient p : viewGUI.getModel().getTeams().get(houseColor.ordinal()).getPlayers()
-            ) {
-                AnchorPane towers = (AnchorPane) getElementById("towers" + p.getWizard().ordinal());
-                for (int i = 0; i < towerLefts; i++) {
-
-                }
-            }*/
             int teamSize = viewGUI.getModel().getTeams().get(houseColor.ordinal()).getPlayers().size();
             for (int i = 0; i < teamSize; i++) {
 
@@ -546,7 +539,12 @@ public class BoardController implements SceneController {
     }
 
     @Override
-    public void updateMembers(int membersLeftToStart, String nickPlayerJoined) {
+    public void updateMembers(int membersLeftToStart, PlayerClient playerJoined) {
+
+    }
+
+    @Override
+    public void updateMatchInfo(MatchType matchType, MatchConstants constants, List<TeamClient> teams) {
 
     }
 

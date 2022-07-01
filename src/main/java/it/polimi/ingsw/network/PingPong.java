@@ -15,6 +15,7 @@ public class PingPong {
     private volatile long time;
     long maxTime = 5000; //time that need to occur before closing the connection
     private final static long period = 2000;//frequency at which ping are send
+    private final Timer pingPong;
 
     /**
      * Constructor PingPong creates a new instance of PingPong.
@@ -24,14 +25,13 @@ public class PingPong {
     public PingPong(PingPongInterface pingPongController) {
         if (DEBUGGING) return;
         this.time = System.currentTimeMillis() + period;
-        Timer pingPong = new Timer();
+        pingPong = new Timer();
         pingPong.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
                 if ((System.currentTimeMillis() - time) > (maxTime + period)) {
                     pingPongController.quit();
-                    pingPong.cancel();
-                    pingPong.purge();
+                    quit();
                 } else pingPongController.sendPingPong();
             }
         }, period, period);
@@ -45,5 +45,10 @@ public class PingPong {
         // updates the max time dynamically in function of the 10 * average response time and caps it between 1 and 15 seconds
         maxTime = Math.min(Math.max(Math.round((double) (maxTime + 20 * delta) / 2), 1000), 15000);
         time = System.currentTimeMillis();
+    }
+
+    public synchronized void quit(){
+        pingPong.cancel();
+        pingPong.purge();
     }
 }
