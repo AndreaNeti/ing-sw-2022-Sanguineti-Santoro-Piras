@@ -22,7 +22,6 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class MenuController implements SceneController {
     public Button createButton;
