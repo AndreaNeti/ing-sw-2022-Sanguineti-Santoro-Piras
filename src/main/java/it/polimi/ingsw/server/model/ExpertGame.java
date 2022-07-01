@@ -6,9 +6,9 @@ import it.polimi.ingsw.exceptions.serverExceptions.NotAllowedException;
 import it.polimi.ingsw.exceptions.serverExceptions.NotEnoughCoinsException;
 import it.polimi.ingsw.network.ExpertGameDelta;
 import it.polimi.ingsw.network.GameDelta;
-import it.polimi.ingsw.server.model.CharacterServerLogic.*;
-import it.polimi.ingsw.server.model.GameComponents.GameComponent;
-import it.polimi.ingsw.server.model.GameComponents.Island;
+import it.polimi.ingsw.server.model.characterServerLogic.*;
+import it.polimi.ingsw.server.model.gameComponents.GameComponent;
+import it.polimi.ingsw.server.model.gameComponents.Island;
 import it.polimi.ingsw.utils.*;
 
 import java.io.Serializable;

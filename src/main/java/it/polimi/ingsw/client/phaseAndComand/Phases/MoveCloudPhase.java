@@ -2,9 +2,9 @@ package it.polimi.ingsw.client.phaseAndComand.Phases;
 
 import it.polimi.ingsw.client.model.GameComponentClient;
 import it.polimi.ingsw.client.phaseAndComand.Commands.GameCommand;
-import it.polimi.ingsw.client.view.Gui.GuiFX;
-import it.polimi.ingsw.client.view.Gui.SceneController.SceneController;
-import it.polimi.ingsw.client.view.Gui.ViewGUI;
+import it.polimi.ingsw.client.view.gui.GuiFX;
+import it.polimi.ingsw.client.view.gui.SceneController.SceneController;
+import it.polimi.ingsw.client.view.gui.ViewGUI;
 import javafx.scene.Node;
 
 /**

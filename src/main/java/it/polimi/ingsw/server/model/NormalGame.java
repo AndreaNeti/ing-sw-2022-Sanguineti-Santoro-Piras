@@ -5,10 +5,10 @@ import it.polimi.ingsw.exceptions.serverExceptions.GameException;
 import it.polimi.ingsw.exceptions.serverExceptions.NotAllowedException;
 import it.polimi.ingsw.exceptions.serverExceptions.NotExpertGameException;
 import it.polimi.ingsw.network.GameDelta;
-import it.polimi.ingsw.server.model.GameComponents.Bag;
-import it.polimi.ingsw.server.model.GameComponents.Cloud;
-import it.polimi.ingsw.server.model.GameComponents.GameComponent;
-import it.polimi.ingsw.server.model.GameComponents.Island;
+import it.polimi.ingsw.server.model.gameComponents.Bag;
+import it.polimi.ingsw.server.model.gameComponents.Cloud;
+import it.polimi.ingsw.server.model.gameComponents.GameComponent;
+import it.polimi.ingsw.server.model.gameComponents.Island;
 import it.polimi.ingsw.utils.*;
 
 import java.util.ArrayList;

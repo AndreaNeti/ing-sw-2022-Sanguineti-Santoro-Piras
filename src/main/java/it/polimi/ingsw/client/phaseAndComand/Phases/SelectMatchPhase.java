@@ -1,8 +1,8 @@
 package it.polimi.ingsw.client.phaseAndComand.Phases;
 
-import it.polimi.ingsw.client.view.Gui.GuiFX;
-import it.polimi.ingsw.client.view.Gui.SceneController.SceneController;
-import it.polimi.ingsw.client.view.Gui.ViewGUI;
+import it.polimi.ingsw.client.view.gui.GuiFX;
+import it.polimi.ingsw.client.view.gui.SceneController.SceneController;
+import it.polimi.ingsw.client.view.gui.ViewGUI;
 
 /**
  * SelectMatchPhase class represents the game phase in which the client can join a match.

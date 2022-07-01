@@ -13,7 +13,7 @@ import it.polimi.ingsw.network.toServerMessage.Quit;
 import it.polimi.ingsw.network.toServerMessage.ToServerMessage;
 import it.polimi.ingsw.server.controller.Controller;
 import it.polimi.ingsw.server.controller.Server;
-import it.polimi.ingsw.server.model.GameComponents.GameComponent;
+import it.polimi.ingsw.server.model.gameComponents.GameComponent;
 import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.server.model.Team;
 import it.polimi.ingsw.utils.*;

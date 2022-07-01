@@ -1,6 +1,6 @@
 package it.polimi.ingsw.client;
 
-import it.polimi.ingsw.client.view.Gui.GuiFX;
+import it.polimi.ingsw.client.view.gui.GuiFX;
 
 /**
  * AppGUI is the game's GUI application.

@@ -3,7 +3,7 @@ package it.polimi.ingsw.network;
 import it.polimi.ingsw.network.toClientMessage.DeltaUpdate;
 import it.polimi.ingsw.network.toClientMessage.ToClientMessage;
 import it.polimi.ingsw.server.controller.GameListener;
-import it.polimi.ingsw.server.model.GameComponents.GameComponent;
+import it.polimi.ingsw.server.model.gameComponents.GameComponent;
 import it.polimi.ingsw.utils.*;
 
 import java.io.Serializable;

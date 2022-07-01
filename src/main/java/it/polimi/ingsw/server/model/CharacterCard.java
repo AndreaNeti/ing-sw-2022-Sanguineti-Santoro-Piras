@@ -2,7 +2,7 @@ package it.polimi.ingsw.server.model;
 
 import it.polimi.ingsw.exceptions.serverExceptions.EndGameException;
 import it.polimi.ingsw.exceptions.serverExceptions.GameException;
-import it.polimi.ingsw.server.model.CharacterServerLogic.CharacterServerLogicInterface;
+import it.polimi.ingsw.server.model.characterServerLogic.CharacterServerLogicInterface;
 import it.polimi.ingsw.utils.CharacterCardDataInterface;
 
 import java.util.Objects;

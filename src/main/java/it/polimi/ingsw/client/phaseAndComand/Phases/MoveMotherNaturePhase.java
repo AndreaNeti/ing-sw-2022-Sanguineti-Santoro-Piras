@@ -3,9 +3,9 @@ package it.polimi.ingsw.client.phaseAndComand.Phases;
 import it.polimi.ingsw.client.model.GameClientView;
 import it.polimi.ingsw.client.model.IslandClient;
 import it.polimi.ingsw.client.phaseAndComand.Commands.GameCommand;
-import it.polimi.ingsw.client.view.Gui.GuiFX;
-import it.polimi.ingsw.client.view.Gui.SceneController.SceneController;
-import it.polimi.ingsw.client.view.Gui.ViewGUI;
+import it.polimi.ingsw.client.view.gui.GuiFX;
+import it.polimi.ingsw.client.view.gui.SceneController.SceneController;
+import it.polimi.ingsw.client.view.gui.ViewGUI;
 import javafx.scene.Node;
 
 import java.util.List;

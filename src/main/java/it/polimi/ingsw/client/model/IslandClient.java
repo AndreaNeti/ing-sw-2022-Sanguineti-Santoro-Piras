@@ -1,7 +1,7 @@
 package it.polimi.ingsw.client.model;
 
-import it.polimi.ingsw.server.model.GameComponents.GameComponent;
-import it.polimi.ingsw.server.model.GameComponents.Island;
+import it.polimi.ingsw.server.model.gameComponents.GameComponent;
+import it.polimi.ingsw.server.model.gameComponents.Island;
 import it.polimi.ingsw.utils.HouseColor;
 
 /**

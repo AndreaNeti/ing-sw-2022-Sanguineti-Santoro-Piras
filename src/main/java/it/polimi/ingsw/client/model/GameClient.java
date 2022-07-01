@@ -3,7 +3,7 @@ package it.polimi.ingsw.client.model;
 import it.polimi.ingsw.client.GameClientListened;
 import it.polimi.ingsw.client.model.CharacterClientLogic.*;
 import it.polimi.ingsw.server.model.ExpertGame;
-import it.polimi.ingsw.server.model.GameComponents.GameComponent;
+import it.polimi.ingsw.server.model.gameComponents.GameComponent;
 import it.polimi.ingsw.server.model.NormalGame;
 import it.polimi.ingsw.utils.*;
 

@@ -1,8 +1,8 @@
 package it.polimi.ingsw.client.phaseAndComand.Phases;
 
-import it.polimi.ingsw.client.view.Gui.GuiFX;
-import it.polimi.ingsw.client.view.Gui.SceneController.SceneController;
-import it.polimi.ingsw.client.view.Gui.ViewGUI;
+import it.polimi.ingsw.client.view.gui.GuiFX;
+import it.polimi.ingsw.client.view.gui.SceneController.SceneController;
+import it.polimi.ingsw.client.view.gui.ViewGUI;
 
 /**
  * WaitPhase class represents the game phase in which the client is when waiting for other players to join the
