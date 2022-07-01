@@ -169,11 +169,12 @@ public class ViewGUI extends AbstractView {
         VBox content = (VBox) assistantCardsBox.getChildren().get(0);
         HBox box = (HBox) (content).getChildren().get(1);
         box.getChildren().clear();
-        sceneController.hideEverything();
         boolean condition = getModel().getCurrentPlayer().equals(playerClient) && getCurrentPhase().equals(GamePhase.PLANIFICATION_PHASE);
         if (condition) {
             sceneController.disableEverything();
-            sceneController.enableNode(content.getChildren().get(0), true);
+            content.getChildren().get(0).setVisible(true);
+        } else {
+            content.getChildren().get(0).setVisible(false);
         }
         for (AssistantCard card : playerClient.getAssistantCards()) {
             ImageView cardImage = new ImageView();
