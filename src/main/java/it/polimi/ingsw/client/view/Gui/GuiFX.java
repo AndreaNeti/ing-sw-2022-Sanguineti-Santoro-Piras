@@ -10,10 +10,12 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.SceneAntialiasing;
 import javafx.scene.control.Alert;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 
 import java.io.IOException;
+import java.util.Objects;
 
 public class GuiFX extends Application {
     private static Stage primaryStage;
@@ -30,12 +32,11 @@ public class GuiFX extends Application {
     @Override
     public void start(Stage primaryStage) {
         inMenuScene = false;
+        primaryStage.getIcons().add(new Image(Objects.requireNonNull(GuiFX.class.getResourceAsStream("/Graphical_Assets/icon.png"))));
         setPrimaryStage(primaryStage);
         primaryStage.setOnCloseRequest(event -> {
             Platform.exit();
-            /*Thread start = new Thread(() -> */
             System.exit(0);
-            // start.start();
         });
         goToMenuScene();
         primaryStage.show();
