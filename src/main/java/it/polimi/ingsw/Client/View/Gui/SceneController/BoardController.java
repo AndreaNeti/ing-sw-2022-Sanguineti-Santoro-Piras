@@ -638,21 +638,11 @@ public class BoardController implements SceneController {
 
     @Override
     public void setWinners(List<HouseColor> winners) {
-
-
         StringBuilder winnerString = new StringBuilder();
-        int i = 0;
-        while (i < winners.size() - 1) {
-            winnerString.append(winners.get(i));
-            winnerString.append(winners).append(" ");
-            i++;
-        }
-        winnerString.append(winners.get(i));
-        String res = winnerString.toString();
-        if (winners.size() > 1) GuiFX.showError("WINNERS!", "THE WINNERS OF THE GAME ARE " + res, "END MATCH!");
-        else
-
-            GuiFX.showError("WINNERS!", "THE WINNER OF THE GAME IS " + res, "END MATCH!");
+        for (HouseColor hc : winners)
+            winnerString.append(hc).append(" TEAM, ");
+        winnerString.delete(winnerString.length() - 2, winnerString.length() - 1);
+        GuiFX.showError("WINNERS!", winnerString + "WON THE GAME :D", "END MATCH");
     }
 
     @Override

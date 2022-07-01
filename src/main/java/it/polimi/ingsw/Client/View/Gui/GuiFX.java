@@ -139,7 +139,7 @@ public class GuiFX extends Application {
      */
     public static void showError(String title, String contentText, String headerText) {
         Platform.runLater(() -> {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setHeaderText(headerText);
             alert.setTitle(title);
             alert.setContentText(contentText);
