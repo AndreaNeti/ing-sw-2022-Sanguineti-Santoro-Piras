@@ -1,7 +1,14 @@
 package it.polimi.ingsw.Util;
 
 /**
- * CharacterCardData
+ * CharacterCardDataInterface interface represents the character cards data in "Eriantys". It contains the following info: <br>
+ * the card's cost, <br>
+ * the card's unique id, <br>
+ * if the card has been already used, <br>
+ * if the card contains students, <br>
+ * if the card contains prohibitions. <br>
+ * This class is used to fetch character card data from the JSON file in the 'recourses' folder in order to assign the data
+ * to the specific character cards when they are instantiated.
  */
 public class CharacterCardData implements CharacterCardDataInterface {
     private final byte id, cost;

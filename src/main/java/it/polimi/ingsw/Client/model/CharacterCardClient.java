@@ -3,20 +3,27 @@ package it.polimi.ingsw.Client.model;
 import it.polimi.ingsw.Client.View.Cli.ViewForCharacterCli;
 import it.polimi.ingsw.Client.View.Gui.ViewGUI;
 import it.polimi.ingsw.Client.model.CharacterClientLogic.CharacterClientLogicInterface;
+import it.polimi.ingsw.Server.model.CharacterServerLogic.CharacterServerLogicInterface;
 import it.polimi.ingsw.Util.CharacterCardDataInterface;
 import it.polimi.ingsw.exceptions.clientExceptions.SkipCommandException;
 
 import java.util.List;
 
 /**
- * CharacterCardClient interface represents the character cards in "Eriantys", available in the expert game mode. <br>
- * This interface is used client side to access the info of the character cards sent by the server.
- * There are a total of 12 client classes that implement this interface.
+ * CharacterCard class represent a generic character card in "Eriantys", client side. <br>
+ * This class contains both the data and the logic of a specific character card, of which it contains the instance. <br>
+ * This class therefore contains all the methods required to use the character card in the client's game.
  */
 public final class CharacterCardClient implements CharacterCardDataInterface, CharacterClientLogicInterface {
     private CharacterCardDataInterface characterData;
     private final CharacterClientLogicInterface characterCard;
 
+    /**
+     * Constructor CharacterCardClient creates a new instance of CharacterCardClient.
+     *
+     * @param characterCard of type {@link CharacterServerLogicInterface} - instance of the specific character card logic.
+     * @param data of type {@link CharacterCardDataInterface} - info about the character card data.
+     */
     public CharacterCardClient(CharacterClientLogicInterface characterCard, CharacterCardDataInterface data) {
         this.characterCard = characterCard;
         this.characterData = data;

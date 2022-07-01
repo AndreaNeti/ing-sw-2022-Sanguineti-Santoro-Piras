@@ -7,8 +7,9 @@ import java.io.Serializable;
  * the card's cost, <br>
  * the card's unique id, <br>
  * if the card has been already used, <br>
- * if the card can contain students. <br>
- * There are a total of 12 character cards classes that implement this interface, each with its own cost and unique ID.
+ * if the card contains students, <br>
+ * if the card contains prohibitions. <br>
+ * Both the CharacterCard and the CharacterCardClient implement this interface.
  */
 public interface CharacterCardDataInterface extends Serializable {
     /**
