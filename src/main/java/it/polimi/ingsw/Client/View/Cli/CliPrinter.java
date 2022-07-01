@@ -535,9 +535,10 @@ public class CliPrinter implements GameClientListener {
      * Method updateCardPlayed not used for CliPrinter.
      *
      * @param playedCard of type {@link AssistantCard} - instance of the updated assistant card played.
+     * @param wizard     of type {@link Wizard } - wizard that played the card
      */
     @Override
-    public void updateCardPlayed(AssistantCard playedCard) {
+    public void updateCardPlayed(AssistantCard playedCard, Wizard wizard) {
 
     }
 

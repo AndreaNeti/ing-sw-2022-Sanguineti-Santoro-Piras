@@ -73,8 +73,9 @@ public interface GameClientListener {
      * Method updateCardPlayed updates the assistant card played.
      *
      * @param playedCard of type {@link AssistantCard} - instance of the updated assistant card played.
+     * @param wizard     of type {@link Wizard } - wizard that played the card
      */
-    void updateCardPlayed(AssistantCard playedCard);
+    void updateCardPlayed(AssistantCard playedCard, Wizard wizard);
 
     /**
      * Method updateIgnoredColor updates the color ignored for influence calculation.

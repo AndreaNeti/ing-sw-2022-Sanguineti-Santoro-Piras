@@ -230,7 +230,7 @@ public class GameClient extends GameClientListened implements GameClientView {
      */
     public void playCard(AssistantCard playedCard) {
         getCurrentPlayer().playCard(playedCard);
-        notifyCardPlayed(playedCard);
+        notifyCardPlayed(playedCard, getCurrentPlayer());
     }
 
     /**

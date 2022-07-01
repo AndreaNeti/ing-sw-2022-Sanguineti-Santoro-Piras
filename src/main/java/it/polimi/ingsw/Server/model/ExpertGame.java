@@ -60,10 +60,10 @@ public class ExpertGame extends NormalGame implements GameInterfaceForCharacter,
 
         CharacterCardData[] characterConstants = (CharacterCardData[]) JsonReader.getObjFromJson("characterConstants", CharacterCardData[].class);
 
-        /*characters.add(factoryCharacter((byte) 0, this, characterConstants));
+        characters.add(factoryCharacter((byte) 0, this, characterConstants));
         characters.add(factoryCharacter((byte) 6, this, characterConstants));
-        characters.add(factoryCharacter((byte) 10, this, characterConstants));*/
-        while (i < matchConstants.numOfCharacterCards()) {
+        characters.add(factoryCharacter((byte) 4, this, characterConstants));
+        /*while (i < matchConstants.numOfCharacterCards()) {
             while (selectedCharacters.contains(characterIndex)) {
                 characterIndex = (byte) rand.nextInt(12);
             }
@@ -71,7 +71,7 @@ public class ExpertGame extends NormalGame implements GameInterfaceForCharacter,
             characters.add(c);
             selectedCharacters.add(characterIndex);
             i++;
-        }
+        }*/
         // add Coin Listener
         for (Player p : getPlayers()) {
             p.getLunchHall().addCoinListener(this);
