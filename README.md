@@ -1,6 +1,6 @@
-# ing-sw-2022-Sanguineti-Santoro-Piras
+# Eriantys - Software Engineering Project
 
-Eriantys Board Game is the final test of "Software Engineering", course of "Computer Science Engineering" 
+Eriantys is the final test of "Software Engineering", course of "Computer Science Engineering" 
 held at Politecnico di Milano (2021/2022).
 
 **Professor**: Gianpaolo Cugola
@@ -35,6 +35,50 @@ held at Politecnico di Milano (2021/2022).
 - Andrea Piras (ID Number: 936909)
 - Andrea Sanguineti (ID Number: 936930)
 - Emanuele Santoro (ID Number: 933198)
+
+## Compile
+
+To run the test and compile the software:
+
+1. Install [Java SE Development Kit 18](https://www.oracle.com/java/technologies/javase/jdk18-archive-downloads.html)
+2. 
+
+## Run using the JAR file
+
+Once installed all requirements and compiled the project, open a terminal and
+go to the project target directory. 
+Once there it is possible to choose to run the server or the client (CLI or GUI):
+
+### Run the Server
+```bash
+java -jar GC45-<version>-jar-with-dependencies.jar -s 
+```
+or
+```bash
+java -jar GC45-<version>-jar-with-dependencies.jar --server 
+```
+### Run the Client (CLI)
+```bash
+java -jar GC45-<version>-jar-with-dependencies.jar -c 
+```
+or
+```bash
+java -jar GC45-<version>-jar-with-dependencies.jar --cli 
+```
+
+### Run the Client (GUI)
+```bash
+java -jar GC45-<version>-jar-with-dependencies.jar 
+```
+To run the Client (GUI) it is also possible to open the JAR file directly from
+the file explorer.
+
+### Recommendations
+
+In order to play, you'll have to launch at least one server and two clients (either CLI or GUI).
+
+WARNING: For the best GUI experience it is strongly suggested to play with a screen resolution
+of 1920x1080 (100% DPI) and with a scaling of 100%.
 
 
 
