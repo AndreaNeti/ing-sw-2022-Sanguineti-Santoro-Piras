@@ -2,10 +2,7 @@ package it.polimi.ingsw.Client.model.CharacterClientLogic;
 
 import it.polimi.ingsw.Client.View.Cli.ViewForCharacterCli;
 import it.polimi.ingsw.Client.View.Gui.ViewGUI;
-import it.polimi.ingsw.Client.model.GameComponentClient;
 import it.polimi.ingsw.Server.model.CharacterServerLogic.Char0;
-import it.polimi.ingsw.Server.model.CharacterCardDataInterface;
-import it.polimi.ingsw.Server.model.GameComponents.GameComponent;
 import it.polimi.ingsw.Util.Color;
 import it.polimi.ingsw.exceptions.clientExceptions.SkipCommandException;
 import javafx.event.EventHandler;

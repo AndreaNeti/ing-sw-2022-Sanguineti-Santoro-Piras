@@ -1,6 +1,5 @@
 package it.polimi.ingsw.Server.model.CharacterServerLogic;
 
-import it.polimi.ingsw.Server.model.CharacterServerLogicInterface;
 import it.polimi.ingsw.Server.model.GameInterfaceForCharacter;
 
 /**

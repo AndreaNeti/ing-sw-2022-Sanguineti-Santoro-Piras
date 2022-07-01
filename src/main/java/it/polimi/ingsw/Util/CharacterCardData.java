@@ -1,12 +1,20 @@
 package it.polimi.ingsw.Util;
 
-import it.polimi.ingsw.Server.model.CharacterCardDataInterface;
-
+/**
+ * CharacterCardData
+ */
 public class CharacterCardData implements CharacterCardDataInterface {
     private final byte id, cost;
     private boolean used;
     private final boolean hasStudents;
 
+    /**
+     * Constructor CharacterCardData creates a new instance of CharacterCardData.
+     *
+     * @param id of type {@code byte} - unique ID of the card.
+     * @param cost of type {@code byte} - cost of the card.
+     * @param hasStudents of type {@code boolean} - boolean to check if the character card can contain students.
+     */
     CharacterCardData(byte id, byte cost, boolean hasStudents) {
         this.id = id;
         this.cost = cost;
@@ -19,6 +27,11 @@ public class CharacterCardData implements CharacterCardDataInterface {
         return id;
     }
 
+    /**
+     * Method getCost returns the card's cost to play, incremented by 1 if the card has been used.
+     *
+     * @return {@code byte} - the card's cost
+     */
     @Override
     public byte getCost() {
         return used ? (byte) (cost + 1) : cost;

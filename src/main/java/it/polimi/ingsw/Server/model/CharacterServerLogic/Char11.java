@@ -1,6 +1,5 @@
 package it.polimi.ingsw.Server.model.CharacterServerLogic;
 
-import it.polimi.ingsw.Server.model.CharacterServerLogicInterface;
 import it.polimi.ingsw.Server.model.GameInterfaceForCharacter;
 import it.polimi.ingsw.Util.Color;
 import it.polimi.ingsw.exceptions.serverExceptions.GameException;

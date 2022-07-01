@@ -13,7 +13,7 @@ import it.polimi.ingsw.network.toServerMessage.ToServerMessage;
 public class PingMessage implements ToClientMessage, ToServerMessage {
 
     /**
-     * Method resetPing updates the time of the last ping received to the current one in the timeout timer ({@link PingPong}) of the controller.
+     * Method resetPing updates the time of the last ping received to the current one in the timeout timer ({@link PingPong}) of the listener.
      *
      * @param pingPongInterface of type {@link PingPongInterface} - instance of the ControllerClient (Client side) / ClientHandler (Server side).
      */

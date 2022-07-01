@@ -7,7 +7,7 @@ package it.polimi.ingsw.network;
  */
 public interface PingPongInterface {
     /**
-     * Method sendPingPong sends a {@link PingMessage} to the server.
+     * Method sendPingPong is used by a sender to send a {@link PingMessage} to a listener.
      */
     void sendPingPong();
 

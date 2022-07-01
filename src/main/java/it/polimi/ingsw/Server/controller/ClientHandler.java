@@ -247,7 +247,9 @@ public class ClientHandler implements Runnable, GameListener, PingPongInterface 
         return Objects.hash(socket);
     }
 
-    //TODO javadoc
+    /**
+     * Method sendPingPong sends a {@link PingMessage} to the client.
+     */
     @Override
     public void sendPingPong() {
         update(new PingMessage());

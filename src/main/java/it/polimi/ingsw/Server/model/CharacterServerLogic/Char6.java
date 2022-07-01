@@ -1,6 +1,5 @@
 package it.polimi.ingsw.Server.model.CharacterServerLogic;
 
-import it.polimi.ingsw.Server.model.CharacterServerLogicInterface;
 import it.polimi.ingsw.Server.model.GameComponents.GameComponent;
 import it.polimi.ingsw.Server.model.GameInterfaceForCharacter;
 import it.polimi.ingsw.Util.Color;
@@ -46,7 +45,7 @@ public class Char6 extends GameComponent implements CharacterServerLogicInterfac
             if (characterColor < 0 || characterColor >= Color.values().length) {
                 throw new NotAllowedException("Set wrong input "+i+" for characterColor");
             }
-            if(entranceHallColor < 0 || entranceHallColor > Color.values().length){
+            if(entranceHallColor < 0 || entranceHallColor >= Color.values().length){
                 throw new NotAllowedException("Set wrong input " +i+" for entranceHallColor");
             }
 

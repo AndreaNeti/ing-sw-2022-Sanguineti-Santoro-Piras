@@ -2,11 +2,15 @@ package it.polimi.ingsw.Client.model.CharacterClientLogic;
 
 import it.polimi.ingsw.Client.View.Cli.ViewForCharacterCli;
 import it.polimi.ingsw.Client.View.Gui.ViewGUI;
-import it.polimi.ingsw.Server.model.CharacterCardDataInterface;
 import it.polimi.ingsw.exceptions.clientExceptions.SkipCommandException;
 
 import java.util.List;
 
+/**
+ * CharacterServerLogicInterface interface represents the character cards server logic in "Eriantys", available in the expert game mode. <br>
+ * It contains the methods required to obtain the inputs to apply the cards' effects and to get a description about them. <br>
+ * There are a total of 12 character cards classes that implement this interface, each one with its own effect on the game and required inputs.
+ */
 public interface CharacterClientLogicInterface {
     /**
      * Method getDescription returns the description of the effect of the card.

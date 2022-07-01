@@ -8,7 +8,7 @@ import it.polimi.ingsw.Client.model.PlayerClient;
 import it.polimi.ingsw.Client.model.TeamClient;
 import it.polimi.ingsw.Server.controller.Controller;
 import it.polimi.ingsw.Server.controller.Server;
-import it.polimi.ingsw.Server.model.CharacterCardDataInterface;
+import it.polimi.ingsw.Util.CharacterCardDataInterface;
 import it.polimi.ingsw.Server.model.GameComponents.GameComponent;
 import it.polimi.ingsw.Server.model.Player;
 import it.polimi.ingsw.Server.model.Team;
@@ -321,11 +321,17 @@ public class ControllerClient extends GameClientListened implements PingPongInte
     }
 
 
+    /**
+     * Method sendPingPong sends a {@link PingMessage} to the server.
+     */
     @Override
     public void sendPingPong() {
         sendMessage(new PingMessage());
     }
 
+    /**
+     * Method quit closes the connection between the client and the server.
+     */
     @Override
     public void quit() {
         closeConnection();

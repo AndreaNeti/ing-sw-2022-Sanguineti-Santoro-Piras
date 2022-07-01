@@ -302,6 +302,9 @@ class CharacterCardTest {
             game.chooseCharacter(charToSelect);
             game.setCharacterInputs(Arrays.asList(-5, -1));
             assertThrows(NotAllowedException.class, () -> c6.play(game), "not valid inputs");
+            game.chooseCharacter(charToSelect);
+            game.setCharacterInputs(Arrays.asList(5, 5));
+            assertThrows(NotAllowedException.class, () -> c6.play(game), "not valid inputs");
             // also resets character inputs
             game.setCurrentPlayer(p1);
             // use first available color on the card to test (it's chosen randomly)

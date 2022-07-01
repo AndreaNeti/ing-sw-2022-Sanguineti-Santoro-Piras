@@ -1,6 +1,6 @@
 package it.polimi.ingsw.network;
 
-import it.polimi.ingsw.Server.model.CharacterCardDataInterface;
+import it.polimi.ingsw.Util.CharacterCardDataInterface;
 import it.polimi.ingsw.Util.Color;
 
 import java.util.*;

@@ -38,7 +38,8 @@ public class ExpertGame extends NormalGame implements GameInterfaceForCharacter,
 
 
     /**
-     * Constructor ExpertGame creates a new instance of ExpertGame.
+     * Constructor ExpertGame creates a new instance of ExpertGame. <br>
+     * Info about the character card is read from a JSON file in the 'resources' folder.
      *
      * @param teamList       of type {@code ArrayList}<{@link Team}> - list of the instances of team that are playing in the game.
      * @param matchConstants of type {@link MatchConstants} - match constant of the game, based on its type.
@@ -98,9 +99,13 @@ public class ExpertGame extends NormalGame implements GameInterfaceForCharacter,
 
 
     /**
-     * Method factoryCharacter creates an instance of one of the 12 possible character cards, based on the index provided.
+     * Method factoryCharacter creates an instance of one of the 12 possible character cards, based on the index provided. <br>
+     * Info about the cards, such as cost and ID, are read from the characterConstants array passed as parameter.
      *
      * @param index of type {@code byte} - index of the CharacterCard to instantiate.
+     * @param game of type {@link GameInterfaceForCharacter} - instance of the game used to draw students on the character cards
+     *             that contain students.
+     * @param characterConstants of type {@link CharacterCardData}{@code []} - array of constants for each card.
      * @return {@link CharacterCard} - instance of the CharacterCard requested.
      */
     static CharacterCard factoryCharacter(int index, GameInterfaceForCharacter game, CharacterCardData[] characterConstants) {
@@ -397,6 +402,7 @@ public class ExpertGame extends NormalGame implements GameInterfaceForCharacter,
     public void chooseCharacter(Byte charId) throws GameException {
         chosenCharacter = null;
         if (charId != null) {
+            inputsCharacter.clear();
             for (CharacterCard c : characters) {
                 if (c.getCharId() == charId) {
                     chosenCharacter = c;

@@ -2,7 +2,7 @@ package it.polimi.ingsw.Client.model;
 
 import it.polimi.ingsw.Client.GameClientListened;
 import it.polimi.ingsw.Client.model.CharacterClientLogic.*;
-import it.polimi.ingsw.Server.model.CharacterCardDataInterface;
+import it.polimi.ingsw.Util.CharacterCardDataInterface;
 import it.polimi.ingsw.Server.model.ExpertGame;
 import it.polimi.ingsw.Server.model.GameComponents.GameComponent;
 import it.polimi.ingsw.Server.model.NormalGame;
@@ -11,8 +11,6 @@ import it.polimi.ingsw.Util.*;
 import java.util.*;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * GameClient class represents the main logic of the game, client side, and corresponds to
