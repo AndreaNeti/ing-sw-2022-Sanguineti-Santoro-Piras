@@ -1,10 +1,10 @@
 package it.polimi.ingsw.client.model;
 
 import it.polimi.ingsw.client.GameClientListener;
-import it.polimi.ingsw.util.Color;
-import it.polimi.ingsw.util.MatchConstants;
-import it.polimi.ingsw.util.MatchType;
-import it.polimi.ingsw.util.Wizard;
+import it.polimi.ingsw.utils.Color;
+import it.polimi.ingsw.utils.MatchConstants;
+import it.polimi.ingsw.utils.MatchType;
+import it.polimi.ingsw.utils.Wizard;
 
 import java.util.ArrayList;
 import java.util.List;

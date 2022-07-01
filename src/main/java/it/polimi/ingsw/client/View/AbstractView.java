@@ -5,7 +5,7 @@ import it.polimi.ingsw.client.PhaseAndComand.Commands.GameCommand;
 import it.polimi.ingsw.client.PhaseAndComand.Phases.*;
 import it.polimi.ingsw.client.model.CharacterCardClient;
 import it.polimi.ingsw.client.model.GameClientView;
-import it.polimi.ingsw.util.GamePhase;
+import it.polimi.ingsw.utils.GamePhase;
 import it.polimi.ingsw.network.toServerMessage.ToServerMessage;
 
 import java.util.ArrayList;

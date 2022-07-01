@@ -5,7 +5,7 @@ import it.polimi.ingsw.client.model.CharacterClientLogic.*;
 import it.polimi.ingsw.server.model.ExpertGame;
 import it.polimi.ingsw.server.model.GameComponents.GameComponent;
 import it.polimi.ingsw.server.model.NormalGame;
-import it.polimi.ingsw.util.*;
+import it.polimi.ingsw.utils.*;
 
 import java.util.*;
 import java.util.concurrent.locks.Lock;

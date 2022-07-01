@@ -1,6 +1,6 @@
 package it.polimi.ingsw.server.model.GameComponents;
 
-import it.polimi.ingsw.util.Color;
+import it.polimi.ingsw.utils.Color;
 
 /**
  * Cloud class represents the game's clouds, used to add students to the player's EntranceHalls at the end of the action phase.

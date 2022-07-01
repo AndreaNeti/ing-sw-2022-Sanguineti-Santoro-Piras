@@ -3,7 +3,7 @@ package it.polimi.ingsw.client.model.CharacterClientLogic;
 import it.polimi.ingsw.client.View.Cli.ViewForCharacterCli;
 import it.polimi.ingsw.client.View.Gui.ViewGUI;
 import it.polimi.ingsw.server.model.CharacterServerLogic.Char0;
-import it.polimi.ingsw.util.Color;
+import it.polimi.ingsw.utils.Color;
 import it.polimi.ingsw.exceptions.clientExceptions.SkipCommandException;
 import javafx.event.EventHandler;
 import javafx.scene.Node;

@@ -1,7 +1,7 @@
 package it.polimi.ingsw.server.model.GameComponents;
 
 import it.polimi.ingsw.server.model.CoinListener;
-import it.polimi.ingsw.util.Color;
+import it.polimi.ingsw.utils.Color;
 import it.polimi.ingsw.exceptions.serverExceptions.NotAllowedException;
 import it.polimi.ingsw.exceptions.serverExceptions.NotEnoughCoinsException;
 

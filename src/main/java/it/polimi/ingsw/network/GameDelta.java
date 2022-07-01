@@ -2,7 +2,7 @@ package it.polimi.ingsw.network;
 
 import it.polimi.ingsw.server.controller.GameListener;
 import it.polimi.ingsw.server.model.GameComponents.GameComponent;
-import it.polimi.ingsw.util.*;
+import it.polimi.ingsw.utils.*;
 import it.polimi.ingsw.network.toClientMessage.DeltaUpdate;
 import it.polimi.ingsw.network.toClientMessage.ToClientMessage;
 

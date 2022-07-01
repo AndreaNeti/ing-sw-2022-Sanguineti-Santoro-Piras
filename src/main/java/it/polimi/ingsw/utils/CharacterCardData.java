@@ -1,4 +1,4 @@
-package it.polimi.ingsw.util;
+package it.polimi.ingsw.utils;
 
 /**
  * CharacterCardDataInterface interface represents the character cards data in "Eriantys". It contains the following info: <br>

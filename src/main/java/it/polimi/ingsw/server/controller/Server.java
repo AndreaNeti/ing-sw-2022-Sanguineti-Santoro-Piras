@@ -1,7 +1,7 @@
 package it.polimi.ingsw.server.controller;
 
-import it.polimi.ingsw.util.MatchConstants;
-import it.polimi.ingsw.util.MatchType;
+import it.polimi.ingsw.utils.MatchConstants;
+import it.polimi.ingsw.utils.MatchType;
 import it.polimi.ingsw.exceptions.serverExceptions.NotAllowedException;
 
 import java.io.IOException;

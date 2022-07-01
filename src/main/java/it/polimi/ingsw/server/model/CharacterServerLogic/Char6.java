@@ -2,7 +2,7 @@ package it.polimi.ingsw.server.model.CharacterServerLogic;
 
 import it.polimi.ingsw.server.model.GameComponents.GameComponent;
 import it.polimi.ingsw.server.model.GameInterfaceForCharacter;
-import it.polimi.ingsw.util.Color;
+import it.polimi.ingsw.utils.Color;
 import it.polimi.ingsw.exceptions.serverExceptions.GameException;
 import it.polimi.ingsw.exceptions.serverExceptions.NotAllowedException;
 import it.polimi.ingsw.exceptions.serverExceptions.NotEnoughStudentsException;

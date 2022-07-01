@@ -1,8 +1,8 @@
 package it.polimi.ingsw.server.controller;
 
-import it.polimi.ingsw.util.AssistantCard;
-import it.polimi.ingsw.util.Color;
-import it.polimi.ingsw.util.MatchType;
+import it.polimi.ingsw.utils.AssistantCard;
+import it.polimi.ingsw.utils.Color;
+import it.polimi.ingsw.utils.MatchType;
 import it.polimi.ingsw.exceptions.serverExceptions.EndGameException;
 import it.polimi.ingsw.exceptions.serverExceptions.GameException;
 import org.junit.jupiter.api.Test;

@@ -1,8 +1,8 @@
 package it.polimi.ingsw.network.toClientMessage;
 
 import it.polimi.ingsw.client.Controller.ControllerClient;
-import it.polimi.ingsw.util.GamePhase;
-import it.polimi.ingsw.util.HouseColor;
+import it.polimi.ingsw.utils.GamePhase;
+import it.polimi.ingsw.utils.HouseColor;
 
 import java.util.List;
 

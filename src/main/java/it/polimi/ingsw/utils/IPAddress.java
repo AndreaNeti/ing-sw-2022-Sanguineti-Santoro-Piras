@@ -1,4 +1,4 @@
-package it.polimi.ingsw.util;
+package it.polimi.ingsw.utils;
 
 /**
  * IPAddress class is used to convert the string of the IP address inputted by the user to connect

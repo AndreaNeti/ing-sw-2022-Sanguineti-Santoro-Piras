@@ -1,7 +1,7 @@
 package it.polimi.ingsw.client.model;
 
 import it.polimi.ingsw.server.model.GameComponents.GameComponent;
-import it.polimi.ingsw.util.Color;
+import it.polimi.ingsw.utils.Color;
 
 import java.util.Arrays;
 import java.util.Objects;

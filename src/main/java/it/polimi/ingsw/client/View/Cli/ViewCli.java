@@ -7,7 +7,7 @@ import it.polimi.ingsw.client.model.CharacterCardClient;
 import it.polimi.ingsw.client.model.GameClientView;
 import it.polimi.ingsw.client.model.GameComponentClient;
 import it.polimi.ingsw.client.model.IslandClient;
-import it.polimi.ingsw.util.*;
+import it.polimi.ingsw.utils.*;
 import it.polimi.ingsw.exceptions.clientExceptions.SkipCommandException;
 
 import java.util.*;

@@ -1,4 +1,4 @@
-package it.polimi.ingsw.util;
+package it.polimi.ingsw.utils;
 
 /**
  * GamePhase enum is used by the client to know which commands are available to the user at a specific time. <br>

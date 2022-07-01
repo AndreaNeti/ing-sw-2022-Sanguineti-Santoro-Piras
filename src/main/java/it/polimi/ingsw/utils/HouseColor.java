@@ -1,4 +1,4 @@
-package it.polimi.ingsw.util;
+package it.polimi.ingsw.utils;
 
 /**
  * HouseColor enum represent the team's colors in "Eriantys". <br>

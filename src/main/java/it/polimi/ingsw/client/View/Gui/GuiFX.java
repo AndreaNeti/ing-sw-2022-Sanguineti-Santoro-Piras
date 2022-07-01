@@ -2,7 +2,7 @@ package it.polimi.ingsw.client.View.Gui;
 
 import it.polimi.ingsw.client.Controller.ControllerClient;
 import it.polimi.ingsw.client.View.Gui.SceneController.SceneController;
-import it.polimi.ingsw.util.GamePhase;
+import it.polimi.ingsw.utils.GamePhase;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;

@@ -4,7 +4,7 @@ import it.polimi.ingsw.client.model.GameComponentClient;
 import it.polimi.ingsw.client.model.IslandClient;
 import it.polimi.ingsw.client.model.PlayerClient;
 import it.polimi.ingsw.client.model.TeamClient;
-import it.polimi.ingsw.util.*;
+import it.polimi.ingsw.utils.*;
 
 import java.util.List;
 

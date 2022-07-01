@@ -1,4 +1,4 @@
-package it.polimi.ingsw.util;
+package it.polimi.ingsw.utils;
 
 /**
  * Wizard enum represents the players' wizards in "Eriantys". <br>

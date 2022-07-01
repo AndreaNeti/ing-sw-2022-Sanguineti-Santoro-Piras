@@ -1,7 +1,7 @@
 package it.polimi.ingsw.client.Controller;
 
 import it.polimi.ingsw.client.GameClientListened;
-import it.polimi.ingsw.util.LimitedChat;
+import it.polimi.ingsw.utils.LimitedChat;
 import it.polimi.ingsw.client.View.AbstractView;
 import it.polimi.ingsw.client.model.GameClient;
 import it.polimi.ingsw.client.model.PlayerClient;
@@ -11,7 +11,7 @@ import it.polimi.ingsw.server.controller.Server;
 import it.polimi.ingsw.server.model.GameComponents.GameComponent;
 import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.server.model.Team;
-import it.polimi.ingsw.util.*;
+import it.polimi.ingsw.utils.*;
 import it.polimi.ingsw.network.GameDelta;
 import it.polimi.ingsw.network.PingMessage;
 import it.polimi.ingsw.network.PingPong;

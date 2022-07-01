@@ -2,7 +2,7 @@ package it.polimi.ingsw.client.model;
 
 import it.polimi.ingsw.server.model.GameComponents.GameComponent;
 import it.polimi.ingsw.server.model.GameComponents.Island;
-import it.polimi.ingsw.util.HouseColor;
+import it.polimi.ingsw.utils.HouseColor;
 
 /**
  * IslandClient class represents the island on the client side and corresponds to the server class {@link Island}.

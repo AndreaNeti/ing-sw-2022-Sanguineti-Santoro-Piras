@@ -1,6 +1,6 @@
 package it.polimi.ingsw.client.View.Cli;
 
-import it.polimi.ingsw.util.Color;
+import it.polimi.ingsw.utils.Color;
 import it.polimi.ingsw.exceptions.clientExceptions.SkipCommandException;
 
 /**

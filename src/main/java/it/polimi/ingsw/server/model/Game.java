@@ -1,8 +1,8 @@
 package it.polimi.ingsw.server.model;
 
-import it.polimi.ingsw.util.AssistantCard;
-import it.polimi.ingsw.util.Color;
-import it.polimi.ingsw.util.HouseColor;
+import it.polimi.ingsw.utils.AssistantCard;
+import it.polimi.ingsw.utils.Color;
+import it.polimi.ingsw.utils.HouseColor;
 import it.polimi.ingsw.exceptions.serverExceptions.EndGameException;
 import it.polimi.ingsw.exceptions.serverExceptions.GameException;
 import it.polimi.ingsw.exceptions.serverExceptions.NotAllowedException;

@@ -4,7 +4,7 @@ import it.polimi.ingsw.client.PhaseAndComand.Commands.GameCommand;
 import it.polimi.ingsw.client.View.Gui.GuiFX;
 import it.polimi.ingsw.client.View.Gui.ViewGUI;
 import it.polimi.ingsw.client.model.*;
-import it.polimi.ingsw.util.*;
+import it.polimi.ingsw.utils.*;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;

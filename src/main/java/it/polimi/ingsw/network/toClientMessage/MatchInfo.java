@@ -2,9 +2,9 @@ package it.polimi.ingsw.network.toClientMessage;
 
 import it.polimi.ingsw.client.Controller.ControllerClient;
 import it.polimi.ingsw.server.model.Team;
-import it.polimi.ingsw.util.MatchConstants;
-import it.polimi.ingsw.util.MatchType;
-import it.polimi.ingsw.util.Wizard;
+import it.polimi.ingsw.utils.MatchConstants;
+import it.polimi.ingsw.utils.MatchType;
+import it.polimi.ingsw.utils.Wizard;
 
 import java.util.List;
 

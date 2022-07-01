@@ -2,7 +2,7 @@ package it.polimi.ingsw.client.View.Cli;
 
 import it.polimi.ingsw.client.GameClientListener;
 import it.polimi.ingsw.client.model.*;
-import it.polimi.ingsw.util.*;
+import it.polimi.ingsw.utils.*;
 import org.fusesource.jansi.AnsiConsole;
 
 import java.io.IOException;
