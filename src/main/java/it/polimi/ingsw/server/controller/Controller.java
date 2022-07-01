@@ -145,18 +145,17 @@ public class Controller {
         if (gamePhase != GamePhase.PLANIFICATION_PHASE) {
             throw new NotAllowedException("Not in action phase");
         }
-        try {
-            if (playersList.get(currentPlayerIndex).canPlayCard(playedCards, card)) {
 
+        if (playersList.get(currentPlayerIndex).canPlayCard(playedCards, card)) {
+            try {
                 game.playCard(card);
                 playedCards.add(card);
-
-                nextPhase();
-            } else {
-                throw new NotAllowedException("Cannot play this card");
+            } catch (EndGameException e) {
+                handleError(e);
             }
-        } catch (EndGameException e) {
-            handleError(e);
+            nextPhase();
+        } else {
+            throw new NotAllowedException("Cannot play this card");
         }
     }
 
