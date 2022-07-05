@@ -71,7 +71,8 @@ public class ClientHandler implements Runnable, GameListener, PingPongInterface 
                 System.out.println(e.getMessage());
                 controller.endGame();
             } catch (GameException e1) {
-                controller.repeatPhase();
+                if (controller != null)
+                    controller.repeatPhase();
                 update(new ErrorException(e1.getMessage()));
             } catch (NullPointerException ex) {
                 ex.printStackTrace();

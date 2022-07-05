@@ -1,6 +1,7 @@
 package it.polimi.ingsw.client.view.gui;
 
 import it.polimi.ingsw.client.controller.ControllerClient;
+import it.polimi.ingsw.client.model.CharacterCardClient;
 import it.polimi.ingsw.client.model.PlayerClient;
 import it.polimi.ingsw.client.phaseAndComand.Commands.GameCommand;
 import it.polimi.ingsw.client.phaseAndComand.Phases.ClientPhase;
@@ -20,6 +21,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+
+import java.util.List;
 
 /**
  * ViewCLI class represents the GUI view that allows the user to interact with the client. <br>
@@ -92,11 +95,14 @@ public class ViewGUI extends AbstractView {
      */
     public void enableChooseCharacter(EventHandler<MouseEvent> event) {
         SceneController sceneController = GuiFX.getActiveSceneController();
-        for (Node n : ((HBox) sceneController.getElementById("#characters")).getChildren()) {
-            AnchorPane singleChar = (AnchorPane) n;
-            Button b = (Button) singleChar.getChildren().get(2);
-            sceneController.enableNode(b, true);
-            b.setOnMouseClicked(event);
+        List<CharacterCardClient> characters = getModel().getCharacters();
+        for (byte i = 0; i < characters.size(); i++) {
+            // set clickable only if you have enough coins to play this card
+            if (characters.get(i).getCost() <= getModel().getCoinsPlayer((byte) getModel().getMyWizard().ordinal())) {
+                Button b = (Button) ((AnchorPane) ((HBox) sceneController.getElementById("#characters")).getChildren().get(i)).getChildren().get(2);
+                sceneController.enableNode(b, true);
+                b.setOnMouseClicked(event);
+            }
         }
     }
 

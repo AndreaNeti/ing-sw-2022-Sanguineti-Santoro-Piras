@@ -301,7 +301,7 @@ public enum GameCommand {
         public void playCLICommand(ViewCli viewCli) throws SkipCommandException {
             int index = viewCli.getCharacterCharToPlayInput();
             CharacterCardClient chosenCharacter = viewCli.getModel().getCharacters().get(index);
-            if (chosenCharacter.getCost() <= viewCli.getModel().getCoinsPlayer((byte) viewCli.getModel().getCurrentPlayer().getWizard().ordinal())) {
+            if (chosenCharacter.getCost() <= viewCli.getModel().getCoinsPlayer((byte) viewCli.getModel().getMyWizard().ordinal())) {
                 viewCli.setCurrentCharacterCard(index);
                 viewCli.sendToServer(new ChooseCharacter(chosenCharacter.getCharId(), chosenCharacter.toString()));
                 //viewCli.setPhaseInView(GamePhase.PLAY_CH_CARD_PHASE, false, false);

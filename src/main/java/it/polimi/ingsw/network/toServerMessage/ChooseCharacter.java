@@ -41,7 +41,7 @@ public class ChooseCharacter implements ToServerMessage {
             if (charId != null)
                 c.sendMessage(clientHandler, "chose " + charName + " card");
             else
-                c.sendMessage(clientHandler, " deselected character card");
+                c.sendMessage(clientHandler, "deselected character card");
         } else throw new NotAllowedException("It's not your turn");
     }
 }

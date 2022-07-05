@@ -55,7 +55,7 @@
     -fx-padding: 5;
 }
 
-.board .card {
+.card {
     -fx-cursor: hand;
 }
 
@@ -89,7 +89,7 @@
 }
 
 .selected, .entrancehall.student.selected {
-    -fx-effect: dropshadow(gaussian, rgb(255, 251, 1), 10, 0.8, 0, 0);
+    -fx-effect: dropshadow(gaussian, rgb(255, 255, 0), 10, 0.8, 0, 0);
 }
 
 
@@ -107,7 +107,11 @@
     -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.83), 30, 0.8, 0, 0);
 }
 
-.card .clickable {
+.card .clickable.student {
+    -fx-effect: dropshadow(gaussian, rgba(0, 255, 255, 0.85), 10, 0.8, 0, 0);
+}
+
+.card .clickable#chooseCharacterButton {
     -fx-effect: dropshadow(gaussian, rgba(0, 255, 255, 0.85), 15, 0.7, 0, 0);
 }
 

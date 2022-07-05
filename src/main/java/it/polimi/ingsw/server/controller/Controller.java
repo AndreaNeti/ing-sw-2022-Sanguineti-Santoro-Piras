@@ -526,9 +526,9 @@ public class Controller {
     }
 
     /**
-     * Method repeatPhase is used to notify that there is again the same phase because there has been an error.
+     * Method repeatPhase is used to notify the current player that there is again the same phase because there has been an error.
      */
     protected void repeatPhase() {
-        setPhase(this.gamePhase);
+        clientHandlers.get(currentPlayerIndex).update(new Phase(this.gamePhase, currentPlayerIndex));
     }
 }
