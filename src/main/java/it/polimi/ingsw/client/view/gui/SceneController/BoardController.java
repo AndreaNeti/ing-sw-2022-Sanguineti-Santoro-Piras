@@ -650,11 +650,14 @@ public class BoardController implements SceneController {
             media.play();
            GuiFX.showError("PAOLINO WON!", "You have been destroyed by Paolino's mighty will", "END MATCH", mediaView);
         } else {
+            URL url = GuiFX.class.getResource("/Graphical_Assets/win.gif");
+            Image image = new Image(url.toString());
+            ImageView mediaView = new ImageView(image);
             StringBuilder winnerString = new StringBuilder();
             for (HouseColor hc : winners)
                 winnerString.append(hc).append(" TEAM, ");
             winnerString.delete(winnerString.length() - 2, winnerString.length() - 1);
-            GuiFX.showError("WINNERS!", winnerString + "WON THE GAME :D", "END MATCH");
+            GuiFX.showError("WINNERS!", winnerString + "WON THE GAME :D", "END MATCH", mediaView);
         }
     }
 
