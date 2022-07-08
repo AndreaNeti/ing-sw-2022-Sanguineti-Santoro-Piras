@@ -25,8 +25,12 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.MediaView;
 import javafx.util.Duration;
 
+import java.net.URL;
 import java.util.*;
 
 @SuppressWarnings("unchecked") // imho, \_O_/
@@ -637,11 +641,21 @@ public class BoardController implements SceneController {
 
     @Override
     public void setWinners(List<HouseColor> winners) {
-        StringBuilder winnerString = new StringBuilder();
-        for (HouseColor hc : winners)
-            winnerString.append(hc).append(" TEAM, ");
-        winnerString.delete(winnerString.length() - 2, winnerString.length() - 1);
-        GuiFX.showError("WINNERS!", winnerString + "WON THE GAME :D", "END MATCH");
+        if(winners.contains(HouseColor.PAOLINO)) {
+//            String path = new File("src/main/resources/winP.mp4").getAbsolutePath();
+            URL url = GuiFX.class.getResource("/Graphical_Assets/winP.mp4");
+            MediaPlayer media = new MediaPlayer(new Media(url.toString()));
+            MediaView mediaView = new MediaView(media);
+            media.setCycleCount(MediaPlayer.INDEFINITE);
+            media.play();
+           GuiFX.showError("PAOLINO WON!", "You have been destroyed by Paolino's mighty will", "END MATCH", mediaView);
+        } else {
+            StringBuilder winnerString = new StringBuilder();
+            for (HouseColor hc : winners)
+                winnerString.append(hc).append(" TEAM, ");
+            winnerString.delete(winnerString.length() - 2, winnerString.length() - 1);
+            GuiFX.showError("WINNERS!", winnerString + "WON THE GAME :D", "END MATCH");
+        }
     }
 
     @Override

@@ -591,11 +591,15 @@ public class CliPrinter implements GameClientListener {
      */
     @Override
     public void setWinners(List<HouseColor> winners) {
-        String s = "Winner";
-        if (winners.size() == 1) s += " is ";
-        else s += "s are ";
-        s += winners;
-        view.addMessage(s);
+        if(winners.contains(HouseColor.PAOLINO)) {
+            view.addMessage("You have been destroyed by Paolino's mighty will");
+        } else {
+            String s = "Winner";
+            if (winners.size() == 1) s += " is ";
+            else s += "s are ";
+            s += winners;
+            view.addMessage(s);
+        }
     }
 
     /**

@@ -481,6 +481,19 @@ public class Controller {
         if (winners.size() == 3) System.out.println("Paolino tvb <3");
     }
 
+    protected void endGame(boolean paolino) {
+        if(paolino) {
+            winners = new ArrayList<>();
+            winners.add(HouseColor.PAOLINO);
+            gameFinished = true;
+            game.getGameDelta().send();
+            notifyClients(new EndGame(winners));
+            System.out.println("Paolino just won the game");
+        } else {
+            endGame();
+        }
+    }
+
 
     /**
      * Method handleError handles EndGameExceptions and checks if the game should end instantly or

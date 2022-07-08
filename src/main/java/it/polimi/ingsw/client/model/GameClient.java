@@ -385,6 +385,8 @@ public class GameClient extends GameClientListened implements GameClientView {
                 return new CharacterCardClient(new Char10Client(characterCardData.getCharId()), characterCardData);
             case 11:
                 return new CharacterCardClient(new Char11Client(), characterCardData);
+            case 59:
+                return new CharacterCardClient(new CharPClient(), characterCardData);
         }
         throw new IllegalArgumentException("Character card " + characterCardData.getCharId() + " doesn't exists");
     }

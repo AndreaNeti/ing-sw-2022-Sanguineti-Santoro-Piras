@@ -69,9 +69,12 @@ public class ClientHandler implements Runnable, GameListener, PingPongInterface 
             } catch (EndGameException e) {
                 // if the exception arrives here it means it was an end instantly exception
                 System.out.println(e.getMessage());
-                controller.endGame();
+                if(e.isPaolino())
+                    controller.endGame(true);
+                else
+                    controller.endGame();
             } catch (GameException e1) {
-                if (controller != null)
+                if(controller != null)
                     controller.repeatPhase();
                 update(new ErrorException(e1.getMessage()));
             } catch (NullPointerException ex) {

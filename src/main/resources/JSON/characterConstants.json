@@ -82,5 +82,12 @@
     "used": false,
     "hasStudents": false,
     "hasProhibitions": false
+  },
+  {
+    "id": -69,
+    "cost": 0,
+    "used": false,
+    "hasStudents": false,
+    "hasProhibitions": false
   }
 ]

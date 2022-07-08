@@ -8,5 +8,5 @@ package it.polimi.ingsw.utils;
  * GREY <br>
  */
 public enum HouseColor {
-    BLACK, WHITE, GREY
+    BLACK, WHITE, GREY, PAOLINO
 }

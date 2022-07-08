@@ -5,14 +5,16 @@
 Eriantys is the final test of **"Software Engineering"**, course of **"Computer Science Engineering"** 
 held at Politecnico di Milano (2021/2022). <br />
 
-**Professor**: Gianpaolo Cugola
+**Professor**: [Gianpaolo Cugola](https://cugola.faculty.polimi.it/images/paolino.jpg)
 
 **Group**: GC-45
 
-**Students**: 
-- Andrea Piras (ID Number: 936909)
-- Andrea Sanguineti (ID Number: 936930)
-- Emanuele Santoro (ID Number: 933198)
+**The team**: 
+- [Andrea Piras](https://github.com/andreapiras00)
+- [Andrea Sanguineti](https://github.com/AndreaNeti)
+- [Emanuele Santoro](https://github.com/emanuelesantoro)
+
+**Final Grade**: 30/30 *cum* laude ( ͡° ͜ʖ ͡°)
 
 ## Project info
 The project consists of a Java version of the board game *Eriantys*.
@@ -23,7 +25,8 @@ The project includes:
 - Peer Reviews of model and network of group GC-55;
 - Source code of the game implementation;
 - Source code of junit tests;
-- Compiled JAR file.
+- Compiled JAR file;
+- A little easter egg ;), tell us if you manage to find it :D
 
 ## Implemented Functionalities
 

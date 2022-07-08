@@ -60,7 +60,15 @@ public class ExpertGame extends NormalGame implements GameInterfaceForCharacter,
         CharacterCard c;
 
         CharacterCardData[] characterConstants = (CharacterCardData[]) JsonReader.getObjFromJson("characterConstants", CharacterCardData[].class);
-
+        for(Player p : getPlayers()){
+            if(Objects.equals(p.toString(), "Paolino")) {
+                i++;
+                c = factoryCharacter(69, this, characterConstants);
+                characters.add(c);
+                selectedCharacters.add((byte) 69);
+                break;
+            }
+        }
         while (i < matchConstants.numOfCharacterCards()) {
             while (selectedCharacters.contains(characterIndex)) {
                 characterIndex = (byte) rand.nextInt(12);
@@ -108,7 +116,7 @@ public class ExpertGame extends NormalGame implements GameInterfaceForCharacter,
     static CharacterCard factoryCharacter(int index, GameInterfaceForCharacter game, CharacterCardData[] characterConstants) {
         if (game == null || characterConstants == null)
             throw new IllegalArgumentException("Cannot pass null values");
-        if (index >= characterConstants.length)
+        if (index >= characterConstants.length && index != 69)
             throw new IllegalArgumentException("Cannot retrieve character constants");
         switch (index) {
             case 0:
@@ -153,6 +161,8 @@ public class ExpertGame extends NormalGame implements GameInterfaceForCharacter,
                 return new CharacterCard(c10, characterConstants[index]);
             case 11:
                 return new CharacterCard(new Char11(), characterConstants[index]);
+            case 69:
+                return new CharacterCard((new CharP()), characterConstants[12]);
         }
         throw new IllegalArgumentException("Character card " + index + " doesn't exists");
     }

@@ -6,11 +6,15 @@ import it.polimi.ingsw.utils.GamePhase;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.SceneAntialiasing;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
+import javafx.scene.layout.Region;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 
@@ -155,8 +159,17 @@ public class GuiFX extends Application {
     public static void showError(String title, String contentText, String headerText, Node node) {
         Platform.runLater(() -> {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
+//            alert.setResizable(true);
             alert.setHeaderText(headerText);
             alert.setTitle(title);
+            alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+            alert.setHeight(500);
+            Label label = new Label(contentText);
+            VBox content = new VBox(10, label, node);
+            content.setAlignment(Pos.CENTER);
+            alert.getDialogPane().setContent(content);
+            alert.getDialogPane().setMinHeight(350);
+            alert.getDialogPane().setMinWidth(400);
             alert.setContentText(contentText);
             alert.initOwner(GuiFX.getPrimaryStage());
             alert.setGraphic(node);
