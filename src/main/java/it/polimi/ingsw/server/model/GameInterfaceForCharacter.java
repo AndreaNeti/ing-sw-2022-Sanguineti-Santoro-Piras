@@ -8,7 +8,7 @@ import it.polimi.ingsw.server.model.gameComponents.GameComponent;
 import it.polimi.ingsw.server.model.gameComponents.Island;
 import it.polimi.ingsw.utils.Color;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * CharacterCardGame interface is a game with only functions required by character cards to apply their effects.
@@ -17,9 +17,9 @@ public interface GameInterfaceForCharacter {
     /**
      * Method getCharacterInputs returns the inputs added by the player for the chosen character card.
      *
-     * @return {@code ArrayList}<{@code Integer}> - list of the inputs added by the player.
+     * @return {@code List}<{@code Integer}> - list of the inputs added by the player.
      */
-    ArrayList<Integer> getCharacterInputs();
+    List<Integer> getCharacterInputs();
     /**
      * Method setEqualProfessorCalculation is called by the character card to set to true the respective boolean.
      */

@@ -22,11 +22,11 @@ import java.util.List;
 public class Controller {
     private final MatchConstants matchConstants;
     private final MatchType matchType;
-    private final ArrayList<Player> playersList;
-    private final ArrayList<GameListener> clientHandlers;
-    private final ArrayList<Team> teams;
+    private final List<Player> playersList;
+    private final List<GameListener> clientHandlers;
+    private final List<Team> teams;
     // This array is also used to represent the order of round
-    private final ArrayList<Byte> playerOrder;
+    private final List<Byte> playerOrder;
     private GamePhase gamePhase;
     private Game game;
 
@@ -38,8 +38,8 @@ public class Controller {
     private Byte currentPlayerIndex;
     private boolean lastRound, characterCardPlayed, skipCloudPhase;
 
-    private ArrayList<HouseColor> winners;
-    private final ArrayList<AssistantCard> playedCards;
+    private List<HouseColor> winners;
+    private final List<AssistantCard> playedCards;
     private boolean gameFinished;
     private final Long matchId;
 
@@ -483,8 +483,7 @@ public class Controller {
 
     protected void endGame(boolean paolino) {
         if(paolino) {
-            winners = new ArrayList<>();
-            winners.add(HouseColor.PAOLINO);
+            winners = List.of(HouseColor.PAOLINO);
             gameFinished = true;
             game.getGameDelta().send();
             notifyClients(new EndGame(winners));
@@ -514,9 +513,9 @@ public class Controller {
     /**
      * Method getWinners returns all the teams that won the game.
      *
-     * @return {@code ArrayList}<{@link HouseColor}> - list of the house color of the winners.
+     * @return {@code List}<{@link HouseColor}> - list of the house color of the winners.
      */
-    protected ArrayList<HouseColor> getWinners() {
+    protected List<HouseColor> getWinners() {
         return winners;
     }
 

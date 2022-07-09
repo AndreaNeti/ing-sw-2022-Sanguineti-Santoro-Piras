@@ -26,12 +26,12 @@ import java.util.Set;
  */
 public class NormalGame implements Game {
     private final GameDelta gameDelta;
-    private final ArrayList<Island> islands;
-    private final ArrayList<Cloud> clouds;
+    private final List<Island> islands;
+    private final List<Cloud> clouds;
     //professors are handled as a 5 player array: professors[i]=j means that professor i (it follows the ordinal of enum) is
     //controlled by the player j
     private final Wizard[] professors;
-    private final ArrayList<Team> teams;
+    private final List<Team> teams;
 
     //a reference to all the pieces contained in the game
     private Bag bag;
@@ -42,10 +42,10 @@ public class NormalGame implements Game {
     /**
      * Constructor NormalGame creates a new NormalGame instance.
      *
-     * @param teamList       of type {@code ArrayList}<{@link Team}> - list of the instances of team that are playing in the game.
+     * @param teamList       of type {@code List}<{@link Team}> - list of the instances of team that are playing in the game.
      * @param matchConstants of type {@link MatchConstants} - match constant of the game, based on its type.
      */
-    public NormalGame(ArrayList<Team> teamList, MatchConstants matchConstants) {
+    public NormalGame(List<Team> teamList, MatchConstants matchConstants) {
         if (teamList == null || matchConstants == null) throw new IllegalArgumentException("Passing null parameter");
         if (teamList.size() < 2) throw new IllegalArgumentException("Cannot initialize a game with less than 2 teams");
         this.matchConstants = matchConstants;
@@ -438,11 +438,11 @@ public class NormalGame implements Game {
      * Method calculateWinner returns the team with fewer towers left. In case of a tie, the winner is the team with
      * more professors controlled. In case of another tie, two or more teams are considered winners.
      *
-     * @return {@code ArrayList}<{@link HouseColor}> - the list of winning teams.
+     * @return {@code List}<{@link HouseColor}> - the list of winning teams.
      */
     @Override
-    public ArrayList<HouseColor> calculateWinner() {
-        ArrayList<HouseColor> winners = new ArrayList<>();
+    public List<HouseColor> calculateWinner() {
+        List<HouseColor> winners = new ArrayList<>();
         byte minTowers = 8;
         byte maxProfessors = 0;
         for (Team t : teams) {
@@ -537,9 +537,9 @@ public class NormalGame implements Game {
     /**
      * Method getClouds returns the list of clouds.
      *
-     * @return {@code ArrayList}<{@link Cloud}> - clouds in the game.
+     * @return {@code List}<{@link Cloud}> - clouds in the game.
      */
-    protected ArrayList<Cloud> getClouds() {
+    protected List<Cloud> getClouds() {
         return clouds;
     }
 
@@ -629,10 +629,10 @@ public class NormalGame implements Game {
     /**
      * Method getPlayers returns all the players in the game.
      *
-     * @return {@code ArrayList}<{@link Player}> - list of the instances of all players in game.
+     * @return {@code List}<{@link Player}> - list of the instances of all players in game.
      */
-    protected ArrayList<Player> getPlayers() {
-        ArrayList<Player> ret = new ArrayList<>(getPlayerSize());
+    protected List<Player> getPlayers() {
+        List<Player> ret = new ArrayList<>(getPlayerSize());
         for (byte i = 0; i < getPlayerSize() / teams.size(); i++)
             for (Team t : teams)
                 ret.add(t.getPlayers().get(i));
@@ -661,19 +661,19 @@ public class NormalGame implements Game {
     /**
      * Method getTeams returns the teams playing in the game.
      *
-     * @return {@code ArrayList}<{@link Team}> - list of the instances of all teams in game.
+     * @return {@code List}<{@link Team}> - list of the instances of all teams in game.
      */
-    protected ArrayList<Team> getTeams() {
+    protected List<Team> getTeams() {
         return teams;
     }
 
     /**
      * Method getIslands returns the islands of the game.
      *
-     * @return {@code ArrayList}<{@link Island}> - list of the instances of the game's islands.
+     * @return {@code List}<{@link Island}> - list of the instances of the game's islands.
      */
     // used only in tests
-    protected ArrayList<Island> getIslands() {
+    protected List<Island> getIslands() {
         return islands;
     }
 

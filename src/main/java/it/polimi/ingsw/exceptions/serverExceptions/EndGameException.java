@@ -8,8 +8,7 @@ package it.polimi.ingsw.exceptions.serverExceptions;
  */
 public class EndGameException extends Exception {
     private final boolean endInstantly;
-
-    private boolean paolino = false;
+    private final boolean paolino;
 
     /**
      * Constructor EndGameException creates a new instance of EndGameException.
@@ -18,18 +17,18 @@ public class EndGameException extends Exception {
      */
     public EndGameException(boolean endInstantly) {
         this.endInstantly = endInstantly;
+        this.paolino = false;
     }
 
     /**
      * Constructor EndGameException creates a new instance of EndGameException.
      *
      * @param endInstantly of type {@code boolean} - boolean to check if the game should end instantly or not.
-     * @param paolino of type {@code boolean} - boolean to check if the game has been won by Paolino.
+     * @param paolino      of type {@code boolean} - boolean to check if the game has been won by Paolino.
      */
     public EndGameException(boolean endInstantly, boolean paolino) {
         this.endInstantly = endInstantly;
-        if(paolino)
-            this.paolino = true;
+        this.paolino = paolino;
     }
 
     /**
@@ -46,7 +45,9 @@ public class EndGameException extends Exception {
      *
      * @return {@code boolean} - true if the game has been won by Paolino, false else.
      */
-    public boolean isPaolino() {return paolino;}
+    public boolean isPaolino() {
+        return paolino;
+    }
 
 
 }

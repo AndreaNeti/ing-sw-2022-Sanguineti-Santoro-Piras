@@ -16,7 +16,7 @@ import java.util.*;
  * new towers left in the teams, new position of mother nature and the played assistant card.
  */
 public class GameDelta implements Serializable {
-    private final transient ArrayList<GameListener> listeners;
+    private final transient List<GameListener> listeners;
     // GC index, students array
     private Map<Byte, GameComponent> updatedGC;
     // deleted islands ids

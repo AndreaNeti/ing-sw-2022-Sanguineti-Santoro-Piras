@@ -91,12 +91,12 @@ public class Player implements Serializable {
      * Each player cannot play the same card of a previous player in the same turn, except it's the only card
      * left available.
      *
-     * @param playedCardsInRound of type {@code ArrayList}<{@link AssistantCard}> - list of cards chosen by the players before in this turn.
+     * @param playedCardsInRound of type {@code List}<{@link AssistantCard}> - list of cards chosen by the players before in this turn.
      * @param card of type {@link AssistantCard} - card that the current player wants to play.
      * @return {@code boolean} - true if the card selected can be played, false else.
      */
     // checks if a card can be played in function of the cards chosen by other players
-    public boolean canPlayCard(ArrayList<AssistantCard> playedCardsInRound, AssistantCard card) {
+    public boolean canPlayCard(List<AssistantCard> playedCardsInRound, AssistantCard card) {
         if (playedCardsInRound == null || card == null)
             throw new IllegalArgumentException("Passing null played cards list");
 
@@ -108,7 +108,7 @@ public class Player implements Serializable {
 
         // if the card you chose is already chosen by someone else, check if you hadn't other choices
         if (playedCardsInRound.contains(card)) {
-            ArrayList<AssistantCard> differentCards = new ArrayList<>(assistantCards);
+            List<AssistantCard> differentCards = new ArrayList<>(assistantCards);
             differentCards.removeAll(playedCardsInRound);
             // there is a card not played by other player that you still didn't choose, you should play that one instead
             return differentCards.isEmpty();

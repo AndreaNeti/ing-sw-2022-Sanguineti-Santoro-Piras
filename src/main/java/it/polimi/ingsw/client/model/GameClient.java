@@ -3,8 +3,8 @@ package it.polimi.ingsw.client.model;
 import it.polimi.ingsw.client.GameClientListened;
 import it.polimi.ingsw.client.model.CharacterClientLogic.*;
 import it.polimi.ingsw.server.model.ExpertGame;
-import it.polimi.ingsw.server.model.gameComponents.GameComponent;
 import it.polimi.ingsw.server.model.NormalGame;
+import it.polimi.ingsw.server.model.gameComponents.GameComponent;
 import it.polimi.ingsw.utils.*;
 
 import java.util.*;
@@ -18,8 +18,8 @@ import java.util.concurrent.locks.ReentrantLock;
  * client's controller.
  */
 public class GameClient extends GameClientListened implements GameClientView {
-    public final ArrayList<IslandClient> islands;
-    public final ArrayList<GameComponentClient> clouds;
+    public final List<IslandClient> islands;
+    public final List<GameComponentClient> clouds;
     private final Wizard[] professors;
     private byte motherNaturePosition;
     private Byte currentPlayer;
@@ -43,11 +43,11 @@ public class GameClient extends GameClientListened implements GameClientView {
     /**
      * Constructor GameClient creates a new instance of GameClient.
      *
-     * @param teamsClient of type {@code ArrayList}<{@link TeamClient}> - list of the instances of the game's teams.
+     * @param teamsClient of type {@code List}<{@link TeamClient}> - list of the instances of the game's teams.
      * @param myWizard    of type {@link Wizard} - wizard associated with the client's player.
      * @param matchType   of type {@link MatchType} - type of the game that the client decided to join.
      */
-    public GameClient(ArrayList<TeamClient> teamsClient, Wizard myWizard, MatchType matchType, MatchConstants constants) {
+    public GameClient(List<TeamClient> teamsClient, Wizard myWizard, MatchType matchType, MatchConstants constants) {
         this.myWizard = myWizard;
         this.professors = new Wizard[Color.values().length];
         Arrays.fill(professors, null);
@@ -243,7 +243,7 @@ public class GameClient extends GameClientListened implements GameClientView {
     }
 
     @Override
-    public ArrayList<GameComponentClient> getClouds() {
+    public List<GameComponentClient> getClouds() {
         // not editable out of model package
         return clouds;
     }
@@ -254,7 +254,7 @@ public class GameClient extends GameClientListened implements GameClientView {
     }
 
     @Override
-    public ArrayList<IslandClient> getIslands() {
+    public List<IslandClient> getIslands() {
         return islands;
     }
 
@@ -420,7 +420,7 @@ public class GameClient extends GameClientListened implements GameClientView {
 
     @Override
     public List<PlayerClient> getPlayers() {
-        ArrayList<PlayerClient> ret = new ArrayList<>(matchType.nPlayers());
+        List<PlayerClient> ret = new ArrayList<>(matchType.nPlayers());
         for (byte i = 0; i < matchType.nPlayers() / teams.size(); i++)
             for (TeamClient t : teams)
                 ret.add(t.getPlayers().get(i));

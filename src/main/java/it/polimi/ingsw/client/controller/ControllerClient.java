@@ -13,9 +13,9 @@ import it.polimi.ingsw.network.toServerMessage.Quit;
 import it.polimi.ingsw.network.toServerMessage.ToServerMessage;
 import it.polimi.ingsw.server.controller.Controller;
 import it.polimi.ingsw.server.controller.Server;
-import it.polimi.ingsw.server.model.gameComponents.GameComponent;
 import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.server.model.Team;
+import it.polimi.ingsw.server.model.gameComponents.GameComponent;
 import it.polimi.ingsw.utils.*;
 
 import java.io.IOException;
@@ -39,7 +39,7 @@ public class ControllerClient extends GameClientListened implements PingPongInte
     private GameClient model;
     private MatchType matchType;
     private MatchConstants matchConstants;
-    private ArrayList<TeamClient> teamsClient;
+    private List<TeamClient> teamsClient;
     private Wizard myWizard;
     private ServerListener serverListener;
     private AbstractView abstractView;
@@ -88,9 +88,9 @@ public class ControllerClient extends GameClientListened implements PingPongInte
     /**
      * Method getChat returns the client's chat.
      *
-     * @return {@code ArrayList}<{@code String}> - copy of the chat saved in a list.
+     * @return {@code List}<{@code String}> - copy of the chat saved in a list.
      */
-    public ArrayList<String> getChat() {
+    public List<String> getChat() {
         return new ArrayList<>(chat);
     }
 

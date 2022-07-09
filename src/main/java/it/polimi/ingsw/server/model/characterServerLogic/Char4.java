@@ -2,8 +2,8 @@ package it.polimi.ingsw.server.model.characterServerLogic;
 
 import it.polimi.ingsw.exceptions.serverExceptions.GameException;
 import it.polimi.ingsw.exceptions.serverExceptions.NotAllowedException;
-import it.polimi.ingsw.server.model.gameComponents.Island;
 import it.polimi.ingsw.server.model.GameInterfaceForCharacter;
+import it.polimi.ingsw.server.model.gameComponents.Island;
 import it.polimi.ingsw.utils.MatchType;
 
 /**

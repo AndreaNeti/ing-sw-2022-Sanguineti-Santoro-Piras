@@ -8,7 +8,6 @@ import it.polimi.ingsw.utils.AssistantCard;
 import it.polimi.ingsw.utils.Color;
 import it.polimi.ingsw.utils.HouseColor;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -58,9 +57,9 @@ public interface Game {
      * Method calculateWinner returns the team with fewer towers left. In case of a tie, the winner is the team with
      * more professors controlled. In case of another tie, two or more teams are considered winners.
      *
-     * @return {@code ArrayList}<{@link HouseColor}> - the list of winning teams.
+     * @return {@code List}<{@link HouseColor}> - the list of winning teams.
      */
-    ArrayList<HouseColor> calculateWinner();
+    List<HouseColor> calculateWinner();
 
     /**
      * Method refillClouds draws 3 or 4 students based on the number of players to each cloud.

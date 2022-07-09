@@ -21,7 +21,7 @@ class CharacterCardTest {
     private final CharacterCard c0, c1, c2, c3, c4, c5, c6, c7, c8, c9, c10, c11;
     private final Byte charToSelect;
 
-    private final ArrayList<CharacterCard> cards = new ArrayList<>();
+    private final List<CharacterCard> cards = new ArrayList<>();
 
     public CharacterCardTest() {
         MatchType matchType = new MatchType((byte) 2, true);
@@ -34,7 +34,7 @@ class CharacterCardTest {
         } catch (GameException e) {
             fail(e);
         }
-        ArrayList<Team> teamList = new ArrayList<>();
+        List<Team> teamList = new ArrayList<>();
         teamList.add(t1);
         teamList.add(t2);
         game = new ExpertGame(teamList, matchConstants);
@@ -590,7 +590,7 @@ class CharacterCardTest {
         } catch (GameException e) {
             fail(e);
         }
-        ArrayList<Player> players = game.getPlayers();
+        List<Player> players = game.getPlayers();
         byte[] oldValues = new byte[players.size()];
         for (byte i = 0; i < players.size(); i++)
             oldValues[i] = players.get(i).getLunchHall().howManyStudents(Color.values()[color]);

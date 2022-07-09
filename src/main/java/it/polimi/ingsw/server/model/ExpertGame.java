@@ -41,10 +41,10 @@ public class ExpertGame extends NormalGame implements GameInterfaceForCharacter,
      * Constructor ExpertGame creates a new instance of ExpertGame. <br>
      * Info about the character card is read from a JSON file in the 'resources' folder.
      *
-     * @param teamList       of type {@code ArrayList}<{@link Team}> - list of the instances of team that are playing in the game.
+     * @param teamList       of type {@code List}<{@link Team}> - list of the instances of team that are playing in the game.
      * @param matchConstants of type {@link MatchConstants} - match constant of the game, based on its type.
      */
-    public ExpertGame(ArrayList<Team> teamList, MatchConstants matchConstants) {
+    public ExpertGame(List<Team> teamList, MatchConstants matchConstants) {
         super(teamList, matchConstants);
         this.matchConstants = matchConstants;
         byte numberOfPlayers = super.getPlayerSize();
@@ -511,10 +511,10 @@ public class ExpertGame extends NormalGame implements GameInterfaceForCharacter,
     /**
      * Method getCharacterInputs returns the inputs added by the player for the chosen character card.
      *
-     * @return {@code ArrayList}<{@code Integer}> - list of the inputs added by the player.
+     * @return {@code List}<{@code Integer}> - list of the inputs added by the player.
      */
     @Override
-    public ArrayList<Integer> getCharacterInputs() {
+    public List<Integer> getCharacterInputs() {
         return new ArrayList<>(inputsCharacter);
     }
 

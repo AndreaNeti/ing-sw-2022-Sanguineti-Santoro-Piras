@@ -6,7 +6,6 @@ import it.polimi.ingsw.utils.MatchConstants;
 import it.polimi.ingsw.utils.MatchType;
 import it.polimi.ingsw.utils.Wizard;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -32,16 +31,16 @@ public interface GameClientView {
     /**
      * Method getClouds returns the cloud components of the game.
      *
-     * @return {@code ArrayList}<{@link GameComponentClient}> - list of instances of the clouds.
+     * @return {@code List}<{@link GameComponentClient}> - list of instances of the clouds.
      */
-    ArrayList<GameComponentClient> getClouds();
+    List<GameComponentClient> getClouds();
 
     /**
      * Method getIslands returns the island components of the game.
      *
-     * @return {@code ArrayList}<{@link IslandClient}> - list of instances of the islands.
+     * @return {@code List}<{@link IslandClient}> - list of instances of the islands.
      */
-    ArrayList<IslandClient> getIslands();
+    List<IslandClient> getIslands();
 
     /**
      * Method getTeams returns the teams playing in the game.

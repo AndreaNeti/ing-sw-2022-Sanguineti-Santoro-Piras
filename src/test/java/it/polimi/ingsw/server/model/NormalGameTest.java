@@ -428,7 +428,7 @@ public class NormalGameTest {
         } catch (GameException | EndGameException e) {
             fail(e);
         }
-        ArrayList<HouseColor> winner1 = gameWith2.calculateWinner();
+        List<HouseColor> winner1 = gameWith2.calculateWinner();
         assertEquals(winner1.size(), 1);
         assertEquals(winner1.get(0), gameWith2.getTeams().get(0).getHouseColor());
 
@@ -447,7 +447,7 @@ public class NormalGameTest {
         } catch (GameException | EndGameException e) {
             fail(e);
         }
-        ArrayList<HouseColor> winner3 = gameWith3.calculateWinner();
+        List<HouseColor> winner3 = gameWith3.calculateWinner();
         assertEquals(winner3.size(), 3);
         assertEquals(winner3.get(0), gameWith3.getTeams().get(0).getHouseColor());
         assertEquals(winner3.get(1), gameWith3.getTeams().get(1).getHouseColor());
@@ -468,7 +468,7 @@ public class NormalGameTest {
         } catch (GameException | EndGameException e) {
             fail(e);
         }
-        ArrayList<HouseColor> winner4 = gameWith4.calculateWinner();
+        List<HouseColor> winner4 = gameWith4.calculateWinner();
         assertEquals(winner4.size(), 2);
         assertEquals(winner4.get(1), gameWith4.getTeams().get(1).getHouseColor());
         assertEquals(winner4.get(0), gameWith4.getTeams().get(0).getHouseColor());

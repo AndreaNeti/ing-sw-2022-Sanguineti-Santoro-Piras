@@ -45,7 +45,7 @@ public class CliPrinter implements GameClientListener {
      */
     private void printLobby() {
         synchronized (view.getChat()) {
-            ArrayList<String> chatCopy = view.getChat();
+            List<String> chatCopy = view.getChat();
 //        Collections.reverse(chatCopy);
             StringBuilder chat = new StringBuilder();
             chat.append(" \u250c").append("\u2500".repeat(39)).append("\u2524 CHAT \u251c").append("\u2500".repeat(39)).append("\u2510\n");
@@ -87,10 +87,10 @@ public class CliPrinter implements GameClientListener {
     /**
      * Method printIsland creates a string that contains the islands.
      *
-     * @param islands of type {@code ArrayList}<{@link IslandClient}> - list of the instances of the islands.
+     * @param islands of type {@code List}<{@link IslandClient}> - list of the instances of the islands.
      * @return {@code StringBuilder} - StringBuilder containing the islands.
      */
-    private StringBuilder printIslands(ArrayList<IslandClient> islands) {
+    private StringBuilder printIslands(List<IslandClient> islands) {
         StringBuilder islandPrint = new StringBuilder();
         // print island number and prohibitions
         for (int i = 0; i < islands.size(); i++) {
@@ -146,11 +146,11 @@ public class CliPrinter implements GameClientListener {
     /**
      * Method printCloudsAndTeams creates a string that contains the clouds and the teams.
      *
-     * @param clouds of type {@code ArrayList}<{@link GameComponentClient}> - list of the instances of the islands.
+     * @param clouds of type {@code List}<{@link GameComponentClient}> - list of the instances of the islands.
      * @param teams  of type {@code List}<{@link TeamClient}> - list of the instances of the teams.
      * @return {@code StringBuilder} - StringBuilder containing the clouds and the teams.
      */
-    private StringBuilder printCloudsAndTeams(ArrayList<GameComponentClient> clouds, List<TeamClient> teams) {
+    private StringBuilder printCloudsAndTeams(List<GameComponentClient> clouds, List<TeamClient> teams) {
         StringBuilder cloudsTeamsPrint = new StringBuilder();
         // print cloud number
         for (int i = 0; i < clouds.size(); i++) {

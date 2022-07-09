@@ -249,9 +249,9 @@ public abstract class AbstractView {
     /**
      * Method getChat is used by the view to get the game's chat through the client's controller.
      *
-     * @return {@code ArrayList}<{@code String}> - copy of the chat saved in a list.
+     * @return {@code List}<{@code String}> - copy of the chat saved in a list.
      */
-    public ArrayList<String> getChat() {
+    public List<String> getChat() {
         return controllerClient.getChat();
     }
 }

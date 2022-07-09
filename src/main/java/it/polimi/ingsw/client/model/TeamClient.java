@@ -34,9 +34,9 @@ public class TeamClient {
     /**
      * Method getPlayers returns all the players in the team.
      *
-     * @return {@code ArrayList}<{@link PlayerClient}> - list of the instances of the team's players.
+     * @return {@code List}<{@link PlayerClient}> - list of the instances of the team's players.
      */
-    public ArrayList<PlayerClient> getPlayers() {
+    public List<PlayerClient> getPlayers() {
         return membersClient;
     }
 

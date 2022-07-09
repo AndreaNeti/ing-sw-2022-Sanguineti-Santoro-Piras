@@ -6,6 +6,7 @@ import it.polimi.ingsw.utils.HouseColor;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -39,9 +40,9 @@ public class Team implements Serializable {
     /**
      * Method getPlayers returns all the players in the team.
      *
-     * @return {@code ArrayList}<{@link Player}> - list of the instances of the team's players.
+     * @return {@code List}<{@link Player}> - list of the instances of the team's players.
      */
-    public ArrayList<Player> getPlayers() {
+    public List<Player> getPlayers() {
         return new ArrayList<>(members);
     }
 

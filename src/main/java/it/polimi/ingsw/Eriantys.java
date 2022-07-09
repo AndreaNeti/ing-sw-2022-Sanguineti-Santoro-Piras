@@ -6,26 +6,15 @@ import it.polimi.ingsw.server.controller.Server;
 
 public class Eriantys {
     public static void main(String[] args) {
-
-        boolean cliParam = false; // default value
-        boolean serverParam = false;
         for (String arg : args) {
             if (arg.equals("--cli") || arg.equals("-c")) {
-                cliParam = true;
-                break;
-            }
-            if (arg.equals("--server") || arg.equals("-s")) {
-                serverParam = true;
+                AppCLI.main(args);
+                return;
+            } else if (arg.equals("--server") || arg.equals("-s")) {
+                Server.main(args);
+                return;
             }
         }
-
-        if (cliParam) {
-            AppCLI.main(args);
-        } else if (serverParam) {
-            Server.main(args);
-        } else {
-            AppGUI.main(args);
-        }
-
+        AppGUI.main(args);
     }
 }
