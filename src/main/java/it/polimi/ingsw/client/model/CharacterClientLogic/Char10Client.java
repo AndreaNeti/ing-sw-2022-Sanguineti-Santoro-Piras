@@ -53,7 +53,6 @@ public class Char10Client implements CharacterClientLogicInterface {
      */
     private EventHandler<MouseEvent> setInput(ViewGUI viewGUI) {
         return mouseEvent -> {
-
             Node clicked = (Node) mouseEvent.getSource();
             inputs.add(((Color) clicked.getProperties().get("color")).ordinal());
             viewGUI.repeatPhase();

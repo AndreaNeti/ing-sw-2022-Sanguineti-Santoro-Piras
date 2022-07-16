@@ -59,7 +59,6 @@ public class Char9Client implements CharacterClientLogicInterface {
         return mouseEvent -> {
             Node clicked = (Node) mouseEvent.getSource();
             inputs.add(((Color) clicked.getProperties().get("color")).ordinal());
-            System.out.println(inputs);
             viewGUI.repeatPhase();
         };
     }

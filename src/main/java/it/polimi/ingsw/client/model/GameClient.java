@@ -159,7 +159,6 @@ public class GameClient extends GameClientListened implements GameClientView {
                 notifyGameComponent(islandToReturn);
             }
         } else if (idGameComponent <= -10) {
-            System.out.println(idGameComponent);
             GameComponentClient gc = charactersWithStudents.get(idGameComponent);
             gc.modifyGameComponent(gameComponent);
             notifyGameComponent(gc);

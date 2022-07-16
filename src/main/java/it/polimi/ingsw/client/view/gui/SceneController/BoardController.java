@@ -258,6 +258,28 @@ public class BoardController implements SceneController {
         enableNode(node, false);
     }
 
+    @Override
+    public void disableNode(Node node) {
+        disableNode(node, false);
+    }
+
+    @Override
+    public void disableNode(Node node, boolean removeVisibility) {
+        Timeline timeline = timelines.get(node);
+        if (timeline != null)
+            timeline.pause();
+        node.setDisable(true);
+        node.getStyleClass().remove("clickable");
+        if (removeVisibility) {
+            node.setVisible(false);
+            visibleElement.remove(node);
+        }
+        node.getStyleClass().remove("selected");
+        node.applyCss();
+        clickableElement.remove(node);
+        selectedElement.remove(node);
+    }
+
     //to enable a node use this function-> this is needed so there is an eay way to disable all the element
     @Override
     public void enableNode(Node node, boolean addVisibility) {
@@ -336,7 +358,7 @@ public class BoardController implements SceneController {
             // update the new mother nature
             IslandClient motherNatureIsland = viewGUI.getModel().getIslands().get(motherNaturePosition);
             AnchorPane islandPane = (AnchorPane) getElementById("#" + getCenterArchipelagoId(motherNatureIsland));
-            System.out.println("Mother Nature position: " + motherNaturePosition + ", moved on island #" + getCenterArchipelagoId(motherNatureIsland));
+            // System.out.println("Mother Nature position: " + motherNaturePosition + ", moved on island #" + getCenterArchipelagoId(motherNatureIsland));
             islandPane.getChildren().add(getMotherNature());
         });
     }
@@ -506,7 +528,7 @@ public class BoardController implements SceneController {
         Platform.runLater(() -> {
             // retrieve the team that deleted the island and enlarge it using the position of mother nature
             byte motherNaturePosition = viewGUI.getModel().getMotherNaturePosition();
-            System.out.println("Mother Nature has position: " + motherNaturePosition + " and it's on island #" + getCenterArchipelagoId(winnerIsland) + " (relativeId = " + winnerIsland.getId() + ") removed island #" + removedIsland.getId());
+            // System.out.println("Mother Nature has position: " + motherNaturePosition + " and it's on island #" + getCenterArchipelagoId(winnerIsland) + " (relativeId = " + winnerIsland.getId() + ") removed island #" + removedIsland.getId());
             HouseColor winnerTeam = winnerIsland.getTeam();
 
             AnchorPane paneWinnerIsland = (AnchorPane) this.getElementById("#" + winnerIsland.getId());
@@ -641,14 +663,14 @@ public class BoardController implements SceneController {
 
     @Override
     public void setWinners(List<HouseColor> winners) {
-        if(winners.contains(HouseColor.PAOLINO)) {
+        if (winners.contains(HouseColor.PAOLINO)) {
 //            String path = new File("src/main/resources/winP.mp4").getAbsolutePath();
             URL url = GuiFX.class.getResource("/Graphical_Assets/winP.mp4");
             MediaPlayer media = new MediaPlayer(new Media(url.toString()));
             MediaView mediaView = new MediaView(media);
             media.setCycleCount(MediaPlayer.INDEFINITE);
             media.play();
-           GuiFX.showError("PAOLINO WON!", "You have been destroyed by Paolino's mighty will", "END MATCH", mediaView);
+            GuiFX.showError("PAOLINO WON!", "You have been destroyed by Paolino's mighty will", "END MATCH", mediaView);
         } else {
             URL url = GuiFX.class.getResource("/Graphical_Assets/win.gif");
             Image image = new Image(url.toString());

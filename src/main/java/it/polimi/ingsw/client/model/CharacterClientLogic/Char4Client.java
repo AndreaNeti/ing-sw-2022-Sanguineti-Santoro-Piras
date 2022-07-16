@@ -53,7 +53,6 @@ public class Char4Client implements CharacterClientLogicInterface {
             Node clicked = (Node) mouseEvent.getSource();
             int relativeId = (int) clicked.getProperties().get("relativeId");
             inputs.add(relativeId);
-            System.out.println("input for grandma :" + inputs);
             viewGUI.repeatPhase();
         };
     }

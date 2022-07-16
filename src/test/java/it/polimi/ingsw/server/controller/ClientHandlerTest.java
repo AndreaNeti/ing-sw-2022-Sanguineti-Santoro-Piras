@@ -138,7 +138,6 @@ class ClientHandlerTest {
 
     @Test
     void createMatchTest() {
-        System.out.println("Ciao");
         MatchType type = new MatchType((byte) 3, false);
         try {
             p2.createMatch(type);

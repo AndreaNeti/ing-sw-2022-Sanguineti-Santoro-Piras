@@ -258,16 +258,18 @@ public enum GameCommand {
                 sceneController.disableEverything();
                 Node clicked = (Node) mouseEvent.getSource();
                 Color c = (Color) clicked.getProperties().get("color");
+                // has a color property, it's a student
                 if (c != null) {
-                    if (color == null) {
-                        sceneController.selectNode(clicked);
-                        // enable all islands
-                        viewGUI.enableIslands(GameCommand.MOVE_STUDENT.getGUIHandler(viewGUI));
-                        //lunchHall is the third children
-                        VBox lunchHall = (VBox) ((AnchorPane) sceneController.getElementById("#mainBoard")).getChildren().get(3);
-                        sceneController.enableNode(lunchHall);
-                        lunchHall.setOnMouseClicked(GameCommand.MOVE_STUDENT.getGUIHandler(viewGUI));
-                    }
+                    EventHandler<MouseEvent> moveStudentClick = GameCommand.MOVE_STUDENT.getGUIHandler(viewGUI);
+                    viewGUI.enableEntrance(moveStudentClick);
+                    sceneController.disableNode(clicked);
+                    sceneController.selectNode(clicked);
+                    // enable all islands
+                    viewGUI.enableIslands(moveStudentClick);
+                    // lunchHall is the third children
+                    VBox lunchHall = (VBox) ((AnchorPane) sceneController.getElementById("#mainBoard")).getChildren().get(3);
+                    sceneController.enableNode(lunchHall);
+                    lunchHall.setOnMouseClicked(moveStudentClick);
                     color = c;
                 } else {
                     // if an island is merged, relativeId is the one representing the "archipelago" (!= id)
@@ -398,7 +400,6 @@ public enum GameCommand {
                 alert.initOwner(GuiFX.getPrimaryStage());
                 CharacterCardClient current = viewGUI.getCurrentCharacterCard();
                 if (alert.showAndWait().filter(ButtonType.OK::equals).isPresent()) {
-                    System.out.println("Character card inputs:" + current.getInputs());
                     viewGUI.sendToServer(new PlayCharacter(current.getInputs()));
                     current.resetInput();
                     viewGUI.unsetCurrentCharacterCard();
@@ -542,7 +543,6 @@ public enum GameCommand {
                     singleChar.getChildren().get(3).setVisible(false);
                     viewGUI.sendToServer(new ChooseCharacter(null, ""));
                 }
-                System.out.println(viewGUI.getCurrentPhase());
             };
         }
 

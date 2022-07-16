@@ -125,15 +125,11 @@ public class NormalGame implements Game {
         if (islandBefore.getTeamColor() != null && islandBefore.getTeamColor().equals(island.getTeamColor())) {
 
             island.merge(islandBefore);
-            System.out.println("Removed island with id " + islandBefore.getId());
             islands.remove(islandBefore);
-            System.out.println("index before: " + islandBeforeIndex + "index after:" + islandAfterIndex);
             if (islandBeforeIndex < islandAfterIndex)
                 islandAfterIndex--;
-            System.out.println("position of mt" + motherNaturePosition);
             if (islandBeforeIndex < motherNaturePosition)
                 motherNaturePosition--;
-            System.out.println("position of mt after" + motherNaturePosition);
 
             // add to game delta
             gameDelta.setNewMotherNaturePosition(motherNaturePosition);
@@ -143,13 +139,9 @@ public class NormalGame implements Game {
         }
         if (islandAfter.getTeamColor() != null && islandAfter.getTeamColor().equals(island.getTeamColor())) {
             island.merge(islandAfter);
-            System.out.println("Removed island with id " + islandAfter.getId());
             islands.remove(islandAfter);
-            System.out.println("position of mt" + motherNaturePosition);
             if (islandAfterIndex <= motherNaturePosition)
                 motherNaturePosition = (byte) Math.floorMod(motherNaturePosition - 1, islands.size());
-
-            System.out.println("position of mt after" + motherNaturePosition);
 
             // add to game delta
             gameDelta.setNewMotherNaturePosition(motherNaturePosition);

@@ -40,7 +40,6 @@ public class Char0Client implements CharacterClientLogicInterface {
 
     @Override
     public void setHandler(ViewGUI viewGUI) {
-
         if (inputs.size() == 0) {
             //this card has id -10 (it's a gameComponent)
             viewGUI.enableStudentsOnCharacter(id, setInput(viewGUI));

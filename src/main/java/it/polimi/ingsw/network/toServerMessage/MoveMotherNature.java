@@ -25,8 +25,8 @@ public class MoveMotherNature implements ToServerMessage {
      * Method execute uses the game controller to move mother nature the selected amount of moves.
      *
      * @param clientHandler of type {@link ClientHandler} - instance of the client handler that sends the message.
-     * @throws GameException if the game is finished or if it's not the client's turn or if mother nature cannot
-     * be moved the selected amount of moves.
+     * @throws GameException    if the game is finished or if it's not the client's turn or if mother nature cannot
+     *                          be moved the selected amount of moves.
      * @throws EndGameException if after moving mother nature there are less than 3 islands left in the game.
      */
     @Override
@@ -37,7 +37,9 @@ public class MoveMotherNature implements ToServerMessage {
         }
         if (c.isMyTurn(clientHandler)) {
             c.moveMotherNature(moves);
-            c.sendMessage(clientHandler, "moved Mother Nature by " + moves + " moves");
+            String message = "moved Mother Nature by " + moves + " move";
+            if (moves > 1) message += "s";
+            c.sendMessage(clientHandler, message);
         } else throw new NotAllowedException("It's not your turn");
     }
 

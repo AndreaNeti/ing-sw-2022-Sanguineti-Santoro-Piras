@@ -52,4 +52,17 @@ public interface SceneController extends GameClientListener {
      * @param node of type {@code Node} - the node you want to be enabled.
      */
     void enableNode(Node node);
+    /**
+     * Method disableNode disables the given node
+     *
+     * @param node of type {@code Node} - the node you want to be disabled.
+     */
+    void disableNode(Node node);
+    /**
+     * Method disableNode disables the given node
+     *
+     * @param node          of type {@code Node} - the node you want to be disabled.
+     * @param removeVisibility of type {@code boolean} - if true also remove the node visible.
+     */
+    void disableNode(Node node, boolean removeVisibility);
 }
