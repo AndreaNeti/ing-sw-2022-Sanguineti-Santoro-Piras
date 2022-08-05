@@ -4,15 +4,19 @@ import it.polimi.ingsw.client.controller.ControllerClient;
 import it.polimi.ingsw.client.view.gui.SceneController.SceneController;
 import it.polimi.ingsw.utils.GamePhase;
 import javafx.application.Application;
+import javafx.application.HostServices;
 import javafx.application.Platform;
+import javafx.concurrent.Task;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.SceneAntialiasing;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -33,6 +37,8 @@ public class GuiFX extends Application {
         return primaryStage;
     }
 
+    public static HostServices hostServices;
+
     @Override
     public void start(Stage primaryStage) {
         inMenuScene = false;
@@ -44,71 +50,20 @@ public class GuiFX extends Application {
         });
         goToMenuScene();
         primaryStage.show();
+        primaryStage.setTitle("Eriantys");
         viewGUI.setPhaseInView(GamePhase.INIT_PHASE, false);
-
+        hostServices = getHostServices();
     }
-
-    /**
-     * Method goToBoardScene loads and set the main game scene
-     */
-    public static void goToBoardScene() {
-        if (inMenuScene) {
-            controller.removeListeners();
-            primaryStage.setTitle("Eriantys");
-            //JFrame loadingWindow = new LoadingWindow().getInitWindow();
-            FXMLLoader loader = new FXMLLoader(GuiFX.class.getResource("/board.fxml"));
-
-            try {
-                /*int width = (int) Screen.getPrimary().getBounds().getWidth();
-                int height = (int) Screen.getPrimary().getBounds().getHeight();*/
-                primaryStage.setScene(new Scene(loader.load(), 1920, 1080, false, SceneAntialiasing.BALANCED));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            SceneController boardController = loader.getController();
-            controller.addListener(boardController);
-            activeSceneController = boardController;
-            boardController.setViewGUI(viewGUI);
-            inMenuScene = false;
-            primaryStage.setFullScreen(true);
-            //primaryStage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
-            primaryStage.setResizable(false);
-            //loadingWindow.dispose();
-            primaryStage.show();
-        }
-    }
-
-    /*private static class LoadingWindow {
-        private JFrame getInitWindow() {
-
-            JFrame loadingFrame = new JFrame();
-            ImageIcon icon = new ImageIcon(Objects.requireNonNull(GuiFX.class.getResource("/loading.gif")));
-            //icon = new ImageIcon(icon.getImage().getScaledInstance(700, 700, Image.SCALE_DEFAULT));
-            JLabel label = new JLabel(icon);
-            //loadingFrame.setIconImage(new ImageIcon(getClass().getResource("/images/logo.png").getPath()).getImage());
-            loadingFrame.setUndecorated(true);
-            loadingFrame.setBackground(new Color(0f, 0f, 0f, 0f));
-
-            /*Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
-            loadingFrame.setLocation((int) ((screenBounds.getWidth() -800) / 2), (int) ((screenBounds.getHeight() - 500) / 2));
-            loadingFrame.getContentPane().add(label);
-            loadingFrame.pack();
-            loadingFrame.setLocationRelativeTo(null);
-            loadingFrame.setAlwaysOnTop(true);
-            loadingFrame.setVisible(true);
-            return loadingFrame;
-        }
-
-    }*/
 
     /**
      * Method goToBoardScene loads and set the menu scene
      */
     public static void goToMenuScene() {
         if (!inMenuScene) {
+            if (activeSceneController != null)
+                activeSceneController.stop();
             controller.removeListeners();
             primaryStage.setResizable(false);
-            primaryStage.setTitle("Eriantys");
             FXMLLoader loader = new FXMLLoader(GuiFX.class.getResource("/menu.fxml"));
             try {
                 primaryStage.setScene(new Scene(loader.load(), 700, 700, false, SceneAntialiasing.BALANCED));
@@ -121,6 +76,51 @@ public class GuiFX extends Application {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        }
+    }
+
+    /**
+     * Method goToBoardScene loads and set the main game scene
+     */
+    public static void goToBoardScene() {
+        if (inMenuScene) {
+            GuiFX.getActiveSceneController().getElementById("#loading").setVisible(true);
+            controller.removeListeners();
+            activeSceneController.stop();
+            Task<Parent> task = new Task<>() {
+                @Override
+                protected Parent call() {
+                    Parent p = null;
+                    FXMLLoader loader = new FXMLLoader(GuiFX.class.getResource("/board.fxml"));
+                    try {
+                        p = loader.load();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    SceneController boardController = loader.getController();
+                    controller.addListener(boardController);
+                    activeSceneController = boardController;
+                    try {
+                        boardController.setViewGUI(viewGUI);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    return p;
+                }
+            };
+            new Thread(task).start();
+            task.setOnSucceeded(workerStateEvent -> {
+                Parent finalParent = task.getValue();
+                System.out.println("son qui");
+                inMenuScene = false;
+                primaryStage.setAlwaysOnTop(true);
+                primaryStage.setFullScreen(true);
+                primaryStage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
+                primaryStage.setResizable(false);
+                primaryStage.setScene(new Scene(finalParent, 1920, 1080, false, SceneAntialiasing.BALANCED));
+                viewGUI.play();
+                primaryStage.show();
+            });
         }
     }
 
@@ -175,5 +175,9 @@ public class GuiFX extends Application {
             alert.setGraphic(node);
             alert.showAndWait();
         });
+    }
+
+    public static boolean isInMenuScene() {
+        return inMenuScene;
     }
 }

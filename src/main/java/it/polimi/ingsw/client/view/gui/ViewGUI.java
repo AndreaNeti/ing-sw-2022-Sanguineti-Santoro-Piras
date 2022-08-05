@@ -29,7 +29,7 @@ import java.util.List;
  * It contains methods to modify the graphical components and interact with them in order to obtain inputs from the user.
  */
 public class ViewGUI extends AbstractView {
-    private ClientPhase phaseToExecute;
+    private boolean play = true;
 
     /**
      * Constructor ViewGUI creates a new instance of ViewGUI.
@@ -42,14 +42,32 @@ public class ViewGUI extends AbstractView {
 
     @Override
     protected synchronized void setPhaseInView(ClientPhase clientPhase, boolean forceImmediateExecution) {
-        phaseToExecute = clientPhase;
         //if it's not in a game should load the menu scene otherwise the board scene
         if (getModel() == null) {
             Platform.runLater(GuiFX::goToMenuScene);
         } else {
+            if (GuiFX.isInMenuScene()) {
+                this.play = false;
+            }
             Platform.runLater(GuiFX::goToBoardScene);
         }
-        Platform.runLater(() -> phaseToExecute.playPhase(this));
+        if (play) Platform.runLater(() -> clientPhase.playPhase(this));
+        else {
+            while (!play) {
+                try {
+                    wait();
+                    Platform.runLater(() -> clientPhase.playPhase(this));
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    public synchronized void play() {
+        this.play = true;
+        System.out.println("notify");
+        notifyAll();
     }
 
     @Override

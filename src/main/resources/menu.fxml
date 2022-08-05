@@ -1,13 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.*?>
 <?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.effect.Glow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
+
 <AnchorPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="700.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.view.gui.SceneController.MenuController">
     <ImageView fitHeight="700.0" fitWidth="700.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <Image url="@Graphical_Assets/logo.jpg" />
@@ -17,18 +28,19 @@
         <HBox spacing="5.0">
             <TextField id="message" />
             <Button fx:id="sendButton" mnemonicParsing="false" text="Send">
-            <HBox.margin>
-               <Insets left="5.0" />
-            </HBox.margin></Button>
+                <HBox.margin>
+                    <Insets left="5.0" />
+                </HBox.margin>
+            </Button>
         </HBox>
     </VBox>
     <AnchorPane fx:id="mainGroup" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <VBox id="nickName" alignment="CENTER" spacing="20.0" visible="false" AnchorPane.bottomAnchor="250.0" AnchorPane.leftAnchor="150.0" AnchorPane.rightAnchor="150.0" AnchorPane.topAnchor="250.0">
-         <Label text="Choose a nickname:" textFill="WHITE">
-             <font>
-                 <Font size="20.0" />
-             </font>
-         </Label>
+            <Label text="Choose a nickname:" textFill="WHITE">
+                <font>
+                    <Font size="20.0" />
+                </font>
+            </Label>
             <TextField id="inputNickName" alignment="CENTER" promptText="Insert nickname">
                 <VBox.margin>
                     <Insets left="50.0" right="50.0" />
@@ -78,11 +90,11 @@
             <TextField id="inputIdMatch" alignment="CENTER" prefHeight="26.0" prefWidth="284.0" promptText="Game ID" GridPane.rowIndex="3" />
         </GridPane>
         <VBox id="connect" alignment="CENTER" spacing="20.0" visible="false" AnchorPane.bottomAnchor="250.0" AnchorPane.leftAnchor="150.0" AnchorPane.rightAnchor="150.0" AnchorPane.topAnchor="250.0">
-         <Label text="Connect to a server:" textFill="WHITE">
-             <font>
-                 <Font size="20.0" />
-             </font>
-         </Label>
+            <Label text="Connect to a server:" textFill="WHITE">
+                <font>
+                    <Font size="20.0" />
+                </font>
+            </Label>
             <TextField id="inputIp" alignment="CENTER" prefWidth="201.0" promptText="Insert Ip" text="localhost">
                 <VBox.margin>
                     <Insets left="50.0" right="50.0" />
@@ -92,14 +104,19 @@
         </VBox>
     </AnchorPane>
     <Button fx:id="chatButton" mnemonicParsing="false" text="Show Chat" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="10.0" />
-   <Button fx:id="quitButton" mnemonicParsing="false" text="Quit" textFill="RED" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0" />
-    <HBox alignment="CENTER" mouseTransparent="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
-          AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+    <Button fx:id="quitButton" mnemonicParsing="false" text="Quit" textFill="RED" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0" />
+    <HBox alignment="CENTER" mouseTransparent="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <VBox fx:id="playerLobby" alignment="CENTER" visible="false">
             <VBox alignment="CENTER" spacing="10.0">
-                <Label text="Lobby"/>
-                <Pane prefHeight="100.0"/>
+                <Label text="Lobby" />
+                <Pane prefHeight="100.0" />
             </VBox>
         </VBox>
     </HBox>
+    <ImageView id="loading" fitHeight="847.0" fitWidth="654.0" preserveRatio="true" visible="false" AnchorPane.bottomAnchor="-64.2247314453125" AnchorPane.leftAnchor="150.0" AnchorPane.rightAnchor="46.0">
+        <image>
+            <Image url="@Graphical_Assets/loading.gif" />
+        </image>
+    </ImageView>
+   <Button fx:id="musicButton" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" text="⏸" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0" />
 </AnchorPane>

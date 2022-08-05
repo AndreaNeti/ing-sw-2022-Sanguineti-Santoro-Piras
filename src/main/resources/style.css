@@ -181,6 +181,24 @@
     -fx-padding: 5 15;
 }
 
+#rulesButton {
+    -fx-background-color: #e38126;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 15;
+    -fx-padding: 10 60;
+}
+
+#musicButton {
+    -fx-background-color: #c2bfbf;
+    -fx-text-fill: #000000;
+    -fx-font-weight: bold;
+    -fx-font-size: 30;
+    -fx-border-radius: 100 100 100 100;
+    -fx-background-radius: 100 100 100 100;
+    -fx-padding: 2 8;
+}
+
 #assistantCardsBox > * {
     -fx-background-color: rgba(255, 255, 255, 0.9);
     -fx-background-radius: 5;

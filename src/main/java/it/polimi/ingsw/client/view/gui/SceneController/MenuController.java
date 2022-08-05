@@ -20,7 +20,11 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.MediaView;
 
+import java.net.URL;
 import java.util.List;
 
 public class MenuController implements SceneController {
@@ -30,6 +34,7 @@ public class MenuController implements SceneController {
     public ToggleGroup player;
     public ToggleGroup gameType;
     public Button quitButton;
+    private MediaPlayer music;
     @FXML
     AnchorPane root;
     ViewGUI viewGUI;
@@ -45,6 +50,7 @@ public class MenuController implements SceneController {
     public Pane paneForChat;
     public VBox playerLobby;
     public Button sendButton;
+    public Button musicButton;
     private ObservableList<String> observableListChat;
     private ObservableList<String> playersInLobbyList;
 
@@ -52,7 +58,27 @@ public class MenuController implements SceneController {
      * Method initialize creates and sets elements in the scene
      */
     private void initialize() {
-        hideEverything();
+        URL url = GuiFX.class.getResource("/totallyNotOblivionSong1.mp3");
+        music = new MediaPlayer(new Media(url.toString()));
+        music.play();
+        music.setOnEndOfMedia(() -> {
+            music.setRate(music.getRate() + 0.5);
+            music.setVolume(music.getVolume() + 25);
+            music.play();
+        });
+        music.setCycleCount(MediaPlayer.INDEFINITE);
+        MediaView mediaView = new MediaView(music);
+        root.getChildren().add(mediaView);
+
+        musicButton.setOnMouseClicked(mouseEvent -> {
+            if (musicButton.getText().equals("\u25b6")) {
+                musicButton.setText("\u23f8");
+                music.play();
+            } else {
+                musicButton.setText("\u25b6");
+                music.pause();
+            }
+        });
         chatButton.setOnAction(actionEvent -> chat.setVisible(!chat.isVisible()));
         //create the chat
         observableListChat = FXCollections.observableArrayList();
@@ -62,6 +88,7 @@ public class MenuController implements SceneController {
         paneForChat.getChildren().add(listView);
         chat.toFront();
         chat.setVisible(false);
+
 
         Pane playerLobbyPane = (Pane) ((VBox) playerLobby.getChildren().get(0)).getChildren().get(1);
         playersInLobbyList = FXCollections.observableArrayList();
@@ -76,6 +103,7 @@ public class MenuController implements SceneController {
         joinIdButton.setOnMouseClicked(GameCommand.JOIN_MATCH_BY_ID.getGUIHandler(viewGUI));
         joinMatchTypeButton.setOnMouseClicked(GameCommand.JOIN_MATCH_BY_TYPE.getGUIHandler(viewGUI));
         sendButton.setOnMouseClicked(GameCommand.TEXT_MESSAGE.getGUIHandler(viewGUI));
+        quitButton.setDisable(false);
         quitButton.setOnMouseClicked(GameCommand.QUIT.getGUIHandler(viewGUI));
     }
 
@@ -192,6 +220,7 @@ public class MenuController implements SceneController {
         });
     }
 
+
     @Override
     public void updateMatchInfo(MatchType matchType, MatchConstants constants, List<TeamClient> teams) {
         Platform.runLater(() -> {
@@ -243,5 +272,15 @@ public class MenuController implements SceneController {
     @Override
     public void setWinners(List<HouseColor> winners) {
 
+    }
+
+    @Override
+    public void addNodeToRoot(Node node) {
+        root.getChildren().add(node);
+    }
+
+    @Override
+    public void stop() {
+        music.stop();
     }
 }

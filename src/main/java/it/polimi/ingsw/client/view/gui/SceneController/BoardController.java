@@ -4,6 +4,7 @@ import it.polimi.ingsw.client.model.*;
 import it.polimi.ingsw.client.phaseAndComand.Commands.GameCommand;
 import it.polimi.ingsw.client.view.gui.GuiFX;
 import it.polimi.ingsw.client.view.gui.ViewGUI;
+import it.polimi.ingsw.utils.Color;
 import it.polimi.ingsw.utils.*;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
@@ -30,7 +31,14 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 import javafx.util.Duration;
 
+import java.awt.*;
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
+import java.util.List;
 import java.util.*;
 
 @SuppressWarnings("unchecked") // imho, \_O_/
@@ -52,15 +60,58 @@ public class BoardController implements SceneController {
     public HBox assistantCardsBox;
     private ObservableList<String> observableListChat;
     public HBox clouds;
+    public Button rulesButton;
+    public Button musicButton;
     public final Set<Node> clickableElement = new HashSet<>();
     public final Set<Node> visibleElement = new HashSet<>();
     public final Set<Node> selectedElement = new HashSet<>();
     private final HashMap<Node, Timeline> timelines = new HashMap<>();
+    private MediaPlayer music;
 
     /**
      * Method initialize creates and sets elements in the scene
      */
     private void initialize() {
+        URL url = GuiFX.class.getResource("/ostGame.mp3");
+        music = new MediaPlayer(new Media(url.toString()));
+        music.play();
+        music.setOnEndOfMedia(() -> {
+            music.play();
+        });
+        music.setCycleCount(MediaPlayer.INDEFINITE);
+        MediaView mediaView = new MediaView(music);
+        root.getChildren().add(mediaView);
+
+        musicButton.setOnMouseClicked(mouseEvent -> {
+            if (musicButton.getText().equals("\u25b6")) {
+                musicButton.setText("\u23f8");
+                music.play();
+            } else {
+                musicButton.setText("\u25b6");
+                music.pause();
+            }
+        });
+
+        String inputFile = "rules.pdf";
+
+        try {
+            Path tempOutput = Files.createTempFile("TempManual", ".pdf");
+            tempOutput.toFile().deleteOnExit();
+            System.out.println("tempOutput: " + tempOutput);
+            InputStream is = GuiFX.class.getClassLoader().getResourceAsStream(inputFile);
+            Files.copy(is, tempOutput, StandardCopyOption.REPLACE_EXISTING);
+            rulesButton.setOnMouseClicked(mouseEvent -> {
+                try {
+                    if (Desktop.isDesktopSupported()) {
+                        Desktop.getDesktop().open(tempOutput.toFile());
+                    }
+                } catch (IOException e) {
+                    GuiFX.showError("Error", "Make sure that you have a pdf viewer on your computer!", "Generic Error");
+                }
+            });
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         //create and initialize chat
         chatButton.setOnAction(actionEvent -> chat.setVisible(!chat.isVisible()));
         //create the chat
@@ -266,8 +317,7 @@ public class BoardController implements SceneController {
     @Override
     public void disableNode(Node node, boolean removeVisibility) {
         Timeline timeline = timelines.get(node);
-        if (timeline != null)
-            timeline.pause();
+        if (timeline != null) timeline.pause();
         node.setDisable(true);
         node.getStyleClass().remove("clickable");
         if (removeVisibility) {
@@ -770,5 +820,16 @@ public class BoardController implements SceneController {
         centerID = Math.round((float) (last + first) / 2);
         if (centerID >= 12 + 2 * MatchType.MAX_PLAYERS) centerID -= 12;
         return centerID;
+    }
+
+    @Override
+    public void addNodeToRoot(Node node) {
+        root.getChildren().add(node);
+    }
+
+    @Override
+    public void stop() {
+        music.stop();
+
     }
 }
