@@ -105,7 +105,7 @@ In order to play, you'll have to launch at least one server and two clients (eit
 **WARNING**: For the best GUI experience it is strongly suggested to play with a screen resolution
 of 1920x1080 (100% DPI) and with a scaling of 100%.
 
-**WARNING**: For the best CLI experience it is strongly suggested to play with the terminal in fullscreen mode. 
+**WARNING**: For the best CLI experience it is strongly suggested to play with the terminal in fullscreen mode. Zoom out and refresh if it's not visible at the beginning.
 Based on the system setting, zooming out/in the terminal could improve the appearance of the game.
 
 
